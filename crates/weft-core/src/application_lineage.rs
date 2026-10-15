@@ -61,11 +61,26 @@ fn fail() -> Diagnostic {
 /// ```
 pub struct ApplicationLineage {
     json: String,
+    catalog: Catalog,
+    plan: crate::application_ir::Plan,
+    order_directions: Vec<OrderDirection>,
+    source_request_json: String,
 }
+/// Direction from the original parser, kept separately from the older plan representation.
+#[derive(Debug,Clone,Copy,PartialEq,Eq)]
+pub enum OrderDirection { Asc, Desc }
 impl ApplicationLineage {
     pub fn json(&self) -> &str {
         &self.json
     }
+    /// Original resolved source context; never a native permission or current cut.
+    pub fn catalog(&self) -> &Catalog { &self.catalog }
+    /// Original typed plan; native lowering needs a separately selected registration.
+    pub fn plan(&self) -> &crate::application_ir::Plan { &self.plan }
+    /// Complete original order directions. A lowerer must preserve each occurrence.
+    pub fn order_directions(&self) -> &[OrderDirection] { &self.order_directions }
+    /// Exact original request UTF8, including whitespace and opaque Artifact source bytes.
+    pub fn source_request_json(&self) -> &str { &self.source_request_json }
 }
 struct Buffer {
     bytes: Vec<u8>,
@@ -196,6 +211,10 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
     }
     Ok(ApplicationLineage {
         json: encode(&report, 16_000_000)?,
+        catalog,
+        plan,
+        order_directions: directions.into_iter().map(|d|if d{OrderDirection::Desc}else{OrderDirection::Asc}).collect(),
+        source_request_json: raw.to_owned(),
     })
 }
 
@@ -469,5 +488,23 @@ mod v02_read_requirements_tests{
  #[test]
  fn public_relationship_observation_and_terminal_keys_remain_separate_read_intents(){
   let source:Value=serde_json::from_str(include_str!("../../weft-postgresql/tests/security-public-relationship/compiler-request.json")).unwrap();let r=json!({"interfaceVersion":"weft-application-lineage/0.2-candidate","modules":source["modules"],"sql":source["sql"],"parameters":source["parameters"],"opaqueSources":[]});let r:Value=serde_json::from_str(prepare(&r.to_string()).unwrap().json()).unwrap();let reads=&r["readRequirements"];assert_eq!(reads["scans"].as_array().unwrap().len(),2);assert_eq!(reads["relationships"][0]["kind"],"relationshipObservation");assert_eq!(reads["relationships"][0]["sourceScan"],"s0");assert_eq!(reads["relationships"][0]["terminalScan"],"t0");assert!(reads["fields"].as_array().unwrap().iter().any(|f|f["scan"]=="t0"&&f["role"]=="predicate"));
+ }
+}
+
+#[cfg(test)]
+mod original_context_tests{
+ use super::*;
+ // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn typed_preparation_keeps_actual_catalog_plan_and_complete_order_directions(){
+  let raw=include_str!("../../../tests/lineage-v02/fixtures/distinct-selfjoin-false-zero.request.json");let prepared=prepare(raw).unwrap();let report:Value=serde_json::from_str(prepared.json()).unwrap();
+  assert_eq!(prepared.source_request_json(),raw);
+  assert_eq!(serde_json::to_string(prepared.plan()).unwrap(),report["applicationPlanJson"].as_str().unwrap());
+  assert_eq!(serde_json::to_value(prepared.catalog().pins()).unwrap(),report["modelPins"]);
+  let original:Value=serde_json::from_str(raw).unwrap();assert_eq!(serde_json::to_value(prepared.catalog().inputs()).unwrap(),original["modules"]);
+  assert_eq!(prepared.plan().ir_version,"weft-ir/application-lineage/0.2-candidate");assert_eq!(prepared.plan().joins.len(),1);assert_eq!(prepared.plan().limit,Some(0));
+  let mut request=original;request["sql"]=json!("SELECT r.resourceId FROM Resource r ORDER BY r.token DESC,r.salary ASC LIMIT 0");let prepared=prepare(&request.to_string()).unwrap();
+  assert_eq!(prepared.order_directions(),&[OrderDirection::Desc,OrderDirection::Asc]);assert_eq!(prepared.plan().order.len(),2);
+  let report:Value=serde_json::from_str(prepared.json()).unwrap();assert_eq!(report["orderDirections"],json!(["desc","asc"]));
  }
 }

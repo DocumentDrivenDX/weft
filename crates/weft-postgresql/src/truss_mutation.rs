@@ -322,7 +322,7 @@ impl CurrentTrussMutationBackend {
                 field: Some(field.clone()),
             });
         }
-        Ok(SelectionLowering::Lowered{sql:format!("SELECT {} FROM {source} WHERE ({scope}) AND ({predicate}) ORDER BY \"weft_mutation\".id ASC LIMIT {}",projection.join(", "),max+1),parameters,columns,preflight,ordering:SelectionOrdering{kind:"native-integer-identity".into(),direction:"asc".into()},bounds:SelectionBounds{max_items:max,fetch_limit:max+1},obligations:vec!["Current PostgreSQL18.6/layout1.0/tagged runtime0.65/0.66/0.67 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into(),"Host must admit original authenticated authorized coherent source/caller cut, run every complete-population preflight before selection, reject any violations and maxItems+1 overflow without trimming".into(),"No connection, raw caller SQL, RR facade, action execution, authorization or publication is issued by this compiler".into()]})
+        Ok(SelectionLowering::Lowered{sql:format!("SELECT {} FROM {source} WHERE ({scope}) AND ({predicate}) ORDER BY \"weft_mutation\".id ASC LIMIT {}",projection.join(", "),max+1),parameters,columns,preflight,ordering:SelectionOrdering{kind:"native-integer-identity".into(),direction:"asc".into()},bounds:SelectionBounds{max_items:max,fetch_limit:max+1},obligations:vec![if self.binding.read()?["releaseId"] == "truss-catalog-runtime/0.67-candidate" { "Current PostgreSQL18.6/layout1.0/tagged runtime0.67 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into() } else if self.binding.read()?["releaseId"] == "truss-catalog-runtime/0.66-candidate" { "Current PostgreSQL18.6/layout1.0/tagged runtime0.66 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into() } else { "Current PostgreSQL18.6/layout1.0/tagged runtime0.65 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into() },"Host must admit original authenticated authorized coherent source/caller cut, run every complete-population preflight before selection, reject any violations and maxItems+1 overflow without trimming".into(),"No connection, raw caller SQL, RR facade, action execution, authorization or publication is issued by this compiler".into()]})
     }
 }
 impl SelectionBackend for CurrentTrussMutationBackend {
@@ -372,5 +372,36 @@ impl SelectionBackend for CurrentTrussMutationBackend {
                 diagnostics: vec![d],
             },
         })
+    }
+}
+
+#[cfg(test)]
+mod native066_tests {
+    use super::*;
+    #[test]
+    fn original_products_native066_selection_lowers_without_repinning_sources() {
+        let fixture:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/truss066-products.json")).unwrap();
+        let model:Artifact=serde_json::from_value(fixture["model"].clone()).unwrap();
+        let binding:Artifact=serde_json::from_value(fixture["binding"].clone()).unwrap();
+        let selection:Artifact=serde_json::from_value(fixture["selection"].clone()).unwrap();
+        let pin:ModelPin=serde_json::from_value(fixture["modelPin"].clone()).unwrap();
+        let historical:Artifact=serde_json::from_value(fixture["historicalNative65Binding"].clone()).unwrap();
+        let old=CurrentTrussMutationBackend::new(model.clone(),historical.clone(),pin.clone(),vec!["Original historical65 compiler fixture only".into()]).unwrap();
+        let old_result=serde_json::to_value(old.lower_selection(&selection,&model,&historical,2).unwrap()).unwrap();
+        assert_eq!(old_result["status"],"lowered", "{old_result}");
+        assert_eq!(old_result["obligations"][0],"Current PostgreSQL18.6/layout1.0/tagged runtime0.65 original binding; same original document bytes retain accepted native revision separately from action compilation revision");
+        let backend=CurrentTrussMutationBackend::new(model.clone(),binding.clone(),pin.clone(),vec!["Original Products native66 public catalog export; compiler-only evidence".into()]).unwrap();
+        let result=serde_json::to_value(backend.lower_selection(&selection,&model,&binding,2).unwrap()).unwrap();
+        assert_eq!(result["status"],"lowered", "{result}");
+        assert_eq!(result["bounds"],json!({"maxItems":2,"fetchLimit":3}));
+        assert!(result["sql"].as_str().unwrap().contains("\"truss\".\"object\""));
+        assert_eq!(result["parameters"][0]["value"],json!({"string":"bar"}));
+        assert!(result["obligations"][0].as_str().unwrap().contains("runtime0.66"));
+        // A runtime label cannot bypass native66's original manifest hash.
+        let mut changed=binding.read().unwrap();changed["releaseSha256"]=json!("0".repeat(64));
+        let utf8=changed.to_string();let bad=Artifact{media_type:"application/json".into(),sha256:weft_core::json::sha256(utf8.as_bytes()),utf8};
+        let backend=CurrentTrussMutationBackend::new(model.clone(),bad.clone(),pin,vec!["Changed manifest refusal".into()]).unwrap();
+        let refused=serde_json::to_value(backend.lower_selection(&selection,&model,&bad,2).unwrap()).unwrap();
+        assert_eq!(refused["status"],"blocked");
     }
 }

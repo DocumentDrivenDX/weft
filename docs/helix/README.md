@@ -1,6 +1,6 @@
 # Weft specification index
 
-Unreleased Python 0.4.31 extends the existing Truss backend 0.4.36 guard to
+Proposed Python 0.4.32 extends the existing Truss backend 0.4.36 guard to
 native runtime 0.66 and 0.67 (0.65 retains backend 0.4.35), preserving the original binding release ID and
 digest. Query/layout semantics are unchanged. The same allowlist applies to
 mutation selection registration. Native 0.68 and older-backend mismatches remain

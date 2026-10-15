@@ -1,0 +1,48 @@
+{
+  "status": "component-passed",
+  "baseCommit": "eff0897f57b84e3c1347a52add682efd0991c275",
+  "sourceSha256": {
+    "crates/weft-core/src/application_lineage.rs": "4d36cf42b8fa8fdd28afcc2d35174991ef15e5df83547a92c86e13b3319a96e5",
+    "crates/weft-core/src/backend.rs": "dc007e912e42466c926f82e0aa6560c875df1cbd7e17e4126d11538e140a2f6b",
+    "crates/weft-runtime/src/lib.rs": "885ec9f8a65a5cc23fb608d292bd75c1b25f1b8a5e0afb735b4cff11f8d8488e",
+    "crates/weft-python/src/lib.rs": "f724b58a347f947b6039b1096baab35d30f1aa041cd137579841c94a034192fb",
+    "tests/lineage-v02/issued-python.py": "6c0befeee7d69e73f84b71c120efc90beec9b8bc9f9d08de19c256f0604a539f",
+    "tests/lineage-v02/native-issued.py": "0dbb2fb400ec6bde7195ec3bd471368aeaed080b431028802f4d7cc12e816790"
+  },
+  "features": [
+    "application-lineage-candidate",
+    "truss-postgresql-pg18"
+  ],
+  "buildProfile": "dev",
+  "candidateWheelSha256": "9146e50f26a630c43d7862c5be844835cbf2127a16b2bfb3130bda92921ac80c",
+  "installedNativeModuleSha256": "f537609b9e062b75e5a3cf869a263f3b3dddbb84ae1112c1651c0be6288f5f5b",
+  "installedNativeMatchesWheel": true,
+  "cliSha256": "113c1dab3f51a5646a04e545573264d071289bd147d641f235fc455f1820f6d9",
+  "ownerReceiptSha256": "d221799d0f8da17b031830c0e27a5e7d2d63c2cf32d63b218f9114bbeab5aef4",
+  "checks": {
+    "core": 301,
+    "runtimeAndDoc": "see runtime.log",
+    "moduleBoundaries": 16,
+    "issuedPython": 31,
+    "pythonReportsAndRefusals": 16,
+    "realChromiumReportsAndRefusals": 16,
+    "ordinaryNativeCompatibility": 8,
+    "ownerSourceConsumer": 445,
+    "ownerActualReports": 27,
+    "defaultApiAbsent": true,
+    "originalAndCandidateReportBytes": "unchanged"
+  },
+  "scope": "Original producer/context custody and ordinary native compatibility. No current protected SQL lowering, native issuer/consumer approval, authenticated current authority or guarded end-to-end release qualification.",
+  "acceptanceCasesPromoted": [],
+  "original132ScopePreserved": true,
+  "composedParent": "f87939f4e6b41c08fa021e7be0630415115395cc",
+  "composition": "Retained concurrent e389 native66 mutation source and f879 release preparation; read-context source files do not overlap. Current0.4.31 dual-feature wheel passes the same31 object/16 JSON checks. Ordinary native8 fixture replay was on the earlier0.4.30 dual-feature image with its frozen SDK, explicitly separate.",
+  "composedWheelSha256": "d2e73d2eb3bb0b4206434e285365cc79aa7ba194603e4a17f6c98a10a7210d6d",
+  "composedInstalledNativeMatchesWheel": true,
+  "composedPeerSourceSha256": {
+    "crates/weft-postgresql/src/truss_mutation.rs": "21dc109380614784811dc14f1daa9cfdc4d425b87dbb3249d858d777cf88a107",
+    "crates/weft-postgresql/src/truss_runtime.rs": "5010b00dc84730d146e7be4bdb56afbeadc46ca0a5cb4fa6fb39154dd044fb05",
+    "crates/weft-python/Cargo.toml": "0166fe73481d92c863f17be36cd68909bf0f744174d444462d63bf92188126fa",
+    "Cargo.lock": "f1570d9bc0b1bba6e38f9274551e2f43b57f242f9d5e6f6d1ade3b4cd1e20b05"
+  }
+}

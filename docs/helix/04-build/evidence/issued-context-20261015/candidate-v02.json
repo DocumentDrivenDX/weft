@@ -1,0 +1,42 @@
+{
+  "scope": "Original compiler source-only correspondence; no native policy/caller/current authority",
+  "binarySha256": "113c1dab3f51a5646a04e545573264d071289bd147d641f235fc455f1820f6d9",
+  "cases": [
+    {
+      "case": "projection-read",
+      "requestSha256": "1ab5051a4f3c2f4acab3a68bb06c8636e26849b672a60d41ae1b29640de5deac",
+      "reportSha256": "33db3d2ff1ec6aecdca5ee55059fc41528c45f583dde6416e0da887b7abf02cf",
+      "passed": true
+    },
+    {
+      "case": "hidden-read-false-zero",
+      "requestSha256": "134ad235773eb359246b57bcfa5660ad8fedb76c93f4c5b2f523348d1dafd386",
+      "reportSha256": "7889f78a8f70f038ccea11e1f49d9e22d125798a5d4489ef7f42a2524e5f259e",
+      "passed": true
+    },
+    {
+      "case": "distinct-selfjoin-false-zero",
+      "requestSha256": "2fe0169903b4cd3152ee2763a62e5103e9d58b81664c73d841bc2a0098378c38",
+      "reportSha256": "c9a0877f9d44ce4db7d65acdf7eb2838f1e4ca64006d7416654a0b706d608269",
+      "passed": true
+    },
+    {
+      "case": "field-free-false-zero",
+      "requestSha256": "80ac3501c5c4e1e935184e93e4d5d1cedf08453f976e822f1b91d2e6801ba052",
+      "reportSha256": "acf0705613cf9e4459cc17162a96fdfb375fb28c4919f15b1621f4ae68f20bb2",
+      "passed": true
+    },
+    {
+      "case": "distinct-required",
+      "requestSha256": "c7d43926fdc03acae2bdb102b02f1482a61ca6a6a19daf7c4aa987f4c5c75f19",
+      "reportSha256": "9f5b9018660b202b0c1196bc043401b0f163eaa7c089da2fc868b4d4f00bdce8",
+      "passed": true
+    },
+    {
+      "case": "sum-unsupported",
+      "requestSha256": "7df006ebe3781562619016268ee64e8a47fb55f6c3aa8f2287443eb895c963c7",
+      "reportSha256": "19a3b919fe06513e90ae9966d4d006eed32191e8db33ffbb24b55e79116a3df1",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "status": "lowered",
+  "sql": "SELECT \"weft_mutation\".id::pg_catalog.text AS identity, \"weft_mutation\".ver::pg_catalog.text AS version, ((\"weft_mutation\".props->'1')->>'text')::pg_catalog.text AS key0 FROM \"truss\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".type_id=1::pg_catalog.int4) AND (((\"weft_mutation\".props->'1'->>'text') COLLATE pg_catalog.\"C\") = ($1::pg_catalog.text COLLATE pg_catalog.\"C\")) ORDER BY \"weft_mutation\".id ASC LIMIT 2",
+  "parameters": [
+    {
+      "name": "p1",
+      "field": {
+        "element": "product-id",
+        "module": "sales"
+      },
+      "value": {
+        "string": "bar"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "name": "identity",
+      "kind": "identity",
+      "field": null
+    },
+    {
+      "name": "version",
+      "kind": "version",
+      "field": null
+    },
+    {
+      "name": "key0",
+      "kind": "key",
+      "field": {
+        "element": "product-id",
+        "module": "sales"
+      }
+    }
+  ],
+  "preflight": [
+    {
+      "sql": "SELECT CASE WHEN pg_catalog.count(*)>10000 THEN '1' ELSE '0' END::pg_catalog.text AS violations FROM \"truss\".\"object\" AS \"weft_mutation\" WHERE \"weft_mutation\".type_id=1::pg_catalog.int4",
+      "parameters": []
+    },
+    {
+      "sql": "SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM \"truss\".\"object\" AS \"weft_mutation\" WHERE \"weft_mutation\".type_id=1::pg_catalog.int4 AND (\"weft_mutation\".id IS NULL OR \"weft_mutation\".id<=0 OR \"weft_mutation\".ver IS NULL OR \"weft_mutation\".ver<=0)",
+      "parameters": []
+    },
+    {
+      "sql": "SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM \"truss\".\"object\" AS \"weft_mutation\" WHERE \"weft_mutation\".type_id=1::pg_catalog.int4 AND (truss.valid_scalar_cell((\"weft_mutation\".props->'1'),'string',FALSE) IS TRUE) IS NOT TRUE",
+      "parameters": []
+    },
+    {
+      "sql": "SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM (SELECT 1 FROM \"truss\".\"object\" AS \"weft_mutation\" WHERE \"weft_mutation\".type_id=1::pg_catalog.int4 GROUP BY (\"weft_mutation\".props->'1'->>'text') COLLATE pg_catalog.\"C\" HAVING pg_catalog.count(*)>1) duplicate_keys",
+      "parameters": []
+    }
+  ],
+  "ordering": {
+    "kind": "native-integer-identity",
+    "direction": "asc"
+  },
+  "bounds": {
+    "maxItems": 1,
+    "fetchLimit": 2
+  },
+  "obligations": [
+    "Current PostgreSQL18.6/layout1.0/tagged runtime0.66 original binding; same original document bytes retain accepted native revision separately from action compilation revision",
+    "Host must admit original authenticated authorized coherent source/caller cut, run every complete-population preflight before selection, reject any violations and maxItems+1 overflow without trimming",
+    "No connection, raw caller SQL, RR facade, action execution, authorization or publication is issued by this compiler"
+  ]
+}

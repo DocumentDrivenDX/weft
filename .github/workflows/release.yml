@@ -72,6 +72,7 @@ jobs:
           assert isinstance(result,dict)
           assert callable(weft.compile_truss_runtime_page_json)
           PYTHON
+          python tests/mutation/native066-wheel-smoke.py
       - uses: actions/upload-artifact@v4
         with:
           name: wheels-${{ matrix.target }}

@@ -1,0 +1,152 @@
+{
+  "status": "passed",
+  "scope": "Actual in-process core issuer and ordinary native066 public SDK compatibility. No installed policy/protection/Subject mapping or current protected authority; no B008 case promotion.",
+  "originalFixtureRunnerSha256": "48422fa7cba0ccb0000dd225febf0580348da7b67495ead93f42510e51cbca1c",
+  "querySdkSha256": "f11a59d608fee53d7d9aec0864d49ba4eb59f81f4360b59b898d8dd2e1c1c849",
+  "weftModule": "/private/tmp/weft-lineage02-issued-context-final-installed/weft/__init__.py",
+  "checks": [
+    {
+      "sql": "SELECT r.token FROM Resource r",
+      "native": {
+        "columns": [
+          "token"
+        ],
+        "rows": [
+          [
+            "opaque-token"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjI3YWJiM2QyLTY4NDAtNDg2ZC05MmUxLTVkZTFmYWJhNjRjNiIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE1OjU2OjExLjIyNTgwNyswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 15:56:11.225807+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      },
+      "reportSha256": "18de0aaf0794024fd5dde5159a19454a14301bc4a22eb20b6f9bbb5924220358",
+      "reportNotNativeCompileRequest": true
+    },
+    {
+      "sql": "SELECT COUNT(*) FROM Resource r",
+      "native": {
+        "columns": [
+          "count"
+        ],
+        "rows": [
+          [
+            1
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjI3YWJiM2QyLTY4NDAtNDg2ZC05MmUxLTVkZTFmYWJhNjRjNiIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE1OjU2OjExLjUzMjA5MSswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 15:56:11.532091+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      },
+      "reportSha256": "a5c0ae0dc867b9c465d2a1449de967741fd56c18f89d2525117da02ba286be28",
+      "reportNotNativeCompileRequest": true
+    },
+    {
+      "sql": "SELECT r.resourceId FROM Resource r WHERE r.token='opaque-token'",
+      "native": {
+        "columns": [
+          "resourceId"
+        ],
+        "rows": [
+          [
+            "r1"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjI3YWJiM2QyLTY4NDAtNDg2ZC05MmUxLTVkZTFmYWJhNjRjNiIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE1OjU2OjExLjgzODQ2OCswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 15:56:11.838468+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      },
+      "reportSha256": "e5c1a220a60798ab57d53be574e1718ce3392df6ae61ce2d28570acbf7ed1996",
+      "reportNotNativeCompileRequest": true
+    },
+    {
+      "sql": "SELECT r.token FROM Resource r GROUP BY r.token",
+      "native": {
+        "columns": [
+          "token"
+        ],
+        "rows": [
+          [
+            "opaque-token"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjI3YWJiM2QyLTY4NDAtNDg2ZC05MmUxLTVkZTFmYWJhNjRjNiIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE1OjU2OjEyLjE0OTA5MyswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 15:56:12.149093+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      },
+      "reportSha256": "f10cc2c64c58655c1eeed57557ebd1e0db4b2990714ade95b7d947a0014f0b21",
+      "reportNotNativeCompileRequest": true
+    },
+    {
+      "sql": "SELECT r.token FROM Resource r JOIN Resource s ON r.resourceId=s.resourceId",
+      "native": {
+        "columns": [
+          "token"
+        ],
+        "rows": [
+          [
+            "opaque-token"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjI3YWJiM2QyLTY4NDAtNDg2ZC05MmUxLTVkZTFmYWJhNjRjNiIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE1OjU2OjEyLjQ0MTM2MiswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 15:56:12.441362+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      },
+      "reportSha256": "2f2f19d0ac6dc72818b700f9eba1f1bea16e55d8d796f1168b8d2a4a777d8d21",
+      "reportNotNativeCompileRequest": true
+    },
+    {
+      "newLineageSyntaxRefusedByOriginalNativeProfile": {
+        "code": "invalid_query",
+        "diagnostics": [
+          {
+            "code": "WFT-UNSUPPORTED",
+            "message": "Expected dialect punctuation"
+          }
+        ],
+        "outcome": "refused"
+      },
+      "sourceDutiesRetained": true
+    },
+    {
+      "declarationOnlyFieldRefused": {
+        "code": "invalid_query",
+        "diagnostics": [
+          {
+            "code": "WFT-NAME-MISSING",
+            "message": "Selected member name missing or ambiguous"
+          }
+        ],
+        "outcome": "refused"
+      }
+    },
+    {
+      "ordinaryCallerHasRawObjectSelect": false
+    }
+  ]
+}

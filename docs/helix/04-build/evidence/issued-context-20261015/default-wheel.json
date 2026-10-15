@@ -1,0 +1,10 @@
+{
+  "scope": "Final default wheel omits optional preparation surface",
+  "module": "/private/tmp/weft-issued-context-default-installed/weft/__init__.py",
+  "absent": [
+    "prepare_application_lineage_json",
+    "prepare_application_lineage",
+    "ApplicationLineagePreparation"
+  ],
+  "ordinaryApiPresent": true
+}

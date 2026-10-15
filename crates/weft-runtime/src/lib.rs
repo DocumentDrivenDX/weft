@@ -538,7 +538,26 @@ pub fn inspect_truss_security_relationship_result_json(request:&str)->weft_core:
 /// Opt-in original source read intents only. Never policy/native admission.
 #[cfg(feature="application-lineage-candidate")]
 pub fn prepare_application_lineage_json(request:&str)->weft_core::error::Result<String>{
- weft_core::application_lineage::prepare(request).map(|p|p.json().to_owned())
+ prepare_application_lineage(request).map(|p|p.json().to_owned())
+}
+/// Original in-process issued preparation. Possession is not native authority.
+#[cfg(feature="application-lineage-candidate")]
+pub fn prepare_application_lineage(request:&str)->weft_core::error::Result<ApplicationLineagePreparation>{
+ weft_core::application_lineage::prepare(request).map(|inner|ApplicationLineagePreparation{inner})
+}
+/// Issued only by the actual core producer. No caller report constructor or serde.
+/// ```compile_fail
+/// use weft_runtime::ApplicationLineagePreparation;
+/// fn forge(inner: weft_core::application_lineage::ApplicationLineage) -> ApplicationLineagePreparation {
+///     ApplicationLineagePreparation { inner }
+/// }
+/// ```
+#[cfg(feature="application-lineage-candidate")]
+pub struct ApplicationLineagePreparation{inner:weft_core::application_lineage::ApplicationLineage}
+#[cfg(feature="application-lineage-candidate")]
+impl ApplicationLineagePreparation{
+ pub fn json(&self)->&str{self.inner.json()}
+ pub fn source_request_json(&self)->&str{self.inner.source_request_json()}
 }
 #[cfg(all(test,feature="application-lineage-candidate"))]
 mod application_lineage_bridge_tests{

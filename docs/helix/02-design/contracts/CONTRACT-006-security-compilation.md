@@ -2112,3 +2112,61 @@ Without the feature these functions are absent. Existing compile entrypoints,
 backend features and release defaults do not enable it. No new parser, sidecar,
 SQL execution, policy interpretation or current/native authority is added. Exact
 source/output custody and subsequent native obligations remain host requirements.
+
+### In-process lineage preparation custody
+
+With application-lineage-candidate enabled, runtime prepare_application_lineage
+returns an immutable ApplicationLineagePreparation, constructed only by the
+actual core issuer. Python prepare_application_lineage(request) returns the
+frozen native ApplicationLineagePreparation object. Its json() method returns
+exactly the existing report bytes; there is no Python constructor, report/dict
+import, mutable field, dynamic instance dictionary or serialization round trip
+that creates this native object. The existing JSON-returning API remains exact.
+The Python class belongs to module weft; default-feature builds omit both the
+class and factory. Browser WASM retains its original JSON-string bridge.
+
+The object is only evidence of an actual local producer invocation over the
+retained source request. Any caller can invoke that producer on its own source
+inputs. Possession MUST NOT authenticate policy/catalog ownership, installed
+source bytes, native caller/Subject, current generation, population completeness
+or release. Those require the native consumer's private invocation and original
+same-store transaction/source/authority checks. A native receiver MUST retain
+its original typed object/procedure reference; duck typing, a user-overridable
+module/class attribute, matching report hashes or a normalized JSON copy MUST NOT
+serve as native admission. No object contains an executable plugin or database
+connection. Opaque sources remain byte-retained and uninterpreted, including
+content that is not valid source policy. All report authority/securityReady flags
+remain false, and all original native security obligations stay open.
+
+The core ApplicationLineage preparation retains the actual resolved Catalog,
+ApplicationPlan and original ordered OrderDirection values. Its catalog(), plan()
+and order_directions() accessors return immutable references; no report JSON is
+reparsed to reconstruct these values. The native runtime/Python preparation owns
+this same core result for its lifetime. Native lowerers MUST consume the complete
+preparation: the older Plan.order list alone does not carry DESC/ASC direction.
+The original order_directions list is occurrence-aligned with Plan.order.
+Retaining typed context does not admit a native registration or change report
+bytes. Old registrations still reject the new IR before binding callbacks, even
+when the original SQL uses only older syntax. Current-source SQL lowering and
+its separate effective operand/domain and original-action designation contracts
+remain unfinished. Legacy security.query-profile0.2-candidate is a relationship
+extension of the earlier policy profile, not canonical policy/catalog0.2 support.
+
+The preparation additionally retains exact original source_request_json() bytes
+as UTF8, including outer request whitespace and uninterpreted Artifact bodies;
+Python exposes this same read-only getter. This avoids a report reconstruction
+for a native source handoff. Source identity MUST include complete original
+request and directions, not only applicationPlanSha256: aligned-span ASC/DESC
+queries can have identical older Plan bytes and different direction vectors.
+The host's resource account includes retained original input/model/plan/report
+and preparation lifetime. These remain bounded component values, not native
+credentials or a total process-memory proof.
+
+A preparation/report created by a native host may retain non-public policy,
+metadata or opaque fact/context bytes supplied by that host. The native adapter
+MUST keep it inside the trusted preparation/execution boundary; authority:false
+is not a public-disclosure classification. Neither json() nor source_request_json()
+may be included in ordinary query responses or unguarded diagnostics. The native
+host releases only the separately checked query result under its current release
+obligations. Test fixtures containing logical-cut bytes are source-correspondence
+evidence, not a protocol that permits returning private facts to an ordinary caller.

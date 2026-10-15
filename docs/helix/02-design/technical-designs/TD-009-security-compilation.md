@@ -391,3 +391,27 @@ interfaces are gated in all three crates; existing release feature defaults and
 compile entrypoints stay separate. Errors preserve the original Diagnostic code
 and become host-language exceptions, with no partial report. Module ownership
 adds only explicit runtime/python/wasm API inventories; core has no host I/O.
+
+### Native producer result lifetime
+
+The runtime wraps the original core preparation in a private-field immutable
+value. Python's feature-gated frozen class owns that runtime value; the binding
+has no direct core dependency and accepts source requests only through the
+original producer. It has no constructor/serde/pickle/copy path from a report.
+The native json receiver requires the actual issued type. This preserves a real
+in-process producer result while the host performs separate original source and
+native authority checks; it is not a native credential or issuer approval.
+CONTRACT-006 governs this custody surface. Browser and JSON report protocols
+remain unchanged. Hosts must preserve trusted procedure references rather than
+consult caller-overridable Python attributes as authentication.
+
+The private core preparation now retains the already resolved Catalog and Plan,
+plus typed original order directions. This keeps original typed context available
+for a future explicit current-source lowerer without a second parser or a JSON
+reconstruction. DESC/ASC cannot be inferred from the older Plan.order Field list.
+The future lowerer must accept the complete preparation and separately bind an
+owner-derived effective query-value descriptor; it must preserve original core
+semantics and refuse operand/domain/key/runtime incompatibility. Retaining model/
+plan allocations extends their lifetime to the preparation's lifetime; hosts
+must account for the number/lifetime of held preparations. Report/input bounds
+remain endpoint/component bounds rather than a process-wide heap theorem.

@@ -41,7 +41,11 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(prepare_security_mapping_json, m)?)?;
     m.add_function(wrap_pyfunction!(compile_json, m)?)?;
     #[cfg(feature="application-lineage-candidate")]
-    m.add_function(wrap_pyfunction!(prepare_application_lineage_json,m)?)?;
+    {
+        m.add_function(wrap_pyfunction!(prepare_application_lineage_json,m)?)?;
+        m.add_function(wrap_pyfunction!(prepare_application_lineage,m)?)?;
+        m.add_class::<ApplicationLineagePreparation>()?;
+    }
     #[cfg(feature="truss-postgresql-pg18")]
     m.add_function(wrap_pyfunction!(compile_truss_runtime_json,m)?)?;
     #[cfg(feature="truss-postgresql-pg18")]
@@ -110,4 +114,22 @@ fn inspect_truss_security_relationship_result_json(request:&str)->PyResult<Strin
 #[pyfunction]
 fn prepare_application_lineage_json(request:&str)->PyResult<String>{
  weft_runtime::prepare_application_lineage_json(request).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+}
+
+/// Core-issued immutable preparation. Actual source/current/native admission remains external.
+#[cfg(feature="application-lineage-candidate")]
+#[pyclass(frozen,module="weft")]
+struct ApplicationLineagePreparation {inner:weft_runtime::ApplicationLineagePreparation}
+#[cfg(feature="application-lineage-candidate")]
+#[pymethods]
+impl ApplicationLineagePreparation {
+ fn json(&self)->&str{self.inner.json()}
+ fn source_request_json(&self)->&str{self.inner.source_request_json()}
+}
+#[cfg(feature="application-lineage-candidate")]
+#[pyfunction]
+fn prepare_application_lineage(request:&str)->PyResult<ApplicationLineagePreparation>{
+ weft_runtime::prepare_application_lineage(request)
+  .map(|inner|ApplicationLineagePreparation{inner})
+  .map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
 }
