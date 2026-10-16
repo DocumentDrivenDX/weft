@@ -1,0 +1,31 @@
+{
+  "scope": "Exact retained source packets/results/reviews; original finding preserved; zero B008 promotions",
+  "files": {
+    "weft-identity036-pg-regressions-20261016.log.gz": "99f15db779ee1870c1657b9c314fdfc06f0b3e9316dba51f745d56a928829a84",
+    "weft-identity036-genuine-northwind-20261016.json": "787e68080280d980b7afa9935bf83fb382e3f9c726c1de118e7fdc183e152e75",
+    "decimal12-static-review.json": "648ed4dc390209a6ed6db17d17d5afc9051bd61fc44ee33389193367516f0dee",
+    "verbatim-log-packing.json": "ab789776b18c073a32b59118f9b0c7faff5abe84c6f35afdd01a97ccfae4eaae",
+    "northwind.umf.json": "e3063579431155a2b8d75398a0defc8ad1f9c1d3bc7f000f822ae30ada552983",
+    "weft-identity036-query-abi-smoke-20261016.json": "c35fad6d47db8d4f3cd725995b25af61c9fce54135291c05316ac7bfb1b42b2c",
+    "identity-names-original-review.json": "03e74a6cad431795bc2a1e17628020f88a21549595d4c325d3013efe1c416818",
+    "weft-identity036-decimal-smoke-20261016.json": "1ce5293a6bd3efa1a27848b0ec29c3c2fdc8922380742b1742424a3e5acaf510",
+    "verify-weft-identity036-genuine-northwind.py": "704cd3d760b9790e2d70898f35d53f914e709269969d8def6880722c3f1741a9",
+    "identity-names-independent-evidence.zip": "9040c67c65dc38b39ecd550ce61eb6b131f3dafd4b96effeb3730cce35d4b3f1",
+    "identity-names-final-review.json": "db0daed7d7026ccc319a7def8a76ce9938fe2aeaf32f2834f477a9f1f89b2ad4",
+    "identity-names-correction-verification.json": "ae5433253a4c7082a444bacb9b2579a08a8f970f3f02cc57ea6011e4aee63c08",
+    "weft-identity036-databricks-smoke-20261016.json": "52eff4b49328e038f7bf05767975aa63180a5d2536cae9a6cb7e79ffd2f792ea",
+    "northwind-compile-request.json": "88fef1b5fcb11a675eeea18916f8991ab92d3bd4baba766169147f0c70acd809",
+    "weft-identity-names-genuine-northwind-20261016.log.gz": "1ac1ed668c492cbaa40b233311186d10d54d9af05a9f1cbab584937c3aec417e",
+    "decimal12-static-packet.zip": "cc86e4237a47e34658d1be439189c0619b78d195a7957f0872bc4af62382b907",
+    "weft-identity036-core-regressions-20261016.log.gz": "f670de069b1b6bfa436d7e3be623650783bff25c7ebc7215a00557460af30bff",
+    "weft-identity-names-specs-20261016.log": "788754a8af77ce814ce1f085f0d55d17ebd0a3ba174acdd2ff05c2945441bdf9",
+    "weft-identity036-designation-smoke-20261016.json": "b4a3dbd5d980e6c6c21bed7530b307c85fce71e215aa4239fa0eeef5c3f06770",
+    "weft-identity-names-modules-20261016.log": "6f03214666d524bb1e9b476daa8f7868e1d1bd4aafae3c15846a5ec6ba4491c1",
+    "original132-correspondence.json": "c117e49e89f695cddc5dabc7fc07bc1a56541ee792b79f32e106963f494dbcf2",
+    "decimal12-identity-names-packet.zip": "e44aeb06bd2bdda9f983f2185b86a9f07d726b873874b40b45f25d1b185fef40",
+    "decimal12-identity-names-r2-packet.zip": "91eedda821dcd0245ecbd8f5d110aba527ffccf4e3d41183aad072f19dbe8c74",
+    "weft-identity036-refinement-smoke-20261016.json": "ec2bc50319d8246a334735001c5d6a5df1bb90710a0fdad1910df3d4dbea6f30",
+    "native-workflow-receipt.json": "ae02793f73f59b6d58522659c3ea045567e4ad43359ad13602761fd7d847144e",
+    "weft-identity-names-test-final-20261016.log.gz": "6c0f467c288ec3fcc28f89785ba35e9ea224d1adecee274ab3fb7d7e656f4acd"
+  }
+}

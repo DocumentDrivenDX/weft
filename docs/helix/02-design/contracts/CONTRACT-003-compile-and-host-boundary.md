@@ -397,6 +397,29 @@ Truss obligations. This selection does not change mutation admission, install a
 protected query consumer or qualify B-008 security. Source/native development
 workflow evidence and matching published-wheel qualification remain distinct.
 
+## Exact decimal(12,2) ordinary Truss candidate — 2026-10-15
+
+Explicit ordinary read backend `truss.postgresql.runtime/0.4.39` adds the admitted
+fixed decimal(12,2) domain for scalar/item projection, exact equality, relationship
+keys and typed SQL page keys. Binding/target0.5 and query ABI1.0 remain selected;
+this is an optional admitted-catalog facet extension, not a new scalar cell or
+SQL function representation. Native source/runtime/model/catalog correspondence
+and actual native acceptance of that domain remain execution preconditions.
+The compiler must not infer every ABI1 installation accepts this extra domain.
+Published backend0.4.38 and earlier selections retain their previous facet sets.
+
+Parameters and continuation values retain original finite fixed-point text,
+including representable trailing zeroes. Precision and scale checks operate on
+exact decimal value without rounding or floating point. Decimal(12,2) has maximum
+absolute value9999999999.99; extra nonzero fractional digits and out-of-range
+values refuse before SQL. Original result cells and declared facets remain intact.
+
+The common page resolver adds an explicitly selected decimal12 factory. Existing
+page factories retain their old key-domain subset; the new selection requires
+compile0.2.6 and does not accept a caller-supplied read profile, ORDER BY or LIMIT.
+No new user comparison operators, aggregate operations, mutation authority or
+protected current-value domain support is implied. Frozen browser compiler and
+runtime cohorts are unchanged and require their own real integration evidence.
 ## Explicit local Spark current contributors
 
 An explicitly selected `current-spark-scalar-candidate` feature MAY expose

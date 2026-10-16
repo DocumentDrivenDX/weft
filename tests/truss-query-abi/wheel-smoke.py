@@ -8,7 +8,7 @@ from pathlib import Path
 import weft
 
 ROOT = Path(__file__).resolve().parent
-EXPECTED_VERSION = '0.4.35'
+EXPECTED_VERSION = '0.4.36'
 assert metadata.version('weft-sql') == weft.__version__ == EXPECTED_VERSION
 native = import_module('weft.weft')
 package_root = Path(weft.__file__).resolve().parent

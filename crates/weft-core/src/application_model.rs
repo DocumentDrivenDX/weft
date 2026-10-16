@@ -111,7 +111,7 @@ impl Catalog {
         for reference in refs {
             let (_, field) = self.local_element_metadata(record, reference)?;
             if field["kind"] != "field" { return Err(fail("Record member must reference a Field")); }
-            let authored = field["name"].as_str()
+            let authored = self.query_name(&field)
                 .ok_or_else(|| fail("Selected Field needs an authored name"))?;
             count += usize::from(name.matches(authored));
         }
@@ -131,8 +131,7 @@ impl Catalog {
             if !ids.insert((identity.module.clone(), identity.element.clone())) {
                 return Err(fail("Repeated member identity"));
             }
-            let name = field["name"]
-                .as_str()
+            let name = self.query_name(&field)
                 .ok_or_else(|| fail("Selected Field needs an authored name"))?
                 .into();
             members.push(Member { name, identity });
@@ -366,7 +365,7 @@ impl Catalog {
                 return Err(fail("Key must contain distinct declared member Fields"));
             }
             let name = Name {
-                value: field["name"].as_str().unwrap_or("").into(),
+                value: self.query_name(&field).unwrap_or("").into(),
                 quoted: true,
                 span: Span { start: 0, end: 0 },
             };

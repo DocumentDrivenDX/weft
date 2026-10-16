@@ -1,0 +1,21 @@
+{
+  "scope": "Gzip retains exact original log bytes including native test EOF; no edits to evidence",
+  "files": [
+    {
+      "path": "docs/helix/04-build/evidence/truss-decimal12-20261016/weft-identity036-pg-regressions-20261016.log.gz",
+      "uncompressedSha256": "e672d633b0dcaafe7004ccebe60ada31150a09f0651d53342d4c2f4f03796fd2"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/truss-decimal12-20261016/weft-identity-names-genuine-northwind-20261016.log.gz",
+      "uncompressedSha256": "4bec430eed42d6a4451efede4aefa61c8803d0cfaa2c8ca943534e4c0192e473"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/truss-decimal12-20261016/weft-identity036-core-regressions-20261016.log.gz",
+      "uncompressedSha256": "acd34e168aaa56fffd79244dd877663cbcf2f77b47e8c38bde9c5a971658c959"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/truss-decimal12-20261016/weft-identity-names-test-final-20261016.log.gz",
+      "uncompressedSha256": "cd270784978691b43e57927584736d2b78976de78b288f5142cc2fd893637663"
+    }
+  ]
+}

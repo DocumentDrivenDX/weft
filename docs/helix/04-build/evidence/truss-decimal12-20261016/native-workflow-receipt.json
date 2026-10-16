@@ -1,0 +1,37 @@
+{
+  "scope": "Genuine ordinary Truss/Weft candidate public workflow; no protected B008 acceptance or public release claim",
+  "nativeRun": {
+    "sourceChat": "01a136f4-03e1-7113-ae18-8cda27e7d5a9",
+    "verifiedToolItem": "exec-636f854d-ba3c-42e3-805d-38770cf9231f",
+    "cwd": "/private/tmp/truss-history-basis-verified-20261015",
+    "command": "PYTHONPATH=packages/python/src:packages/python/tests:/private/tmp/weft-identity036-installed-20261016 TRUSS_CONSUMER_QUERY_CAPTURE=/private/tmp/truss-northwind036039-query-capture-20261016 /private/tmp/truss-practical-performance-env/bin/python -m unittest -v test_consumer_northwind_numeric_native.ConsumerNorthwindNumericTests.test_original_product_exact_numeric_workflow",
+    "status": "completed",
+    "exitCode": 0,
+    "unittestDurationSeconds": 13.706,
+    "output": "Ran 1 test in 13.706s\nOK\n"
+  },
+  "candidate": {
+    "sdk": "0.4.36",
+    "backend": "0.4.39",
+    "runtime": "truss-catalog-runtime/0.69-candidate",
+    "runtimeSha256": "9a2151c375c63f0d92a7165d463d0f655bb024c6faba0af6bea21f292e0fe534",
+    "hostChange": "Owner reports only explicit SDK/backend pair constants selected for run; host source restored afterwards; before/after source snapshot not supplied"
+  },
+  "assertionsFromInspectedNativeTest": [
+    "Unmodified original model registration",
+    "Public Product create and update",
+    "Committed native get/reopen preserves decimal1.2300 and integer9007199254740993",
+    "Public query equality decimal1.23 returns original exact decimal1.2300 and integer9007199254740993"
+  ],
+  "capturePins": {
+    "northwind.umf.json": "e3063579431155a2b8d75398a0defc8ad1f9c1d3bc7f000f822ae30ada552983",
+    "northwind-compile-request.json": "88fef1b5fcb11a675eeea18916f8991ab92d3bd4baba766169147f0c70acd809"
+  },
+  "nativeProtectedSecurityCasePromotions": 0,
+  "publicationQualified": false,
+  "limitations": [
+    "Ordinary module-access public path; no complete B008/source-current policy enforcement claim",
+    "Isolated local candidate pair, not public wheel cohort",
+    "Final source-bound native replay remains required at release"
+  ]
+}

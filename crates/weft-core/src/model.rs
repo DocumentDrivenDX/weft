@@ -34,6 +34,7 @@ pub struct Catalog {
     inputs: Vec<ModuleInput>,
     pub(crate) exact_numbers: bool,
     security_inputs: bool,
+    pub(crate) identity_name_fallback: bool,
     pub(crate) exact_scalars: bool,
     pub(crate) documents: Vec<Value>,
 }
@@ -80,6 +81,13 @@ struct Envelope;
 #[jsonschema::validator(path = "../../spec/upstream/umf-0.8.0.schema.json")]
 struct Envelope08;
 impl Catalog {
+    /// New host-selected profile only; authored names always take precedence.
+    pub(crate) fn query_name<'a>(&self, element: &'a Value) -> Option<&'a str> {
+        element.get("name").and_then(Value::as_str).or_else(|| {
+            self.identity_name_fallback.then(|| element["id"].as_str()).flatten()
+        })
+    }
+
     /// Read-only original inputs. Clone and prepare a new Catalog to change them.
     pub fn inputs(&self) -> &[ModuleInput] {
         &self.inputs
@@ -166,7 +174,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, security_inputs:required_version==Some("0.8.0") })
+        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()
@@ -222,7 +230,7 @@ impl Catalog {
                     continue;
                 }
                 for e in module["elements"].as_array().unwrap() {
-                    if e["kind"] == "record" && name.matches(e["name"].as_str().unwrap_or("")) {
+                    if e["kind"] == "record" && name.matches(self.query_name(e).unwrap_or("")) {
                         selected08(&input.pin, e)?;
                         found.push(Record {
                             identity: Identity {
@@ -287,7 +295,7 @@ impl Catalog {
                 .iter()
                 .find(|e| e["id"] == eid)
                 .ok_or_else(|| fail("WFT-MODEL", "Referenced local element missing"))?;
-            if name.matches(element["name"].as_str().unwrap_or("")) {
+            if name.matches(self.query_name(element).unwrap_or("")) {
                 let mut identity = record.identity.clone();
                 identity.module = mid.into();
                 identity.element = eid.into();
@@ -320,7 +328,7 @@ impl Catalog {
         Ok((
             identity,
             logical_type,
-            field["name"].as_str().unwrap().into(),
+            self.query_name(field).expect("matched query name").into(),
         ))
     }
 }
@@ -388,6 +396,22 @@ pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool
 #[cfg(test)]
 mod numeric_preparation_tests {
     use super::*;
+    #[test]
+    fn explicit_identity_names_preserve_precedence_ambiguity_and_original_bytes() {
+        let mut doc = json!({"umf":"0.7.0","id":"owner","vocabularies":{},"extensions":{},"modules":[{"id":"m","namespace":"m","extensions":{},"elements":[{"id":"row-id","kind":"record","members":[{"module":"m","element":"field.id"},{"module":"m","element":"other-id"}],"extensions":{}},{"id":"field.id","kind":"field","scalarType":"string","nullability":"required","cardinality":"one","extensions":{}},{"id":"other-id","name":"Authored","kind":"field","scalarType":"string","nullability":"required","cardinality":"one","extensions":{}}]}]});
+        let input = |v:&Value| {let raw=v.to_string();ModuleInput{document_json:raw.clone(),pin:ModelPin{document_id:"owner".into(),revision:"r1".into(),sha256:sha256(raw.as_bytes()),umf_version:"0.7.0".into()},selected_module_ids:vec!["m".into()]}};
+        let name = |v:&str| Name{value:v.into(),quoted:true,span:crate::ir::Span{start:0,end:0}};
+        let original=input(&doc);let mut c=Catalog::prepare(vec![original.clone()]).unwrap();
+        assert!(c.record(None,&name("row-id")).is_err());c.identity_name_fallback=true;
+        let record=c.record(None,&name("row-id")).unwrap();assert_eq!(record.identity.element,"row-id");
+        assert_eq!(c.field(&record,&name("field.id")).unwrap().0.element,"field.id");
+        assert_eq!(c.field(&record,&name("Authored")).unwrap().0.element,"other-id");
+        assert!(c.field(&record,&name("other-id")).is_err());
+        assert_eq!(c.record_members(&record).unwrap()[0].name,"field.id");assert_eq!(c.inputs(),&[original]);
+        doc["modules"][0]["elements"][2]["name"]=json!("field.id");
+        let mut c=Catalog::prepare(vec![input(&doc)]).unwrap();c.identity_name_fallback=true;let r=c.record(None,&name("row-id")).unwrap();assert!(c.field(&r,&name("field.id")).is_err());
+        doc["modules"][0]["elements"][0]["name"]=json!("AuthoredRow");let mut c=Catalog::prepare(vec![input(&doc)]).unwrap();c.identity_name_fallback=true;assert!(c.record(None,&name("row-id")).is_err());assert!(c.record(None,&name("AuthoredRow")).is_ok());
+    }
     #[test]
     fn exact_numeric_mode_is_explicit_and_preserves_original_source() {
         let source = r#" {"umf":"0.7.0","id":"numeric-owner","vocabularies":{},"extensions":{},"modules":[{"id":"m","namespace":"m","extensions":{},"elements":[{"id":"row","name":"Row","kind":"record","members":[{"module":"m","element":"amount"},{"module":"m","element":"units"}],"extensions":{}},{"id":"amount","name":"amount","kind":"field","scalarType":"decimal","nullability":"required","cardinality":"one","extensions":{}},{"id":"units","name":"units","kind":"field","scalarType":"integer","nullability":"required","cardinality":"one","extensions":{}}]}]} "#;

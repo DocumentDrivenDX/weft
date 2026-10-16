@@ -1,0 +1,325 @@
+{
+  "reviewId": "weft-decimal12-astra-static-20261015",
+  "status": "no-actionable-static-findings",
+  "reviewedAtUtc": "2026-10-16T03:39:17.704840+00:00",
+  "reviewer": "Independent Astra Ultra review plus independent publication-gate subreview",
+  "scope": "Exact frozen 14-file Decimal12 compiler/package/gate increment, reconstructed from canonical base. Native integration and publication explicitly excluded from approval. No repository or frozen-packet changes.",
+  "source": {
+    "zip": "/private/tmp/weft-decimal12-static-review-20261015.zip",
+    "zipSha256": "cc86e4237a47e34658d1be439189c0619b78d195a7957f0872bc4af62382b907",
+    "sourcePinsSha256": "5ede5fd23972af345d16d8a4e5d577a94a8f211ef9207b649b2bb2e1578a8777",
+    "canonicalBase": "d50ca2f098a7965c9eb8a6b6fb9bd27ca1c26f52",
+    "dispatchBaseCorrection": "The dispatched abbreviation d50ca2f5 does not resolve locally. Used the exact source-pins.json base d50ca2f098a7965c9eb8a6b6fb9bd27ca1c26f52, verified in Git.",
+    "sourceFileCount": 14,
+    "sourceFileDigests": {
+      "crates/weft-postgresql/src/truss_runtime.rs": "658754cad708e1da31f3cbd4d1ae909fa411fb951a1f97523e01629bfc709125",
+      "crates/weft-core/src/compile.rs": "c6fe19d613e6d398c26151ba50a4162f1fa81c5e5a8fa27479a0a0921a8e937f",
+      "crates/weft-core/src/application_resolve.rs": "260a2a78b93f6c248adddf7946a3a5607b084f7e50b0832ebc4a9fc8437356a7",
+      "crates/weft-python/Cargo.toml": "fa894cef49d4ec26e0d82aea8fa34294255df39ed5a12617b966f8d0154c53ca",
+      "crates/weft-python/pyproject.toml": "20a78967e36f888d9632868c3f660d5c597dda24d0f1a6b26e98c51292db9d7c",
+      "Cargo.lock": "e1eb9e924f72b7600e7bdb7bd52f909d65877f4b5624addad80d235adba4a062",
+      "tests/truss-query-abi/wheel-smoke.py": "b7b2ca2d712c4838ae7e38a885524d8e3a0671877ccc84e4f0b380a42da7d6ad",
+      "tests/truss-decimal12/wheel-smoke.py": "a8f93b8d925c09bd5a3c4f2a7137262ca92f35ededd86a3a891756dac1d45379",
+      "scripts/release/verify-decimal12-smoke.py": "ac4edb349e6f70edc9fa3d2970371b22f909662076f898f96985f6fb4d28b7f9",
+      "scripts/release/test-decimal12-smoke-gate.py": "ebe77a232f67dd91e846fffa918773391ee86ba1344514c258d4ffaf5c0a3b7e",
+      ".github/workflows/release.yml": "e96b5b7a3aef603dabc46510d1499e5e49e43f99c4f7ffcda445b321a8b0a1c8",
+      "docs/helix/02-design/module-boundaries.json": "3c7af8424a80007d6dc10194756012aed67cfc6c20d525e9d6c0b5645da8def3",
+      "docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md": "0b8d747016d8c883b596a1c8c02e0d4e603e6f35968b658d304beb69622d2954",
+      "docs/helix/04-build/releases/v0.4.36.md": "ec5c1d70c075fe8496de8acab57f62c6faa506da6296dbe7490ded472243219c"
+    },
+    "all14FrozenSourceHashesVerified": true,
+    "baseRelativeDiff": "static-change.diff",
+    "baseRelativeDiffSha256": "f677a6e925bde320d76ac234642137b3ef167f419823086a5a05866beacf5a4b",
+    "governingInputs": [
+      "base AGENTS.md",
+      ".helix.yml",
+      "docs/helix/README.md",
+      "CONTRACT-001-weft-sql-and-logical-plan.md",
+      "CONTRACT-002-backend-interface.md",
+      "frozen CONTRACT-003-compile-and-host-boundary.md",
+      "base implementation-plan.md",
+      "frozen v0.4.36 release scope"
+    ]
+  },
+  "staticAssessment": {
+    "abi1OptionalRefinement": "The change adds the narrower fixed decimal(12,2) domain through explicit backend 0.4.39 and a named capability. Binding/target 0.5 and query ABI 1 pin remain unchanged; exact scalar cells and generic numeric SQL representation are reused. This is coherent as a compiler-level optional admitted-catalog refinement, provided actual native catalog/domain admission and source/runtime correspondence are independently established. ABI 1 alone does not establish those facts.",
+    "legacyBackendClosure": "decimal12 defaults false on old registrations, is true only for explicit target backend 0.4.39, and remains false for mutation mapping. Scalar/item, relationship-key and page-key checks share the admitted fixed-facet predicate; old 0.4.38 remains closed to 12,2.",
+    "pageFactoryClosure": "New public compile_decimal12_typed_page_json_with_exact_numbers_factory selects decimal12 explicitly and requires compile 0.2.6. Existing ordinary/string/typed page factories pass false. Caller readProfile/security, ORDER BY/LIMIT, joins/aggregates, invalid page size, continuation arity and key domains retain refusal paths.",
+    "exactValueMeaning": "Finite fixed-point decimal values retain original strings, including representable trailing zeros and negative zero. Decimal(12,2) maximum magnitude is 9999999999.99; out-of-range or extra nonzero fractional digits refuse without rounding. Malformed continuation tokens are rejected by emission validation before SQL escapes. No binary-float conversion was found in this path.",
+    "preservation": "Independent compiled-artifact checks retained exact original model pins, binding digest, backend version and complete original binding text. No native admission or source authority is inferred from these artifacts.",
+    "publicationGate": "Exact twenty-case reports must match all five distinct wheel reports, source commit/version, native/shim/wheel custody pins and literal false authority flags. Workflow validates actual downloaded wheel bytes before the strict Decimal12 preflight. No validator false-pass found in reviewed controls."
+  },
+  "independentEvidence": {
+    "compilerControls": {
+      "cases": 187,
+      "unexpected": 0,
+      "binarySha256": "eceda8171931587a587876ec5b83cc9e7ffb6f6b6768442232e9153336bd749b",
+      "execution": "independent-execution.json",
+      "results": "controls-result.json",
+      "inputs": "controls-inputs.json",
+      "script": "run-controls.py",
+      "scope": "Actual Rust compiler execution on reconstructed frozen source, using derived compiler fixtures. 59 valid fixed-point tokens including deterministic generated cents and endpoints, 22 invalid tokens through both named-parameter and page-continuation paths, plus version/facet/factory/page/candidate controls."
+    },
+    "itemControls": {
+      "cases": 4,
+      "unexpected": 0,
+      "results": "item-result.json",
+      "inputs": "item-inputs.json",
+      "script": "run-item-controls.py",
+      "scope": "Actual compiler projection of derived array/map 12,2 item descriptors: 0.4.39 compiles both; 0.4.38 refuses both. No native catalog acceptance."
+    },
+    "compiledArtifactCustody": {
+      "artifacts": 121,
+      "allMatched": true,
+      "results": "artifact-custody-controls.json"
+    },
+    "buildAndFreshness": {
+      "command": [
+        "/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "build",
+        "--locked",
+        "--offline",
+        "-p",
+        "weft-postgresql",
+        "--example",
+        "astra_decimal12"
+      ],
+      "buildExitCode": 0,
+      "controlsExitCode": 0,
+      "selectedInputCount": 1139,
+      "sourcesUnchanged": true,
+      "executionSha256": "3a657f68a137506ab60c3c05e3be3acfe1a12ea815a06b3b875b0f1ac35a1607",
+      "note": "Selected repository inputs hashed before/after offline locked reviewer build and 187 controls; verified again after item controls. Not a hermetic toolchain claim."
+    },
+    "publicationValidator": {
+      "providedSyntheticValidatorSuite": {
+        "controls": 15,
+        "exitCode": 0,
+        "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]"
+      },
+      "independentSyntheticJsonMutationMatrix": {
+        "controls": 1024,
+        "passed": 1024,
+        "accepted": 4,
+        "rejected": 1020,
+        "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+        "coverage": "All five report positions, all twenty case positions, missing/duplicate/extra reports and case identities, statuses, extra/missing case fields, source/version/type/authority mutations, three custody hashes, valid report and baseline order permutations, null sourceCommit refusal."
+      },
+      "actualInstalledWheelExecutionsPerformedByReviewer": 0,
+      "nativeExecutionsPerformedByReviewer": 0
+    },
+    "gateReview": {
+      "path": "gate-review/review.json",
+      "sha256": "495b056da72623527caa566952937cd6835ea7d2ca1776bc61b73d3056570830"
+    }
+  },
+  "suppliedOwnerEvidence": {
+    "observations": {
+      "weft-decimal12-pg-lib-20261015.log": {
+        "sha256": "57a5608a14feabad013e6e7f4e91022b2260baf7f27e6b8c4870a451b1e98910",
+        "bytes": 19060,
+        "passingTestRows": 109,
+        "distinctPassingTests": 109,
+        "summary": [
+          "test result: ok. 109 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 40.40s"
+        ]
+      },
+      "weft-decimal036-smoke-final-20261015.json": {
+        "sha256": "c70b74f63b2de02c33ef887378216dbab32b0a42432624863b065d754b9ef4ca",
+        "bytes": 2040
+      },
+      "weft-decimal12-core-regressions-20261015.log": {
+        "sha256": "89657e2e3a36aebb26977cfb23541147b65a7cbaf8e169ba11ef9f15aff21995",
+        "bytes": 40437,
+        "passingTestRows": 338,
+        "distinctPassingTests": 338,
+        "summary": [
+          "test result: ok. 338 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.86s"
+        ]
+      }
+    },
+    "claimedTestCounts": {
+      "core": 338,
+      "postgresqlLibrary": 109,
+      "decimalWheelControls": 20,
+      "publicationValidatorControls": 15
+    },
+    "wheelObservation": {
+      "version": "0.4.36",
+      "sourceCommit": null,
+      "wheel": "weft_sql-0.4.36-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "e33a799841dcfcfa7dea96704a98b0684e55f7a9bb1776fb7ebc2313f9b21c8e",
+        "nativeModuleSha256": "5987e08e9b270ae8638988013c7fe244321c7b4e76a979b71b21ce7069414e68",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 20,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-0",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-1",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-2",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-3",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-4",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-5",
+          "status": "compiled"
+        },
+        {
+          "id": "nonrepresentable-0",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-1",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-2",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-3",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-4",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-5",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-6",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.38",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.37",
+          "status": "blocked"
+        },
+        {
+          "id": "related-decimal-key",
+          "status": "compiled"
+        },
+        {
+          "id": "first-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "next-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "bad-typed-page",
+          "status": "blocked"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Derived compiler-domain fixture through exact wheel; no native storage admission."
+    },
+    "qualification": "The archived logs contain 338 distinct passing core tests and 109 distinct passing PostgreSQL library tests. They are supplied owner observations without a complete captured pre/post source-input cohort or structured execution receipt in this packet; the reviewer did not duplicate those full campaigns or infer exact source custody from log paths. The reviewer did not load or verify the reported wheel bytes."
+  },
+  "remainingFindings": [],
+  "missingEvidence": [
+    {
+      "id": "DECIMAL12-NATIVE",
+      "blocks": [
+        "native integration approval",
+        "native support claim"
+      ],
+      "requirement": "Fresh execution of genuine accepted model/catalog/source/query fixtures through an actual ABI 1 Truss installation, using unchanged original consumer models and explicit0.4.39 selection.",
+      "missing": "Derived A-value facets and compiler-only bindings do not establish native accepted-model correspondence or execution. Demonstrate scalar/item projection, exact parameter equality, decimal relationship keys and composite typed paging, including exact lexical values, endpoint/failure cases and runtime/model/source drift refusal. Native cleanup/custody must be observed."
+    },
+    {
+      "id": "DECIMAL12-WHEEL-COHORT",
+      "blocks": [
+        "publication approval"
+      ],
+      "requirement": "Actual newly built/installed five-platform 0.4.36 wheel cohort, exact immutable source commit and passing baseline/Decimal12 reports tied to those downloaded bytes.",
+      "missing": "Packet contains one local macOS arm64 20-case report with sourceCommit:null, not five actual platform reports. The strict gate correctly rejects null source commit. Synthetic 15/1,024 gate tests demonstrate validator behavior, not execution of 100 cases across five wheels."
+    },
+    {
+      "id": "DECIMAL12-INTEGRATION-FRESHNESS",
+      "blocks": [
+        "merged-source qualification"
+      ],
+      "requirement": "Reconcile this exact14-file source against any separately evolving bounded-String or other Weft work, then capture and rerun the resulting source cohort.",
+      "missing": "This static packet is pinned to d50ca2f098a7965c9eb8a6b6fb9bd27ca1c26f52; independent bounded R1/R2 reviews and mutable R3 work do not qualify a combined source tree."
+    }
+  ],
+  "nonblockingCoverageLimits": [
+    "The first typed-page wheel smoke asserts compiled status only; other positive cases additionally check backend/binding and exact parameter text. That individual smoke has narrower semantics coverage, not a demonstrated compiler defect.",
+    "No native, actual installed-wheel or browser execution performed by this reviewer. Existing browser cohorts and protected String/I64/refinement surfaces were not requalified by this change.",
+    "Full 338-core/109-PostgreSQL-library campaigns were not independently repeated; focused source-pinned compiler controls and strict gate controls were run.",
+    "No B-008, native acceptance, authority, or case promotion. All original 132 requirements and prior acceptance dispositions remain as governed."
+  ],
+  "reviewerInvestigations": [
+    {
+      "concern": "Fixed-decimal continuation tokens initially appeared able to bypass lexical checking in the resolver.",
+      "outcome": "The actual emitted-artifact validation rejects every malformed token tested before returning SQL. 187-case results include these negative controls; no finding filed."
+    }
+  ],
+  "approval": {
+    "staticScopeNoActionableFindings": true,
+    "nativeIntegrationApproved": false,
+    "publicationApproved": false,
+    "casePromotion": false
+  },
+  "artifacts": {
+    "artifact-custody-controls.json": "ecb7d9056fd941d225f2bca477ca3b15b8bad4b0ffe370fb33864f0c5a671a37",
+    "build-final.stderr": "81fd8793b83936aa4839c9919b2834aab282e81ff302c39b660fe215b070d2fc",
+    "build-final.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build.stderr": "273bd63f0bc3bef9e61327e4bda5f67a8d87b236b67d561593a0882a29e38d1b",
+    "build.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "controls-inputs.json": "af09aef08572805fbf3262d628e3680885126039439d97cdce3f1d8cb123fe2f",
+    "controls-result.json": "f37f6f513281bcd32f1a67b5f79bc2df4d07331f14f1be8b1c79a99ea7d8a3e2",
+    "controls.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "controls.stdout": "aeb1b99d3b3e6302f396872257b38851c5fec31c3de05f6bad4911c57e333eeb",
+    "gate-review/pins-before.json": "4556e6412091cdebc17392cd7136a0c9a2fc1fdd7ef6984ea23a3d17b0effe27",
+    "gate-review/probe.py": "215acd7953936ef2d448761bafc0834753441e9d97915da65acfd32502414235",
+    "gate-review/probe.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gate-review/probe.stdout": "46a8525b318ac34cedfabc64d1f00a5871c7670f4f59c00683aa80c6ce9efa9d",
+    "gate-review/result.json": "09f3a7c77d7b85a7765d4e605d3e282c0fde37201e9fb7d6aa275bf15eb7e2d5",
+    "gate-review/supplied-gate-controls.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gate-review/supplied-gate-controls.stdout": "905e646ea8cb9583ba7e43db58a096c68bcc8d53caea7e5d7d69d77b90d5c7ac",
+    "independent-execution.json": "3a657f68a137506ab60c3c05e3be3acfe1a12ea815a06b3b875b0f1ac35a1607",
+    "independent-source-inputs.json": "55460259fb8a74877398d15a933a9c255f31564b062ffca34eecdf3aff9b16db",
+    "item-inputs.json": "4b2622cdbf05ddc11e07a111ef740097547c1a097808c500fd63b28e48ef015e",
+    "item-result.json": "ba9cc4433c3fa269b76fbf3c358f27e788a0b13214c426d6dba165e7ed61fed6",
+    "item.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "item.stdout": "68fbbe095a35e256758935770439173d0bb5f95e0ef6fd310f2d884efa25c917",
+    "pinned-build.stderr": "b871836448c24aeb30e31f0b47a6d150486a9427313d8593f54bf80e7aa7323d",
+    "pinned-build.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pinned-controls.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pinned-controls.stdout": "d5330c77735c7dbd00c298cde5ad9a5d76095155f2d00fe6827f7791df3a1765",
+    "run-controls.py": "50158cce215cdc346a3abf6fc594a6543297ea4af2752c22c5dafb0a5844119c",
+    "run-frozen-checks.py": "45f9cc21ec4b6be40171b22659871b0620f75ee7688e617c61af235e78d1246d",
+    "run-item-controls.py": "8af6b9dbfdb83f2e91f86b6a754d6e885b1e65fd3fb93991202f2afea60cdef5",
+    "static-change.diff": "f677a6e925bde320d76ac234642137b3ef167f419823086a5a05866beacf5a4b",
+    "gate-review/review.json": "495b056da72623527caa566952937cd6835ea7d2ca1776bc61b73d3056570830",
+    "reconstructed/crates/weft-postgresql/examples/astra_decimal12.rs": "10ea8bbfc9aa6b9fddc67f7d309890f28aba919e6690845b3570d824821d1da1"
+  }
+}

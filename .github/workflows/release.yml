@@ -100,6 +100,14 @@ jobs:
         if: hashFiles('tests/truss-query-abi/wheel-smoke.py') != ''
         shell: bash
         run: python tests/truss-query-abi/wheel-smoke.py
+      - name: Test closed Decimal12 publication gate
+        if: hashFiles('scripts/release/test-decimal12-smoke-gate.py') != ''
+        shell: bash
+        run: python scripts/release/test-decimal12-smoke-gate.py
+      - name: Smoke explicit Decimal12 domains from the exact standard wheel
+        if: hashFiles('tests/truss-decimal12/wheel-smoke.py') != ''
+        shell: bash
+        run: python tests/truss-decimal12/wheel-smoke.py --wheel dist/*.whl --output dist/truss-decimal12-smoke-${{ matrix.target }}.json
       - uses: actions/upload-artifact@v4
         with:
           name: wheels-${{ matrix.target }}
@@ -108,6 +116,7 @@ jobs:
             dist/current-query-smoke-*.json
             dist/current-databricks-smoke-*.json
             dist/current-refinement-smoke-*.json
+            dist/truss-decimal12-smoke-*.json
           if-no-files-found: error
   publish:
     if: always() && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.promote_run_id != ''))
@@ -180,6 +189,14 @@ jobs:
           else:
               assert refinement==[]
 
+          decimal12=[json.loads(p.read_text()) for p in sorted(root.glob('truss-decimal12-smoke-*.json'))]
+          decimal12_required=tuple(map(int,version.split('.'))) >= (0,4,36)
+          if decimal12_required:
+              gate=runpy.run_path('scripts/release/verify-decimal12-smoke.py')
+              gate['validate'](decimal12,smoke,commit,version)
+          else:
+              assert decimal12==[]
+
           query_abi_path=pathlib.Path('tests/truss-query-abi/fixtures/query-abi.json')
           query_abi_backend=None
           if query_abi_path.exists():
@@ -198,7 +215,7 @@ jobs:
           latest=runtimes[-1]
 
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':features,'currentQuerySmoke':smoke,'currentDatabricksSmoke':databricks,'currentQueryRefinementSmoke':refinement,'trussQueryAbiBackend':query_abi_backend,'trussBackendSelection':'closed-runtime-hash','trussBackend':'0.4.37' if native68.exists() else '0.4.36','trussRuntime':latest['releaseId'],'trussRuntimeSha256':latest['sha256'],'supportedTrussRuntimes':runtimes,'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':features,'currentQuerySmoke':smoke,'currentDatabricksSmoke':databricks,'currentQueryRefinementSmoke':refinement,'trussDecimal12Smoke':decimal12,'trussDecimal12Backend':({'backendVersion':'0.4.39','targetProfile':'truss-runtime-pg18.6/0.5','bindingProfile':'truss-runtime-binding/0.5','capability':'type.decimal12Scale2','nativeAdmission':False} if decimal12_required else None),'trussQueryAbiBackend':query_abi_backend,'trussBackendSelection':'closed-runtime-hash','trussBackend':'0.4.37' if native68.exists() else '0.4.36','trussRuntime':latest['releaseId'],'trussRuntimeSha256':latest['sha256'],'supportedTrussRuntimes':runtimes,'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft; then
             test "$(cat /tmp/release-draft)" = true

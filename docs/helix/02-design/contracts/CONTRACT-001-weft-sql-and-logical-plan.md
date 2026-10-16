@@ -167,3 +167,16 @@ original expression substring as its logical name and requires
 `project.implicitArithmeticLabels`. Existing output ordinal, collision,
 positioned carrier and exact arithmetic rules continue to apply. Older dialects
 and their serialized plans MUST retain their original behavior.
+
+## Explicit name-or-ID Truss selection — 2026-10-16
+
+The human-selected ordinary Truss backend0.4.39 MAY resolve a Record or member
+Field by its original stable element ID only when its authored name is absent.
+An authored name always takes precedence; its ID is not an additional alias.
+Quoted identifiers preserve exact IDs, including punctuation. Unquoted matching
+retains the existing ASCII folding rules; collisions refuse as ambiguous.
+The resolved identity, original module bytes, hashes and native bindings remain
+unchanged. Existing compiler factories and backend0.4.38 and earlier remain
+name-only, including their original unnamed-source refusals. This selection
+does not change protected security query naming, mutation resolution, relationship
+naming, namespace rules or the frozen browser compiler cohort.

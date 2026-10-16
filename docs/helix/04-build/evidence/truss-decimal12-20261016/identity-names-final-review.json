@@ -1,0 +1,208 @@
+{
+  "review": "Independent Astra Ultra static review of Decimal12 and absent-name stable-ID resolution",
+  "date": "2026-10-16",
+  "base": "be8ebc471e8f31e18dc20e2703bb0ad0270d35b2",
+  "governingBasis": [
+    "Frozen Weft AGENTS.md, .helix.yml and docs/helix/README.md; installed HELIX workflow",
+    "CONTRACT-001 explicit name-or-ID Truss selection and CONTRACT-003 ordinary host boundary",
+    "Human naming decision supplied and verified by owner/parent dispatch: stable IDs only when authored names are absent; old versions unchanged"
+  ],
+  "sourceReconstruction": {
+    "root": "/private/tmp/weft-decimal12-identity-names-astra-20261016/reconstructed",
+    "basePlusOriginalOverlay": true,
+    "all17PacketHashesVerified": true,
+    "ownerExportMatchingSelectedSourceInputs": 1158,
+    "ownerExportDifferences": [],
+    "capturedSourceUnchangedAroundBuildAndControls": true,
+    "sourceCapture": "probe/execution.json",
+    "noOwnerRepositoryEdits": true
+  },
+  "independentEvidence": {
+    "freshRustCompilerControls": 309,
+    "namingControls": 81,
+    "freshDecimalControls": 191,
+    "registrationAbiControls": 37,
+    "allPassed": true,
+    "compilerNote": "81 + 187 + 4 + 37; control campaigns are separately retained, including repeated scenario themes across probes.",
+    "additionalSyntheticPublicationGateControls": 1024,
+    "suppliedGateTestsReexecuted": 15,
+    "installedWheelGenuineNamingControlsReplayed": 2,
+    "compiledNamingArtifactsCustodyChecked": 39,
+    "rust": "1.90.0",
+    "lockedOfflineFinalBuild": true,
+    "sourceInputCount": 1158,
+    "nativeQueriesExecuted": 0,
+    "browserCampaignsExecuted": 0,
+    "wheelPlatformsIndependentlyReplayed": 1
+  },
+  "reviewConclusions": [
+    "Absent authored names enable original stable Record/member Field IDs only through the new trusted identity-name factory selected by Truss backend 0.4.39. Authored names take precedence; differing IDs are not aliases.",
+    "Quoted punctuation and exact-case IDs resolve; ordinary ASCII-folded matching remains unchanged. Exact and folded selector collisions refuse. Wildcards preserve distinct Token/token labels exactly as old authored-name behavior already did; unquoted token remains ambiguous.",
+    "Record names, member lookup/metadata, default Field labels, wildcard projection and generated typed-page key lookup consistently use the helper while retaining original identity and key-field ordering.",
+    "Explicit unnamed-model page, relationship-key and scalar paths compile under .39. Earlier .38 unnamed requests refuse; fully authored .38 controls remain accepted. Old ordinary/exact/string-page/typed-page factories do not reach backend registration for unnamed source, whereas explicit new factories do.",
+    "Malformed present authored names refuse envelope validation; names are not rewritten into source bytes. Exact model pins, binding digest, original binding parameter bytes and public member/output labels verified for all 39 successful naming artifacts; internal page-key outputs retain original key identities.",
+    "Fresh Decimal12 boundary/lexical, scalar, page, relationship-key and array/map item controls retain exact tokens and refusal of unsupported domains and older backend versions. These 191 controls ran against this changed source, rather than reusing the previous report.",
+    "Actual .39 registration, target/profile, query ABI1.0 pin and binding custody controls passed. Valid installation/runtime declarations remain conditional host inputs, not native admission.",
+    "Static call-site audit: Catalog constructors default identity_name_fallback false; legacy compiler factories explicitly pass false; Spark/reporting compilers prepare fresh ordinary catalogs; protected source factories and mutation mapping are unchanged. The .39 ordinary runtime alone selects the new true path; no protected lowering or mutation authority is added."
+  ],
+  "genuineInputPins": {
+    "compileRequestFileSha256": "f2b9167a0a0df0f409b12f3aeb9e7403d0b389a3204dc1a1189bf654d7dd72e8",
+    "originalModuleJsonSha256": "e3063579431155a2b8d75398a0defc8ad1f9c1d3bc7f000f822ae30ada552983",
+    "originalBindingJsonSha256": "183fca93da7388ed4bb5190ea9a70848a445e46f5d0c788cf0c3e3538d5bb7d0",
+    "observedOldResult": "0.4.38 WFT-NAME-MISSING",
+    "observedNewResult": "0.4.39 compiled",
+    "scope": "Actual untouched owner-supplied request/module/binding bytes consumed by compiler; no native query pass inferred."
+  },
+  "laterWheelEvidence": {
+    "wheelPins": {
+      "wheelSha256": "25613653fed7a6bbcbaee2c55f653307a96669eab3a64a9e683e204452411dbf",
+      "nativeModuleSha256": "7ed33a7ce423c1787073615c8985317846d3e4df817f13667c71a86b08ff261c",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "pinsUnchangedDuringIndependentReplay": true,
+    "currentBuildSourceComparedFiles": 4040,
+    "currentBuildSourceDifferences": [],
+    "providedReportCounts": {
+      "genuineNaming": 2,
+      "decimal": 20,
+      "refinement": 30,
+      "queryAbi": 17
+    },
+    "replayedHere": [
+      "genuineNaming"
+    ],
+    "sourceCommitAttestation": false,
+    "platforms": 1,
+    "fivePlatformCohort": false,
+    "qualification": "One local macOS arm64 wheel. Current source correspondence is verified; this is not historical before/after build-source attestation or native query acceptance."
+  },
+  "suppliedRegressionLogs": {
+    "core": {
+      "reportedPassed": 339,
+      "sha256": "acd34e168aaa56fffd79244dd877663cbcf2f77b47e8c38bde9c5a971658c959",
+      "independentlyReexecutedByThisReviewer": false
+    },
+    "pg": {
+      "reportedPassed": 115,
+      "sha256": "e672d633b0dcaafe7004ccebe60ada31150a09f0651d53342d4c2f4f03796fd2",
+      "independentlyReexecutedByThisReviewer": false
+    }
+  },
+  "missingEvidenceAndQualificationLimits": [
+    "This is a static/compiler review with local Rust and one local macOS arm64 wheel evidence. No native PostgreSQL query, browser campaign, five-platform wheel cohort or public release was independently executed here.",
+    "The supplied later 339-core and 115-PostgreSQL regression logs are inspected/pinned evidence, not independently repeated full suites. They lack a reviewable complete pre/post build-source capture. Independent targeted build/tests capture 1,158 selected source inputs unchanged and matching the current owner export.",
+    "The supplied local wheel has exact wheel/native-module/shim custody and two independently replayed genuine naming controls. sourceCommit is null/absent; current source-file correspondence is not a historical pre/post build-source or CI commit attestation. The 20 Decimal, 30 refinement and 17 ABI local wheel reports were inspected, not rerun in this review.",
+    "Current standard Decimal wheel smoke uses the derived fully named fixture. Add absent-name fallback and legacy-refusal checks to the five-platform gate before claiming that cohort qualifies naming behavior; the separate two-case local replay does not install those CI checks.",
+    "Later native PASS claims were explicitly excluded because candidate host/source snapshots before and after and a final source-bound replay were not reviewed. Native model/catalog/runtime correspondence and guarded execution remain open.",
+    "No UMF P03/L03, B-008, native permission, nullable Token, protected-query or complete-criterion/case promotion. This review does not accept publication.",
+    "Prior frozen Decimal and bounded R1/R2/R3 reports remain unchanged and are not reused as approval for the new naming source."
+  ],
+  "reviewerHarnessCorrections": [
+    "First naming-result summarizer indexed an empty diagnostics array for successful compilation; corrected external harness only, attempt-1 retained.",
+    "Initial exploratory expectation rejected case-distinct wildcard labels and expected a bare field in the older dialect. Current and old named controls established case-distinct wildcard labels are preserved, while bare-name syntax is outside this dialect. Corrected expectations and added old-version positive controls; attempt-2 retained.",
+    "Artifact metadata audit was corrected to unwrap page artifacts and distinguish public outputs from internal generated page-key labels; retained initial validator and verified key identities separately. No product source edits."
+  ],
+  "artifactPins": {
+    "reconstruction.json": "3ab390f07dd75b85f7416714706b9f8584b4b476ef30e4a491f7e8d82b404bc5",
+    "base-relative.diff": "89a49634f8d504b4c09c3a8226f8916e0ca9f4e7d7e72352d189d435743e5abc",
+    "packet/source-pins.json": "3bfd7e306fd34b90023e7066787532cea37124ecfc06422e670a862c708bdc5a",
+    "r2-packet/source-pins.json": "4a69583e4e39679d218f0a31d5ec78cbf26c408b962a8900e9b563765eec05e9",
+    "r2-correction-verification.json": "ae5433253a4c7082a444bacb9b2579a08a8f970f3f02cc57ea6011e4aee63c08",
+    "probe/src/main.rs": "ca2b7ad5af1291184d4e17cbd4a66d0eca43bb2b3a652a2bbf927042e179f6ab",
+    "probe/Cargo.toml": "d310b0e54e3be4c665b9432ae4cb03ec71bfbb066e2e1bcb4710ad7556f11537",
+    "probe/Cargo.lock": "e50c5bce6da43384ee5c9bf412a3cb5768429835c7906ef1449d9ce4923a86a9",
+    "probe/build.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe/build.stderr": "60a604db42d99c656dd3e58f0d8350902baf5bf2facbf7a646c3af0a49e15fd3",
+    "probe/run-frozen.py": "8b7d5f19d31c4c7db5a745e012d2db4540b2d73c69f4013d8101db32dd93157c",
+    "probe/execution.json": "47b1faa11c389e45d1022a6b65891f3829b28d9313e40c3f756518fa2654965c",
+    "probe/naming-controls.py": "021802e3064cfefa72bfe86c78857e1d99e977184bbb559c2ae0e03d42c57222",
+    "probe/naming-inputs.json": "e570cffa7b3d4abf3a8b73fcdd801bd3f0c45d1df531535f7cc648ae48486764",
+    "probe/naming-results.json": "0b884d084a9e00db3552edd5944dd80ba9982a7a8b0791fa4ce1ee93dcaf4081",
+    "probe/naming.stdout": "aeefc8f44ae2c9e28a29d1d910c9a59207e705cdf64244741a1edad144120ef2",
+    "probe/naming.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe/verify-artifacts.py": "ee80ec23b5bb009167b4061d881b4bb29c8fda8661ac1dde8acdf083b24bca05",
+    "probe/artifact-custody-checks.json": "a9385f43b78826b9d950baf5762384e1ef846b66d96c1bf209ee5acf5ecba50b",
+    "decimal-controls/run-controls.py": "5648d21fad6e4f6a4447eb635abe9f5f1c0c20ee4ed2edb12ddbfaf1146b2f5e",
+    "decimal-controls/controls-inputs.json": "af09aef08572805fbf3262d628e3680885126039439d97cdce3f1d8cb123fe2f",
+    "decimal-controls/controls-result.json": "d560d29f191b92def3ca02768b3137b19c2e960e6cce4432c63b9b1e68054df4",
+    "decimal-controls/controls.stdout": "d4de9ae7ad449f7c8214ae475528ad99ff881549ca59f2e02806f70d431f90c0",
+    "decimal-controls/run-item-controls.py": "b557f1c83d301227385dcb53d4ad0246e67a5b513bb4e2705b22636409add6ab",
+    "decimal-controls/item-result.json": "ba9cc4433c3fa269b76fbf3c358f27e788a0b13214c426d6dba165e7ed61fed6",
+    "decimal-controls/item-execution.json": "d5fc7634e05fb6c5fd45fe7cc9e8345e1cd980c3c159d7297b7de88065082e94",
+    "gate-review/original-review.json": "d583b7ee927e92036f7944955e4c55181faf09d25d43ce711e1ef40b1ad04303",
+    "gate-review/r2-correction-review.json": "cf918694b8eceda50b0a91c455aaf97b79669e272ce800251f2f9d41619d984f",
+    "gate-review/execution.json": "a84a8f59cdcbf1531e6223fcfa6d5a3ec99de5ff7027be1d4d01d2c537eaa4c9",
+    "gate-review/result.json": "36deb98acac1ffb513fbd17703b48a724d3fe360ad994959b63c024f84f23707",
+    "gate-review/registration-probe/stdout.json": "1ba369cac95d72ab9f46d0722c0abe2ef049811d187409c60e0bbccb404cdd28",
+    "gate-review/wheel-evidence/audit.json": "8e8f08346da73ba6ab155804cf6a098d3aa3f3100749cc9293aea9d0ed3bf567",
+    "gate-review/wheel-evidence/independent-genuine-northwind.json": "787e68080280d980b7afa9935bf83fb382e3f9c726c1de118e7fdc183e152e75"
+  },
+  "originalSourceDigests": {
+    ".github/workflows/release.yml": "e96b5b7a3aef603dabc46510d1499e5e49e43f99c4f7ffcda445b321a8b0a1c8",
+    "Cargo.lock": "8281dec6bc9a70694317149f7aff3d7e36153fd80a31eb19b328edf4527f73b2",
+    "crates/weft-core/src/application_model.rs": "d9f237820eea19843db761f8cb2a53c6c6f8ecc661a5d938b3ed46f66d8b7a7b",
+    "crates/weft-core/src/application_resolve.rs": "260a2a78b93f6c248adddf7946a3a5607b084f7e50b0832ebc4a9fc8437356a7",
+    "crates/weft-core/src/compile.rs": "0d92fb493b48e52f4671ed34b1685a12b5a38e5b0f6e03e1c68957afe9f03ce6",
+    "crates/weft-core/src/model.rs": "46d6afa90723049c318acbbf2b11a06241b1d093992445c435c9ec0c9c0b2dd4",
+    "crates/weft-postgresql/src/truss_runtime.rs": "0d154e8dc508441b35b2a634b76667fea66cc5d0392faa21875c51b866a8d0c5",
+    "crates/weft-python/Cargo.toml": "1e6f39302f5a7f3a37dfd965fa3f05fa58ea2517e9836e7f688a1f1882234112",
+    "crates/weft-python/pyproject.toml": "20a78967e36f888d9632868c3f660d5c597dda24d0f1a6b26e98c51292db9d7c",
+    "docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md": "9c3ce87175601a42650d87cf23a878af1cca1268449f08c0e18ae50e3f92a4de",
+    "docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md": "2740b7e666838d87189a2b971579b0e1bc33d821e97b920fbd64ffa0df10a59d",
+    "docs/helix/02-design/module-boundaries.json": "92860bb48c6f6936bfcea7c2ed849de0193c6d9d28b3169d386dbc70a3a8d258",
+    "scripts/release/test-decimal12-smoke-gate.py": "ebe77a232f67dd91e846fffa918773391ee86ba1344514c258d4ffaf5c0a3b7e",
+    "scripts/release/verify-decimal12-smoke.py": "ac4edb349e6f70edc9fa3d2970371b22f909662076f898f96985f6fb4d28b7f9",
+    "tests/truss-decimal12/fixtures/genuine-northwind-compile-request.json": "f2b9167a0a0df0f409b12f3aeb9e7403d0b389a3204dc1a1189bf654d7dd72e8",
+    "tests/truss-decimal12/wheel-smoke.py": "a8f93b8d925c09bd5a3c4f2a7137262ca92f35ededd86a3a891756dac1d45379",
+    "tests/truss-query-abi/wheel-smoke.py": "b7b2ca2d712c4838ae7e38a885524d8e3a0671877ccc84e4f0b380a42da7d6ad"
+  },
+  "packetZip": "/private/tmp/weft-decimal12-identity-names-r2-review-20261016.zip",
+  "packetSha256": "91eedda821dcd0245ecbd8f5d110aba527ffccf4e3d41183aad072f19dbe8c74",
+  "sourceFileCount": 18,
+  "verdict": "R2 resolves the sole identified packaging defect. No remaining actionable finding in this reviewed static/compiler scope. Native integration and publication remain unqualified.",
+  "findings": [],
+  "remainingFindings": [],
+  "originalReview": {
+    "path": "original-review.json",
+    "sha256": "03e74a6cad431795bc2a1e17628020f88a21549595d4c325d3013efe1c416818",
+    "zipSha256": "e44aeb06bd2bdda9f983f2185b86a9f07d726b873874b40b45f25d1b185fef40"
+  },
+  "resolvedFindings": [
+    {
+      "id": "release-note-missing",
+      "priority": 2,
+      "originalPacketStatus": "open",
+      "r2Status": "resolved",
+      "resolution": "R2 adds the workflow-required docs/helix/04-build/releases/v0.4.36.md. It accurately describes .39 absent-name fallback, authored-name precedence, ambiguity, legacy boundary and native qualification limits.",
+      "releaseNoteSha256": "37b90b31891374ecbd68170aebb803a2679b07cca0e62671127c86f97e92eb10"
+    }
+  ],
+  "r2Correction": {
+    "sameBase": true,
+    "allOriginal17FileHashesUnchanged": true,
+    "onlyAddedSourceFile": "docs/helix/04-build/releases/v0.4.36.md",
+    "all18HashesVerified": true,
+    "compilerCampaignsRepeatedForNoteOnlyChange": false,
+    "verification": "r2-correction-verification.json"
+  },
+  "correctedSourceDigests": {
+    ".github/workflows/release.yml": "e96b5b7a3aef603dabc46510d1499e5e49e43f99c4f7ffcda445b321a8b0a1c8",
+    "Cargo.lock": "8281dec6bc9a70694317149f7aff3d7e36153fd80a31eb19b328edf4527f73b2",
+    "crates/weft-core/src/application_model.rs": "d9f237820eea19843db761f8cb2a53c6c6f8ecc661a5d938b3ed46f66d8b7a7b",
+    "crates/weft-core/src/application_resolve.rs": "260a2a78b93f6c248adddf7946a3a5607b084f7e50b0832ebc4a9fc8437356a7",
+    "crates/weft-core/src/compile.rs": "0d92fb493b48e52f4671ed34b1685a12b5a38e5b0f6e03e1c68957afe9f03ce6",
+    "crates/weft-core/src/model.rs": "46d6afa90723049c318acbbf2b11a06241b1d093992445c435c9ec0c9c0b2dd4",
+    "crates/weft-postgresql/src/truss_runtime.rs": "0d154e8dc508441b35b2a634b76667fea66cc5d0392faa21875c51b866a8d0c5",
+    "crates/weft-python/Cargo.toml": "1e6f39302f5a7f3a37dfd965fa3f05fa58ea2517e9836e7f688a1f1882234112",
+    "crates/weft-python/pyproject.toml": "20a78967e36f888d9632868c3f660d5c597dda24d0f1a6b26e98c51292db9d7c",
+    "docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md": "9c3ce87175601a42650d87cf23a878af1cca1268449f08c0e18ae50e3f92a4de",
+    "docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md": "2740b7e666838d87189a2b971579b0e1bc33d821e97b920fbd64ffa0df10a59d",
+    "docs/helix/02-design/module-boundaries.json": "92860bb48c6f6936bfcea7c2ed849de0193c6d9d28b3169d386dbc70a3a8d258",
+    "scripts/release/test-decimal12-smoke-gate.py": "ebe77a232f67dd91e846fffa918773391ee86ba1344514c258d4ffaf5c0a3b7e",
+    "scripts/release/verify-decimal12-smoke.py": "ac4edb349e6f70edc9fa3d2970371b22f909662076f898f96985f6fb4d28b7f9",
+    "tests/truss-decimal12/fixtures/genuine-northwind-compile-request.json": "f2b9167a0a0df0f409b12f3aeb9e7403d0b389a3204dc1a1189bf654d7dd72e8",
+    "tests/truss-decimal12/wheel-smoke.py": "a8f93b8d925c09bd5a3c4f2a7137262ca92f35ededd86a3a891756dac1d45379",
+    "tests/truss-query-abi/wheel-smoke.py": "b7b2ca2d712c4838ae7e38a885524d8e3a0671877ccc84e4f0b380a42da7d6ad",
+    "docs/helix/04-build/releases/v0.4.36.md": "37b90b31891374ecbd68170aebb803a2679b07cca0e62671127c86f97e92eb10"
+  }
+}

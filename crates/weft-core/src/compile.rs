@@ -95,35 +95,45 @@ pub struct Compiler {
 }
 impl Compiler {
     pub fn compile_json(&self, raw: &str) -> String {
-        self.compile_json_internal(raw, None, None, false, None)
+        self.compile_json_internal(raw, None, None, false, None, false)
     }
     pub fn compile_json_with_factory(
         &self,
         raw: &str,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory), None, false, None)
+        self.compile_json_internal(raw, Some(factory), None, false, None, false)
     }
     /// Only a trusted embedding selects this additional numeric interpretation.
     pub fn compile_json_with_exact_numbers_factory(&self,raw:&str,factory:&mut RegistryFactory<'_>)->String{
-        self.compile_json_internal(raw,Some(factory),None,true, None)
+        self.compile_json_internal(raw,Some(factory),None,true, None, false)
     }
     pub fn compile_json_with_security_factory(
         &self,
         raw: &str,
         factory: &mut crate::security_backend::SecurityRegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, None, Some(factory), false, None)
+        self.compile_json_internal(raw, None, Some(factory), false, None, false)
     }
     /// Explicit host-selected authored-key page composition; ordinary compilation is unchanged.
     pub fn compile_page_json_with_exact_numbers_factory(
         &self, raw: &str, page_size: u16, after: Option<Vec<String>>,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory), None, true, Some((page_size, after, false)))
+        self.compile_json_internal(raw, Some(factory), None, true, Some((page_size, after, false, false)), false)
     }
     pub fn compile_typed_page_json_with_exact_numbers_factory(&self,raw:&str,page_size:u16,after:Option<Vec<String>>,factory:&mut RegistryFactory<'_>) -> String {
-        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true)))
+        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true,false)), false)
+    }
+
+    /// Explicit decimal(12,2) key extension; existing page factories stay closed.
+    pub fn compile_decimal12_typed_page_json_with_exact_numbers_factory(&self,raw:&str,page_size:u16,after:Option<Vec<String>>,factory:&mut RegistryFactory<'_>) -> String {
+        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true,true)), true)
+    }
+
+    /// Explicit name-or-stable-ID profile; legacy factories remain name-only.
+    pub fn compile_identity_names_json_with_exact_numbers_factory(&self,raw:&str,factory:&mut RegistryFactory<'_>)->String {
+        self.compile_json_internal(raw,Some(factory),None,true,None,true)
     }
 
     fn compile_json_internal(
@@ -132,11 +142,12 @@ impl Compiler {
         factory: Option<&mut RegistryFactory<'_>>,
         security_factory: Option<&mut crate::security_backend::SecurityRegistryFactory<'_>>,
         exact_numbers: bool,
-        page: Option<(u16, Option<Vec<String>>, bool)>,
+        page: Option<(u16, Option<Vec<String>>, bool, bool)>,
+        identity_name_fallback: bool,
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
-            if let Some((size, after, _)) = page.as_ref() {
+            if let Some((size, after, _, _)) = page.as_ref() {
                 if !(1..=999).contains(size) || after.as_ref().is_some_and(|items| items.len()>1024 || items.iter().try_fold(0usize, |total, value| total.checked_add(value.len())).is_none_or(|bytes| bytes>65536)) {
                     return Err(Diagnostic::new("WFT-LIMIT", "input", "Page size or continuation exceeds its bounds"));
                 }
@@ -247,6 +258,7 @@ impl Compiler {
             } else {
                 crate::model::Catalog::prepare(req.modules)?
             };
+            catalog.identity_name_fallback = identity_name_fallback;
             catalog.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6");
             if let Some(source)=req.security.as_ref() {
                 let packet=crate::security_source::SecuritySourcePacket::read(
@@ -294,11 +306,12 @@ impl Compiler {
                 )
             } else {
                 let query = crate::application_syntax::parse(&req.sql)?;
-                let page_plan = if let Some((size, after, typed)) = page {
+                let page_plan = if let Some((size, after, typed, decimal12)) = page {
+                    if decimal12 && req.interface_version != "weft-compile/0.2.6" { return Err(Diagnostic::new("WFT-PROFILE","input","Decimal12 page requires explicit compile0.2.6 context")); }
                     if req.read_profile.is_some() || req.security.is_some() {
                         return Err(Diagnostic::new("WFT-PROFILE", "input", "Page entrypoint owns its read profile"));
                     }
-                    Some(if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6") {crate::application_resolve::resolve_page_with_exact(&catalog,query.clone(),req.parameters.clone().unwrap_or_default(),req.exact_parameters.clone().unwrap_or_default(),size,after.as_deref(),typed,timestamp_equality)?} else if typed { crate::application_resolve::resolve_typed_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? } else { crate::application_resolve::resolve_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? })
+                    Some(if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6") {crate::application_resolve::resolve_page_with_exact(&catalog,query.clone(),req.parameters.clone().unwrap_or_default(),req.exact_parameters.clone().unwrap_or_default(),size,after.as_deref(),typed,timestamp_equality,decimal12)?} else if typed { crate::application_resolve::resolve_typed_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? } else { crate::application_resolve::resolve_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? })
                 } else { None };
                 let mut plan = match page_plan.as_ref() {
                     Some(page) => page.plan.clone(),

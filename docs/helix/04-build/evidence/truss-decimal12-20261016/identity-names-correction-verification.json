@@ -1,0 +1,8 @@
+{
+  "zipSha256": "91eedda821dcd0245ecbd8f5d110aba527ffccf4e3d41183aad072f19dbe8c74",
+  "sameBase": "be8ebc471e8f31e18dc20e2703bb0ad0270d35b2",
+  "original17SourceHashesIdentical": true,
+  "addedFiles": {
+    "docs/helix/04-build/releases/v0.4.36.md": "37b90b31891374ecbd68170aebb803a2679b07cca0e62671127c86f97e92eb10"
+  }
+}

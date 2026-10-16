@@ -509,17 +509,17 @@ pub fn resolve_page(
     page_size: u16,
     after: Option<&[String]>,
 ) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,false,ExactParameters::new(),false,false)
+    resolve_page_inner(catalog,query,parameters,page_size,after,false,ExactParameters::new(),false,false,false)
 }
 
 pub fn resolve_typed_page(catalog:&Catalog,query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,true,ExactParameters::new(),false,false)
+    resolve_page_inner(catalog,query,parameters,page_size,after,true,ExactParameters::new(),false,false,false)
 }
 
-pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,timestamp_equality:bool)->Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true,timestamp_equality)
+pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,timestamp_equality:bool,decimal12:bool)->Result<PagePlan> {
+    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true,timestamp_equality,decimal12)
 }
-fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool,timestamp_equality:bool) -> Result<PagePlan> {
+fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool,timestamp_equality:bool,decimal12:bool) -> Result<PagePlan> {
     if !(1..=999).contains(&page_size) || !query.order.is_empty() || query.limit.is_some()
         || !query.joins.is_empty() || !query.groups.is_empty()
         || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_) | ast::Output::Related { .. }))
@@ -531,7 +531,7 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
         .iter().filter(|key| key["primary"] == true).collect::<Vec<_>>();
     if primary.len() != 1 { return Err(fail("WFT-PROFILE", "SQL page requires exactly one authored primary key")); }
     let key = catalog.authored_key(&record, primary[0]["id"].as_str().unwrap())?;
-    if key.fields.is_empty() || key.types.iter().any(|t| t.nullable || match t.family { Family::String => t.facets != json!({}), Family::Boolean => !typed_keys || t.facets != json!({}), Family::Integer => !typed_keys || (t.facets != json!({}) && t.facets != json!({"integerWidth":{"bits":64,"signed":true}})), Family::Decimal => !typed_keys || (t.facets != json!({"precision":18,"scale":4}) && !(binary_equality && t.facets == json!({"precision":18,"scale":2}))) }) {
+    if key.fields.is_empty() || key.types.iter().any(|t| t.nullable || match t.family { Family::String => t.facets != json!({}), Family::Boolean => !typed_keys || t.facets != json!({}), Family::Integer => !typed_keys || (t.facets != json!({}) && t.facets != json!({"integerWidth":{"bits":64,"signed":true}})), Family::Decimal => !typed_keys || (t.facets != json!({"precision":18,"scale":4}) && !(binary_equality && t.facets == json!({"precision":18,"scale":2})) && !(decimal12 && t.facets == json!({"precision":12,"scale":2}))) }) {
         return Err(fail("WFT-PROFILE", "SQL page requires complete required-string key components"));
     }
     let mut columns = Vec::new();

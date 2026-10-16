@@ -1,0 +1,3 @@
+$ bun scripts/check-specs.ts
+Checked 69 governed artifacts, 83 schemas, 52 allocated criteria (planned/open/deferred; execution separate) and 636 fixture scenarios (1 deliberate schema negatives).
+No compiler, database or embedding tests were executed.
