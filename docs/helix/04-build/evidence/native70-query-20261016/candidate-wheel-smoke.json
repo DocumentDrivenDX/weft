@@ -1,0 +1,36 @@
+{
+  "version": "0.4.37",
+  "sourceCommit": "39dbcfb3d34491a8a10979bde97fd18932dd1568",
+  "wheel": "weft_sql-0.4.37-cp39-abi3-macosx_11_0_arm64.whl",
+  "pinsBeforeAfter": {
+    "wheelSha256": "9f6be78476b6e306c74205a24b412bf9f8fa6d928b1dedbc14049c97b551ad03",
+    "nativeModuleSha256": "2c42d0797350a7fdbaafaaf817befe7476cf92d87d39077929497d9b410b3201",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "controls": 5,
+  "checks": [
+    {
+      "id": "projection",
+      "status": "compiled"
+    },
+    {
+      "id": "count",
+      "status": "compiled"
+    },
+    {
+      "id": "page",
+      "status": "compiled"
+    },
+    {
+      "id": "old-backend",
+      "status": "blocked"
+    },
+    {
+      "id": "wrong-runtime-digest",
+      "status": "blocked"
+    }
+  ],
+  "nativeAdmission": false,
+  "securityReady": false,
+  "scope": "Genuine native70 public catalog/write/read binding through exact wheel compiler; compilation only, no action or security admission"
+}
