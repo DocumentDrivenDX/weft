@@ -134,3 +134,43 @@ fn intermediate_key_budget_refuses_before_retaining_new_cache_entry() {
  assert!(resolver.key(&reference,"pk").is_err());
  assert!(resolver.keys.is_empty(),"failed charge must not retain the Key");
 }
+
+#[test]
+fn unselected_declared_target_key_is_resolved_completely_without_entity_defaults() {
+ for invalid_last_field in [false,true] {
+  let mut q=fixture();graph(&mut q,false);
+  model(&mut q,|d|{
+   let elements=d["modules"][0]["elements"].as_array_mut().unwrap();
+   let template=elements.iter().find(|e|e["id"]=="projectId").unwrap().clone();
+   let mut members=Vec::new();
+   for ordinal in 0..256 {
+    let id=format!("unselectedKey{ordinal}");let mut field=template.clone();
+    field["id"]=json!(id);field["name"]=json!(id);
+    if invalid_last_field&&ordinal==255{field["nullability"]=json!("absent-allowed")}
+    elements.push(field);members.push(json!({"module":"m","element":id}));
+   }
+   elements.push(json!({"id":"UnselectedTarget","name":"UnselectedTarget","kind":"record","members":members,"keys":[{"id":"authoredComposite","name":"Authored composite","fields":members,"primary":false}],"extensions":{}}));
+   d["modules"][0]["relationships"][0]["target"].as_array_mut().unwrap().push(json!({"module":"m","element":"UnselectedTarget","key":"authoredComposite"}));
+  });
+  let revision="r".repeat(4096);q["modules"][0]["pin"]["revision"]=json!(revision);
+  let pin=q["modules"][0]["pin"].clone();profile(&mut q,|p|p["modelPins"][0]=pin);
+  ontology(&mut q,|o|o["documents"][0]["revision"]=json!(revision));
+  let raw=q.to_string();assert!(raw.len()<4_000_000);
+  let original=crate::application_lineage::prepare(&raw).unwrap();
+  let context=crate::current_presence::prepare(&original).unwrap();
+  // This extra authored branch is deliberately absent from selected entities.
+  let model=current_presence_model_requirements::derive(&context).unwrap();
+  assert_eq!(model.record_requirements().len(),5);
+  let issued=derive(&context);
+  if invalid_last_field {assert!(issued.is_err(),"unselected authored Key must still be validated");continue}
+  let issued=issued.unwrap();let value:Value=serde_json::from_str(issued.json()).unwrap();
+  let branch=&value["associations"][2]["targets"][2];
+  assert_eq!(branch["record"]["element"],"UnselectedTarget");
+  assert_eq!(branch["key"]["id"],"authoredComposite");
+  let fields=branch["key"]["fields"].as_array().unwrap();assert_eq!(fields.len(),256);
+  for (ordinal,field) in fields.iter().enumerate(){assert_eq!(field["element"],format!("unselectedKey{ordinal}"));assert_eq!(field["revision"],revision)}
+  assert!(serde_json::to_vec(&branch["key"]).unwrap().len()>1_000_000);
+  assert_eq!(value["associations"][2]["endpoints"][1]["declarationOrdinals"],json!([0,1]));
+  assert_eq!(value["sourceRequestJson"],raw);assert_eq!(value["authority"],false);
+ }
+}

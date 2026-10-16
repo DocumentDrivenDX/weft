@@ -1,0 +1,96 @@
+{
+  "baseline": "8a04cf5f3c319bc4969987dccfd3a6ac99be80a9",
+  "status": "component-regression-and-hosted-gate-candidate",
+  "productionFilesUnchanged": [
+    "crates/weft-core/src/current_presence_graph_requirements.rs",
+    "crates/weft-core/src/current_presence_model_requirements.rs",
+    "crates/weft-runtime/src/lib.rs",
+    "crates/weft-python/src/lib.rs",
+    "crates/weft-python/Cargo.toml",
+    "crates/weft-python/pyproject.toml"
+  ],
+  "hostedCI": "pending-after-push",
+  "nativeAdmission": false,
+  "original132Acceptance": false,
+  "unselectedTargetKey": {
+    "components": 256,
+    "encodedIdentityBytesGreaterThan": 1000000,
+    "positive": "complete ordered authored Key retained",
+    "negative": "nullable final component refuses at Graph stage after parent/context/model derivation succeeds"
+  },
+  "freshNativeWheelChecks": {
+    "default": 1,
+    "old-model": 2,
+    "graph": 38
+  },
+  "files": {
+    "crates/weft-core/src/current_presence_graph_requirements_tests.rs": {
+      "sha256": "bb63e52374d8b365a125420ae41e2e1e501f879f9956001fd666d949f43343d3",
+      "bytes": 19928
+    },
+    ".github/workflows/conformance.yml": {
+      "sha256": "f60ef4d3c83f4d5d83288b2cb1eea968e64642ddbfef84d96bb86d514895259e",
+      "bytes": 13497
+    },
+    "docs/helix/03-test/test-plans/current-presence-graph-requirements.md": {
+      "sha256": "2722abc54fe245ba0b25279903c65c199c7bfeb545dc4ea10ea430fe44636259",
+      "bytes": 8380
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-unselected-target-key-20261016.log.gz": {
+      "sha256": "ccf0a7cba79997fd035237ba94c78b5bb19f839b36512626a291b842619485b2",
+      "bytes": 1612
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-workflow-yaml-20261016.log.gz": {
+      "sha256": "01cf13e45664c51be0a4e70d7a0573f027f9cba844df94ab559c084e184db466",
+      "bytes": 65
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-target-key-specs-20261016.log.gz": {
+      "sha256": "17f0bb2059f06d158c2c425d91964b32845411521416d2e8fada5999a740c73a",
+      "bytes": 204
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-fresh-default-build-20261016.log.gz": {
+      "sha256": "abd562dedecc937a5a809c194d557639ae7ce6dab51fb22cdf21bb70f1eb66f7",
+      "bytes": 2217
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-fresh-default-tests-20261016.log.gz": {
+      "sha256": "d743cb46baf13f5efa370e9f69b47cc4401d14af125456d7107dc8c8b62e19c3",
+      "bytes": 101
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-fresh-old-model-build-20261016.log.gz": {
+      "sha256": "7ef2c813b5ecf88574712bb0a6202e24e35ffad548dbac2553a6eccd66c678dc",
+      "bytes": 2258
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-fresh-old-model-tests-20261016.log.gz": {
+      "sha256": "38eee7c273d978f9354f50476091eb4abb9366aaf0739d79c71f2b7444a41d42",
+      "bytes": 117
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-fresh-graph-build-20261016.log.gz": {
+      "sha256": "65cc1279d339f2a14ab63e2b977806ed9ac1cbfc92c8a5c0233bcb7dcd94d0b2",
+      "bytes": 2214
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-fresh-graph-tests-20261016.log.gz": {
+      "sha256": "9c3cabfce400b94e47aa20c1b62bfea916be33bacad329e8e2d91746837a5d51",
+      "bytes": 400
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/run-weft-graph-fresh-feature-wheels-20261016.py": {
+      "sha256": "daf489aa47a8904fb88ac387136a9f7f94f61494c360c9d77a2639a6a56d090f",
+      "bytes": 2102
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/weft-graph-fresh-feature-wheels-20261016.json": {
+      "sha256": "720a4aa85a1dcc744bdf418d17c2172b620dc271d983e33410ce25e00c9a88f2",
+      "bytes": 2406
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/default/weft_sql-0.4.39-cp39-abi3-macosx_11_0_arm64.whl": {
+      "sha256": "0a89bd1ac32d1838a695894cc94c2033ff7b3133f87efff777ae8b72cd5705bb",
+      "bytes": 6743853
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/old-model/weft_sql-0.4.39-cp39-abi3-macosx_11_0_arm64.whl": {
+      "sha256": "e54678313a966f94fa802a5a645e5a0850b62a7cd137cc4fcaa6f2c20b1e03e4",
+      "bytes": 5037618
+    },
+    "docs/helix/04-build/evidence/graph-unselected-target-key-and-ci-20261016/graph/weft_sql-0.4.39-cp39-abi3-macosx_11_0_arm64.whl": {
+      "sha256": "9161fd61cf6313dc73031a1937ebf90a5c6e770565aa88bcd0020060137b53f5",
+      "bytes": 5130895
+    }
+  }
+}

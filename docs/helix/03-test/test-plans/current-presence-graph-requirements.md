@@ -107,3 +107,21 @@ flags, actual Python parent custody, wrong receivers/extra arguments, no
 coercion callbacks and frozen/non-importable instances. These are embedding
 checks; native graph populations, accepted-source/codec/current-authority joins
 and guarded release remain separate required end-to-end evidence.
+
+## Hosted candidate regression gate
+
+The separate `graph-requirements-candidate` conformance job MUST explicitly
+select the Graph feature for the full Core tests, lifetime compile-fail tests
+and runtime custody checks. It MUST build distinct default, model-only and
+Graph native wheels, test actual method absence on the earlier selections,
+and execute the Graph and existing model bridge checks on the Graph wheel.
+These unpublished candidate wheels and receipts MUST remain separate from
+release/default consumer pins. A pass establishes component/embedding evidence
+only, not the original132 native acceptance matrix.
+
+Exercise a large authored composite target Key on an unselected declared
+branch. Resolve every ordered component and full revision through the original
+compiler without substituting selected-entity/default Keys; refuse an invalid
+final component at Graph resolution even when selected model requirements
+succeed. Encoded retained-payload limits do not guarantee absence of temporary
+allocation while resolving that original Key.
