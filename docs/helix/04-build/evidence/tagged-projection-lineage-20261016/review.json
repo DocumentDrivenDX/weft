@@ -1,0 +1,100 @@
+{
+  "status": "component-review-passed-after-correction",
+  "reviewer": "Independent Astra Ultra review continuation",
+  "reviewedAt": "2026-10-16T05:56:24.100644+00:00",
+  "packet": {
+    "path": "/private/tmp/weft-presence-lineage-r2-review-20261016.zip",
+    "sha256": "aeadb493c4340eeeb9d61773238c77af4d9063dfa04936bd4611c944f680d2f8"
+  },
+  "baseCommit": "5d44ddc0b89bc60ff1019c397bcc74631252892b",
+  "pins": {
+    "frozen/review-manifest.json": "38df641fcb9eae1733c8ef1f6996b83e6f44ffbba73f11a9962604e1716e31d5",
+    "frozen/crates/weft-core/src/application_lineage.rs": "e9753ed6f881f5e1752d1b97ca774a6c92a46f45612adeeafebfd0f294873692",
+    "packet-audit.json": "867148b0409c9913f0ce0280163193ba48f19a4d371c8364aad12e7f5344baba",
+    "source-pins.json": "22835f17017d83e5ceda52493d7c5be9fb9e0cc1cee334fce17e956d02ad344a",
+    "execution-summary.json": "a7548e87a2097dec6657e57041340cc03a80235e6a2662931d1658c0e43e2370",
+    "r1-to-r2.patch": "b31477e43ecd91e4118017087c51febda6517dc954ab17b8dddd8371af9d313e",
+    "control-inputs.json": "aa86553c3b841a134d7b1c0808f6785e28eb6857086f4737ac0d4cdbe0fb6495",
+    "enabled-results.jsonl": "29eba4d4e2bed93ce910fb8bafc43483d34a411ae0411860a2640c8f1b40d67e",
+    "disabled-results.jsonl": "d36e4472eb4714c32b2cc8bd253322854aa2fbd31d27047c9265f4f72609cafa",
+    "extra-controls.json": "de7a22f97871c20340114ebacb847d9135dc12a7887f0808ccf986b11daa1faf",
+    "extra-enabled-results.jsonl": "6a264e0ac0f46a7c7629c6d6ba38682e80d7b0cb7141a2094b94b8fb4902f774",
+    "extra-disabled-results.jsonl": "546ae3fa0c597805b2b37e52a760dad2e64a3a635853333e9e91f97bf7a22282",
+    "r1-extra-disabled-baseline.jsonl": "546ae3fa0c597805b2b37e52a760dad2e64a3a635853333e9e91f97bf7a22282",
+    "build-enabled.log": "0d6408f6b15c50cb60979e776b7fce5518e3458d4589226e161175fc568abe0c",
+    "build-disabled.log": "8c98c0fadc7af2935fb42d05af7439f4cdfeb95e0ebd97b07b494b3ec270c72c",
+    "probe-enabled": "2e7d56ab051017a62a4259940db149dfb8c2674e0751415598b7420b23104b03",
+    "probe-disabled": "b9827aaa97f0a8c63e2ba8784c83a31358a75c55fc3f4947f99bd7fecd732fdb",
+    "reviewer-expectation-correction.json": "509dbb5b39415aec4558d195ccef3a1cdac1b9e2710440b8f063ab626f958ee1"
+  },
+  "originalReview": {
+    "path": "/private/tmp/weft-presence-lineage-astra-20261016/review.json",
+    "sha256": "7fcdb666b559b0da5780b8ee67c31a370388c433fd592f3731ceb0cdbc68ce96",
+    "immutable": true
+  },
+  "resolvedFindings": [
+    {
+      "id": "PRESENCE-LINEAGE-001",
+      "priority": 2,
+      "original": "Complete-entity wildcard syntax was expanded into Field expressions before the projection-only guard.",
+      "resolution": "The R2 guard checks original parsed syntax.outputs and rejects every non-Output::Field projection before resolution. The original post-resolution singular-scalar and no-operation checks remain.",
+      "verified": "Both frozen R1 counterexamples now refuse in independently compiled R2. Quoted/spaced/reverse-mixed wildcard controls also refuse, while quoted/direct/repeated Field projections and valid scalar reads with unselected containers still succeed. Permanent wildcard and valid array/map regressions were added.",
+      "finalSourceSha256": "e9753ed6f881f5e1752d1b97ca774a6c92a46f45612adeeafebfd0f294873692"
+    }
+  ],
+  "remainingFindings": [],
+  "sourceCustody": {
+    "originalEightFilesPinned": true,
+    "onlyChangedSinceR1": [
+      "crates/weft-core/src/application_lineage.rs"
+    ],
+    "embeddedR1PacketReportAndIndependentWitnessesByteIdentical": true,
+    "reconstructedRepositoryInputs": 1196,
+    "reviewerProbeInputs": 1,
+    "sourceBeforeAfterUnchanged": true,
+    "reconstruction": "Exact preserved Git5d44ddc0-based R1 reconstruction plus sole R2 source replacement; no owner-checkout edits."
+  },
+  "independentChecks": {
+    "rustEnabled": 53,
+    "rustDisabled": 53,
+    "allExpectedOutcomesVerified": true,
+    "originalEnabledMatrix46": "All46 outcomes now match; former two unexpected wildcard successes are refusals.",
+    "extraEnabled7": "Three older required-field source profiles preserve behavior; quoted direct Field succeeds; three additional wildcard spellings refuse.",
+    "disabled53": "All original46 optional/version/malformed cases and new .4 controls refuse; older .1/.2/.3 required-field source-only preparation retains baseline availability.",
+    "baselineComparison7": "Exact extra disabled outputs independently reproduced with preserved R1 disabled binary. Old .3 source-only preparation without bounded feature remains available, while its CurrentDesignation refuses; this is pre-existing source inspection, not new execution authority.",
+    "objectClosure": "Every successful .4 object retains exact .4 report/plan capability and authority=false/securityReady=false, contains no project.entity, and refuses actual current designation and public legacy resolver.",
+    "publicArrayMapEvidence": "Exact same public-UMF-validated array/map definitions from R1 independent controls are retained; R2 selected container negatives and unselected container/scalar positives pass.",
+    "builds": "Rust1.90.0 offline enabled tagged-current-projection-candidate and no-default-feature probe builds; no database or bridge execution."
+  },
+  "suppliedEvidence": {
+    "enabledCore": 352,
+    "disabledCore": 328,
+    "focusedPresenceTests": 4,
+    "specArtifacts": 70,
+    "schemas": 89,
+    "workspacePackages": 11,
+    "moduleBoundaryTests": 16,
+    "qualification": "Inspected supplied logs/manifest; these full campaigns were not independently repeated. The earlierAttempts field carries the historical R1 351-case wording; R2 final counts are explicitly reported separately."
+  },
+  "futureBoundaryObligations": [
+    "CurrentQueryDesignation has the unchanged strict .2/.3 allowlist; .4 has no designation/operand, SQL lowerer/result ABI or Python/WASM registration in this chunk.",
+    "Before enabling any .4 designation/operand, legacy PG/Databricks/Spark lowerers/checkers require explicit old-profile allowlist guards and actual .4 typed-context refusal controls. Existing bounded/liveSUM boolean routing must not silently classify a future profile. This is a future obligation, not a current demonstrated bypass.",
+    "Exact original availability/read descriptors do not describe tagged public results or grant policy selection. Token source queryability confers no Token disclosure permission."
+  ],
+  "scopeLimits": [
+    "Core-only .4 lineage component; no native authenticated source/caller/current cut, operator permission, transform execution or guarded release acceptance.",
+    "No promotion of original132 backend cases, P03/B08 or complete security criteria.",
+    "Owner final-main integration and any subsequent physical/runtime changes require their own exact-source evidence; this report covers this frozen R2 only."
+  ],
+  "reviewerHarnessHistory": [
+    {
+      "path": "build-first-wrong-cwd.log",
+      "description": "Initial review build command used review directory instead of reconstructed workspace and failed before compilation; corrected invocation passed."
+    },
+    {
+      "path": "reviewer-expectation-correction.json",
+      "description": "An extra test initially expected old .3 source inspection to be disabled. Exact preserved R1 binary reproduced the same accepted source-only outcome; corrected expected behavior, while designation remains refused. The first attempt to execute an archived non-executable binary copy was denied before launch; replay used a byte-verified copy with executable mode in this review directory."
+    }
+  ],
+  "sourceMutation": "Original frozen R1/R2 packets, prior review, and owner source were not modified. Review reconstruction/probes/artifacts are isolated here."
+}

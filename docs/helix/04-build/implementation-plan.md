@@ -2601,3 +2601,21 @@ matching do not reconstruct those facts. Evidence:
 and a qualified native observation, promotes zero original cases, and leaves
 all132 B-008 obligations open. Source-pinned adversarial native replay remains
 required before wider qualification.
+
+
+### Tagged projection lineage frontend .4 — 2026-10-16
+
+The optional Core-only tagged-current-projection-candidate feature admits an
+explicit application-lineage .4 request for direct scalar Field projections
+and retains original Field availability in readRequirements. It cannot issue
+an existing current-query designation or executable SQL. Unsupported value
+operators, aggregates, complete entities, LIMIT and structured selected outputs
+refuse. R1's wildcard expansion finding is corrected by checking the original
+AST before resolution; the original packet, P2 finding and witnesses remain
+retained. Final source passes352 enabled and328 disabled Core tests, with
+53enabled/53disabled independent outcomes,70artifact/89schema checks and
+11package/16test boundary checks. Evidence:
+`evidence/tagged-projection-lineage-20261016/`. This feature is absent from the
+frozen public0.4.36 source. Full original132 scope remains required; no native
+case is promoted. SQL/result protocols, owner-fold provenance, bridge selection,
+authenticated native authority and guarded enforcement remain unfinished.

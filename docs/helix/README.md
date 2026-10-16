@@ -11,6 +11,11 @@ Main separately includes the optional `bounded-current-string-candidate` feature
 at `8e0f4cb`, with reviewed Python/WASM and PostgreSQL/Databricks compiler evidence.
 That feature is not part of the frozen public0.4.36 source. See
 [bounded String evidence](04-build/evidence/bounded-current-strings-20261015/README.md).
+Main also includes the optional Core-only `tagged-current-projection-candidate`
+frontend: explicit `.4` direct Field lineage preserves original availability.
+It cannot issue current-query designations or SQL and is not in public0.4.36.
+See [reviewed projection lineage evidence](04-build/evidence/tagged-projection-lineage-20261016/README.md).
+
 B-008 remains incomplete: all132 original shared/native requirements remain in
 force, and these increments promote no native case. Conditional checker matches
 grant no native authority; genuine caller/source/current-authority admission and

@@ -1,0 +1,91 @@
+{
+  "baseCommit": "5d44ddc0b89bc60ff1019c397bcc74631252892b",
+  "sourceFiles": [
+    {
+      "path": "crates/weft-core/Cargo.toml",
+      "sha256": "fcf611087c8ff18e1f72a92e1a0f2adc55affecb5fe47557d06ed2599a41e09a",
+      "baselineSha256": "4c8c041df466b25cf219488f56268c94c311cf9e354178b0453cc97a82690aa3",
+      "r1Sha256": "fcf611087c8ff18e1f72a92e1a0f2adc55affecb5fe47557d06ed2599a41e09a"
+    },
+    {
+      "path": "crates/weft-core/src/application_lineage.rs",
+      "sha256": "e9753ed6f881f5e1752d1b97ca774a6c92a46f45612adeeafebfd0f294873692",
+      "baselineSha256": "01138e55d322bf661480484a1cff092a645db8a5795c594d8576fa45ca8c9d11",
+      "r1Sha256": "ee845416e12bbab53a54cc4b77ca46a9e073a5c588219a772e6365694dfd4fe6"
+    },
+    {
+      "path": "crates/weft-core/src/application_read_requirements.rs",
+      "sha256": "65768e754939c51ec38ab0476dc66c9f355e3816786f3df29d88a7e367efdceb",
+      "baselineSha256": "725a129e35c263a74d1a5a73738d48af02f98b0e6fe9ffa9aac7d81538cef4e4",
+      "r1Sha256": "65768e754939c51ec38ab0476dc66c9f355e3816786f3df29d88a7e367efdceb"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+      "sha256": "eca594d89d033c42fb15571f87234eaa096379d0fa6ba8528269fa8ddce45a2e",
+      "baselineSha256": "8f0e674c7e845b28e4da1d62ab301d83853e8adfae61ca72c24ebf8d6a3bba24",
+      "r1Sha256": "eca594d89d033c42fb15571f87234eaa096379d0fa6ba8528269fa8ddce45a2e"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/application-lineage-request-v0.4-candidate.schema.json",
+      "sha256": "0f3626285a3e4e643882fd092f722af79a88234b2f441d47102ab0034a13b122",
+      "baselineSha256": null,
+      "r1Sha256": "0f3626285a3e4e643882fd092f722af79a88234b2f441d47102ab0034a13b122"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/application-lineage-v0.4-candidate.schema.json",
+      "sha256": "aa9a47c34803b567aa65a28c23751baed57407160e6eff4fa17f2b5fe1d087e1",
+      "baselineSha256": null,
+      "r1Sha256": "aa9a47c34803b567aa65a28c23751baed57407160e6eff4fa17f2b5fe1d087e1"
+    },
+    {
+      "path": "tests/current-query-presence/fixtures/optional-token-lineage.request.json",
+      "sha256": "7c21f24199e8e0b3c1ae44731c9f5633e530cf6d0294236478ed8ee522157ff3",
+      "baselineSha256": null,
+      "r1Sha256": "7c21f24199e8e0b3c1ae44731c9f5633e530cf6d0294236478ed8ee522157ff3"
+    },
+    {
+      "path": "tests/current-query-presence/fixtures/source-provenance.json",
+      "sha256": "b705217b806f8904440d6fd4429debd86f4e4a63434392c9f5ab9cb0cf3a417e",
+      "baselineSha256": null,
+      "r1Sha256": "b705217b806f8904440d6fd4429debd86f4e4a63434392c9f5ab9cb0cf3a417e"
+    }
+  ],
+  "finalReviewSha256": "9aeed25ba2726e06c9a0f7292804e1717c1eefd6b5d0431de75131beae50f526",
+  "independentArchiveSha256": "855e99531d18ac5d69699e25fb2e99bcb78733f98b543deb1b113a17920c3781",
+  "independentFilesVerified": 1246,
+  "r1OwnerPacketSha256": "6782865a896518781837c05e1a6ee480f4b14eedf77bb740a1ef20d57d2b1e5a",
+  "r2OwnerPacketSha256": "aeadb493c4340eeeb9d61773238c77af4d9063dfa04936bd4611c944f680d2f8",
+  "tests": {
+    "featureEnabledCore": 352,
+    "featureDisabledCore": 328,
+    "focusedPresence": 4,
+    "specArtifacts": 70,
+    "schemas": 89,
+    "workspacePackages": 11,
+    "moduleBoundaryTests": 16,
+    "externalPublicApiProbe": {
+      "r1WildcardPrepared": true,
+      "r2WildcardPrepared": false,
+      "validArrayRefusedBoth": true
+    }
+  },
+  "independentControls": {
+    "rustEnabled": 53,
+    "rustDisabled": 53,
+    "allExpectedOutcomesVerified": true,
+    "originalEnabledMatrix46": "All46 outcomes now match; former two unexpected wildcard successes are refusals.",
+    "extraEnabled7": "Three older required-field source profiles preserve behavior; quoted direct Field succeeds; three additional wildcard spellings refuse.",
+    "disabled53": "All original46 optional/version/malformed cases and new .4 controls refuse; older .1/.2/.3 required-field source-only preparation retains baseline availability.",
+    "baselineComparison7": "Exact extra disabled outputs independently reproduced with preserved R1 disabled binary. Old .3 source-only preparation without bounded feature remains available, while its CurrentDesignation refuses; this is pre-existing source inspection, not new execution authority.",
+    "objectClosure": "Every successful .4 object retains exact .4 report/plan capability and authority=false/securityReady=false, contains no project.entity, and refuses actual current designation and public legacy resolver.",
+    "publicArrayMapEvidence": "Exact same public-UMF-validated array/map definitions from R1 independent controls are retained; R2 selected container negatives and unselected container/scalar positives pass.",
+    "builds": "Rust1.90.0 offline enabled tagged-current-projection-candidate and no-default-feature probe builds; no database or bridge execution."
+  },
+  "remainingFindings": [],
+  "scope": "Core-only feature-gated projection lineage .4; no SQL, native result ABI, runtime designation, Python/WASM registration or security activation",
+  "nativeAdmission": false,
+  "originalAcceptanceCasesPromoted": 0,
+  "uniqueArchiveEntries": 1247,
+  "originalSourceObservationSha256": "888f47d7aa6676409152b5e194f9a3789ec6ae53fdcc38b1a3d11721bb01b7f4",
+  "retentionCorrection": "First local archive contained two identical review.json entries; retained locally unqualified. Final archive contains each verified entry once; original review/evidence unchanged."
+}

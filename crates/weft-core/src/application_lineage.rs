@@ -26,6 +26,10 @@ struct ReportSchemaV02;
 struct RequestSchemaV03;
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-v0.3-candidate.schema.json")]
 struct ReportSchemaV03;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-request-v0.4-candidate.schema.json")]
+struct RequestSchemaV04;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-v0.4-candidate.schema.json")]
+struct ReportSchemaV04;
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct SourceIdentity {
@@ -121,13 +125,15 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         return Err(fail());
     }
     let value = checked_json(raw).map_err(|_| fail())?;
-    let bounded = value["interfaceVersion"] == "weft-application-lineage/0.3-candidate";
+    let presence = value["interfaceVersion"] == "weft-application-lineage/0.4-candidate";
+    if presence && !cfg!(feature="tagged-current-projection-candidate"){return Err(fail());}
+    let bounded = presence || value["interfaceVersion"] == "weft-application-lineage/0.3-candidate";
     let extended=bounded || value["interfaceVersion"]=="weft-application-lineage/0.2-candidate";
-    if !(if bounded{RequestSchemaV03::is_valid(&value)}else if extended{RequestSchemaV02::is_valid(&value)}else{RequestSchema::is_valid(&value)}) {
+    if !(if presence{RequestSchemaV04::is_valid(&value)}else if bounded{RequestSchemaV03::is_valid(&value)}else if extended{RequestSchemaV02::is_valid(&value)}else{RequestSchema::is_valid(&value)}) {
         return Err(fail());
     }
     let request: Request = serde_json::from_value(value).map_err(|_| fail())?;
-    if request.interface_version != if bounded{"weft-application-lineage/0.3-candidate"}else if extended{"weft-application-lineage/0.2-candidate"}else{"weft-application-lineage/0.1-candidate"}
+    if request.interface_version != if presence{"weft-application-lineage/0.4-candidate"}else if bounded{"weft-application-lineage/0.3-candidate"}else if extended{"weft-application-lineage/0.2-candidate"}else{"weft-application-lineage/0.1-candidate"}
         || request.opaque_sources.len() > 16
     {
         return Err(fail());
@@ -160,13 +166,18 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
     )?;
     let catalog = if bounded { Catalog::prepare_security_bounded_strings(request.modules)? } else { Catalog::prepare_security(request.modules)? };
     let (syntax, directions) = if extended{crate::application_syntax::parse_lineage_candidate(&request.sql)?}else{crate::application_syntax::parse_security(&request.sql)?};
+    // Resolution expands Entity/wildcard syntax into Field expressions. Check
+    // the original projection kind before that expansion can erase its meaning.
+    if presence && syntax.outputs.iter().any(|p|!matches!(p.output,crate::application_syntax::Output::Field(_))) {
+        return Err(fail());
+    }
     let mut plan = if bounded { crate::application_resolve::resolve_bounded_current_strings(&catalog,syntax,request.parameters)? } else { crate::application_resolve::resolve(
         &catalog,
         syntax,
         request.parameters,
         request.read_profile,
     )? };
-    if bounded{plan.ir_version="weft-ir/application-lineage/0.3-candidate".into();}else if extended{plan.ir_version="weft-ir/application-lineage/0.2-candidate".into();}
+    if presence{plan.ir_version="weft-ir/application-lineage/0.4-candidate".into();}else if bounded{plan.ir_version="weft-ir/application-lineage/0.3-candidate".into();}else if extended{plan.ir_version="weft-ir/application-lineage/0.2-candidate".into();}
     if directions.len() != plan.order.len() {
         return Err(fail());
     }
@@ -188,7 +199,23 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         plan.required_capabilities.push("order.desc".into());
         plan.required_capabilities.sort();
     }
-    crate::application_property_uses::require_present_fields(&plan,&catalog)?;
+    if presence {
+        // This frontend represents direct disclosure projections only. It does not
+        // define value operators over absent/withheld/tagged payloads.
+        if !plan.joins.is_empty() || !plan.filters.is_empty() || !plan.groups.is_empty()
+            || !plan.order.is_empty() || plan.limit.is_some() || plan.page_key.is_some()
+            || plan.outputs.iter().any(|o|!matches!(o.expression,crate::application_ir::Expression::Field{..}))
+        {return Err(fail());}
+        let record=catalog.record_by_identity(&plan.source.record)?;
+        for output in &plan.outputs {
+            let crate::application_ir::Expression::Field{identity,..}=&output.expression else{return Err(fail());};
+            let (_,graph)=catalog.member_descriptor_by_identity(&record,identity)?;
+            let descriptor=graph.iter().find(|d|d.identity==*identity).ok_or_else(fail)?;
+            if !matches!(descriptor.shape,crate::application_model::Shape::Scalar{..}) {return Err(fail());}
+        }
+        plan.required_capabilities.push("tagged-current-projection".into());
+        plan.required_capabilities.sort();
+    } else {crate::application_property_uses::require_present_fields(&plan,&catalog)?;}
     let scans = crate::application_property_uses::scans(&plan)?;
     let mut uses = Vec::new();
     let mut remaining = 8_000_000usize;
@@ -209,9 +236,10 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         Ok(())
     })?;
     let plan_json = encode(&plan, 8_000_000)?;
-    let mut report = json!({"version":if bounded{"weft.application.lineage/0.3-candidate"}else if extended{"weft.application.lineage/0.2-candidate"}else{"weft.application.lineage/0.1-candidate"},"securityReady":false,"authority":false,"sourceRequestJson":raw,"sourceRequestSha256":sha256(raw.as_bytes()),"modelPins":catalog.pins(),"sqlSha256":sha256(request.sql.as_bytes()),"applicationPlanJson":plan_json,"applicationPlanSha256":sha256(plan_json.as_bytes()),"orderDirections":directions.iter().map(|d|if *d{"desc"}else{"asc"}).collect::<Vec<_>>(),"scans":scans,"uses":uses,"unresolvedSources":unresolved});
+    let mut report = json!({"version":if presence{"weft.application.lineage/0.4-candidate"}else if bounded{"weft.application.lineage/0.3-candidate"}else if extended{"weft.application.lineage/0.2-candidate"}else{"weft.application.lineage/0.1-candidate"},"securityReady":false,"authority":false,"sourceRequestJson":raw,"sourceRequestSha256":sha256(raw.as_bytes()),"modelPins":catalog.pins(),"sqlSha256":sha256(request.sql.as_bytes()),"applicationPlanJson":plan_json,"applicationPlanSha256":sha256(plan_json.as_bytes()),"orderDirections":directions.iter().map(|d|if *d{"desc"}else{"asc"}).collect::<Vec<_>>(),"scans":scans,"uses":uses,"unresolvedSources":unresolved});
+    if presence{report["capabilities"]=json!(["tagged-current-projection"]);}
     if extended{report["readRequirements"]=crate::application_read_requirements::derive(&plan,&catalog)?;}
-    if !(if bounded{ReportSchemaV03::is_valid(&report)}else if extended{ReportSchemaV02::is_valid(&report)}else{ReportSchema::is_valid(&report)}) {
+    if !(if presence{ReportSchemaV04::is_valid(&report)}else if bounded{ReportSchemaV03::is_valid(&report)}else if extended{ReportSchemaV02::is_valid(&report)}else{ReportSchema::is_valid(&report)}) {
         return Err(fail());
     }
     Ok(ApplicationLineage {
@@ -226,6 +254,83 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    fn presence_fixture()->Value {
+        serde_json::from_str(include_str!("../../../tests/current-query-presence/fixtures/optional-token-lineage.request.json")).unwrap()
+    }
+    #[test]
+    fn presence_frontend_requires_its_build_feature_and_keeps_legacy_refusal() {
+        let request=presence_fixture();
+        if !cfg!(feature="tagged-current-projection-candidate") {
+            assert!(prepare(&request.to_string()).is_err());return;
+        }
+        let prepared=prepare(&request.to_string()).unwrap();
+        let report:Value=serde_json::from_str(prepared.json()).unwrap();
+        assert_eq!(report["version"],"weft.application.lineage/0.4-candidate");
+        assert_eq!(report["capabilities"],json!(["tagged-current-projection"]));
+        assert!(prepared.plan().required_capabilities.iter().any(|v|v=="tagged-current-projection"));
+        assert_eq!(report["readRequirements"]["fields"][0]["descriptor"]["availability"],"absent-allowed");
+        assert_eq!(report["securityReady"],false);assert_eq!(report["authority"],false);
+        let retained:Value=serde_json::from_str(report["sourceRequestJson"].as_str().unwrap()).unwrap();
+        assert_eq!(retained,request);
+        assert!(crate::current_query_designation::derive(&prepared).is_err());
+        for version in ["0.1-candidate","0.2-candidate","0.3-candidate"] {
+            let mut old=request.clone();old["interfaceVersion"]=json!(format!("weft-application-lineage/{version}"));
+            assert!(prepare(&old.to_string()).is_err(),"{version}");
+        }
+    }
+    #[cfg(feature="tagged-current-projection-candidate")]
+    #[test]
+    fn presence_frontend_refuses_unimplemented_value_operators_before_lowering() {
+        for sql in ["SELECT r.* FROM Resource r",
+                    "SELECT r.*, r.token AS extra FROM Resource r",
+                    "SELECT r.token FROM Resource r WHERE FALSE",
+                    "SELECT r.token FROM Resource r LIMIT 0",
+                    "SELECT r.token FROM Resource r ORDER BY r.token",
+                    "SELECT COUNT(*) FROM Resource r",
+                    "SELECT r.token FROM Resource r JOIN Resource s ON r.token = s.token",
+                    "SELECT r.token FROM Resource r GROUP BY r.token"] {
+            let mut request=presence_fixture();request["sql"]=json!(sql);
+            assert!(prepare(&request.to_string()).is_err(),"{sql}");
+        }
+    }
+    #[cfg(feature="tagged-current-projection-candidate")]
+    #[test]
+    fn presence_frontend_preserves_repeated_projection_positions_and_refuses_unknown_cardinality() {
+        let mut request=presence_fixture();
+        request["sql"]=json!("SELECT r.token AS first, r.token AS second FROM Resource r");
+        let prepared=prepare(&request.to_string()).unwrap();
+        let report:Value=serde_json::from_str(prepared.json()).unwrap();
+        let fields=report["readRequirements"]["fields"].as_array().unwrap();
+        assert_eq!(fields.len(),2);
+        assert_eq!(fields[0]["path"],"outputs/0/expression");assert_eq!(fields[1]["path"],"outputs/1/expression");
+        assert_eq!(fields[0]["fieldIdentity"],fields[1]["fieldIdentity"]);
+        let mut document:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        let token=document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="token").unwrap();
+        token["cardinality"]=json!("many");
+        let raw=document.to_string();request["modules"][0]["documentJson"]=json!(raw);
+        request["modules"][0]["pin"]["sha256"]=json!(sha256(raw.as_bytes()));
+        assert!(prepare(&request.to_string()).is_err());
+    }
+    #[cfg(feature="tagged-current-projection-candidate")]
+    #[test]
+    fn presence_frontend_refuses_selected_array_map_without_poisoning_scalar_reads() {
+        for cardinality in ["array","map"] {
+            let mut request=presence_fixture();
+            let mut document:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+            let token=document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="token").unwrap().as_object_mut().unwrap();
+            token.remove("scalarType");token.remove("facets");
+            token.insert("cardinality".into(),json!(cardinality));
+            token.insert("itemType".into(),json!({"module":"m","element":"resourceId"}));
+            let raw=document.to_string();request["modules"][0]["documentJson"]=json!(raw);
+            request["modules"][0]["pin"]["sha256"]=json!(sha256(raw.as_bytes()));
+            assert!(prepare(&request.to_string()).is_err(),"selected {cardinality}");
+            request["sql"]=json!("SELECT r.resourceId FROM Resource r");
+            let prepared=prepare(&request.to_string()).unwrap();
+            let report:Value=serde_json::from_str(prepared.json()).unwrap();
+            assert_eq!(report["readRequirements"]["fields"][0]["descriptor"]["availability"],"required");
+            assert!(!prepared.plan().required_capabilities.iter().any(|v|v=="project.entity"));
+        }
+    }
     fn fixture() -> Value {
         let source: Value = serde_json::from_str(include_str!(
             "../../../tests/query-properties/fixtures/operators.request.json"
