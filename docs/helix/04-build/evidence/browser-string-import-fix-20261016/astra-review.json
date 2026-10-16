@@ -1,0 +1,85 @@
+{
+  "review": "Astra Ultra bounded source review: exact wasm-bindgen string imports in browser parity harness",
+  "date": "2026-10-16",
+  "baseline": "35546f506e6e860e57c01e767bbe9857f053a48a",
+  "verdict": "SOURCE_CLEAR_NO_BLOCKING_FINDINGS",
+  "findings": [],
+  "sourcePins": {
+    "/private/tmp/weft-ashlar-local-spark-20261015/tests/compile/browser-check.mjs": "c8298cf9cd97af7ab536847146440202d08f0e5fcd555a740158a53f0d8ce046",
+    "/private/tmp/weft-ashlar-local-spark-20261015/crates/weft-wasm/src/lib.rs": "ad66bdd0cc0e1d762df0ec6c4f510f283c0d34c7304f45ea3be4fa7bd49ff219",
+    "/private/tmp/weft-ashlar-local-spark-20261015/Cargo.lock": "f13f601e926d90d45f85d53e353d2764da2d455e55a93c29dff48d7d23946c71",
+    "/private/tmp/weft039-ci-artifacts-38942463185/weft-fresh-hosts/fresh-host-evidence/web/weft_wasm.js": "418b69a33767b66971c69088c63fd5cb399b8c0dcfefa67ab819c633163eaa9e",
+    "/private/tmp/weft039-ci-artifacts-38942463185/weft-fresh-hosts/fresh-host-evidence/web/weft_wasm_bg.wasm": "1f7b71b73ef20cd575c7508fd3f30f13e4bf36768d0d3f94bb2d042598e1523c",
+    "/private/tmp/weft039-ci-artifacts-38942463185/weft-fresh-hosts/fresh-host-evidence/cases.jsonl": "93edb8cca1c19ee65037a59835e0153abf8cfbf5ce136c69e5e0765f7f5779ce",
+    "/private/tmp/weft039-ci-artifacts-38942463185/weft-fresh-hosts/fresh-host-evidence/cli-reports.json": "63042aa4692ca739df3c3a9fb0c49839c5964cca627c1d23c47c2ad58324ad31",
+    "/private/tmp/weft039-ci-artifacts-38942463185/weft-fresh-hosts/fresh-host-evidence/cli-summary.json": "7a8e16fcc37315ae5801646dd512a334a23e0689cba03a48336c84dfc61880a7",
+    "/private/tmp/weft039-browser-reproduce.log": "7f64f439bc3eaa2c00b17bb30c32e99472298c6bcd3b2a90392761a622b90351"
+  },
+  "scope": "Only tests/compile/browser-check.mjs; no runtime, release or ownership changes. No delegation, waits or execution cycles.",
+  "allowedAdditions": {
+    "__wbg_length_a95b69f903b746c4": "Returns arg0.length.",
+    "__wbg_charCodeAt_291b921e27833f8e": "Returns arg0.charCodeAt(arg1 >>> 0).",
+    "__wbg___wbindgen_is_string_fbb76cb2940daafd": "Returns typeof(arg0) === string.",
+    "__wbg___wbindgen_string_get_e4f06c90489ad01b": "Accepts a primitive string, transfers it via existing TextEncoder/WASM allocation, and writes pointer/length to WASM memory."
+  },
+  "assessment": [
+    "The exact CI-generated import bodies contain string/memory operations only: no network, filesystem, process, DOM, WASI, eval or other host-I/O capability was found in these four additions.",
+    "Rust strict_text first rejects nonprimitive strings, bounds UTF-16 length, rejects unpaired surrogates, bounds calculated UTF-8 byte length, and confirms final UTF-8 length after transfer. The imports support these existing checks; the patch does not alter them.",
+    "Cargo.lock pins wasm-bindgen0.2.105 and js-sys0.3.82. Four hashed names are added exactly; no broad new prefix or wildcard is introduced.",
+    "The boolean predicate still rejects every non-wbg module and every non-function import, including imports with one of the newly allowed names. The existing legacy throw-name prefix is unchanged.",
+    "Static inverse-diff comparison confirms every byte outside the new four-name set, its explanatory comment and membership disjunct is unchanged. All response-count/exact-byte parity checks, Node-global checks, bad-transport/surrogate and trap controls, host-I/O stubs and request checks remain."
+  ],
+  "evidence": {
+    "ciRun": "38942463185",
+    "retainedCorpusCases": 2181,
+    "retainedNativeReports": 2181,
+    "observedImports": [
+      {
+        "module": "wbg",
+        "name": "__wbg_length_a95b69f903b746c4",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg_charCodeAt_291b921e27833f8e",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_init_externref_table",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_cast_2241b6af4c4b2941",
+        "kind": "function"
+      }
+    ],
+    "localReplay": "Retained log fails at the old import allowlist after parity iteration, expected-count, page-error and Node-global checks. Under the inspected control flow, those preceding checks completed for the loaded corpus. The four newly allowed names are exactly the observed imports outside the old allowlist.",
+    "status": "Source reviewed; no corrected browser replay/build performed by reviewer."
+  },
+  "limits": [
+    "The failed replay stops before the later network-request check and summary write; it is not a full browser-harness pass.",
+    "The2181 parity corpus does not independently qualify every exported strict_text entrypoint or broader security behavior.",
+    "This test-only whitelist correction does not approve a runtime change, release, publication or Truss adoption."
+  ],
+  "reviewerActions": [
+    "Read the frozen one-file diff, exact generated JS bodies and transfer helper, Rust string validation, pinned dependency versions and retained replay/corpus evidence.",
+    "No product edits, builds, native/browser execution, agents or waiting."
+  ]
+}

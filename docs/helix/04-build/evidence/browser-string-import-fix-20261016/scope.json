@@ -1,0 +1,8 @@
+{
+  "sourceCommit": "35546f506e6e860e57c01e767bbe9857f053a48a",
+  "failedCiRun": 38942463185,
+  "artifactWasmSha256": "1f7b71b73ef20cd575c7508fd3f30f13e4bf36768d0d3f94bb2d042598e1523c",
+  "change": "Permit four exact wasm-bindgen generated string interop import names; preserve module/function restrictions and byte parity/network/global checks.",
+  "result": "2181 exact CI corpus cases pass in real Chromium after fix.",
+  "scope": "Replay of exact CI artifacts, not a fresh full-host build or published wheel qualification."
+}
