@@ -1,0 +1,14 @@
+{
+  "sourceObservationSha256": "888f47d7aa6676409152b5e194f9a3789ec6ae53fdcc38b1a3d11721bb01b7f4",
+  "sourceModelRevision": "query-presence-core-r1",
+  "authoredFrontendVersion": "weft-application-lineage/0.4-candidate",
+  "originalEnvelopeVersion": "weft-application-lineage/0.3-candidate",
+  "onlyEnvelopeVersionChanged": true,
+  "modelModulesAndOpaqueSourcesUnchanged": true,
+  "tokenDisclosureAuthorized": false,
+  "nativeAdmission": false,
+  "scope": "Explicit successor named model with genuine unchanged Resource membership. Presence lineage only; existing policy does not establish Token disclosure permission.",
+  "initialHandoffSha256": "95e0d548909cf2afed04eb85975e31334c401e521430eaec08b4c3e7d7fe4d48",
+  "frozenUmfHandoffSha256": "f34a26997289fd42611a4f089605f13f8334042eef03845f38affa80b1d49c71",
+  "handoffCustodyCorrection": "Native/generator source closure expanded after independent review; projection semantics and exact copied source model are unchanged."
+}

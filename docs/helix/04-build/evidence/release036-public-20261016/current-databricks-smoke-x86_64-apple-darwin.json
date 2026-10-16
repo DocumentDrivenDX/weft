@@ -1,0 +1,144 @@
+{
+  "scope": "Actual candidate native Python descriptors/custody only; no database permissions or native security admission",
+  "controls": 32,
+  "checks": [
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:refuse-import:0",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:refuse-import:1",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:refuse-import:2",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:refuse-import:3",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:refuse-import:4",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:refuse-import:5",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:foreign-self:NoneType",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:foreign-self:str",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:foreign-self:dict",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:foreign-self:ApplicationLineagePreparation",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:foreign-self:object",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:11",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:12",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:refuse-import:13",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:refuse-import:14",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:refuse-import:15",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:refuse-import:16",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:refuse-import:17",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:refuse-import:18",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:foreign-self:NoneType",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:foreign-self:str",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:foreign-self:dict",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:foreign-self:ApplicationLineagePreparation",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:foreign-self:object",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:no-authority-override:24",
+      "refused": true
+    },
+    {
+      "id": "lower_databricks_current_sum_candidate_json:no-authority-override:25",
+      "refused": true
+    },
+    {
+      "id": "actual-same-original-candidate-emits-conditional-sql",
+      "passed": true
+    },
+    {
+      "id": "old-postgresql-consumer-refuses:lower_postgresql_scalar_candidate_json",
+      "refused": true
+    },
+    {
+      "id": "old-postgresql-consumer-refuses:lower_postgresql_current_rows_candidate_json",
+      "refused": true
+    },
+    {
+      "id": "old-postgresql-consumer-refuses:lower_postgresql_current_contributors_candidate_json",
+      "refused": true
+    },
+    {
+      "id": "old-postgresql-consumer-refuses:lower_postgresql_current_sum_candidate_json",
+      "refused": true
+    },
+    {
+      "id": "original-parent-retained",
+      "passed": true
+    }
+  ],
+  "version": "0.4.36",
+  "sourceCommit": "a14640f2bb288e58de0c9846fb10162e3e4030fc",
+  "wheel": "weft_sql-0.4.36-cp39-abi3-macosx_10_12_x86_64.whl",
+  "pinsBeforeAfter": {
+    "wheelSha256": "0b3386c2bcc2b8f022835ec6c6fbc89ef4f6774532e8c9ca59555fc01fb4d418",
+    "nativeModuleSha256": "19a30f8d9ddecb10e8cb2fd98e378fa195f1b451f5b23391c7f610e001fa084f",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "nativeAdmission": false,
+  "securityReady": false
+}

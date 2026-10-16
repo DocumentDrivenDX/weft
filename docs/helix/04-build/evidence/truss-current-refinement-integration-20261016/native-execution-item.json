@@ -1,0 +1,17 @@
+{
+  "sourceThreadId": "01a10c68-3279-7310-9e05-1b216e469b79",
+  "turnId": "01a1431b-fafc-7011-bdca-f475374889b6",
+  "item": {
+    "type": "commandExecution",
+    "id": "exec-dd2cfde0-476a-4996-8bb6-07dfcfd503d3",
+    "command": "/bin/zsh -lc 'TRUSS_BUN_EXECUTABLE=/opt/homebrew/bin/bun PYTHONPATH=/private/tmp/truss-weft036-public-installed-20261016:packages/python/src:packages/python/tests /private/tmp/truss-practical-performance-env/bin/python -m unittest test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_public_masked_projection_with_authorized_exact_raw_predicate -v -f'",
+    "cwd": "/private/tmp/truss-main-integration-20261010",
+    "status": "completed",
+    "exitCode": 0,
+    "durationMs": 15194,
+    "output": {
+      "text": "test_public_masked_projection_with_authorized_exact_raw_predicate (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_public_masked_projection_with_authorized_exact_raw_predicate) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 14.158s\n\nOK\n",
+      "truncated": false
+    }
+  }
+}

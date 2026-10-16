@@ -5,6 +5,8 @@ edition.workspace = true
 publish.workspace = true
 rust-version = "1.90"
 [features]
+tagged-current-projection-candidate=["bounded-current-string-candidate"]
+bounded-current-string-candidate=["current-query-refinement-candidate"]
 current-query-refinement-candidate=[]
 
 [dependencies]

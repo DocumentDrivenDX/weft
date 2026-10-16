@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-bounded-string-r4-frozen-20261016/tests/truss-query-abi/wheel-smoke.py", line 18, in <module>
+    assert callable(weft.compile_truss_runtime_json)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'weft' has no attribute 'compile_truss_runtime_json'

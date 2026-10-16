@@ -214,6 +214,36 @@ impl CurrentQueryPreparation{
   let binding=refinement_text(original_binding_json,4_000_000)?;let input=refinement_text(refinement_input_json,16_777_216)?;
   self.inner.check_databricks_current_sum_candidate_json(&binding,&input).map_err(|_|refinement_python_failure())
  }
+ #[cfg(feature="bounded-current-string-candidate")]
+ fn lower_postgresql_bounded_current_rows_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py).map_err(|_|refinement_python_failure())?;let binding=refinement_text(original_binding_json,4_000_000)?;
+  self.inner.lower_postgresql_bounded_current_rows_candidate_json(&binding).map_err(|_|refinement_python_failure())
+ }
+ #[cfg(feature="bounded-current-string-candidate")]
+ fn check_postgresql_bounded_current_rows_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>,refinement_input_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py).map_err(|_|refinement_python_failure())?;let binding=refinement_text(original_binding_json,4_000_000)?;let input=refinement_text(refinement_input_json,16_777_216)?;
+  self.inner.check_postgresql_bounded_current_rows_candidate_json(&binding,&input).map_err(|_|refinement_python_failure())
+ }
+ #[cfg(feature="bounded-current-string-candidate")]
+ fn lower_postgresql_bounded_current_contributors_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py).map_err(|_|refinement_python_failure())?;let binding=refinement_text(original_binding_json,4_000_000)?;
+  self.inner.lower_postgresql_bounded_current_contributors_candidate_json(&binding).map_err(|_|refinement_python_failure())
+ }
+ #[cfg(feature="bounded-current-string-candidate")]
+ fn check_postgresql_bounded_current_contributors_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>,refinement_input_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py).map_err(|_|refinement_python_failure())?;let binding=refinement_text(original_binding_json,4_000_000)?;let input=refinement_text(refinement_input_json,16_777_216)?;
+  self.inner.check_postgresql_bounded_current_contributors_candidate_json(&binding,&input).map_err(|_|refinement_python_failure())
+ }
+ #[cfg(feature="bounded-current-string-candidate")]
+ fn lower_databricks_bounded_current_contributors_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py).map_err(|_|refinement_python_failure())?;let binding=refinement_text(original_binding_json,4_000_000)?;
+  self.inner.lower_databricks_bounded_current_contributors_candidate_json(&binding).map_err(|_|refinement_python_failure())
+ }
+ #[cfg(feature="bounded-current-string-candidate")]
+ fn check_databricks_bounded_current_contributors_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>,refinement_input_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py).map_err(|_|refinement_python_failure())?;let binding=refinement_text(original_binding_json,4_000_000)?;let input=refinement_text(refinement_input_json,16_777_216)?;
+  self.inner.check_databricks_bounded_current_contributors_candidate_json(&binding,&input).map_err(|_|refinement_python_failure())
+ }
  fn operand_count(&self,py:Python<'_>)->PyResult<usize>{self.check_original(py)?;Ok(self.inner.operand_count())}
  fn native_request_json(&self,py:Python<'_>)->PyResult<String>{self.check_original(py)?;self.inner.native_request_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))}
 

@@ -1,0 +1,1015 @@
+{
+  "scope": "Actual Chromium initialized WASM, typed object custody and complete native compiler/checker byte parity; no database/native caller/authority/release or P03 acceptance.",
+  "browser": "153.0.8010.12",
+  "nativePacketSha256": "3b988f4a98db640879ab8318f8c370fcf6a99ddd5967c5715824c913dd1eafda",
+  "jsSha256": "872deca05f3db3a34b43c33aa44188410bf629d9cfc13682ab9da6ad807d01e6",
+  "wasmSha256": "22d3c27df95aae0b3ad647257511f7ebbfb2e6008c95e30d3f25f6e1374976c2",
+  "controls": [
+    {
+      "id": "postgresql/rows/0/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/object-custody",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/null-capability",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/object-custody",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/null-capability",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/object-custody",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/null-capability",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/object-custody",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/null-capability",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/object-custody",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/null-capability",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/object-custody",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/null-capability",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/object-custody",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/null-capability",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/object-custody",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/source-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/artifact-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/check-byte-parity",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/nonprimitive/null",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/nonprimitive/undefined",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/nonprimitive/number",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/nonprimitive/object",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/nonprimitive/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/raw-surrogate-binding",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/null-capability",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/ordinary-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/original-retained-after-parent-free",
+      "passed": true
+    },
+    {
+      "id": "actual-raw-surrogate-source-injection",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage/raw-high-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage/raw-low-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage/ASCII-frame-budget",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/raw-high-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/raw-low-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/ASCII-frame-budget",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/raw-high-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/raw-low-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/ASCII-frame-budget",
+      "passed": true
+    },
+    {
+      "id": "UTF8-byte-budget-before-conversion",
+      "passed": true
+    },
+    {
+      "id": "prepare_security_mapping_json/original-Unicode-source",
+      "passed": true
+    },
+    {
+      "id": "inspect_security_mapping_subject_key_json/original-Unicode-source",
+      "passed": true
+    }
+  ],
+  "requests": [
+    "http://weft.bounded.test/",
+    "http://weft.bounded.test/weft.js",
+    "http://weft.bounded.test/weft_wasm_bg.wasm"
+  ],
+  "pageErrors": []
+}

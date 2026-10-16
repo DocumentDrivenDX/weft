@@ -1,0 +1,18 @@
+{
+  "parentCommit": "eddbe2e68e1b9a989ac189901b5e14cdd3a649c7",
+  "all8ReviewedSourceHashesMatch": true,
+  "specificationsPassed": true,
+  "moduleBoundariesPassed": true,
+  "logs": [
+    {
+      "stored": "weft-presence-final-main-specs-20261016.log.gz",
+      "uncompressedSha256": "506803c1845bbfe69ed1fe78322c0015eb95337c0247f84d83dd70d819f1a168"
+    },
+    {
+      "stored": "weft-presence-final-main-modules-20261016.log.gz",
+      "uncompressedSha256": "1118a02b55264d42648e0ce5c6dec90f96c65d2e11ba5c9332ede60c6b93e25b"
+    }
+  ],
+  "nativeAdmission": false,
+  "originalAcceptanceCasesPromoted": 0
+}

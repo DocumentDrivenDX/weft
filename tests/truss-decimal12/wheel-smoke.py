@@ -1,4 +1,4 @@
-"""Derived compiler-domain fixture through exact wheel; no native storage admission."""
+"""Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."""
 import argparse,hashlib,importlib,json,pathlib,tomllib,zipfile
 import weft
 p=argparse.ArgumentParser();p.add_argument('--wheel',type=pathlib.Path,required=True);p.add_argument('--output',type=pathlib.Path,required=True);a=p.parse_args();root=pathlib.Path(__file__).resolve().parents[2]
@@ -20,7 +20,7 @@ def run(label,r,expected='compiled',page=None):
  raw=weft.compile_truss_runtime_json(text(r))if page is None else weft.compile_truss_runtime_page_json(text(r),2,page)
  out=json.loads(raw);assert out['status']==expected,(label,out)
  if expected=='compiled':
-  artifact=out.get('artifact',out);assert artifact['backend']['backendVersion']==r['target']['backendVersion'];assert any(p['value']==raw_binding for p in artifact['parameters'])
+  artifact=out.get('artifact',out);assert artifact['backend']['backendVersion']==r['target']['backendVersion'];assert any(p['value']==r['target']['bindingJson'] for p in artifact['parameters'])
  else:assert 'sql'not in out
  checks.append({'id':label,'status':expected});return out
 run('projection',request('SELECT a."A-value" FROM "A" a'))
@@ -34,7 +34,14 @@ r=request('SELECT a.* FROM "A" a')
 out=json.loads(weft.compile_truss_runtime_page_json(text(r),2));assert out['status']=='compiled',out;checks.append({'id':'first-typed-page','status':'compiled'})
 run('next-typed-page',r,page=['9999999999.9900','label'])
 run('bad-typed-page',r,'blocked',page=['10000000000.00','label'])
-assert len(checks)==20
+# Original genuinely accepted owner model/binding, with only explicit backend selection changed.
+genuine=json.loads((root/'tests/truss-decimal12/fixtures/genuine-northwind-compile-request.json').read_bytes())
+original_modules=text(genuine['modules']);original_binding=genuine['target']['bindingJson']
+old=run('genuine-unnamed-old-backend',genuine,'blocked');assert old['diagnostics'][0]['code']=='WFT-NAME-MISSING'
+genuine['target']['backendVersion']='0.4.39'
+new=run('genuine-unnamed-new-backend',genuine);assert any(p['value']=='1.23'for p in new['parameters'])
+assert text(genuine['modules'])==original_modules and genuine['target']['bindingJson']==original_binding
+assert len(checks)==22
 assert pins==dict(wheelSha256=sha(a.wheel.read_bytes()),nativeModuleSha256=sha(native.read_bytes()),shimSha256=sha(pathlib.Path(weft.__file__).read_bytes()))
 commit=None
 if(root/'.git').exists():

@@ -656,6 +656,18 @@ impl CurrentQueryPreparation{
   self.with_context(|_,_,operands|Ok(weft_databricks::current_scalar::check_original_sum(operands,binding,input)?.to_string()))
    .map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))
  }
+ #[cfg(feature="bounded-current-string-candidate")]
+ pub fn lower_postgresql_bounded_current_rows_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_postgresql::current_scalar::lower_bounded_rows(operands,binding)?.json_string())}
+ #[cfg(feature="bounded-current-string-candidate")]
+ pub fn check_postgresql_bounded_current_rows_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|Ok(weft_postgresql::current_scalar::check_bounded_rows(operands,binding,input)?.to_string())).map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))}
+ #[cfg(feature="bounded-current-string-candidate")]
+ pub fn lower_postgresql_bounded_current_contributors_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_postgresql::current_scalar::lower_bounded_contributors(operands,binding)?.json_string())}
+ #[cfg(feature="bounded-current-string-candidate")]
+ pub fn check_postgresql_bounded_current_contributors_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|Ok(weft_postgresql::current_scalar::check_bounded_contributors(operands,binding,input)?.to_string())).map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))}
+ #[cfg(feature="bounded-current-string-candidate")]
+ pub fn lower_databricks_bounded_current_contributors_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_databricks::current_scalar::lower_bounded_contributors(operands,binding)?.json_string())}
+ #[cfg(feature="bounded-current-string-candidate")]
+ pub fn check_databricks_bounded_current_contributors_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|Ok(weft_databricks::current_scalar::check_bounded_contributors(operands,binding,input)?.to_string())).map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))}
  /// Trusted Rust consumer hook, not a Python callback or native admission API.
  /// Borrowed declarations are derived over the same original context on each
  /// scoped invocation; SQL/AST are not reparsed and caller reports are not imported.

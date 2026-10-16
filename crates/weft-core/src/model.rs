@@ -36,6 +36,7 @@ pub struct Catalog {
     security_inputs: bool,
     pub(crate) identity_name_fallback: bool,
     pub(crate) exact_scalars: bool,
+    pub(crate) bounded_current_strings: bool,
     pub(crate) documents: Vec<Value>,
 }
 #[derive(Debug, Clone)]
@@ -103,6 +104,11 @@ impl Catalog {
     /// Source custody only; security activation remains independently gated.
     pub fn prepare_security(inputs: Vec<ModuleInput>) -> Result<Self> {
         Self::prepare_version(inputs, Some("0.8.0"))
+    }
+    pub(crate) fn prepare_security_bounded_strings(inputs: Vec<ModuleInput>) -> Result<Self> {
+        let mut catalog = Self::prepare_security(inputs)?;
+        catalog.bounded_current_strings = true;
+        Ok(catalog)
     }
     fn prepare_version(inputs: Vec<ModuleInput>, required_version: Option<&str>) -> Result<Self> {
         if inputs.is_empty() || inputs.len() > 32 {
@@ -174,7 +180,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
+        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()
@@ -324,7 +330,7 @@ impl Catalog {
             // Derive the ideal scalar domain, leaving original selected source bytes untouched.
             ideal={let mut v=field.clone();v["nullability"]=Value::String("required".into());v};&ideal
         } else {field};
-        let logical_type = scalar_type(selected, name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers)?;
+        let logical_type = scalar_type(selected, name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers, self.bounded_current_strings)?;
         Ok((
             identity,
             logical_type,
@@ -333,7 +339,7 @@ impl Catalog {
     }
 }
 
-pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool, mathematical_decimal: bool) -> Result<LogicalType> {
+pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool, mathematical_decimal: bool, bounded_strings: bool) -> Result<LogicalType> {
     let err = || {
         Diagnostic::new("WFT-TYPE", "type", "Selected field meaning is unsupported").at(&name.span)
     };
@@ -359,6 +365,7 @@ pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool
     let allowed: &[&str] = match family {
         Family::Integer => &["integerWidth"],
         Family::Decimal => &["precision", "scale"],
+        Family::String if bounded_strings => &["length"],
         _ => &[],
     };
     if facets
@@ -368,6 +375,9 @@ pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool
         .any(|k| !allowed.contains(&k.as_str()))
     {
         return Err(err());
+    }
+    if family == Family::String && bounded_strings {
+        crate::current_string_domain::bounds(&facets).map_err(|_| err())?;
     }
     if family == Family::Integer && !(mathematical_integer && facets == json!({})) {
         let width = &facets["integerWidth"];

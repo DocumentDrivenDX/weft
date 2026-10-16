@@ -44,6 +44,9 @@ impl Registry {
         target: &Target,
         binding: &BindingInput,
     ) -> Result<Compilation> {
+        if catalog.bounded_current_strings {
+            return Err(fail("WFT-VERSION", "Bounded-string catalogs require the dedicated current-query candidate compiler"));
+        }
         let b = self
             .backends
             .get(&target.backend_id)

@@ -6,7 +6,11 @@ use crate::{
 pub fn literal(input: &Literal, expected: &LogicalType) -> Result<Expression> {
     let error = |code, message| Diagnostic::new(code, "type", message).at(&input.span);
     match (&input.kind, &expected.family) {
-        (LiteralKind::String, Family::String) | (LiteralKind::Boolean, Family::Boolean) => {}
+        (LiteralKind::String, Family::String) => {
+            crate::current_string_domain::validate_facets(&expected.facets, &input.value)
+                .map_err(|_| error("WFT-STRING-DOMAIN", "String literal exceeds selected domain"))?;
+        }
+        (LiteralKind::Boolean, Family::Boolean) => {}
         (LiteralKind::Number, Family::Integer) => {
             if input.value.contains('.') {
                 return Err(error(

@@ -20,4 +20,6 @@ path = "../../tests/ashlar-databricks/compiler.rs"
 
 [features]
 current-spark-scalar-candidate=["current-query-refinement-candidate"]
+
+bounded-current-string-candidate=["current-query-refinement-candidate","weft-core/bounded-current-string-candidate"]
 current-query-refinement-candidate=["weft-core/current-query-refinement-candidate"]

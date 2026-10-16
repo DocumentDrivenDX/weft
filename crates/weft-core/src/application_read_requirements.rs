@@ -63,7 +63,11 @@ pub(crate) fn derive(plan: &app::Plan, catalog: &Catalog) -> Result<Value> {
             .iter()
             .find(|d| d.identity == *identity)
             .ok_or_else(fail)?;
-        if descriptor.availability.as_deref() != Some("required") {
+        let tagged_projection=cfg!(feature="tagged-current-projection-candidate")
+            && plan.ir_version=="weft-ir/application-lineage/0.4-candidate"
+            && role=="projection" && matches!(descriptor.shape,Shape::Scalar{..});
+        if descriptor.availability.as_deref() != Some("required")
+            && !(tagged_projection && descriptor.availability.as_deref()==Some("absent-allowed")) {
             return Err(fail());
         }
         let scalar = matches!(descriptor.shape, Shape::Scalar { .. });

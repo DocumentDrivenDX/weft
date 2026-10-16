@@ -1,0 +1,212 @@
+{
+  "mode": "standard",
+  "scope": "Actual Chromium initialized WASM, typed object custody and complete native compiler/checker byte parity; no database/native caller/authority/release or P03 acceptance.",
+  "browser": "153.0.8010.12",
+  "nativePacketSha256": "3b988f4a98db640879ab8318f8c370fcf6a99ddd5967c5715824c913dd1eafda",
+  "jsSha256": "8ad80f3ac70476a2c62250d76155ab5491bec1f3256915709c562796d6eab4b1",
+  "wasmSha256": "d69d0ec618801fbd714bfc755280a98cba4c0cae4353d853c86038a77ded9723",
+  "controls": [
+    {
+      "id": "feature-off-no-prepared-bounded-object-API",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/0/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/1/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/2/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/rows/3/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/4/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/5/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/6/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/7/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/8/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/9/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "postgresql/contributors/10/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/11/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/12/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/13/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/14/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/15/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/16/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/standard-source-inspection-only",
+      "passed": true
+    },
+    {
+      "id": "databricks/contributors/17/standard-no-activation",
+      "passed": true
+    },
+    {
+      "id": "actual-raw-surrogate-source-injection",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/raw-high-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/raw-low-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "prepare_application_lineage_json/ASCII-frame-budget",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/raw-high-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/raw-low-surrogate",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/boxed-string",
+      "passed": true
+    },
+    {
+      "id": "prepare_current_query_designations_json/ASCII-frame-budget",
+      "passed": true
+    },
+    {
+      "id": "UTF8-byte-budget-before-conversion",
+      "passed": true
+    },
+    {
+      "id": "prepare_security_mapping_json/original-Unicode-source",
+      "passed": true
+    },
+    {
+      "id": "inspect_security_mapping_subject_key_json/original-Unicode-source",
+      "passed": true
+    }
+  ],
+  "requests": [
+    "http://weft.bounded.test/",
+    "http://weft.bounded.test/weft.js",
+    "http://weft.bounded.test/weft_wasm_bg.wasm"
+  ],
+  "pageErrors": []
+}

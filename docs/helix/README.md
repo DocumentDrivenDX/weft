@@ -1,11 +1,25 @@
 # Weft specification index
 
-Python 0.4.35 adds a conditional result checker to the standard candidate wheel
-and an explicit Truss query-ABI backend for owned and independent reads. A checker
-match grants no native authority. B-008 is incomplete: all 132 original
-shared/native requirements and prior case acceptances remain in force. Native
-authority and guarded release still need qualified host enforcement. See [release scope](04-build/releases/v0.4.35.md)
-and [implementation evidence](04-build/evidence/current-query-refinement-implementation-20261015/README.md).
+Python 0.4.36 is published with explicit Truss backend0.4.39 support for
+fixed decimal(12,2) and original stable Record/Field IDs when names are absent.
+Authored names take precedence; old backend registrations retain their refusals.
+All five public wheel payloads and 20 source-bound reports are verified, including
+22 closed Decimal/name controls per platform. See [release scope](04-build/releases/v0.4.36.md)
+and [public qualification evidence](04-build/evidence/release036-public-20261016/summary.json).
+
+Main separately includes the optional `bounded-current-string-candidate` feature
+at `8e0f4cb`, with reviewed Python/WASM and PostgreSQL/Databricks compiler evidence.
+That feature is not part of the frozen public0.4.36 source. See
+[bounded String evidence](04-build/evidence/bounded-current-strings-20261015/README.md).
+Main also includes the optional Core-only `tagged-current-projection-candidate`
+frontend: explicit `.4` direct Field lineage preserves original availability.
+It cannot issue current-query designations or SQL and is not in public0.4.36.
+See [reviewed projection lineage evidence](04-build/evidence/tagged-projection-lineage-20261016/README.md).
+
+B-008 remains incomplete: all132 original shared/native requirements remain in
+force, and these increments promote no native case. Conditional checker matches
+grant no native authority; genuine caller/source/current-authority admission and
+guarded native release still require qualified host enforcement.
 
 Proposed Python0.4.33 includes the current-query source-context and conditional
 SQL APIs in standard wheels, with exact-wheel ABI2/3/4 smoke checks across all

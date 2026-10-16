@@ -258,3 +258,63 @@ bag semantics; artifact hashes MUST bind the distinct Spark artifact bytes. A
 Databricks artifact or binding cannot substitute, even when result values agree.
 No Spark SUM checker, implicit engine selection, runtime permission or native
 completeness claim follows from this profile.
+
+
+## Tagged projection lineage frontend candidate — 2026-10-16
+
+This extension defines model/SQL lineage only. It does not extend any current
+scalar materialization binding, result checker, disclosure decision or native
+admission. US-009-AC1–AC4 and CONTRACT-007's original/absent/withheld/transformed
+rules remain required. The original132 backend cases remain in scope.
+
+The optional core build feature `tagged-current-projection-candidate` admits only
+the explicitly selected `weft-application-lineage/0.4-candidate` request and emits
+`weft.application.lineage/0.4-candidate` with exactly the report capability
+`tagged-current-projection`; the typed plan MUST also require that capability. The
+[request schema](application-lineage-request-v0.4-candidate.schema.json) and
+[report schema](application-lineage-v0.4-candidate.schema.json) define the closed
+surface. Reports retain exact original request bytes and model/source pins,
+`securityReady:false` and `authority:false`.
+
+The initial frontend MUST admit only direct Field projections over one scan.
+Selected singular scalar Fields MAY have original `required` or `absent-allowed`
+availability; their exact descriptor and qualified identity MUST survive in
+`readRequirements`. That descriptor is an original source requirement, never an
+assertion that a scalar is present or that its projection is authorized. The
+logical scalar type does not replace the original availability descriptor or
+describe a future public tagged-cell result.
+
+Joins, predicates (including FALSE), grouping, ordering, aggregates, LIMIT
+(including zero), page keys, relationships, metadata and complete-entity outputs
+MUST refuse atomically in this frontend. Their presence-aware semantics are not
+established by a carrier round trip. Existing field-free COUNT(*) paths retain
+their existing contracts; this new projection profile does not redefine them.
+
+The new report MUST NOT be accepted by existing current-query designation or
+scalar backend profiles. Feature-disabled builds and earlier lineage request
+versions MUST retain their refusals. A new SQL materialization/result protocol,
+typed runtime context and bridge selection remain required before this lineage
+can produce executable SQL. No public-cell or native ABI is allocated here.
+
+Future tagged results MUST preserve Original(value), Absent, Withheld and
+Transformed(selection, outputDomain, transform/version, value), including present
+null payload keys. Represented alternatives MUST NOT be called authorized
+alternatives. Exact original Field/revision and policy/catalog/domain pins, and
+independent per-cell owner selection at the authenticated held cut, remain native
+host obligations. Neither a native row tag nor client JSON can grant disclosure.
+Absent/Withheld MUST NOT remove eligible rows or become scalar SQL NULL. The
+original integer domain and each transformed text domain form a heterogeneous
+result; a uniform scalar descriptor MUST NOT replace that union.
+
+For example, `SELECT r.token FROM Resource r` over an explicitly revised model
+with an absent-allowed Token can yield lineage retaining that availability. It
+cannot yield SQL, a Token read permission, or a selected disclosure. The named
+queryable source used by the component tests does not itself grant Token
+disclosure. An absent Token, Original(null), Withheld, and Transformed(null)
+remain distinct obligations for subsequent lowering and authenticated native
+qualification.
+
+Malformed versions/sources and unsupported syntax/profile shapes refuse with the
+existing bounded lineage diagnostic; no partial SQL or native permit is returned.
+Callers MUST explicitly select a supported profile and MUST NOT retry by coercing
+availability, altering original sources, or dropping a protected operation.

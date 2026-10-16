@@ -1,0 +1,96 @@
+{
+  "version": "0.4.36",
+  "sourceCommit": "1ed81c11fa870d57ba21d4339132ff139b05641d",
+  "wheel": "weft_sql-0.4.36-cp39-abi3-macosx_11_0_arm64.whl",
+  "pinsBeforeAfter": {
+    "wheelSha256": "42d25fe20a882fdfe1a804a8442110783ebd67b48d4168a110b890919c7883b0",
+    "nativeModuleSha256": "fd9f6a76b1c584ee4c49fbdb452cf9c1349918d417e3a4f303691c2a8d33f853",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "controls": 20,
+  "checks": [
+    {
+      "id": "projection",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-0",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-1",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-2",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-3",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-4",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-5",
+      "status": "compiled"
+    },
+    {
+      "id": "nonrepresentable-0",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-1",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-2",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-3",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-4",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-5",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-6",
+      "status": "blocked"
+    },
+    {
+      "id": "old-version-0.4.38",
+      "status": "blocked"
+    },
+    {
+      "id": "old-version-0.4.37",
+      "status": "blocked"
+    },
+    {
+      "id": "related-decimal-key",
+      "status": "compiled"
+    },
+    {
+      "id": "first-typed-page",
+      "status": "compiled"
+    },
+    {
+      "id": "next-typed-page",
+      "status": "compiled"
+    },
+    {
+      "id": "bad-typed-page",
+      "status": "blocked"
+    }
+  ],
+  "nativeAdmission": false,
+  "securityReady": false,
+  "scope": "Derived compiler-domain fixture through exact wheel; no native storage admission."
+}
