@@ -49,6 +49,11 @@ fn page_and_mutation_admission_keep_original_release_identity() {
             serde_json::from_value(r["modules"][0]["pin"].clone()).unwrap(),
             vec!["fixture-only: no native execution or authority claim".into()],
         );
-        assert_eq!(result.is_ok(), accepted, "mutation admission for {release}");
+        // Registration retains recognized original sources; native release-hash
+        // qualification happens during lowering. Runtime0.68 is recognized on
+        // this baseline, while its deliberately wrong hash above still refuses
+        // page lowering. Registration never grants execution authority.
+        let registered = accepted || release == "truss-catalog-runtime/0.68-candidate";
+        assert_eq!(result.is_ok(), registered, "mutation source registration for {release}");
     }
 }

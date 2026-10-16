@@ -1,0 +1,87 @@
+{
+  "allowPartial": false,
+  "projection": [
+    {
+      "field": {
+        "element": "id",
+        "module": "search"
+      },
+      "name": "id"
+    },
+    {
+      "field": {
+        "element": "body",
+        "module": "search"
+      },
+      "name": "body"
+    },
+    {
+      "field": {
+        "element": "embedding",
+        "module": "search"
+      },
+      "name": "embedding"
+    }
+  ],
+  "queryParameter": "__umf_search_query",
+  "selection": {
+    "binding": {
+      "modelJson": "{\n  \"umf\": \"0.8.0\",\n  \"id\": \"typed-search-e2e\",\n  \"vocabularies\": {\n    \"umf.access\": {\n      \"version\": \"0.1.0\"\n    }\n  },\n  \"modules\": [\n    {\n      \"id\": \"search\",\n      \"namespace\": \"search\",\n      \"elements\": [\n        {\n          \"id\": \"id\",\n          \"name\": \"id\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"body\",\n          \"name\": \"body\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"embedding\",\n          \"name\": \"embedding\",\n          \"kind\": \"field\",\n          \"cardinality\": \"array\",\n          \"nullability\": \"required\",\n          \"extensions\": {},\n          \"itemType\": {\n            \"module\": \"search\",\n            \"element\": \"component\"\n          },\n          \"facets\": {\n            \"collectionSize\": {\n              \"min\": 3,\n              \"max\": 3\n            }\n          }\n        },\n        {\n          \"id\": \"component\",\n          \"name\": \"component\",\n          \"kind\": \"field\",\n          \"scalarType\": \"float\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"Doc\",\n          \"name\": \"Doc\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"search\",\n              \"element\": \"id\"\n            },\n            {\n              \"module\": \"search\",\n              \"element\": \"body\"\n            },\n            {\n              \"module\": \"search\",\n              \"element\": \"embedding\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"doc-key\",\n              \"fields\": [\n                {\n                  \"module\": \"search\",\n                  \"element\": \"id\"\n                }\n              ],\n              \"primary\": true,\n              \"name\": \"Document identity\"\n            }\n          ],\n          \"extensions\": {}\n        }\n      ],\n      \"extensions\": {\n        \"umf.access\": {\n          \"views\": [\n            {\n              \"record\": {\n                \"module\": \"search\",\n                \"element\": \"Doc\"\n              },\n              \"selectedKey\": {\n                \"module\": \"search\",\n                \"element\": \"Doc\",\n                \"key\": \"doc-key\"\n              },\n              \"fields\": [\n                {\n                  \"field\": {\n                    \"module\": \"search\",\n                    \"element\": \"id\"\n                  },\n                  \"row\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"create\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"mutable\": false,\n                  \"generated\": false\n                },\n                {\n                  \"field\": {\n                    \"module\": \"search\",\n                    \"element\": \"body\"\n                  },\n                  \"row\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"create\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"mutable\": true,\n                  \"generated\": false\n                },\n                {\n                  \"field\": {\n                    \"module\": \"search\",\n                    \"element\": \"embedding\"\n                  },\n                  \"row\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"create\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"mutable\": true,\n                  \"generated\": false\n                },\n                {\n                  \"field\": {\n                    \"module\": \"search\",\n                    \"element\": \"component\"\n                  },\n                  \"row\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"create\": {\n                    \"missing\": false,\n                    \"null\": false\n                  },\n                  \"mutable\": false,\n                  \"generated\": false\n                }\n              ]\n            }\n          ],\n          \"columns\": [],\n          \"search\": [\n            {\n              \"id\": \"text\",\n              \"record\": {\n                \"module\": \"search\",\n                \"element\": \"Doc\"\n              },\n              \"kind\": \"keyword\",\n              \"exactness\": \"exact\",\n              \"filterable\": [\n                {\n                  \"module\": \"search\",\n                  \"element\": \"id\"\n                },\n                {\n                  \"module\": \"search\",\n                  \"element\": \"body\"\n                }\n              ],\n              \"keyword\": {\n                \"source\": [\n                  {\n                    \"module\": \"search\",\n                    \"element\": \"body\"\n                  }\n                ],\n                \"ranking\": {\n                  \"family\": \"implementation-defined\"\n                },\n                \"analyzer\": {\n                  \"language\": \"english\",\n                  \"stemming\": true\n                },\n                \"syntax\": \"plain\"\n              }\n            },\n            {\n              \"id\": \"semantic\",\n              \"record\": {\n                \"module\": \"search\",\n                \"element\": \"Doc\"\n              },\n              \"kind\": \"vector\",\n              \"exactness\": \"exact\",\n              \"filterable\": [\n                {\n                  \"module\": \"search\",\n                  \"element\": \"id\"\n                },\n                {\n                  \"module\": \"search\",\n                  \"element\": \"body\"\n                }\n              ],\n              \"vector\": {\n                \"field\": {\n                  \"module\": \"search\",\n                  \"element\": \"embedding\"\n                },\n                \"source\": {\n                  \"module\": \"search\",\n                  \"element\": \"body\"\n                },\n                \"model\": {\n                  \"id\": \"fixture-embedder\",\n                  \"version\": \"1\"\n                },\n                \"dimensions\": 3,\n                \"metric\": \"cosine\",\n                \"computedBy\": \"host\"\n              }\n            }\n          ],\n          \"searchBindings\": [\n            {\n              \"index\": \"text\",\n              \"target\": {\n                \"platform\": \"postgresql\",\n                \"majorVersion\": \"18\"\n              },\n              \"native\": \"doc_text\",\n              \"freshness\": \"transactional\",\n              \"maxK\": 100,\n              \"filtering\": \"complete\"\n            },\n            {\n              \"index\": \"semantic\",\n              \"target\": {\n                \"platform\": \"postgresql\",\n                \"majorVersion\": \"18\"\n              },\n              \"native\": \"doc_semantic\",\n              \"freshness\": \"transactional\",\n              \"maxK\": 100,\n              \"filtering\": \"complete\"\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n",
+      "modelSha256": "4fb27f1ac4b0d8f178a29bb4d955f82f57e519a8717ad2ce860a20b60939fa91",
+      "relationships": [],
+      "schema": "search_app",
+      "tables": [
+        {
+          "columns": [
+            {
+              "carrier": "string",
+              "logical": "id",
+              "native": "id",
+              "nullable": false
+            },
+            {
+              "carrier": "string",
+              "logical": "body",
+              "native": "body",
+              "nullable": false
+            }
+          ],
+          "key": [
+            "id"
+          ],
+          "logical": [
+            "search",
+            "Doc"
+          ],
+          "native": "docs"
+        }
+      ],
+      "version": "umf.raw-read-binding/0.1"
+    },
+    "keyset": false,
+    "parameters": [],
+    "rowCap": 1000,
+    "sql": "SELECT \"r\".\"id\" AS \"id\" FROM \"search\".\"Doc\" AS \"r\"",
+    "target": "postgresql18",
+    "version": "weft.raw-read/0.1"
+  },
+  "source": {
+    "coreVersion": "0.8.0",
+    "documentId": "typed-search-e2e",
+    "documentSha256": "4fb27f1ac4b0d8f178a29bb4d955f82f57e519a8717ad2ce860a20b60939fa91",
+    "module": "search",
+    "pointer": "/modules/0/extensions/umf.access/search/1"
+  },
+  "topK": 3,
+  "vectorBinding": {
+    "dimensions": 3,
+    "extensionSchema": "public",
+    "extensionVersion": "0.8.7",
+    "field": {
+      "element": "embedding",
+      "module": "search"
+    },
+    "native": "embedding"
+  },
+  "version": "weft.search/0.1"
+}

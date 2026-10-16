@@ -8,6 +8,7 @@ publish.workspace = true
 weft-core = { path = "../weft-core" }
 serde.workspace = true
 serde_json.workspace = true
+sqlparser.workspace = true
 
 [[test]]
 name = "ashlar-binding"

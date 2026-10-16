@@ -730,4 +730,15 @@ mod current_query_object_tests{
 }
 
 #[cfg(feature="raw-postgresql-reads")]
-pub fn compile_raw_read_json(request:&str)->String {weft_postgresql::raw_read::compile_json(request)}
+pub fn compile_raw_read_json(request:&str)->String {
+ if serde_json::from_str::<serde_json::Value>(request).ok().is_some_and(|r|r["target"]=="spark-delta4"){weft_databricks::raw_read::compile_json(request)}else{weft_postgresql::raw_read::compile_json(request)}
+}
+
+#[cfg(feature="raw-postgresql-reads")]
+pub fn compile_native_action_json(request:&str)->String{weft_postgresql::raw_action::compile_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+pub fn compile_native_bulk_json(request:&str)->String{weft_postgresql::raw_bulk::compile_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+pub fn compile_search_json(request:&str)->String{weft_postgresql::search::compile_json(request)}

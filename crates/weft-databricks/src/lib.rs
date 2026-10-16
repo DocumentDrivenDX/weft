@@ -35,3 +35,5 @@ pub mod compatible_profile;
 
 /// Conditional same-original current-value SQL; hosts own native admission.
 pub mod current_scalar;
+
+pub mod raw_read;

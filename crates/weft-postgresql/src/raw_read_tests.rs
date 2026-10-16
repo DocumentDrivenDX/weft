@@ -82,4 +82,19 @@ mod raw_read_tests {
             assert_eq!(compile(r)["status"], status);
         }
     }
+    #[test]
+    fn raw_read_retains_native_privilege_and_complete_cursor_order_provenance() {
+        let mut r=request();
+        r["sql"]=json!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o ORDER BY o.status DESC NULLS FIRST, o.id ASC NULLS LAST LIMIT 2");
+        r["parameters"]=json!([]); r["keyset"]=json!(true);
+        let out=compile(r);
+        assert_eq!(out["status"],"compiled");
+        assert_eq!(out["cursorOrdering"],json!([
+            {"table":["commerce","Order"],"field":"status","direction":"DESC","nulls":"FIRST"},
+            {"table":["commerce","Order"],"field":"id","direction":"ASC","nulls":"LAST"}]));
+        assert_eq!(out["referencedTables"].as_array().unwrap().len(),1);
+        assert_eq!(out["referencedTables"][0]["native"],"orders");
+        assert_eq!(out["referencedTables"][0]["columns"][0]["native"],"id");
+    }
+
 }

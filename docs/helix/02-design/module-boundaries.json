@@ -39,6 +39,20 @@
           "path": null
         },
         {
+          "name": "sqlparser",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.63.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "std"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        },
+        {
           "name": "weft-core",
           "kind": "normal",
           "optional": false,
@@ -265,7 +279,8 @@
             "mod:paths_keys_having",
             "mod:implicit_arithmetic",
             "mod:compatible_profile",
-            "mod:current_scalar"
+            "mod:current_scalar",
+            "mod:raw_read"
           ],
           "pathReferences": []
         },
@@ -326,6 +341,13 @@
             "struct:Qualified"
           ],
           "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
         }
       ]
     },
@@ -376,6 +398,20 @@
           "path": null
         },
         {
+          "name": "proptest",
+          "kind": "dev",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.11.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "std"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        },
+        {
           "name": "serde",
           "kind": "normal",
           "optional": false,
@@ -422,20 +458,6 @@
           "optional": false,
           "source": "registry+https://github.com/rust-lang/crates.io-index",
           "req": "=0.63.0",
-          "rename": null,
-          "target": null,
-          "features": [
-            "std"
-          ],
-          "defaultFeatures": false,
-          "path": null
-        },
-        {
-          "name": "proptest",
-          "kind": "dev",
-          "optional": false,
-          "source": "registry+https://github.com/rust-lang/crates.io-index",
-          "req": "=1.11.0",
           "rename": null,
           "target": null,
           "features": [
@@ -1317,7 +1339,10 @@
             "mod:security_aggregate_results",
             "mod:security_operand_values",
             "mod:current_query_refinement",
-            "mod:raw_read"
+            "mod:raw_read",
+            "mod:raw_action",
+            "mod:raw_bulk",
+            "mod:search"
           ],
           "pathReferences": []
         },
@@ -1529,6 +1554,98 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/raw_action.rs",
+          "publicDeclarations": [
+            "type:ActionResult",
+            "struct:InvocationProfile",
+            "field:id",
+            "field:version",
+            "struct:ActionSource",
+            "field:document_id",
+            "field:core_version",
+            "field:module",
+            "field:action",
+            "field:document_sha256",
+            "field:action_pointer",
+            "field:invocation",
+            "struct:SecuritySources",
+            "field:policy",
+            "field:ontology",
+            "struct:ActionRequest",
+            "field:version",
+            "field:target",
+            "field:binding",
+            "field:source",
+            "field:role_mappings",
+            "field:session_principal",
+            "field:security",
+            "struct:ActionField",
+            "field:reference",
+            "field:table",
+            "field:logical",
+            "field:carrier",
+            "field:nullable",
+            "field:declaration",
+            "struct:ActionKey",
+            "field:reference",
+            "field:table",
+            "field:fields",
+            "struct:ActionEntity",
+            "field:key",
+            "field:components",
+            "field:required_existing",
+            "struct:ActionFrame",
+            "field:source",
+            "field:entity",
+            "field:fields",
+            "struct:ActionEffect",
+            "field:id",
+            "field:kind",
+            "field:entity",
+            "field:values",
+            "enum:RuleNode",
+            "struct:RuleExpression",
+            "field:family",
+            "field:nullable",
+            "field:node",
+            "struct:ActionCondition",
+            "field:id",
+            "field:code",
+            "field:retryable",
+            "field:source",
+            "field:expression",
+            "struct:AdmittedAction",
+            "fn:request",
+            "fn:action",
+            "fn:fields",
+            "fn:entities",
+            "fn:frames",
+            "fn:effects",
+            "fn:preconditions",
+            "fn:postconditions",
+            "fn:admit_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/raw_bulk.rs",
+          "publicDeclarations": [
+            "struct:RequestBulk",
+            "field:version",
+            "field:action",
+            "field:selection",
+            "field:max_items",
+            "field:action_inputs",
+            "field:parameters",
+            "struct:AdmittedBulk",
+            "fn:request",
+            "fn:action",
+            "fn:selection",
+            "fn:admit_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/raw_read.rs",
           "publicDeclarations": [
             "enum:Carrier",
@@ -1566,6 +1683,7 @@
             "field:binding",
             "field:parameters",
             "field:row_cap",
+            "field:snapshots",
             "field:keyset",
             "struct:AdmittedRead",
             "fn:request",
@@ -1578,6 +1696,43 @@
           "path": "crates/weft-core/src/resolve.rs",
           "publicDeclarations": [
             "fn:resolve"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/search.rs",
+          "publicDeclarations": [
+            "struct:Source",
+            "field:document_id",
+            "field:core_version",
+            "field:document_sha256",
+            "field:module",
+            "field:pointer",
+            "struct:Projection",
+            "field:field",
+            "field:name",
+            "struct:VectorBinding",
+            "field:field",
+            "field:native",
+            "field:dimensions",
+            "field:extension_schema",
+            "field:extension_version",
+            "struct:SearchRequest",
+            "field:version",
+            "field:source",
+            "field:selection",
+            "field:query_parameter",
+            "field:top_k",
+            "field:projection",
+            "field:vector_binding",
+            "field:allow_partial",
+            "struct:AdmittedSearch",
+            "fn:request",
+            "fn:selection",
+            "fn:index",
+            "fn:binding",
+            "fn:record",
+            "fn:admit_json"
           ],
           "pathReferences": []
         },
@@ -2577,7 +2732,10 @@
             "mod:security_relational_parameters",
             "mod:security_relational_sql",
             "mod:security_relational_transport",
-            "mod:security_native_codecs"
+            "mod:security_native_codecs",
+            "mod:raw_action",
+            "mod:raw_bulk",
+            "mod:search"
           ],
           "pathReferences": []
         },
@@ -2810,6 +2968,20 @@
             "const:PROFILE",
             "const:EVIDENCE",
             "struct:Qualified"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_action.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_bulk.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -3105,6 +3277,13 @@
             "fn:decode_property",
             "fn:decode_logical_property",
             "fn:decode"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/search.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -3408,6 +3587,20 @@
       "dependencies": [
         {
           "name": "serde",
+          "kind": "dev",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde",
           "kind": "normal",
           "optional": false,
           "source": "registry+https://github.com/rust-lang/crates.io-index",
@@ -3416,6 +3609,21 @@
           "target": null,
           "features": [
             "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "dev",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
           ],
           "defaultFeatures": true,
           "path": null
@@ -3482,35 +3690,6 @@
           "features": [],
           "defaultFeatures": true,
           "path": "crates/weft-postgresql"
-        },
-        {
-          "name": "serde",
-          "kind": "dev",
-          "optional": false,
-          "source": "registry+https://github.com/rust-lang/crates.io-index",
-          "req": "=1.0.228",
-          "rename": null,
-          "target": null,
-          "features": [
-            "derive"
-          ],
-          "defaultFeatures": true,
-          "path": null
-        },
-        {
-          "name": "serde_json",
-          "kind": "dev",
-          "optional": false,
-          "source": "registry+https://github.com/rust-lang/crates.io-index",
-          "req": "=1.0.145",
-          "rename": null,
-          "target": null,
-          "features": [
-            "arbitrary_precision",
-            "raw_value"
-          ],
-          "defaultFeatures": true,
-          "path": null
         }
       ],
       "sources": [
@@ -3572,7 +3751,10 @@
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend",
-            "fn:compile_raw_read_json"
+            "fn:compile_raw_read_json",
+            "fn:compile_native_action_json",
+            "fn:compile_native_bulk_json",
+            "fn:compile_search_json"
           ],
           "pathReferences": []
         },
@@ -3717,7 +3899,10 @@
         {
           "path": "crates/weft-python/src/lib.rs",
           "publicDeclarations": [
-            "fn:compile_raw_read_json"
+            "fn:compile_raw_read_json",
+            "fn:compile_native_action_json",
+            "fn:compile_native_bulk_json",
+            "fn:compile_search_json"
           ],
           "pathReferences": []
         }
@@ -3772,7 +3957,10 @@
             "fn:register_browser_selection",
             "fn:lower_selection_json",
             "fn:compile_json",
-            "fn:compile_raw_read_json"
+            "fn:compile_raw_read_json",
+            "fn:compile_native_action_json",
+            "fn:compile_native_bulk_json",
+            "fn:compile_search_json"
           ],
           "pathReferences": []
         }

@@ -77,3 +77,15 @@ impl MutationCompiler {
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_raw_read_json(request:&str)->String {weft_runtime::compile_raw_read_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen]
+pub fn compile_native_action_json(request:&str)->String{weft_runtime::compile_native_action_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen]
+pub fn compile_native_bulk_json(request:&str)->String{weft_runtime::compile_native_bulk_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen]
+pub fn compile_search_json(request:&str)->String{weft_runtime::compile_search_json(request)}

@@ -1042,6 +1042,7 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+ "sqlparser",
  "weft-core",
 ]
 
@@ -1067,7 +1068,7 @@ dependencies = [
 
 [[package]]
 name = "weft-python"
-version = "0.4.36"
+version = "0.4.37-dev.0"
 dependencies = [
  "pyo3",
  "weft-runtime",

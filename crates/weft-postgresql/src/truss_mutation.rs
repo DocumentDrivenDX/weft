@@ -415,6 +415,14 @@ mod native066_tests {
         let backend=CurrentTrussMutationBackend::new(model.clone(),bad.clone(),pin,vec!["Changed manifest refusal".into()]).unwrap();
         let refused=serde_json::to_value(backend.lower_selection(&selection,&model,&bad,2).unwrap()).unwrap();
         assert_eq!(refused["status"],"blocked");
+        // A recognized0.68 registration also cannot upgrade a wrong original
+        // manifest hash into qualified native selection lowering.
+        let mut changed=bad.read().unwrap();changed["releaseId"]=json!("truss-catalog-runtime/0.68-candidate");
+        let utf8=changed.to_string();let native068=Artifact{media_type:"application/json".into(),sha256:weft_core::json::sha256(utf8.as_bytes()),utf8};
+        let pin:ModelPin=serde_json::from_value(fixture["modelPin"].clone()).unwrap();
+        let backend=CurrentTrussMutationBackend::new(model.clone(),native068.clone(),pin,vec!["Recognized original68 source; wrong native manifest hash".into()]).unwrap();
+        let refused=serde_json::to_value(backend.lower_selection(&selection,&model,&native068,2).unwrap()).unwrap();
+        assert_eq!(refused["status"],"blocked");
     }
 }
 

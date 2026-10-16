@@ -33,6 +33,12 @@ fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_raw_read_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_native_action_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_native_bulk_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_search_json, m)?)?;
     m.add_class::<MutationCompiler>()?;
     #[cfg(feature="truss-security-relationship-candidate")]
     {
@@ -236,3 +242,15 @@ fn refinement_text(value:&Bound<'_,PyAny>,maximum:usize)->PyResult<String>{
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]
 pub fn compile_raw_read_json(request:&str)->String {weft_runtime::compile_raw_read_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_native_action_json(request:&str)->String{weft_runtime::compile_native_action_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_native_bulk_json(request:&str)->String{weft_runtime::compile_native_bulk_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_search_json(request:&str)->String{weft_runtime::compile_search_json(request)}

@@ -306,3 +306,9 @@ pub mod security_relational_transport;
 pub mod security_native_codecs;
 
 mod truss_browser_binding;
+
+pub mod raw_action;
+
+pub mod raw_bulk;
+
+pub mod search;

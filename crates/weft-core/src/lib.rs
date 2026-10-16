@@ -181,3 +181,9 @@ pub mod security_operand_values;
 pub mod current_query_refinement;
 
 pub mod raw_read;
+
+pub mod raw_action;
+
+pub mod raw_bulk;
+
+pub mod search;

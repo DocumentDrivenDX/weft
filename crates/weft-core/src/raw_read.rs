@@ -68,10 +68,12 @@ pub struct Request {
     pub binding: Binding,
     pub parameters: Vec<Parameter>,
     pub row_cap: u16,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub snapshots: Option<BTreeMap<String,u64>>,
     #[serde(default)]
     pub keyset: bool,
 }
-fn validate_model(binding: &Binding) -> Result<()> {
+pub(crate) fn validate_model(binding: &Binding) -> Result<()> {
     let doc = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
     if crate::json::sha256(binding.model_json.as_bytes()) != binding.model_sha256 {
         return Err("model source pin mismatch");

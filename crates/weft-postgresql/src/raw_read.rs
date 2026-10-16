@@ -11,7 +11,7 @@ trait PgCarrier {
 impl PgCarrier for Carrier {
     fn sql(&self) -> &str {
         match self {
-            Self::Integer => "int8",
+            Self::Integer => "numeric",
             Self::Decimal => "numeric",
             Self::String => "text",
             Self::Boolean => "bool",
@@ -160,6 +160,12 @@ impl<'a> Lower<'a> {
                 });
             }
         }
+        if let Expr::Value(v)=e { match &v.value {
+            Value::SingleQuotedString(text)=>{if text.contains('\0'){return Err("native string literal contains NUL")};return Ok(Scalar{sql:format!("(E'{}' COLLATE pg_catalog.\"C\")",text.replace('\\',"\\\\").replace('\'',"''")),carrier:Carrier::String,nullable:false,aggregate:false,fields:BTreeSet::new()})},
+            Value::Boolean(value)=>return Ok(Scalar{sql:if *value{"TRUE"}else{"FALSE"}.into(),carrier:Carrier::Boolean,nullable:false,aggregate:false,fields:BTreeSet::new()}),
+            Value::Number(token,false)=>{let integer=token.bytes().all(|c|c.is_ascii_digit()||matches!(c,b'-'|b'+'));return Ok(Scalar{sql:format!("({token})::pg_catalog.numeric"),carrier:if integer{Carrier::Integer}else{Carrier::Decimal},nullable:false,aggregate:false,fields:BTreeSet::new()})},
+            _=>{}
+        }}
         let Expr::Function(f) = e else {
             return Err("unsupported scalar expression; use a bound parameter");
         };
@@ -272,6 +278,8 @@ impl<'a> Lower<'a> {
                 }
                 Ok(format!("{} {} {}", l.sql, op, r.sql))
             }
+            Expr::Between{expr,negated,low,high}=>{let value=self.predicate_value(expr,aggregates)?;let low=self.predicate_value(low,aggregates)?;let high=self.predicate_value(high,aggregates)?;if value.carrier!=low.carrier||value.carrier!=high.carrier{return Err("BETWEEN carrier mismatch")};Ok(format!("{} {}BETWEEN {} AND {}",value.sql,if *negated{"NOT "}else{""},low.sql,high.sql))},
+            Expr::InList{expr,list,negated}=>{let value=self.predicate_value(expr,aggregates)?;if list.len()>1000{return Err("IN list budget")};if list.is_empty(){return Ok(if *negated{"TRUE"}else{"FALSE"}.into())};let items=list.iter().map(|expr|{let item=self.predicate_value(expr,aggregates)?;if item.carrier!=value.carrier{return Err("IN carrier mismatch")};Ok(item.sql)}).collect::<Result<Vec<_>>>()?;Ok(format!("{} {}IN ({})",value.sql,if *negated{"NOT "}else{""},items.join(", ")))},
             Expr::IsNull(e) => Ok(format!(
                 "{} IS NULL",
                 self.predicate_value(e, aggregates)?.sql
@@ -338,10 +346,12 @@ impl<'a> Lower<'a> {
         Ok((old.ok_or("empty join")?, result))
     }
 }
-fn lower(admitted: &AdmittedRead) -> Result<Json> {
+pub(crate) fn lower(admitted: &AdmittedRead) -> Result<Json> { lower_profile(admitted,true) }
+pub(crate) fn lower_search_input(admitted:&AdmittedRead)->Result<Json>{lower_profile(admitted,false)}
+fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     let r = admitted.request();
     let q = admitted.query();
-    if r.version != "weft.raw-read/0.1"
+    if r.snapshots.is_some() || r.version != "weft.raw-read/0.1"
         || !["postgresql18", "lakebase18"].contains(&r.target.as_str())
     {
         return Err("unsupported target or request version");
@@ -532,6 +542,7 @@ fn lower(admitted: &AdmittedRead) -> Result<Json> {
     }
     let mut cursor_parameters: Vec<Parameter> = vec![];
     let mut cursor_outputs: Vec<Output> = vec![];
+    let mut cursor_ordering: Vec<Json> = vec![];
     let mut after_filter = None;
     if r.keyset {
         if aggregate || s.having.is_some() {
@@ -562,12 +573,16 @@ fn lower(admitted: &AdmittedRead) -> Result<Json> {
         for (i, item) in items.iter().enumerate() {
             let c = l.column(&item.expr)?;
             let field = c.fields.iter().next().unwrap().clone();
-            if !seen.insert(field) {
+            if !seen.insert(field.clone()) {
                 return Err("duplicate keyset ordering column");
             }
             if matches!(c.carrier, Carrier::Boolean) {
                 return Err("boolean keyset ordering outside profile");
             }
+            let (table, _) = l.scans.get(&field.0).ok_or("missing ordering owner")?;
+            cursor_ordering.push(json!({"table": table.logical, "field":field.1,
+                "direction":match item.options.sort {None|Some(OrderBySort::Asc)=>"ASC",Some(OrderBySort::Desc)=>"DESC",_=>return Err("keyset operator")},
+                "nulls":if item.options.nulls_first.unwrap_or(false){"FIRST"}else{"LAST"}}));
             let pname = format!("__umf_after_{i}");
             l.slots.push(pname.clone());
             let slot = format!("${}::pg_catalog.{}", l.slots.len(), c.carrier.sql());
@@ -691,11 +706,11 @@ fn lower(admitted: &AdmittedRead) -> Result<Json> {
         },
         _ => return Err("offset/limit outside profile"),
     };
-    sql += &format!(" LIMIT {}", limit);
+    if bounded {sql += &format!(" LIMIT {}", limit);}
     if l.used.len() != r.parameters.len() {
         return Err("unused declared parameter");
     }
-    let obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":limit,"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
+    let obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":if bounded{json!(limit)}else{Json::Null},"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
     let lock_sql: Vec<String> = l
         .scans
         .values()
@@ -709,7 +724,8 @@ fn lower(admitted: &AdmittedRead) -> Result<Json> {
         .collect::<BTreeSet<_>>()
         .into_iter()
         .collect();
-    let mut result = json!({"version":"weft.raw-read/0.1","status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs});
+    let referenced_tables: Vec<Json> = l.scans.values().map(|(table,_)| json!({"logical":table.logical,"native":table.native,"columns":table.columns})).collect();
+    let mut result = json!({"version":if bounded{"weft.raw-read/0.1"}else{"weft.search-input/0.1"},"status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced_tables});
     let digest = weft_core::json::sha256(result.to_string().as_bytes());
     result["structuralDigest"] = json!(digest);
     Ok(result)
