@@ -1,0 +1,104 @@
+{
+  "version": "0.4.36",
+  "sourceCommit": "a14640f2bb288e58de0c9846fb10162e3e4030fc",
+  "wheel": "weft_sql-0.4.36-cp39-abi3-macosx_10_12_x86_64.whl",
+  "pinsBeforeAfter": {
+    "wheelSha256": "0b3386c2bcc2b8f022835ec6c6fbc89ef4f6774532e8c9ca59555fc01fb4d418",
+    "nativeModuleSha256": "19a30f8d9ddecb10e8cb2fd98e378fa195f1b451f5b23391c7f610e001fa084f",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "controls": 22,
+  "checks": [
+    {
+      "id": "projection",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-0",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-1",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-2",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-3",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-4",
+      "status": "compiled"
+    },
+    {
+      "id": "exact-parameter-5",
+      "status": "compiled"
+    },
+    {
+      "id": "nonrepresentable-0",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-1",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-2",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-3",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-4",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-5",
+      "status": "blocked"
+    },
+    {
+      "id": "nonrepresentable-6",
+      "status": "blocked"
+    },
+    {
+      "id": "old-version-0.4.38",
+      "status": "blocked"
+    },
+    {
+      "id": "old-version-0.4.37",
+      "status": "blocked"
+    },
+    {
+      "id": "related-decimal-key",
+      "status": "compiled"
+    },
+    {
+      "id": "first-typed-page",
+      "status": "compiled"
+    },
+    {
+      "id": "next-typed-page",
+      "status": "compiled"
+    },
+    {
+      "id": "bad-typed-page",
+      "status": "blocked"
+    },
+    {
+      "id": "genuine-unnamed-old-backend",
+      "status": "blocked"
+    },
+    {
+      "id": "genuine-unnamed-new-backend",
+      "status": "compiled"
+    }
+  ],
+  "nativeAdmission": false,
+  "securityReady": false,
+  "scope": "Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."
+}

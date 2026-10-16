@@ -1,0 +1,29 @@
+{
+  "scope": "Exact original public CRLF report bytes; restore gzip contents before checking original SHA256SUMS/API digests",
+  "files": [
+    {
+      "originalPath": "current-databricks-smoke-x86_64-pc-windows-msvc.json",
+      "storedPath": "current-databricks-smoke-x86_64-pc-windows-msvc.json.gz",
+      "originalSha256": "ff106f43769d1e9b6c204cd11a38ec4bc4de6afa5b258a718b27fcf2b8d4b86c",
+      "storedSha256": "dd44282d1cacf9955be1df29493943a364888572fc3b035c6e53170fab1b0cb5"
+    },
+    {
+      "originalPath": "current-query-smoke-x86_64-pc-windows-msvc.json",
+      "storedPath": "current-query-smoke-x86_64-pc-windows-msvc.json.gz",
+      "originalSha256": "b856496c5fee00a890986c99b493276e60fe19be69e1fee92a7f7731fe1672ad",
+      "storedSha256": "84ac2dbd0784584ae11bfb07e605c65f6157bf66460e9e2c6ddf7df34d97152d"
+    },
+    {
+      "originalPath": "current-refinement-smoke-x86_64-pc-windows-msvc.json",
+      "storedPath": "current-refinement-smoke-x86_64-pc-windows-msvc.json.gz",
+      "originalSha256": "4dee3ad547bfaf984ee6b0a28f92c0f07ca3871c954f8c3f1a00fe72ff86c180",
+      "storedSha256": "2a309d8c2d76be1f8e9f21afe86c3148ff28e21d53aa650c1f1f927085c9ee16"
+    },
+    {
+      "originalPath": "truss-decimal12-smoke-x86_64-pc-windows-msvc.json",
+      "storedPath": "truss-decimal12-smoke-x86_64-pc-windows-msvc.json.gz",
+      "originalSha256": "7a4057040cdeebbb6062c7ed208ba501f6516f70e6200ec5631d8f362d48dc05",
+      "storedSha256": "d2eaec8c46603d3b95662daf21a7873402ad8b85975542f257276a99699fb433"
+    }
+  ]
+}

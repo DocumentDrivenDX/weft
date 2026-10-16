@@ -1,0 +1,22 @@
+{
+  "scope": "Verified public standard SDK36 cohort; bounded String feature is separate later main component; no B008 native case promotion",
+  "releaseUrl": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.36",
+  "sourceCommit": "a14640f2bb288e58de0c9846fb10162e3e4030fc",
+  "mainBoundedStringCommit": "8e0f4cb069818b093f59f040b4255f5881876730",
+  "assetsVerified": 27,
+  "platformJobsPassed": 5,
+  "publishedReportsVerified": 20,
+  "localInstalledPublicWheelChecks": {
+    "decimalAndIdentity": 22,
+    "refinement": 30,
+    "queryAbi": 17,
+    "genuineNorthwindCompiler": 2
+  },
+  "nativeSecurityCasePromotions": 0,
+  "originalRequiredCases": 132,
+  "authorityAndGuardedRelease": "still require qualified native host enforcement",
+  "databricksUnmetResources": [
+    "working second caller",
+    "dedicated SQL endpoint"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "scope": "Actual installed candidate wheel and genuine owner-captured modules/binding; compiler-only, no native SQL execution",
+  "version": "0.4.36",
+  "pinsBeforeAfter": {
+    "wheelSha256": "ab14b73dcf94ea329514b5e9a54e6d37bbdca08e45319446f0e6d6181117deab",
+    "nativeModuleSha256": "fd9f6a76b1c584ee4c49fbdb452cf9c1349918d417e3a4f303691c2a8d33f853",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "originalRequestSha256": "f2b9167a0a0df0f409b12f3aeb9e7403d0b389a3204dc1a1189bf654d7dd72e8",
+  "checks": [
+    {
+      "backendVersion": "0.4.38",
+      "status": "blocked",
+      "originalModuleAndBindingPreserved": true
+    },
+    {
+      "backendVersion": "0.4.39",
+      "status": "compiled",
+      "originalModuleAndBindingPreserved": true
+    }
+  ],
+  "nativeAdmission": false,
+  "securityReady": false
+}
