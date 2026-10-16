@@ -224,7 +224,9 @@
             "fn:lower",
             "fn:lower_original_sum",
             "fn:check_contributors",
-            "fn:check_original_sum"
+            "fn:check_original_sum",
+            "fn:lower_spark_contributors",
+            "fn:check_spark_contributors"
           ],
           "pathReferences": []
         },
@@ -1312,7 +1314,8 @@
             "mod:security_source_context",
             "mod:security_aggregate_results",
             "mod:security_operand_values",
-            "mod:current_query_refinement"
+            "mod:current_query_refinement",
+            "mod:raw_read"
           ],
           "pathReferences": []
         },
@@ -1520,6 +1523,52 @@
             "field:second",
             "field:kind",
             "field:span"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/raw_read.rs",
+          "publicDeclarations": [
+            "enum:Carrier",
+            "struct:Column",
+            "field:logical",
+            "field:native",
+            "field:carrier",
+            "field:nullable",
+            "struct:Table",
+            "field:logical",
+            "field:native",
+            "field:columns",
+            "field:key",
+            "struct:Relationship",
+            "field:id",
+            "field:source",
+            "field:target",
+            "field:pairs",
+            "field:to_one",
+            "struct:Binding",
+            "field:version",
+            "field:schema",
+            "field:tables",
+            "field:relationships",
+            "field:model_sha256",
+            "field:model_json",
+            "struct:Parameter",
+            "field:name",
+            "field:carrier",
+            "field:nullable",
+            "struct:Request",
+            "field:version",
+            "field:target",
+            "field:sql",
+            "field:binding",
+            "field:parameters",
+            "field:row_cap",
+            "field:keyset",
+            "struct:AdmittedRead",
+            "fn:request",
+            "fn:query",
+            "fn:admit_json"
           ],
           "pathReferences": []
         },
@@ -2268,6 +2317,20 @@
           "path": null
         },
         {
+          "name": "sqlparser",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.63.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "std"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        },
+        {
           "name": "weft-core",
           "kind": "normal",
           "optional": false,
@@ -2456,6 +2519,7 @@
           "publicDeclarations": [
             "mod:current_scalar",
             "mod:truss_mutation",
+            "mod:raw_read",
             "mod:mutation",
             "mod:truss_runtime",
             "mod:pg18",
@@ -2745,6 +2809,18 @@
             "const:EVIDENCE",
             "struct:Qualified"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read_tests.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
@@ -3484,6 +3560,8 @@
             "fn:lower_postgresql_current_sum_candidate_json",
             "fn:lower_databricks_current_contributors_candidate_json",
             "fn:lower_databricks_current_sum_candidate_json",
+            "fn:lower_spark_current_contributors_candidate_json",
+            "fn:check_spark_current_contributors_candidate_json",
             "fn:check_postgresql_current_rows_candidate_json",
             "fn:check_postgresql_current_contributors_candidate_json",
             "fn:check_postgresql_current_sum_candidate_json",
@@ -3491,7 +3569,8 @@
             "fn:check_databricks_current_sum_candidate_json",
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
-            "fn:install_browser_mutation_backend"
+            "fn:install_browser_mutation_backend",
+            "fn:compile_raw_read_json"
           ],
           "pathReferences": []
         },
@@ -3635,7 +3714,9 @@
       "sources": [
         {
           "path": "crates/weft-python/src/lib.rs",
-          "publicDeclarations": [],
+          "publicDeclarations": [
+            "fn:compile_raw_read_json"
+          ],
           "pathReferences": []
         }
       ]
@@ -3688,7 +3769,8 @@
             "fn:new",
             "fn:register_browser_selection",
             "fn:lower_selection_json",
-            "fn:compile_json"
+            "fn:compile_json",
+            "fn:compile_raw_read_json"
           ],
           "pathReferences": []
         }
@@ -3933,7 +4015,8 @@
       "coverage": "Checked source inventory; Python/TS/shell import and internal module coupling reviewed manually",
       "roots": [
         "scripts",
-        "tests/qualify-and-evolve"
+        "tests/qualify-and-evolve",
+        "tests/current-scalar-spark"
       ],
       "extensions": [
         ".py",
@@ -4019,6 +4102,7 @@
         "scripts/sign-site.mjs",
         "scripts/spec-allocation.test.ts",
         "scripts/spec-allocation.ts",
+        "tests/current-scalar-spark/python-bridge.py",
         "tests/qualify-and-evolve/ashlar-count-controls.py",
         "tests/qualify-and-evolve/ashlar-engine-controls.py",
         "tests/qualify-and-evolve/ashlar-warehouse-controls.py",
