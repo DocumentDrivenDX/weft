@@ -1,0 +1,79 @@
+[
+  {
+    "mode": "default",
+    "wheel": "/private/tmp/weft-graph-fresh-feature-wheels-20261016/default/weft_sql-0.4.39-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "0a89bd1ac32d1838a695894cc94c2033ff7b3133f87efff777ae8b72cd5705bb",
+    "test": {
+      "mode": "default",
+      "checks": [
+        "default class absent"
+      ],
+      "passed": 1,
+      "nativeAdmission": false
+    }
+  },
+  {
+    "mode": "old-model",
+    "wheel": "/private/tmp/weft-graph-fresh-feature-wheels-20261016/old-model/weft_sql-0.4.39-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "e54678313a966f94fa802a5a645e5a0850b62a7cd137cc4fcaa6f2c20b1e03e4",
+    "test": {
+      "mode": "old-model",
+      "checks": [
+        "old model method present",
+        "graph method absent"
+      ],
+      "passed": 2,
+      "nativeAdmission": false
+    }
+  },
+  {
+    "mode": "graph",
+    "wheel": "/private/tmp/weft-graph-fresh-feature-wheels-20261016/graph/weft_sql-0.4.39-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "9161fd61cf6313dc73031a1937ebf90a5c6e770565aa88bcd0020060137b53f5",
+    "test": {
+      "mode": "graph",
+      "checks": [
+        "same original parent",
+        "equal source remains different parent",
+        "deterministic data does not replace custody",
+        "exact original source",
+        "exact source hash",
+        "actual preparation hash",
+        "same-context model hash",
+        "version",
+        "complete false",
+        "authority false",
+        "securityReady false",
+        "native admission required",
+        "independent association mapping",
+        "record namespace",
+        "target Key original owner",
+        "member original descriptor",
+        "target Key original owner",
+        "member original descriptor",
+        "record namespace",
+        "target Key original owner",
+        "member original descriptor",
+        "target Key original owner",
+        "member original descriptor",
+        "parent retained",
+        "data stable after parent drop",
+        "wrong receiver",
+        "wrong receiver",
+        "wrong receiver",
+        "wrong receiver",
+        "wrong receiver",
+        "wrong receiver",
+        "extra argument",
+        "no coercion callbacks",
+        "no constructor",
+        "no copy",
+        "no pickle",
+        "frozen parent",
+        "report not compiler request"
+      ],
+      "passed": 38,
+      "nativeAdmission": false
+    }
+  }
+]

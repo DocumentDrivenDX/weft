@@ -1,3 +1,5 @@
+#[cfg(feature="current-presence-graph-requirements-candidate")]
+pub mod current_presence_graph_requirements;
 #[cfg(feature="current-presence-model-requirements-candidate")]
 pub mod current_presence_model_requirements;
 #[cfg(feature="current-presence-context-candidate")]

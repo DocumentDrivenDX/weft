@@ -1205,6 +1205,24 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/current_presence_graph_requirements.rs",
+          "publicDeclarations": [
+            "struct:CurrentPresenceGraphRequirements",
+            "fn:context",
+            "fn:model_requirements",
+            "fn:json",
+            "fn:derive"
+          ],
+          "pathReferences": [
+            "crates/weft-core/src/current_presence_graph_requirements_tests.rs"
+          ]
+        },
+        {
+          "path": "crates/weft-core/src/current_presence_graph_requirements_tests.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/current_presence_model_requirements.rs",
           "publicDeclarations": [
             "struct:CurrentPresenceModelRequirements",
@@ -1382,6 +1400,7 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:current_presence_graph_requirements",
             "mod:current_presence_model_requirements",
             "mod:current_presence",
             "mod:current_string_domain",
@@ -3889,6 +3908,7 @@
             "fn:is_from",
             "fn:native_request_json",
             "fn:model_requirements_json",
+            "fn:graph_requirements_json",
             "fn:lower_postgresql_current_presence_candidate_json",
             "fn:check_postgresql_current_presence_candidate_json"
           ],

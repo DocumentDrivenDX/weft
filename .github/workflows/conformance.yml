@@ -178,3 +178,52 @@ jobs:
             ${{ runner.temp }}/weft-formal-evidence
             ${{ runner.temp }}/weft-mutation-evidence
           if-no-files-found: error
+
+  graph-requirements-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CARGO_BUILD_JOBS: "1"
+      CARGO_PROFILE_TEST_OPT_LEVEL: "1"
+      CARGO_PROFILE_TEST_DEBUG_ASSERTIONS: "true"
+      CARGO_PROFILE_TEST_OVERFLOW_CHECKS: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Graph candidate builders
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal
+          rustup default 1.90.0
+          python -m pip install maturin==1.9.6
+          cargo fetch --locked
+      - name: Original Graph Core, lifetime and runtime custody checks
+        run: |
+          cargo test --locked -p weft-core --features current-presence-graph-requirements-candidate --lib
+          cargo test --locked -p weft-core --features current-presence-graph-requirements-candidate --doc current_presence_graph_requirements
+          cargo test --locked -p weft-runtime --features current-presence-graph-requirements-candidate --lib current_presence
+      - name: Build separate default, model-only and Graph native wheels
+        run: |
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --no-default-features --out "$RUNNER_TEMP/graph-wheels/default"
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --no-default-features --features current-presence-model-requirements-candidate --out "$RUNNER_TEMP/graph-wheels/model"
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --no-default-features --features current-presence-graph-requirements-candidate --out "$RUNNER_TEMP/graph-wheels/graph"
+      - name: Actual native Python custody and feature isolation
+        run: |
+          mkdir -p "$RUNNER_TEMP/graph-evidence"
+          for profile in default model graph; do
+            python -m pip install --no-deps --target "$RUNNER_TEMP/graph-installed/$profile" "$RUNNER_TEMP/graph-wheels/$profile/"*.whl
+          done
+          python tests/current-query-presence/python-graph-requirements-bridge.py "$RUNNER_TEMP/graph-installed/default" default > "$RUNNER_TEMP/graph-evidence/default.json"
+          python tests/current-query-presence/python-graph-requirements-bridge.py "$RUNNER_TEMP/graph-installed/model" old-model > "$RUNNER_TEMP/graph-evidence/model.json"
+          python tests/current-query-presence/python-graph-requirements-bridge.py "$RUNNER_TEMP/graph-installed/graph" graph > "$RUNNER_TEMP/graph-evidence/graph.json"
+          python tests/current-query-presence/python-model-requirements-bridge.py "$RUNNER_TEMP/graph-installed/graph" candidate "$RUNNER_TEMP/graph-evidence/existing-model.json"
+      - name: Retain unpublished Graph candidate wheels and receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: graph-requirements-candidate-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/graph-evidence
+            ${{ runner.temp }}/graph-wheels
+          if-no-files-found: warn

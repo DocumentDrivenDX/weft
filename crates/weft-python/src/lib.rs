@@ -328,6 +328,10 @@ impl CurrentPresencePreparation{
  fn model_requirements_json(&self,py:Python<'_>)->PyResult<String>{
   self.check_original(py)?;self.inner.model_requirements_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
  }
+ #[cfg(feature="current-presence-graph-requirements-candidate")]
+ fn graph_requirements_json(&self,py:Python<'_>)->PyResult<String>{
+  self.check_original(py)?;self.inner.graph_requirements_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
  fn lower_postgresql_current_presence_candidate_json(&self,py:Python<'_>,binding_json:&Bound<'_,PyAny>)->PyResult<String>{
   self.check_original(py)?;let binding=presence_text(binding_json,4_000_000)?;self.inner.lower_postgresql_current_presence_candidate_json(&binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
  }
