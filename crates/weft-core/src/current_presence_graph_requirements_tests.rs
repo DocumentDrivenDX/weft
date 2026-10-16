@@ -69,7 +69,7 @@ fn structural_endpoint_key_namespace_and_witness_breaks_refuse_without_defaults(
 }
 #[test]
 fn existing_model_report_bytes_remain_exact_against_actual039_native_baseline(){
- let raw=include_str!("../../../tests/current-query-presence/fixtures/unadmitted-context.request.json");assert_eq!(sha256(raw.as_bytes()),"2ebd655178b71bb49c48ff6997587cf51cd2a419a1793f95a24a6ec82d5dfe24");let original=crate::application_lineage::prepare(raw).unwrap();let context=crate::current_presence::prepare(&original).unwrap();let result=derive(&context).unwrap();assert_eq!(sha256(result.model_requirements().json().as_bytes()),"b5285598b2a6da07b6f6070adb468dd55ba496842a64f11b078eebe8fcf9924e");assert_eq!(result.model_requirements().record_requirements().len(),5);
+ let raw=include_str!("../../../tests/current-query-presence/fixtures/unadmitted-context.request.json");assert_eq!(sha256(raw.as_bytes()),"2ebd655178b71bb49c48ff6997587cf51cd2a419a1793f95a24a6ec82d5dfe24");let original=crate::application_lineage::prepare(raw).unwrap();let context=crate::current_presence::prepare(&original).unwrap();let result=derive(&context).unwrap();assert_eq!(sha256(result.model_requirements().json().as_bytes()),"b5285598b2a6da07b6f6070adb468dd55ba496842a64f11b078eebe8fcf9924e");assert_eq!(result.model_requirements().record_requirements().len(),5);assert_eq!(result.json().len(),30_718);assert_eq!(sha256(result.json().as_bytes()),"fea5b5468a1d9e2e79d2a96dd1107777a6a56022dad892de4d4ebd92b24b870a");
 }
 #[test]
 fn borrowed_metadata_amplification_has_whole_report_positive_and_refusal_controls(){
@@ -173,4 +173,15 @@ fn unselected_declared_target_key_is_resolved_completely_without_entity_defaults
   assert_eq!(value["associations"][2]["endpoints"][1]["declarationOrdinals"],json!([0,1]));
   assert_eq!(value["sourceRequestJson"],raw);assert_eq!(value["authority"],false);
  }
+}
+
+#[test]
+fn intermediate_output_budget_is_inclusive_and_refuses_before_retention() {
+ let payload="x".repeat(LIMIT-2);let mut entries=Vec::new();
+ let mut budget=PayloadBudget::result_phase(CODE);
+ retain(&mut budget,&mut entries,payload.as_str()).unwrap();
+ assert_eq!(entries.len(),1);assert_eq!(entries[0],payload);
+ assert!(retain(&mut budget,&mut entries,"").is_err());
+ assert_eq!(entries.len(),1,"refused entry must not be retained");
+ assert_eq!(entries[0],payload,"previous retained entries must remain unchanged");
 }

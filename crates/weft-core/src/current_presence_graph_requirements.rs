@@ -84,6 +84,11 @@ impl Resolver<'_>{
 #[derive(Serialize)]
 #[serde(rename_all="camelCase")]
 struct Report<'a>{version:&'static str,scope:&'static str,complete:bool,authority:bool,security_ready:bool,native_admission:&'static str,source_request_json:&'a str,source_request_sha256:String,preparation_sha256:String,model_requirements_sha256:String,model_pins:Vec<crate::ir::ModelPin>,associations:Vec<Association<'a>>,unresolved:Vec<&'static str>}
+// Charge the encoded payload before retaining an entry, independently of the
+// final report encoder. Failure leaves already retained entries unchanged.
+fn retain<T:Serialize>(budget:&mut PayloadBudget,entries:&mut Vec<T>,entry:T)->Result<()>{
+ budget.copy_json(&entry).map_err(|_|fail())?;entries.push(entry);Ok(())
+}
 fn encode<T:Serialize>(v:&T)->Result<String>{
  struct Buffer{bytes:Vec<u8>,left:usize}
  impl std::io::Write for Buffer{fn write(&mut self,b:&[u8])->std::io::Result<usize>{self.left=self.left.checked_sub(b.len()).ok_or_else(||std::io::Error::other("budget"))?;self.bytes.extend_from_slice(b);Ok(b.len())}fn flush(&mut self)->std::io::Result<()>{Ok(())}}
@@ -141,7 +146,7 @@ pub fn derive<'context,'parent>(context:&'context CurrentPresencePreparation<'pa
     },
     _=>return Err(fail()),
    };
-   output_budget.copy_json(&entry).map_err(|_|fail())?;entries.push(entry)
+   retain(&mut output_budget,&mut entries,entry)?
   }
   let report=Report{version:"weft.current-presence.graph-requirements/0.1-candidate",scope:"original-association-endpoint-requirements-only",complete:false,authority:false,security_ready:false,native_admission:"required",source_request_json:parent.source_request_json(),source_request_sha256:sha256(parent.source_request_json().as_bytes()),preparation_sha256:sha256(context.json().as_bytes()),model_requirements_sha256:sha256(model.json().as_bytes()),model_pins:catalog.pins(),associations:entries,unresolved:vec!["original UMF whole-source semantics and required-meaning verdict","native graph interpretation, codec, complete occurrence populations and context correspondence","actual held source/caller/current-authority witness","closing guards and guarded release"]};
   let json=encode(&report)?;

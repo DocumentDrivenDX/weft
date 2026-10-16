@@ -125,3 +125,16 @@ compiler without substituting selected-entity/default Keys; refuse an invalid
 final component at Graph resolution even when selected model requirements
 succeed. Encoded retained-payload limits do not guarantee absence of temporary
 allocation while resolving that original Key.
+
+## Independent output-retention control
+
+Exercise the actual entry-retention helper separately from final serialization:
+an encoded JSON string filling the 16,000,000-byte budget exactly succeeds;
+the next entry refuses without retaining it or altering the previous entry.
+Remove the helper's charge in an isolated source mutant and require this test
+to fail; final report encoding cannot substitute for that intermediate guard.
+Restore the source and rerun the complete Graph-enabled Core suite and native
+bridge checks. Preserve a byte/hash golden for the complete unchanged Graph
+report obtained from the earlier retained native wheel, alongside the existing
+model-report golden. These controls establish payload accounting and data
+compatibility, not native admission or peak-process-memory guarantees.
