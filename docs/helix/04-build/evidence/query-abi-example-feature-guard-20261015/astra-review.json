@@ -1,0 +1,48 @@
+{
+  "status": "no-blocking-packaging-finding",
+  "scope": "Independent static four-line Cargo manifest delta review only. No Rust/core/native/CI campaign was run.",
+  "base": "fa55e7b73117544d6351b0f866abe0d6a28c9f65",
+  "file": "crates/weft-runtime/Cargo.toml",
+  "beforeSha256": "60e3885b267ca835cd412e4f829d92efa794fc8656d2309d133a872401ca2e43",
+  "afterSha256": "48eb19d53b7944c24b97bf8630d421d30b30c100a91eb5996a641adcd52176cd",
+  "semanticDelta": {
+    "name": "compile_truss_query_abi",
+    "required-features": [
+      "truss-postgresql-pg18"
+    ]
+  },
+  "checks": {
+    "beforeMatchesActualCommittedGitBlob": true,
+    "onlyFourLineAppend": true,
+    "parsedTOMLOnlyOneExampleAddition": true,
+    "exactFeatureNameMatchesCommittedCalleeCfg": true,
+    "featureEnablesActualOptionalDependency": true,
+    "matchesExistingRequiredFeatureExamplePattern": true,
+    "beforeAfterCaptureStable": true
+  },
+  "sourcePins": {
+    "committedRuntimeLib": "f8d04bf72ebb50b1b2532e3f9bdd176453a393e6c1fa457b54456905f2a00f5a",
+    "committedExample": "2a9244a5c786da111637cc42d83df46ccdacab6afbd21eeca9a47bcdb8bb68e1"
+  },
+  "effect": "Default examples builds skip this example when its callee is unavailable. Explicit truss-postgresql-pg18 selection admits the example and enables the same original callee; no implementation or SQL/checker/Python meaning changes.",
+  "ownerExecutionEvidence": {
+    "original-default-failure": {
+      "path": "/private/tmp/weft-queryabi-example-default-20261015.log",
+      "sha256": "a961ff7a9e1582ad6f7fbece341465a450b8c331b002eb3324ec61135288c6c1",
+      "bytes": 7482
+    },
+    "owner-default-fixed": {
+      "path": "/private/tmp/weft-queryabi-examples-default-fixed-20261015.log",
+      "sha256": "cb94aab5a767bd4aee393b5def74ef53bdbe22343f9b1fd55bce8fb0a86ceeee",
+      "bytes": 6422
+    },
+    "owner-explicit-pg18-fixed": {
+      "path": "/private/tmp/weft-queryabi-example-pg18-fixed-20261015.log",
+      "sha256": "de4a4efd474edd18da165cc8f6c0d1310066fe09160b0b26fe6e6da4f88a0bb3",
+      "bytes": 6521
+    }
+  },
+  "qualification": "Owner logs show the original E0425 and fixed default/explicit-feature checks finishing; those executions are owner evidence, not independent replays. No future five-platform CI or native acceptance is qualified.",
+  "casesPromoted": [],
+  "authority": false
+}

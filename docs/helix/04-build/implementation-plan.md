@@ -2548,3 +2548,7 @@ the historical validator counterexample. The integrated wheel independently
 passes131 additional pure controls;15 independent publication-gate controls
 validate the correction. This clears main integration and normal five-platform
 release CI only; it grants no native authority or132-case completion.
+
+### Query ABI example packaging correction — 2026-10-15
+
+The new `compile_truss_query_abi` example now declares its existing PG18 feature requirement. This fixes default example compilation without changing compiler or security semantics. Owner default and explicit-feature checks pass; independent Astra static review found no blocking packaging issue. Original failure, exact delta, reviews, and successful logs are retained in [the packaging packet](evidence/query-abi-example-feature-guard-20261015/README.md). Fresh five-platform build-only CI is pending; no native acceptance case is promoted.

@@ -65,3 +65,7 @@ required-features=["ashlar-databricks-paths-keys"]
 name="weft-implicit-arithmetic"
 path="src/implicit_arithmetic_cli.rs"
 required-features=["ashlar-databricks-implicit-arithmetic"]
+
+[[example]]
+name="compile_truss_query_abi"
+required-features=["truss-postgresql-pg18"]

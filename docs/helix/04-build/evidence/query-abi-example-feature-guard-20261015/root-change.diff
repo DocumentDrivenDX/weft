@@ -1,0 +1,10 @@
+--- fa55e7b73117544d6351b0f866abe0d6a28c9f65/crates/weft-runtime/Cargo.toml
++++ reviewed/crates/weft-runtime/Cargo.toml
+@@ -65,3 +65,7 @@
+ name="weft-implicit-arithmetic"
+ path="src/implicit_arithmetic_cli.rs"
+ required-features=["ashlar-databricks-implicit-arithmetic"]
++
++[[example]]
++name="compile_truss_query_abi"
++required-features=["truss-postgresql-pg18"]
