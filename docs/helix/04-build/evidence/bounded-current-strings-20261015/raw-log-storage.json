@@ -1,0 +1,79 @@
+{
+  "format": "gzip",
+  "reason": "Preserve verbatim original logs while satisfying the repository Git whitespace check.",
+  "restoration": "For each entry, gzip-decompress storedPath to originalPath and verify originalSha256. Original receipts remain unchanged and refer to these exact restored bytes.",
+  "files": [
+    {
+      "originalPath": "r2-backend-regression.log",
+      "storedPath": "r2-backend-regression.log.gz",
+      "originalSha256": "0cfef10c4f352efde427eed30aae42d2723f0664b83f5d61952f8cd17b49f1ea",
+      "storedSha256": "d0344190e1469b14612b093cb769f44d0d608d0208d74f626fa6df6e9aeefa2c",
+      "originalBytes": 20539,
+      "storedBytes": 5833
+    },
+    {
+      "originalPath": "r3-core-tests/stdout.log",
+      "storedPath": "r3-core-tests/stdout.log.gz",
+      "originalSha256": "5eb29a390409f9bf20ea78da2c4a116a77118536e26e983a498ca3d550647caa",
+      "storedSha256": "be3fec7966a6100a065b37d56e0b14dab02c332d389775cdfbf8b150f00067b0",
+      "originalBytes": 37092,
+      "storedBytes": 8655
+    },
+    {
+      "originalPath": "r3-scalar-tests/stdout.log",
+      "storedPath": "r3-scalar-tests/stdout.log.gz",
+      "originalSha256": "f518ad233ccf063491d6a385d532d05503525e69767b26d3a6245ba0f6f3e2a8",
+      "storedSha256": "23026470e17828eeb044f51eb847b576a66e391687d41c1178ff8c4b2f64f7d8",
+      "originalBytes": 3683,
+      "storedBytes": 1082
+    },
+    {
+      "originalPath": "weft-bounded-main-core-20261016.log",
+      "storedPath": "weft-bounded-main-core-20261016.log.gz",
+      "originalSha256": "f896325210838e56cdb86b590e73a40bb1690110e5c96756077e2a2f6d8a5f8c",
+      "storedSha256": "7a364e927cc398c3965962fde181b8f864dcdfbf8cbc27ebec104f7b8601454e",
+      "originalBytes": 42283,
+      "storedBytes": 10326
+    },
+    {
+      "originalPath": "weft-bounded-main-scalars-network-20261016.log",
+      "storedPath": "weft-bounded-main-scalars-network-20261016.log.gz",
+      "originalSha256": "2441c120ea02765daa5170f0375bde43caca43919abeea59622aa9bd8dca5599",
+      "storedSha256": "c9e497ed9e891e97e3ae3d2a1870098b0141f0fd0ee544f98b48c111444d9055",
+      "originalBytes": 14543,
+      "storedBytes": 4260
+    },
+    {
+      "originalPath": "weft-bounded-r3-pg-tests-fixed-20261015.log",
+      "storedPath": "weft-bounded-r3-pg-tests-fixed-20261015.log.gz",
+      "originalSha256": "ad5d8378f8230bb89c5289c1e9a364b749b28e01eeb2ef33c838568ccde769b9",
+      "storedSha256": "1ae461ccc8a7d21833a1dd4578480587e40f2374dc0401867067fdb6a11366a4",
+      "originalBytes": 8081,
+      "storedBytes": 2531
+    },
+    {
+      "originalPath": "weft-bounded-r3-relational-tests-20261015.log",
+      "storedPath": "weft-bounded-r3-relational-tests-20261015.log.gz",
+      "originalSha256": "6448e6422247aaead5d0f95f868f44d1330a90be84c9ca6c6d55fb44f70afeb8",
+      "storedSha256": "f8150ec78cfa5ffc64f95bbfc19a777cf9064b5f53ff9eab929fb45916095e16",
+      "originalBytes": 8793,
+      "storedBytes": 2566
+    },
+    {
+      "originalPath": "weft-bounded-r5-frozen-scalars-20261016.log",
+      "storedPath": "weft-bounded-r5-frozen-scalars-20261016.log.gz",
+      "originalSha256": "2058ed801e668829f1ec4d17ecdfb38c8daf4fa0d4460fa5673a236f2958256d",
+      "storedSha256": "51178b95b31379a23d44bf6124d9809e2fd87d3b90c175f6e20473b76ac6616e",
+      "originalBytes": 11820,
+      "storedBytes": 3434
+    },
+    {
+      "originalPath": "weft-bounded-r5-main-full-backends-20261016.log",
+      "storedPath": "weft-bounded-r5-main-full-backends-20261016.log.gz",
+      "originalSha256": "794edbbf2bd1d7dcc0ca102200e62d841225e377fc21837c4cff9b4691f81fec",
+      "storedSha256": "dd52a5edf40c99c778575e9bbfcc94d87b34ea68d193161302e35a2903076b21",
+      "originalBytes": 22551,
+      "storedBytes": 6246
+    }
+  ]
+}
