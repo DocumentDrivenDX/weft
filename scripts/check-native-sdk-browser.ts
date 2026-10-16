@@ -6,10 +6,14 @@ const cases:{name:string;method:string;request:string;arguments?:string[];expect
 const action=await Bun.file('tests/native-actions/action-request.json').json();
 for(const name of ['approve','guarded','postFail','createOrder','firstFalse']){const r=structuredClone(action);r.source.action=name;const doc=JSON.parse(r.binding.modelJson);r.source.actionPointer='/modules/0/extensions/umf.actions/actions/'+doc.modules[0].extensions['umf.actions'].actions.findIndex((a:any)=>a.id===name);cases.push({name,method:'compile_native_action_json',request:JSON.stringify(r)});}
 const bulk={version:'weft.native-bulk/0.1',selection:{version:'weft.raw-read/0.1',target:'postgresql18',sql:'SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC',binding:action.binding,parameters:[],rowCap:4},action,maxItems:3,actionInputs:{},parameters:[]};cases.push({name:'bulk',method:'compile_native_bulk_json',request:JSON.stringify(bulk)});
+const deltaAction=structuredClone(action);deltaAction.target='spark-delta4';
+cases.push({name:'delta-action',method:'compile_native_action_json',request:JSON.stringify(deltaAction)});
+const deltaBulk=structuredClone(bulk);deltaBulk.action=deltaAction;deltaBulk.selection.target='spark-delta4';
+cases.push({name:'delta-bulk',method:'compile_native_bulk_json',request:JSON.stringify(deltaBulk)});
 for(const name of ['keyword','vector'])cases.push({name,method:'compile_search_json',request:await Bun.file('tests/native-search/'+name+'-request.json').text()});
 const spark={version:'weft.raw-read/0.1',target:'spark-delta4',sql:'SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC',binding:{...action.binding,schema:'sdk_spark'},parameters:[],rowCap:10,keyset:false,snapshots:{orders:7}};cases.push({name:'spark',method:'compile_raw_read_json',request:JSON.stringify(spark)});
 const refused=structuredClone(action);refused.source.documentSha256='0'.repeat(64);cases.push({name:'source-refusal',method:'compile_native_action_json',request:JSON.stringify(refused)});
-for(const [name,method] of [['truss','truss-runtime'],['ashlar-spark4','ashlar-spark4']]){
+for(const [name,method] of [['truss','truss-runtime'],['ashlar-spark4','ashlar-spark4'],['ashlar-dbsql-20261016','ashlar-dbsql-20261016']]){
  const request=await Bun.file('tests/engine-catalog/native-'+name+'-request.json').json();
  const input=JSON.stringify({version:'weft.engine-read/0.1',compiler:method,request});
  cases.push({name:'engine-'+name,method:'compile_engine_read_json',request:input});

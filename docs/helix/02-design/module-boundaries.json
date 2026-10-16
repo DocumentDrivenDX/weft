@@ -271,6 +271,7 @@
             "mod:candidate",
             "mod:mathematical_integer",
             "mod:native_profile",
+            "mod:managed_20261016",
             "mod:qualified_profile",
             "mod:arithmetic",
             "mod:count_distinct",
@@ -295,6 +296,15 @@
             "const:VERSION",
             "const:PROFILE",
             "struct:LocalSpark4"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/managed_20261016.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:Managed20261016"
           ],
           "pathReferences": []
         },
