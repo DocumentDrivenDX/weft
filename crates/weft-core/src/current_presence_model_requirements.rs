@@ -13,10 +13,12 @@ fn fail()->Diagnostic{Diagnostic::new("WFT-CURRENT-PRESENCE-MODEL-REQUIREMENTS",
 /// use weft_core::{current_presence::CurrentPresencePreparation,current_presence_model_requirements::{derive,CurrentPresenceModelRequirements}};
 /// fn escaped(c:&CurrentPresencePreparation<'_>)->CurrentPresenceModelRequirements<'static,'static>{derive(c).unwrap()}
 /// ```
-pub struct CurrentPresenceModelRequirements<'context,'parent>{context:&'context CurrentPresencePreparation<'parent>,json:String}
+pub struct CurrentPresenceModelRequirements<'context,'parent>{context:&'context CurrentPresencePreparation<'parent>,json:String,#[cfg(feature="current-presence-graph-requirements-candidate")]records:BTreeMap<SecurityRef,Value>}
 impl<'context,'parent> CurrentPresenceModelRequirements<'context,'parent>{
  pub fn context(&self)->&'context CurrentPresencePreparation<'parent>{self.context}
  pub fn json(&self)->&str{&self.json}
+ #[cfg(feature="current-presence-graph-requirements-candidate")]
+ pub(crate) fn record_requirements(&self)->&BTreeMap<SecurityRef,Value>{&self.records}
 }
 fn identity(context:&CurrentPresencePreparation<'_>,r:&SecurityRef)->Result<Identity>{
  let pins=context.preparation().catalog().pins();let matching:Vec<_>=pins.iter().filter(|p|p.document_id==r.document_id).collect();
@@ -71,8 +73,10 @@ pub fn derive<'context,'parent>(context:&'context CurrentPresencePreparation<'pa
   "complete":false,"authority":false,"securityReady":false,"nativeAdmission":"required",
   "sourceRequestJson":parent.source_request_json(),"sourceRequestSha256":sha256(parent.source_request_json().as_bytes()),
   "preparationSha256":sha256(context.json().as_bytes()),"modelPins":catalog.pins(),"ontologySha256":sha256(raw.as_bytes()),
-  "records":records.into_values().collect::<Vec<_>>(),
+  "records":records.values().collect::<Vec<_>>(),
   "unresolved":["whole-source UMF semantic admission","original graph direction, association Record and endpoint-Key correspondence","context-field native correspondence","accepted property/home/native identity and original codec correspondence","actual authenticated operation and continuously held native source/authority witness","closing guards and guarded release"]});
+ #[cfg(not(feature="current-presence-graph-requirements-candidate"))]
+ drop(records);
  let json=crate::current_query_designation::encode(&report,16_000_000).map_err(|_|fail())?;
- Ok(CurrentPresenceModelRequirements{context,json})
+ Ok(CurrentPresenceModelRequirements{context,json,#[cfg(feature="current-presence-graph-requirements-candidate")]records})
 }

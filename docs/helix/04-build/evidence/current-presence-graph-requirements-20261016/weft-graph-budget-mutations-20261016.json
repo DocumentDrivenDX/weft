@@ -1,0 +1,20 @@
+{
+  "sourceSha256": "f3ae7b8242323d6228df3924e5f614cdd2b7578876a5c93bfc4e8a0ca7554f06",
+  "sourceRestored": true,
+  "results": [
+    {
+      "mutant": "detail",
+      "test": "intermediate_detail_budget_refuses_before_retaining_match_ordinal",
+      "exitCode": 101,
+      "killed": true,
+      "log": "/private/tmp/weft-graph-budget-mutant-detail-20261016.log"
+    },
+    {
+      "mutant": "key",
+      "test": "intermediate_key_budget_refuses_before_retaining_new_cache_entry",
+      "exitCode": 101,
+      "killed": true,
+      "log": "/private/tmp/weft-graph-budget-mutant-key-20261016.log"
+    }
+  ]
+}

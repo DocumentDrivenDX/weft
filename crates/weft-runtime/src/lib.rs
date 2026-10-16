@@ -781,6 +781,11 @@ impl CurrentPresencePreparation{
  pub fn model_requirements_json(&self)->weft_core::error::Result<String>{
   self.with_context(|context|Ok(weft_core::current_presence_model_requirements::derive(context)?.json().to_owned()))
  }
+ /// Original association data from this object's retained original parent.
+ #[cfg(feature="current-presence-graph-requirements-candidate")]
+ pub fn graph_requirements_json(&self)->weft_core::error::Result<String>{
+  self.with_context(|context|Ok(weft_core::current_presence_graph_requirements::derive(context)?.json().to_owned()))
+ }
  pub fn lower_postgresql_current_presence_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{
   self.with_context(|context|Ok(weft_postgresql::current_presence::lower(context,binding)?.json().to_owned()))
  }
@@ -837,5 +842,33 @@ mod current_presence_model_requirements_bridge_tests{
   let expected=weft_core::current_presence_model_requirements::derive(&context).unwrap();assert_eq!(child.model_requirements_json().unwrap(),expected.json());
   drop(original);assert_eq!(child.model_requirements_json().unwrap(),expected.json());
   let report:serde_json::Value=serde_json::from_str(expected.json()).unwrap();assert_eq!(report["sourceRequestJson"],raw);assert_eq!(report["complete"],false);assert_eq!(report["authority"],false);
+ }
+}
+
+#[cfg(all(test,feature="current-presence-graph-requirements-candidate"))]
+mod current_presence_graph_requirements_bridge_tests {
+ use super::*;
+ #[test]
+ fn graph_data_refuses_stored_context_mismatch_before_factory() {
+  let raw=include_str!("../../../tests/current-query-presence/fixtures/unadmitted-context.request.json");
+  let original=prepare_application_lineage(raw).unwrap();let mut child=original.prepare_current_presence().unwrap();
+  child.preparation_json.push(' ');
+  let failure=child.graph_requirements_json().unwrap_err();
+  assert_eq!(failure.code,"WFT-CURRENT-PRESENCE-BRIDGE");
+ }
+ #[test]
+ fn graph_data_preserves_original_arc_and_exact_core_report() {
+  let raw=include_str!("../../../tests/current-query-presence/fixtures/unadmitted-context.request.json");
+  let original=prepare_application_lineage(raw).unwrap();let child=original.prepare_current_presence().unwrap();
+  let other=prepare_application_lineage(raw).unwrap();assert!(child.is_from(&original));assert!(!child.is_from(&other));
+  let core=weft_core::application_lineage::prepare(raw).unwrap();let context=weft_core::current_presence::prepare(&core).unwrap();
+  let expected=weft_core::current_presence_graph_requirements::derive(&context).unwrap();
+  assert_eq!(child.graph_requirements_json().unwrap(),expected.json());
+  let value:serde_json::Value=serde_json::from_str(expected.json()).unwrap();
+  let model:serde_json::Value=serde_json::from_str(&child.model_requirements_json().unwrap()).unwrap();
+  assert_eq!(value["sourceRequestJson"],raw);assert_eq!(value["sourceRequestJson"],model["sourceRequestJson"]);
+  assert_eq!(value["associations"].as_array().unwrap().len(),2);
+  assert_eq!(value["authority"],false);assert_eq!(value["securityReady"],false);
+  drop(original);assert_eq!(child.graph_requirements_json().unwrap(),expected.json());
  }
 }
