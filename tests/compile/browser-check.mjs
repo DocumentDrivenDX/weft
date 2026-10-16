@@ -89,7 +89,9 @@ try {
  if(results.hasNodeProcess||results.hasRequire) throw new Error('Node globals exposed');
  // Imports must be generated string/memory/error interop, never WASI/system/network.
  // wasm-bindgen0.2.105 adds this exact Ref(String)->Externref cast for browser-local Result errors.
- if(results.imports.some(i=>i.module!=='wbg'||!(i.name==='__wbindgen_init_externref_table'||i.name==='__wbindgen_cast_2241b6af4c4b2941'||i.name.startsWith('__wbg___wbindgen_throw_'))||i.kind!=='function')) throw new Error('Unexpected WASM host imports '+JSON.stringify(results.imports));
+ const stringInteropImports=new Set(['__wbg_length_a95b69f903b746c4','__wbg_charCodeAt_291b921e27833f8e','__wbg___wbindgen_is_string_fbb76cb2940daafd','__wbg___wbindgen_string_get_e4f06c90489ad01b']);
+ // Pinned wasm-bindgen string validation: length, UTF-16 code units, type check and string transfer.
+ if(results.imports.some(i=>i.module!=='wbg'||!(i.name==='__wbindgen_init_externref_table'||i.name==='__wbindgen_cast_2241b6af4c4b2941'||i.name.startsWith('__wbg___wbindgen_throw_')||stringInteropImports.has(i.name))||i.kind!=='function')) throw new Error('Unexpected WASM host imports '+JSON.stringify(results.imports));
  if(requests.some(r=>!r.startsWith(base))) throw new Error('External network request');
  const wasm=await readFile(resolve(root,process.env.WEFT_PROBE_WASM || 'target/b002/web/weft_frontend_probe_bg.wasm'));
  const summary={cases:checked,batchSize,streamingCorpus:corpusPath.endsWith('.jsonl'),browser:await browser.version(),playwrightVersion,wasmBytes:wasm.length,wasmSha256:createHash('sha256').update(wasm).digest('hex'),jsGlueBytes:(await stat(resolve(root,process.env.WEFT_PROBE_JS || 'target/b002/web/weft_frontend_probe.js'))).size,imports:results.imports,initialMemoryBytes:results.initialMemoryBytes,finalMemoryBytes:results.finalMemoryBytes,networkRequests:requests,nodeGlobals:false,byteParity:true};

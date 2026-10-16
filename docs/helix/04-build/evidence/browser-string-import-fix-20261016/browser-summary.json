@@ -1,0 +1,57 @@
+{
+  "cases": 2181,
+  "batchSize": 64,
+  "streamingCorpus": true,
+  "browser": "151.0.7922.34",
+  "playwrightVersion": "1.62.1",
+  "wasmBytes": 19016683,
+  "wasmSha256": "1f7b71b73ef20cd575c7508fd3f30f13e4bf36768d0d3f94bb2d042598e1523c",
+  "jsGlueBytes": 12099,
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbg_length_a95b69f903b746c4",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg_charCodeAt_291b921e27833f8e",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_cast_2241b6af4c4b2941",
+      "kind": "function"
+    }
+  ],
+  "initialMemoryBytes": 1966080,
+  "finalMemoryBytes": 4128768,
+  "networkRequests": [
+    "http://weft.spike.test/",
+    "http://weft.spike.test/spike.wasm",
+    "http://weft.spike.test/spike.js",
+    "http://weft.spike.test/wrapper.js"
+  ],
+  "nodeGlobals": false,
+  "byteParity": true
+}
