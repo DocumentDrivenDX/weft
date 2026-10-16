@@ -1,0 +1,17 @@
+{
+  "version": "weft-python-model-requirements-checks/0.1",
+  "mode": "old-presence",
+  "passed": true,
+  "checks": 3,
+  "checksPassed": [
+    "old presence class present",
+    "new method absent on old class",
+    "new method absent on old instance"
+  ],
+  "nativeModule": "/private/tmp/weft-model-requirements-old-presence-installed-20261016/weft/weft.abi3.so",
+  "nativeModuleSha256": "3878d6abfa777571512d290d736e61ef382f2ebb1602d8fffe3b316832fec8e0",
+  "packagePath": "/private/tmp/weft-model-requirements-old-presence-installed-20261016/weft/__init__.py",
+  "nativeDatabase": false,
+  "authority": false,
+  "scope": "actual native Python types over supplied compiler data fixtures; no native binding/current-authority admission"
+}

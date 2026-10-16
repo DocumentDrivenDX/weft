@@ -1,0 +1,16 @@
+{
+  "version": "weft-python-model-requirements-checks/0.1",
+  "mode": "default",
+  "passed": true,
+  "checks": 2,
+  "checksPassed": [
+    "default class absent",
+    "default factory absent"
+  ],
+  "nativeModule": "/private/tmp/weft-model-requirements-default-installed-20261016/weft/weft.abi3.so",
+  "nativeModuleSha256": "5a3a46ae1dd72efa6e88b2c6c2a031fc401dc22bd688aa4542bb4c3c68bf538e",
+  "packagePath": "/private/tmp/weft-model-requirements-default-installed-20261016/weft/__init__.py",
+  "nativeDatabase": false,
+  "authority": false,
+  "scope": "actual native Python types over supplied compiler data fixtures; no native binding/current-authority admission"
+}

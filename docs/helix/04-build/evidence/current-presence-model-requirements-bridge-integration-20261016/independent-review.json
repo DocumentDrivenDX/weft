@@ -1,0 +1,136 @@
+{
+  "status": "passed-scoped-source-runtime-python-review",
+  "remainingFindings": [],
+  "packet": {
+    "path": "review.zip",
+    "sha256": "d6a199e1cdd6aeb7a06fb324656a24854fa0567b107b9f622500f56769b72b7c",
+    "bytes": 10372411
+  },
+  "candidate": "27c028d4101ae1af816574ecc185068ea069ed0f",
+  "baseline": "84fddd1090ee4549d126de514ae863949854c9e0",
+  "sourcePins": {
+    "crates/weft-runtime/Cargo.toml": {
+      "bytes": 3351,
+      "sha256": "a5a31cff59acfa3d65a19d9824701e5ff347e289b6fe3f20f03f1e42cb824a32",
+      "baselineSha256": "7ffe39d37c9af81b592ec1237e10103d9ff668fdf304abfe14ed817d0c92c943"
+    },
+    "crates/weft-runtime/src/lib.rs": {
+      "bytes": 51102,
+      "sha256": "ceb2b0251a36ee8ff422d49f9a98899742aec02a27e523188ebad77eb08b2c6d",
+      "baselineSha256": "df86435012c4ea8b432a4d20ed8e601bda14cadcd9e0ef2feb049970c35b9af8"
+    },
+    "crates/weft-python/Cargo.toml": {
+      "bytes": 2407,
+      "sha256": "f2eb3122aa18aeee7995f7e36526f972706acb19a7344c165d34445ccee2b7e7",
+      "baselineSha256": "85c7047ee9b0977570ca7bc64148ec82b959d70986e85f02b5c60183f0fa51f1"
+    },
+    "crates/weft-python/src/lib.rs": {
+      "bytes": 22011,
+      "sha256": "0059ca155af656d739d1f52739a089fb1853363b35a85cc4b4051755d8d51b78",
+      "baselineSha256": "dfa6dca3e004c160f563c9662bbe8941a5cb7394fb133984444bf1bfe3a43d3c"
+    },
+    "tests/current-query-presence/python-model-requirements-bridge.py": {
+      "bytes": 11558,
+      "sha256": "4f2d93b37ecfbb338134964965a258c73926e8ca22ba30090179f0fabe287fe8",
+      "baselineSha256": null
+    },
+    "docs/helix/02-design/module-boundaries.json": {
+      "bytes": 142874,
+      "sha256": "2d071af0b4f003ad074bf0b92cf0bec3d41b16776cec21b1106ec96f7960761d",
+      "baselineSha256": "9b6cf3d14f4bbdf5f1508bec6f7e481190df7dcd252412c212e2b9b25cf593cc"
+    },
+    "docs/helix/02-design/contracts/CONTRACT-016-current-presence-model-requirements-bridge.md": {
+      "bytes": 6169,
+      "sha256": "0c2622a391994ebc98263c04e38c7a4b915b0107402ee152185b8004ae20d976",
+      "baselineSha256": null
+    }
+  },
+  "conclusions": [
+    "The new runtime method reuses private with_context over the same retained immutable Arc, checks the stored context report and returns actual Core requirements JSON. Python checks the actual retained Python parent/runtime Arc before this call; no source/report importer or callback is introduced.",
+    "Existing original requested Field/Record identity and nested descriptor identity remain distinct; complete membership, ordered Key identity and Core refusal/capacity behavior survive the bridge. Independent runtime output equals actual Core output byte-for-byte.",
+    "New feature enables the lower-layer requirements feature. Fresh old-presence wheel lacks the method; fresh default wheel lacks presence type/factory. Existing whole-disclosure bridge behavior remains intact.",
+    "CONTRACT-016 correctly leaves closed/stale native-operation custody to the later host join. This preparation has no host operation handle and its returned JSON is incomplete data, not native authority."
+  ],
+  "validation": [
+    {
+      "command": "python3.12 reconstruct.py; python3.12 candidate-audit.py",
+      "result": "7 source and31 evidence pins, all4468 inherited pins, all39 candidate Git deltas and3 wheels/15 package entries verified. All1855 present reconstructed input endpoints match after controls.",
+      "receipts": [
+        "source-audit.json",
+        "candidate-audit.json",
+        "source-after.json"
+      ]
+    },
+    {
+      "command": "python3.12 run-python.py (four fresh Python3.11.17 processes)",
+      "result": "56 new +415 existing combined-wheel controls;3 old-presence method-absence +2 default class/factory-absence controls pass.",
+      "receipts": [
+        "python-executions.json",
+        "new-checks.json",
+        "existing-checks.json",
+        "old-checks.json",
+        "default-checks.json"
+      ]
+    },
+    {
+      "command": "python3.11 -B independent-python.py",
+      "result": "148 checks pass, including36 retained reviewer-authored Core adversarial scenarios against actual native Python output, complete Keys/identities, nested array/map/structured graphs, wrong receivers/no coercion, bound-method parent GC retention,6,841,616-byte successful return and original oversize refusal.",
+      "receipt": "independent-python.json"
+    },
+    {
+      "command": "cargo test --offline -p weft-runtime --features current-presence-model-requirements-candidate --lib",
+      "result": "8 passed;2.28s tests after46.18s build.",
+      "log": "runtime-tests.log"
+    },
+    {
+      "command": "python3.12 runtime-controls.py",
+      "result": "3 fresh downstream feature clients produce expected E0432/E0599/success;3 independent runtime custody tests pass. Removing the context comparison causes both stored-report corruption and original-parent substitution tests to fail.",
+      "receipt": "runtime-controls.json"
+    },
+    {
+      "command": "cargo check --offline -p weft-python --no-default-features --features current-presence-model-requirements-candidate",
+      "result": "Exact reconstructed Python extension source checks successfully with the new feature alone;20.65s.",
+      "log": "python-feature-source-check.log"
+    }
+  ],
+  "wheels": [
+    {
+      "profile": "combined",
+      "wheelSha256": "e072db75724608d652f3368ab1375907c3fbf2cd1e321a0d7a04bbdad4d92778",
+      "nativeSha256": "9f1c7bc60f070734f2e935ba53e82a0bd22002e9e738c34f65623ca8bac978dd"
+    },
+    {
+      "profile": "old-presence",
+      "wheelSha256": "5ef4121f3959af502bd9abea4a715c379bc709c434baa2dfdc7e34cbb9daa358",
+      "nativeSha256": "3878d6abfa777571512d290d736e61ef382f2ebb1602d8fffe3b316832fec8e0"
+    },
+    {
+      "profile": "default",
+      "wheelSha256": "516818ffde400f2960eca95316fd3a0bab656199d92d406ef8fcfa21b306fc64",
+      "nativeSha256": "5a3a46ae1dd72efa6e88b2c6c2a031fc401dc22bd688aa4542bb4c3c68bf538e"
+    }
+  ],
+  "qualifications": [
+    "Independent execution used the supplied macOS ARM abi3 wheels and a separately compiled exact-source runtime/Python source check. Wheel build logs/source/package pins correspond as supplied evidence; no independent byte-reproducible wheel rebuild or hermetic toolchain attestation is claimed.",
+    "Python extension class namespaces remain mutable by trusted local Python code. A local monkeypatch can return arbitrary data; it cannot change the captured original native descriptor or import a native preparation from a dictionary. Frozen refers to instance state, not hostile-code isolation within one interpreter.",
+    "The16,000,000-byte Core output guard is retained. It is not a peak-memory/CPU or whole-host decoder capacity theorem.",
+    "Owner75 artifact/96 schema and11 package/16 boundary results are retained and inspected, not independently rerun here. Original415 bridge controls were rerun on the new wheel.",
+    "No SQL/native correspondence campaign, native source mapping/codec/graph proof, authenticated caller/current-cut/closing release admission, default/public wheel repin, WASM extension, or132 Weft/158 UMF case promotion. The separate paired-native source/evidence review is not retroactively expanded by this bridge review.",
+    "Input hashes establish captured Git/package and endpoint correspondence, not continuously held-file/ABA protection. External compiler/Python/cache closure remains non-hermetic."
+  ],
+  "retainedAttempts": [
+    "Owner initial wrong-class placement E0599 source/log remains verbatim in frozen packet; no wheel from that failed attempt is treated as final.",
+    "Reviewer first capacity expectation retained the line-delimited fixture newline; exact source preservation adds two JSON-escaped bytes. The corrected replay strips only that protocol newline to match the prior Core input.",
+    "Reviewer second probe incorrectly expected immutable class namespace; retained failure now explicitly qualified above, with captured-native-descriptor control passing.",
+    "Reviewer first mutation selector included a nonexistent space and refused before mutating source; corrected exact selector produced the expected two test failures. Original source restored."
+  ],
+  "artifactManifest": {
+    "path": "manifest.json",
+    "format": "relative path -> {sha256,bytes}; excludes itself",
+    "excludedReproducibleTrees": [
+      "source/ (base Git +7 retained overlays)",
+      "installed/ (three exact retained wheels)",
+      "target/ (external build products)"
+    ]
+  }
+}

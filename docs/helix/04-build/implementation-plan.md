@@ -2719,3 +2719,28 @@ Python requirements exposure remains a separately reviewed candidate, not part
 of this integration or an installed-consumer repin. The separately captured
 actual Truss catalog correspondence test does not establish codec/graph/native
 permission/current-generation/guarded-release closure. B-008 remains open.
+
+
+### B-008 issued model requirements runtime/Python bridge — 2026-10-16
+
+[CONTRACT-016](../02-design/contracts/CONTRACT-016-current-presence-model-requirements-bridge.md)
+adds a separately selected runtime/Python method over the existing actual issued
+presence preparation. Runtime retains the same original Arc; Python retains and
+checks that same actual parent. The output is unchanged incomplete Core model
+requirements JSON, with no report importer, callback escape, new constructor,
+SQL execution or authority issuance. Default and older features omit the method.
+
+[Full reviewed current039 integration evidence](evidence/current-presence-model-requirements-bridge-integration-20261016/README.md)
+retains all99Astra artifacts, historical037inputs and fresh actual039opt-in,
+old-presence and default wheels. Actual extension checks pass56requirements plus
+415existing bridge controls and old/default absence controls;8runtime tests and
+3downstream feature clients pass. Current release/version/ownership work remains
+preserved; existing installed consumers and computation assets are not repinned.
+
+A genuine scalar-only actual context produces9,833,820bytes from597,992original
+bytes, exceeding the existing Truss8MiBdecoder while fitting Core's16Moutput
+bound. Exact data/generator and independent replay are retained; a separately
+named native decoder profile requires its own review/qualification rather than
+a global guard increase. Whole-source semantic/native admission is not inferred.
+Original132B-008 requirements, native graph/context/codec/current-authority and
+guarded end-to-end release remain required and open; this component promotes none.

@@ -1,0 +1,18 @@
+from pathlib import Path
+import os,subprocess,sys,json,hashlib,zipfile,email
+root=Path('/private/tmp/weft-model-requirements-bridge-main-integration-20261016');python='/private/tmp/truss-practical-performance-env/bin/python';maturin='/private/tmp/truss-clean-install-20261013/bin/maturin';target='/private/tmp/weft-model-requirements-bridge-main-target-20261016';common=['truss-postgresql-pg18','current-postgresql-scalar-candidate','current-databricks-scalar-candidate','current-query-refinement-candidate'];env=os.environ.copy();env.update(PATH='/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/opt/homebrew/bin:'+env['PATH'],CARGO_HOME='/private/tmp/ashlar-weft-compatible-toolchain-20261013-a/cargo',CARGO_BUILD_JOBS='1',MACOSX_DEPLOYMENT_TARGET='11.0',PYO3_PYTHON=python)
+rows=[]
+for profile,features,mode in [('combined',common+['bounded-current-string-candidate','current-presence-model-requirements-candidate'],'new'),('old-presence',common+['bounded-current-string-candidate','current-presence-candidate'],'old-presence'),('default',common,'default')]:
+ wheels=Path('/private/tmp/weft-model-requirements-main-'+profile+'-wheels-20261016')
+ if profile!='combined':
+  log=Path('/private/tmp/weft-model-requirements-main-'+profile+'-wheel-build-20261016.log')
+  with log.open('wb') as stream:subprocess.run([maturin,'build','--offline','--locked','--release','--manifest-path','crates/weft-python/Cargo.toml','--features',','.join(features),'--interpreter',python,'--target-dir',target,'--out',str(wheels)],cwd=root,env=env,stdout=stream,stderr=subprocess.STDOUT,check=True)
+ wheel=next(wheels.glob('*.whl'));assert wheel.name=='weft_sql-0.4.39.dev0-cp39-abi3-macosx_11_0_arm64.whl',wheel.name;installed=Path('/private/tmp/weft-model-requirements-main-'+profile+'-installed-20261016');installed.mkdir(exist_ok=False)
+ with zipfile.ZipFile(wheel) as z:
+  assert all(not Path(n).is_absolute() and '..' not in Path(n).parts for n in z.namelist());metadata=email.message_from_bytes(z.read('weft_sql-0.4.39.dev0.dist-info/METADATA'));assert metadata['Version']=='0.4.39.dev0';z.extractall(installed);entries={n:{'bytes':len(z.read(n)),'sha256':hashlib.sha256(z.read(n)).hexdigest()} for n in z.namelist() if not n.endswith('/')}
+ manifest={'wheel':str(wheel),'wheelSha256':hashlib.sha256(wheel.read_bytes()).hexdigest(),'installed':str(installed),'entries':entries,'features':features,'packageVersion':'0.4.39.dev0','published':False,'nativeAuthority':False};Path('/private/tmp/weft-model-requirements-main-'+profile+'-wheel-20261016.json').write_text(json.dumps(manifest,indent=2)+'\n')
+ receipt='/private/tmp/weft-model-requirements-main-'+profile+'-python-checks-20261016.json';subprocess.run([python,'-I','tests/current-query-presence/python-model-requirements-bridge.py',str(installed),mode,receipt],cwd=root,check=True)
+ version=subprocess.check_output([python,'-I','-c','import sys;sys.path.insert(0,sys.argv[1]);import weft;assert weft.__version__=="0.4.39-dev.0";print(weft.__version__)',str(installed)],cwd=root,text=True).strip();assert version=='0.4.39-dev.0'
+ if profile=='combined':subprocess.run([python,'-I','tests/current-query-presence/python-bridge.py',str(installed),'combined','/private/tmp/weft-model-requirements-main-existing-bridge-checks-20261016.json'],cwd=root,check=True)
+ rows.append({'profile':profile,'wheelSha256':manifest['wheelSha256'],'nativeSha256':entries['weft/weft.abi3.so']['sha256'],'version':version,'passed':True});print(json.dumps(rows[-1]),flush=True)
+Path('/private/tmp/weft-model-requirements-main-wheel-profiles-20261016.json').write_text(json.dumps({'version':'weft-current-main-wheel-profiles/0.1','profiles':rows,'nativeDatabase':False,'consumerRepinned':False},indent=2)+'\n')

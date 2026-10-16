@@ -1,0 +1,52 @@
+{
+  "baseline": "f53b30aad597894e0db01dcc3a907545c06af1e0",
+  "candidate": "27c028d4101ae1af816574ecc185068ea069ed0f",
+  "reviewArtifacts": 99,
+  "reviewArtifactBytes": 22782012,
+  "reviewSha256": "c3633cdc2400751f6c4f21060d32fa75dd809468c4992a6654080228ea2c05bc",
+  "reviewManifestSha256": "a059208c7560816304af26ef6e7a07b774a20bb72641e4032186dc8121623ba6",
+  "remainingFindings": [],
+  "source": {
+    "crates/weft-runtime/Cargo.toml": {
+      "bytes": 3351,
+      "sha256": "a5a31cff59acfa3d65a19d9824701e5ff347e289b6fe3f20f03f1e42cb824a32",
+      "reviewedSha256": "a5a31cff59acfa3d65a19d9824701e5ff347e289b6fe3f20f03f1e42cb824a32"
+    },
+    "crates/weft-runtime/src/lib.rs": {
+      "bytes": 51102,
+      "sha256": "ceb2b0251a36ee8ff422d49f9a98899742aec02a27e523188ebad77eb08b2c6d",
+      "reviewedSha256": "ceb2b0251a36ee8ff422d49f9a98899742aec02a27e523188ebad77eb08b2c6d"
+    },
+    "crates/weft-python/Cargo.toml": {
+      "bytes": 2409,
+      "sha256": "84d157972b4247f7ae3e739ee9a05f660d1a10baf86d0901be453b8959033ba3",
+      "reviewedSha256": "f2eb3122aa18aeee7995f7e36526f972706acb19a7344c165d34445ccee2b7e7"
+    },
+    "crates/weft-python/src/lib.rs": {
+      "bytes": 22011,
+      "sha256": "0059ca155af656d739d1f52739a089fb1853363b35a85cc4b4051755d8d51b78",
+      "reviewedSha256": "0059ca155af656d739d1f52739a089fb1853363b35a85cc4b4051755d8d51b78"
+    },
+    "tests/current-query-presence/python-model-requirements-bridge.py": {
+      "bytes": 11558,
+      "sha256": "4f2d93b37ecfbb338134964965a258c73926e8ca22ba30090179f0fabe287fe8",
+      "reviewedSha256": "4f2d93b37ecfbb338134964965a258c73926e8ca22ba30090179f0fabe287fe8"
+    },
+    "docs/helix/02-design/module-boundaries.json": {
+      "bytes": 142981,
+      "sha256": "577b69af091a95d34d1f46256d145f52527ee019292dc7f2879d9c73448c9a32",
+      "reviewedSha256": "2d071af0b4f003ad074bf0b92cf0bec3d41b16776cec21b1106ec96f7960761d"
+    },
+    "docs/helix/02-design/contracts/CONTRACT-016-current-presence-model-requirements-bridge.md": {
+      "bytes": 6169,
+      "sha256": "0c2622a391994ebc98263c04e38c7a4b915b0107402ee152185b8004ae20d976",
+      "reviewedSha256": "0c2622a391994ebc98263c04e38c7a4b915b0107402ee152185b8004ae20d976"
+    }
+  },
+  "sourceExceptions": [
+    "weft-python package version039 development preserved",
+    "two unchanged incoming release tools remain in ownership"
+  ],
+  "consumerRepinned": false,
+  "nativeAuthority": false
+}

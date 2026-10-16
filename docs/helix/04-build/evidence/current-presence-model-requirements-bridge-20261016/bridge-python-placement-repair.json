@@ -1,0 +1,6 @@
+{
+  "initialSourceSha256": "8002df8a917e95f361a802f218673585c5093b84b624b8b9556829fcedfd9b5e",
+  "correctedSourceSha256": "0059ca155af656d739d1f52739a089fb1853363b35a85cc4b4051755d8d51b78",
+  "failure": "Rust E0599 refused method on CurrentQueryPreparation; moved unchanged method to CurrentPresencePreparation",
+  "nativeAdmission": false
+}

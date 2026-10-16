@@ -1,0 +1,398 @@
+{
+  "candidate-audit.json": {
+    "sha256": "f6fce48aa2d6427bda5e571f207304ade7651fdc5aad02b767813dd67b86465c",
+    "bytes": 13530
+  },
+  "candidate-audit.py": {
+    "sha256": "5e9e9092393a5030c83a9772fb35766a5c082c0194d7e703b83fa3f3704df4c7",
+    "bytes": 1857
+  },
+  "capacity-180-input.json": {
+    "sha256": "73c905eedb127c547886cf3d6ac2ecc3f3a1cde0ad8eba5bc226252bc4670256",
+    "bytes": 223185
+  },
+  "capacity-40-input.json": {
+    "sha256": "0b006682024ffca0a70bd36a6c4292eed6459cb4fc924d18d051b80888561d5e",
+    "bytes": 143805
+  },
+  "default-checks.json": {
+    "sha256": "b0552e05821c5ad66f5fe96ff433c4da0f4cd93c5ea7f96f37a685d859e87068",
+    "bytes": 699
+  },
+  "default.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "default.stdout": {
+    "sha256": "91406c978075a55c912e9b27de95cc393b6e5023cca0721e7583dd573b84f6bf",
+    "bytes": 74
+  },
+  "diffs/crates__weft-python__Cargo.toml.diff": {
+    "sha256": "fc26e7111d4c45f070a7dd25aca58e2061f5e75a9f1e0ee4fa2902a97b726af6",
+    "bytes": 567
+  },
+  "diffs/crates__weft-python__src__lib.rs.diff": {
+    "sha256": "c43b20f857d344322db89bf4a63bba72d948d1c9e538ae6d23421b66c62a27b3",
+    "bytes": 1905
+  },
+  "diffs/crates__weft-runtime__Cargo.toml.diff": {
+    "sha256": "1afde1a3f0dd08205cb22add9aec64dead9ff7d97375fe7c114cc2b9727aff6c",
+    "bytes": 678
+  },
+  "diffs/crates__weft-runtime__src__lib.rs.diff": {
+    "sha256": "a875ecd303a075047bf8456aa31d7022b7fe73d4ffe8bcaeb1435cf6181f46d3",
+    "bytes": 2179
+  },
+  "diffs/docs__helix__02-design__contracts__CONTRACT-016-current-presence-model-requirements-bridge.md.diff": {
+    "sha256": "ae95f873b71cf980a7912d3dcf45198426391a13c524189720c862e5b22bb332",
+    "bytes": 6509
+  },
+  "diffs/docs__helix__02-design__module-boundaries.json.diff": {
+    "sha256": "d5a8aec809d8878246f847355330ea1454045d96cf2c537643fef2003fd3b656",
+    "bytes": 415
+  },
+  "diffs/tests__current-query-presence__python-model-requirements-bridge.py.diff": {
+    "sha256": "37c12d651fe7a5d67cf81749b126cd67cd2a7d69cf6c68902dab4d5cc392cb49",
+    "bytes": 11910
+  },
+  "existing-checks.json": {
+    "sha256": "752a9b17c4f6c4ff25459ac5352704a8109c483974a28e619bffef7ed1f6a593",
+    "bytes": 12928
+  },
+  "existing.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "existing.stdout": {
+    "sha256": "60789498beea18991c15be5af8b54fcc61bcb9be1e88dfe5fb238d2366d35861",
+    "bytes": 77
+  },
+  "feature-default.log": {
+    "sha256": "0b5ac754b214ccf36a0f940fad613e011e3fa139155ed3b95acbab871f312581",
+    "bytes": 8354
+  },
+  "feature-default.toml": {
+    "sha256": "db0d9137035124cc3d1a802535da78d48930f682bda6b70c4b74816e9b15591a",
+    "bytes": 359
+  },
+  "feature-new.log": {
+    "sha256": "4a0c579856b5a8fc2f680fd89e49c501910163f1efea9551bc019676c81a5be3",
+    "bytes": 8332
+  },
+  "feature-new.toml": {
+    "sha256": "28e04f51cd109af437766aa8fef8328b69c707935ef56fdc88de64dc67aa3abb",
+    "bytes": 406
+  },
+  "feature-old-presence.log": {
+    "sha256": "f1907e117060ab8c48d324210af56692bda82761a473713a6cfe1ff5e584cdd6",
+    "bytes": 8440
+  },
+  "feature-old-presence.toml": {
+    "sha256": "e67f0dd1204a11ef6fa4320d31e9e8b9ca2f948638deb4d8953532b108f970dc",
+    "bytes": 387
+  },
+  "feature-probe/Cargo.lock": {
+    "sha256": "f4e5c62eee0047e713c86585dbe2590f8e3ba18051780060176172026e5969ec",
+    "bytes": 23498
+  },
+  "feature-probe/Cargo.toml": {
+    "sha256": "28e04f51cd109af437766aa8fef8328b69c707935ef56fdc88de64dc67aa3abb",
+    "bytes": 406
+  },
+  "feature-probe/src/main.rs": {
+    "sha256": "4c4814432cef5ae43d06b891c3a254fbe6d3e36bbcb828015ef55a35f07a3fb7",
+    "bytes": 134
+  },
+  "finalize.py": {
+    "sha256": "88091bb2c1a6b7ea7e5122fd15860a60a782664a5c5b15427d3d53dde878ca94",
+    "bytes": 7003
+  },
+  "frozen/crates/weft-python/Cargo.toml": {
+    "sha256": "f2eb3122aa18aeee7995f7e36526f972706acb19a7344c165d34445ccee2b7e7",
+    "bytes": 2407
+  },
+  "frozen/crates/weft-python/src/lib.rs": {
+    "sha256": "0059ca155af656d739d1f52739a089fb1853363b35a85cc4b4051755d8d51b78",
+    "bytes": 22011
+  },
+  "frozen/crates/weft-runtime/Cargo.toml": {
+    "sha256": "a5a31cff59acfa3d65a19d9824701e5ff347e289b6fe3f20f03f1e42cb824a32",
+    "bytes": 3351
+  },
+  "frozen/crates/weft-runtime/src/lib.rs": {
+    "sha256": "ceb2b0251a36ee8ff422d49f9a98899742aec02a27e523188ebad77eb08b2c6d",
+    "bytes": 51102
+  },
+  "frozen/docs/helix/02-design/contracts/CONTRACT-016-current-presence-model-requirements-bridge.md": {
+    "sha256": "0c2622a391994ebc98263c04e38c7a4b915b0107402ee152185b8004ae20d976",
+    "bytes": 6169
+  },
+  "frozen/docs/helix/02-design/module-boundaries.json": {
+    "sha256": "2d071af0b4f003ad074bf0b92cf0bec3d41b16776cec21b1106ec96f7960761d",
+    "bytes": 142874
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/README.md": {
+    "sha256": "86e716c6dce278f805afa09dc486b24d6940e554f8402c07396101906a22dc61",
+    "bytes": 2911
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/bridge-all-runtime-tests.log.gz": {
+    "sha256": "c1a1851e4e666f3073e59718188c14aa17f862aac91ca081fcee5fc84b0b18bc",
+    "bytes": 2467
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/bridge-boundaries.log.gz": {
+    "sha256": "2d4ab081d5fb8bae6206ebf5521b3decc7c446d6340d68a967f2b1ca498dc78d",
+    "bytes": 814
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/bridge-final-boundaries.log.gz": {
+    "sha256": "ea8768d11bcbb719171fe673a6b37d3ba38b4a0dacc2858540c7c8075699fb9d",
+    "bytes": 814
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/bridge-final-specs.log.gz": {
+    "sha256": "ab8499ec4b6fc9ae9612bd3160a6a943f6d44efd4ac8a4865378eb8f5b257323",
+    "bytes": 203
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/bridge-python-placement-repair.json": {
+    "sha256": "47a3909882b35a3c64fc48e5e40e6a4d709d150a9203aca7d2434f89b74b4930",
+    "bytes": 342
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/bridge-runtime-tests.log.gz": {
+    "sha256": "0f6ddb007659174529bfc3530a0c2c1d8e45193aa6b02ae532d873682c4294f7",
+    "bytes": 3130
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/bridge-specs.log.gz": {
+    "sha256": "ab8499ec4b6fc9ae9612bd3160a6a943f6d44efd4ac8a4865378eb8f5b257323",
+    "bytes": 203
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/check-weft-model-requirements-runtime-feature-boundary-20261016.py": {
+    "sha256": "c4c1045139138392e6ace4c857d6ac90ca731a015e118a1fa9b6b7c556def6c2",
+    "bytes": 2303
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/combined-python-checks.json": {
+    "sha256": "daf24baf1ab9834e2de6e7151d014d933f5494615ea9b9cc7a0e33d57f0a1631",
+    "bytes": 3099
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/combined-weft-sql-local-candidate.whl": {
+    "sha256": "e072db75724608d652f3368ab1375907c3fbf2cd1e321a0d7a04bbdad4d92778",
+    "bytes": 3428079
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/combined-wheel-build.log.gz": {
+    "sha256": "98445ace00e124de2652c29aef1efee8d12634a8c23be78fe32b6b19c263520e",
+    "bytes": 2228
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/combined-wheel.json": {
+    "sha256": "edae960fe96db532d7a3afa0d0663cd474346727367bccd772edeb93efbf1054",
+    "bytes": 1358
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/default-weft-sql-local-candidate.whl": {
+    "sha256": "516818ffde400f2960eca95316fd3a0bab656199d92d406ef8fcfa21b306fc64",
+    "bytes": 3287816
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/default-wheel-build.log.gz": {
+    "sha256": "3bdefe79fcd6802231775a54e03820feb17b58ed81620ecb6f0958a465302aad",
+    "bytes": 2210
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/default-wheel.json": {
+    "sha256": "b2468e58bd9c9df4ef124ae8b3f3cf8f014f7da8989000ef5f6ac111092c3120",
+    "bytes": 1263
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/existing-bridge-checks.json": {
+    "sha256": "165f13ae0994745d0da363c1ffd8aeb881dd302d881f10eb8ed66f5a2761d201",
+    "bytes": 12912
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/existing-local-old-presence.json": {
+    "sha256": "67a55ccf2366810329fe23de571a67c578c58bad6dfc1b9a66f936a285f2b3bb",
+    "bytes": 723
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/fresh-default-checks.json": {
+    "sha256": "0da2f95264e5d5f316aa401506bcafdcbf8851a9342e4da0cb3d63ee19a43949",
+    "bytes": 667
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/fresh-old-presence-checks.json": {
+    "sha256": "b0af42c07f4d2daefd8bab37550486d0950e03ce5ce07f7e35c55b2f267810eb",
+    "bytes": 737
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/inherited-baseline-inputs.json": {
+    "sha256": "a06374ba9a0a6fd658c78254bf034eaed109e7917d3ef5e9b78c10fda7b68e53",
+    "bytes": 963983
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/install-weft-model-requirements-wheel-20261016.py": {
+    "sha256": "c9b8e6c25a466f837a90b34f79c552b3ea06c93eb423f09bf09db0fe45b0acfe",
+    "bytes": 1178
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/new-wheel-build.log.gz": {
+    "sha256": "733370920134a67fd37c93b2607d38fed930e9dcaf91aa5b3ec497821bdec155",
+    "bytes": 3694
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/old-presence-weft-sql-local-candidate.whl": {
+    "sha256": "5ef4121f3959af502bd9abea4a715c379bc709c434baa2dfdc7e34cbb9daa358",
+    "bytes": 3422843
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/old-presence-wheel-build.log.gz": {
+    "sha256": "e2d50ff11779a02f518b5d23c1da728a2af49988424ab775dabae73c8bb427bd",
+    "bytes": 2249
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/old-presence-wheel.json": {
+    "sha256": "4a663121b09a2441a0bfc35e6aedc78881b927053234d5849f2c8802f5c6fc5d",
+    "bytes": 1347
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/retention.json": {
+    "sha256": "c69d9ec86f14fea8f82cfa6f007010253220b8af173d2963aa93baa7e2955bd2",
+    "bytes": 9791
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/runtime-feature-boundary.json": {
+    "sha256": "2ed655e29cf6cc2cf2db05469ce925986759e07097bb71357336b7244aca5b66",
+    "bytes": 877
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/runtime-feature-default.log.gz": {
+    "sha256": "edcb83b49031bc6219ffdae01d60e99fbe2f60a2a2a14fbd204b57cd5ae36f42",
+    "bytes": 2990
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/runtime-feature-new.log.gz": {
+    "sha256": "c07e44ccee2f8bdc61be30616f05fa2f014e962ff3a1c26bdc94c38c292e2385",
+    "bytes": 2195
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/runtime-feature-old-presence.log.gz": {
+    "sha256": "6d9d66f0b6c5154b43d4f256cd7bf6262c0a2bee0d940a5f71c6919f1a3f6e97",
+    "bytes": 2281
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-bridge-20261016/weft-model-requirements-bridge-python-initial-placement-20261016.rs": {
+    "sha256": "8002df8a917e95f361a802f218673585c5093b84b624b8b9556829fcedfd9b5e",
+    "bytes": 22010
+  },
+  "frozen/tests/current-query-presence/python-model-requirements-bridge.py": {
+    "sha256": "4f2d93b37ecfbb338134964965a258c73926e8ca22ba30090179f0fabe287fe8",
+    "bytes": 11558
+  },
+  "independent-python-first.log": {
+    "sha256": "b945a3cd15265fbd338693f2fb7e8a731e044f435d93ad528c739aa0c771800f",
+    "bytes": 625
+  },
+  "independent-python-first.py": {
+    "sha256": "6567f88b477307045dce1488d4297d6d35b14dffcd948158ed3892535228c4df",
+    "bytes": 5584
+  },
+  "independent-python-second.log": {
+    "sha256": "9a3015717cb6389662e5930f89439777098021216a25669d51beaf8aefdeb9c6",
+    "bytes": 408
+  },
+  "independent-python-second.py": {
+    "sha256": "0d5a0664e330610073a0de7b8332dbec45f6a87b4232688d98a0c4b139828629",
+    "bytes": 5603
+  },
+  "independent-python.json": {
+    "sha256": "64efabd02e1abe396c3269204c07826beae58c1f9284e280876b01d43bf3f3db",
+    "bytes": 24506
+  },
+  "independent-python.log": {
+    "sha256": "cae718841587cdef4d26b903a87bae5716c31b27b12ceac08629bb2767a69da4",
+    "bytes": 49
+  },
+  "independent-python.py": {
+    "sha256": "d20390cbc2fe775607c85aa63a2c89ccf5f4190beeae6a173705d79616071b3c",
+    "bytes": 6159
+  },
+  "new-checks.json": {
+    "sha256": "cb263c76fc20caed7f7345649eb55f21cce7efbcb0203635e8d55482152138b8",
+    "bytes": 3136
+  },
+  "new.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "new.stdout": {
+    "sha256": "8ae7a8a389a7ea8104424b2ee83b492d08d68f40ce5891ce14d7427e68c1ef39",
+    "bytes": 76
+  },
+  "old-checks.json": {
+    "sha256": "ecf7c52b00da9daaa2f5d1df1e4d018f74967e16458ffaa76617c27fed11d882",
+    "bytes": 769
+  },
+  "old.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "old.stdout": {
+    "sha256": "3848f19391ed08f89f1205c1f976a7a9f24773c381a12f258ddac3287a4de395",
+    "bytes": 79
+  },
+  "prior-core-controls.json.gz": {
+    "sha256": "e0f46be45a21a682b90f9d70dc52340820ac4e12d401678e5a3175c80f42be3f",
+    "bytes": 89197
+  },
+  "python-executions.json": {
+    "sha256": "250df512f9d88a7ad982a922a9b06a717b7753011bc6d228fc39c6f24686f9b7",
+    "bytes": 2107
+  },
+  "python-feature-source-check.log": {
+    "sha256": "cd86c48dce072bbd2771b851a4de59f8bfb43d93971fd32ee6df03a5637ffd81",
+    "bytes": 7989
+  },
+  "reconstruct.log": {
+    "sha256": "c487c3f4f7f08a6478c3ee7100a32ee573d0318e16634a6f887bc40d07ef4883",
+    "bytes": 82
+  },
+  "reconstruct.py": {
+    "sha256": "70270d8d89b46fef71a7150561f1868be27586e2ee071b2e85b8e5f17b8d0d1e",
+    "bytes": 3132
+  },
+  "review.json": {
+    "sha256": "c3633cdc2400751f6c4f21060d32fa75dd809468c4992a6654080228ea2c05bc",
+    "bytes": 8505
+  },
+  "review.zip": {
+    "sha256": "d6a199e1cdd6aeb7a06fb324656a24854fa0567b107b9f622500f56769b72b7c",
+    "bytes": 10372411
+  },
+  "run-python.py": {
+    "sha256": "b7347689eab25e67e0ff183fba63325e12b61ce9684cccc52dc85b8ca039dbc6",
+    "bytes": 1015
+  },
+  "runtime-controls-first.log": {
+    "sha256": "c27aaaf1ae94d5ecd7f30a72bd39e0487868962e81b58dd01b22d74c83522231",
+    "bytes": 231
+  },
+  "runtime-controls-first.py": {
+    "sha256": "f9b813314c17d226ec99bf6dc254023508f1e8542a97d91c7cb0c3e4cfb452e3",
+    "bytes": 4337
+  },
+  "runtime-controls.json": {
+    "sha256": "53790c7c49e0cdc389d92579dbc3728758a3ec2a39c033adb86fb0b6a0ded024",
+    "bytes": 1985
+  },
+  "runtime-controls.log": {
+    "sha256": "de642c7a70bd742e9d846c3bd3fc5f944a03e9e8e036f3168e2fcbc14d7e1b98",
+    "bytes": 34
+  },
+  "runtime-controls.py": {
+    "sha256": "793943adc36a0e3bcd173efa53e8699ec5690c50d6f63ecf929c62c7150a0471",
+    "bytes": 4336
+  },
+  "runtime-extra-tests.rs": {
+    "sha256": "ce7ccb5af454fb2cfd8ee637f8ec45029cfb15d6754b8d4c496d43a6975ca06e",
+    "bytes": 1359
+  },
+  "runtime-independent.log": {
+    "sha256": "bef75a471c7fda8130d06c87a3bf33e00ec5c46f1c711930ba9056ffb787dae1",
+    "bytes": 7299
+  },
+  "runtime-mutant-no-context-comparison.log": {
+    "sha256": "8d7c259c085d911773f5060841d1e8609cd621079236c5a89479e6dfd6a75281",
+    "bytes": 94861
+  },
+  "runtime-mutant-no-context-comparison.rs": {
+    "sha256": "da3f59bd3d27b41d73148c1c97fd3fa15346eb3a2bea74d183b8354dd5ac1e3d",
+    "bytes": 52429
+  },
+  "runtime-tests.log": {
+    "sha256": "d6d5dfc6d5673512de3305ffa1ff295d00c1da2efaf25eabae4058013e9aa249",
+    "bytes": 10888
+  },
+  "source-after.json": {
+    "sha256": "17ae9cd4978680b6323b9574cd192b3baf7460eb39255ad07b047fd6b9a38710",
+    "bytes": 155195
+  },
+  "source-audit.json": {
+    "sha256": "0db56feaf13c5cad3d57ad90b6c27f6fde563835110468f6c45298d18f525ec9",
+    "bytes": 10800
+  }
+}

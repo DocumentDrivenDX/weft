@@ -3829,6 +3829,7 @@
             "fn:json",
             "fn:is_from",
             "fn:native_request_json",
+            "fn:model_requirements_json",
             "fn:lower_postgresql_current_presence_candidate_json",
             "fn:check_postgresql_current_presence_candidate_json"
           ],
