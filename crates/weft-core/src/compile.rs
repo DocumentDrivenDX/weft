@@ -67,6 +67,10 @@ struct Plan025;
 struct Request026;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/logical-plan-v0.2.6.schema.json")]
 struct Plan026;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.2.7.schema.json")]
+struct Request027;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/logical-plan-v0.2.7.schema.json")]
+struct Plan027;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.3.schema.json")]
 struct Request03;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/security-compile-request-v0.1.schema.json")]
@@ -168,7 +172,7 @@ impl Compiler {
                     "Compile and dialect versions must be supplied strings",
                 ));
             }
-            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0")) = input["interfaceVersion"].as_str() {
+            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6" | "weft-compile/0.2.7" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0")) = input["interfaceVersion"].as_str() {
                 version = v.into();
             }
             if security_factory.is_some() && version != "weft-security-compile/0.2.0" {
@@ -186,6 +190,7 @@ impl Compiler {
                     | (Some("weft-compile/0.2.4"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.2.5"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.2.6"), Some("weft-sql/0.2.0"))
+                    | (Some("weft-compile/0.2.7"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.2.3"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.3.0"), Some("weft-sql/0.3.0"))
                     | (Some("weft-security-compile/0.1.0"), Some("weft-sql/0.2.0"))
@@ -206,6 +211,7 @@ impl Compiler {
                 RequestSecurity02::is_valid(&input)
             } else if version == "weft-security-compile/0.1.0" {
                 RequestSecurity01::is_valid(&input)
+            } else if version == "weft-compile/0.2.7" { Request027::is_valid(&input)
             } else if version == "weft-compile/0.2.6" { Request026::is_valid(&input)
             } else if version == "weft-compile/0.2.5" { Request025::is_valid(&input)
             } else if version == "weft-compile/0.2.4" { Request024::is_valid(&input)
@@ -225,12 +231,12 @@ impl Compiler {
                     "Request violates its versioned envelope",
                 ));
             }
-            if page.is_some() && !matches!(version.as_str(),"weft-compile/0.2.2"|"weft-compile/0.2.3"|"weft-compile/0.2.4"|"weft-compile/0.2.5"|"weft-compile/0.2.6") {
+            if page.is_some() && !matches!(version.as_str(),"weft-compile/0.2.2"|"weft-compile/0.2.3"|"weft-compile/0.2.4"|"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7") {
                 return Err(Diagnostic::new("WFT-VERSION", "input", "SQL page composition requires compile/0.2.2"));
             }
             let req: Request = serde_json::from_value(input)
                 .map_err(|_| Diagnostic::new("WFT-INPUT", "input", "Malformed request members"))?;
-            let timestamp_equality=req.interface_version=="weft-compile/0.2.6" && req.timestamp_comparison_profile.as_deref()==Some(crate::exact_instant::PROFILE);
+            let timestamp_equality=matches!(req.interface_version.as_str(),"weft-compile/0.2.6"|"weft-compile/0.2.7") && req.timestamp_comparison_profile.as_deref()==Some(crate::exact_instant::PROFILE);
             if req.sql.len() > 65536 {
                 return Err(Diagnostic::new("WFT-LIMIT", "input", "SQL exceeds 64 KiB"));
             }
@@ -259,7 +265,8 @@ impl Compiler {
                 crate::model::Catalog::prepare(req.modules)?
             };
             catalog.identity_name_fallback = identity_name_fallback;
-            catalog.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6");
+            catalog.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6" | "weft-compile/0.2.7");
+            catalog.exact_dates = req.interface_version=="weft-compile/0.2.7";
             if let Some(source)=req.security.as_ref() {
                 let packet=crate::security_source::SecuritySourcePacket::read(
                     source["policyJson"].as_str().expect("security request schema"),
@@ -307,17 +314,20 @@ impl Compiler {
             } else {
                 let query = crate::application_syntax::parse(&req.sql)?;
                 let page_plan = if let Some((size, after, typed, decimal12)) = page {
-                    if decimal12 && req.interface_version != "weft-compile/0.2.6" { return Err(Diagnostic::new("WFT-PROFILE","input","Decimal12 page requires explicit compile0.2.6 context")); }
+                    if decimal12 && !matches!(req.interface_version.as_str(),"weft-compile/0.2.6"|"weft-compile/0.2.7") { return Err(Diagnostic::new("WFT-PROFILE","input","Decimal12 page requires explicit compile0.2.6 context")); }
                     if req.read_profile.is_some() || req.security.is_some() {
                         return Err(Diagnostic::new("WFT-PROFILE", "input", "Page entrypoint owns its read profile"));
                     }
-                    Some(if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6") {crate::application_resolve::resolve_page_with_exact(&catalog,query.clone(),req.parameters.clone().unwrap_or_default(),req.exact_parameters.clone().unwrap_or_default(),size,after.as_deref(),typed,timestamp_equality,decimal12)?} else if typed { crate::application_resolve::resolve_typed_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? } else { crate::application_resolve::resolve_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? })
+                    Some(if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7") {crate::application_resolve::resolve_page_with_exact(&catalog,query.clone(),req.parameters.clone().unwrap_or_default(),req.exact_parameters.clone().unwrap_or_default(),size,after.as_deref(),typed,timestamp_equality,decimal12)?} else if typed { crate::application_resolve::resolve_typed_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? } else { crate::application_resolve::resolve_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? })
                 } else { None };
                 let mut plan = match page_plan.as_ref() {
                     Some(page) => page.plan.clone(),
-                    None => if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6") {crate::application_resolve::resolve_with_exact(&catalog,query,req.parameters.unwrap_or_default(),req.exact_parameters.unwrap_or_default(),req.read_profile,timestamp_equality)?} else {crate::application_resolve::resolve(&catalog, query, req.parameters.unwrap_or_default(), req.read_profile)?},
+                    None => if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7") {crate::application_resolve::resolve_with_exact(&catalog,query,req.parameters.unwrap_or_default(),req.exact_parameters.unwrap_or_default(),req.read_profile,timestamp_equality)?} else {crate::application_resolve::resolve(&catalog, query, req.parameters.unwrap_or_default(), req.read_profile)?},
                 };
-                if timestamp_equality {
+                if catalog.exact_dates {
+                    plan.ir_version="weft-ir/0.2.7".into();
+                    if !Plan027::is_valid(&serde_json::to_value(&plan).expect("typed canonical date plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates canonical date semantics"));}
+                } else if timestamp_equality {
                     plan.ir_version="weft-ir/0.2.6".into();
                     if !Plan026::is_valid(&serde_json::to_value(&plan).expect("typed exact instant plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates exact instant semantics"));}
                 } else if req.interface_version=="weft-compile/0.2.5" {

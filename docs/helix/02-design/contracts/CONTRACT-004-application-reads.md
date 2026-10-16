@@ -197,3 +197,38 @@ arithmetic, binary comparison, other database profiles or new browser artifacts.
 A qualified single-column WHERE equality `s.addresses = 'key'` (or a named parameter) resolves to existing HAS_RELATED semantics when the actual Record has no authored member with that name and its direction-specific relationship target key has one component. The inverse name resolves from its actual target endpoint. Literal/parameter admission, exact key type and existential multiplicity follow HAS_RELATED unchanged. An authored member retains field semantics, including its existing refusal rules. Composite keys require explicit KEY tuples; ON, greater/tuple comparisons, bare names and field operands gain no shorthand meaning.
 
 This is additive application-frontend support through the shared resolver, including existing application backend versions that already implement the resulting IR. It changes no transport or logical-plan schema and does not imply new backend capabilities or deployment qualification.
+
+## Canonical Truss date queries — explicit 0.2.7 extension
+
+The explicit `weft-compile/0.2.7`, `weft-ir/0.2.7` and
+`weft-backend/0.2.7` contracts add the exact scalar descriptor
+`{"kind":"exactScalar","scalarType":"date"}`. Truss backend `0.4.41`
+extends backend `0.4.39` and requires the exact logical-query ABI `1.1` pin.
+It retains the binding `0.5` shape and PostgreSQL18.6 target profile. Older
+request, plan, backend and ABI selections MUST retain their original domains.
+A model or target MUST NOT implicitly upgrade a source request.
+
+This backend subset is canonical Gregorian `YYYY-MM-DD`, years `0001` through
+`9999`, with valid month/day and leap-day combinations. It is an explicit Truss
+value domain; UMF core's declaration of the `date` family alone does not establish
+all temporal value or refinement semantics. Selected unsupported refinements
+MUST refuse. Original date tokens MUST survive projection unchanged.
+
+Equality admits a date Field against another date Field, a quoted canonical date
+literal, or an exact parameter such as
+`"day":{"scalarType":"date","value":"2000-02-29"}` in `exactParameters`.
+The ordinary `parameters` string family MUST NOT substitute for a date.
+The backend MUST compare canonical date tokens with C-collated text equality;
+it MUST NOT cast them to timestamps, depend on session timezone or accept a
+noncanonical spelling. An absent or present-null date operand yields SQL UNKNOWN
+and does not match a WHERE or INNER JOIN equality. Projection MUST preserve the
+existing absent/null/value distinctions. The new capabilities are `type.date`,
+`compare.date.equal` and `compare.date.optionalEqual`.
+
+For example, `SELECT a.day FROM A a WHERE a.day=:day` with the exact parameter
+above returns the original date token for matching rows. An impossible or
+noncanonical operand, including `1900-02-29` or `2024-2-01`, MUST block with
+`WFT-DATE-DOMAIN` and no SQL. Date ordering, ranges, key/page-key components and
+implicit date/string coercions are outside this extension and MUST NOT be inferred
+from equality support. Hosts MUST validate exact native date slots and retain
+original catalog, authority, buffered-source and final-handoff checks.

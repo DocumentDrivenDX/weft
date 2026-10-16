@@ -41,7 +41,7 @@ pub enum Shape {
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub enum ExactScalarType { Timestamp, Binary }
+pub enum ExactScalarType { Timestamp, Binary, Date }
 #[derive(Debug, Clone, Serialize)]
 pub struct Descriptor {
     pub identity: Identity,
@@ -291,13 +291,13 @@ impl Catalog {
                             quoted: true,
                             span: Span { start: 0, end: 0 },
                         };
-                        if c.exact_scalars && matches!(v["scalarType"].as_str(), Some("timestamp" | "binary")) {
+                        if c.exact_scalars && (matches!(v["scalarType"].as_str(), Some("timestamp" | "binary")) || c.exact_dates && r.pin.umf_version=="0.8.0" && v["scalarType"]=="date") {
                             if !references.is_empty() || v.get("itemType").is_some() || v.get("recordType").is_some() {
                                 return Err(fail("Exact scalar cannot carry references or item meaning"));
                             }
                             Shape::ExactScalar { scalar_type: if v["scalarType"] == "timestamp" {
                                 ExactScalarType::Timestamp
-                            } else { ExactScalarType::Binary } }
+                            } else if v["scalarType"]=="date" { ExactScalarType::Date } else { ExactScalarType::Binary } }
                         } else {
                             Shape::Scalar {
                                 logical_type: scalar_type(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers, c.bounded_current_strings)?,

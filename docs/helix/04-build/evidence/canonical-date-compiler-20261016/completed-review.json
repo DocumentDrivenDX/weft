@@ -1,0 +1,119 @@
+{
+  "review": "Astra Ultra completed bounded canonical-date compiler iteration",
+  "date": "2026-10-16",
+  "status": "CLEAR_FOR_BOUNDED_COMPILER_FUNCTIONAL_MAIN_INCREMENT",
+  "recommendation": "Land the reviewed compiler/contracts increment with scoped passing evidence and honest known-failure/incomplete-suite disclosure. Do not adopt the disposable Truss ABI candidate or claim release, platform, performance, page/container or arbitrary-schema qualification.",
+  "blocking_findings": [],
+  "source": {
+    "repository": "/private/tmp/weft-ashlar-local-spark-20261015",
+    "baseline": "a7fe3212e7c2f22049e57753c188a277aaf93f5e",
+    "source_review": "/private/tmp/weft-canonical-date-source-astra-20261016.json",
+    "source_review_sha256": "eb04e9ea98ca8d0e66f5039d3806d877bba4ad4b85beaba6392ed1739410e36c",
+    "all_16_reviewed_files_unchanged": true,
+    "file_sha256": {
+      "crates/weft-core/src/application_binary.rs": "81e95c963d0cbd22b99fc6ff84670c529f2f42ad922af6496eeeb391ebc975fc",
+      "crates/weft-core/src/application_model.rs": "62e6abe973d868d37e34cde8a0ec4c501bd78aeda9b7790bf12bdbb759c9defc",
+      "crates/weft-core/src/application_scope.rs": "94abdbc15d03b615bc1485fac413f1451474ba3ce0083c7eb40fb65b4e919c7a",
+      "crates/weft-core/src/backend.rs": "985dd90c3316c117508dfc3d83a9fc976875f11c2e4f329ce3465ef638f1ec7f",
+      "crates/weft-core/src/backend_emission.rs": "fccb5238144d8e4401326467538ee4d719a33927c4f6b36e0ea616d3d693c172",
+      "crates/weft-core/src/compile.rs": "c8ae3fc3edc9c3106fbbba10b267d946073dfb3c9c99871c08138b16ba0e5ec5",
+      "crates/weft-core/src/exact.rs": "9b444cc507fdbf5ac2b9431d0c22087e5fc2b08c162e9d65fa3e8aed02edca38",
+      "crates/weft-core/src/model.rs": "050435fddf08a7c7e4d61022a63d90abbaf071d5c25be19d0d7eb549c45a6cba",
+      "crates/weft-postgresql/src/lib.rs": "0320cc002b3b622dd7848ca0b14c67f309da84d4468fb8f61624ca15df2c4a15",
+      "crates/weft-postgresql/src/truss_runtime.rs": "489ad92957a6411702b0835f4cf9dd1998e830973a568021ddb6172ea22e6e30",
+      "docs/helix/02-design/contracts/CONTRACT-004-application-reads.md": "14b75d07e2ca9577bb617486a06cf8d31299c48a350e405c5e5228a21d95537d",
+      "docs/helix/02-design/contracts/backend-manifest-v0.2.7.schema.json": "98237d861369fb7629954816099a952125aa25a56beccc2dbcf5da3221654c0d",
+      "docs/helix/02-design/contracts/compile-request-v0.2.7.schema.json": "c491d87df0ae44dc85b3e3f9ed9af990131255b7caf554af35c0383dbabda063",
+      "docs/helix/02-design/contracts/compile-response-v0.2.7.schema.json": "c2013bf79aeec6fd76f71a708bb5730d618bf6b24f5cc352872dba8811cca237",
+      "docs/helix/02-design/contracts/logical-plan-v0.2.7.schema.json": "44c9cc0b9f18a4bf601d99bebca98a96b60c13239edc6a46dd704121d72581f3",
+      "tests/truss-date/query-abi1.1.json": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+    }
+  },
+  "parent_run_evidence": [
+    {
+      "session": 24035,
+      "outcome": "PASS 2 focused date compiler tests in 0.04 s after the initial globally duplicated property-ID fixture was corrected"
+    },
+    {
+      "session": 66740,
+      "outcome": "Candidate macOS ARM64 wheel built successfully from the reviewed uncommitted source"
+    },
+    {
+      "session": 24422,
+      "outcome": "Initial native harness failed before public catalog/create/query work: Rust-exported version 0.4.39-dev.0 differed from asserted PEP distribution version 0.4.39.dev0. Initial log and report retained; cleanup passed."
+    },
+    {
+      "session": 40139,
+      "outcome": "PASS 1 public native test in 5.688 s after only runtime-version spelling and test provenance/count assertions were corrected. Fresh public catalog accepts four real objects, commits, reopens consumer, verifies literal/typed/field equality, exactly two join results, original 0001/2000 tokens, absent versus null, and impossible-date WFT-DATE-DOMAIN refusal. Terminal unittest OK and fixture teardown passed."
+    },
+    {
+      "session": 83879,
+      "outcome": "TERMINAL exit 101: core 328 PASS in 6.39 s; PostgreSQL 127 PASS and 1 FAIL in 536.74 s. Both new date tests pass. The sole failure is the statically verified preexisting browser producer-pin mismatch. The long decimal-domain test passes. The complete suite is terminal FAILED, not green."
+    },
+    {
+      "session": 52299,
+      "outcome": "PASS governed-spec checks: 75 artifacts, 100 schemas and 636 fixture scenarios (one deliberate schema negative); 52 criteria tracked as planned/open/deferred. This command executes no compiler, database or embedding tests."
+    }
+  ],
+  "provenance": {
+    "wheel": "/private/tmp/weft-date-wheels-20261016/weft_sql-0.4.39.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+    "wheel_sha256": "6d77a59062e0fc8380b693e1c9686ba7d71a89e8088d940afdbff6659fe745dc",
+    "installed_path": "/private/tmp/weft-date-installed-20261016/weft",
+    "installed_runtime_version": "0.4.39-dev.0",
+    "distribution_version": "0.4.39.dev0",
+    "installed_shim_sha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "installed_extension_sha256": "316ae6eb198f7ad4863cebbbd892f4a8d3ae76aefb6af1c650ec36ee9429c067",
+    "reviewer_verified_installed_files_equal_wheel_entries": true,
+    "truss_candidate_runtime": "truss-catalog-runtime/0.71-candidate",
+    "truss_candidate_manifest_sha256": "b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835",
+    "query_abi": {
+      "identity": "truss-postgresql-logical-query",
+      "version": "1.1",
+      "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+    },
+    "captured_bindingJson_equals_binding": true,
+    "captured_original_document_sha_matches_pin": true,
+    "deadlines": "Existing fixture 10000 ms SQL statement and 30000 ms host operation deadlines unchanged; no retries or extra grants.",
+    "captured_binding_limits": {
+      "maximumScanRows": 100,
+      "maximumResultRows": 100,
+      "maximumBytes": 4194304
+    }
+  },
+  "known_browser_failure": {
+    "test": "truss_mutation::browser_tests::browser_mapping_lowers_original_selection_with_complete_record_preflight",
+    "diagnostic": "WFT-MUTATION-ACTION: Owner preparation build is not pinned by this compiler",
+    "static_baseline_attribution": "Reviewer independently compared local-products-64-input.json, actions-plan-local/owner-pins.json, core mutation.rs and PostgreSQL truss_mutation.rs to git a7fe321; all are byte-identical. The fixture producer build sha256:633f8ad623cc150fd3f6e2c5fe5324a0a128393036aa34d9929bfadf1142c6e4 differs from expected sha256:6b331c0b5118435a79eb19b3c66464b4ea1ed3e70134fc3b71e07913487a408b at the unchanged exact comparison before date compilation.",
+    "limit": "This proves an existing source/fixture pin mismatch, not a baseline binary test run or a passing complete suite. No pin relabeling, guard relaxation or test weakening is approved."
+  },
+  "reproducibility_note": "The disposable generator now uses exact Rust runtime version spelling 0.4.39-dev.0, matching the successful installed-wheel check. The distribution filename/version remains PEP spelling 0.4.39.dev0. Initial failed harness log/report and corrected exact wheel provenance are preserved.",
+  "candidate_final_sha256": {
+    "_query_runtime.py": "88f7e54269048de4f6a418f7b2ffa82c56e29791cd7627c890fb945dd5e1bcca",
+    "_catalog_runtime/query-abi.json": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f",
+    "_catalog_runtime/query.sql": "4ef3565932967794b2644e4734ad3d2bfc33b46b43e9aaaf7201b3d364128c66",
+    "_catalog_runtime/manifest.json": "b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835"
+  },
+  "evidence_sha256": {
+    "/private/tmp/truss-date-query-native-20261016.py": "64ed273dc37db29a0a73df5ce4a9e9168dd7f96efba9ed06342cfcf07f39f29d",
+    "/private/tmp/prepare-truss-date-candidate-20261016.py": "249303d94e54a86a25f71603f5a8a0412f3021d2dc3d763a182faca36cab614d",
+    "/private/tmp/truss-date-query-native-20261016.log": "afc04ed62e95374cf27137cb1e1b21fbb3c31f5fbb54ab52c24b0759878de08f",
+    "/private/tmp/truss-date-query-native-report-20261016.json": "7a22fe79b6f7b7c9541be01270c6b644f997a1785c3929d10d91e4313e39ab4d",
+    "/private/tmp/truss-date-query-native-20261016-initial-version-harness.log": "816dc2f5332301e9a956c5c04402778d15715fcd1b4428bcb116a784efa3aa59",
+    "/private/tmp/truss-date-query-native-report-20261016-initial-version-harness.json": "9acb12d65790b1e500ddac637c214a92746dbc80d90d255f5849f70d5bc016f5",
+    "/private/tmp/truss-date-native-query-bundle-20261016.json": "956436903caf7cf32ae900891013a25ba183f2590559857829f3c17cc426a6bd",
+    "/private/tmp/weft-date-browser-preexisting-mismatch-20261016.json": "28c2ab6c98bcf8aa3c571badf853dcca5cb730336732cc7479b28e11d98e1111",
+    "/private/tmp/weft-date-browser-failure-detail-20261016.log": "01b5352d940b12752a4e08ff2e03a3a7d5581e463af52908c891636fdfa60ac3",
+    "/private/tmp/weft-date-wheel-build-20261016.log": "0f767e9298ecfa3955946cde17e4ec50b4f2a1b6a9158be111faa8323d5e2002",
+    "/private/tmp/weft-date-wheel-install-20261016.log": "478725a447cee313dd9f047812f0ed79d52b21bd7b06f15ec2633fd2957dc124",
+    "/private/tmp/weft-date-core-postgres-tests-20261016.log": "131d45708ce849ce13778acf929f30ce5b245552368fbc380dc7a077708d7c20",
+    "/private/tmp/weft-date-specs-20261016.log": "d111e6eb95b286e8fbcc64e418b5a415c2ec480d40516f845e08bf19170f86f0"
+  },
+  "limits": [
+    "Full core/PostgreSQL suite is terminal with one known producer-pin failure, so no all-tests-pass claim. Static source evidence attributes that mismatch to the unchanged baseline; no baseline binary run or guard relaxation is implied.",
+    "Matching published compiler wheel and atomic Truss SDK/native ABI integration remain separate work.",
+    "Only original four-record native date subset is demonstrated; no browser/date-key/range/order/arithmetic/page/container or all-schema claim.",
+    "No performance or installed Linux/macOS release qualification; no development capacity timeout closure."
+  ],
+  "reviewer_actions": "Read-only source/hash/archive/log/binding checks; receipt write only. No product edits, native tests, Rust tests or spawned agents.",
+  "terminal_update": "2026-10-16: reviewer inspected terminal raw summaries, corrected generator and unchanged 16 source hashes. Bounded compiler functional main-increment clearance remains valid; SDK/native ABI adoption and release remain separate."
+}

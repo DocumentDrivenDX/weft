@@ -1,0 +1,70 @@
+{
+  "review": "Astra Ultra completed source review",
+  "date": "2026-10-16",
+  "status": "SOURCE_CLEAR_WITH_TEST_AND_ADOPTION_GATES_OPEN",
+  "repository": "/private/tmp/weft-ashlar-local-spark-20261015",
+  "baseline": "a7fe3212e7c2f22049e57753c188a277aaf93f5e",
+  "scope": "Canonical Truss date compiler extension: ten Rust files, four new 0.2.7 schemas, exact ABI 1.1 fixture, and CONTRACT-004 extension; no Truss runtime, SDK defaults, package version or release pin changes.",
+  "blocking_source_findings": [],
+  "plan_adjustment": "Approved explicit request-version selection through existing Compiler methods: only the 0.2.7 envelope enables Catalog.exact_dates. Old request versions remain date-disabled, old registered backends cannot emit IR 0.2.7, and backend 0.4.41 is explicitly selected. A separate duplicate factory method is not required to preserve old-version behavior.",
+  "source_findings": [
+    "The four 0.2.6 schemas are unchanged. New request/response/backend/IR schemas consistently use 0.2.7 and add Date only in exact scalar/parameter domains; referenced repository schemas exist.",
+    "Backend 0.4.41 derives its existing query behavior from 0.4.39, not the native-70-specific 0.4.40. The new backend alone registers Date capabilities and exact query ABI 1.1 with fixture SHA-256 9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f.",
+    "Date field admission is gated by the explicit request version and UMF 0.8 descriptor. Exact family matching and original typed token/provenance checks are retained. Canonical validation requires exactly ten ASCII characters and delegates Gregorian validity to the existing private zero-clock instant validator, discarding its computed key and preserving the original date text.",
+    "Date equality emits C-collated text comparisons. No PostgreSQL date/timestamp cast or session-timezone dependency is introduced. Existing absence/null/value projection and SQL UNKNOWN behavior remain; no date ordering, arithmetic, range, key or page-key capability is added.",
+    "The bounded push_date helper follows the existing slot-emission pattern; resolver and common backend emission independently validate canonical Date tokens. Final Build.canonical_dates field and initializer propagation are present.",
+    "CONTRACT-004 accurately defines an explicit canonical Truss date subset rather than claiming all UMF date/refinement semantics, preserves old contracts, and requires host slot/source/authority checks. Callable ABI signatures are unchanged; descriptor and supported cell domain are explicitly versioned."
+  ],
+  "resolved_during_review": [
+    "Initial Build::predicate referenced a missing canonical_dates field/initializer; final source supplies both.",
+    "Initial PostgreSQL push_date code referenced a private core helper; final source keeps validation in resolver/common emission without introducing a public cross-crate helper.",
+    "Initial positive test fixture reused a globally occupied property ID; parent corrected the fixture to ID 5. Invalid-date controls now require WFT-DATE-DOMAIN."
+  ],
+  "validation": {
+    "reviewer_performed": [
+      "Read-only diff/source/schema/reference/hash inspection",
+      "git diff --check",
+      "Verified unchanged 0.2.6 schemas against HEAD and parsed new schema JSON"
+    ],
+    "reviewer_did_not_perform": [
+      "Product edits",
+      "Rust or native test execution",
+      "Release or performance qualification"
+    ],
+    "parent_reported": [
+      {
+        "session": 24035,
+        "result": "PASS 2 date compiler tests in 0.04 s"
+      },
+      {
+        "session": 83879,
+        "result": "Core 328 tests PASS in 6.39 s; PostgreSQL suite still running, with browser_mapping_lowers_original_selection_with_complete_record_preflight already reported failing. Cause unresolved; not classified as baseline."
+      }
+    ],
+    "test_log": "/private/tmp/weft-date-core-postgres-tests-20261016.log"
+  },
+  "remaining_gates": [
+    "Resolve or independently establish the PostgreSQL full-suite failure before completed iteration/adoption clearance.",
+    "Real Truss accept/create/commit/compile/query, exact host date parameter and cell validation, matching ABI 1.1/native source pin integration, installed wheel and release gates are not yet qualified.",
+    "Page-filter and recursive projection paths that can use exact Date require appropriate evidence before claiming support beyond the reviewed compiler subset.",
+    "No performance, arbitrary valid-schema, installed platform or release success is inferred from source review or two compiler tests."
+  ],
+  "file_sha256": {
+    "crates/weft-core/src/application_binary.rs": "81e95c963d0cbd22b99fc6ff84670c529f2f42ad922af6496eeeb391ebc975fc",
+    "crates/weft-core/src/application_model.rs": "62e6abe973d868d37e34cde8a0ec4c501bd78aeda9b7790bf12bdbb759c9defc",
+    "crates/weft-core/src/application_scope.rs": "94abdbc15d03b615bc1485fac413f1451474ba3ce0083c7eb40fb65b4e919c7a",
+    "crates/weft-core/src/backend.rs": "985dd90c3316c117508dfc3d83a9fc976875f11c2e4f329ce3465ef638f1ec7f",
+    "crates/weft-core/src/backend_emission.rs": "fccb5238144d8e4401326467538ee4d719a33927c4f6b36e0ea616d3d693c172",
+    "crates/weft-core/src/compile.rs": "c8ae3fc3edc9c3106fbbba10b267d946073dfb3c9c99871c08138b16ba0e5ec5",
+    "crates/weft-core/src/exact.rs": "9b444cc507fdbf5ac2b9431d0c22087e5fc2b08c162e9d65fa3e8aed02edca38",
+    "crates/weft-core/src/model.rs": "050435fddf08a7c7e4d61022a63d90abbaf071d5c25be19d0d7eb549c45a6cba",
+    "crates/weft-postgresql/src/lib.rs": "0320cc002b3b622dd7848ca0b14c67f309da84d4468fb8f61624ca15df2c4a15",
+    "crates/weft-postgresql/src/truss_runtime.rs": "489ad92957a6411702b0835f4cf9dd1998e830973a568021ddb6172ea22e6e30",
+    "docs/helix/02-design/contracts/CONTRACT-004-application-reads.md": "14b75d07e2ca9577bb617486a06cf8d31299c48a350e405c5e5228a21d95537d",
+    "docs/helix/02-design/contracts/backend-manifest-v0.2.7.schema.json": "98237d861369fb7629954816099a952125aa25a56beccc2dbcf5da3221654c0d",
+    "docs/helix/02-design/contracts/compile-request-v0.2.7.schema.json": "c491d87df0ae44dc85b3e3f9ed9af990131255b7caf554af35c0383dbabda063",
+    "docs/helix/02-design/contracts/compile-response-v0.2.7.schema.json": "c2013bf79aeec6fd76f71a708bb5730d618bf6b24f5cc352872dba8811cca237",
+    "docs/helix/02-design/contracts/logical-plan-v0.2.7.schema.json": "44c9cc0b9f18a4bf601d99bebca98a96b60c13239edc6a46dd704121d72581f3",
+    "tests/truss-date/query-abi1.1.json": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+  }
+}

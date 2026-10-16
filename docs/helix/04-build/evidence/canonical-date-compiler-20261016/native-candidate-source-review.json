@@ -1,0 +1,48 @@
+{
+  "review": "Astra Ultra paired disposable canonical-date candidate and native-test source review",
+  "date": "2026-10-16",
+  "status": "SOURCE_CLEAR_FOR_DISPOSABLE_NATIVE_EXECUTION",
+  "baseline_repository": "/private/tmp/truss-main-integration-20261010",
+  "baseline_head": "4d7aa544ef2fc34f6ee3ace41b9947a726a2359b",
+  "candidate": "/private/tmp/truss-date-query-candidate-20261016/truss",
+  "blocking_source_findings": [],
+  "scope": "Fresh disposable installation only; copied main source with explicit new query ABI/compiler backend and host date validation. Not adoption into main, upgrade coverage, installed release qualification, or performance evidence.",
+  "findings": [
+    "Candidate file inventory equals the copied main package inventory, excluding Python bytecode. Exactly four files differ: _query_runtime.py, _catalog_runtime/query-abi.json, query.sql and manifest.json. All other package bytes match current main.",
+    "The ABI descriptor is byte-identical to the reviewed Weft ABI 1.1 fixture and native query_abi advertises its exact SHA-256. Every manifest file digest matches its candidate payload. Retained runtime identity 0.71-candidate is a disposable development experiment, not a reusable published release identity.",
+    "Host explicitly selects weft-compile/0.2.7, IR 0.2.7, backend 0.4.41 / interface 0.2.7, and candidate compiler version 0.4.39.dev0. It still verifies original binding/model/backend/obligations, exact slot ordering, source scope, final authority, result carriers and host custody. No production default changed.",
+    "ASCII [0-9] fixed-width date regex plus date.fromisoformat admits exactly Gregorian YYYY-MM-DD with years 0001 through 9999. Original text is returned unchanged. Validation occurs for caller TextValue date parameters, compiled native date slots and decoded date results; no date/timestamp SQL cast, timezone conversion, implicit string coercion or permission caching is introduced.",
+    "Existing binary/timestamp paths, scalar decoding and absent/null envelopes are retained. The new date decoder preserves TextValue(kind=date,text=original) and leaves existing absent/null behavior intact.",
+    "The fixture uses existing public preparation, acceptance, grants, group mutation, commit and reopened consumer query paths for four original records, with 10-second statement and 30-second operation limits inherited unchanged. Literal/typed/field equality, absent/null projection and invalid-literal DATE-DOMAIN refusal are exercised. It does not claim pages, containers, complete entities, upgrade or all-schema support."
+  ],
+  "pre_execution_and_evidence_notes": [
+    "Use the exact built wheel from the reviewed Weft candidate and retain its hash/source provenance plus actual installed module path/version. A matching development version string alone is not wheel provenance.",
+    "Recommended small test strengthening: assert len(joined.rows)==2 before comparing its set, so duplicate result multiplicity cannot be hidden.",
+    "fixtureCleanup=passed is written after per-test teardown; final class runtime cleanup is only established by successful terminal unittest completion. Retain terminal output and any failure.",
+    "The generator performs asserted fresh-directory creation and copies only into /private/tmp. Static inspection confirms its actual replacements landed only in the intended files. Main tracked source remains unchanged.",
+    "Parent-reported Python 3.11 compile check passed after system Python 3.9 was incompatible with existing package annotations; reviewer did not execute candidate modules or native tests."
+  ],
+  "validation": {
+    "reviewer": "Read-only script/fixture/runtime/source diff, complete candidate file inventory comparison, ABI and manifest hash verification. No product edits, tests, native launches or agents.",
+    "native": "Pending",
+    "wheel": "Parent build session 66740 pending at request; exact installed wheel evidence required",
+    "full_compiler_suite": "Separate unresolved PostgreSQL compiler-suite failure from session 83879 is not waived by permission to run this bounded diagnostic."
+  },
+  "script_sha256": {
+    "/private/tmp/prepare-truss-date-candidate-20261016.py": "8604592a7e0a5b73d500937330ce91a6713cd0d851033c637ca2bb18e4955373",
+    "/private/tmp/truss-date-query-native-20261016.py": "d93a877b9f37cdab88579b9d1f37aac68cdf02cdfc1b29d8d6b19c1384fa2d56"
+  },
+  "candidate_file_sha256": {
+    "_catalog_runtime/manifest.json": "b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835",
+    "_catalog_runtime/query-abi.json": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f",
+    "_catalog_runtime/query.sql": "4ef3565932967794b2644e4734ad3d2bfc33b46b43e9aaaf7201b3d364128c66",
+    "_query_runtime.py": "75273060259e8512ca4cb63376423f84db5aa02665d08ca41a2fcb5a71921761"
+  },
+  "baseline_changed_file_sha256": {
+    "_catalog_runtime/manifest.json": "c9221e8b0fe5a90de7f056ced84fde460c36f0d3faceff7a2348ed01c0586f20",
+    "_catalog_runtime/query-abi.json": "9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806",
+    "_catalog_runtime/query.sql": "4b2e7cded8f2fee754d49c97929c490ef29a17a4e49b2bcd126562cda85c77cc",
+    "_query_runtime.py": "4c9a1f4f680728e99266ae099aadf9e31b09c467b757cb373001447ada40b248"
+  },
+  "manifest_all_file_digests_valid": true
+}

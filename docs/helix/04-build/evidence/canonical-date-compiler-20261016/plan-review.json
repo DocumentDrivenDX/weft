@@ -1,0 +1,75 @@
+{
+  "review": "Astra Ultra feature plan review",
+  "date": "2026-10-16",
+  "status": "REVISED_PLAN_CLEAR_WITH_EXPLICIT_VERSION_AND_ROLLOUT_BOUNDARIES",
+  "scope": "Canonical Gregorian date projection and equality in an explicitly selected Weft Truss backend0.4.41; no implementation/native execution reviewed.",
+  "inspected_sources": {
+    "weft_checkout": "/private/tmp/weft-ashlar-local-spark-20261015",
+    "weft_inspected_head": "51459bd7b5533adec8e40022c0428813f5f4537d",
+    "planned_fast_forward": "a7fe321",
+    "truss_checkout": "/private/tmp/truss-main-integration-20261010",
+    "truss_query_abi": "1.0 / 9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806",
+    "umf_checkout": "/Users/erik/.codex/worktrees/0e51/umf",
+    "umf_head": "cbb6fb8718aad59fd2061b62d12976387570db2f"
+  },
+  "original_plan_issue_resolved": "Compile request0.2.6, IR0.2.6 and response parameter-slot schemas explicitly close exactScalar to binary/timestamp. Backend version alone cannot introduce Date into that wire contract. Revised request/response/IR/backend0.2.7 schemas plus query ABI1.1 are appropriate; preserve all existing schemas unchanged.",
+  "required_boundaries": [
+    {
+      "topic": "Explicit compiler selection",
+      "requirement": "New trusted Compiler entrypoint and resolver/catalog date flag default false on every existing entrypoint. Backend41 alone selects the new path, requires exact new wire versions and advertises type.date/equality capabilities. Generic/default/security/browser/current-query entrypoints must not acquire Date semantics accidentally."
+    },
+    {
+      "topic": "Backend inheritance",
+      "requirement": "Backend40 is a separate fixed-native70 branch. Backend41 should explicitly inherit backend39 generic query-ABI, decimal12 and name-or-stable-ID behavior before adding Date, while leaving backend38/39/40 version/hash/binding guards and mutation selection unchanged."
+    },
+    {
+      "topic": "Closed transport validation",
+      "requirement": "Add new version validation throughout request, typed IR, backend manifest/language matching, response, exact parameter slots, artifact decoding and relevant embedded/packaged schemas. Do not alter old enums or mark date-bearing artifacts0.2.6. Inspect shared enum consumers and old if Binary else Timestamp logic for accidental Date fallthrough."
+    },
+    {
+      "topic": "Exact date domain",
+      "requirement": "Validate exactly ten ASCII bytes YYYY-MM-DD, Gregorian year0001..9999 and calendar-valid month/day with Gregorian leap rules. No normalization, locale parsing, timezone conversion, timestamp coercion, signed/extended years or native date cast in emitted comparisons. Keep the existing native source validation intact."
+    },
+    {
+      "topic": "Equality and presence",
+      "requirement": "Emit text equality with explicit C collation for same-family Date fields, canonical literals and explicitly typed Date parameters. Plain string parameters or date-vs-string/timestamp fields refuse. Missing and explicit-null cells retain existing absent/null result envelopes and SQL UNKNOWN/nonmatch equality. Do not coalesce them to strings or dates."
+    },
+    {
+      "topic": "Scope containment",
+      "requirement": "No date ordering, range operators, arithmetic, grouping, keys, relationship-key encoding or date page-key admission is implied. Date scalar leaves inside existing projection containers/whole records either receive explicit coverage or remain refused; existing page filters may use date equality only if the new page entrypoint is included and tested."
+    },
+    {
+      "topic": "Native authority and source custody",
+      "requirement": "Keep validated complete native source buffering, model/runtime/installation/catalog binding, scope/reader/root checks and final handoff unchanged. New ABI1.1 is an exact descriptor/version/hash; it grants no authority and must not wildcard old ABI pins."
+    },
+    {
+      "topic": "Python carrier and parameters",
+      "requirement": "Reuse TextValue(kind=date,text=original). Extend exact result descriptor, authored parameter, compiled-slot validation and decoder paths together under the new selected protocol. Reject noncanonical date slots before SQL, retain original token bytes and do not reinterpret Date as generic string."
+    },
+    {
+      "topic": "Atomic rollout",
+      "requirement": "query_binding currently emits only query_abi(), and query_scope requires exact equality; current SDK selects Weft036/backend39/ABI1.0. Replacing the native pin with1.1 before matching compiler adoption would break ordinary queries. Test the paired candidate first, then adopt native ABI1.1, Python backend41/new protocol, exact compiler version and verified published wheel pins atomically. Alternatively design explicit ABI coexistence separately. Do not relax old backends to accept1.1."
+    }
+  ],
+  "owner_semantic_scope": {
+    "finding": "The assertion that UMF core already validates the identical Gregorian date domain is not supported by the inspected pinned owner source.",
+    "evidence": [
+      "UMF spec/core/schema-properties-document.schema.json /$defs/literal/oneOf/7 accepts a date string without Gregorian value validation.",
+      "UMF src/model/schema-literals.ts:74 treats float/date/time/timestamp literal text separately and explicitly refuses temporal refinements whose semantics are undefined.",
+      "Truss packages/python/src/truss/_catalog_runtime/scalars.sql:22-25 already validates canonical YYYY-MM-DD, nonzero year and calendar validity using make_date."
+    ],
+    "requirement": "Describe this feature as an explicit canonical Truss date subset. A broader UMF owner-equivalence claim requires a separately identified qualified owner profile. Preserve refusal of unsupported date facets/default/allowed-value meanings."
+  },
+  "focused_validation": [
+    "Rust projection and equality tests for literal, typed parameter and field-to-field comparison, including required and absent/null cases; positive0001-01-01/9999-12-31/2000-02-29 and negative1900-02-29, zero/extended year, malformed padding, whitespace/non-ASCII digits and invalid month/day.",
+    "Cross-version refusal controls: old compiler entrypoint and old backend/date use, old0.2.6 Date input, backend41 with wrong ABI/version/hash, and mismatched Date/string/timestamp parameters/fields. Preserve existing timestamp/binary/numeric/native70 controls.",
+    "Actual public accepted model -> CREATE/COMMIT -> compile -> query on PostgreSQL18 using the exact paired candidate wheel/SDK, original token readback, equality with actual values, null/absent nonmatches and retained current native authority checks. Test page/container paths only if admitted by scope.",
+    "Run the existing whole-wheel smoke/release gates for the actual final package version and source; package version is distinct from backend0.4.41 and must not reuse a published release. Published matching-wheel adoption follows actual artifacts and pins, not candidate build success."
+  ],
+  "plan_disposition": "Implementation may proceed in the explicit candidate scope above. Completed source and native evidence remain separate gates. Existing CREATE/1024 performance and cross-platform failures stay open; this feature makes no performance claim.",
+  "reviewer_actions": {
+    "product_edits": false,
+    "native_tests": false,
+    "agents_spawned": false
+  }
+}
