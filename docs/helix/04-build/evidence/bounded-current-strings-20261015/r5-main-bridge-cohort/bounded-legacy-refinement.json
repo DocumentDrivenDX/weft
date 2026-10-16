@@ -1,0 +1,135 @@
+{
+  "version": "0.4.36",
+  "sourceCommit": "a853a5bcfe2edc3a4c63c0cb8fcc01593fd4ec68",
+  "wheel": "weft_sql-0.4.36-cp39-abi3-macosx_11_0_arm64.whl",
+  "pinsBeforeAfter": {
+    "wheelSha256": "f8e5c035b074e22550bc7ef4fe9cb0ccefe90b8205499b15940d5a3252f9b552",
+    "nativeModuleSha256": "ba3d207ec9a7841751324ec5f7f4a6875c6552eaf5aaec78b4c10bd5281253ab",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "checks": [
+    {
+      "id": "postgresql/rows",
+      "matched": true
+    },
+    {
+      "id": "postgresql/rows/foreign-source",
+      "refused": true
+    },
+    {
+      "id": "postgresql/rows/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "postgresql/rows/duplicate-key",
+      "refused": true
+    },
+    {
+      "id": "postgresql/rows/missing-input",
+      "refused": true
+    },
+    {
+      "id": "postgresql/rows/unknown-frame",
+      "refused": true
+    },
+    {
+      "id": "postgresql/contributors",
+      "matched": true
+    },
+    {
+      "id": "postgresql/contributors/foreign-source",
+      "refused": true
+    },
+    {
+      "id": "postgresql/contributors/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "postgresql/contributors/duplicate-key",
+      "refused": true
+    },
+    {
+      "id": "postgresql/contributors/missing-input",
+      "refused": true
+    },
+    {
+      "id": "postgresql/contributors/unknown-frame",
+      "refused": true
+    },
+    {
+      "id": "postgresql/sum",
+      "matched": true
+    },
+    {
+      "id": "postgresql/sum/foreign-source",
+      "refused": true
+    },
+    {
+      "id": "postgresql/sum/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "postgresql/sum/duplicate-key",
+      "refused": true
+    },
+    {
+      "id": "postgresql/sum/missing-input",
+      "refused": true
+    },
+    {
+      "id": "postgresql/sum/unknown-frame",
+      "refused": true
+    },
+    {
+      "id": "databricks/contributors",
+      "matched": true
+    },
+    {
+      "id": "databricks/contributors/foreign-source",
+      "refused": true
+    },
+    {
+      "id": "databricks/contributors/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "databricks/contributors/duplicate-key",
+      "refused": true
+    },
+    {
+      "id": "databricks/contributors/missing-input",
+      "refused": true
+    },
+    {
+      "id": "databricks/contributors/unknown-frame",
+      "refused": true
+    },
+    {
+      "id": "databricks/sum",
+      "matched": true
+    },
+    {
+      "id": "databricks/sum/foreign-source",
+      "refused": true
+    },
+    {
+      "id": "databricks/sum/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "databricks/sum/duplicate-key",
+      "refused": true
+    },
+    {
+      "id": "databricks/sum/missing-input",
+      "refused": true
+    },
+    {
+      "id": "databricks/sum/unknown-frame",
+      "refused": true
+    }
+  ],
+  "controls": 30,
+  "nativeAdmission": false,
+  "securityReady": false
+}

@@ -1,0 +1,14 @@
+{
+  "scope": "Independent root read-only hash/terminal verification of frozen bridge cohort; no native security or final main promotion",
+  "cohortReceiptSha256": "cd8e6d21900591f95023b38bcac93f1560e56703abcfc053c1d364388449a1d4",
+  "frozenSource": "/private/tmp/weft-bounded-string-r5-frozen-20261016",
+  "sourceFilesMatched": 1157,
+  "executionsPassed": 26,
+  "checks": {
+    "python": 265,
+    "candidateBrowser": 252,
+    "standardWheel": 54,
+    "standardBrowser": 51
+  },
+  "nativeAdmission": false
+}
