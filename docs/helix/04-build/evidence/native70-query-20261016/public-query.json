@@ -1,0 +1,27 @@
+{
+  "scope": "Actual public native70 acceptance/create/query over unchanged named original Core08 products; frozen unpublished Truss source plus explicit version37/backend40 constants. No current-policy/owned/aggregate-security acceptance.",
+  "checks": [
+    {
+      "id": "public-named-products-query-after-native70-create",
+      "rows": [
+        [
+          "old"
+        ]
+      ],
+      "ordinaryDirectObjectSelect": false
+    },
+    {
+      "id": "public-ordinary-count",
+      "rows": [
+        [
+          2
+        ]
+      ]
+    }
+  ],
+  "weftVersion": "0.4.37",
+  "moduleSha256": "2c42d0797350a7fdbaafaaf817befe7476cf92d87d39077929497d9b410b3201",
+  "exporterSha256": "b7b42396ef792980c0d836f6a07100930b54af7aca27c515ca234f4e06a54815",
+  "runtimeManifestSha256": "0d292c3681986b3664ff3af9927039d10cf20ef029511e33ccd7d76c566041e3",
+  "cleanup": "Original LocalPostgres exporter context exited without cleanup error"
+}
