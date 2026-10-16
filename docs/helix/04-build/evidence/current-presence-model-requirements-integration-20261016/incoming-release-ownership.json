@@ -1,0 +1,17 @@
+{
+  "baseline": "86872faf2625098f262eeb5f7fed486eb958947b",
+  "scope": "ownership inventory for unchanged committed incoming release tooling",
+  "files": [
+    {
+      "path": "scripts/release/test-native70-smoke-gate.py",
+      "bytes": 1841,
+      "sha256": "db631a2078c9f16121e0d83d23621cfe4d6e8f9d33fdfd70bb048460bae4c828"
+    },
+    {
+      "path": "scripts/release/verify-native70-smoke.py",
+      "bytes": 859,
+      "sha256": "ddab9b4435ce1b4b7e7ea76ddc57ebcbc7ed2fdbac573645acfa7ea465cb7944"
+    }
+  ],
+  "sourceBehaviorChanged": false
+}

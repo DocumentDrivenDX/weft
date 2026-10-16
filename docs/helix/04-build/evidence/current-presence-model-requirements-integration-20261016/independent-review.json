@@ -1,0 +1,89 @@
+{
+  "status": "passed-with-qualified-core-component-scope",
+  "remainingFindings": [],
+  "packet": {
+    "path": "review.zip",
+    "sha256": "d4c81f46151ec7f6be51684e9ee68d1ec4cdafa9747f5454aa4f5f841f5db542",
+    "bytes": 312861
+  },
+  "baseline": "377a5530f8aecd8c2ecbe3ae4f67cd0c0fbce3b5",
+  "candidate": "84fddd1090ee4549d126de514ae863949854c9e0",
+  "source": {
+    "path": "frozen/crates/weft-core/src/current_presence_model_requirements.rs",
+    "sha256": "96a6012a08cbcb6d5bd530110b21feb69e5eb52a39d1dc1e90b8c2a6b6632255",
+    "bytes": 5823
+  },
+  "custody": "All6source and21evidence manifest entries match; all4445inherited baseline entries match exact Git reconstruction. All27overlay/evidence blobs match the candidate Git object. Six product inputs restored/unchanged after isolated mutation controls. Owner and integration sources were not edited.",
+  "validation": [
+    {
+      "command": "python3.12 reconstruct.py and packet/inherited/candidate hash audits",
+      "result": "6source+21evidence pins;4445inherited pins;27candidate blobs;6closing source pins match",
+      "receipts": [
+        "packet-audit.json",
+        "inherited-audit.json",
+        "candidate-correspondence.json",
+        "source-after.json"
+      ]
+    },
+    {
+      "command": "python3.12 run-cargo.py test --offline -p weft-core --features current-presence-model-requirements-candidate --lib model_requirements_",
+      "result": "6passed",
+      "receipt": "focused.log"
+    },
+    {
+      "command": "python3.12 run-cargo.py test --offline -p weft-core --features current-presence-model-requirements-candidate --doc current_presence_model_requirements",
+      "result": "2compile-fail tests passed",
+      "receipt": "doctests.log"
+    },
+    {
+      "command": "python3.12 adversarial.py",
+      "result": "36actual downstream Rust cases/131assertions passed",
+      "receipt": "adversarial.json"
+    },
+    {
+      "command": "python3.12 extra-controls.py",
+      "result": "4controls pass: same local IDs in different modules/documents with exact revisions;4096complete valid entities issue;4097complete valid entities refuse",
+      "receipt": "extra-controls.json"
+    },
+    {
+      "command": "python3.12 report-capacity.py",
+      "result": "40shared nested graphs produce6841616report bytes;180graphs refuse the entire report under16000000encoded-byte cap",
+      "receipt": "report-capacity.json"
+    },
+    {
+      "command": "python3.12 feature-controls.py",
+      "result": "Default and old-context-only clients fail specifically E0432 absent module; explicit new feature compiles",
+      "receipt": "feature-controls.json"
+    },
+    {
+      "command": "python3.12 mutations.py",
+      "result": "4effective isolated mutants detected: remove member census; remove association-Key agreement; substitute nested identity for requested Field; reverse Key order. Original source restored and probe rebuilt.",
+      "receipt": "mutations.json"
+    }
+  ],
+  "assessment": [
+    "The issued object borrows the exact CurrentPresencePreparation and therefore its actual original ApplicationLineage. Private fields/noDeserialize and lifetimes retain typed custody; equal report bytes from independently prepared objects do not establish object identity.",
+    "Factory reuses original Catalog Record/member descriptor and authored-Key APIs. Complete entity member census, distinct complete references, exact Record revision and ordered selected Key survive or refuse. Parent/request/profile guards remain unchanged.",
+    "Requested Field identity is retained separately from enclosing Record identity and every nested descriptor identity. Actual array/map/structured controls preserve original descriptor traversal and availability, including absent-allowed nested Fields. No native property/type IDs or physical codec meanings are inferred.",
+    "All original source request and opaque bytes remain exact. Unknown graph content, including unvalidated future forms, can remain data in this intentionally incomplete report; it is not whole-UMF semantic admission. Known record-members associations require the same selected entity Key.",
+    "Construction-order guidance is accurate: the actual context already includes its native-binding source and hashes. A context-dependent report hash cannot be embedded into that same binding without circularity/re-preparation. Persistent descriptors and fresh held witnesses remain separately governed obligations.",
+    "Only one optional Core feature/module and its explicit ownership entries are added; old context/default profiles omit the module. No runtime/Python/WASM bridge, backend registration, default cohort or public wheel is added here."
+  ],
+  "suppliedEvidence": "Retained owner logs report361Core tests,2doctests,3feature profiles,74artifacts/96schemas and11packages/16boundary controls. Counts/logs and source pins were inspected; this review independently ran the focused controls above, not another full361-test or spec/module campaign.",
+  "scopeLimits": [
+    "No SQL/native execution, source/caller/current-cut authentication, native binding admission, guarded release, integration activation or case promotion. Original132Weft/shared158UMF obligations remain open.",
+    "The16MB assertion is encoded report capacity, not a process-memory or CPU theorem; descriptor materialization precedes final bounded serialization. Earlier original parser/request/type-graph guards still apply.",
+    "Hash comparisons establish supplied/reconstructed endpoint correspondence, not continuously held/ABA-safe files or hermetic external toolchain/dependency execution. Rust1.90/toolchain and offline Cargo cache are external.",
+    "Runtime/Python follow-on work and future complete graph/Field/native/codec/witness correspondence require separate review. Fixture native binding is explicitly unadmitted."
+  ],
+  "retainedAttempts": [
+    "Owner initial offline feature environment failure and first missing boundary declaration failure remain unchanged in the frozen packet.",
+    "Reviewer initial systemPython3.9 tar filter incompatibility was corrected usingPython3.12; note retained.",
+    "Reviewer first nested fixtures lacked required extensions objects; corrected after parent-envelope refusal. First revision-drift expectation used wrong refusal stage; actual context refusal is valid. Original source/results retained.",
+    "Reviewer extra-controls first execution omitted __file__; next4096 fixture omitted required Key name. Both failed harness attempts retained before correction. No product source repair."
+  ],
+  "artifactManifest": {
+    "path": "manifest.json",
+    "format": "relative path -> {sha256,bytes}; excludes itself, finalize.py, expanded source/, Cargo target/, and redundant baseline.tar. Reconstruct source from immutable baseline Git plus retained exact review.zip; no owner paths required for product reconstruction."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "baseline": "86872faf2625098f262eeb5f7fed486eb958947b",
+  "candidate": "84fddd1090ee4549d126de514ae863949854c9e0",
+  "source": {
+    "crates/weft-core/Cargo.toml": {
+      "bytes": 1672,
+      "sha256": "bb3d73dc76d4c02ca1fe7a7f03cacf3a751daa6e6a14602ef98aba2bd0bfba78",
+      "baselineSha256": "ce7d0146d149537ab7e410572db29c364df6e4e77cd227c9672cc065b87b2fca"
+    },
+    "crates/weft-core/src/lib.rs": {
+      "bytes": 6161,
+      "sha256": "3c44cf8f8c48ebde6bbd2b06131d375158fef08d8c1836800ab7607e9da0f3b3",
+      "baselineSha256": "812aae497b36cd187e8310f267ae6d5a81061e6e7e7d9e0024cad4ed1cf9ac43"
+    },
+    "crates/weft-core/src/current_presence.rs": {
+      "bytes": 21541,
+      "sha256": "19634a18660c59d696cbfee3c0a91f2350074e850132dbd3955ca432d37bc34f",
+      "baselineSha256": "7ae6162bfc600e1106f02602cf95e98c7dc177064204d2dee07916a15caed073"
+    },
+    "crates/weft-core/src/current_presence_model_requirements.rs": {
+      "bytes": 5823,
+      "sha256": "96a6012a08cbcb6d5bd530110b21feb69e5eb52a39d1dc1e90b8c2a6b6632255",
+      "baselineSha256": null
+    },
+    "docs/helix/02-design/module-boundaries.json": {
+      "bytes": 142832,
+      "sha256": "9b6cf3d14f4bbdf5f1508bec6f7e481190df7dcd252412c212e2b9b25cf593cc",
+      "baselineSha256": "b20a790652062cd76a4417618bd896b49acc7aabb0cf897d005d0f5b7fd1b1dc"
+    },
+    "docs/helix/02-design/contracts/CONTRACT-015-current-presence-model-requirements.md": {
+      "bytes": 8794,
+      "sha256": "6689f4eff2513a04b6dbf6cf7e6258d4f607725d2528c77069d6acfeaaf08d49",
+      "baselineSha256": null
+    }
+  },
+  "overlayEntries": 28,
+  "reviewArtifacts": 94,
+  "reviewArtifactBytes": 21890594,
+  "reviewSha256": "e7f9cbaea46024dd7d2d698b516cc016b66d951cfdb0815d55ae2a9f145686c8",
+  "reviewManifestSha256": "fc5d5d87643b299389bde3c6a92b9f4678942235b87618accafff4f4de2c441f",
+  "remainingFindings": [],
+  "bridgeIncluded": false,
+  "nativeAuthority": false
+}

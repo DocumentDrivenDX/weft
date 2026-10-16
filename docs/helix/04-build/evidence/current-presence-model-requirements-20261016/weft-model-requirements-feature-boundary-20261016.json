@@ -1,0 +1,33 @@
+{
+  "version": "weft-model-requirements-feature-probe/0.1",
+  "cases": [
+    {
+      "profile": "default",
+      "features": [],
+      "exitCode": 101,
+      "expectedPresence": false,
+      "passed": true,
+      "log": "/private/tmp/weft-model-requirements-feature-default-20261016.log"
+    },
+    {
+      "profile": "old-context-only",
+      "features": [
+        "current-presence-context-candidate"
+      ],
+      "exitCode": 101,
+      "expectedPresence": false,
+      "passed": true,
+      "log": "/private/tmp/weft-model-requirements-feature-old-context-only-20261016.log"
+    },
+    {
+      "profile": "explicit-new",
+      "features": [
+        "current-presence-model-requirements-candidate"
+      ],
+      "exitCode": 0,
+      "expectedPresence": true,
+      "passed": true,
+      "log": "/private/tmp/weft-model-requirements-feature-explicit-new-20261016.log"
+    }
+  ]
+}

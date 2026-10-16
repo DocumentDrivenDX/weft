@@ -1157,6 +1157,16 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/current_presence_model_requirements.rs",
+          "publicDeclarations": [
+            "struct:CurrentPresenceModelRequirements",
+            "fn:context",
+            "fn:json",
+            "fn:derive"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/current_query_designation.rs",
           "publicDeclarations": [
             "struct:SourceIdentity",
@@ -1324,6 +1334,7 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:current_presence_model_requirements",
             "mod:current_presence",
             "mod:current_string_domain",
             "mod:current_query_operands",
@@ -4340,9 +4351,11 @@
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
         "scripts/release/test-decimal12-smoke-gate.py",
+        "scripts/release/test-native70-smoke-gate.py",
         "scripts/release/test-refinement-smoke-gate.py",
         "scripts/release/test_verify_promotion.py",
         "scripts/release/verify-decimal12-smoke.py",
+        "scripts/release/verify-native70-smoke.py",
         "scripts/release/verify-promotion.py",
         "scripts/release/verify-refinement-smoke.py",
         "scripts/reliability/__init__.py",

@@ -2693,3 +2693,29 @@ qualification. No native database execution, producer/source/caller/current-cut
 admission, closing guard or release is established by the bridge tests. Truss and
 Ashlar need separate native presence consumers over actual collector/guard seams;
 all original132 acceptance obligations remain open with zero case promotion.
+
+
+### B-008 original model requirements — 2026-10-16
+
+[CONTRACT-015](../02-design/contracts/CONTRACT-015-current-presence-model-requirements.md)
+adds an explicit optional Core requirements feature over the same actual issued
+presence context. It retains complete original request/model/source pins and
+resolves full Record membership, original descriptor identities/availability and
+ordered selected authored Keys through existing compiler APIs. Persistent native
+binding identity precedes the preparation; its descriptor must not incorporate
+the resulting context/report hash and create a self-hash cycle. This incomplete
+report authenticates no native source, caller, current authority or release.
+
+[Independent review and current-main integration evidence](evidence/current-presence-model-requirements-integration-20261016/README.md)
+retain all94Astra artifacts, original attempts and root replay. The review found
+no remaining findings within its qualified component scope; independent controls
+cover membership/identity/key order, nested descriptors, report capacity, feature
+absence and four detected source mutants. Current-main Core tests pass361cases;
+all initial132native/shared B-008 cases remain required and none is promoted.
+
+The integration preserves newer release commits and accounts for two unchanged
+incoming native70 release scripts in the module-ownership inventory. Runtime/
+Python requirements exposure remains a separately reviewed candidate, not part
+of this integration or an installed-consumer repin. The separately captured
+actual Truss catalog correspondence test does not establish codec/graph/native
+permission/current-generation/guarded-release closure. B-008 remains open.
