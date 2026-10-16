@@ -330,9 +330,9 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
             || native.field != vector["field"]
             || native.dimensions == 0
             || native.dimensions > 16000
-            || native.extension_version != "0.8.7"
+            || !matches!(native.extension_version.as_str(), "0.8.6" | "0.8.7")
         {
-            return Err("SEARCH_UNSUPPORTED: exact pgvector0.8.7 shape required");
+            return Err("SEARCH_UNSUPPORTED: exact pinned pgvector0.8.6 or 0.8.7 shape required");
         }
         for node in [field, leaf] {
             if node["extensions"].as_object().is_none_or(|m| !m.is_empty())

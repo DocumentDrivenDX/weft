@@ -75,6 +75,17 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/authored_pages.rs",
+          "publicDeclarations": [
+            "const:LOCAL_VERSION",
+            "const:MANAGED_VERSION",
+            "struct:AuthoredPages",
+            "fn:local",
+            "fn:managed"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/binding.rs",
           "publicDeclarations": [
             "const:PROFILE",
@@ -271,6 +282,7 @@
             "mod:candidate",
             "mod:mathematical_integer",
             "mod:native_profile",
+            "mod:managed_20261016",
             "mod:qualified_profile",
             "mod:arithmetic",
             "mod:count_distinct",
@@ -282,7 +294,29 @@
             "mod:implicit_arithmetic",
             "mod:compatible_profile",
             "mod:current_scalar",
-            "mod:raw_read"
+            "mod:raw_read",
+            "mod:local_spark4",
+            "mod:raw_action",
+            "mod:raw_bulk",
+            "mod:authored_pages"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:LocalSpark4"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/managed_20261016.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:Managed20261016"
           ],
           "pathReferences": []
         },
@@ -341,6 +375,20 @@
             "const:PROFILE",
             "const:EVIDENCE",
             "struct:Qualified"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_action.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_bulk.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -3776,6 +3824,16 @@
       ],
       "sources": [
         {
+          "path": "crates/weft-runtime/src/engine_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json",
+            "fn:compile_page_json",
+            "fn:check_page_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/implicit_arithmetic.rs",
           "publicDeclarations": [
             "fn:compile_json"
@@ -3844,6 +3902,7 @@
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
+            "mod:engine_read",
             "struct:CurrentPresencePreparation",
             "fn:json",
             "fn:is_from",
@@ -3999,7 +4058,11 @@
             "fn:compile_raw_read_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
-            "fn:compile_search_json"
+            "fn:compile_search_json",
+            "fn:compile_engine_read_json",
+            "fn:check_engine_read_json",
+            "fn:compile_engine_page_json",
+            "fn:check_engine_page_json"
           ],
           "pathReferences": []
         }
@@ -4083,7 +4146,11 @@
             "fn:check_databricks_bounded_current_contributors_candidate_json",
             "fn:is_from",
             "fn:designation_json",
-            "fn:native_request_json"
+            "fn:native_request_json",
+            "fn:compile_engine_read_json",
+            "fn:check_engine_read_json",
+            "fn:compile_engine_page_json",
+            "fn:check_engine_page_json"
           ],
           "pathReferences": []
         }
@@ -4371,16 +4438,19 @@
         "scripts/local/test_public_integer_source.py",
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
+        "scripts/python-release/licenses.py",
         "scripts/release/test-date-smoke-gate.py",
         "scripts/release/test-decimal12-smoke-gate.py",
         "scripts/release/test-native70-smoke-gate.py",
         "scripts/release/test-refinement-smoke-gate.py",
+        "scripts/release/test-wheel-packaging-version-gate.py",
         "scripts/release/test_verify_promotion.py",
         "scripts/release/verify-date-smoke.py",
         "scripts/release/verify-decimal12-smoke.py",
         "scripts/release/verify-native70-smoke.py",
         "scripts/release/verify-promotion.py",
         "scripts/release/verify-refinement-smoke.py",
+        "scripts/release/verify-wheel-packaging.py",
         "scripts/reliability/__init__.py",
         "scripts/reliability/cargo.py",
         "scripts/reliability/config.py",

@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "cases": [
+    "eager verification refuses a foreign target profile before native search",
+    "actual native plain keyword ranking and RLS; whole-row vector decoding",
+    "plain keyword terms do not interpret boolean operators or SQL text",
+    "actual pgvector0.8.6 exact distance, complete pre-filtering and Key tie order",
+    "host embedder identity and bounded native-leg RRF under one read snapshot",
+    "embedder mismatch refuses before native dispatch",
+    "undefined matching cosine vectors refuse rather than disappear from top-k",
+    "blocking host embedder stays off the async loop; timeout returns before any native dispatch",
+    "actual async keyword/vector/RRF target and cleanup parity",
+    "native index/operator-class drift refuses before ranked data read"
+  ],
+  "versions": {
+    "postgresql": "18.6",
+    "pgvector": "0.8.6"
+  },
+  "temporal": "HELD",
+  "scope": "isolated managed Lakebase source-bound exact search fixture; no broader engine/Unity qualification"
+}
+managedConnectionClosed=true

@@ -156,5 +156,11 @@ export async function checkRepository(root:string,cargo:string) {
 }
 if(import.meta.main) {
   try {const count=await checkRepository(resolve(import.meta.dir,'..'),process.env.WEFT_CARGO ?? ''); console.log(`Module boundaries: ${count} workspace packages checked`);}
-  catch {console.error('Module boundary check failed');process.exitCode=1;}
+  catch(error) {
+    // Only checker-owned bounded diagnostics; never echo native Cargo stderr or host paths.
+    const message=error instanceof Error ? error.message : '';
+    const safe=/^(?:Workspace ownership set differs|Unowned package: [a-z0-9-]+|Dependency boundary differs: [a-z0-9-]+|Dependency cycle: [a-z0-9-]+|Cargo metadata failed|Package manifest ownership differs|Unowned path dependency|Unowned Rust source or public declaration|Unowned host tooling source|JavaScript dependency boundary differs|Unowned (?:symlink directory|symlink entry|symlink source|module path|host symlink source)|Unclosed Rust comment|Unclosed raw literal|Unclosed literal|Malformed visibility|Unclosed public reexport|Unsupported public declaration|Unsupported public surface|Malformed Rust attribute|Unsupported module path|Unsupported path escape)$/;
+    console.error('Module boundary check failed'+(safe.test(message) ? ': '+message : ': checker infrastructure failure'));
+    process.exitCode=1;
+  }
 }

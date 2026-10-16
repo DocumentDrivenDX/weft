@@ -5,6 +5,7 @@ pub mod mathematical_integer;
 
 /// Engine-pinned candidate registration for the B-007 native support review.
 pub mod native_profile;
+pub mod managed_20261016;
 
 /// Native-semantics-qualified registration; explicit host obligations remain mandatory.
 pub mod qualified_profile;
@@ -37,3 +38,12 @@ pub mod compatible_profile;
 pub mod current_scalar;
 
 pub mod raw_read;
+
+pub mod local_spark4;
+
+pub mod raw_action;
+
+pub mod raw_bulk;
+
+/// Separate authored-Key page language candidates; no historical profile relabeling.
+pub mod authored_pages;

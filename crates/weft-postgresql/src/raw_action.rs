@@ -262,6 +262,7 @@ impl Lower<'_> {
 fn compile(source: &str) -> Result<Value> {
     let admitted = raw_action::admit_json(source)?;
     let r = admitted.request();
+    if !matches!(r.target.as_str(), "postgresql18" | "lakebase18") { return Err("PostgreSQL native action target required"); }
     let lower = Lower {
         action: &admitted,
         binding: &r.binding,

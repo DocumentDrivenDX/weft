@@ -36,7 +36,6 @@ jobs:
           rustup toolchain install 1.90.0 --profile minimal --component rustfmt --target wasm32-unknown-unknown
           rustup default 1.90.0
           python -m pip install maturin==1.9.6
-          cargo install wasm-bindgen-cli --version 0.2.105 --locked
           cargo fetch --locked
       - name: Install actual Chromium and system dependencies
         run: bunx --bun playwright@1.62.1 install --with-deps chromium
@@ -63,6 +62,8 @@ jobs:
           python3 -I -B -S -W error::ResourceWarning -m unittest discover -s tests/distribution-implicit-arithmetic-corpus -q
       - name: Enforce module boundaries and negative controls
         run: WEFT_CARGO="$(command -v cargo)" bun run modules:check
+      - name: Install pinned browser binding builder
+        run: cargo install wasm-bindgen-cli --version 0.2.105 --locked
       - name: Install pinned host diagnostics dependencies
         run: python -m pip install -r scripts/reliability/requirements.txt
       - name: Actual SDK diagnostics, receiver and failure controls

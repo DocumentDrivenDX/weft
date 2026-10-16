@@ -3,8 +3,15 @@ requires=["maturin==1.9.6"]
 build-backend="maturin"
 [project]
 name="weft-sql"
-version = "0.4.39"
+version = "0.4.40"
+description="Native UMF-powered SQL compiler with explicit backend profiles"
+readme="README.md"
 requires-python=">=3.9"
+license="MIT OR Apache-2.0"
+license-files=["LICENSE-MIT","LICENSE-APACHE","THIRD-PARTY-LICENSES.txt"]
+[project.urls]
+Repository="https://github.com/DocumentDrivenDX/weft"
+Issues="https://github.com/DocumentDrivenDX/weft/issues"
 [tool.maturin]
 bindings="pyo3"
-features=["truss-postgresql-pg18","current-postgresql-scalar-candidate","current-databricks-scalar-candidate","current-query-refinement-candidate"]
+features=["raw-postgresql-reads","ashlar-databricks-qualified","truss-postgresql-pg18","current-postgresql-scalar-candidate","current-databricks-scalar-candidate","current-query-refinement-candidate"]

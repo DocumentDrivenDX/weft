@@ -753,14 +753,16 @@ pub fn compile_raw_read_json(request:&str)->String {
 }
 
 #[cfg(feature="raw-postgresql-reads")]
-pub fn compile_native_action_json(request:&str)->String{weft_postgresql::raw_action::compile_json(request)}
+pub fn compile_native_action_json(request:&str)->String{if weft_core::json::checked_json(request).ok().is_some_and(|v|v["target"]=="spark-delta4"){weft_databricks::raw_action::compile_json(request)}else{weft_postgresql::raw_action::compile_json(request)}}
 
 #[cfg(feature="raw-postgresql-reads")]
-pub fn compile_native_bulk_json(request:&str)->String{weft_postgresql::raw_bulk::compile_json(request)}
+pub fn compile_native_bulk_json(request:&str)->String{if weft_core::json::checked_json(request).ok().is_some_and(|v|v["action"]["target"]=="spark-delta4"){weft_databricks::raw_bulk::compile_json(request)}else{weft_postgresql::raw_bulk::compile_json(request)}}
 
 #[cfg(feature="raw-postgresql-reads")]
 pub fn compile_search_json(request:&str)->String{weft_postgresql::search::compile_json(request)}
 
+#[cfg(feature="raw-postgresql-reads")]
+pub mod engine_read;
 /// Original-object presence custody, not JSON import or native permission.
 /// ```compile_fail
 /// use weft_runtime::CurrentPresencePreparation;
