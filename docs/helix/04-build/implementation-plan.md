@@ -2574,3 +2574,15 @@ checker/guarded host sequencing integration; its evidence uses an inert backend,
 not genuine managed capture or authority. Existing native case acceptances stay
 accepted; all132 original requirements remain required and this increment
 promotes zero native cases. Broader B-008 native enforcement remains incomplete.
+
+
+### Bounded current-string module inventory synchronization — 2026-10-16
+
+The main bounded-string implementation had eight Rust surface entries and the
+existing WASM `js-sys` dependency missing from its ownership inventory. The
+inventory now matches those exact already-committed source bytes. Actual Cargo
+edges cover all11 workspace packages and all16 boundary tests pass. No runtime
+implementation, dependency selection, profile, publication or native acceptance
+changes. Evidence: `evidence/bounded-current-strings-20261015/module-boundary-repair-20261016/`.
+The separate new projection-lineage frontend is excluded from this correction.
+All132 original B-008 cases remain required.

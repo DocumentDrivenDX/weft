@@ -1,0 +1,74 @@
+{
+  "baselineCommit": "0230e96c37776de6124297bb25b30a2d3416ba3c",
+  "change": "Ownership inventory synchronization for existing bounded-current-string implementation, no implementation or dependency selection changes",
+  "existingSourceBytesVerified": [
+    {
+      "path": "crates/weft-databricks/src/current_scalar.rs",
+      "sha256": "e81a325fcc76d4ef61de44eb4fe260dc892f51350d7bdd6300824da3927025cb"
+    },
+    {
+      "path": "crates/weft-core/src/current_query_designation.rs",
+      "sha256": "450e92956b868ae4c74fb7ca92f4ad4f3e3bf74e6d3b5b6f3e0668903f8e383b"
+    },
+    {
+      "path": "crates/weft-core/src/current_query_refinement.rs",
+      "sha256": "221abf906b35de019ee15eb893736ec0ff694dd3f43463be87f33f8fe6f07d09"
+    },
+    {
+      "path": "crates/weft-core/src/current_string_domain.rs",
+      "sha256": "ec8534ec479e8effcb15781504ed6d788e947bbb62f7f28bc58253bc7c513a5b"
+    },
+    {
+      "path": "crates/weft-core/src/lib.rs",
+      "sha256": "42b6a13ee307a0b1486c3c826683f2b064a8b007a6bc47bdb91319b2a99444e5"
+    },
+    {
+      "path": "crates/weft-postgresql/src/current_scalar.rs",
+      "sha256": "fed2108a9e42282ecdfa2c8d099386a229d8ca305e254abc026a63766e602a87"
+    },
+    {
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "1aa3623b77aa3700bf9373a84fae1a302272076a4d90daf7272a712f7b9fc9ab"
+    },
+    {
+      "path": "crates/weft-wasm/src/lib.rs",
+      "sha256": "f4065722bd3f38271b7b97c8098f070fef3b063bc735bcb109036bdf58277760"
+    }
+  ],
+  "existingWasmCargoSha256": "f12d75764dad60736a87971eb4e9e21c0f84ec2014dd7620d9afb44faa7f1241",
+  "addedDependencyInventory": {
+    "package": "weft-wasm",
+    "name": "js-sys",
+    "requirement": "=0.3.82"
+  },
+  "priorFailures": [
+    "Initial module check lacked cargo on PATH; environment corrected",
+    "Correct environment exposed existing stale inventory on main"
+  ],
+  "final": {
+    "exitCode": 0,
+    "workspacePackages": 11,
+    "boundaryTestsPassed": 16,
+    "boundaryTestsFailed": 0
+  },
+  "logs": [
+    {
+      "original": "weft-presence-modules-20261016.log",
+      "stored": "weft-presence-modules-20261016.log.gz",
+      "uncompressedSha256": "1a9ee238f54868242bd984cecefdaeecbac56826d23f9be5d425652e0ce21eb2"
+    },
+    {
+      "original": "weft-presence-modules-r2-20261016.log",
+      "stored": "weft-presence-modules-r2-20261016.log.gz",
+      "uncompressedSha256": "ec73054201077eb21ef9cc368cf6335d5da364d28c0a422b0e568c8e787cdd0c"
+    },
+    {
+      "original": "weft-presence-modules-r4-20261016.log",
+      "stored": "weft-presence-modules-r4-20261016.log.gz",
+      "uncompressedSha256": "95c4eb28f5f6e6e444fdb16feb2367934bae0aaf611d1307fc0e452494e145db"
+    }
+  ],
+  "newPresenceFrontendIncluded": false,
+  "nativeAdmission": false,
+  "originalAcceptanceCasesPromoted": 0
+}

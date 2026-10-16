@@ -223,8 +223,10 @@
             "fn:json",
             "fn:lower",
             "fn:lower_original_sum",
+            "fn:lower_bounded_contributors",
             "fn:check_contributors",
             "fn:check_original_sum",
+            "fn:check_bounded_contributors",
             "fn:lower_spark_contributors",
             "fn:check_spark_contributors"
           ],
@@ -1134,6 +1136,7 @@
             "fn:json",
             "fn:preparation",
             "fn:primary_action",
+            "fn:supports_bounded_unicode_strings",
             "fn:supports_live_original_integer_sum",
             "fn:binding_scope",
             "fn:original_action",
@@ -1184,13 +1187,29 @@
             "field:selections",
             "field:output_types",
             "field:encoding",
-            "fn:compare"
+            "fn:compare",
+            "fn:compare_bounded"
           ],
           "pathReferences": []
         },
         {
           "path": "crates/weft-core/src/current_query_refinement/tests.rs",
           "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/current_string_domain.rs",
+          "publicDeclarations": [
+            "struct:Length",
+            "fn:min",
+            "fn:max",
+            "fn:bounds",
+            "fn:supported",
+            "fn:validate",
+            "fn:validate_facets",
+            "fn:same_domain",
+            "fn:literal_compatible"
+          ],
           "pathReferences": []
         },
         {
@@ -1269,6 +1288,7 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:current_string_domain",
             "mod:current_query_operands",
             "mod:current_query_designation",
             "mod:application_lineage",
@@ -2473,9 +2493,13 @@
             "fn:lower_rows",
             "fn:lower_contributors",
             "fn:lower_original_sum",
+            "fn:lower_bounded_rows",
+            "fn:lower_bounded_contributors",
             "fn:check_rows",
             "fn:check_contributors",
-            "fn:check_original_sum"
+            "fn:check_original_sum",
+            "fn:check_bounded_rows",
+            "fn:check_bounded_contributors"
           ],
           "pathReferences": []
         },
@@ -3569,6 +3593,12 @@
             "fn:check_postgresql_current_sum_candidate_json",
             "fn:check_databricks_current_contributors_candidate_json",
             "fn:check_databricks_current_sum_candidate_json",
+            "fn:lower_postgresql_bounded_current_rows_candidate_json",
+            "fn:check_postgresql_bounded_current_rows_candidate_json",
+            "fn:lower_postgresql_bounded_current_contributors_candidate_json",
+            "fn:check_postgresql_bounded_current_contributors_candidate_json",
+            "fn:lower_databricks_bounded_current_contributors_candidate_json",
+            "fn:check_databricks_bounded_current_contributors_candidate_json",
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend",
@@ -3731,6 +3761,18 @@
       "constructionAndIntegration": "calls runtime; no compiler semantics",
       "dependencies": [
         {
+          "name": "js-sys",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.3.82",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
           "name": "wasm-bindgen",
           "kind": "normal",
           "optional": false,
@@ -3772,7 +3814,21 @@
             "fn:register_browser_selection",
             "fn:lower_selection_json",
             "fn:compile_json",
-            "fn:compile_raw_read_json"
+            "fn:compile_raw_read_json",
+            "struct:ApplicationLineagePreparation",
+            "fn:prepare_application_lineage",
+            "fn:json",
+            "fn:prepare_current_query",
+            "struct:CurrentQueryPreparation",
+            "fn:lower_postgresql_bounded_current_rows_candidate_json",
+            "fn:check_postgresql_bounded_current_rows_candidate_json",
+            "fn:lower_postgresql_bounded_current_contributors_candidate_json",
+            "fn:check_postgresql_bounded_current_contributors_candidate_json",
+            "fn:lower_databricks_bounded_current_contributors_candidate_json",
+            "fn:check_databricks_bounded_current_contributors_candidate_json",
+            "fn:is_from",
+            "fn:designation_json",
+            "fn:native_request_json"
           ],
           "pathReferences": []
         }
