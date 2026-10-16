@@ -1147,6 +1147,7 @@
             "fn:compile_typed_page_json_with_exact_numbers_factory",
             "fn:compile_decimal12_typed_page_json_with_exact_numbers_factory",
             "fn:compile_identity_names_json_with_exact_numbers_factory",
+            "fn:compile_cursor_json_with_exact_numbers_factory",
             "mod:v04",
             "mod:v041",
             "mod:v042"
@@ -3655,7 +3656,8 @@
             "struct:Mapping",
             "struct:TargetPlan",
             "fn:compile_json",
-            "fn:compile_page_json"
+            "fn:compile_page_json",
+            "fn:compile_cursor_json"
           ],
           "pathReferences": []
         },
@@ -3824,6 +3826,13 @@
       ],
       "sources": [
         {
+          "path": "crates/weft-runtime/src/engine_export.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/engine_read.rs",
           "publicDeclarations": [
             "fn:compile_json",
@@ -3910,7 +3919,8 @@
             "fn:model_requirements_json",
             "fn:graph_requirements_json",
             "fn:lower_postgresql_current_presence_candidate_json",
-            "fn:check_postgresql_current_presence_candidate_json"
+            "fn:check_postgresql_current_presence_candidate_json",
+            "mod:engine_export"
           ],
           "pathReferences": []
         },
@@ -4062,7 +4072,8 @@
             "fn:compile_engine_read_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
-            "fn:check_engine_page_json"
+            "fn:check_engine_page_json",
+            "fn:compile_engine_export_json"
           ],
           "pathReferences": []
         }
@@ -4150,7 +4161,8 @@
             "fn:compile_engine_read_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
-            "fn:check_engine_page_json"
+            "fn:check_engine_page_json",
+            "fn:compile_engine_export_json"
           ],
           "pathReferences": []
         }

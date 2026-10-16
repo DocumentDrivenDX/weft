@@ -3,7 +3,7 @@ requires=["maturin==1.9.6"]
 build-backend="maturin"
 [project]
 name="weft-sql"
-version = "0.4.40"
+version = "0.4.41.dev0"
 description="Native UMF-powered SQL compiler with explicit backend profiles"
 readme="README.md"
 requires-python=">=3.9"

@@ -1,0 +1,8 @@
+{
+  "status": "pass",
+  "ordinaryAndPageProgramsEqual": true,
+  "exportChangeOnly": "explicit cursor targetContext read_context and covering owner structural digest; SQL/parameters/IR/columns/obligations unchanged",
+  "cases": 9,
+  "scope": "three actual native requests each ordinary/page/export; bound values unchanged by descriptive manifest correction",
+  "previousProgramsSha256": "f2cf159483aad3b7e658dde2c7694baa4d639ef4f24ecf85be771accd117e816"
+}

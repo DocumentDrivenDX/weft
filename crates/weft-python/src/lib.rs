@@ -47,6 +47,8 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compile_engine_page_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(check_engine_page_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_engine_export_json, m)?)?;
     m.add_class::<MutationCompiler>()?;
     #[cfg(feature="truss-security-relationship-candidate")]
     {
@@ -351,3 +353,7 @@ pub fn compile_engine_page_json(request:&str)->String{weft_runtime::engine_read:
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]
 pub fn check_engine_page_json(program:&str,current_request:&str,after_json:&str)->String{weft_runtime::engine_read::check_page_json(program,current_request,after_json)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_engine_export_json(program:&str,current_request:&str)->String{weft_runtime::engine_export::compile_json(program,current_request)}

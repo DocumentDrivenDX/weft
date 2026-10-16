@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "engineControls": 11,
+  "originalDateOwnerControls": 2,
+  "chromiumCases": 47,
+  "nativeCompilerPythonWasmParity": true,
+  "compiler": "0.4.41-dev.0 unpublished candidate",
+  "backend": "truss.postgresql.runtime/0.4.42",
+  "targetProfile": "truss-runtime-pg18.6-export/0.1",
+  "nativeScope": "bounded ordinary module ACL sources only; Truss receipts separately owned",
+  "sourceCap": 10000,
+  "temporal": "HELD",
+  "cursorManifestControls": 1,
+  "metadataCorrection": "only042 read_context, covering structural digest; original041 unchanged",
+  "finalBrowserCases": 47
+}
