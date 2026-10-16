@@ -22,7 +22,7 @@ ddx:
 ## Purpose
 
 Bind an actual immutable .4 projection-lineage preparation to explicitly selected
-source pins and a required canonical disclosure-selection producer. The context
+source pins and a required atomic rendered disclosure-batch producer. The context
 is a compiler data object. It authenticates no caller, source, cut or disposition.
 US-009 and every original132 shared/native case remain required.
 
@@ -38,8 +38,11 @@ is provided by this increment. Those downstream requirements remain unfinished.
 UMF owns policy evaluation and the canonical winning source occurrences. The
 required producer is the private candidate API
 `evaluateCandidateCatalogReadDisclosureBatchWithinOperation`, returning protocol
-`umf.security.logical-disclosure-batch/0.1-candidate`. This atomic producer contract is a planned requirement while its implementation
-and review are in progress. The earlier selection-only protocol remains separate
+`umf.security.logical-disclosure-batch/0.1-candidate`. The exact atomic producer has a reviewed logical-subset implementation. The
+[qualified native transport component evidence](../../04-build/evidence/current-presence-native-20261016/README.md)
+retains actual invocation and disclosure transport over supplied logical facts;
+it does not qualify authenticated original source/caller/current authority or
+guarded release. The earlier selection-only protocol remains separate
 and MUST NOT be relabeled as a rendered batch. No lowering may use this context
 until the exact producer is implemented, reviewed and qualified for its declared
 logical subset. A producer declaration is not a verified invocation; `complete:false` and `authority:false` remain data

@@ -1,0 +1,16 @@
+{
+  "scope": "Supplied actual PG18.6 administrator fixture plus independent non-SQL audit; no caller/source/current-authority/guarded release or case promotion",
+  "reviewArtifacts": 901,
+  "reviewSha256": "2c266dba043c20469e196883abbe0e80d354b6ad261d29f3ff420dfecf1930a9",
+  "auditArchiveSha256": "3996814223f69c5b386c000a6fec98e909edaf2b3204d19b461322bb98228460",
+  "nativeReceiptSha256": "c1a0299242907ad79fc4437ae5ced9b67a36d9e305be455121b5149a2177f49d",
+  "sourceInputArchiveSha256": "adedcad67a9972a7020638f9d2b7067abe6bd9f19e2c580133564fcfda7eade0",
+  "positiveOperations": 47,
+  "negativeOperations": 5,
+  "sqlStatements": 234,
+  "recordedObservations": 869,
+  "capturedSourcePaths": 1285,
+  "cleanupScope": "exact observed tmpfs-only storage plus owned-container absence",
+  "nativeExecutedByIndependentReviewer": false,
+  "original132CasesPromoted": 0
+}

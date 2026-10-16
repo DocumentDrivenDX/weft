@@ -2651,3 +2651,25 @@ obligations apply at either stage. All executable/schema/test bytes are unchange
 from review. Actual producer/native-source/caller/current-cut composition, native
 transport and guarded enforcement, bridges, Databricks and the full original132
 acceptance scope remain unfinished. No case is promoted or public profile enabled.
+
+
+### Actual PostgreSQL presence transport component — 2026-10-16
+
+The source-reviewed held Rust probe and actual atomic UMF producer execute through
+an owned PostgreSQL18.6 TEXT-cell fixture:47 positive and5 negative operations,
+234 SQL statements and869 repeated observations. Six actual mixed/empty cuts
+retain complete distinct-key bags. A staged invalid selected occurrence passes
+byte transport and fails mandatory whole V2 validation. Four other negatives
+corrupt only checker frames, with actual driver rows unchanged. Exact tmpfs-only
+storage and owned-container removal/absence are verified.
+
+`evidence/current-presence-native-20261016/` retains the exact receipt and1285-source
+archive, plus all901 independently audited artifacts. The reviewer ran fresh
+producer/V2 and held-probe replays, but no SQL or Docker. This excluded administrator
+fixture does not authenticate an ordinary caller/Subject, original native source,
+complete current policy cut, production Truss/Ashlar mapping or native membership
+joins; it does not establish closing authority or guarded release. Original132
+acceptance and case statuses remain unchanged. Runtime/Python bridge and actual
+host/source integration remain subsequent work. CONTRACT-012's planned-producer
+status and informational selection/batch wording are reconciled with this exact
+qualified evidence, retaining normative prerequisites and all host obligations.
