@@ -618,3 +618,10 @@ transport; exercise actual installed wheels with original native inputs; then
 qualify an explicit host consumer. Keep the feature unavailable on missing
 implementation or evidence. Rollback removes its explicit registration/feature,
 never weakens an existing lowerer or reinterprets a historical receipt.
+
+The bounded checker also caps complete pre-limit expected cell/order reference
+slots at 1,000,000 and public-value/contributor-key UTF-8 text occurrences at
+16,777,216 bytes. Repeated projections count repeatedly; LIMIT 0 does not bypass
+these limits. Borrowed source/group/order values avoid copying large values before
+checking expected payload. These are semantic size limits, not allocation tracing
+or whole-process resource assurance. CONTRACT-010 defines the exact accounting.

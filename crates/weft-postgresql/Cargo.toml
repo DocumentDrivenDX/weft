@@ -17,9 +17,14 @@ name = "candidate-compiler"
 path = "../../tests/truss-postgresql/compiler.rs"
 
 [features]
+current-query-refinement-candidate=["weft-core/current-query-refinement-candidate"]
 conformance-original=[]
 
 [[test]]
 name="mutation_lowering"
 path="../../tests/mutation/lowering.rs"
 required-features=["conformance-original"]
+
+[[test]]
+name="truss-query-abi"
+path="../../tests/truss-query-abi/compiler.rs"

@@ -185,6 +185,13 @@ The existing source/context/binding limits remain applicable. There are at most 
 scans, 10,000 total supplied source rows, 4,096 validated per-use selections, 1,024
 public output columns, 10,000 intermediate tuples and 10,000 pre-limit result rows.
 A Cartesian join candidate product over 1,000,000 refuses before iteration.
+The complete pre-limit expected result has at most 1,000,000 public-cell plus
+hidden-order-key reference slots (rows multiplied by output plus order arity).
+Its public text values and contributor-key text occurrences together total at
+most 16,777,216 UTF-8 bytes, counting repeated occurrences. These limits apply
+before LIMIT, including LIMIT 0. Source values and hidden order keys remain
+borrowed during evaluation; payload limits are checked before copying expected
+public values or contributor keys.
 No prefix, sampling or approximate arithmetic may bypass these limits. Limit0
 still requires complete checked inputs and bounded derivation. These are declared
 frame/cardinality bounds, not a whole-process memory or timing proof; hosts retain

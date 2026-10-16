@@ -175,3 +175,7 @@ pub mod security_aggregate_results;
 
 /// Original relational operand domain/presence checks; no native authority.
 pub mod security_operand_values;
+
+/// Optional conditional relational conformance; never native authority.
+#[cfg(feature="current-query-refinement-candidate")]
+pub mod current_query_refinement;

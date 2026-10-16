@@ -1390,3 +1390,52 @@ mod tests {
             .contains("\"eligible\" IS TRUE"));
     }
 }
+
+/// Optional conditional result comparison; actual lowering precedes all input evaluation.
+#[cfg(feature="current-query-refinement-candidate")]
+pub fn check_rows<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str,input_json:&str)->Result<Value>{
+    (||{
+        let actual=lower_rows(context,binding_json)?;
+        let binding:RowBinding=serde_json::from_str(binding_json).map_err(|_|fail())?;
+        refine_actual(context,actual,binding.values,binding_json,input_json,weft_core::current_query_refinement::Encoding::Rows)
+    })().map_err(|_|refinement_failure())
+}
+/// Optional conditional result comparison; actual lowering precedes all input evaluation.
+#[cfg(feature="current-query-refinement-candidate")]
+pub fn check_contributors<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str,input_json:&str)->Result<Value>{
+    (||{
+        let actual=lower_contributors(context,binding_json)?;
+        let binding:RowBinding=serde_json::from_str(binding_json).map_err(|_|fail())?;
+        refine_actual(context,actual,binding.values,binding_json,input_json,weft_core::current_query_refinement::Encoding::Contributors)
+    })().map_err(|_|refinement_failure())
+}
+/// Optional conditional result comparison; actual lowering precedes all input evaluation.
+#[cfg(feature="current-query-refinement-candidate")]
+pub fn check_original_sum<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str,input_json:&str)->Result<Value>{
+    (||{
+        let actual=lower_original_sum(context,binding_json)?;
+        let binding:RowBinding=serde_json::from_str(binding_json).map_err(|_|fail())?;
+        refine_actual(context,actual,binding.values,binding_json,input_json,weft_core::current_query_refinement::Encoding::Contributors)
+    })().map_err(|_|refinement_failure())
+}
+
+#[cfg(feature="current-query-refinement-candidate")]
+fn refinement_failure()->Diagnostic{Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused")}
+#[cfg(feature="current-query-refinement-candidate")]
+fn refine_actual<'a>(context:&'a CurrentQueryOperands<'a>,actual:CurrentScalarSql<'a>,values:Vec<BindingValue>,binding_json:&str,input_json:&str,encoding:weft_core::current_query_refinement::Encoding)->Result<Value>{
+    use weft_core::current_query_refinement::{Selection,Lowered,compare};
+    if !std::ptr::eq(context,actual.context){return Err(refinement_failure())}
+    let artifact=actual.json_string()?;let artifact_sha=sha256(artifact.as_bytes());let binding_sha=sha256(binding_json.as_bytes());
+    let selections=values.into_iter().map(|v|{
+        let descriptor=context.designation().preparation().catalog().scalar_descriptor_by_identity(&v.domain)?;
+        let Shape::Scalar{logical_type}=descriptor.shape else{return Err(refinement_failure())};
+        Ok(Selection{path:v.path,scan:v.scan,field:v.field,domain:v.domain,column:v.column,logical_type,comparison_scope:v.comparison_scope,
+            mode:v.mode.map(|m|match m{Mode::Disclosed=>"disclosed",Mode::OriginalAuthorized=>"original-authorized",Mode::Prohibited=>"prohibited",Mode::Unresolved=>"unresolved"}.into()),
+            original_action:v.original_action,exposure:v.exposure.map(|m|match m{Exposure::Original=>"original",Exposure::Transformed=>"transformed"}.into())})
+    }).collect::<Result<Vec<_>>>()?;
+    let types=actual.columns().iter().map(|c|c.logical_type.clone()).collect::<Vec<_>>();
+    compare(context,Lowered{binding_sha256:&binding_sha,artifact_sha256:&artifact_sha,selections:&selections,output_types:&types,encoding},input_json)?;
+    Ok(json!({"version":"weft.current-query.refinement-result/0.1-candidate","matched":true,"authority":false,"securityReady":false,"nativeAdmission":"required",
+        "sourceRequestSha256":sha256(context.designation().preparation().source_request_json().as_bytes()),"designationSha256":sha256(context.designation().json().as_bytes()),
+        "materializationBindingSha256":binding_sha,"compiledArtifactSha256":artifact_sha,"refinementInputSha256":sha256(input_json.as_bytes())}))
+}

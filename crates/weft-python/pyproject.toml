@@ -3,8 +3,8 @@ requires=["maturin==1.9.6"]
 build-backend="maturin"
 [project]
 name="weft-sql"
-version="0.4.34"
+version="0.4.35"
 requires-python=">=3.9"
 [tool.maturin]
 bindings="pyo3"
-features=["truss-postgresql-pg18","current-postgresql-scalar-candidate","current-databricks-scalar-candidate"]
+features=["truss-postgresql-pg18","current-postgresql-scalar-candidate","current-databricks-scalar-candidate","current-query-refinement-candidate"]

@@ -1,0 +1,147 @@
+{
+  "version": "astra-frozen-implementation-review/1",
+  "date": "2026-10-15",
+  "status": "no-blocking-finding-in-frozen-conditional-checker",
+  "scope": "Full read-only review of the 20 frozen CONTRACT010 implementation sources over exact base7426 and optional unpublished prototype wheel35. Conditional finite comparison, not native admission or source completeness.",
+  "frozen": {
+    "zip": "/private/tmp/weft-refinement-implementation-frozen-v2-20261015.zip",
+    "sha256": "0d91f6b09357a4d2df074f9e126bf2a217ff98a3dfe6cfdfa254e4de44ca6b0a",
+    "base": "7426bb7328d56112f704f581ab7128b211f51a20",
+    "files": 20,
+    "allBeforeAfterPinsStable": true,
+    "baseArchiveBlobsIndependentlyMatchedToGit": 3967,
+    "contractSha256": "d241c6256c7b334dad7e47de802a236a0a590057c2444984c0474488fe3ce065"
+  },
+  "prototype": {
+    "wheelSha256": "bcb28f5ffdb084cb43e23c6ffdb5cb941637b6ed0cff19fcdcfeebc2b6008ce2",
+    "moduleSha256": "366e70afc8f12c287e0a262d9b9eb1d15c62a0894e8c3a45ee5f88b7d1d65e64",
+    "exactWheelExtractionAndExportIdentityChecked": true,
+    "laterIntegratedWheelAndStandardFeatureSelectionExcluded": true
+  },
+  "independentlyExecuted": [
+    {
+      "kind": "frozen Rust tests",
+      "groupsPassed": 21,
+      "actualCheckerPermutationComparisonsWithinGroups": 51690,
+      "log": "core-replay.log",
+      "cargo": "1.90.0",
+      "rustc": "1.90.0",
+      "offlineLocked": true
+    },
+    {
+      "kind": "independently authored Python actual-wheel controls",
+      "passed": 131,
+      "methods": 5,
+      "data": "Different three-row captured population, Unicode decomposition and raw/mask ordering differences; independently authored complete public/private results. Original governed source fixtures and typed factory reused.",
+      "receipt": "pure-controls.json",
+      "frames": "pure-cases.json"
+    },
+    {
+      "kind": "independently authored Rust controls",
+      "groupsPassed": 3,
+      "assertions": 12,
+      "coverage": [
+        "cumulative expected payload before LIMIT0",
+        "repeated key occurrences across complete join tuples",
+        "exact grouped projection and hidden-order selection",
+        "mixed direction/tie cutoff and occurrence consumption"
+      ],
+      "source": "independent-tests.rs",
+      "log": "independent-rust.log"
+    },
+    {
+      "kind": "isolated actual source weakenings",
+      "detected": 8,
+      "survivedRedundantDefense": 1,
+      "receipt": "mutation-controls.json",
+      "patchesAndLogs": "mutations/"
+    }
+  ],
+  "sourceReview": [
+    {
+      "area": "Original custody",
+      "finding": "Actual selected backend lowerer executes first; its private typed artifact and same original CQP determine binding/artifact hashes, selected values and output types. Runtime retains Arc original identity and derives exact same designation; Python checks retained original object. Public low-level compare/Lowered is adapter data returning Result only, not a success-report issuer.",
+      "lines": [
+        "weft-postgresql/current_scalar.rs:1394-1441",
+        "weft-databricks/current_scalar.rs:1175-1213",
+        "weft-runtime/lib.rs:616-669",
+        "weft-python/lib.rs:168-222"
+      ]
+    },
+    {
+      "area": "Per-use meaning",
+      "finding": "Exact (path,scan) selection retains original/effective domain, physical column, scope and mode/action/exposure. Same Field can remain raw Integer for a predicate while projecting transformed String. Grouped projections and hidden order require exact selected expression correspondence; no Field-wide remapping.",
+      "lines": [
+        "current_query_refinement.rs:154-195",
+        "current_query_refinement.rs:458-651"
+      ]
+    },
+    {
+      "area": "Relational result",
+      "finding": "Typed joins/filter/group/COUNT/DISTINCT/explicit original SUM derive full expected tuples and key bags. Exact whole public-plus-bag signatures consume occurrences once. ORDER checks observed direction and complete prefix classes; ties and unordered LIMIT admit the allowed submultisets. NULL appears only for empty global SUM.",
+      "lines": [
+        "current_query_refinement.rs:224-381",
+        "current_query_refinement.rs:731-791"
+      ]
+    },
+    {
+      "area": "Privacy and malformed input",
+      "finding": "Closed bounded JSON, duplicate members, exact Python strings and all lowerer/parser/evaluation failures normalize to the fixed private diagnostic. Successful report has only fixed false-authority flags and complete input/query/binding/artifact hashes. Host must still withhold outcome/timing/digests and guarantee held-cut custody.",
+      "lines": [
+        "current_query_refinement.rs:398-435",
+        "current_query_refinement.rs:833-880",
+        "weft-python/lib.rs:215-222"
+      ]
+    },
+    {
+      "area": "Bounds",
+      "finding": "Input/cell/scan/selection/tuple limits preflight before FALSE/LIMIT. Checked reference-slot and cumulative expected-public-plus-key occurrence text bounds apply to full pre-limit derivation, before large owned copies. Small generated numeric strings are bounded by <=10000 signed64 inputs. Temporary maps/group structures/pool clones and total CPU/heap are outside the declared semantic payload claim.",
+      "lines": [
+        "current_query_refinement.rs:231-249",
+        "current_query_refinement.rs:293-377",
+        "current_query_refinement.rs:654-737"
+      ]
+    },
+    {
+      "area": "Frozen compatibility",
+      "finding": "New methods and core module are feature-gated, existing lowerers unchanged, frozen pyproject does not auto-enable the feature. Cargo.lock changes only Python package version0.4.34->0.4.35. Subsequent standard-feature exposure and Truss.38 changes require separate addendum review."
+    }
+  ],
+  "mutationSurvivor": {
+    "id": "ignore-key-occurrence-multiplicity",
+    "actualExit": 0,
+    "disposition": "Redundant guard within current profile, not counted detected. Unique per-scan keys, one enumeration per complete joined tuple and partitioning into groups imply each compressed expected full-tuple multiplicity is1. Omitting all contributor-key payload was separately caught. Private observed bag duplicates still fail exact expected signature/occurrence matching."
+  },
+  "suppliedEvidenceReviewedNotReexecuted": {
+    "coreClaim": 338,
+    "postgresql": {
+      "controls": 67,
+      "version": "180006",
+      "scope": "Original independent predeclared row/contributor/SUM oracles plus actual SQL/checker correspondence, synthetic privileged stage premises.",
+      "limitation": "Frozen runner closes LocalPostgres context but does not record actual PID/lease/data-directory absence or complete before/after executable/input custody. Later explicit cleanup rerun is separate."
+    },
+    "databricks": {
+      "controls": 229,
+      "retainedCases": 22,
+      "scope": "Offline installed checker correspondence to retained managed SQL results; not fresh DB execution.",
+      "limitation": "Frozen runner records runner/wheel/module but lacks full consumed retained-input before/after manifest and exact statement SQL/parameter association. Later captured-input correction is separate."
+    },
+    "observations": "Original four supplied observations retained verbatim."
+  },
+  "remainingPremises": [
+    "Supplied populations/counts may be consistently forged or truncated; matching is not native completeness.",
+    "Binding column/source/type/scope, eligible population, authenticated caller/Subject/policy/action, statement/result and snapshot custody remain host premises.",
+    "No protected backend admission, all-case promotion, public release, timing privacy, universal refinement theorem, Linux qualification or release authenticity.",
+    "Later release/default-feature/integrated-wheel addendum is outside this immutable report."
+  ],
+  "calibrationsRetained": [
+    "First cargo attempt had no cargo on PATH; rerun used existing pinned local toolchain/cache offline.",
+    "Independent SQL first used repeated COUNT output names; original producer correctly refused; explicit independent aliases added.",
+    "Independent harness ZIP variable was accidentally shadowed after semantic checks; fixed custody endpoint check and reran131.",
+    "Expected-key-count-multiplier mutation survival retained; no production edit or expectation weakening."
+  ],
+  "acceptancePromotion": false,
+  "nativeCampaignDuplicated": false,
+  "partnerSourceEdited": false,
+  "blockers": []
+}

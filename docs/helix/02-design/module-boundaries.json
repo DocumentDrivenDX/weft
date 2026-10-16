@@ -222,7 +222,9 @@
             "fn:json_string",
             "fn:json",
             "fn:lower",
-            "fn:lower_original_sum"
+            "fn:lower_original_sum",
+            "fn:check_contributors",
+            "fn:check_original_sum"
           ],
           "pathReferences": []
         },
@@ -1158,6 +1160,36 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/current_query_refinement.rs",
+          "publicDeclarations": [
+            "struct:Selection",
+            "field:path",
+            "field:scan",
+            "field:field",
+            "field:domain",
+            "field:column",
+            "field:logical_type",
+            "field:comparison_scope",
+            "field:mode",
+            "field:original_action",
+            "field:exposure",
+            "enum:Encoding",
+            "struct:Lowered",
+            "field:binding_sha256",
+            "field:artifact_sha256",
+            "field:selections",
+            "field:output_types",
+            "field:encoding",
+            "fn:compare"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/current_query_refinement/tests.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/error.rs",
           "publicDeclarations": [
             "struct:Diagnostic",
@@ -1279,7 +1311,8 @@
             "mod:security_parameter_sources",
             "mod:security_source_context",
             "mod:security_aggregate_results",
-            "mod:security_operand_values"
+            "mod:security_operand_values",
+            "mod:current_query_refinement"
           ],
           "pathReferences": []
         },
@@ -2374,7 +2407,10 @@
             "fn:lower",
             "fn:lower_rows",
             "fn:lower_contributors",
-            "fn:lower_original_sum"
+            "fn:lower_original_sum",
+            "fn:check_rows",
+            "fn:check_contributors",
+            "fn:check_original_sum"
           ],
           "pathReferences": []
         },
@@ -3225,6 +3261,9 @@
             "const:RELATIONSHIP_TARGET",
             "const:PAGE_PROFILE",
             "const:PAGE_TARGET",
+            "const:QUERY_ABI_PROFILE",
+            "const:QUERY_ABI_TARGET",
+            "const:QUERY_ABI_SHA256",
             "struct:Runtime",
             "struct:Mapping",
             "struct:TargetPlan",
@@ -3445,6 +3484,11 @@
             "fn:lower_postgresql_current_sum_candidate_json",
             "fn:lower_databricks_current_contributors_candidate_json",
             "fn:lower_databricks_current_sum_candidate_json",
+            "fn:check_postgresql_current_rows_candidate_json",
+            "fn:check_postgresql_current_contributors_candidate_json",
+            "fn:check_postgresql_current_sum_candidate_json",
+            "fn:check_databricks_current_contributors_candidate_json",
+            "fn:check_databricks_current_sum_candidate_json",
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend"
@@ -3930,8 +3974,10 @@
         "scripts/local/test_public_integer_source.py",
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
+        "scripts/release/test-refinement-smoke-gate.py",
         "scripts/release/test_verify_promotion.py",
         "scripts/release/verify-promotion.py",
+        "scripts/release/verify-refinement-smoke.py",
         "scripts/reliability/__init__.py",
         "scripts/reliability/cargo.py",
         "scripts/reliability/config.py",

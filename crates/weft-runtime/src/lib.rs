@@ -616,6 +616,36 @@ impl CurrentQueryPreparation{
  /// Conditional Databricks SQL for the explicit original signed64 SUM context.
  #[cfg(feature="current-databricks-scalar-candidate")]
  pub fn lower_databricks_current_sum_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_databricks::current_scalar::lower_original_sum(operands,binding)?.json_string())}
+ /// Conditional result comparison under independently supplied native-host premises.
+ #[cfg(feature="current-query-refinement-candidate")]
+ pub fn check_postgresql_current_rows_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{
+  self.with_context(|_,_,operands|Ok(weft_postgresql::current_scalar::check_rows(operands,binding,input)?.to_string()))
+   .map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))
+ }
+ /// Conditional result comparison under independently supplied native-host premises.
+ #[cfg(feature="current-query-refinement-candidate")]
+ pub fn check_postgresql_current_contributors_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{
+  self.with_context(|_,_,operands|Ok(weft_postgresql::current_scalar::check_contributors(operands,binding,input)?.to_string()))
+   .map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))
+ }
+ /// Conditional result comparison under independently supplied native-host premises.
+ #[cfg(feature="current-query-refinement-candidate")]
+ pub fn check_postgresql_current_sum_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{
+  self.with_context(|_,_,operands|Ok(weft_postgresql::current_scalar::check_original_sum(operands,binding,input)?.to_string()))
+   .map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))
+ }
+ /// Conditional result comparison under independently supplied native-host premises.
+ #[cfg(feature="current-query-refinement-candidate")]
+ pub fn check_databricks_current_contributors_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{
+  self.with_context(|_,_,operands|Ok(weft_databricks::current_scalar::check_contributors(operands,binding,input)?.to_string()))
+   .map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))
+ }
+ /// Conditional result comparison under independently supplied native-host premises.
+ #[cfg(feature="current-query-refinement-candidate")]
+ pub fn check_databricks_current_sum_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{
+  self.with_context(|_,_,operands|Ok(weft_databricks::current_scalar::check_original_sum(operands,binding,input)?.to_string()))
+   .map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))
+ }
  /// Trusted Rust consumer hook, not a Python callback or native admission API.
  /// Borrowed declarations are derived over the same original context on each
  /// scoped invocation; SQL/AST are not reparsed and caller reports are not imported.

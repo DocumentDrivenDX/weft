@@ -1,0 +1,122 @@
+{
+  "interfaceVersion": "truss-query-abi-descriptor/0.1",
+  "identity": "truss-postgresql-logical-query",
+  "version": "1.0",
+  "postgresVersion": "180006",
+  "bindingInterfaceVersion": "truss-runtime-binding/0.5",
+  "schema": "truss",
+  "functions": [
+    {
+      "signature": "truss.query_scope(jsonb)",
+      "returns": "void"
+    },
+    {
+      "signature": "truss.query_objects(jsonb,int)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "props",
+          "jsonb"
+        ]
+      ]
+    },
+    {
+      "signature": "truss.query_edges(jsonb,int)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "source_id",
+          "bigint"
+        ],
+        [
+          "target_id",
+          "bigint"
+        ]
+      ]
+    },
+    {
+      "signature": "truss.query_page_objects(jsonb,int,text)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "props",
+          "jsonb"
+        ]
+      ]
+    },
+    {
+      "signature": "truss.query_numeric_value(text,text)",
+      "returns": "boolean"
+    },
+    {
+      "signature": "truss.query_timestamp_instant_key(text,text)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.query_object_attribution(jsonb,int,bigint)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.query_object_times(jsonb,int,bigint)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.query_object_load_id(jsonb,int,bigint)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.query_complete_related_keys(jsonb,int,int)",
+      "returns": "jsonb"
+    }
+  ],
+  "sourceValues": {
+    "identity": "native positive signed64 object or edge id; record/relationship type id qualifies identity",
+    "properties": "JSON object keyed by native property id text; missing key is absent; explicit null cell is present null",
+    "scalarCells": "UMF exact string, boolean, integer, decimal, timestamp and binary cells under admitted catalog facets; no precision-losing casts",
+    "containers": "admitted flat and recursive scalar array/map cells retain order, map keys and absent/null distinctions",
+    "numeric": "integer/decimal source text is validated before PostgreSQL numeric input; admitted signed64 and decimal(18,4)/(18,2) facets retain exact meaning",
+    "timestampComparison": "umf-rfc3339-exact-instant/1.0.0; original token retained; instant key is [wholeSecondsText,fractionDigitsWithoutTrailingZeroes]",
+    "binary": "canonical base64 text; byte equality uses decoded bytes"
+  },
+  "graph": {
+    "relationships": "directed independent or owned, one admitted endpoint type pair, no association object or composition; every distinct edge id counts, including parallel edges",
+    "ownership": "acyclic owned forest; object root columns identify the rootless aggregate root; complete current root is validated in the caller statement snapshot",
+    "rootAuthorization": "every observed current or historical attribution root document must occur in binding.documents; its module reader is required before source buffering and final handoff; final query_scope rechecks the complete selected document scope",
+    "relationshipKeys": "complete authored endpoint keys, with tuple arity and exact scalar components preserved"
+  },
+  "entityMetadata": {
+    "attribution": [
+      "_version",
+      "_created_by",
+      "_updated_by",
+      "_original_author",
+      "_original_at"
+    ],
+    "times": [
+      "_created_at",
+      "_updated_at"
+    ],
+    "load": [
+      "_load_id"
+    ],
+    "meaning": "original creation and current version evidence, including descendant effects of an original ownership change; no synthetic child operation; nullable import metadata remains JSON null when absent",
+    "history": "exact original per-entity journal group and immutable owning attempt/transition; historical root interpretation never falls back to a live root"
+  },
+  "execution": {
+    "snapshot": "STABLE data sources use the caller SQL statement snapshot, including own pending writes; current authority is checked again at final handoff",
+    "binding": "queryAbi pin is exact; installation id, actual runtime release id+sha256, accepted document revisions+sha256, catalog revision and native mappings remain byte-bound by the original compiled artifact",
+    "wrongRuntime": "execution refuses a different actual installation/runtime binding even when queryAbi is identical",
+    "session": "authenticated original person on host-supplied PostgreSQL connection; caller owns transaction; generated SQL runs with pinned pg_catalog,pg_temp search_path",
+    "limits": "maximumScanRows and maximumResultRows 1..10000; maximumBytes 1..16777216; bounded complete source bags before caller predicates; output limit, ordinary deadlines, no internal retries",
+    "refusals": "invalid binding/profile or unsupported meaning, unauthorized owner/root, stale catalog/observation, malformed exact value, or resource limit refuses the whole query; no partial rows"
+  }
+}

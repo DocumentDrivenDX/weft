@@ -1,0 +1,8 @@
+{
+  "finding": "New refinement publish block accepts five reports with controls=30 but checks=[]",
+  "scope": "Exact new refinement validation block isolated with synthetic artifact metadata; not native wheel execution or whole publisher bypass",
+  "sourceSha256": "1015486273a7edbc8d1de1b858fc72803c9a1bb48873e12baecb69154fe95a62",
+  "sourceSnapshot": "/private/tmp/weft-integrated035-review-20261015",
+  "status": "counterexample reproduced",
+  "nativeAuthority": false
+}

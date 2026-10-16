@@ -2502,3 +2502,49 @@ Actualspecscheck69artifacts/83schemas passes. API remainsreserved/unimplemented;
 next implement pure evaluator, validated backend bridge and explicit runtime/
 Python feature, then genuine held-source/capture/closing integration. Existing
 SQLbindings/cohorts/publicsecurityrefusal and all original132 obligations remain.
+
+### Conditional result refinement and explicit Truss query ABI — 2026-10-15
+
+CONTRACT-010 now has a shared bounded relational checker, backend adapters and
+five original-CQP Python methods. The proposed standard0.4.35 wheel explicitly
+selects the named candidate feature; it does not acquire native/protected
+permissions. Exact per-use domains, complete contributor multiplicity, SQL
+ordering/limit ties, integer SUM and global/grouped empty semantics are checked.
+Pre-limit logical payload/reference-slot limits prevent repeated-output expansion
+before copying large values. A consistent forged population/count/result may
+conditionally match and remains unauthoritative.
+
+Ordinary Truss backend0.4.38 selects explicit query ABI1.0 with binding/target0.5,
+including directed owned/independent relationship reads. Original runtime,
+installation/model/source pins are forwarded unchanged for native checking.
+Earlier targets refuse the new binding; mutation admission remains unchanged.
+This removes the compiler's whole-runtime hash enumeration only for the new
+explicit read target, without granting native admission.
+
+Root evidence includes338 core,105 PG library and15 Databricks library tests,
+four query ABI compiler groups and actual installed integrated-wheel controls:
+30 new API smokes,67 fresh PostgreSQL checks,229 offline checks across22 retained
+managed Databricks queries,17 query ABI checks and existing4PG/32DBX/10native68
+controls. The retained original publishedTruss33 consumer gate rejects the new
+module through three entrypoints. PostgreSQL cleanup is checked; no fresh managed
+Databricks execution occurred. Frozen-body independent review added131 separate
+wheel controls and three Rust groups/12assertions, detected eight weakenings and
+retained one redundant-defense survivor honestly.
+
+Release review found and corrected a validator accepting an empty check list
+with a claimed total30. Its replacement requires exact30 identities/boolean
+outcomes and five exact wheel/source/version/pin reports;20 synthetic validator
+controls exercise refusal paths. Five-platform publication and final native
+consumer activation remain separate. Source/review inputs and qualified local
+receipts are retained in
+[evidence](evidence/current-query-refinement-implementation-20261015/README.md).
+B-008 remains open under all132 original shared/native cases, including genuine
+source/caller/current authority, independent completeness, native leakage and
+final guarded release; no case is promoted by this conditional component.
+
+Final frozen-body and integration/release-source reviews found no remaining
+component blocker. Original Astra and root reports/archives are retained, with
+the historical validator counterexample. The integrated wheel independently
+passes131 additional pure controls;15 independent publication-gate controls
+validate the correction. This clears main integration and normal five-platform
+release CI only; it grants no native authority or132-case completion.

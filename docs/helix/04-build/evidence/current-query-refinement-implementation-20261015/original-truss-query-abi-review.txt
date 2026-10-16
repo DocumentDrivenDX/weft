@@ -1,0 +1,8 @@
+Reviewer: /root/astra_plan_review (Astra Ultra, retained owner-requested reviewer)
+Patch: /private/tmp/weft-queryabi038-reviewed-20261015.patch
+Patch SHA256: 32f9a9b7a34fb7cf65433cab46403e1fa89a02e3f5c403572c6540ed24f5e6e5
+Base: 7426bb7328d56112f704f581ab7128b211f51a20
+Original final review:
+Approved for handoff to the Weft owner. No concrete defect found against baseline 7426bb73.
+Legacy admission remains closed; .38/.5 validates the exact ABI pin, preserves original binding bytes, retains page features, and leaves mutation admission unchanged. Fixture hashes and binding-to-manifest correspondence match.
+Matching-wheel qualification remains separate.

@@ -1,0 +1,17 @@
+{
+  "scope": "Original accepted native69 development binding/model; not a published native69 support claim",
+  "weftBase": "7426bb7328d56112f704f581ab7128b211f51a20",
+  "trussQueryAbiSource": "a294227b",
+  "queryAbi": {
+    "sha256": "9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806",
+    "version": "1.0",
+    "identity": "truss-postgresql-logical-query"
+  },
+  "bindingSha256": "4c7e7ce7426a443cdbf660c83d7b1ebec8f3403e9a076e0776844fb2b03c0262",
+  "originalFiles": {
+    "native-query-bundle.json": "b3f0df1e2b1ba492f548e94364a1a08cafdba525a4d4e78f266f65c89a671c65",
+    "native-runtime-manifest.json": "5e703a8a144e99ff0744e5f6c9926439787f9d2c51b3e28df4e56f8f40f639e7",
+    "query-abi.json": "9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806"
+  },
+  "nativeEvidence": "Actual PG18 public owned workflow plus native source descendant attribution and same-ABI wrong-runtime refusal; separate from matching wheel qualification"
+}

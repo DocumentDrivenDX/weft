@@ -1,5 +1,12 @@
 # Weft specification index
 
+Python 0.4.35 adds a conditional result checker to the standard candidate wheel
+and an explicit Truss query-ABI backend for owned and independent reads. A checker
+match grants no native authority. B-008 remains open under all 132 original
+shared/native cases; authenticated source/caller/current authority and guarded
+release still need qualified host enforcement. See [release scope](04-build/releases/v0.4.35.md)
+and [implementation evidence](04-build/evidence/current-query-refinement-implementation-20261015/README.md).
+
 Proposed Python0.4.33 includes the current-query source-context and conditional
 SQL APIs in standard wheels, with exact-wheel ABI2/3/4 smoke checks across all
 five platform targets. These are compiler candidates, not native permissions or

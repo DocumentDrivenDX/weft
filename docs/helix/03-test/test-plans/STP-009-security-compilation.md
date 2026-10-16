@@ -632,3 +632,10 @@ Use exact `(scan,path)` selections for raw-predicate/masked-projection positives
 and same-Field remap mutants. Include hidden ORDER keys, multiple ordering columns
 with mixed directions, invocation/cut/report reuse and private outcome/timing
 boundaries. Old lowerers' relational inequalities remain unsupported.
+
+Refinement expansion regressions must cover repeated large source cells across
+projections and hidden order keys, including LIMIT 0. Test the inclusive
+1,000,000 expected cell/order reference-slot bound and refusal above it; check
+repeated public-value/contributor-key UTF-8 payload against the 16,777,216-byte
+pre-limit bound. Successful small captured frames do not waive expanded-result
+limits or imply whole-process memory/timing assurance.

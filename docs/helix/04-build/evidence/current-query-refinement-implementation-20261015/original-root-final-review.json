@@ -1,0 +1,80 @@
+{
+  "status": "no remaining root blocker in reviewed conditional implementation/release-source scope",
+  "date": "2026-10-15",
+  "sourceBase": "7426bb7328d56112f704f581ab7128b211f51a20",
+  "coreSnapshotSha256": "0d91f6b09357a4d2df074f9e126bf2a217ff98a3dfe6cfdfa254e4de44ca6b0a",
+  "finalReleaseSnapshotSha256": "adb73a62f1f391acf167631fbdfab9dd4c656e13d9c07e0e5d857da43de82f38",
+  "final34SourcePins": {
+    ".github/workflows/release.yml": "41d186d964adfd04e239275dd7fafaec16bb9b99084d127c6368264bfcba21b5",
+    "Cargo.lock": "3f34363fc114fc2c507c94df53f369dc9771146091f09645e7264703c95d15d9",
+    "crates/weft-core/Cargo.toml": "cc083a240658c8718ae5a345f6cfbabfb37dc46629097fca93272618d4066a8f",
+    "crates/weft-core/src/current_query_refinement.rs": "bb95ed80f4c49c85daaf9caadf39b718822440494ec41d057a638bb4690c3ff0",
+    "crates/weft-core/src/current_query_refinement/tests.rs": "c395ca08bbcc76d53f30082881f2e15b0042246b3a00eda2eac8047e0cf06740",
+    "crates/weft-core/src/lib.rs": "2b5a030039df6abeffc191fdffefc666d483ffdd16539a5101a39a6abe13a122",
+    "crates/weft-databricks/Cargo.toml": "55ba09e3b685b9377987a28172554400b8a397eac06f7b36334039638ede28d9",
+    "crates/weft-databricks/src/current_scalar.rs": "e39994131c6d965af25f35a26a650b0d614784540330e70cef65b603bb2de354",
+    "crates/weft-postgresql/Cargo.toml": "11513d7a18c3eff745580925c3e065a43529c8b94904602f22aca0fa6867c727",
+    "crates/weft-postgresql/src/current_scalar.rs": "bd2a08db0e2721e2cbe4cfa4847d521804f37ce6f9a58ae23da61dff068bdc91",
+    "crates/weft-postgresql/src/truss_runtime.rs": "9d9e7956a2522ce5b3ac878b8d4b03357b80d8943c5507ecdc8e060b120c4e5c",
+    "crates/weft-python/Cargo.toml": "799fc9d8ffad1bc56b0b45723cca29ba0ba369dbb15e1e1ace92e92478b1380b",
+    "crates/weft-python/pyproject.toml": "3b387e47026be34ef0faf2e21288938b830f023a1fe7f7645b3a49f738758e2e",
+    "crates/weft-python/src/lib.rs": "434353315cfbed445adc847182f139b63ad81a693b8384b03a91bcc708b8eb17",
+    "crates/weft-runtime/Cargo.toml": "60e3885b267ca835cd412e4f829d92efa794fc8656d2309d133a872401ca2e43",
+    "crates/weft-runtime/examples/compile_truss_query_abi.rs": "2a9244a5c786da111637cc42d83df46ccdacab6afbd21eeca9a47bcdb8bb68e1",
+    "crates/weft-runtime/src/lib.rs": "f8d04bf72ebb50b1b2532e3f9bdd176453a393e6c1fa457b54456905f2a00f5a",
+    "docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md": "b99b8b058090530dd79d8101e8e75e23e639497a0984550348e1a94407d5c564",
+    "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md": "d241c6256c7b334dad7e47de802a236a0a590057c2444984c0474488fe3ce065",
+    "docs/helix/02-design/module-boundaries.json": "486a498dcca3ba97fdf0d63d03a91ebdbdb565ea66da258cf459c0947158e745",
+    "docs/helix/02-design/technical-designs/TD-009-security-compilation.md": "7b10022cc49afebe6c5ba99a2e5910b678b4519e5d8b8d352502a1f9cb92905e",
+    "docs/helix/03-test/test-plans/STP-009-security-compilation.md": "a839a4d8b0d86f05b54f5fde193277081a57c51e1931f4edb7e95580db83d662",
+    "docs/helix/04-build/releases/v0.4.35.md": "e5cc103fc4b060a0f294495cf171ac215e943611e8d60a2e4e2c69d471dcb418",
+    "scripts/release/test-refinement-smoke-gate.py": "211ae838a7b36e15a33301d7138923f870049d9ad53799dfc08986c416686e4d",
+    "scripts/release/verify-refinement-smoke.py": "eb298d952e8951fd4ba747ab9a9c51038bb29050124824c74896534bbca4c31a",
+    "tests/current-query-refinement/wheel-smoke.py": "53cd01455c764973fe712e3d9fc74f72775c4d413f959d18d198af02f1a68802",
+    "tests/current-scalar-databricks/refinement-interop.py": "23c3474864f81e53309f9959a9ac5e5d612c74e2f5aebeedf00c6bdd65924f98",
+    "tests/current-scalar-postgresql/refinement-native.py": "015d39d6d2b427542ff78285912a1e7d05230d6998802ab10624ee3a07d90f55",
+    "tests/truss-query-abi/compiler.rs": "c484dd9c6d2e81ae086b3ff3ed7332474a4f62824301c85bf862c1bfa464e74a",
+    "tests/truss-query-abi/custody.json": "27eb2ab72c2353e10a2a44ac97a3edaff6994284bdee288092f8bcd2cb52ee97",
+    "tests/truss-query-abi/fixtures/native-query-bundle.json": "b3f0df1e2b1ba492f548e94364a1a08cafdba525a4d4e78f266f65c89a671c65",
+    "tests/truss-query-abi/fixtures/native-runtime-manifest.json": "5e703a8a144e99ff0744e5f6c9926439787f9d2c51b3e28df4e56f8f40f639e7",
+    "tests/truss-query-abi/fixtures/query-abi.json": "9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806",
+    "tests/truss-query-abi/wheel-smoke.py": "65b9a5a3d0c7d9c3d2321bd6ceb0f7dec62d444f1a99e38eed154d3801c541d3"
+  },
+  "allPinsMatchAfterReview": true,
+  "wheelSha256": "e8dfc15316109494846c4d0a5f58038f623028746a749e11e4af240f25ddcbdd",
+  "nativeModuleSha256": "a915e9b005c088af1b38eca9a66fbb99064ff8bb9e06fd7fc17c8e794b257c2f",
+  "rootIndependentlyExecuted": [
+    "Exact historical new-publisher block accepts five controls30/checks[] reports; counterexample retained",
+    "Corrected frozen validator20 synthetic controls pass; strict IDs/flags/source/wheel correspondence verified"
+  ],
+  "rootInspectedNotRerun": [
+    "338 supplied core tests",
+    "Exact old/new wheel and source/receipt correspondence",
+    "Original and final67PG18.6 controls plus independent predeclared oracle source pins",
+    "Final captured229offline Databricks controls over22retained managed cases",
+    "Astra core21groups51690comparisons/131oldwheelcontrols/3newRustgroups12assertions/8detected+1redundantsurvivor",
+    "Astra newintegratedwheel131independent+30refinement+17ABI controls",
+    "Astra finalgate20owner+15independent controls"
+  ],
+  "resolvedFindings": [
+    "Expected result payload amplification charged before large copies and LIMIT0",
+    "Databricks input parsing uses same captured buffers as hashes",
+    "Publisher exact30check evidence enforced; empty-list counterexample now refuses",
+    "Metadata/API availability distinguish conditional checker/ABI selection from native admission"
+  ],
+  "independentReviewPins": {
+    "core": "2a34852b0c14d2fc6f6bab12e5027eeeb4d962c01294d38bb54ba792f6c1ae15",
+    "finalAddendum": "06df100737320614fdddd2ac2d93d3a590eaf00481d5e5e32839e274a2f7aac2"
+  },
+  "remainingPremises": [
+    "All input source/caller/Subject/current authority, eligibility/actions, native type/scope correspondence, complete populations/cuts and closing guarded release remain host obligations",
+    "Consistently forged input/count/result may match conditionally; report is no credential",
+    "No cumulative allocation/heap/time theorem",
+    "Normal five-platform release CI is still required before publication; localARM wheel review is not other-platform qualification",
+    "Original132 and expanded158 acceptance requirements remain; no case promoted"
+  ],
+  "partnerSourcesEditedByRoot": false,
+  "nativeCampaignDuplicatedByRoot": false,
+  "nativeAcceptanceChanged": false,
+  "casesPromoted": []
+}

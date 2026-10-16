@@ -374,3 +374,25 @@ Runtime backend0.4.8 also admits Truss0.38's additive source ACK receipt release
 The existing0.35/0.36/0.37 branches remain admitted; SQL, IR, binding and entity
 projection semantics are unchanged. A rebuilt Python extension executes the
 public Truss0.38 import-load query alongside its populated upgrade test.
+
+## Explicit Truss query ABI candidate — 2026-10-15
+
+Ordinary read backend `truss.postgresql.runtime/0.4.38` explicitly selects target
+`truss-runtime-pg18.6/0.5` and binding `truss-runtime-binding/0.5`. It requires the
+closed `queryAbi` pin: identity `truss-postgresql-logical-query`, version `1.0`,
+SHA-256 `9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806`.
+Missing, null, changed or extended ABI pins refuse. Earlier backend selections
+retain their closed runtime hashes and refuse this binding and any queryAbi member.
+
+The new selection admits the ABI's directed independent and owned relationship
+reads. Its compiler no longer enumerates whole-runtime release hashes. It retains
+and forwards the complete original binding JSON, including installation identity,
+runtime release/hash and accepted model/source/mapping pins, without rewriting.
+Truss MUST check every actual installation/runtime/model/source pin at native
+`query_scope` admission, including rejecting a changed runtime hash with the same
+query ABI. The ABI pin alone grants neither execution nor access authority.
+
+Current/historical aggregate-root scope and descendant attribution remain native
+Truss obligations. This selection does not change mutation admission, install a
+protected query consumer or qualify B-008 security. Source/native development
+workflow evidence and matching published-wheel qualification remain distinct.

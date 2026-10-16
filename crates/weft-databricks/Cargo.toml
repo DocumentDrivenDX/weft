@@ -16,3 +16,6 @@ path = "../../tests/ashlar-databricks/binding.rs"
 [[test]]
 name = "ashlar-compiler"
 path = "../../tests/ashlar-databricks/compiler.rs"
+
+[features]
+current-query-refinement-candidate=["weft-core/current-query-refinement-candidate"]

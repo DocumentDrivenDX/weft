@@ -1,0 +1,22 @@
+{
+  "README.md": "b7e4eabc441a59eecc5a71037cbeea29e5e018b90d1c752e8bf499c85a8514fc",
+  "frozen-core-review-input.zip": "0d91f6b09357a4d2df074f9e126bf2a217ff98a3dfe6cfdfa254e4de44ca6b0a",
+  "frozen-integration-review-input.zip": "ff2e25057c84e86ce62fc095b2d5619bdba80abbee84fce658139b67e8b46e92",
+  "frozen-integration-review-v2-input.zip": "adb73a62f1f391acf167631fbdfab9dd4c656e13d9c07e0e5d857da43de82f38",
+  "integrated-databricks.json": "92a2db41ae78aecc3cf01fc5a3a6f7c94e9eb8afbe72de2afbc5a9aaa807a79c",
+  "integrated-postgresql.json": "e5cef8cc198ffc36288a872fb5e234cbc18e0422820b5042fd9991d3e99fc9d1",
+  "integrated-refinement-smoke.json": "6b27bf33fa23ee25dcd8e739079f13a07c8a1bfec9e889014d9d0573d1009136",
+  "integrated-retained-consumer-refusal.json": "9105c0c57eceabbc12894e2627622d7c6f8bad21100c85c659faed647949d72a",
+  "integrated-source-pins.json": "5ff55fbf0a3ec4e6aa5330c3e684e5bbc01a0b560f04a7954f33e27deaba7256",
+  "integrated-v2-source-pins.json": "5fba083b0a4eb0a38b207aceff953bc561c41c0d48d814e45ae73cb38f8b5a97",
+  "original-amplification-review.zip": "774da5de8bd0fb8009eb58525a4c694d8169126961eedecee209899c0a7f2509",
+  "original-core-astra-review.json": "2a34852b0c14d2fc6f6bab12e5027eeeb4d962c01294d38bb54ba792f6c1ae15",
+  "original-core-astra-review.zip": "22a925428de70c6027850936b0e16b5ab142be3b013e9174dfc4657e56932b53",
+  "original-integration-astra-review.json": "06df100737320614fdddd2ac2d93d3a590eaf00481d5e5e32839e274a2f7aac2",
+  "original-integration-astra-review.zip": "6110c09a0c9a1e353237d52d6e94c1145f9297d23262ebf3daf6692e6ed0555c",
+  "original-root-final-review.json": "317e2e6d7adc3ab4ca646b466f3b88abfd297ec5b7d2b274cd8905fd87545ac2",
+  "original-root-gate-counterexample.json": "5feb31ea51851d62594aad19f45c46be15f566ce41278a3b22e9a51423997507",
+  "original-root-reviewed-refinement-publish-gate.py.gz": "b0eedc629bc6a8257af1f38dc49724248ade1a196df09d28809e51b9f59fb830",
+  "original-truss-query-abi-review.txt": "665d423478d8e809bf9a8f01dbc8c7856c5b0056f8d8ac370a9c59f6d62fc411",
+  "original-truss-query-abi.patch.gz": "e8aa6d3a76399bf3e4310a3a3a2d76039671f869c8a6525fdd875532200cb214"
+}

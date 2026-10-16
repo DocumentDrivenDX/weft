@@ -88,6 +88,18 @@ jobs:
         if: hashFiles('tests/current-scalar-databricks/wheel-smoke.py') != ''
         shell: bash
         run: python tests/current-scalar-databricks/wheel-smoke.py --wheel dist/*.whl --output dist/current-databricks-smoke-${{ matrix.target }}.json
+      - name: Smoke conditional refinement APIs from the exact standard wheel
+        if: hashFiles('tests/current-query-refinement/wheel-smoke.py') != ''
+        shell: bash
+        run: python tests/current-query-refinement/wheel-smoke.py --wheel dist/*.whl --output dist/current-refinement-smoke-${{ matrix.target }}.json
+      - name: Test closed refinement publication gate
+        if: hashFiles('scripts/release/test-refinement-smoke-gate.py') != ''
+        shell: bash
+        run: python scripts/release/test-refinement-smoke-gate.py
+      - name: Smoke explicit Truss query ABI from the exact standard wheel
+        if: hashFiles('tests/truss-query-abi/wheel-smoke.py') != ''
+        shell: bash
+        run: python tests/truss-query-abi/wheel-smoke.py
       - uses: actions/upload-artifact@v4
         with:
           name: wheels-${{ matrix.target }}
@@ -95,6 +107,7 @@ jobs:
             dist/*.whl
             dist/current-query-smoke-*.json
             dist/current-databricks-smoke-*.json
+            dist/current-refinement-smoke-*.json
           if-no-files-found: error
   publish:
     if: always() && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.promote_run_id != ''))
@@ -130,7 +143,7 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
           python - <<'PYTHON'
-          import hashlib,json,os,pathlib,subprocess,tomllib,zipfile
+          import hashlib,json,os,pathlib,runpy,subprocess,tomllib,zipfile
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
           root=pathlib.Path('dist');wheels=sorted(root.glob('*.whl'))
           assert len(wheels)==5
@@ -160,6 +173,21 @@ jobs:
           else:
               assert databricks==[]
 
+          refinement=[json.loads(p.read_text()) for p in sorted(root.glob('current-refinement-smoke-*.json'))]
+          if 'current-query-refinement-candidate' in features:
+              gate=runpy.run_path('scripts/release/verify-refinement-smoke.py')
+              gate['validate'](refinement,smoke,commit,version)
+          else:
+              assert refinement==[]
+
+          query_abi_path=pathlib.Path('tests/truss-query-abi/fixtures/query-abi.json')
+          query_abi_backend=None
+          if query_abi_path.exists():
+              raw=query_abi_path.read_bytes();abi=json.loads(raw)
+              assert hashlib.sha256(raw).hexdigest()=='9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806'
+              assert abi['identity']=='truss-postgresql-logical-query' and abi['version']=='1.0'
+              query_abi_backend={'backendVersion':'0.4.38','targetProfile':'truss-runtime-pg18.6/0.5','bindingProfile':'truss-runtime-binding/0.5','queryAbi':{'identity':abi['identity'],'version':abi['version'],'sha256':hashlib.sha256(raw).hexdigest()},'nativeAdmission':False}
+
           runtimes=[{'releaseId':'truss-catalog-runtime/0.66-candidate','sha256':'99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a'},{'releaseId':'truss-catalog-runtime/0.67-candidate','sha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee'}]
           native68=pathlib.Path('tests/truss068/native-runtime-manifest.json')
           if native68.exists():
@@ -170,7 +198,7 @@ jobs:
           latest=runtimes[-1]
 
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':features,'currentQuerySmoke':smoke,'currentDatabricksSmoke':databricks,'trussBackend':'0.4.37' if native68.exists() else '0.4.36','trussRuntime':latest['releaseId'],'trussRuntimeSha256':latest['sha256'],'supportedTrussRuntimes':runtimes,'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':features,'currentQuerySmoke':smoke,'currentDatabricksSmoke':databricks,'currentQueryRefinementSmoke':refinement,'trussQueryAbiBackend':query_abi_backend,'trussBackendSelection':'closed-runtime-hash','trussBackend':'0.4.37' if native68.exists() else '0.4.36','trussRuntime':latest['releaseId'],'trussRuntimeSha256':latest['sha256'],'supportedTrussRuntimes':runtimes,'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft; then
             test "$(cat /tmp/release-draft)" = true
