@@ -1,0 +1,20 @@
+{
+  "base": "a4fe27c194a5e956d8bd6b05ed2d3e02969e573f",
+  "publishedDateTag": "v0.4.39",
+  "publishedDateCommit": "98b079b24d3933df3eaed7adbf28878b13fd3bcd",
+  "files": {
+    "crates/weft-runtime/src/engine_read.rs": "6c4038647d594352428087915a723d530daa14f4076792fca8bb09c07928990b",
+    "crates/weft-databricks/src/authored_pages.rs": "0efd313d5076c4fa5d4bb45d29779f351aeb0177b90eb8c5df1d7289add84957",
+    "crates/weft-databricks/src/lib.rs": "b38d0af1f38c30c09fbd13742c26a309db36cdf145b12ac691a6b4f264d26b88",
+    "crates/weft-python/src/lib.rs": "e090c4e35c808172ba409826145d7fd74df10472c68408062c928c8effac78d8",
+    "crates/weft-python/Cargo.toml": "5f370a381afb46bd03145bf44d427020545f4894b6584e9cc40841fe31dc5500",
+    "crates/weft-python/pyproject.toml": "c30eb0fe5ef76efca61897bf8a5e1a752c8d590024dc5d33e704d0d6886cd45f",
+    "crates/weft-wasm/src/lib.rs": "f4527459de6cdb501f510c49b94f9f91dbe62d8869fc05ff2bc79b5f4589bb04",
+    "Cargo.lock": "52cd5a9264d73062c377f51a8a5f4708df49baa0bdd20517e754ce5b8df75894",
+    "scripts/check-native-sdk-browser.ts": "3ecc615de1eb228a81551318c64323afcdb227f09d2f990c192165092f0b741a",
+    "docs/helix/02-design/module-boundaries.json": "74d42957018fc4d514391c609015586dab4c93414366cd8bc0b6a37d123fc01f"
+  },
+  "compilerVersion": "0.4.40",
+  "publication": "not yet published; complete CI and five wheels still required",
+  "temporal": "HELD"
+}

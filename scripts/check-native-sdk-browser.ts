@@ -40,6 +40,20 @@ cases.push({name:'engine-page-context-drift',method:'check_engine_page_json',req
 cases.push({name:'engine-page-key-arity',method:'check_engine_page_json',request:'',arguments:[pageProgram,JSON.stringify(pageRequest),'["a","b"]'],expected:'blocked'});
 const pageAltered=JSON.parse(pageProgram);pageAltered.page.keyOutputs=[0];
 cases.push({name:'engine-page-program-tamper',method:'check_engine_page_json',request:'',arguments:[JSON.stringify(pageAltered),JSON.stringify(pageRequest),'null'],expected:'blocked'});
+for(const [name,method,version] of [['ashlar-spark4','ashlar-spark4-pages','0.1.0-local-spark4-pages-candidate'],['ashlar-dbsql-20261016','ashlar-dbsql-20261016-pages','0.1.0-managed-20261016-pages-candidate']]){
+ const legacy=await Bun.file('tests/engine-catalog/native-'+name+'-request.json').json();
+ cases.push({name:'engine-page-'+name+'-legacy-refusal',method:'compile_engine_page_json',request:JSON.stringify({version:'weft.engine-page/0.1',compiler:method,request:legacy,pageSize:1}),expected:'blocked'});
+ const request=structuredClone(legacy);request.interfaceVersion='weft-compile/0.2.2';request.target.backendVersion=version;
+ const input=JSON.stringify({version:'weft.engine-page/0.1',compiler:method,request,pageSize:1});
+ cases.push({name:'engine-page-'+name+'-fresh-profile',method:'compile_engine_page_json',request:input});
+ const child=Bun.spawn([python,'-I','-B','-c','import sys,weft;print(weft.compile_engine_page_json(sys.stdin.read()))'],{stdin:new Blob([input]),stdout:'pipe',stderr:'pipe'});
+ const program=await new Response(child.stdout).text();if(await child.exited!==0)throw Error('Separate original page fixture compilation failed');
+ cases.push({name:'engine-page-'+name+'-continuation',method:'check_engine_page_json',request:'',arguments:[program,JSON.stringify(request),'["a"]']});
+ const current=structuredClone(request);current.parameters.status.value='different bound data';
+ cases.push({name:'engine-page-'+name+'-current-values',method:'check_engine_page_json',request:'',arguments:[program,JSON.stringify(current),'null']});
+ current.target.bindingSha256='0'.repeat(64);
+ cases.push({name:'engine-page-'+name+'-context-drift',method:'check_engine_page_json',request:'',arguments:[program,JSON.stringify(current),'null'],expected:'blocked'});
+}
 // The combined compiler retains the underlying owner's Date support while the
 // typed SDK's selected profile remains non-temporal. These are different gates.
 const dateBundle=await Bun.file('tests/truss-date/native-query-bundle.json').json();
