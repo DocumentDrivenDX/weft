@@ -1,0 +1,20 @@
+[
+  {
+    "profile": "default",
+    "exitCode": 101,
+    "passed": true,
+    "log": "/private/tmp/weft-graph-runtime-feature-default-20261016.log"
+  },
+  {
+    "profile": "old-model",
+    "exitCode": 101,
+    "passed": true,
+    "log": "/private/tmp/weft-graph-runtime-feature-old-model-20261016.log"
+  },
+  {
+    "profile": "graph",
+    "exitCode": 0,
+    "passed": true,
+    "log": "/private/tmp/weft-graph-runtime-feature-graph-20261016.log"
+  }
+]

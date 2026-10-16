@@ -1,0 +1,155 @@
+{
+  "baseline": "a7fe3212e7c2f22049e57753c188a277aaf93f5e",
+  "status": "unreviewed-component-candidate",
+  "merged": false,
+  "nativeAdmission": false,
+  "original132Acceptance": false,
+  "limitations": [
+    "No runtime/Python Graph factory yet",
+    "No native population, codec, caller/current-authority or guarded release admission",
+    "Budgets bound retained encoded payload; not peak temporary allocation or host memory",
+    "Must reconcile with newer main before integration"
+  ],
+  "files": {
+    "crates/weft-core/src/current_presence_graph_requirements.rs": {
+      "sha256": "f3ae7b8242323d6228df3924e5f614cdd2b7578876a5c93bfc4e8a0ca7554f06",
+      "bytes": 14561
+    },
+    "crates/weft-core/src/current_presence_graph_requirements_tests.rs": {
+      "sha256": "46911a89e2fa969a95665e4657bf022b7a1dfdad0289db4c6b341dc1397cd19f",
+      "bytes": 17313
+    },
+    "crates/weft-core/src/current_presence_model_requirements.rs": {
+      "sha256": "c5d65a7decdb977e00d87fa97830b438677d88cf2a4f17645210f4b9ead6da11",
+      "bytes": 6226
+    },
+    "crates/weft-core/src/current_presence.rs": {
+      "sha256": "e6f917a016fc04012ce5345b6891f5a3268267cbdb302775d32c2ffd803c95d8",
+      "bytes": 21563
+    },
+    "crates/weft-core/src/lib.rs": {
+      "sha256": "1ad5bfd3851ecb8ec4561844a0e7f74c313fb43162e4a023be59c31f34a5f481",
+      "bytes": 6270
+    },
+    "crates/weft-core/Cargo.toml": {
+      "sha256": "d4edb36540dceaf539150db973dad6217a882075566a26020efcca4ae1be2c0b",
+      "bytes": 1768
+    },
+    "docs/helix/02-design/module-boundaries.json": {
+      "sha256": "09c3a09ea910ac2e9a6328831da1f9780f152492779b06a3ff1d774dc026d58a",
+      "bytes": 143647
+    },
+    "docs/helix/02-design/contracts/CONTRACT-017-current-presence-graph-requirements.md": {
+      "sha256": "deb836c9d5273358710108b2380056403c7d0b609acb5c1acb78dc784fb0b385",
+      "bytes": 15477
+    },
+    "docs/helix/02-design/contracts/current-presence-graph-requirements-v0.1-candidate.schema.json": {
+      "sha256": "4a0c27332adab01b17cc5378b623a2580e7346437d67aef0864dda09142fb602",
+      "bytes": 11490
+    },
+    "docs/helix/03-test/test-plans/current-presence-graph-requirements.md": {
+      "sha256": "e6c7392ec32cb3f542aa190ce78506c3760af1a72b353473232d9171988a9e7d",
+      "bytes": 6525
+    },
+    "tests/current-query-presence/fixtures/model-requirements-scalar-capacity.request.json": {
+      "sha256": "9979943c2cba3bbcdb297084906194fc4a58532600a582c3faa18a13737a1dc5",
+      "bytes": 597992
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-specs-20261016.log.gz": {
+      "sha256": "dddd1f39ea58220870a2d6dec892f6011684ecf1096ad355f27df4a499771dcc",
+      "bytes": 203
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-all-core-r5-20261016.log.gz": {
+      "sha256": "291f070f65c0cb9cca34d33986505aa7b9274f75c5476a0425a5e008aac6f52c",
+      "bytes": 10740
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-model-doctests-20261016.log.gz": {
+      "sha256": "fd50a0dddc570032fda1916963b251ce5a5d4225a92b07a90bf619b1284b8296",
+      "bytes": 2092
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-graph-doctests-20261016.log.gz": {
+      "sha256": "93ee14b6e285b078b74c32eb3809682af4c1fb60b95091a40f97ee8a8c1449cb",
+      "bytes": 2147
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-first-tests-20261016.log.gz": {
+      "sha256": "6602c15bf6bb349ab1cc511ef1a4fcac15ae49fbd18b02448368f247b875e33c",
+      "bytes": 2192
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-tests-r3-20261016.log.gz": {
+      "sha256": "2ce8d3cfbcd92ffce0d12eaaabf4e8142e083b75e82171c603759763d9dbc412",
+      "bytes": 2227
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-tests-r4-20261016.log.gz": {
+      "sha256": "7c8f1da08ec2b23a0852525dae5e9ce08a51337ea74592524365c7948535e2b2",
+      "bytes": 2060
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-first-compile-20261016.log.gz": {
+      "sha256": "01c96263843cc6a4aee76067ec635ad43053250fb2b7ccf1c9d767c40ed3e50d",
+      "bytes": 2764
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-old-model-tests-20261016.log.gz": {
+      "sha256": "8d43ac7483b8f305affcfa37bb39e4aad835985562ad74123add48b237b5e56c",
+      "bytes": 1914
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-feature-default-20261016.log.gz": {
+      "sha256": "1dded79bbee36d42a231a3902b90215b1c318ed7e24daabc9a1cdc86f9af18a1",
+      "bytes": 2990
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-tests-r2-20261016.log.gz": {
+      "sha256": "2bde4580e63b7f698e03fbb0ca80e1a5983af82d66ed4da462b28aacd91e0c79",
+      "bytes": 1925
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-feature-old-model-only-20261016.log.gz": {
+      "sha256": "6286e98051e3066d7ac0403575f7d2a341789ab8e55940e7e167fca88e761ea7",
+      "bytes": 2296
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-design-specs-20261016.log.gz": {
+      "sha256": "ada62c2dd9149bcdef6ed8bb749111755cd47e6288ca6b92fecd08a2194020b6",
+      "bytes": 203
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-boundaries-20261016.log.gz": {
+      "sha256": "75363813d0feef9dd1b43e73264ba253d7a451dd1d737825be4994d7c62a819d",
+      "bytes": 823
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-final-checks-20261016.log.gz": {
+      "sha256": "bc389e70fa2cfcde5002f6dd1f9652f143f9a8c83060eaeda35722c5d30b2e50",
+      "bytes": 263
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-feature-explicit-new-20261016.log.gz": {
+      "sha256": "e43bcb03b36ea90822734e0b3c2a0b0078b9b82df6314127d664e76426605367",
+      "bytes": 2068
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-budget-restored-20261016.log.gz": {
+      "sha256": "7d68a8c65b38fd38e9d5b33647815317ac557e857c47b3936d47ddfe48baa5a0",
+      "bytes": 1622
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-budget-mutant-key-20261016.log.gz": {
+      "sha256": "b3ce16b14a1b5640ba3f93e39843fe60044a75d27f01464a3529e36d95a7e614",
+      "bytes": 1787
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-budget-mutant-detail-20261016.log.gz": {
+      "sha256": "a1e0897242b04560bcd5c0f85fb141fd79bea209ecb9b5ab7573fe1881c5f164",
+      "bytes": 1923
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-intermediate-budget-tests-20261016.log.gz": {
+      "sha256": "8a8704d183d47b7b9683d75756e0599922aafbd79f8fd85be71bae8a3553d79d",
+      "bytes": 1743
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-budget-mutations-20261016.json": {
+      "sha256": "c0d5d3e01bc6856592752fe1c42cf5b49a5604ce93caafd484fce8f1fe75f444",
+      "bytes": 607
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-budget-mutations-20261016.py": {
+      "sha256": "0dbccb691c656a845b1a128a616d7fc64226e0e6da38501ff9a41ac77a1af069",
+      "bytes": 1776
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/weft-graph-requirements-feature-boundary-20261016.json": {
+      "sha256": "4c3065731067158736eef4686d499279df060eaa040dd49500d8cc10f5834e6d",
+      "bytes": 891
+    },
+    "docs/helix/04-build/evidence/current-presence-graph-requirements-20261016/check-weft-graph-requirements-feature-boundary-20261016.py": {
+      "sha256": "5d5107178bbdf6df2a21598b666116077c7353b0a266483e6778ca83fd65a426",
+      "bytes": 2236
+    }
+  }
+}
