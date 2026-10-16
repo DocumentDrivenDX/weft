@@ -728,3 +728,6 @@ mod current_query_object_tests{
   for raw in [include_str!("../../../tests/current-query-designation/fixtures/unsupported-salary-sum.request.json"),include_str!("../../../tests/application-lineage/fixtures/token-equality.request.json")]{let parent=prepare_application_lineage(raw).unwrap();let before=parent.json().to_owned();assert!(parent.prepare_current_query().is_err());assert_eq!(parent.json(),before);}
  }
 }
+
+#[cfg(feature="raw-postgresql-reads")]
+pub fn compile_raw_read_json(request:&str)->String {weft_postgresql::raw_read::compile_json(request)}

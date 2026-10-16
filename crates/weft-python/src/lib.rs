@@ -31,6 +31,8 @@ fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 }
 #[pymodule]
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_raw_read_json, m)?)?;
     m.add_class::<MutationCompiler>()?;
     #[cfg(feature="truss-security-relationship-candidate")]
     {
@@ -230,3 +232,7 @@ fn refinement_text(value:&Bound<'_,PyAny>,maximum:usize)->PyResult<String>{
  if !value.is_exact_instance_of::<pyo3::types::PyString>()||value.len().map_err(|_|refinement_python_failure())?>maximum{return Err(refinement_python_failure())}
  let text=value.extract::<String>().map_err(|_|refinement_python_failure())?;if text.len()>maximum{return Err(refinement_python_failure())}Ok(text)
 }
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_raw_read_json(request:&str)->String {weft_runtime::compile_raw_read_json(request)}

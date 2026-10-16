@@ -73,3 +73,7 @@ impl MutationCompiler {
         self.registry.compile_json(request)
     }
 }
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_raw_read_json(request:&str)->String {weft_runtime::compile_raw_read_json(request)}

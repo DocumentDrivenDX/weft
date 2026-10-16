@@ -179,3 +179,5 @@ pub mod security_operand_values;
 /// Optional conditional relational conformance; never native authority.
 #[cfg(feature="current-query-refinement-candidate")]
 pub mod current_query_refinement;
+
+pub mod raw_read;

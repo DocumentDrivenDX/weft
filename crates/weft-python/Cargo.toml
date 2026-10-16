@@ -7,6 +7,7 @@ publish.workspace=true
 name="weft"
 crate-type=["cdylib"]
 [features]
+raw-postgresql-reads=["weft-runtime/raw-postgresql-reads"]
 current-spark-scalar-candidate=["current-query-refinement-candidate","weft-runtime/current-spark-scalar-candidate"]
 current-query-refinement-candidate=["current-postgresql-scalar-candidate","current-databricks-scalar-candidate","weft-runtime/current-query-refinement-candidate"]
 current-databricks-scalar-candidate=["application-lineage-candidate","weft-runtime/current-databricks-scalar-candidate"]

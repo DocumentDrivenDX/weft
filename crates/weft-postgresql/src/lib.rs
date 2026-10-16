@@ -1,5 +1,6 @@
 pub mod current_scalar;
 pub mod truss_mutation;
+pub mod raw_read;
 pub mod mutation;
 pub mod truss_runtime;
 mod storage_composition;
