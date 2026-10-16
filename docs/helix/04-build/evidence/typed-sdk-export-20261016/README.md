@@ -47,3 +47,11 @@ is historical evidence reconciliation, not a weakened runtime admission check.
 The earlier native-cohort wheel and final metadata-corrected installed wheel have
 separate exact receipts. No native rerun is claimed solely for that descriptive
 change. Integrated native226 qualification is recorded separately by Truss.
+
+PR18's first Graph CI job117244306025 failed before compilation because rustup
+auto-installing the repository rustfmt component conflicted with the hosted
+runner's bin/cargo-fmt. The host-only Graph job now explicitly selects its
+already installed minimal1.90.0 toolchain through RUSTUP_TOOLCHAIN; its full
+Core/doc/runtime/wheel/isolation checks remain unchanged. The main compiler job
+retains its explicit rustfmt/WASM installation. A new CI run must supply the
+actual hosted result; local YAML/toolchain selection alone is not that proof.
