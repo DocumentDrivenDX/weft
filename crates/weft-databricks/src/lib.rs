@@ -37,3 +37,9 @@ pub mod compatible_profile;
 pub mod current_scalar;
 
 pub mod raw_read;
+
+pub mod local_spark4;
+
+pub mod raw_action;
+
+pub mod raw_bulk;

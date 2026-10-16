@@ -191,12 +191,14 @@ impl Lower<'_> {
         }
     }
 }
-fn lower(a: &AdmittedRead) -> Result<J> {
+fn lower(a: &AdmittedRead) -> Result<J> { lower_inner(a,false) }
+pub(crate) fn lower_transaction(a:&AdmittedRead)->Result<J>{ lower_inner(a,true) }
+fn lower_inner(a: &AdmittedRead, transaction:bool) -> Result<J> {
     let r = a.request();
     let q = a.query();
     if r.version != "weft.raw-read/0.1"
         || r.target != "spark-delta4"
-        || r.binding.schema.is_none()
+        || (!transaction && r.binding.schema.is_none())
         || r.keyset
     {
         return Err("explicit raw Spark4 qualified-schema non-page profile required");
@@ -283,17 +285,15 @@ fn lower(a: &AdmittedRead) -> Result<J> {
     {
         return Err("numeric raw Spark binding requires separately qualified shape profile");
     };
-    let snapshots = r
-        .snapshots
-        .as_ref()
-        .ok_or("explicit compiled snapshot versions required")?;
-    if snapshots.len() != 1 {
-        return Err("exact snapshot inventory required");
+    let (version,native)=if transaction {
+        if r.snapshots.is_some(){return Err("transaction selection must use its original native transaction snapshot")}
+        (None,"`__umf_delta_stage`".to_string())
+    }else{
+        let snapshots=r.snapshots.as_ref().ok_or("explicit compiled snapshot versions required")?;
+        if snapshots.len()!=1{return Err("exact snapshot inventory required")}
+        let version=*snapshots.get(&table.native).filter(|v|**v<=i64::MAX as u64).ok_or("exact native snapshot version required")?;
+        (Some(version),format!("{}.{} VERSION AS OF {version}",ident(r.binding.schema.as_ref().unwrap())?,ident(&table.native)?))
     };
-    let version = snapshots
-        .get(&table.native)
-        .filter(|v| **v <= i64::MAX as u64)
-        .ok_or("exact native snapshot version required")?;
     let mut l = Lower {
         request: r,
         table,
@@ -325,13 +325,7 @@ fn lower(a: &AdmittedRead) -> Result<J> {
         projection.push(format!("{} AS {}", c.0, ident(&out)?));
         outputs.push(json!({"name":out,"carrier":c.1,"nullable":c.2}));
     }
-    let mut sql = format!(
-        "SELECT {} FROM {}.{} VERSION AS OF {version} AS {}",
-        projection.join(", "),
-        ident(r.binding.schema.as_ref().unwrap())?,
-        ident(&table.native)?,
-        ident(&l.alias)?
-    );
+    let mut sql=format!("SELECT {} FROM {native} AS {}",projection.join(", "),ident(&l.alias)?);
     if let Some(e) = &s.selection {
         sql += &format!(" WHERE {}", l.predicate(e)?)
     };
@@ -384,11 +378,6 @@ fn lower(a: &AdmittedRead) -> Result<J> {
     if l.used.len() != r.parameters.len() {
         return Err("unused or duplicate parameter");
     };
-    let native = format!(
-        "{}.{} VERSION AS OF {version}",
-        ident(r.binding.schema.as_ref().unwrap())?,
-        ident(&table.native)?
-    );
     let keys = table
         .key
         .iter()
@@ -410,7 +399,8 @@ fn lower(a: &AdmittedRead) -> Result<J> {
         .collect::<Vec<_>>()
         .join(" OR ");
     let check=format!("SELECT COUNT(*) AS violations FROM (SELECT {} FROM {native} GROUP BY {} HAVING COUNT(*) <> 1 OR {nulls}) AS invalid_keys",keys.join(", "),keys.join(", "));
-    let mut out = json!({"version":"weft.raw-read/0.1","status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"binding":r.binding,"sourceSql":r.sql,"nativeChecks":[{"sql":check,"expected":0}],"snapshotTables":[{"table":table.native,"version":version}],"lockSql":[],"cursorParameters":[],"cursorOutputs":[],"cursorOrdering":[],"referencedTables":[{"logical":table.logical,"native":table.native,"columns":table.columns}],"obligations":{"transaction":"snapshot-read","principal":"administrative-single-tenant","ansiEnabled":true,"sparkVersion":"4.0.1","deltaVersion":"4.0.0","binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"uuid-and-version"}});
+    let mut out = json!({"version":"weft.raw-read/0.1","status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"binding":r.binding,"sourceSql":r.sql,"nativeChecks":[{"sql":check,"expected":0}],"snapshotTables":version.map(|v|vec![json!({"table":table.native,"version":v})]).unwrap_or_default(),"lockSql":[],"cursorParameters":[],"cursorOutputs":[],"cursorOrdering":[],"referencedTables":[{"logical":table.logical,"native":table.native,"columns":table.columns}],"obligations":{"transaction":"snapshot-read","principal":"administrative-single-tenant","ansiEnabled":true,"sparkVersion":"4.0.1","deltaVersion":"4.0.0","binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"uuid-and-version"}});
+    if transaction {out["version"]=json!("weft.delta-selection/0.1");out["obligations"]["transaction"]=json!("original-Delta4-optimistic-Serializable-whole-table");out["obligations"]["tableIdentity"]=json!("original-native-transaction-snapshot-view");}
     out["structuralDigest"] = json!(weft_core::json::sha256(out.to_string().as_bytes()));
     Ok(out)
 }

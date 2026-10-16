@@ -282,7 +282,19 @@
             "mod:implicit_arithmetic",
             "mod:compatible_profile",
             "mod:current_scalar",
-            "mod:raw_read"
+            "mod:raw_read",
+            "mod:local_spark4",
+            "mod:raw_action",
+            "mod:raw_bulk"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:LocalSpark4"
           ],
           "pathReferences": []
         },
@@ -341,6 +353,20 @@
             "const:PROFILE",
             "const:EVIDENCE",
             "struct:Qualified"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_action.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_bulk.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -3718,6 +3744,14 @@
       ],
       "sources": [
         {
+          "path": "crates/weft-runtime/src/engine_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/implicit_arithmetic.rs",
           "publicDeclarations": [
             "fn:compile_json"
@@ -3784,7 +3818,8 @@
             "fn:compile_raw_read_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
-            "fn:compile_search_json"
+            "fn:compile_search_json",
+            "mod:engine_read"
           ],
           "pathReferences": []
         },
@@ -3932,7 +3967,9 @@
             "fn:compile_raw_read_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
-            "fn:compile_search_json"
+            "fn:compile_search_json",
+            "fn:compile_engine_read_json",
+            "fn:check_engine_read_json"
           ],
           "pathReferences": []
         }
@@ -4016,7 +4053,9 @@
             "fn:check_databricks_bounded_current_contributors_candidate_json",
             "fn:is_from",
             "fn:designation_json",
-            "fn:native_request_json"
+            "fn:native_request_json",
+            "fn:compile_engine_read_json",
+            "fn:check_engine_read_json"
           ],
           "pathReferences": []
         }

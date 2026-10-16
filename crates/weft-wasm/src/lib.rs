@@ -147,3 +147,10 @@ impl CurrentQueryPreparation {
     pub fn designation_json(&self)->String{self.inner.designation_json().to_owned()}
     pub fn native_request_json(&self)->Result<String,wasm_bindgen::JsValue>{self.inner.native_request_json().map_err(|d|wasm_bindgen::JsValue::from_str(&format!("{}: {}",d.code,d.message)))}
 }
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_engine_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::engine_read::compile_json(&original))}
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn check_engine_read_json(program:&js_sys::JsString,current_request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let program=strict_text(program,4_194_304)?;let request=strict_text(current_request,4_194_304)?;Ok(weft_runtime::engine_read::check_json(&program,&request))}
