@@ -5,7 +5,8 @@ ddx:
   activity: design
   status: draft
   links:
-    - weft.typed-sdk-engine-catalog
+    - id: weft.typed-sdk-engine-catalog
+      kind: informed_by
   authoring:
     home: repo
 ---
