@@ -7,6 +7,7 @@ publish.workspace=true
 name="weft"
 crate-type=["cdylib"]
 [features]
+current-presence-candidate=["application-lineage-candidate","weft-runtime/current-presence-candidate"]
 raw-postgresql-reads=["weft-runtime/raw-postgresql-reads"]
 current-spark-scalar-candidate=["current-query-refinement-candidate","weft-runtime/current-spark-scalar-candidate"]
 

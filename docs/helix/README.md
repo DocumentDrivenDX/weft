@@ -115,3 +115,10 @@ cells retain explicit absence, withholding and null distinctions. Their
 [qualified evidence](04-build/evidence/current-presence-postgresql-20261016/README.md)
 does not establish native authority, producer invocation, execution or guarded
 release. Full B-008 acceptance remains open.
+
+
+The optional [issued runtime/Python presence bridge](02-design/contracts/CONTRACT-014-current-presence-bridge.md)
+now has reviewed native-class custody and data-correspondence evidence. It keeps
+the original preparation alive and rejects cross-profile objects and imported
+reports. Its [qualified local wheel evidence](04-build/evidence/current-presence-bridge-20261016/README.md)
+adds no default feature, public release, WASM bridge or native execution authority.

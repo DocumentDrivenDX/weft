@@ -3780,6 +3780,7 @@
             "struct:ApplicationLineagePreparation",
             "fn:json",
             "fn:source_request_json",
+            "fn:prepare_current_presence",
             "fn:current_query_designations_json",
             "fn:prepare_current_query",
             "struct:CurrentQueryPreparation",
@@ -3812,7 +3813,13 @@
             "fn:compile_raw_read_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
-            "fn:compile_search_json"
+            "fn:compile_search_json",
+            "struct:CurrentPresencePreparation",
+            "fn:json",
+            "fn:is_from",
+            "fn:native_request_json",
+            "fn:lower_postgresql_current_presence_candidate_json",
+            "fn:check_postgresql_current_presence_candidate_json"
           ],
           "pathReferences": []
         },

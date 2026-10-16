@@ -5,6 +5,7 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+current-presence-candidate=["application-lineage-candidate","dep:weft-postgresql","weft-core/current-presence-context-candidate","weft-postgresql/current-presence-candidate"]
 raw-postgresql-reads=["dep:weft-postgresql","dep:weft-databricks"]
 current-spark-scalar-candidate=["application-lineage-candidate","dep:weft-databricks","weft-databricks/current-spark-scalar-candidate"]
 

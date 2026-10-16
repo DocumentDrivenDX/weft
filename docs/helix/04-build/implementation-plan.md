@@ -2673,3 +2673,23 @@ acceptance and case statuses remain unchanged. Runtime/Python bridge and actual
 host/source integration remain subsequent work. CONTRACT-012's planned-producer
 status and informational selection/batch wording are reconciled with this exact
 qualified evidence, retaining normative prerequisites and all host obligations.
+
+
+### Issued runtime/Python presence bridge — 2026-10-16
+
+CONTRACT-014 exposes the actual Core/PG presence path through separate optional
+runtime and frozen Python types, with actual original-object custody and no report
+constructor. Exact-string UTF8 bounds, old/new descriptor rejection, parent
+lifetime and feature independence have real native-wheel evidence. Independent
+review passes7runtime/4compile-fail tests,415/410/7/12 supplied wheel controls,
+314 adversarial controls on an independently rebuilt expanded-feature wheel,
+298 on the supplied combined wheel,8 intended Rust diagnostics and6525source
+custody checks. All eight merged files retain exact reviewed bytes.
+Evidence: `evidence/current-presence-bridge-20261016/`.
+
+Default Python feature selection, published0.4.36 pins, WASM and old consumers
+remain unchanged. Local macOS ARM dev wheels are not publication or platform-wide
+qualification. No native database execution, producer/source/caller/current-cut
+admission, closing guard or release is established by the bridge tests. Truss and
+Ashlar need separate native presence consumers over actual collector/guard seams;
+all original132 acceptance obligations remain open with zero case promotion.
