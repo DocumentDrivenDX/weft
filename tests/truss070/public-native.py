@@ -7,7 +7,7 @@ p=argparse.ArgumentParser();p.add_argument('--truss',type=pathlib.Path,required=
 sys.path.insert(0,str(a.truss/'packages/python/src'));sys.path.insert(0,str(a.truss/'packages/python/examples'))
 import weft
 import truss._query_runtime as query_runtime
-assert weft.__version__=="0.4.37"
+assert weft.__version__=="0.4.38"
 query_runtime.BACKEND=dict(query_runtime.BACKEND,backendVersion="0.4.40")
 query_runtime.compiler=lambda:weft.compile_truss_runtime_json
 from adopter_workflow import transaction,success
@@ -28,5 +28,5 @@ namespace={'__name__':'original_exporter_callback','__file__':str(source),'exerc
 exec(compile(raw.replace(needle,needle+'\n                exercise(runtime,person,admin,documents,identities,bundle_bytes)'),str(source),'exec'),namespace)
 namespace['run'](a.model,a.output/'original-export','/opt/homebrew/bin/bun')
 native=next(pathlib.Path(weft.__file__).parent.glob('*.so'));manifest=(a.truss/'packages/python/src/truss/_catalog_runtime/manifest.json').read_bytes();assert hashlib.sha256(manifest).hexdigest()=='0d292c3681986b3664ff3af9927039d10cf20ef029511e33ccd7d76c566041e3'
-report={'scope':'Actual public native70 acceptance/create/query over unchanged named original Core08 products; frozen unpublished Truss source plus explicit version37/backend40 constants. No current-policy/owned/aggregate-security acceptance.','checks':checks,'weftVersion':weft.__version__,'moduleSha256':hashlib.sha256(native.read_bytes()).hexdigest(),'exporterSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'runtimeManifestSha256':hashlib.sha256(manifest).hexdigest(),'cleanup':'Original LocalPostgres exporter context exited without cleanup error'}
+report={'scope':'Actual public native70 acceptance/create/query over unchanged named original Core08 products; frozen unpublished Truss source plus explicit version38/backend40 constants. No current-policy/owned/aggregate-security acceptance.','checks':checks,'weftVersion':weft.__version__,'moduleSha256':hashlib.sha256(native.read_bytes()).hexdigest(),'exporterSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'runtimeManifestSha256':hashlib.sha256(manifest).hexdigest(),'cleanup':'Original LocalPostgres exporter context exited without cleanup error'}
 (a.output/'receipt.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
