@@ -1,0 +1,14 @@
+{
+  "scope": "Synthetic validator inputs only; no five-wheel/native execution claim",
+  "controls": [
+    {
+      "name": "old20-checks-claimed20",
+      "status": "rejected"
+    },
+    {
+      "name": "old20-checks-claimed22",
+      "status": "rejected"
+    }
+  ],
+  "nativeAdmission": false
+}

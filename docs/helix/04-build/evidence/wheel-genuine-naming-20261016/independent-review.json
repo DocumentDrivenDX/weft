@@ -1,0 +1,204 @@
+{
+  "review": "Independent Astra Ultra review of the strict 22-case wheel naming gate follow-up",
+  "date": "2026-10-16",
+  "verdict": "No actionable findings in the frozen three-file release-gate change. Exact final script passes two pinned wheel artifacts locally, including the supplied CI ARM wheel; native execution, an actual22-case five-platform cohort and publication remain unqualified.",
+  "findings": [],
+  "remainingFindings": [],
+  "source": {
+    "zip": "/private/tmp/weft-wheel-naming-gate-20261016/review.zip",
+    "zipSha256": "b02e674fdf4cd90c5c11f2cfa10c41ed0c8c9da54d61e2a8e6dd3037a3b04147",
+    "base": "1ed81c11fa870d57ba21d4339132ff139b05641d",
+    "fileCount": 3,
+    "files": {
+      "tests/truss-decimal12/wheel-smoke.py": "fb3bcdb9182f4efb284be830821ea15714b1a0985cbc6851dc6ef708d2761f8f",
+      "scripts/release/verify-decimal12-smoke.py": "49ef7df6837a80065bf8a885ef8d37c50ae7772793c51ecb06a3c52d2eb278fb",
+      "scripts/release/test-decimal12-smoke-gate.py": "7ccd230f3f4d8e92ab64535faecdc5b4e2579f75e5f6b02291746e7790128717"
+    },
+    "baseRelativeDiff": "base-relative.diff",
+    "allSourceAndGitBaseInputHashesVerifiedBeforeAfter": true,
+    "sourceInputs": {
+      "tests/truss-decimal12/wheel-smoke.py": "fb3bcdb9182f4efb284be830821ea15714b1a0985cbc6851dc6ef708d2761f8f",
+      "scripts/release/verify-decimal12-smoke.py": "49ef7df6837a80065bf8a885ef8d37c50ae7772793c51ecb06a3c52d2eb278fb",
+      "scripts/release/test-decimal12-smoke-gate.py": "7ccd230f3f4d8e92ab64535faecdc5b4e2579f75e5f6b02291746e7790128717",
+      "tests/truss-query-abi/fixtures/native-query-bundle.json": "b3f0df1e2b1ba492f548e94364a1a08cafdba525a4d4e78f266f65c89a671c65",
+      "tests/truss-decimal12/fixtures/genuine-northwind-compile-request.json": "f2b9167a0a0df0f409b12f3aeb9e7403d0b389a3204dc1a1189bf654d7dd72e8",
+      "crates/weft-python/pyproject.toml": "20a78967e36f888d9632868c3f660d5c597dda24d0f1a6b26e98c51292db9d7c",
+      ".github/workflows/release.yml": "e96b5b7a3aef603dabc46510d1499e5e49e43f99c4f7ffcda445b321a8b0a1c8",
+      "AGENTS.md": "d10e315200c67f4a7380e06120ea679769afaa6ca6e7e0df339e35326effd02a",
+      ".helix.yml": "50c803bf828578d2d717246db0d75d16acb6c294867cce533e1073009cae010a",
+      "docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md": "9c3ce87175601a42650d87cf23a878af1cca1268449f08c0e18ae50e3f92a4de",
+      "docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md": "2740b7e666838d87189a2b971579b0e1bc33d821e97b920fbd64ffa0df10a59d"
+    },
+    "scope": "Only the existing Decimal wheel smoke, strict gate validator and validator tests change. No Rust/native/SDK version change."
+  },
+  "independentEvidence": {
+    "exactFrozenWheelScriptControls": 22,
+    "localWheelPlatforms": 1,
+    "syntheticJsonGateControls": 1136,
+    "syntheticWorkflowFilesystemControls": 24,
+    "smokeFileFailureControls": 4,
+    "suppliedGateTestsReexecuted": 15,
+    "allPassed": true,
+    "additionalGenuineArtifactInspection": "The same final two genuine smoke cases were separately captured to inspect request/artifact custody; not counted again as independent coverage.",
+    "nativeSqlExecutions": 0,
+    "rustRebuilds": 0,
+    "publishedArtifacts": 0,
+    "actualWheelArtifactsReplayed": 2,
+    "wheelReplayDetail": "The same22 controls pass on the original local candidate wheel and supplied CI ARM wheel; same platform and same scenarios, not44 independent coverage cases."
+  },
+  "conclusions": [
+    "Frozen smoke retains all original20 Decimal checks, adds the untouched Northwind .38 WFT-NAME-MISSING / .39 compiled pair, and checks each successful artifact carries its own exact request binding bytes. The derived-case custody assertion remains equivalent.",
+    "Exact count22 and exact ordered22 case IDs/statuses are required in every report. Old20 cohorts, old20 reports falsely claiming22, omitted/duplicated/renamed cases and changed expected outcomes refuse.",
+    "Five distinct baseline wheels and exact matching naming-report wheel set are required. Commit/version, full custody-pin equality and literal false nativeAdmission/securityReady values remain mandatory.",
+    "Composed with the unchanged base release workflow, actual archive filenames and wheel/native/shim hashes are checked before invoking the new validator. Independent synthetic controls reject missing/extra archives, missing/duplicate/extra/malformed reports, overwritten or misplaced report paths, relative/absolute wheel names and archive pin mismatches.",
+    "Actual smoke invocation refuses missing wheel files, directory-as-wheel, malformed archives and missing genuine fixture paths without emitting a success report.",
+    "Genuine source request bytes are read from the unchanged base fixture. Only explicit backend selection changes; exact original module JSON, binding JSON, model pins, binding digest and price token1.23 survive the new compiler result."
+  ],
+  "genuineCustody": {
+    "cases": 2,
+    "oldStatus": "blocked",
+    "oldCode": "WFT-NAME-MISSING",
+    "newStatus": "compiled",
+    "untouchedRequestFileSha256": "f2b9167a0a0df0f409b12f3aeb9e7403d0b389a3204dc1a1189bf654d7dd72e8",
+    "modules": [
+      {
+        "sha256": "e3063579431155a2b8d75398a0defc8ad1f9c1d3bc7f000f822ae30ada552983",
+        "revision": "e3063579431155a2b8d75398a0defc8ad1f9c1d3bc7f000f822ae30ada552983",
+        "documentId": "northwind-example",
+        "umfVersion": "0.7.0"
+      }
+    ],
+    "bindingJsonSha256": "183fca93da7388ed4bb5190ea9a70848a445e46f5d0c788cf0c3e3538d5bb7d0",
+    "onlyNewRequestChange": "target.backendVersion 0.4.38 -> 0.4.39",
+    "originalModuleAndBindingBytesPreserved": true,
+    "artifactModelPinsAndBindingDigestPreserved": true,
+    "parameterToken": "1.23",
+    "nativeModuleSha256": "7ed33a7ce423c1787073615c8985317846d3e4df817f13667c71a86b08ff261c",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "scope": "Supplemental exact-wheel compiler artifact inspection; same two genuine cases as22smoke, not additional independent coverage and no native SQL."
+  },
+  "wheelEvidence": {
+    "receipt": "wheel-execution.json",
+    "report": "independent-wheel-smoke.json",
+    "command": [
+      "/Users/erik/.local/bin/python3.11",
+      "-B",
+      "/private/tmp/weft-wheel-naming-gate-astra-20261016/replay/tests/truss-decimal12/wheel-smoke.py",
+      "--wheel",
+      "/private/tmp/weft-identity036-wheel-20261016/weft_sql-0.4.36-cp39-abi3-macosx_11_0_arm64.whl",
+      "--output",
+      "/private/tmp/weft-wheel-naming-gate-astra-20261016/independent-wheel-smoke.json"
+    ],
+    "exitCode": 0,
+    "pinsBefore": {
+      "wheel": "25613653fed7a6bbcbaee2c55f653307a96669eab3a64a9e683e204452411dbf",
+      "native": "7ed33a7ce423c1787073615c8985317846d3e4df817f13667c71a86b08ff261c",
+      "shim": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "pinsAfter": {
+      "wheel": "25613653fed7a6bbcbaee2c55f653307a96669eab3a64a9e683e204452411dbf",
+      "native": "7ed33a7ce423c1787073615c8985317846d3e4df817f13667c71a86b08ff261c",
+      "shim": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "sourceCommit": null,
+    "qualification": "One existing local macOS arm64 wheel, independently loaded/replayed with exact module/shim bytes. This is not CI source attestation or five-platform publication evidence."
+  },
+  "suppliedReceiptQualification": {
+    "path": "packet/observations/actual-wheel-smoke.json",
+    "sha256": "05b5ad8d63443b421ebec2a9e2dfe7a5deb760d112392cdd26d8395ace567a5b",
+    "reportedControls": 22,
+    "issue": "Its scope text equals the previous script docstring, while the final frozen script emits a different __doc__. It is therefore retained as supplied evidence, not attributed to execution of the exact final script bytes.",
+    "resolution": "Independent final-script replay records all22 passing with the final scope text and unchanged source/host hashes. This resolves the local component freshness gap without rewriting the supplied report."
+  },
+  "limits": [
+    "The 1,136 JSON and24 filesystem controls are synthetic, including dummy ZIP entries and an injected commit for exact workflow-preflight execution. They test failure behavior, not five real platform wheels.",
+    "The local actual-wheel report has sourceCommit:null because the replay is a standalone base+overlay export. It cannot satisfy the public five-wheel gate without fresh exact-commit CI reports.",
+    "The supplied build38848945807 reports4/30/32/20 checks with source1ed81c1 and matching actual wheel/native/shim bytes. Its original Decimal report remains a20-case report. Independent local expanded22 replay of that CI wheel does not retroactively upgrade the CI run to a22-case or five-platform final release0.4.36 cohort.",
+    "No native Truss/PostgreSQL execution, guarded-release acceptance, publication approval or UMF case/criterion promotion is granted. No R4/bounded runtime source was reviewed in this task.",
+    "Prior frozen static/compiler/naming reports remain unchanged; this report only closes the previously identified lack of naming checks in the wheel-smoke gate source."
+  ],
+  "artifactPins": {
+    "packet/source-pins.json": "340c677ac2eb8f3adaca8225dafca126e0d79c86b957ae79cf42bba20d1c2cc3",
+    "packet/observations/actual-wheel-smoke.json": "05b5ad8d63443b421ebec2a9e2dfe7a5deb760d112392cdd26d8395ace567a5b",
+    "reconstruction.json": "54ab9bed1e64e44e0fae1918718f33e2d6da10628bda3bd6532ee973fe0fdc62",
+    "base-relative.diff": "6b66aca3ddecbf6602e816f2ca64fb667a072b5ad07574813713944b23c328e2",
+    "run-wheel.py": "080257377ea6629ae580f2b4cc9b25493959173e9924aa57f46c2f63e2eb219e",
+    "wheel-execution.json": "d737d8845b1335d35f2386f75acd6531161d171ec798f06f4a2961e5ab500636",
+    "independent-wheel-smoke.json": "4bda47edc3ebba371fa75698c3a0b15ccd48b795a593793737925795bcba4538",
+    "wheel.stdout": "3385beeb6e0c2b3956ef44add6da0bd0cee6b1ae7d11b5dfc7bf43aabddbc11c",
+    "wheel.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capture-genuine.py": "3a3e1af7b0064e3399ffccbbad52f11eee7e239f13313f6685e514cb588633e5",
+    "genuine-custody.json": "5b0c77fdd13536ed8cc7452db0c229e30b6fdd0589804798603316e1edb8bc76",
+    "genuine-new-request.json": "a262328bf3be01492ccf1042fc12561695e9dbddf03a18a5b10590adfe6b1769",
+    "genuine-new-output.json": "7c89fd6e69cabe70cce547d2f00a1326e8f4c00abc5f1024fde98230451e3548",
+    "genuine-old-output.json": "95f1656dc04668e3c91c2f02617f6cbaa20351246079168c7b30e3b2d293945f",
+    "negative-smoke.py": "b9bac8481367cf47da6ec4f9cc148a92a32bc2a12cc81d34bb315cdfba7b5e15",
+    "smoke-negatives/results.json": "2f533a40ff04fab3150c49343c875e035861cf006c6c556bfd07edaf7b57ba5c",
+    "gate-controls/review.json": "7288dc7d48f7008da02c92d98b6a1a1aaf455eb903c1185cff1d530dfaf0884a",
+    "gate-controls/result.json": "6af6347b598df190bb3565bc8aace51930bece64b937bb32de18b0d11203c223",
+    "gate-controls/path-result.json": "fed67c4971dcc825ce73fa0e7bb61dcb44ee2574817b80d8ab1eb9b3730b36e1",
+    "pre-ci-supplement-review.json": "4675ae7a7733c1480305c7c445ba3d8e261b26928512d8b6a552d3b59a7fb3bf",
+    "audit-ci-wheel.py": "83dcfcbae26a0f205ab01260317c0c22ec3e2bcd851f6be82ec48be7ea30fae2",
+    "ci-supplement/weft_sql-0.4.36-cp39-abi3-macosx_11_0_arm64.whl": "42d25fe20a882fdfe1a804a8442110783ebd67b48d4168a110b890919c7883b0",
+    "ci-supplement/audit.json": "9a37add2b568d5226de5a2b508763e717187f2b043048cde22711c6d20207c4e",
+    "ci-supplement/current-query-smoke-aarch64-apple-darwin.json": "daae6e66352609eb6f7d9ba8e388e37361fc2b0b270f542a663f4b42ca10ec1a",
+    "ci-supplement/stdout": "3385beeb6e0c2b3956ef44add6da0bd0cee6b1ae7d11b5dfc7bf43aabddbc11c",
+    "ci-supplement/current-refinement-smoke-aarch64-apple-darwin.json": "b50272136875eb75c8cbaea76a85f90604ed62548f8b9686257cab3fe56392c2",
+    "ci-supplement/stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ci-supplement/current-databricks-smoke-aarch64-apple-darwin.json": "0ae610913046a48141fb1060179dc24773b6eabf9a2a3f36f4b938c1a6e1a686",
+    "ci-supplement/truss-decimal12-smoke-aarch64-apple-darwin.json": "0409579475e65d4072f7e664e331ee225df1696999d13279c12f6a96744e76f6",
+    "ci-supplement/verified-artifact.json": "81cd112313366b759b0662a08270b8a5574aa65b7d4f35cda9408bc317156ee6",
+    "ci-supplement/independent-expanded22.json": "0908bb13020ff5f16834ee2f4af9a5511d0277e02ad882f0fb8601f22a6c2950",
+    "ci-supplement/expanded22-local-smoke.json": "0908bb13020ff5f16834ee2f4af9a5511d0277e02ad882f0fb8601f22a6c2950"
+  },
+  "repositoryEdits": "None. Reconstruction, scripts, synthetic fixtures, replay evidence and report are confined to /private/tmp/weft-wheel-naming-gate-astra-20261016.",
+  "ciWheelSupplement": {
+    "scope": "Independently checked supplied build-only CI ARM wheel and four original reports; independently replayed final expanded22 script locally. Not a22caseCIcohort or publication/native qualification.",
+    "suppliedRunId": 38848945807,
+    "suppliedOriginalSourceCommit": "1ed81c11fa870d57ba21d4339132ff139b05641d",
+    "originalReportCounts": [
+      {
+        "file": "current-query-smoke-aarch64-apple-darwin.json",
+        "controls": 4,
+        "sha256": "daae6e66352609eb6f7d9ba8e388e37361fc2b0b270f542a663f4b42ca10ec1a"
+      },
+      {
+        "file": "current-refinement-smoke-aarch64-apple-darwin.json",
+        "controls": 30,
+        "sha256": "b50272136875eb75c8cbaea76a85f90604ed62548f8b9686257cab3fe56392c2"
+      },
+      {
+        "file": "current-databricks-smoke-aarch64-apple-darwin.json",
+        "controls": 32,
+        "sha256": "0ae610913046a48141fb1060179dc24773b6eabf9a2a3f36f4b938c1a6e1a686"
+      },
+      {
+        "file": "truss-decimal12-smoke-aarch64-apple-darwin.json",
+        "controls": 20,
+        "sha256": "0409579475e65d4072f7e664e331ee225df1696999d13279c12f6a96744e76f6"
+      }
+    ],
+    "pinsBeforeAfter": {
+      "wheelSha256": "42d25fe20a882fdfe1a804a8442110783ebd67b48d4168a110b890919c7883b0",
+      "nativeModuleSha256": "fd9f6a76b1c584ee4c49fbdb452cf9c1349918d417e3a4f303691c2a8d33f853",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "exactArchiveInstalledModuleAndShimMatch": true,
+    "command": [
+      "/Users/erik/.local/bin/python3.11",
+      "-B",
+      "/private/tmp/weft-wheel-naming-gate-astra-20261016/replay/tests/truss-decimal12/wheel-smoke.py",
+      "--wheel",
+      "/private/tmp/weft-wheel-naming-gate-astra-20261016/ci-supplement/weft_sql-0.4.36-cp39-abi3-macosx_11_0_arm64.whl",
+      "--output",
+      "/private/tmp/weft-wheel-naming-gate-astra-20261016/ci-supplement/independent-expanded22.json"
+    ],
+    "exitCode": 0,
+    "newLocalControls": 22,
+    "newLocalSourceCommit": null,
+    "newLocalReportMatchesSuppliedExpandedReport": true,
+    "frozenReviewInputHashesUnchanged": true,
+    "nativeSqlExecutions": 0,
+    "realWheelPlatforms": 1
+  }
+}

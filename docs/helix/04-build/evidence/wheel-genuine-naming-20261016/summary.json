@@ -1,0 +1,24 @@
+{
+  "scope": "Three Python-only publication coverage changes; no compiler/native permissions or SDK version changes",
+  "parentCommit": "1ed81c11fa870d57ba21d4339132ff139b05641d",
+  "closedChecks": 22,
+  "oldDecimalOnlyCohort": 20,
+  "actualArmCiCompilerSource": "1ed81c11fa870d57ba21d4339132ff139b05641d",
+  "ciRunId": 38848945807,
+  "localExpandedGateAgainstActualCiWheel": "passed22",
+  "syntheticOld20RefusalControls": 2,
+  "syntheticGateControls": 15,
+  "independentReview": {
+    "status": "no actionable findings",
+    "sha256": "84645d72f89ec3e1953ae5ecf155d25afaf86faa70bb1cfbe3f852206461ab78"
+  },
+  "nativeCasePromotions": 0,
+  "publicationQualified": false,
+  "previous20ControlCiCohort": {
+    "runId": 38848945807,
+    "source": "1ed81c11fa870d57ba21d4339132ff139b05641d",
+    "wheelJobsSucceeded": 5,
+    "publish": "skipped",
+    "doesNotQualifyNew22ControlMatrix": true
+  }
+}
