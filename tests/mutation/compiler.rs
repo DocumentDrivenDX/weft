@@ -56,3 +56,9 @@ fn original_local_preparation_compiles_without_crossing_native_producer() {
     crossed["actions"][0]["preparation"]["sha256"] = weft_core::json::sha256(bytes.as_bytes()).into();
     assert!(MutationRegistry::from_json(&crossed.to_string()).is_err());
 }
+
+#[test]
+fn prepared_owner_cohort_refuses_previous_local_producer() {
+ let old:Value=serde_json::from_str(include_str!("fixtures/local-products-input-previous-producer.json")).unwrap();
+ assert!(MutationRegistry::from_json(&old["configuration"].to_string()).is_err());
+}

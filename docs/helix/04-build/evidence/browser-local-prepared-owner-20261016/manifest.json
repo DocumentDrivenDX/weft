@@ -1,0 +1,78 @@
+{
+  "README.md": {
+    "bytes": 3821,
+    "sha256": "567df31cb846b1eda310b43f1c116fc6c0ed4b23aa0d2a3c9a105d338caaa1ff"
+  },
+  "canonical-wasm.zip": {
+    "bytes": 2427126,
+    "sha256": "2fb0a18a320460b701a75fff287a7f2ac64df2ffbd5b85bd308eb70b6284100f"
+  },
+  "receipt.json": {
+    "bytes": 142253,
+    "sha256": "d53581c0dfe57b1364ec2d20eb88d48ce4944ee3f0f67e2a167b17154bd01418"
+  },
+  "umf-prepared-identities-astra-20261016.json": {
+    "bytes": 8223,
+    "sha256": "24747c3fc96d0b4f26ff9ce32c17bc87001010b0bf43e1157c8eee082928696d"
+  },
+  "weft-browser-canonical-layout-tests-20261016.log.gz": {
+    "bytes": 2428,
+    "sha256": "f50e8b451a306c85199c09490d20db9c7f3b40e84ffacfcd48b6819003f4b675"
+  },
+  "weft-browser-canonical-owner-inputs-20261016.json": {
+    "bytes": 470034,
+    "sha256": "ff61299dda99cd33466ef7c3e5f2b82eeb94d2ea448b76505de4cae8836926db"
+  },
+  "weft-browser-canonical-owner-native-tests-20261016.log.gz": {
+    "bytes": 3239,
+    "sha256": "811a3d2e8cac5c81e4697dbb21e1266e02b67638ac94b9254c6d6198f2ffeaae"
+  },
+  "weft-browser-canonical-owner-source-20261016.json": {
+    "bytes": 1232,
+    "sha256": "900bcb6cf17a9a74dca01d514b1567ffbd54d2cf758affa54baeb45dc3a8350e"
+  },
+  "weft-browser-canonical-owner-wasm-build-20261016.log.gz": {
+    "bytes": 2870,
+    "sha256": "3595e29f17594d8c0ccc9024ab1e15214b6c28a87ea829d5f1fc766957e2172a"
+  },
+  "weft-browser-canonical-source-commit-20261016.json": {
+    "bytes": 1111,
+    "sha256": "afec8d598f2021c4e7cea42cd6dce3d90bc2784a0e39488518e6bc7a724dbbb3"
+  },
+  "weft-browser-layout02-pair-astra-20261016.json": {
+    "bytes": 3999,
+    "sha256": "d14e2f222280ae146679ae5b6c7cfe0374ac22b331c4393c1df39d592ed21767"
+  },
+  "weft-browser-main-boundaries-20261016.log.gz": {
+    "bytes": 67,
+    "sha256": "dc02466624afaa5fdeeeb03e57c4920b59bad09490a5a257e8702bdc50de1fee"
+  },
+  "weft-browser-main-boundary-tests-20261016-initial.log.gz": {
+    "bytes": 979,
+    "sha256": "e43edd941e719e940d2cd03e3f229ed7c76084164a21fdb5a3d5f1f6f3b4ea64"
+  },
+  "weft-browser-main-boundary-tests-20261016.log.gz": {
+    "bytes": 541,
+    "sha256": "2443d54cd5553b34ae6d2058938dc9e8a70005b158ebda89cf290a677b228eed"
+  },
+  "weft-browser-main-layout-tests-20261016.log.gz": {
+    "bytes": 2485,
+    "sha256": "fa2dd9de943f63d918c62efbdfd4efc8b821f682c413b84cd40745f393fffdf2"
+  },
+  "weft-browser-main-owner-native-tests-20261016.log.gz": {
+    "bytes": 3233,
+    "sha256": "fc93f5ef45ed51e60ed7cd21917b4c0bbb392a44f5d65ed3a973ecb901b2542f"
+  },
+  "weft-browser-main-python-boundaries-20261016.log.gz": {
+    "bytes": 288,
+    "sha256": "a6dbcd28ee4d38f22d82cfc8ddd5fb40ef710caa56c959968751fa6441ecd4c9"
+  },
+  "weft-browser-main-specs-20261016-initial.log.gz": {
+    "bytes": 179,
+    "sha256": "1f96fe6781739a6a5816d54f267e4d2ff0c6e6251e59f07090c8afa6539dbfa7"
+  },
+  "weft-browser-main-specs-20261016.log.gz": {
+    "bytes": 203,
+    "sha256": "a91fcf2c6eeb6328d9a473cc92eec7b4caf0f2e82145537b4fc50cbd1eaa542c"
+  }
+}

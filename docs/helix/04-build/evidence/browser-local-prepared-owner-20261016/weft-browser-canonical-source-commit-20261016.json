@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "ab94595f176cc67ed213843285dda4d401033959",
+  "ref": "refs/heads/codex/browser-layout02-prepared-c1",
+  "parent": "4f5b73df8b751b4291b84af3b59169c1a1b63ed0",
+  "tree": "cff0ca8ab0c4f0b7f9f469505f90779d4104867a",
+  "files": {
+    "crates/weft-postgresql/src/truss_browser_binding.rs": "4a0e7b6cc1b6165f0c7b086c2bf4ec3f0be99625aff576f66d33cbd8974013cc",
+    "spec/upstream/actions-plan-local/owner-pins.json": "1ceaac93fe251f5019e1b967796d46eda680b2a635e6ff60af38428d65b84905",
+    "tests/mutation/compiler.rs": "08baacc301fc02d7cb744d432621eff328071de11404c471e31cfba12f931002",
+    "tests/mutation/fixtures/local-products-input.json": "71a8dad6cdaaa53ffda89cdce8286ed51da2a3550956e8c8a99beae6f69750ee",
+    "tests/mutation/fixtures/local-products-input-previous-producer.json": "2a17a1dc0df402ff6ea4fe10c14314e5f928951a70294e32734d04746616de8e"
+  },
+  "sourceInputsManifestSha256": "ff61299dda99cd33466ef7c3e5f2b82eeb94d2ea448b76505de4cae8836926db",
+  "scope": "Canonical tested compatibility source; no main update or public browser/native/security qualification from this commit alone."
+}
