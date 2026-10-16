@@ -8,6 +8,9 @@ for(let n=3;n<=64;n++){const id='extra-'+n;module.elements.push({id,name:id,kind
 const utf8=JSON.stringify(model),sha256=new Bun.CryptoHasher('sha256').update(utf8).digest('hex');
 const artifact={mediaType:'application/json',utf8,sha256},pin={...fixture.request.modelPin,sha256},action={...fixture.request.action,documentSha256:sha256};
 const preparation=owner.prepareActionPlanModel(pin,action,{registry:owner.createUmfRegistry(),models:[{pin,artifact}],actions:[{pin:action,artifact}],selections:[]});
+const expectedOwner=await Bun.file(root+'/spec/upstream/actions-plan-local/owner-pins.json').json();
+const producer=JSON.parse(preparation.utf8).producer;
+if(!producer||Object.keys(producer).length!==3||!['id','version','build'].every(k=>producer[k]===expectedOwner.producer[k]))throw Error('Original pinned local preparation producer required before writing fixture');
 const value={scope:'Synthetic64-field mapping regression, original UMF public preparation output; not adopter execution or issued authority',configuration:{actions:[{pin:action,snapshot:artifact,preparation}],selectionBackends:[]},request:{...fixture.request,model:artifact,modelPin:pin,action}};
 await Bun.write(root+'/tests/mutation/fixtures/local-products-64-input.json',JSON.stringify(value,null,2)+'\n');
 console.log(JSON.stringify({model:sha256,preparation:preparation.sha256,producer:JSON.parse(preparation.utf8).producer}));
