@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "release": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.40",
+  "commit": "685691d3f7e2b9cd98285c74a56a6707a7b01cfd",
+  "wheel": "weft_sql-0.4.40-cp39-abi3-macosx_11_0_arm64.whl",
+  "sha256": "24d5514c779bd43fceafb6f89268f4fb4dc6a28b1332370fcaefd9f4c20b63cc",
+  "allFiveAssetDigestsMatchChecksums": true,
+  "allFivePackagingReportsMatch": true,
+  "dateBackend": {
+    "backendVersion": "0.4.41",
+    "targetProfile": "truss-runtime-pg18.6/0.5",
+    "bindingProfile": "truss-runtime-binding/0.5",
+    "queryAbi": {
+      "identity": "truss-postgresql-logical-query",
+      "version": "1.1",
+      "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+    },
+    "nativeAdmission": false
+  },
+  "temporalSdk": "HELD"
+}

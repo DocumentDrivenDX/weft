@@ -1,0 +1,28 @@
+{
+  "conformance": {
+    "run": 38965346243,
+    "reviewedSource": "6a6b80e49dc9ba5bcf87b55a541e2dff0db109a6",
+    "compilerAndEvidence": "success",
+    "graphRequirementsCandidate": "success"
+  },
+  "publication": {
+    "run": 38972345011,
+    "tag": "v0.4.40",
+    "source": "685691d3f7e2b9cd98285c74a56a6707a7b01cfd",
+    "allFiveWheels": "success",
+    "publisher": "success",
+    "reviewedAndPublishedTree": "01811900635b26dc0f6037c26d193d5a9e27d3b5"
+  },
+  "consumerEvidence": {
+    "truss": "14 actual native controls, public ARM wheel with frozen clean2695a512 source, RC backend039/ABI1.0; original owner packet",
+    "ashlar": "17 actual Spark4/Delta4/PG18 controls, public ARM wheel with frozenbf29f191 source; original owner packet",
+    "managed": "complete original engine-page/generated context recompiles identically; prior11 native controls retain original source/run scope, no new native managed claim"
+  },
+  "temporalSdk": "HELD",
+  "nativeAdmission": false,
+  "limits": [
+    "No complete SDK acceptance or protected action/manifest qualification",
+    "Compiler Date ABI1.1 and its gates do not promote SDK temporal support",
+    "Truss ordinary Date/default adoption requires its own fresh native composition"
+  ]
+}
