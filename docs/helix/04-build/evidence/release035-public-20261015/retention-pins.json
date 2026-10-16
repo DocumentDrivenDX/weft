@@ -1,0 +1,17 @@
+{
+  "README.md": "bbd15f6691f9d28aed4d9720c13bfaeb969adb7a7babc41e6b4390dd8d4d392c",
+  "SHA256SUMS": "7d2951fb7982d6be8b06be0084a9a5d2e5812d821502d24caa7b87033da316c7",
+  "build-only-jobs.json": "39074fee03b05b61a0fb33ce5f43e43d71a13c37e69da128a51cb47db470cd6c",
+  "build-only-run.json": "e7bf15352551f93b84410ca9666745d463e8c8acbffbb7b7db465e7897cfe1c3",
+  "github-release.json": "9c6262730db175c79ab18dbd39c0b612cd643d0e426f4fe93dd5de36bc40c484",
+  "public-databricks-checker.json": "fba3a0ef03e24921b0f2236ba740b6326cab6e8fdbb29ae722afb3777d17a6fc",
+  "public-postgresql-checker.json": "af5d4382b60e34111561dbf9580356cd03f66c4f98c1b5134a328605a81e634d",
+  "public-query-abi.json": "fb4988e8440b5ddfee8f9914b365da61ea3bfb0d8405ffe2a2abdd9cfa125067",
+  "public-refinement-smoke.json": "29b8c4c29a4f8a85f3ba36349123d20313953d54f8755e2c201fa9864e35d482",
+  "public-retained-consumer-refusal.json": "4b6890c0ab17a6361dd6cabcd461ee2678af687d4bef09c2f1b60ed38459d58a",
+  "release-pins.json": "b4503afc619294f292fe4ea56dbe33075a3b3d69607cd60975d51b9793a73cfc",
+  "verified-public.json": "678be1107fb874e9d61ef91b0cf4d4bf1596589335120416b20c304d2397cf82",
+  "verify-public.py": "2cf0c96f65bfe6b6621e2f2f5c23781f8dd2208583b6023ebd76e8bc7c49ea83",
+  "workflow-jobs.json": "85fbe12715a36f82266b2e18ab3dac1d2acd1392ee2285978370ea739e7c76d6",
+  "workflow-run.json": "1deeda1685495bf8df3d3278365dc133242a789343a8f58fa0ff04c9573adec2"
+}

@@ -1,0 +1,288 @@
+{
+  "serverStopped": true,
+  "leaseReleased": true,
+  "runtimeDirectoryRemoved": true,
+  "scope": "Fresh native SQL/checker correspondence with synthetic stage premises.\nNo caller/source authorization, native admission or guarded release claim.\n",
+  "weftVersion": "0.4.35",
+  "wheelSha256": "7b8e37c34cf157bf399bda7b430b4891d7a0b37d87db16979ade0355e0b0d79d",
+  "nativeModuleSha256": "b3467b40a3b80a33b71f7400cdf513cb064c82bf64cd91c239afa41cbb204e4f",
+  "runnerSha256": "015d39d6d2b427542ff78285912a1e7d05230d6998802ab10624ee3a07d90f55",
+  "originalOracleSourcePins": {
+    "rows": "cd3d5e31080d7bcbe78bd091fe6de8240cd0dd45cf42da4e72b9718b9e23314c",
+    "contributors": "96617476fe0b06242d596ed7d3dd1b47d1cfb80aa314320b9793ad1a2d77b6d0",
+    "sum": "bec61c0458034f7279cc40131ad499452701ac9bf8394d1078dfc441e47d1697"
+  },
+  "serverVersionNum": "180006",
+  "checks": [
+    {
+      "id": "rows/mixed",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "rows/mixed/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "rows/selfjoin",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "rows/selfjoin/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "rows/two-masked-cells",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "rows/two-masked-cells/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "rows/false",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "rows/limit-zero",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "rows/asc",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "rows/asc/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "rows/named",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "rows/named/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "rows/quoted-data",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/count",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/count/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/distinct",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/distinct/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/joined-count",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/joined-count/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/joined-distinct",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/joined-distinct/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/group",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/group/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/joined-group",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/joined-group/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/hidden-group",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/hidden-group/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/empty-global-count",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/empty-global-count/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/empty-global-distinct",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/empty-global-distinct/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/empty-group",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/original-predicate",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/original-predicate/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/zero-limit",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/direct-singletons",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/direct-singletons/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/named-count",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/named-count/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/parameter-data",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/parameter-data/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/two-hidden-group-fields",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/two-hidden-group-fields/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "contributors/integer-distinct",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "contributors/integer-distinct/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/exact-total",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/exact-total/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/beyond-positive-int64",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/beyond-positive-int64/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/beyond-negative-int64",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/beyond-negative-int64/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/empty-null",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/empty-null/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/empty-null-with-count",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/empty-null-with-count/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/empty-group",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/zero-limit",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/grouped",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/grouped/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/joined",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/joined/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/same-public-sum-distinct-bags",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/same-public-sum-distinct-bags/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/sum-and-distinct",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/sum-and-distinct/wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum/count-capability-context",
+      "originalOracleAndCheckerMatch": true
+    },
+    {
+      "id": "sum/count-capability-context/wrong-public",
+      "refused": true
+    }
+  ],
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": []
+}

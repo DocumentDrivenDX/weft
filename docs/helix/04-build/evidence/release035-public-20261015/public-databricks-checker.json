@@ -1,0 +1,934 @@
+{
+  "inputPinsBeforeAfter": {
+    "/private/tmp/weft-current-databricks-native-20261015/receipt.json": "0c0928d10e3ccab9ebbab46159aaa9964d2fb3f3c5c88c4203488b7601dfce0f",
+    "/private/tmp/weft-current-databricks-native-20261015/statements.json": "10279a59a67bb52410aab00eab793661ce6ec5e73f65349d80b6a4465eef4684",
+    "/private/tmp/weft-refinement-20261015/tests/current-scalar-databricks/native.py": "1969c1cda8bc9b46430cf4ea2960122e32e5404e1392cdd0af2e0ae28043df95",
+    "/private/tmp/weft-refinement-20261015/tests/current-query-designation/fixtures/mixed-original-uses.request.json": "192614d9e7b0dee56364299a9d7cfee0d72b0a7c8778b91640da818cb8ef8ad4",
+    "/private/tmp/weft-refinement-20261015/tests/current-query-designation/fixtures/live-original-integer-sum.request.json": "fc8ed1aaa049f16a3accc983b09118711bd70aead974f247d72a02df6f2e6855"
+  },
+  "scope": "Actual installed candidate CQP checker over retained managed results and independently captured original fixture populations. Offline correspondence only; no fresh native execution, completeness/authority admission or guarded release.",
+  "version": "0.4.35",
+  "wheelSha256": "7b8e37c34cf157bf399bda7b430b4891d7a0b37d87db16979ade0355e0b0d79d",
+  "nativeModuleSha256": "b3467b40a3b80a33b71f7400cdf513cb064c82bf64cd91c239afa41cbb204e4f",
+  "runnerSha256": "23c3474864f81e53309f9959a9ac5e5d612c74e2f5aebeedf00c6bdd65924f98",
+  "checks": [
+    {
+      "id": "count",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "count-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "count-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "count-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "count-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "count-declared-count",
+      "refused": true
+    },
+    {
+      "id": "count-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "count-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "count-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "count-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "exact-input-string-0",
+      "refused": true
+    },
+    {
+      "id": "exact-binding-string-0",
+      "refused": true
+    },
+    {
+      "id": "exact-input-string-1",
+      "refused": true
+    },
+    {
+      "id": "exact-binding-string-1",
+      "refused": true
+    },
+    {
+      "id": "exact-input-string-2",
+      "refused": true
+    },
+    {
+      "id": "exact-binding-string-2",
+      "refused": true
+    },
+    {
+      "id": "exact-input-string-3",
+      "refused": true
+    },
+    {
+      "id": "exact-binding-string-3",
+      "refused": true
+    },
+    {
+      "id": "exact-input-string-4",
+      "refused": true
+    },
+    {
+      "id": "exact-binding-string-4",
+      "refused": true
+    },
+    {
+      "id": "consistent-forged-world-conditional-only",
+      "authority": false
+    },
+    {
+      "id": "distinct",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "distinct-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "distinct-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "distinct-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "distinct-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "distinct-declared-count",
+      "refused": true
+    },
+    {
+      "id": "distinct-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "distinct-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "distinct-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "distinct-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "integer-distinct-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-declared-count",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "integer-distinct-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "group",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "group-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "group-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "group-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "group-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "group-declared-count",
+      "refused": true
+    },
+    {
+      "id": "group-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "group-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "group-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "group-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "hidden-group",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "hidden-group-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-declared-count",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "hidden-group-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "joined-count",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "joined-count-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-count-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-count-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-count-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-count-declared-count",
+      "refused": true
+    },
+    {
+      "id": "joined-count-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "joined-count-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "joined-count-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "joined-count-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "joined-distinct-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-declared-count",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "joined-distinct-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "actual-native-same-public-count-wrong-contributor",
+      "refused": true
+    },
+    {
+      "id": "empty-count",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "empty-count-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-count-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-count-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-count-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-count-declared-count",
+      "refused": true
+    },
+    {
+      "id": "empty-count-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "empty-count-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "empty-count-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "empty-count-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "empty-distinct-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-declared-count",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "empty-distinct-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "empty-group",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "empty-group-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-group-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-group-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-group-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "empty-group-declared-count",
+      "refused": true
+    },
+    {
+      "id": "empty-group-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "empty-group-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "empty-group-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "limit-zero",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "limit-zero-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "limit-zero-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "limit-zero-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "limit-zero-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "limit-zero-declared-count",
+      "refused": true
+    },
+    {
+      "id": "limit-zero-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "limit-zero-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "limit-zero-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "masked-raw-parameter-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-declared-count",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "masked-raw-parameter-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "parameter-is-data-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-declared-count",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "parameter-is-data-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-total",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-total-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-total-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-total-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-total-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-total-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-total-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-total-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-total-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-total-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-positive-int64-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-beyond-negative-int64-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-empty-null-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-null-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-empty-group-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-empty-group-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-group",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-group-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-group-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-group-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-group-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-group-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-group-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-group-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-group-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-group-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-join",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-join-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-join-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-join-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-join-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-join-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-join-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-join-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-join-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-join-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags-wrong-public",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct",
+      "matchedRetainedManagedResult": true
+    },
+    {
+      "id": "sum-with-distinct-sourceRequestSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-designationSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-materializationBindingSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-compiledArtifactSha256",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-declared-count",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-unknown-cell",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-duplicate-json",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-binding-byte-anchor",
+      "refused": true
+    },
+    {
+      "id": "sum-with-distinct-wrong-public",
+      "refused": true
+    }
+  ],
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": []
+}

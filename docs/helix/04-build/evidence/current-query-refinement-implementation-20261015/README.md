@@ -5,8 +5,9 @@ five actual-CQP backend/Python methods. The proposed standard 0.4.35 distributio
 explicitly enables that feature. Calling a named checker compares supplied
 complete cells/results conditionally; it grants no native permission or protected
 consumer admission. Original source/caller/current authority, factual completeness,
-retention and guarded release remain native-host duties. All original 132 B-008
-shared/native cases remain open; no case is promoted by this evidence.
+retention and guarded release remain native-host duties. All 132 original B-008
+shared/native requirements remain required, and prior case acceptances remain
+accepted. This increment promotes zero native cases.
 
 ## Independent frozen-body review
 

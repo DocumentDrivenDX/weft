@@ -2552,3 +2552,25 @@ release CI only; it grants no native authority or132-case completion.
 ### Query ABI example packaging correction — 2026-10-15
 
 The new `compile_truss_query_abi` example now declares its existing PG18 feature requirement. This fixes default example compilation without changing compiler or security semantics. Owner default and explicit-feature checks pass; independent Astra static review found no blocking packaging issue. Original failure, exact delta, reviews, and successful logs are retained in [the packaging packet](evidence/query-abi-example-feature-guard-20261015/README.md). Fresh five-platform build-only CI is pending; no native acceptance case is promoted.
+
+Status clarification: all132 original B-008 requirements remain required; prior
+accepted cases remain accepted. This conditional checker, query ABI and packaging
+increment promotes zero native cases. Broader native acceptance is still incomplete.
+
+### Published candidate 0.4.35 — 2026-10-15
+
+Tag v0.4.35 selects ff3695af5ece9d386b3dcbf266cf23d632997733. Build-only
+run38837705038 and normal tagged run38839037643 pass all five platform jobs;
+the tagged publication gate also passes. All22 official asset digests and every
+embedded source/version/wheel/native/shim smoke anchor are verified. The actual
+public ARM wheel passes67 fresh PostgreSQL checker controls with cleanup,229
+retained managed-Databricks correspondence controls,30 API and17 query ABI
+controls; the unchanged old consumer rejects it through three entrypoints.
+Official wheel cohorts were handed to Truss and Ashlar for explicit integration.
+
+[Public artifact evidence](evidence/release035-public-20261015/README.md) separates
+these published bytes from local prototypes. Ashlar main d7167a20 has opt-in live
+checker/guarded host sequencing integration; its evidence uses an inert backend,
+not genuine managed capture or authority. Existing native case acceptances stay
+accepted; all132 original requirements remain required and this increment
+promotes zero native cases. Broader B-008 native enforcement remains incomplete.
