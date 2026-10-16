@@ -1143,6 +1143,20 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/current_presence.rs",
+          "publicDeclarations": [
+            "struct:CurrentPresencePreparation",
+            "fn:preparation",
+            "fn:json",
+            "fn:primary_action",
+            "fn:binding_scope",
+            "fn:producer_protocol",
+            "fn:native_request_json",
+            "fn:prepare"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/current_query_designation.rs",
           "publicDeclarations": [
             "struct:SourceIdentity",
@@ -1310,6 +1324,7 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:current_presence",
             "mod:current_string_domain",
             "mod:current_query_operands",
             "mod:current_query_designation",

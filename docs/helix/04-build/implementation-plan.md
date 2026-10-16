@@ -2619,3 +2619,16 @@ retained. Final source passes352 enabled and328 disabled Core tests, with
 frozen public0.4.36 source. Full original132 scope remains required; no native
 case is promoted. SQL/result protocols, owner-fold provenance, bridge selection,
 authenticated native authority and guarded enforcement remain unfinished.
+
+
+### Separate current-presence context — 2026-10-16
+
+CONTRACT-012 adds an optional Core-only borrowed presence context with exact
+source/profile/model pins and an explicit atomic UMF disclosure-batch producer
+requirement. Existing current-query APIs retain their old types and refuse this
+context. Independent review found no actionable issue across114 Rust scenarios,
+134 assertions,106 schema controls,19 old/new API type boundaries and3 compile-fail
+doctests. Evidence and merged-source verification:
+`evidence/current-presence-context-20261016/`. This is source/type correspondence,
+not producer invocation, SQL/result ABI or authenticated native enforcement.
+All original132 B-008 cases remain required; zero cases are promoted.

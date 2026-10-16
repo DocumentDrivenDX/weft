@@ -1,0 +1,71 @@
+{
+  "baseCommit": "cc2e96a4fff38626cc4658cbd57ea9153d007226",
+  "files": [
+    {
+      "path": "crates/weft-core/Cargo.toml",
+      "sha256": "ce7d0146d149537ab7e410572db29c364df6e4e77cd227c9672cc065b87b2fca",
+      "reviewedSha256": "ce7d0146d149537ab7e410572db29c364df6e4e77cd227c9672cc065b87b2fca",
+      "exactReviewedBytes": true
+    },
+    {
+      "path": "crates/weft-core/src/lib.rs",
+      "sha256": "812aae497b36cd187e8310f267ae6d5a81061e6e7e7d9e0024cad4ed1cf9ac43",
+      "reviewedSha256": "fd484f477d5ba8efbd668ee8878d58bb022d464711331d56b898d8c722afb1b6",
+      "exactReviewedBytes": false
+    },
+    {
+      "path": "crates/weft-core/src/current_query_designation.rs",
+      "sha256": "3aed3a7bf4c14e506b26a3b6c6e1d901ce91eacb6e0765a441fbbe24c1860300",
+      "reviewedSha256": "3aed3a7bf4c14e506b26a3b6c6e1d901ce91eacb6e0765a441fbbe24c1860300",
+      "exactReviewedBytes": true
+    },
+    {
+      "path": "crates/weft-core/src/current_presence.rs",
+      "sha256": "7ae6162bfc600e1106f02602cf95e98c7dc177064204d2dee07916a15caed073",
+      "reviewedSha256": "7ae6162bfc600e1106f02602cf95e98c7dc177064204d2dee07916a15caed073",
+      "exactReviewedBytes": true
+    },
+    {
+      "path": "docs/helix/02-design/module-boundaries.json",
+      "sha256": "90f7516cafb6b29590887fb56b16dc842cf25a4f973f493aef2894473a02fb16",
+      "reviewedSha256": "700adbdf27c93a5cc6cd57485d200f57176c185ddc73278ab3558d6761cc4502",
+      "exactReviewedBytes": false
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-012-current-presence-context.md",
+      "sha256": "8931a52cea2913a25e3c6294c23611b1309a5e828bfd66a4761106c370664f7c",
+      "reviewedSha256": "8931a52cea2913a25e3c6294c23611b1309a5e828bfd66a4761106c370664f7c",
+      "exactReviewedBytes": true
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-profile-v0.1-candidate.schema.json",
+      "sha256": "e69f48a67c854ba98709ce5549d71cb0248b04643b892979ba783f82891c13b0",
+      "reviewedSha256": "e69f48a67c854ba98709ce5549d71cb0248b04643b892979ba783f82891c13b0",
+      "exactReviewedBytes": true
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-preparation-v0.1-candidate.schema.json",
+      "sha256": "60e5cf2be232d239136cd764d57cd3e4908813b5a9c49d0faf1f52b277e51139",
+      "reviewedSha256": "60e5cf2be232d239136cd764d57cd3e4908813b5a9c49d0faf1f52b277e51139",
+      "exactReviewedBytes": true
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-native-input-v0.1-candidate.schema.json",
+      "sha256": "f53836398a7880895220cdd64763e7774a4fffa9f644662e9fd8121d01f8de89",
+      "reviewedSha256": "f53836398a7880895220cdd64763e7774a4fffa9f644662e9fd8121d01f8de89",
+      "exactReviewedBytes": true
+    },
+    {
+      "path": "tests/current-query-presence/check-type-boundaries.py",
+      "sha256": "cff75734473bd6059e3a2a37579fd4408653f4da770544546b5f22c34509949c",
+      "reviewedSha256": "cff75734473bd6059e3a2a37579fd4408653f4da770544546b5f22c34509949c",
+      "exactReviewedBytes": true
+    }
+  ],
+  "otherPackageInventoriesUnchanged": true,
+  "reviewArchiveVerified": true,
+  "artifactSha256": {
+    "independent-review.zip": "5dcb18ad2145ee090a7ee6d6bb88dca59043bece0c07e8b3745d542a38d6102e",
+    "source-review-packet.zip": "cf9cc96908e9c0cc76504e9cac12aaf54be7c423b023da0200222b9d2748a12e"
+  }
+}

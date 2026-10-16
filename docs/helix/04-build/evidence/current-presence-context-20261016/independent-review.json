@@ -1,0 +1,151 @@
+{
+  "version": "independent-component-review/1",
+  "status": "complete",
+  "verdict": "No actionable source finding in the frozen Core-only CurrentPresencePreparation R1. Source data/type/feature boundaries pass the independent controls below. No invocation, SQL/native, result ABI, Python/WASM or release acceptance.",
+  "sourcePacket": {
+    "path": "/private/tmp/weft-presence-context-r1-review-20261016.zip",
+    "sha256": "cf9cc96908e9c0cc76504e9cac12aaf54be7c423b023da0200222b9d2748a12e"
+  },
+  "baseCommit": "4fb4de6af3374455a4605ac509e1e413be8ad023",
+  "reviewedSourceFiles": [
+    {
+      "path": "crates/weft-core/Cargo.toml",
+      "sha256": "ce7d0146d149537ab7e410572db29c364df6e4e77cd227c9672cc065b87b2fca",
+      "baselineSha256": "fcf611087c8ff18e1f72a92e1a0f2adc55affecb5fe47557d06ed2599a41e09a"
+    },
+    {
+      "path": "crates/weft-core/src/lib.rs",
+      "sha256": "fd484f477d5ba8efbd668ee8878d58bb022d464711331d56b898d8c722afb1b6",
+      "baselineSha256": "42b6a13ee307a0b1486c3c826683f2b064a8b007a6bc47bdb91319b2a99444e5"
+    },
+    {
+      "path": "crates/weft-core/src/current_query_designation.rs",
+      "sha256": "3aed3a7bf4c14e506b26a3b6c6e1d901ce91eacb6e0765a441fbbe24c1860300",
+      "baselineSha256": "450e92956b868ae4c74fb7ca92f4ad4f3e3bf74e6d3b5b6f3e0668903f8e383b"
+    },
+    {
+      "path": "crates/weft-core/src/current_presence.rs",
+      "sha256": "7ae6162bfc600e1106f02602cf95e98c7dc177064204d2dee07916a15caed073",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/module-boundaries.json",
+      "sha256": "700adbdf27c93a5cc6cd57485d200f57176c185ddc73278ab3558d6761cc4502",
+      "baselineSha256": "1a340674e0dfafa9af37b29ef73883f103d6142768392b3987b2c7fffd3d6e3c"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-012-current-presence-context.md",
+      "sha256": "8931a52cea2913a25e3c6294c23611b1309a5e828bfd66a4761106c370664f7c",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-profile-v0.1-candidate.schema.json",
+      "sha256": "e69f48a67c854ba98709ce5549d71cb0248b04643b892979ba783f82891c13b0",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-preparation-v0.1-candidate.schema.json",
+      "sha256": "60e5cf2be232d239136cd764d57cd3e4908813b5a9c49d0faf1f52b277e51139",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-native-input-v0.1-candidate.schema.json",
+      "sha256": "f53836398a7880895220cdd64763e7774a4fffa9f644662e9fd8121d01f8de89",
+      "baselineSha256": null
+    },
+    {
+      "path": "tests/current-query-presence/check-type-boundaries.py",
+      "sha256": "cff75734473bd6059e3a2a37579fd4408653f4da770544546b5f22c34509949c",
+      "baselineSha256": null
+    }
+  ],
+  "reconstruction": {
+    "root": "/private/tmp/weft-current-presence-context-astra-20261016/reconstructed",
+    "selectedSourceInputs": 1206,
+    "sourceManifest": "source-custody.json",
+    "allTenOverlayAndBasePinsMatched": true,
+    "allSelectedSourcesUnchangedAfterReviewRuns": true,
+    "ownerCheckoutModified": false,
+    "externalClosureHermetic": false
+  },
+  "findings": [],
+  "independentlyExecuted": [
+    {
+      "runtime": "Rust1.90.0 actual public Core methods",
+      "scenarios": 106,
+      "checks": 122,
+      "receipt": "controls.json",
+      "details": "Original parent/context/hash/native-request correspondence; exact source pins, role count/uniqueness, media types, profile versions/unknown members/capabilities, wrong producer, targets/model pins, old parents and forbidden .4 syntax, ontology read-purpose checks, UTF8/NUL identities and binding text endpoints. Unrelated opaque and intentionally uninterpreted policy/binding bodies retain explicit source-only qualification."
+    },
+    {
+      "runtime": "Rust1.90.0 actual public Core methods",
+      "scenarios": 8,
+      "checks": 12,
+      "receipt": "boundary-controls.json",
+      "details": "256 direct projections pass with exact retained read requirements;257 refuses.16 opaque sources pass;17 refuses. Exactly4,000,000 original request UTF8 bytes, including trailing whitespace, pass and retain byte hash;4,000,001 refuses.4096-byte profile identity passes and4097 refuses."
+    },
+    {
+      "runtime": "Bun1.4.2 / Ajv8.20.0 against frozen JSON schemas",
+      "checks": 106,
+      "receipt": "schema-controls.json",
+      "details": "Every emitted prepared report/native input/source profile validates. Missing required fields, unknown nested fields, authority/securityReady true, nativeAdmission accepted, missing unresolved obligations and unknown versions reject. This is schema data consistency, not typed-object issuance."
+    },
+    {
+      "runtime": "Rust1.90.0 compiler, actual old PG/DBX/Spark APIs",
+      "cohorts": 4,
+      "receipt": "type-probe/receipt.json",
+      "details": "All19 old-type API calls compile; all19 new-context calls fail specifically E0308 naming CurrentQueryOperands/CurrentPresencePreparation. Feature-off and tag-only imports fail E0432. No API is invoked or SQL executed."
+    },
+    {
+      "runtime": "Rust1.90.0 rustdoc",
+      "checks": 3,
+      "log": "doctests.log",
+      "details": "Deserializing issued context, returning it as old context and outliving borrowed parent each fail to compile as required."
+    }
+  ],
+  "analysis": [
+    "The only existing-code changes add the explicit Core feature/module, expose the existing bounded writer as crate-private and add a feature-gated wrapper around the unchanged bounded ontology action-purpose parser. Existing old designation allowlist still accepts only its original .2/.3 typed IR parents; actual .4 parents refuse. No PG/DBX/Spark/Python/WASM/runtime implementation is changed by this ten-file packet.",
+    "CurrentPresencePreparation has private fields, no Deserialize/public data constructor and a real shared borrow of the original immutable ApplicationLineage. Public accessors return immutable original context/data; JSON and native-request JSON are reports, not importable issued objects. Compile-time rejection and lifetime controls establish the scoped safe-Rust boundary.",
+    "Preparation requires exact .4 parent IR, tagged capability and original core0.8 pins. It selects presence-designation/native-binding and the four policy/ontology/catalog/owner roles exactly once; profile/source byte hashes, identities, targets, model-pin ordering, capabilities and producer contract are checked without fallback. Unrelated opaque sources remain in original request bytes.",
+    "Parent ApplicationLineage already validates all opaque identity fields as nonempty, NUL-free and at most4096 UTF8 bytes before new context code compares their pins. Independent multibyte and NUL controls confirm that the new profile cannot bypass those original checks. JSON Schema character maxLength is only one layer; Rust byte checks remain authoritative for the stated byte-bound fields.",
+    "The native-binding body is intentionally only JSON object data with exact pin correspondence. Policy/catalog/owner bodies remain opaque and unresolved in this context; independently admitted controls containing an uninterpreted policy or empty policy do not establish grants. Ontology action purpose is a declared read-purpose check, not read authorization. The optional Token fixture does not itself grant Token disclosure.",
+    "Source/request/profile/lineage/preparation hashes preserve exact source correspondence. The report explicitly fixes authority:false, securityReady:false, nativeAdmission:required and unresolved obligations. Native input retains all report fields with a distinct version, exact preparation hash and full original sourceRequestJson. No caller/cut, cells, selected per-row occurrence or invocation is supplied.",
+    "The shared writer checks the byte budget before extending its output and refuses on serialization failure. Both new outputs use16,000,000 UTF8 bytes; parent request parsing has existing4,000,000-byte, depth/node,16-source and256-projection bounds. Actual boundary checks cover parent/identity/collection limits; the16 MB output exhaustion branch is supported by source analysis, not an independently driven maximum-output campaign. These are bounded data operations, not a process-memory proof.",
+    "The report schemas are closed data schemas. They do not constitute source authentication, whole-source UMF admission, an actual atomic producer invocation or backend/result permission. The exact producer protocol and WithinOperation entrypoint refer to the atomic batch; earlier selection-only output cannot satisfy that declared contract."
+  ],
+  "evidenceQualification": {
+    "suppliedOnly": [
+      "Owner355 enabled Core tests /328 default Core tests,3 compile-fail doctests,71 artifacts/92 schemas and11-package/16-test module boundaries are preserved as supplied source-packet evidence. Only reviewer executions explicitly listed above were independently reproduced.",
+      "Owner initial missing-fixture setup failures, earlier selector-protocol prototype, initial contract-ID/spec failure and final corrected logs are retained, without crediting earlier attempts to final source."
+    ],
+    "scope": [
+      "No native database replay, SQL lowering, runtime/published wheel/browser class registration, result ABI allocation, backend binding admission or production release.",
+      "No full B-008/native acceptance or original132 required-case promotion. UMF158-case fourth gate is a separate pending owner campaign and is not credited by this report.",
+      "Frozen current-presence producer declaration is data only. Even separately reviewed UMF producer source does not by itself qualify authenticated native caller/source/current-cut custody or guarded release."
+    ]
+  },
+  "editorialNotes": [
+    {
+      "severity": "informational",
+      "file": "docs/helix/02-design/contracts/CONTRACT-012-current-presence-context.md",
+      "note": "Purpose uses the older phrase canonical disclosure-selection producer, while the normative scope, exact protocol/entrypoint, code and schemas consistently require atomic rendered batch. Updating that short wording would improve consistency; no conflicting executable routing or authority claim was found."
+    }
+  ],
+  "reviewerHarnessFailures": [
+    {
+      "log": "first-build-missing-rustc.log",
+      "meaning": "Initial explicit cargo invocation lacked rustc on PATH; no implementation compiled. Corrected with the explicit pinned Rust toolchain."
+    },
+    {
+      "log": "second-build-missing-upstream-spec-root.log",
+      "meaning": "Initial reconstructed roots omitted existing base spec resources. Restored the exact Git base spec root, added its pins, then compiled successfully. No owner or frozen source changes."
+    }
+  ],
+  "probe": {
+    "sourceSha256": "9ea8f42fda9ba5fe59f4c60f9a77edfcc1d8bf36272f07ca901b3557a1fdc9a9",
+    "cargoManifestSha256": "181fdfd7e0fc35fe96f3499005895939fc22063203d61f339fae456c4b661e5f",
+    "cargoLockSha256": "241a3838abcc182fd1f8f9ba040695acb35a093d3351e4688288b3215f6ff148",
+    "binarySha256": "d84d48c8e437a99d97c44b4013c43e07eae149fba6c26161f2ecbc89cdf0b758",
+    "buildLog": "probe-build.log"
+  }
+}
