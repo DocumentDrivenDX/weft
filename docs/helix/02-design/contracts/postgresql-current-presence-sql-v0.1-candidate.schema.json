@@ -1,0 +1,422 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:postgresql:current-presence:sql:0.1-candidate",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.postgresql.current-presence.sql/0.1-candidate"
+    },
+    "capabilities": {
+      "const": [
+        "tagged-current-projection"
+      ]
+    },
+    "authority": {
+      "const": false
+    },
+    "securityReady": {
+      "const": false
+    },
+    "nativeAdmission": {
+      "const": "required"
+    },
+    "sourceRequestSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "preparationSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "materializationBindingSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "sql": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16000000
+    },
+    "parameters": {
+      "const": []
+    },
+    "resultColumns": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "sourceField": {
+            "$ref": "#/$defs/identity"
+          },
+          "headerColumn": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "type": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "tagged-umf-disclosure-cell"
+              },
+              "originalDomain": {
+                "$ref": "urn:weft:application:lineage:0.4-candidate#/properties/readRequirements/properties/fields/items/properties/descriptor/oneOf/0"
+              },
+              "transformedDomain": {
+                "const": "per-cell outputDomain resolved against the held header domains"
+              },
+              "alternatives": {
+                "enum": [
+                  [
+                    "original",
+                    "withheld",
+                    "transformed"
+                  ],
+                  [
+                    "original",
+                    "absent",
+                    "withheld",
+                    "transformed"
+                  ]
+                ]
+              },
+              "authorization": {
+                "const": "actual held owner selection required"
+              }
+            },
+            "required": [
+              "kind",
+              "originalDomain",
+              "transformedDomain",
+              "alternatives",
+              "authorization"
+            ],
+            "additionalProperties": false
+          },
+          "encoding": {
+            "const": "weft.umf-disclosure-cell-text/0.1-candidate"
+          },
+          "nativeType": {
+            "const": "text"
+          }
+        },
+        "required": [
+          "position",
+          "name",
+          "sourceField",
+          "headerColumn",
+          "type",
+          "encoding",
+          "nativeType"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "disclosureHeader": {
+      "$ref": "#/$defs/header"
+    },
+    "privateResultColumns": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          },
+          "name": {
+            "const": "__weft_source_rows"
+          },
+          "purpose": {
+            "const": "source-row-contribution"
+          },
+          "encoding": {
+            "const": "jsonb-text:weft.stage-row-tuple/0.1-candidate"
+          },
+          "maxKeyUtf8Bytes": {
+            "const": 256
+          },
+          "nativeType": {
+            "const": "text"
+          },
+          "scans": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          }
+        },
+        "required": [
+          "position",
+          "name",
+          "purpose",
+          "encoding",
+          "maxKeyUtf8Bytes",
+          "nativeType",
+          "scans"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "obligations": {
+      "const": [
+        "actual authenticated owner batch/header/source/caller/current cut",
+        "native owned TEXT cells and BOOL eligibility plus unique nonnull TEXT row keys",
+        "independent complete eligible population and exact statement/result custody",
+        "whole UMF V2 header/cell/domain/selected-occurrence validation",
+        "closing authority revalidation and guarded release; cleanup on every outcome"
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "capabilities",
+    "authority",
+    "securityReady",
+    "nativeAdmission",
+    "sourceRequestSha256",
+    "preparationSha256",
+    "materializationBindingSha256",
+    "sql",
+    "parameters",
+    "resultColumns",
+    "disclosureHeader",
+    "privateResultColumns",
+    "obligations"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "securityRef": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "transform": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "column": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/securityRef"
+            },
+            "storageEffect": {
+              "const": "canonical"
+            },
+            "valueProfile": {
+              "const": "umf-gregorian-date/1.0.0"
+            }
+          },
+          "required": [
+            "field",
+            "storageEffect"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/securityRef"
+            },
+            "storageEffect": {
+              "const": "stored-transformed"
+            },
+            "storageTransform": {
+              "$ref": "#/$defs/transform"
+            },
+            "valueProfile": {
+              "const": "umf-gregorian-date/1.0.0"
+            }
+          },
+          "required": [
+            "field",
+            "storageEffect",
+            "storageTransform"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "header": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.security.disclosure/0.2.0"
+        },
+        "policy": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "id",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "protection": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "id",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "revision"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/column"
+          }
+        }
+      },
+      "required": [
+        "version",
+        "policy",
+        "protection",
+        "domains",
+        "columns"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

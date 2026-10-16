@@ -1,0 +1,104 @@
+{
+  "version": "weft-model-requirements-main-integration/0.1",
+  "baseline": "86872faf2625098f262eeb5f7fed486eb958947b",
+  "candidate": "84fddd1090ee4549d126de514ae863949854c9e0",
+  "reviewRemainingFindings": [],
+  "reviewArtifactsVerified": 94,
+  "sourceAndPlan": {
+    "crates/weft-core/Cargo.toml": {
+      "bytes": 1672,
+      "sha256": "bb3d73dc76d4c02ca1fe7a7f03cacf3a751daa6e6a14602ef98aba2bd0bfba78"
+    },
+    "crates/weft-core/src/current_presence.rs": {
+      "bytes": 21541,
+      "sha256": "19634a18660c59d696cbfee3c0a91f2350074e850132dbd3955ca432d37bc34f"
+    },
+    "crates/weft-core/src/current_presence_model_requirements.rs": {
+      "bytes": 5823,
+      "sha256": "96a6012a08cbcb6d5bd530110b21feb69e5eb52a39d1dc1e90b8c2a6b6632255"
+    },
+    "crates/weft-core/src/lib.rs": {
+      "bytes": 6161,
+      "sha256": "3c44cf8f8c48ebde6bbd2b06131d375158fef08d8c1836800ab7607e9da0f3b3"
+    },
+    "docs/helix/02-design/contracts/CONTRACT-015-current-presence-model-requirements.md": {
+      "bytes": 8794,
+      "sha256": "6689f4eff2513a04b6dbf6cf7e6258d4f607725d2528c77069d6acfeaaf08d49"
+    },
+    "docs/helix/02-design/module-boundaries.json": {
+      "bytes": 142939,
+      "sha256": "206374dc705e052753e6bbd2c90c6feb75ccb5fcbefd1b81dc352b5051fde8ae"
+    },
+    "docs/helix/04-build/implementation-plan.md": {
+      "bytes": 232616,
+      "sha256": "498f25486aadcb2ef70644aca8049f61d94cac7fccd106bdd1d76348e103cd70"
+    }
+  },
+  "files": {
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/README.md": {
+      "bytes": 2012,
+      "sha256": "6ec5a1f4e378b7fa20190cd292d2ab636fb65c306695648d8327ea561826e556"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/boundaries-r2.log.gz": {
+      "bytes": 812,
+      "sha256": "980389fc4188ae80d2a0373cfec11bc37d972c22aa27791895afc85d174bcdb8"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/boundaries.log.gz": {
+      "bytes": 374,
+      "sha256": "0d32bfe7e6f1fa38c6480d2c6f88ea816f2dc2a6d610f9ebf76cdaa45badb17c"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/core-tests.log.gz": {
+      "bytes": 11373,
+      "sha256": "01ddbb618a9e5ca464a5c8d3d75bab9584dd57b094f9f5f5364a141029eda200"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/doctests.log.gz": {
+      "bytes": 2152,
+      "sha256": "dbc42fac01d161a2b902ff1efd8ae08032616bd975aa49de23d36e4567a94fea"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/final-specs.log.gz": {
+      "bytes": 203,
+      "sha256": "a2e5c51e535a276c1bbb95898894271658d19f9abe9e07c50fba2f514e728e97"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/incoming-release-ownership.json": {
+      "bytes": 547,
+      "sha256": "ea9da422ded66ff064bb859e12df04bc77b761139202437a245defdf08169879"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/independent-manifest.json": {
+      "bytes": 15162,
+      "sha256": "fc5d5d87643b299389bde3c6a92b9f4678942235b87618accafff4f4de2c441f"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/independent-review.json": {
+      "bytes": 6909,
+      "sha256": "e7f9cbaea46024dd7d2d698b516cc016b66d951cfdb0815d55ae2a9f145686c8"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/independent-review.zip": {
+      "bytes": 1186555,
+      "sha256": "13d197f2c9ec7a1a8140b01423eed94fdc73831a749c1fc6e4b0a24b5e286d32"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/preparation.json": {
+      "bytes": 1919,
+      "sha256": "d315728aa0250abb87a22595b9d760b60a74ce0194bc70085f8a9b12fe6511de"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/preserved-current-main-inputs.json": {
+      "bytes": 960294,
+      "sha256": "30e26d8612ad38cd6d6bc10e1d21b1c2e551072278511448868a7ed528b01a17"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/root-focused.log.gz": {
+      "bytes": 1774,
+      "sha256": "fd9a16dc410b85819b840999f5eb9b047f9826649806f1c1ab8dadd08e0c709f"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/root-review.json": {
+      "bytes": 1115,
+      "sha256": "18bb55c376d2f8b953b605f3c93605f689938f2e8f6811b941720eb643a90456"
+    },
+    "docs/helix/04-build/evidence/current-presence-model-requirements-integration-20261016/specs.log.gz": {
+      "bytes": 203,
+      "sha256": "a2e5c51e535a276c1bbb95898894271658d19f9abe9e07c50fba2f514e728e97"
+    }
+  },
+  "preservedMainFiles": 4455,
+  "runtimePythonBridgeIncluded": false,
+  "consumerRepinned": false,
+  "nativeAuthority": false,
+  "acceptanceCasesPromoted": 0
+}

@@ -1,0 +1,38 @@
+{
+  "wheel": "/private/tmp/weft-model-requirements-main-combined-wheels-20261016/weft_sql-0.4.39.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "b0c509df5bb4903971a7547379331c94754e638310834d4aa081a8030f09a299",
+  "installed": "/private/tmp/weft-model-requirements-main-combined-installed-20261016",
+  "entries": {
+    "weft_sql-0.4.39.dev0.dist-info/METADATA": {
+      "bytes": 81,
+      "sha256": "c842c1764c26d7b4f96c789b0951d6671919b8a72abea460d2519d932d0a258e"
+    },
+    "weft_sql-0.4.39.dev0.dist-info/WHEEL": {
+      "bytes": 102,
+      "sha256": "be9a82d2d467ffc6d31e276fb6b3dbae71503d99eb86e2b3b230dd78ac02779f"
+    },
+    "weft/__init__.py": {
+      "bytes": 99,
+      "sha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "weft/weft.abi3.so": {
+      "bytes": 9525968,
+      "sha256": "39b3a516bf0a42b1f2de1d06fa6ad501f572b42977c8e2189c57ed9d19d44198"
+    },
+    "weft_sql-0.4.39.dev0.dist-info/RECORD": {
+      "bytes": 374,
+      "sha256": "bbaa5ca2c60aac749c39a3abffc52dd26f8da4797bbb1dbb35ef9068ee025365"
+    }
+  },
+  "features": [
+    "truss-postgresql-pg18",
+    "current-postgresql-scalar-candidate",
+    "current-databricks-scalar-candidate",
+    "current-query-refinement-candidate",
+    "bounded-current-string-candidate",
+    "current-presence-model-requirements-candidate"
+  ],
+  "packageVersion": "0.4.39.dev0",
+  "published": false,
+  "nativeAuthority": false
+}

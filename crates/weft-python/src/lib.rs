@@ -59,6 +59,8 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
         m.add_class::<ApplicationLineagePreparation>()?;
         m.add_class::<CurrentQueryPreparation>()?;
     }
+    #[cfg(feature="current-presence-candidate")]
+    m.add_class::<CurrentPresencePreparation>()?;
     #[cfg(feature="truss-postgresql-pg18")]
     m.add_function(wrap_pyfunction!(compile_truss_runtime_json,m)?)?;
     #[cfg(feature="truss-postgresql-pg18")]
@@ -140,6 +142,11 @@ impl ApplicationLineagePreparation {
  fn source_request_json(&self)->&str{self.inner.source_request_json()}
  fn current_query_designations_json(&self)->PyResult<String>{
   self.inner.current_query_designations_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
+ #[cfg(feature="current-presence-candidate")]
+ fn prepare_current_presence(slf:PyRef<'_,Self>)->PyResult<CurrentPresencePreparation>{
+  let inner=slf.inner.prepare_current_presence().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))?;
+  Ok(CurrentPresencePreparation{original:slf.into(),inner})
  }
  fn prepare_current_query(slf:PyRef<'_,Self>)->PyResult<CurrentQueryPreparation>{
   let inner=slf.inner.prepare_current_query().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))?;
@@ -251,6 +258,7 @@ impl CurrentQueryPreparation{
  fn operand_count(&self,py:Python<'_>)->PyResult<usize>{self.check_original(py)?;Ok(self.inner.operand_count())}
  fn native_request_json(&self,py:Python<'_>)->PyResult<String>{self.check_original(py)?;self.inner.native_request_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))}
 
+
  #[cfg(feature="current-postgresql-scalar-candidate")]
  fn lower_postgresql_scalar_candidate_json(&self,py:Python<'_>,binding:&str)->PyResult<String>{
   self.check_original(py)?;self.inner.lower_postgresql_scalar_candidate_json(binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
@@ -295,3 +303,36 @@ pub fn compile_engine_read_json(request:&str)->String{weft_runtime::engine_read:
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]
 pub fn check_engine_read_json(program:&str,current_request:&str)->String{weft_runtime::engine_read::check_json(program,current_request)}
+#[cfg(feature="current-presence-candidate")]
+fn presence_failure()->PyErr{pyo3::exceptions::PyValueError::new_err("WFT-CURRENT-PRESENCE-BRIDGE: Current presence bridge refused")}
+#[cfg(feature="current-presence-candidate")]
+fn presence_text(value:&Bound<'_,PyAny>,maximum:usize)->PyResult<String>{
+ if !value.is_exact_instance_of::<pyo3::types::PyString>()||value.len().map_err(|_|presence_failure())?>maximum{return Err(presence_failure())}
+ let text=value.extract::<String>().map_err(|_|presence_failure())?;if text.len()>maximum{return Err(presence_failure())}Ok(text)
+}
+/// Distinct issued type. No constructor, subclassing, report import or old methods.
+#[cfg(feature="current-presence-candidate")]
+#[pyclass(frozen,module="weft")]
+struct CurrentPresencePreparation{original:Py<ApplicationLineagePreparation>,inner:weft_runtime::CurrentPresencePreparation}
+#[cfg(feature="current-presence-candidate")]
+#[pymethods]
+impl CurrentPresencePreparation{
+ fn source_preparation(&self,py:Python<'_>)->PyResult<Py<ApplicationLineagePreparation>>{self.check_original(py)?;Ok(self.original.clone_ref(py))}
+ fn json(&self,py:Python<'_>)->PyResult<String>{self.check_original(py)?;Ok(self.inner.json().to_owned())}
+ fn native_request_json(&self,py:Python<'_>)->PyResult<String>{self.check_original(py)?;self.inner.native_request_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))}
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ fn model_requirements_json(&self,py:Python<'_>)->PyResult<String>{
+  self.check_original(py)?;self.inner.model_requirements_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
+ fn lower_postgresql_current_presence_candidate_json(&self,py:Python<'_>,binding_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py)?;let binding=presence_text(binding_json,4_000_000)?;self.inner.lower_postgresql_current_presence_candidate_json(&binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
+ fn check_postgresql_current_presence_candidate_json(&self,py:Python<'_>,binding_json:&Bound<'_,PyAny>,transport_input_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py)?;let binding=presence_text(binding_json,4_000_000)?;let input=presence_text(transport_input_json,16_000_000)?;
+  self.inner.check_postgresql_current_presence_candidate_json(&binding,&input).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
+}
+#[cfg(feature="current-presence-candidate")]
+impl CurrentPresencePreparation{
+ fn check_original(&self,py:Python<'_>)->PyResult<()>{if !self.inner.is_from(&self.original.bind(py).borrow().inner){return Err(presence_failure())}Ok(())}
+}

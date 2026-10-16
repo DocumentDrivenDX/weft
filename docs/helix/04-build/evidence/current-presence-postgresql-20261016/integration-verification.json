@@ -1,0 +1,87 @@
+{
+  "baseCommit": "1c1a7dba5d5ceea282fbe0cd75fc7f0fa0469194",
+  "reviewSha256": "d082ec02020e07b9a8820d4a771dd7bee619c87178621114260c5e409f5687d1",
+  "reviewArtifacts": 70,
+  "archiveUncompressedBytes": 12877959,
+  "reviewedSourceFiles": [
+    {
+      "path": "crates/weft-postgresql/Cargo.toml",
+      "sha256": "b24fe5484a7ad5997328ce7c6b5a8e280bc3bd5da29780f936593d818a624bdd",
+      "baselineSha256": "063cfeab425c2aba0877f1915eb2abbaa57d00804c3bf5d5bd0af3b87325334c",
+      "integratedSha256": "b24fe5484a7ad5997328ce7c6b5a8e280bc3bd5da29780f936593d818a624bdd"
+    },
+    {
+      "path": "crates/weft-postgresql/src/lib.rs",
+      "sha256": "caacb512cb177d5251bd927e029774d10cd32846849dde637a5d4d85018c6693",
+      "baselineSha256": "285d1c71ada8c3c72d7c9fa14ddf86a85ad7e1b2b5581535069320bbe1f1d60c",
+      "integratedSha256": "caacb512cb177d5251bd927e029774d10cd32846849dde637a5d4d85018c6693"
+    },
+    {
+      "path": "crates/weft-postgresql/src/current_presence.rs",
+      "sha256": "7d3e05d57de0ecc71abf4b19203c6d2d0717a9e98897c32762e59d7b70e87623",
+      "baselineSha256": null,
+      "integratedSha256": "7d3e05d57de0ecc71abf4b19203c6d2d0717a9e98897c32762e59d7b70e87623"
+    },
+    {
+      "path": "docs/helix/02-design/module-boundaries.json",
+      "sha256": "2102fd337911db50b3c158e6833edc05344b4dad0428b51e2489abb9d71ad614",
+      "baselineSha256": "90f7516cafb6b29590887fb56b16dc842cf25a4f973f493aef2894473a02fb16",
+      "integratedSha256": "2102fd337911db50b3c158e6833edc05344b4dad0428b51e2489abb9d71ad614"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-013-current-presence-transport.md",
+      "sha256": "c135b0fdee4a1e1f85ef7a300ef1c4d32cfdb468397832ec264b945b3291508e",
+      "baselineSha256": null,
+      "integratedSha256": "9ba4b64d9cb7bcca63533bb6ade93910d271aa1c002cb61e261509237007c24a"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/postgresql-current-presence-binding-v0.1-candidate.schema.json",
+      "sha256": "70600331253abc2af7790a438ea47498770b6fc2e3c2ece1eab693c1d08682e9",
+      "baselineSha256": null,
+      "integratedSha256": "70600331253abc2af7790a438ea47498770b6fc2e3c2ece1eab693c1d08682e9"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/postgresql-current-presence-sql-v0.1-candidate.schema.json",
+      "sha256": "129d926cb2fc8353915694836eb3dcf6aba0ff606b9b16c1a1e4a2486eee0354",
+      "baselineSha256": null,
+      "integratedSha256": "129d926cb2fc8353915694836eb3dcf6aba0ff606b9b16c1a1e4a2486eee0354"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-transport-input-v0.1-candidate.schema.json",
+      "sha256": "810bad66d87c808546c00d9fc0d6647f4eb9a15c8f9ce843093e33cac011b9b9",
+      "baselineSha256": null,
+      "integratedSha256": "810bad66d87c808546c00d9fc0d6647f4eb9a15c8f9ce843093e33cac011b9b9"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-transport-result-v0.1-candidate.schema.json",
+      "sha256": "059992286df979c63c0421116562c2e02bfec37fafd9bee8de910feb7c338bfb",
+      "baselineSha256": null,
+      "integratedSha256": "059992286df979c63c0421116562c2e02bfec37fafd9bee8de910feb7c338bfb"
+    },
+    {
+      "path": "tests/current-query-presence/fixtures/unadmitted-context.request.json",
+      "sha256": "2ebd655178b71bb49c48ff6997587cf51cd2a419a1793f95a24a6ec82d5dfe24",
+      "baselineSha256": null,
+      "integratedSha256": "2ebd655178b71bb49c48ff6997587cf51cd2a419a1793f95a24a6ec82d5dfe24"
+    },
+    {
+      "path": "tests/current-query-presence/fixtures/actual-atomic-transport.json",
+      "sha256": "f19439e8da44419aa2c08252a8155aa2efc2dc807cbb1b90e0cace7297660a53",
+      "baselineSha256": null,
+      "integratedSha256": "f19439e8da44419aa2c08252a8155aa2efc2dc807cbb1b90e0cace7297660a53"
+    },
+    {
+      "path": "tests/current-query-presence/check-transport-schemas.ts",
+      "sha256": "ef0c979b4534a350895d1a1ed5172e6d906663c766129cdd093d849173d80802",
+      "baselineSha256": null,
+      "integratedSha256": "ef0c979b4534a350895d1a1ed5172e6d906663c766129cdd093d849173d80802"
+    }
+  ],
+  "onlyDifferenceFromReviewedSource": "CONTRACT-013 Error Semantics stage-specific editorial clarification; exact diff retained",
+  "postgresqlLibraryUnitTests": 132,
+  "nativeDatabaseExecuted": false,
+  "original132AcceptanceCasesPromoted": 0,
+  "editorialPatchRawSha256": "fcc6a98900040df3ad3ba52a61829aca6e1adce5550fb5b4593bff470ff5fa7b",
+  "integratedModulesExitCode": 0,
+  "integratedSpecsExitCode": 0
+}

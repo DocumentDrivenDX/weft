@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "packetSha256": "d4c81f46151ec7f6be51684e9ee68d1ec4cdafa9747f5454aa4f5f841f5db542",
+  "verifiedSource": {
+    "crates/weft-core/Cargo.toml": "bb3d73dc76d4c02ca1fe7a7f03cacf3a751daa6e6a14602ef98aba2bd0bfba78",
+    "crates/weft-core/src/lib.rs": "3c44cf8f8c48ebde6bbd2b06131d375158fef08d8c1836800ab7607e9da0f3b3",
+    "crates/weft-core/src/current_presence.rs": "19634a18660c59d696cbfee3c0a91f2350074e850132dbd3955ca432d37bc34f",
+    "crates/weft-core/src/current_presence_model_requirements.rs": "96a6012a08cbcb6d5bd530110b21feb69e5eb52a39d1dc1e90b8c2a6b6632255",
+    "docs/helix/02-design/module-boundaries.json": "9b6cf3d14f4bbdf5f1508bec6f7e481190df7dcd252412c212e2b9b25cf593cc",
+    "docs/helix/02-design/contracts/CONTRACT-015-current-presence-model-requirements.md": "6689f4eff2513a04b6dbf6cf7e6258d4f607725d2528c77069d6acfeaaf08d49"
+  },
+  "verifiedEvidence": 21,
+  "focusedTests": 6,
+  "log": "/private/tmp/weft-model-requirements-root-focused-20261016.log",
+  "scope": "Root exact frozen-source correspondence and six focused tests, no native/authority or acceptance promotion."
+}

@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:current-presence:transport-input:0.1-candidate",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.current-presence.transport-input/0.1-candidate"
+    },
+    "sourceRequestSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "preparationSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "materializationBindingSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "compiledArtifactSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "expectedRowCount": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$",
+      "maxLength": 4
+    },
+    "header": {
+      "$ref": "#/$defs/header"
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "cells": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 256,
+            "items": {
+              "type": "string",
+              "maxLength": 16000000
+            }
+          }
+        },
+        "required": [
+          "key",
+          "cells"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "resultRows": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 4096,
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 257,
+        "items": {
+          "type": "string",
+          "maxLength": 16000000
+        }
+      }
+    }
+  },
+  "required": [
+    "version",
+    "sourceRequestSha256",
+    "preparationSha256",
+    "materializationBindingSha256",
+    "compiledArtifactSha256",
+    "expectedRowCount",
+    "header",
+    "rows",
+    "resultRows"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "securityRef": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "transform": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "column": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/securityRef"
+            },
+            "storageEffect": {
+              "const": "canonical"
+            },
+            "valueProfile": {
+              "const": "umf-gregorian-date/1.0.0"
+            }
+          },
+          "required": [
+            "field",
+            "storageEffect"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/securityRef"
+            },
+            "storageEffect": {
+              "const": "stored-transformed"
+            },
+            "storageTransform": {
+              "$ref": "#/$defs/transform"
+            },
+            "valueProfile": {
+              "const": "umf-gregorian-date/1.0.0"
+            }
+          },
+          "required": [
+            "field",
+            "storageEffect",
+            "storageTransform"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "header": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.security.disclosure/0.2.0"
+        },
+        "policy": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "id",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "protection": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "id",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "revision"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/column"
+          }
+        }
+      },
+      "required": [
+        "version",
+        "policy",
+        "protection",
+        "domains",
+        "columns"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

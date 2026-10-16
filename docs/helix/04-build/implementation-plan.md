@@ -2619,3 +2619,128 @@ retained. Final source passes352 enabled and328 disabled Core tests, with
 frozen public0.4.36 source. Full original132 scope remains required; no native
 case is promoted. SQL/result protocols, owner-fold provenance, bridge selection,
 authenticated native authority and guarded enforcement remain unfinished.
+
+
+### Separate current-presence context — 2026-10-16
+
+CONTRACT-012 adds an optional Core-only borrowed presence context with exact
+source/profile/model pins and an explicit atomic UMF disclosure-batch producer
+requirement. Existing current-query APIs retain their old types and refuse this
+context. Independent review found no actionable issue across114 Rust scenarios,
+134 assertions,106 schema controls,19 old/new API type boundaries and3 compile-fail
+doctests. Evidence and merged-source verification:
+`evidence/current-presence-context-20261016/`. This is source/type correspondence,
+not producer invocation, SQL/result ABI or authenticated native enforcement.
+All original132 B-008 cases remain required; zero cases are promoted.
+
+
+### Conditional PostgreSQL presence transport — 2026-10-16
+
+CONTRACT-013 adds a separate optional typed PG projection/check path over complete
+UMF disclosure-cell TEXT with held header and private scan/key lineage. Actual
+Core presence context and exact original source/binding/artifact bytes remain
+required. Independent review passes9 focusedRust,221schema,145transport,
+859producer/model and5type/feature controls. Owner full PostgreSQL library passes
+132unit tests, distinct from the original132 B-008 acceptance cases. Source and
+qualified evidence: `evidence/current-presence-postgresql-20261016/`.
+
+The reviewed contract's error wording is clarified by a retained editorial diff:
+lower failure produces no artifact; check failure produces no success report or
+public rows and cannot erase previously issued SQL. Host zero-release and cleanup
+obligations apply at either stage. All executable/schema/test bytes are unchanged
+from review. Actual producer/native-source/caller/current-cut composition, native
+transport and guarded enforcement, bridges, Databricks and the full original132
+acceptance scope remain unfinished. No case is promoted or public profile enabled.
+
+
+### Actual PostgreSQL presence transport component — 2026-10-16
+
+The source-reviewed held Rust probe and actual atomic UMF producer execute through
+an owned PostgreSQL18.6 TEXT-cell fixture:47 positive and5 negative operations,
+234 SQL statements and869 repeated observations. Six actual mixed/empty cuts
+retain complete distinct-key bags. A staged invalid selected occurrence passes
+byte transport and fails mandatory whole V2 validation. Four other negatives
+corrupt only checker frames, with actual driver rows unchanged. Exact tmpfs-only
+storage and owned-container removal/absence are verified.
+
+`evidence/current-presence-native-20261016/` retains the exact receipt and1285-source
+archive, plus all901 independently audited artifacts. The reviewer ran fresh
+producer/V2 and held-probe replays, but no SQL or Docker. This excluded administrator
+fixture does not authenticate an ordinary caller/Subject, original native source,
+complete current policy cut, production Truss/Ashlar mapping or native membership
+joins; it does not establish closing authority or guarded release. Original132
+acceptance and case statuses remain unchanged. Runtime/Python bridge and actual
+host/source integration remain subsequent work. CONTRACT-012's planned-producer
+status and informational selection/batch wording are reconciled with this exact
+qualified evidence, retaining normative prerequisites and all host obligations.
+
+
+### Issued runtime/Python presence bridge — 2026-10-16
+
+CONTRACT-014 exposes the actual Core/PG presence path through separate optional
+runtime and frozen Python types, with actual original-object custody and no report
+constructor. Exact-string UTF8 bounds, old/new descriptor rejection, parent
+lifetime and feature independence have real native-wheel evidence. Independent
+review passes7runtime/4compile-fail tests,415/410/7/12 supplied wheel controls,
+314 adversarial controls on an independently rebuilt expanded-feature wheel,
+298 on the supplied combined wheel,8 intended Rust diagnostics and6525source
+custody checks. All eight merged files retain exact reviewed bytes.
+Evidence: `evidence/current-presence-bridge-20261016/`.
+
+Default Python feature selection, published0.4.36 pins, WASM and old consumers
+remain unchanged. Local macOS ARM dev wheels are not publication or platform-wide
+qualification. No native database execution, producer/source/caller/current-cut
+admission, closing guard or release is established by the bridge tests. Truss and
+Ashlar need separate native presence consumers over actual collector/guard seams;
+all original132 acceptance obligations remain open with zero case promotion.
+
+
+### B-008 original model requirements — 2026-10-16
+
+[CONTRACT-015](../02-design/contracts/CONTRACT-015-current-presence-model-requirements.md)
+adds an explicit optional Core requirements feature over the same actual issued
+presence context. It retains complete original request/model/source pins and
+resolves full Record membership, original descriptor identities/availability and
+ordered selected authored Keys through existing compiler APIs. Persistent native
+binding identity precedes the preparation; its descriptor must not incorporate
+the resulting context/report hash and create a self-hash cycle. This incomplete
+report authenticates no native source, caller, current authority or release.
+
+[Independent review and current-main integration evidence](evidence/current-presence-model-requirements-integration-20261016/README.md)
+retain all94Astra artifacts, original attempts and root replay. The review found
+no remaining findings within its qualified component scope; independent controls
+cover membership/identity/key order, nested descriptors, report capacity, feature
+absence and four detected source mutants. Current-main Core tests pass361cases;
+all initial132native/shared B-008 cases remain required and none is promoted.
+
+The integration preserves newer release commits and accounts for two unchanged
+incoming native70 release scripts in the module-ownership inventory. Runtime/
+Python requirements exposure remains a separately reviewed candidate, not part
+of this integration or an installed-consumer repin. The separately captured
+actual Truss catalog correspondence test does not establish codec/graph/native
+permission/current-generation/guarded-release closure. B-008 remains open.
+
+
+### B-008 issued model requirements runtime/Python bridge — 2026-10-16
+
+[CONTRACT-016](../02-design/contracts/CONTRACT-016-current-presence-model-requirements-bridge.md)
+adds a separately selected runtime/Python method over the existing actual issued
+presence preparation. Runtime retains the same original Arc; Python retains and
+checks that same actual parent. The output is unchanged incomplete Core model
+requirements JSON, with no report importer, callback escape, new constructor,
+SQL execution or authority issuance. Default and older features omit the method.
+
+[Full reviewed current039 integration evidence](evidence/current-presence-model-requirements-bridge-integration-20261016/README.md)
+retains all99Astra artifacts, historical037inputs and fresh actual039opt-in,
+old-presence and default wheels. Actual extension checks pass56requirements plus
+415existing bridge controls and old/default absence controls;8runtime tests and
+3downstream feature clients pass. Current release/version/ownership work remains
+preserved; existing installed consumers and computation assets are not repinned.
+
+A genuine scalar-only actual context produces9,833,820bytes from597,992original
+bytes, exceeding the existing Truss8MiBdecoder while fitting Core's16Moutput
+bound. Exact data/generator and independent replay are retained; a separately
+named native decoder profile requires its own review/qualification rather than
+a global guard increase. Whole-source semantic/native admission is not inferred.
+Original132B-008 requirements, native graph/context/codec/current-authority and
+guarded end-to-end release remain required and open; this component promotes none.

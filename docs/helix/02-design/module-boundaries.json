@@ -1169,6 +1169,30 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/current_presence.rs",
+          "publicDeclarations": [
+            "struct:CurrentPresencePreparation",
+            "fn:preparation",
+            "fn:json",
+            "fn:primary_action",
+            "fn:binding_scope",
+            "fn:producer_protocol",
+            "fn:native_request_json",
+            "fn:prepare"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/current_presence_model_requirements.rs",
+          "publicDeclarations": [
+            "struct:CurrentPresenceModelRequirements",
+            "fn:context",
+            "fn:json",
+            "fn:derive"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/current_query_designation.rs",
           "publicDeclarations": [
             "struct:SourceIdentity",
@@ -1336,6 +1360,8 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:current_presence_model_requirements",
+            "mod:current_presence",
             "mod:current_string_domain",
             "mod:current_query_operands",
             "mod:current_query_designation",
@@ -2646,6 +2672,18 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/current_presence.rs",
+          "publicDeclarations": [
+            "struct:CurrentPresenceSql",
+            "fn:context",
+            "fn:sql",
+            "fn:json",
+            "fn:lower",
+            "fn:check"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/current_scalar.rs",
           "publicDeclarations": [
             "struct:Parameter",
@@ -2785,7 +2823,8 @@
             "mod:security_native_codecs",
             "mod:raw_action",
             "mod:raw_bulk",
-            "mod:search"
+            "mod:search",
+            "mod:current_presence"
           ],
           "pathReferences": []
         },
@@ -3786,6 +3825,7 @@
             "struct:ApplicationLineagePreparation",
             "fn:json",
             "fn:source_request_json",
+            "fn:prepare_current_presence",
             "fn:current_query_designations_json",
             "fn:prepare_current_query",
             "struct:CurrentQueryPreparation",
@@ -3819,7 +3859,14 @@
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
-            "mod:engine_read"
+            "mod:engine_read",
+            "struct:CurrentPresencePreparation",
+            "fn:json",
+            "fn:is_from",
+            "fn:native_request_json",
+            "fn:model_requirements_json",
+            "fn:lower_postgresql_current_presence_candidate_json",
+            "fn:check_postgresql_current_presence_candidate_json"
           ],
           "pathReferences": []
         },
@@ -4344,9 +4391,11 @@
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
         "scripts/release/test-decimal12-smoke-gate.py",
+        "scripts/release/test-native70-smoke-gate.py",
         "scripts/release/test-refinement-smoke-gate.py",
         "scripts/release/test_verify_promotion.py",
         "scripts/release/verify-decimal12-smoke.py",
+        "scripts/release/verify-native70-smoke.py",
         "scripts/release/verify-promotion.py",
         "scripts/release/verify-refinement-smoke.py",
         "scripts/reliability/__init__.py",

@@ -1,0 +1,5 @@
+{
+  "baseCommit": "cc2e96a4fff38626cc4658cbd57ea9153d007226",
+  "reviewedBase": "4fb4de6af3374455a4605ac509e1e413be8ad023",
+  "sourceMerge": "lib.rs preserves raw_action/raw_bulk/search declarations from new main; inventory regenerated from merged sources"
+}

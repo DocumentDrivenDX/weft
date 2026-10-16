@@ -1,12 +1,14 @@
 [package]
 name="weft-python"
-version="0.4.37-dev.0"
+version = "0.4.39-dev.0"
 edition.workspace=true
 publish.workspace=true
 [lib]
 name="weft"
 crate-type=["cdylib"]
 [features]
+current-presence-model-requirements-candidate=["current-presence-candidate","weft-runtime/current-presence-model-requirements-candidate"]
+current-presence-candidate=["application-lineage-candidate","weft-runtime/current-presence-candidate"]
 raw-postgresql-reads=["weft-runtime/raw-postgresql-reads"]
 current-spark-scalar-candidate=["current-query-refinement-candidate","weft-runtime/current-spark-scalar-candidate"]
 

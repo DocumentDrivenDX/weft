@@ -3,12 +3,13 @@ from copy import deepcopy
 from hashlib import sha256
 from importlib import import_module, metadata, machinery
 import json
+import tomllib
 from pathlib import Path
 
 import weft
 
 ROOT = Path(__file__).resolve().parent
-EXPECTED_VERSION = '0.4.36'
+EXPECTED_VERSION = tomllib.loads((ROOT.parents[1] / 'crates/weft-python/pyproject.toml').read_text())['project']['version']
 assert metadata.version('weft-sql') == weft.__version__ == EXPECTED_VERSION
 native = import_module('weft.weft')
 package_root = Path(weft.__file__).resolve().parent

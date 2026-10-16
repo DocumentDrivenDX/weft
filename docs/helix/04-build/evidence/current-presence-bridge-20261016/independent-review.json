@@ -1,0 +1,356 @@
+{
+  "status": "completed",
+  "verdict": "No actionable finding in the exact optional runtime/Python presence bridge component.",
+  "reviewer": "Retained user-requested independent Astra Ultra reviewer /root/astra_retirement_review",
+  "date": "2026-10-16",
+  "scope": "Separate optional issued CurrentPresencePreparation runtime/Python bridge over the previously reviewed Core/PG presence component. Source, native C-extension type/lifetime/refusal/feature boundaries and exact data correspondence only.",
+  "nativeDatabaseExecutedByReviewer": false,
+  "findings": [],
+  "remainingFindings": [],
+  "frozenInputs": {
+    "reviewPacket": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/frozen/review.zip",
+      "sha256": "1e62c86935c1074487460ba4bb46c531a446de1bc909fc933d80f58c224ba7d3",
+      "bytes": 68983
+    },
+    "manifest": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/frozen/manifest.json",
+      "sha256": "6bee5b034dff2b8f23de74ebf6684bd23dbfcbc8e468d7e7755ffd20e25a0a73",
+      "bytes": 5268
+    },
+    "baseCommit": "54a822ae33eea7c820cbdbf5f9e9beaa002af9e7",
+    "baseRepository": "/Users/erik/Projects/weft",
+    "changedFiles": [
+      {
+        "path": "crates/weft-runtime/Cargo.toml",
+        "sha256": "7ffe39d37c9af81b592ec1237e10103d9ff668fdf304abfe14ed817d0c92c943",
+        "baselineSha256": "fe5b9252ef09a2b1a05a7bb0571aa781f0b87cc8061f8cf83f141d71009fce3b"
+      },
+      {
+        "path": "crates/weft-runtime/src/lib.rs",
+        "sha256": "df86435012c4ea8b432a4d20ed8e601bda14cadcd9e0ef2feb049970c35b9af8",
+        "baselineSha256": "b1a49700ece8f010a6e7f14212b2cd48a7e732ab8609d8dc6b134f8531e45102"
+      },
+      {
+        "path": "crates/weft-python/Cargo.toml",
+        "sha256": "85c7047ee9b0977570ca7bc64148ec82b959d70986e85f02b5c60183f0fa51f1",
+        "baselineSha256": "b0a359470196b3d156a7d16f71e5c0630bb8b94392b4954555fefae9b62c10dc"
+      },
+      {
+        "path": "crates/weft-python/src/lib.rs",
+        "sha256": "dfa6dca3e004c160f563c9662bbe8941a5cb7394fb133984444bf1bfe3a43d3c",
+        "baselineSha256": "6fda6e09b5ff96d1eaa56cfbe875e6069b214d2b73f0a6aadc0456cc60b2576f"
+      },
+      {
+        "path": "docs/helix/02-design/module-boundaries.json",
+        "sha256": "b20a790652062cd76a4417618bd896b49acc7aabb0cf897d005d0f5b7fd1b1dc",
+        "baselineSha256": "2102fd337911db50b3c158e6833edc05344b4dad0428b51e2489abb9d71ad614"
+      },
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-014-current-presence-bridge.md",
+        "sha256": "041ca286d37cd059e0039ef8c783108ed3d122eb4ad083b40907f4128900c2b7",
+        "baselineSha256": null
+      },
+      {
+        "path": "tests/current-query-presence/python-bridge.py",
+        "sha256": "a4a408c185fc2b4f1cc3a6dcadbd8d21a4ed90902ce7e3b8a4375b8615d014ca",
+        "baselineSha256": null
+      },
+      {
+        "path": "tests/current-query-presence/fixtures/actual-atomic-transport-emitted.json",
+        "sha256": "9f0f952fa260697bf055ec22d20792565b4db295a86c2f82ca4949f5ee236710",
+        "baselineSha256": null
+      }
+    ],
+    "reconstruction": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/reconstruction.json",
+      "sha256": "7fd1fd2f6dcc3f2deb42657b8088f945cb3e85976947078efb432fc43ff7ef89",
+      "bytes": 4911
+    },
+    "sourceDiff": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/source.diff",
+      "sha256": "143ce5c3e3c6922db28dd1d09cf9eb4415c7aaa624d756582741ec9ebf20622d",
+      "bytes": 11365
+    },
+    "compilerTestSourceArchive": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/reviewed-source-inputs.zip",
+      "sha256": "c47d3b23c65ac2c4cb2f6f8d39556158620aefe86bc59aaef964dd04f1b7e775",
+      "bytes": 18524405
+    },
+    "governanceSourceArchive": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/governance-source-inputs.zip",
+      "sha256": "19aa72f096a3044e76b4992b6bfb5af4b2434699726439407a76a8a3a17e0385",
+      "bytes": 703827
+    },
+    "externalGovernanceJsRuntimeArchive": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/external-js-runtime.zip",
+      "sha256": "737bb2ac0dc0068ef9d54ab60d7075485fb04bae08582400014166b88e81ff1b",
+      "bytes": 695924
+    },
+    "suppliedWheels": {
+      "candidate": {
+        "path": "/private/tmp/weft-presence-python-candidate-wheels-20261016/weft_sql-0.4.37.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "7adef6110da136842719e8859d6b308f18d1e8d2e61df6272afa5b9364149b4b",
+        "bytes": 4969685,
+        "members": {
+          "weft_sql-0.4.37.dev0.dist-info/METADATA": "ad0477028ac94de094c186f05e6ca438546052d7701415c31286ec26c03f8c30",
+          "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+          "weft/weft.abi3.so": "042d0bfccc9bbb99e7ae93e9edb4a187dfe96b21bb11c0fe82d50f1df22e149b"
+        }
+      },
+      "combined": {
+        "path": "/private/tmp/weft-presence-python-combined-wheels-20261016/weft_sql-0.4.37.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "2b5806d53cb50b95b56f0dda0dee8ea79e6f1d72b839f5ec74304943fe3022ad",
+        "bytes": 6934865,
+        "members": {
+          "weft_sql-0.4.37.dev0.dist-info/METADATA": "ad0477028ac94de094c186f05e6ca438546052d7701415c31286ec26c03f8c30",
+          "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+          "weft/weft.abi3.so": "a94439b3949c6db574ded8d95d9b81b23e128b0cbb7570edff65228d3737c402"
+        }
+      },
+      "legacy": {
+        "path": "/private/tmp/weft-presence-python-legacy-wheels-20261016/weft_sql-0.4.37.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "9ac87fb8d156f4dcaad34e719409ee92e922a060d98191b88c60fcc6e6ed6d5e",
+        "bytes": 6702339,
+        "members": {
+          "weft_sql-0.4.37.dev0.dist-info/METADATA": "ad0477028ac94de094c186f05e6ca438546052d7701415c31286ec26c03f8c30",
+          "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+          "weft/weft.abi3.so": "a0e50a07f3b9fb8fe7a0b57c4ff637afa852c8190e767a2669d2c85f0b103dbf"
+        }
+      },
+      "runtime-only": {
+        "path": "/private/tmp/weft-presence-python-runtime-only-wheels-20261016/weft_sql-0.4.37.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "e59a9ae217c92c7264dbc1b3eac9f3ba5cbafdc55f0b5564736daf1ec72e5f96",
+        "bytes": 6702557,
+        "members": {
+          "weft_sql-0.4.37.dev0.dist-info/METADATA": "ad0477028ac94de094c186f05e6ca438546052d7701415c31286ec26c03f8c30",
+          "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+          "weft/weft.abi3.so": "8b85331ba03e90b73832f619a6573e3a29ea85d1efc6959bea774ac0c0046bed"
+        }
+      }
+    },
+    "laterCandidateOnlyFinalReceipt": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/frozen/candidate-later-final-receipt.json",
+      "sha256": "59dfef79b1e80cf4fb31beac8585341da210be8ba313695a774474b650774909",
+      "bytes": 12744
+    }
+  },
+  "sourceAssessment": [
+    "The exact base-relative change consists of eight declared files. Runtime/Python production code is additive: an explicit feature, actual-parent factory and distinct new type. Existing scalar method implementations, public backend registrations, default Python feature configuration and WASM source are unchanged.",
+    "Runtime issuance calls the actual Core presence factory on the retained ApplicationLineage object and retains Arc ownership of that same original. is_from uses Arc::ptr_eq, so equal source bytes do not substitute another original. Private fields, no serde/clone constructor and a private scoped consumer prevent importing success data or exporting the borrowed Core context.",
+    "Each runtime native-request/lower/check operation re-derives the Core presence context from the retained immutable original and compares the exact issued preparation JSON before dispatch. This does not accept a replacement SQL/AST/context/report. The inherited Core preparation reads its own retained original source data; no claim is made that it performs zero internal JSON parsing.",
+    "The native Python class retains the actual Python parent plus the runtime child. Every new method checks their pointer custody. source_preparation returns that actual parent. Frozen non-subclassable native instances have no constructor, mutable instance fields, instance dictionary, copy/pickle reconstruction or class substitution.",
+    "Binding/frame entrypoints require exact native builtin PyString objects before length/extraction. No user __str__, __len__ or spoofed __class__ callback runs. Conversion rejects surrogate-containing Python strings; raw UTF8 byte bounds are 4,000,000 and 16,000,000. Exact-size valid inputs pass and size-plus-one inputs refuse.",
+    "Old/new raw method descriptors reject the wrong actual class. Old designation/factory paths still refuse .4. Legacy wheels expose neither the new class nor factory. Enabling the runtime feature alone does not expose the Python class/factory.",
+    "The bridge exposes compiler/data reports only, with authority:false, securityReady:false and nativeAdmission:required. The invalid selected-occurrence control intentionally still matches structural transport, demonstrating that whole UMF semantic/source/current-cut validation remains a separate required host barrier.",
+    "Errors remain scoped fixed messages without supplied private sentinel values or partial success. The contract correctly distinguishes lowering failure from later checking failure: a later refusal cannot erase previously issued SQL; the host must release nothing and clean up its owned stage."
+  ],
+  "independentExecution": {
+    "runtimeSourceBuild": {
+      "libraryTests": 7,
+      "compileFailDoctests": 4,
+      "status": "passed",
+      "records": {
+        "path": "/private/tmp/weft-presence-bridge-astra-20261016/replays/executions.json",
+        "sha256": "d6fe7feccb973417e95274c9796dfa9b0b34131b1e7a597c4a037325d76a6f2a",
+        "bytes": 4015
+      },
+      "qualification": "Executed from the exact reconstructed frozen sources, with the optional presence feature. Four compile-fail examples are distinct from the additional explicit diagnostics controls."
+    },
+    "suppliedWheelCorpusReplays": [
+      {
+        "wheel": "combined",
+        "checks": 415,
+        "status": "passed",
+        "receipt": {
+          "path": "/private/tmp/weft-presence-bridge-astra-20261016/replays/combined.json",
+          "sha256": "657c35474527cfc78ab11ba0af840892bdd1f3ba8d340fd7d07693fa3fab823a",
+          "bytes": 12922
+        }
+      },
+      {
+        "wheel": "candidate",
+        "checks": 410,
+        "status": "passed",
+        "receipt": {
+          "path": "/private/tmp/weft-presence-bridge-astra-20261016/replays/candidate.json",
+          "sha256": "d760e4900b9fa623cb9bc35e1638bb409c4c9ebf225b63a44f49b80f204013d2",
+          "bytes": 12757
+        }
+      },
+      {
+        "wheel": "legacy",
+        "checks": 7,
+        "status": "passed",
+        "receipt": {
+          "path": "/private/tmp/weft-presence-bridge-astra-20261016/replays/legacy.json",
+          "sha256": "0cec747bb856fdfcb05cfab50121b5c47dde6c578e98e5fdcea3c9c962dd338d",
+          "bytes": 520
+        }
+      },
+      {
+        "wheel": "runtime-only",
+        "checks": 12,
+        "status": "passed",
+        "receipt": {
+          "path": "/private/tmp/weft-presence-bridge-astra-20261016/replays/runtime-only.json",
+          "sha256": "705cbfaeb81e0945de0cffee174ffc88aea3e932268cdcf10f0c287077b279f4",
+          "bytes": 783
+        }
+      }
+    ],
+    "independentSourceBuiltWheel": {
+      "build": {
+        "path": "/private/tmp/weft-presence-bridge-astra-20261016/independent-wheel-build.json",
+        "sha256": "7cc4053778db41c61b2bccfa5f52c24c420423abd635ff97bbd27a5fd23d8852",
+        "bytes": 1625
+      },
+      "wheel": {
+        "path": "/private/tmp/weft-presence-bridge-astra-20261016/wheels/all-features/weft_sql-0.4.37.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+        "sha256": "baecb4d207419813361b9a5801348b3c39362e94c263aa3892c45eb502ddaabb"
+      },
+      "members": {
+        "weft_sql-0.4.37.dev0.dist-info/METADATA": "ad0477028ac94de094c186f05e6ca438546052d7701415c31286ec26c03f8c30",
+        "weft_sql-0.4.37.dev0.dist-info/WHEEL": "be9a82d2d467ffc6d31e276fb6b3dbae71503d99eb86e2b3b230dd78ac02779f",
+        "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+        "weft/weft.abi3.so": "c5f1f8a4e3baba6778d3c58f539ad1e2c76d0304cc1c1161dd0365336e725d1e",
+        "weft_sql-0.4.37.dev0.dist-info/RECORD": "1095544ee61b0eaa7ccea749698e91671dde9d921ed1544b1b55cbbc1529adcf"
+      },
+      "features": "Explicit pyproject baseline plus current-presence-candidate, bounded-current-string-candidate and current-spark-scalar-candidate.",
+      "corpusChecks": 415,
+      "corpusReceipt": {
+        "path": "/private/tmp/weft-presence-bridge-astra-20261016/replays/independent-wheel-corpus.json",
+        "sha256": "97411880322715e8dc2452e245959104f43dee2ed433f8bb806cecfe59d239fb",
+        "bytes": 12926
+      },
+      "qualification": "Separate locally built dev abi3 macOS ARM wheel, not a replacement/relabeling of any supplied wheel and not a publication artifact. No source edits were needed."
+    },
+    "adversarialPython": [
+      {
+        "wheel": "supplied combined",
+        "checks": 298,
+        "oldLowerCheckDescriptors": 11,
+        "status": "passed",
+        "receipt": {
+          "path": "/private/tmp/weft-presence-bridge-astra-20261016/independent-python-combined.json",
+          "sha256": "33834b045f2402d61fe7afc52a44d5cc95b1d4704129f0bf4cc9775bdc23cc1d",
+          "bytes": 186041
+        }
+      },
+      {
+        "wheel": "independently source-built expanded-feature wheel",
+        "checks": 314,
+        "oldLowerCheckDescriptors": 19,
+        "status": "passed",
+        "receipt": {
+          "path": "/private/tmp/weft-presence-bridge-astra-20261016/independent-python-all-features.json",
+          "sha256": "47120fe2afb3a852e25bd32f8d96894b71121de3c92c62f5efb58063261eb577",
+          "bytes": 192375
+        }
+      }
+    ],
+    "adversarialCoverage": [
+      "Exact actual parent identity, equal-byte distinct parents, parent lifetime after dropping caller handle, retained original source bytes including whitespace, stale original binding refusal and correct newly pinned binding success.",
+      "No report/native-input/artifact/check-report import as a lineage or presence object; direct native descriptors reject fake __class__, mappings, parent objects and old current-query objects.",
+      "All enabled old lower/check descriptors refuse the new type before backend handling: 11 on the supplied combined wheel and 19 on the separately built expanded-feature wheel.",
+      "No arbitrary-object or str-subclass coercion/callbacks across lower binding, checker binding and checker frame channels; bytes, bytearray, memoryview and mappings refuse.",
+      "Constructor, subclassing, instance state/class mutation, copy/deepcopy and every supported pickle protocol refuse.",
+      "Lone high/low/mixed/paired-surrogate-codepoint strings refuse; ASCII/BMP/supplementary UTF8 over-bounds refuse. Valid 4,000,000-byte binding and 16,000,000-byte frame succeed with exact raw-body SHA pins; plus-one boundaries refuse.",
+      "Duplicate/unknown JSON fields, NUL/nonfinite/deep bodies, old versions, stale pins, noncanonical counts, missing rows and SQL-null collapse refuse with private diagnostics suppressed.",
+      "Structurally matching selected occurrence 999/999 retains false authority and requires whole UMF validation; no authority is inferred from possessing the class or receiving a matched report."
+    ],
+    "explicitRustBoundaries": {
+      "controls": 8,
+      "status": "passed",
+      "report": {
+        "path": "/private/tmp/weft-presence-bridge-astra-20261016/rust-controls.json",
+        "sha256": "3ab29bbf3e3017e404392252064f3c2911145a9436a845d352697ba0b7eb882a",
+        "bytes": 7614
+      },
+      "diagnostics": {
+        "deserialize": "E0277",
+        "serialize": "E0277",
+        "clone": "E0308",
+        "private-callback": "E0624",
+        "old-receiver": "E0308",
+        "private-ownership": "E0616",
+        "feature-off-type": "E0432",
+        "lineage-only-factory": "E0599"
+      },
+      "qualification": "Each negative was checked for its intended Rust diagnostic, not merely a failed cargo exit."
+    },
+    "governance": {
+      "status": "passed",
+      "artifacts": 73,
+      "schemas": 96,
+      "workspacePackages": 11,
+      "boundaryUnitTests": 16,
+      "report": {
+        "path": "/private/tmp/weft-presence-bridge-astra-20261016/governance-controls.json",
+        "sha256": "1f14efdea4251129be47dbad48ee9208c91e56d2cd21190f59689b31f163c3ab",
+        "bytes": 956
+      },
+      "qualification": "Specification/boundary checks do not execute a database or close planned requirements."
+    }
+  },
+  "custody": {
+    "checks": 6525,
+    "status": "passed",
+    "report": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/custody-audit.json",
+      "sha256": "cc201d8e40866803d891de13aab5e6675397bd2d7ea06c86b01c1deef106219a",
+      "bytes": 2288600
+    },
+    "originalReconstructedFiles": 4412,
+    "selectedSourceFiles": 1306,
+    "governanceSourceFiles": 225,
+    "finalSourceEndpoints": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/final-source-endpoints.json",
+      "sha256": "cf274a4199a8164fda4f474b0680b116708a9e686031b6e29be634005393395e",
+      "bytes": 228
+    },
+    "findings": "All original reconstructed file hashes remain unchanged. Selected current owner source endpoints match the exact reconstructed base+overlay. All four supplied wheel/native/shim pins match their frozen manifest, and the independent wheel has its own build/member pins.",
+    "fixtureCustody": "The actual 66-packet corpus and 41 emitted rendered artifacts retain their previously independently reviewed hashes. The 25 refused packets remain data/refusal evidence; the bridge does not relabel them as successful compiled operations.",
+    "sourceSnapshotQualification": "Endpoint equality is not held-file/ABA proof. Captured source/fixture/governance bytes and Cargo.lock identify the reviewed build inputs; external compiler/Python/OS dependency closure is not hermetic.",
+    "runtime": {
+      "path": "/private/tmp/weft-presence-bridge-astra-20261016/runtime.json",
+      "sha256": "0ab8af39b2e2391e1dadf58db8573b7a4a11930001dce92e28a2de85625e7b1c",
+      "bytes": 1122
+    },
+    "retention": "The final manifest covers the compact retained evidence set. Reconstructed checkout, Cargo target cache, redundant full Git base tar and extracted wheel installations are scratch copies excluded from that manifest; exact source/governance/runtime archives and wheel ZIPs with restoration mappings are included."
+  },
+  "historicalEvidence": {
+    "frozenR1Unmodified": true,
+    "candidate396": "The frozen R1 packet retains the earlier candidate-only 396-check receipt as an earlier harness cohort. The separately supplied later 410-check receipt and this review\u2019s fresh 410 replay are retained separately; the original archive/manifest is unchanged.",
+    "ownerInitialRuntimeFailure": "The supplied first runtime log records the initial wrong outer version test setup; current frozen source uses interfaceVersion and passes. This historical failure log is retained and not counted as current successful evidence or independently reproduced.",
+    "reviewerSetupAttempts": [
+      {
+        "path": "reconstruction.json",
+        "qualification": "Initial git archive attempt targeted the owner source export without .git and failed before reconstruction. Retried against the authoritative /Users/erik/Projects/weft Git object; no owner source edits."
+      },
+      {
+        "path": "reviewer-attempts/first-independent-python-combined.json",
+        "qualification": "Initial reviewer harness incorrectly expected 19 old Python descriptors in the supplied combined wheel. All actual 11 already refused correctly. Corrected scope; separately rebuilt an expanded-feature wheel to exercise all 19."
+      },
+      {
+        "path": "reviewer-attempts/rust-first/",
+        "qualification": "Initial external Rust control crate omitted the baseline workspace ahash path patch and failed offline resolution before the intended type controls. No such failures counted as passing. Corrected only the external probe setup and checked eight intended diagnostics."
+      },
+      {
+        "path": "reviewer-attempts/governance-first/",
+        "qualification": "Initial reviewer environment omitted required WEFT_CARGO for the module-boundary script. Corrected the environment and reran; source unchanged. Initial logs and scripts retained."
+      }
+    ],
+    "productFindingFromTheseAttempts": false
+  },
+  "scopeLimits": [
+    "No SQL, Docker or native database campaign was executed for this bridge review. The prior native supplied-campaign audit remains a separate immutable report; it does not automatically qualify these Python wheel binaries for native execution.",
+    "These are local development ABI3 macOS ARM artifacts tested with the recorded Python 3.11.17 runtime and Rust toolchain. No Windows/Linux/x86/Python-version matrix, public release, default-feature enablement or WASM bridge is qualified.",
+    "The held context and exact source hashes do not authenticate the source, caller, Subject, native role/mapping or current cut. Read-purpose metadata is not a grant; fixture bindings remain explicitly unadmitted.",
+    "The bridge does not invoke the UMF producer, perform whole V2 semantic validation, authenticate complete native population or enforce closing current-authority checks/guarded release. Those host obligations remain mandatory, including empty results.",
+    "Input/output bounds and observed local boundary timings are component checks, not process-memory limits, hard deadlines, cancellation guarantees or an unbounded proof. Hosts retain their execution, resource, cleanup and release obligations.",
+    "No original Weft132 or UMF158 security requirement is promoted. The 34 UMF criteria and existing 45-implemented/113-missing status are unchanged; the full security acceptance gate was not rerun in this review.",
+    "Counts include repeated fixture/control assertions on multiple wheel configurations; they are not additional unique acceptance requirements or formal proofs."
+  ],
+  "disposition": "No correction is required for this exact bridge component before its owner\u2019s scoped integration. Any subsequent source/ABI/platform/native admission change needs its own qualified evidence."
+}

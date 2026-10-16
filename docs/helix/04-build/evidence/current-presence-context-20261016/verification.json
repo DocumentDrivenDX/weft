@@ -1,0 +1,33 @@
+{
+  "baseCommit": "cc2e96a4fff38626cc4658cbd57ea9153d007226",
+  "mergedCoreExitCode": 0,
+  "mergedCoreTests": 355,
+  "modulesExitCode": 0,
+  "workspacePackages": 11,
+  "moduleTests": 16,
+  "specsExitCode": 0,
+  "governedArtifacts": 71,
+  "schemas": 92,
+  "original132CasesPromoted": 0,
+  "nativeDatabaseExecuted": false,
+  "pythonWasmApiAdded": false,
+  "reviewedSourceFiles": 10,
+  "byteIdenticalReviewFiles": 8,
+  "additiveMergedFiles": [
+    "crates/weft-core/src/lib.rs",
+    "docs/helix/02-design/module-boundaries.json"
+  ],
+  "independentReviewSha256": "2eaf99dcc17bb30165d506f1777a252d4e92cfac5da6ea84310b5b933937faa4",
+  "logs": {
+    "merged-specs.log": "5e355ebb41e169a75bed5e5e1f86d56bd39045b14c63d4d73c22df7c75272ae5",
+    "merged-module-boundaries-initial-missing-cargo.log": "ec73054201077eb21ef9cc368cf6335d5da364d28c0a422b0e568c8e787cdd0c",
+    "merged-module-boundaries.log": "568d36cbf51b413cc01a58925841ae6edc614b2c9d8190405a1b1e4b9fe875a6",
+    "merged-core.log": "7ff6e8ec5a4d1cc829522c1fa8dc184a3936e36e48dffcd57388317139cf76da"
+  },
+  "rawLogPackaging": {
+    "path": "merged-core.log.gz",
+    "rawSha256": "7ff6e8ec5a4d1cc829522c1fa8dc184a3936e36e48dffcd57388317139cf76da",
+    "gzipSha256": "aeafa4a8e6c0a95fca65bc6c554d37ed92ea6ef12861ed3c3c2199ae26713808",
+    "reason": "Lossless gzip retains original trailing blank line while avoiding text whitespace diff failure"
+  }
+}

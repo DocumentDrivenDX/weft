@@ -85,7 +85,7 @@ fn purposes(source:&Opaque)->Result<BTreeMap<String,BTreeSet<String>>>{
  }
  if result.keys().cloned().collect::<BTreeSet<_>>()!=expected{return Err(fail())}Ok(result)
 }
-fn encode(v:&Value,maximum:usize)->Result<String>{
+pub(crate) fn encode(v:&Value,maximum:usize)->Result<String>{
  struct Buffer{bytes:Vec<u8>,left:usize}
  impl std::io::Write for Buffer{fn write(&mut self,b:&[u8])->std::io::Result<usize>{self.left=self.left.checked_sub(b.len()).ok_or_else(||std::io::Error::other("budget"))?;self.bytes.extend_from_slice(b);Ok(b.len())}fn flush(&mut self)->std::io::Result<()>{Ok(())}}
  let mut b=Buffer{bytes:Vec::new(),left:maximum};serde_json::to_writer(&mut b,v).map_err(|_|fail())?;String::from_utf8(b.bytes).map_err(|_|fail())
@@ -306,4 +306,10 @@ mod bounded_tests {
   let mut r=request();r["sql"]=json!("SELECT SUM(r.salary) AS total FROM Resource r");r["parameters"]=json!({});
   let refused=(||{let p=crate::application_lineage::prepare(&r.to_string())?;let d=derive(&p)?;crate::current_query_operands::derive(&d).map(|_|())})();assert!(refused.is_err());
  }
+}
+
+#[cfg(feature="current-presence-context-candidate")]
+pub(crate) fn require_presence_read_purpose(raw:&str,identity:&SourceIdentity,action:&str)->Result<()> {
+ let source=Opaque{role:"ontology".into(),identity:identity.clone(),media_type:"application/json".into(),utf8:raw.into(),sha256:sha256(raw.as_bytes())};
+ if purposes(&source)?.get(action).is_some_and(|p|p.contains("read")){Ok(())}else{Err(fail())}
 }

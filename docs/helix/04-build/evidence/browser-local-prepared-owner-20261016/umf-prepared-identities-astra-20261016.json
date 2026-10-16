@@ -1,0 +1,123 @@
+{
+  "review": "Astra Ultra scoped source review",
+  "date": "2026-10-16",
+  "verdict": "SOURCE_CLEAR; downstream cohort qualification pending",
+  "scope": [
+    "UMF immutable prepared Core Key tuples and action identity/input helpers, including lazy successful declaration resolution",
+    "CONTRACT-901 reusable declaration section",
+    "Truss five prepared per-batch call substitutions",
+    "Weft exact new local owner pin and actual original preparation fixture; native/general producer unchanged"
+  ],
+  "sourceSha256": {
+    "/Users/erik/.codex/worktrees/0ede/umf/src/model/key-tuple.ts": "3e224718ab1dd05d15e9430caead7aeac93178d045444b307cd34df6f1d76a1a",
+    "/Users/erik/.codex/worktrees/0ede/umf/src/extensions/actions/selector.ts": "0bd7f164ceceaca5a397237ed654de3fc62f6a7e98ad14ba10d6f94d0b8fbd6d",
+    "/Users/erik/.codex/worktrees/0ede/umf/tests/actions/prepared-identities.test.ts": "32fa71802b84a3d72229c45cb50740a9bd8d5b9b1ffbf537e5efd67a2d9ca8cd",
+    "/Users/erik/.codex/worktrees/0ede/umf/tests/actions-prepared-corpus.ts": "5a75768d1f7afc6ce42b758dcd5d23df8d65f5f635a4937cf1bdae55fd184def",
+    "/Users/erik/.codex/worktrees/0ede/umf/scripts/actions-prepared-browser.ts": "f5619d63bdd6843dc7697c265117998490b9ff5b696a35ec5bf98bf281f64a2f",
+    "/Users/erik/.codex/worktrees/0ede/umf/docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md": "7a84cdbb09e24f399aedb15bec365a7b0300c9b8083e121d18754aa86b5eefb3",
+    "/private/tmp/umf-prepared-base40-20261016/src/index.ts": "43aa730abd2e90a8987d0c9a17de869abeca5517fc787089ac57fed10b1f1447",
+    "/private/tmp/umf-prepared-base40-20261016/src/extensions/actions/plan-identity.ts": "8a33d4439573e3b4190332ca187cd0276840e6619dae7986627e9c10cec3d017",
+    "/private/tmp/weft-browser-prepared-owner-20261016/spec/upstream/actions-plan-local/owner-pins.json": "987e7f42ae05581cf1e2777187fd8a3c32e817b93bb4acbc4e136c01f68083d8",
+    "/private/tmp/weft-browser-prepared-owner-20261016/tests/mutation/compiler.rs": "08baacc301fc02d7cb744d432621eff328071de11404c471e31cfba12f931002",
+    "/private/tmp/weft-browser-prepared-owner-20261016/tests/mutation/fixtures/local-products-input.json": "71a8dad6cdaaa53ffda89cdce8286ed51da2a3550956e8c8a99beae6f69750ee",
+    "/private/tmp/weft-browser-prepared-owner-20261016/tests/mutation/fixtures/local-products-input-previous-producer.json": "2a17a1dc0df402ff6ea4fe10c14314e5f928951a70294e32734d04746616de8e",
+    "/private/tmp/weft-browser-prepared-owner-20261016/.cargo/config.toml": "6e87ded1a3f6228bb0aee5f62f89e72f87c1f9281d882ef7ac1dd8844315a64f",
+    "/private/tmp/truss-browser-prepared-keys-20261016/packages/browser/batch.ts": "e2d6a37753b45b2804ab7a1738b29a0930e901395fadb8aa19404b73bfc32411",
+    "/private/tmp/truss-browser-prepared-keys-20261016/packages/browser/actions.ts": "cdd5df370f4e929e0e83d932fdc9d1700ae82d1f132045bf091c798568197016",
+    "/private/tmp/truss-browser-prepared-keys-20261016/packages/browser/build-assets.ts": "b7a043b5acb3b5daf43f6d3d7b6d2cb2b573c4ee212098a9ac71bf919a5d60b4",
+    "/private/tmp/truss-browser-prepared-keys-20261016/packages/browser/check-lifecycle.ts": "3c90edf4a0d918040d35d62556cbd811ba227bbee89d40c8c2b50a5c1bfde08c",
+    "/private/tmp/truss-browser-prepared-keys-20261016/packages/browser/owners/umf-local-actions/producer.json": "5f5b1ac7f0e4d6154a6a45584d54aa879586f2673e7a5672eb0afa9637bf94fe"
+  },
+  "independentlyObserved": {
+    "parityProbes": 14,
+    "probeScope": [
+      "outputs valid/missing/wrong typed value/unknown parameter",
+      "selected unknown dependency refuses ACTION_UNCHECKED",
+      "foreign retained source with wrong component domain preserves KEY_TUPLE_VALUE",
+      "receipt getter refuses NON_JSON without execution",
+      "optional unknown dependency absent accepted; supplied refuses on repeated calls",
+      "warmed output/parameter calls retain value admission"
+    ],
+    "sourceCustody": [
+      "deep-owned frozen model/action; no caller alias or global state",
+      "per-call copied inputs/results, original tuple body/schema/receipt recomputation",
+      "foreign-source verification falls back to original stateless behavior",
+      "only successful declaration resolution memoized within frozen source; no actor/store/current-authority state",
+      "all five consumer substitutions retain original preparation/manifest/native guard/key/effect checks"
+    ],
+    "cohort": [
+      "complete regular Weft source-tree comparison: only local owner-pins, compiler test, generated local fixture changed; exact previous fixture added",
+      "all three original schema bytes/pins and original Cargo configuration match",
+      "canonical UMF ESM independently recomputes preparation7ee exactly",
+      "new preparation body differs from old only in producer",
+      "canonical gzip matches current bundle; notice payload files unchanged, inventory metadata updated"
+    ]
+  },
+  "pins": {
+    "umfBase": "40f011402bf8f0c9512225975b62a034f1da325c",
+    "producer": "sha256:6b331c0b5118435a79eb19b3c66464b4ea1ed3e70134fc3b71e07913487a408b",
+    "bundleSha256": "86fd188e12b2c796c41f10d4f26a9b8aaa12323d148722fa034d05ec062a43a3",
+    "sourceMapSha256": "cba464a10530f7ee5aa910e10e631dabdab79c770a82a5f65b5065ceebb3a9fa",
+    "preparationSha256": "7ee1afaa2b4d24a2d86473341255edf9b11ad266e5d35477126e00504f1975c0",
+    "weftBase": "4f5b73df8b751b4291b84af3b59169c1a1b63ed0",
+    "weftBuildInputs": {
+      "path": "/private/tmp/weft-browser-prepared-owner-build-inputs-20261016.json",
+      "sha256": "0800c3c8c663e2c52480f3691f4c8d98a17b7d3784810bab6506e26b15dbb28c",
+      "entries": 3235,
+      "verification": "manifest hash/count and reviewed entries independently verified; full pre/post freeze reported by parent"
+    }
+  },
+  "parentExecutedEvidence": {
+    "bun": {
+      "passed": 28,
+      "assertions": 474,
+      "files": 3,
+      "retainedLogInspected": true
+    },
+    "chromium": {
+      "passed": 83,
+      "version": "153.0.8010.12",
+      "bundleSha256": "86fd188e12b2c796c41f10d4f26a9b8aaa12323d148722fa034d05ec062a43a3",
+      "externalRequests": 0,
+      "producerQualification": false,
+      "retainedReportInspected": true
+    },
+    "rustFreshIsolatedTarget": {
+      "session": "68917",
+      "passed": 10,
+      "failed": 0,
+      "retainedLogInspected": true
+    },
+    "dependencyComparison": {
+      "sources": 882,
+      "byteEqual": true,
+      "qualification": "parent-produced comparison receipt inspected; notice payload equality independently checked"
+    }
+  },
+  "supersededFailures": [
+    {
+      "session": "10950",
+      "result": "lifecycle stopped at stale expected6f5e preparation assertion; actual original API returned7ee; assertion now7ee; no E2E success inferred"
+    },
+    {
+      "session": "93941",
+      "result": "shared-target run8pass2fail contradicted on-disk local pin; fresh isolated-target10pass resolves candidate test qualification; exact cache failure mechanism not established"
+    }
+  ],
+  "evidenceSha256": {
+    "/private/tmp/umf-prepared-identities-bun-20261016.log": "5b14dbe9cbd87723796981fa2ec18524b8740622efd21a8d9281cd7e4a521b34",
+    "/private/tmp/umf-prepared-canonical-chromium-20261016.json": "ac69700aae554c90100a80132fc55e5ed71be5aebcc8b91a5b17dfc5acf9db6c",
+    "/private/tmp/umf-prepared-dependency-source-comparison-20261016.json": "70eceef8eda2404f098c8a839762a6b7da532e4c16c1f6e87e5f0beca26bd252",
+    "/private/tmp/weft-browser-prepared-owner-tests-20261016.log": "c8a2aea4120cab6bd4aaaaf52e391f4a3cfe87d0802ea0c0fd2d7e040478cee5",
+    "/private/tmp/weft-browser-prepared-owner-tests-fresh-20261016.log": "00e27f21e2ac18e136e8f3c6f12c33693ff7f564be8142e9b155026f15afe529",
+    "/private/tmp/truss-browser-prepared-lifecycle-20261016.log": "60a25e1b01c0edaae6a4c6101fa7b3a3bc06d46f7f64f27632128c9a4e05432f"
+  },
+  "openGates": [
+    "fresh configured WASM build and artifact/source correspondence",
+    "new-cohort browser lifecycle and actual1024/point update reproof",
+    "measured performance; no gain or throughput claim",
+    "canonical owner adoption/source revision and publication qualification; frozen633 cohort unchanged"
+  ],
+  "productionEditsByReviewer": false,
+  "nativeOrBrowserRunsByReviewer": false
+}

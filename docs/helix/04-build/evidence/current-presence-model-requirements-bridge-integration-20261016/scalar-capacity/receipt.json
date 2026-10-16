@@ -1,0 +1,21 @@
+{
+  "version": "weft-actual-scalar-requirements-capacity/0.1",
+  "passed": true,
+  "requestBytes": 597992,
+  "requirementsBytes": 9833820,
+  "requestSha256": "9979943c2cba3bbcdb297084906194fc4a58532600a582c3faa18a13737a1dc5",
+  "requirementsSha256": "23d1451bd831aed015c63c6df054dce2ec4165543d115e806f7071d1c0aadea9",
+  "recordCount": 5,
+  "fieldCount": 1062,
+  "singleScalarDescriptorPerField": true,
+  "allLogicalTypesNonnullable": true,
+  "modelRevisionCharacters": 4096,
+  "additionalScalarFields": 1050,
+  "sameActualParent": true,
+  "seconds": 6.209237208007835,
+  "modulePath": "/private/tmp/weft-model-requirements-main-combined-installed-20261016/weft/weft.abi3.so",
+  "moduleSha256": "39b3a516bf0a42b1f2de1d06fa6ad501f572b42977c8e2189c57ed9d19d44198",
+  "originalSourceSemanticAdmission": false,
+  "nativeAuthority": false,
+  "scope": "Actual compiler-issued parent/presence/model requirements; pure metadata capacity, no native admission or full UMF owner evaluation"
+}

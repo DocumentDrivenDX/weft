@@ -1,0 +1,714 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:current-presence:native-input:0.1-candidate",
+  "type": "object",
+  "required": [
+    "version",
+    "capabilities",
+    "authority",
+    "securityReady",
+    "nativeAdmission",
+    "sourceRequestSha256",
+    "lineageSha256",
+    "sourceProfileJson",
+    "sourceProfileSha256",
+    "modelPins",
+    "sources",
+    "binding",
+    "primaryAction",
+    "producer",
+    "readRequirements",
+    "unresolved",
+    "preparationSha256",
+    "sourceRequestJson"
+  ],
+  "properties": {
+    "version": {
+      "const": "weft.current-presence.native-input/0.1-candidate"
+    },
+    "capabilities": {
+      "const": [
+        "tagged-current-projection"
+      ]
+    },
+    "authority": {
+      "const": false
+    },
+    "securityReady": {
+      "const": false
+    },
+    "nativeAdmission": {
+      "const": "required"
+    },
+    "sourceRequestSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "lineageSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceProfileJson": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "sourceProfileSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "modelPins": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "umfVersion": {
+            "const": "0.8.0"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "documentId",
+          "revision",
+          "umfVersion",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "enum": [
+              "policy",
+              "ontology",
+              "catalog",
+              "owner"
+            ]
+          },
+          "identity": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "revision"
+            ],
+            "additionalProperties": false
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "role",
+          "identity",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "backendId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "backendVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "targetProfile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "documentId",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "backendId",
+        "backendVersion",
+        "targetProfile",
+        "source",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "primaryAction": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "protocol",
+        "entrypoint"
+      ],
+      "properties": {
+        "protocol": {
+          "const": "umf.security.logical-disclosure-batch/0.1-candidate"
+        },
+        "entrypoint": {
+          "const": "evaluateCandidateCatalogReadDisclosureBatchWithinOperation"
+        }
+      },
+      "additionalProperties": false
+    },
+    "readRequirements": {
+      "type": "object",
+      "properties": {
+        "scans": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "scan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "target": {
+                "$ref": "#/$defs/lineage_ref"
+              },
+              "recordIdentity": {
+                "$ref": "#/$defs/lineage_identity"
+              },
+              "kind": {
+                "const": "rowRead"
+              }
+            },
+            "required": [
+              "path",
+              "scan",
+              "target",
+              "recordIdentity",
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "fields": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "scan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "target": {
+                "$ref": "#/$defs/lineage_ref"
+              },
+              "recordIdentity": {
+                "$ref": "#/$defs/lineage_identity"
+              },
+              "field": {
+                "$ref": "#/$defs/lineage_ref"
+              },
+              "fieldIdentity": {
+                "$ref": "#/$defs/lineage_identity"
+              },
+              "role": {
+                "enum": [
+                  "projection",
+                  "predicate",
+                  "join",
+                  "group",
+                  "order",
+                  "aggregate"
+                ]
+              },
+              "descriptor": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/lineage_identity"
+                      },
+                      "availability": {
+                        "enum": [
+                          "required",
+                          "absent-allowed"
+                        ]
+                      },
+                      "kind": {
+                        "const": "scalar"
+                      },
+                      "type": {
+                        "$ref": "#/$defs/lineage_logicalType"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/lineage_identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "sequence"
+                      },
+                      "item": {
+                        "$ref": "#/$defs/lineage_identity"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "item"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/lineage_identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "map"
+                      },
+                      "item": {
+                        "$ref": "#/$defs/lineage_identity"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "item"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/lineage_identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "structured"
+                      },
+                      "record": {
+                        "$ref": "#/$defs/lineage_identity"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "record"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/lineage_identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "exactScalar"
+                      },
+                      "scalarType": {
+                        "enum": [
+                          "timestamp",
+                          "binary"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "scalarType"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "sourceStatus": {
+                "enum": [
+                  "derived",
+                  "unsupported-shape"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "scan",
+              "target",
+              "recordIdentity",
+              "field",
+              "fieldIdentity",
+              "role",
+              "descriptor",
+              "sourceStatus"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "descriptor": {
+                      "properties": {
+                        "kind": {
+                          "const": "scalar"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "sourceStatus": {
+                      "const": "derived"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "sourceStatus": {
+                      "const": "unsupported-shape"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "kind": {
+                "const": "relationshipObservation"
+              },
+              "sourceScan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "terminalScan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "relationship": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "relationship": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "relationship"
+                ],
+                "additionalProperties": false
+              },
+              "sourceIdentity": {
+                "$ref": "#/$defs/lineage_identity"
+              },
+              "targetIdentity": {
+                "$ref": "#/$defs/lineage_identity"
+              }
+            },
+            "required": [
+              "path",
+              "kind",
+              "sourceScan",
+              "terminalScan",
+              "relationship",
+              "sourceIdentity",
+              "targetIdentity"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unsupportedSources": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "kind": {
+                "enum": [
+                  "fieldShape",
+                  "numericAggregateProperties"
+                ]
+              },
+              "fieldIdentity": {
+                "$ref": "#/$defs/lineage_identity"
+              }
+            },
+            "required": [
+              "path",
+              "kind"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "fieldShape"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "fieldIdentity"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "fieldIdentity"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "scans",
+        "fields",
+        "relationships",
+        "unsupportedSources"
+      ],
+      "additionalProperties": false
+    },
+    "unresolved": {
+      "const": [
+        "whole-source UMF semantic admission",
+        "actual canonical owner-fold invocation and selected source occurrences",
+        "native caller/source/current-cut authentication",
+        "materialization/result codec and guarded release"
+      ]
+    },
+    "preparationSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceRequestJson": {
+      "type": "string",
+      "maxLength": 4000000
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "lineage_ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "lineage_identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "lineage_logicalType": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "decimal"
+          ]
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "facets": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "family",
+        "nullable",
+        "facets"
+      ],
+      "additionalProperties": false
+    },
+    "lineage_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

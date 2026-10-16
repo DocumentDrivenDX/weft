@@ -1,3 +1,7 @@
+#[cfg(feature="current-presence-model-requirements-candidate")]
+pub mod current_presence_model_requirements;
+#[cfg(feature="current-presence-context-candidate")]
+pub mod current_presence;
 pub mod current_string_domain;
 pub mod current_query_operands;
 pub mod current_query_designation;

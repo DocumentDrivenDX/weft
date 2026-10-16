@@ -1,0 +1,79 @@
+{
+  "baseCommit": "1c1a7dba5d5ceea282fbe0cd75fc7f0fa0469194",
+  "sourceFiles": [
+    {
+      "path": "crates/weft-postgresql/Cargo.toml",
+      "sha256": "b24fe5484a7ad5997328ce7c6b5a8e280bc3bd5da29780f936593d818a624bdd",
+      "baselineSha256": "063cfeab425c2aba0877f1915eb2abbaa57d00804c3bf5d5bd0af3b87325334c"
+    },
+    {
+      "path": "crates/weft-postgresql/src/lib.rs",
+      "sha256": "caacb512cb177d5251bd927e029774d10cd32846849dde637a5d4d85018c6693",
+      "baselineSha256": "285d1c71ada8c3c72d7c9fa14ddf86a85ad7e1b2b5581535069320bbe1f1d60c"
+    },
+    {
+      "path": "crates/weft-postgresql/src/current_presence.rs",
+      "sha256": "7d3e05d57de0ecc71abf4b19203c6d2d0717a9e98897c32762e59d7b70e87623",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/module-boundaries.json",
+      "sha256": "2102fd337911db50b3c158e6833edc05344b4dad0428b51e2489abb9d71ad614",
+      "baselineSha256": "90f7516cafb6b29590887fb56b16dc842cf25a4f973f493aef2894473a02fb16"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-013-current-presence-transport.md",
+      "sha256": "c135b0fdee4a1e1f85ef7a300ef1c4d32cfdb468397832ec264b945b3291508e",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/postgresql-current-presence-binding-v0.1-candidate.schema.json",
+      "sha256": "70600331253abc2af7790a438ea47498770b6fc2e3c2ece1eab693c1d08682e9",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/postgresql-current-presence-sql-v0.1-candidate.schema.json",
+      "sha256": "129d926cb2fc8353915694836eb3dcf6aba0ff606b9b16c1a1e4a2486eee0354",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-transport-input-v0.1-candidate.schema.json",
+      "sha256": "810bad66d87c808546c00d9fc0d6647f4eb9a15c8f9ce843093e33cac011b9b9",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-transport-result-v0.1-candidate.schema.json",
+      "sha256": "059992286df979c63c0421116562c2e02bfec37fafd9bee8de910feb7c338bfb",
+      "baselineSha256": null
+    },
+    {
+      "path": "tests/current-query-presence/fixtures/unadmitted-context.request.json",
+      "sha256": "2ebd655178b71bb49c48ff6997587cf51cd2a419a1793f95a24a6ec82d5dfe24",
+      "baselineSha256": null
+    },
+    {
+      "path": "tests/current-query-presence/fixtures/actual-atomic-transport.json",
+      "sha256": "f19439e8da44419aa2c08252a8155aa2efc2dc807cbb1b90e0cace7297660a53",
+      "baselineSha256": null
+    },
+    {
+      "path": "tests/current-query-presence/check-transport-schemas.ts",
+      "sha256": "ef0c979b4534a350895d1a1ed5172e6d906663c766129cdd093d849173d80802",
+      "baselineSha256": null
+    }
+  ],
+  "scope": "Conditional PG tagged TEXT-cell projection and independent complete-row-bag transport correspondence; no runtime/native ABI/authority",
+  "requiredProducerPacketSha256": "123be2df9ef80b9a1a25904ea6b886924ac8d63b52de88b4c5a6b34fdc020acb",
+  "qualification": "Upstream packet independent review still pending; actual41 rendered outputs/35empty/25refusals retained; test-provided logical locators are not native custody",
+  "tests": {
+    "focusedRust": 9,
+    "actualRenderedPackets": 41,
+    "schemaControls": 221,
+    "fullUpdatedLibrary": "running; do not claim pass",
+    "priorPrototypeLibrary": 122,
+    "specArtifacts": 72,
+    "schemas": 96
+  },
+  "nativeDatabaseExecuted": false,
+  "original132CasesPromoted": 0
+}

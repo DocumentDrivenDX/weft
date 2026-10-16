@@ -1,0 +1,82 @@
+{
+  "baseCommit": "4fb4de6af3374455a4605ac509e1e413be8ad023",
+  "sourceFiles": [
+    {
+      "path": "crates/weft-core/Cargo.toml",
+      "sha256": "ce7d0146d149537ab7e410572db29c364df6e4e77cd227c9672cc065b87b2fca",
+      "baselineSha256": "fcf611087c8ff18e1f72a92e1a0f2adc55affecb5fe47557d06ed2599a41e09a"
+    },
+    {
+      "path": "crates/weft-core/src/lib.rs",
+      "sha256": "fd484f477d5ba8efbd668ee8878d58bb022d464711331d56b898d8c722afb1b6",
+      "baselineSha256": "42b6a13ee307a0b1486c3c826683f2b064a8b007a6bc47bdb91319b2a99444e5"
+    },
+    {
+      "path": "crates/weft-core/src/current_query_designation.rs",
+      "sha256": "3aed3a7bf4c14e506b26a3b6c6e1d901ce91eacb6e0765a441fbbe24c1860300",
+      "baselineSha256": "450e92956b868ae4c74fb7ca92f4ad4f3e3bf74e6d3b5b6f3e0668903f8e383b"
+    },
+    {
+      "path": "crates/weft-core/src/current_presence.rs",
+      "sha256": "7ae6162bfc600e1106f02602cf95e98c7dc177064204d2dee07916a15caed073",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/module-boundaries.json",
+      "sha256": "700adbdf27c93a5cc6cd57485d200f57176c185ddc73278ab3558d6761cc4502",
+      "baselineSha256": "1a340674e0dfafa9af37b29ef73883f103d6142768392b3987b2c7fffd3d6e3c"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-012-current-presence-context.md",
+      "sha256": "8931a52cea2913a25e3c6294c23611b1309a5e828bfd66a4761106c370664f7c",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-profile-v0.1-candidate.schema.json",
+      "sha256": "e69f48a67c854ba98709ce5549d71cb0248b04643b892979ba783f82891c13b0",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-preparation-v0.1-candidate.schema.json",
+      "sha256": "60e5cf2be232d239136cd764d57cd3e4908813b5a9c49d0faf1f52b277e51139",
+      "baselineSha256": null
+    },
+    {
+      "path": "docs/helix/02-design/contracts/current-presence-native-input-v0.1-candidate.schema.json",
+      "sha256": "f53836398a7880895220cdd64763e7774a4fffa9f644662e9fd8121d01f8de89",
+      "baselineSha256": null
+    },
+    {
+      "path": "tests/current-query-presence/check-type-boundaries.py",
+      "sha256": "cff75734473bd6059e3a2a37579fd4408653f4da770544546b5f22c34509949c",
+      "baselineSha256": null
+    }
+  ],
+  "scope": "Core-only separately typed source/presence context; no SQL/native result codec/Python or WASM exposure",
+  "feature": "current-presence-context-candidate",
+  "requiredProducer": {
+    "protocol": "umf.security.logical-disclosure-batch/0.1-candidate",
+    "entrypoint": "evaluateCandidateCatalogReadDisclosureBatchWithinOperation",
+    "status": "required candidate data contract; upstream implementation frozen under independent review, not native admission"
+  },
+  "tests": {
+    "coreEnabled": 355,
+    "coreDefault": 328,
+    "doctestsCompileFail": 3,
+    "oldLowerCheckApisRejectNewType": 19,
+    "oldTypePositive": true,
+    "featureOffAbsent": true,
+    "lineageOnlyAbsent": true,
+    "specArtifacts": 71,
+    "schemas": 92,
+    "workspacePackages": 11,
+    "boundaryTests": 16
+  },
+  "priorAttempts": [
+    "Initial fixture assumed absent query-designation source and failed in setup; corrected to explicitly authored unadmitted test binding/profile, not accepted Truss binding repair",
+    "Initial prototype required selector protocol; deliberate unmerged update now requires atomic rendered batch contract",
+    "Initial proposed contract ID011 collided with existing bounded-string contract; new uncommitted artifact assigned012"
+  ],
+  "nativeAdmission": false,
+  "originalAcceptanceCasesPromoted": 0
+}

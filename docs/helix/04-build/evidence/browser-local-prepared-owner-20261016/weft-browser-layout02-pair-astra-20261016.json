@@ -1,0 +1,60 @@
+{
+  "review": "Astra Ultra narrow source review",
+  "reviewedAtUtc": "2026-10-16T09:18:40.643294+00:00",
+  "verdict": "SOURCE_CLEAR",
+  "candidate": "/private/tmp/weft-browser-layout02-backport-20261016",
+  "baselineRevision": "4f5b73df8b751b4291b84af3b59169c1a1b63ed0",
+  "scope": "Additive exact browser layout/profile pair admission only, plus source review of two admission tests. No compiler/parser/backend semantics changed.",
+  "source": {
+    "path": "/private/tmp/weft-browser-layout02-backport-20261016/crates/weft-postgresql/src/truss_browser_binding.rs",
+    "sha256": "4a0e7b6cc1b6165f0c7b086c2bf4ec3f0be99625aff576f66d33cbd8974013cc",
+    "baselineSha256": "5cfd0a1e4f52cc030c5b8961d2fb170d9ea43e542f2967656e94e44466fa5c8b"
+  },
+  "originalFixture": {
+    "path": "/private/tmp/weft-browser-layout02-backport-20261016/tests/mutation/fixtures/local-products-input.json",
+    "sha256": "2a17a1dc0df402ff6ea4fe10c14314e5f928951a70294e32734d04746616de8e",
+    "byteIdenticalToBaseline": true
+  },
+  "findings": [],
+  "independentChecks": [
+    {
+      "check": "Compared production section before cfg(test) with exact baseline git object after one expected string replacement",
+      "result": "PASS: every other production predicate and body byte identical"
+    },
+    {
+      "check": "Compared local-products-input.json with original baseline git object",
+      "result": "PASS: exact original bytes unchanged"
+    },
+    {
+      "check": "Source reviewed actual BrowserMapping::admit test invocation",
+      "result": "Two accepted exact pairs, two crossed refused pairs, unknown profile/layout refusals; five unrelated mapping refusal controls retain original constraints"
+    }
+  ],
+  "semanticConclusions": [
+    "matches! tests the profile and layout digest as one tuple. It admits only (0.1,c203d094...) or (0.2,1ffa72c5...), never the Cartesian product.",
+    "Existing mapping schema, PGlite/PostgreSQL versions, exact model/catalog/Record/Field/Key correspondence, resource limits and native identifier admissions remain unchanged.",
+    "The new pair corresponds to the separately source-reviewed 28-table browser layout. All retained table definitions are byte-identical to original48-table layout; it remains a new fresh-store profile, with no old-store migration or native authority claim.",
+    "Tests exercise the actual private admission method using original Artifact/model pin/Catalog preparation rather than a copied predicate. Their runtime results have not been observed by this reviewer."
+  ],
+  "browserCheckerFindingClosure": {
+    "previousReceipt": "/private/tmp/truss-browser-object-pages-astra-20261016-r2.json",
+    "file": "/private/tmp/truss-browser-paged-read-20261016/packages/browser/check-bulk1024.ts",
+    "sha256": "14fd357a62cefaaeb12fafec1f98925b59b270ed4fefbe13ddb782aa881931ff",
+    "finding": "Request/error observation began after worker startup",
+    "status": "CLOSED_SOURCE_VERIFIED",
+    "correction": "Current lines35-37 install routing and pageerror listener before line38 calls prepare().",
+    "execution": "Not run by reviewer; no new bulk proof inferred"
+  },
+  "runtimeStatus": {
+    "reviewerRanRust": false,
+    "reviewerRanWasmBuild": false,
+    "reviewerRanBrowser": false,
+    "parentReportedPriorAttempt": "Initial partial-archive build failed for missing original schema inputs; parent reports exact originals restored. No successful new binary claimed here.",
+    "actionLifecycle": "Original4f5 binary still refuses0.2. Source fix does not change an existing binary; canonical owner commit, actual rebuilt WASM/wrapper/provenance pins and browser lifecycle/bulk reproof remain required."
+  },
+  "limitations": [
+    "Narrow source correctness clearance only; no capacity, performance, release or deployment qualification.",
+    "No expanded arbitrary model/scalar/query support; original String/local action subset and owner boundaries remain.",
+    "Frozen original website provider/compiler cohorts are unchanged."
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "owner": "UMF",
-  "revision": "40f011402bf8f0c9512225975b62a034f1da325c",
-  "scope": "Exact local producer cohort; original schema bytes reused unchanged from ../actions-plan",
+  "revision": "c1e316c42ebe2a3a87420a5edc7e1ae751137b5b",
+  "scope": "Exact committed prepared local-action owner cohort; original schema bytes unchanged. Browser/native/publication qualification remains separate.",
   "resources": [
     {
       "file": "core.schema.json",
@@ -22,6 +22,6 @@
   "producer": {
     "id": "umf.actions.plan-model",
     "version": "1",
-    "build": "sha256:633f8ad623cc150fd3f6e2c5fe5324a0a128393036aa34d9929bfadf1142c6e4"
+    "build": "sha256:6b331c0b5118435a79eb19b3c66464b4ea1ed3e70134fc3b71e07913487a408b"
   }
 }

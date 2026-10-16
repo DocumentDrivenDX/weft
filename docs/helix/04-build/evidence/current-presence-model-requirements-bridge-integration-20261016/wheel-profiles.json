@@ -1,0 +1,28 @@
+{
+  "version": "weft-current-main-wheel-profiles/0.1",
+  "profiles": [
+    {
+      "profile": "combined",
+      "wheelSha256": "b0c509df5bb4903971a7547379331c94754e638310834d4aa081a8030f09a299",
+      "nativeSha256": "39b3a516bf0a42b1f2de1d06fa6ad501f572b42977c8e2189c57ed9d19d44198",
+      "version": "0.4.39-dev.0",
+      "passed": true
+    },
+    {
+      "profile": "old-presence",
+      "wheelSha256": "efd2d08e1c6275b81d8c387efca9730d32621fbe37f0a224ba26eedaaa3703d9",
+      "nativeSha256": "8eabc7a7b03810e87092ba15a4e5ac4157b3107a4088d5e556618d3e2d13b63e",
+      "version": "0.4.39-dev.0",
+      "passed": true
+    },
+    {
+      "profile": "default",
+      "wheelSha256": "7ca029bc850e55daa7667c223beb27f4e9ff42666ded733c7f3b340f03112296",
+      "nativeSha256": "6bd14fef5a36c4dc65c05d0bb3fcd65beead561f7b2200d955ae55c964b4ace6",
+      "version": "0.4.39-dev.0",
+      "passed": true
+    }
+  ],
+  "nativeDatabase": false,
+  "consumerRepinned": false
+}

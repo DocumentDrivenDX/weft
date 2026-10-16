@@ -1,0 +1,13 @@
+{
+  "version": "weft-model-requirements-feature-probe/0.1",
+  "cases": [
+    {
+      "profile": "default",
+      "features": [],
+      "exitCode": 101,
+      "expectedPresence": false,
+      "passed": false,
+      "log": "/private/tmp/weft-model-requirements-feature-default-20261016.log"
+    }
+  ]
+}

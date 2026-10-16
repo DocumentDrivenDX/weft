@@ -1,0 +1,378 @@
+{
+  "AGENTS-reviewed.md": {
+    "sha256": "d10e315200c67f4a7380e06120ea679769afaa6ca6e7e0df339e35326effd02a",
+    "bytes": 1615
+  },
+  "adversarial.json": {
+    "sha256": "554d952758420ebc5ec5c03a053adfeb6ab2a368ac0af387d01756013f0a6506",
+    "bytes": 2812869
+  },
+  "adversarial.log": {
+    "sha256": "494ce267037cff73d4531811aac36f14378218a935546a9a7f13430a909ca57d",
+    "bytes": 45
+  },
+  "adversarial.py": {
+    "sha256": "bcf6aa2e0d6010b3a88dd2a9e29686ea31817cc749372da4769fa73cd79408db",
+    "bytes": 9643
+  },
+  "candidate-correspondence.json": {
+    "sha256": "4d97b5419aa38b29a7eb1aff4d93f93f5fdbe9a3c23c6c39a00c8e7fddd36c33",
+    "bytes": 4743
+  },
+  "capacity-180-input.json": {
+    "sha256": "73c905eedb127c547886cf3d6ac2ecc3f3a1cde0ad8eba5bc226252bc4670256",
+    "bytes": 223185
+  },
+  "capacity-40-input.json": {
+    "sha256": "0b006682024ffca0a70bd36a6c4292eed6459cb4fc924d18d051b80888561d5e",
+    "bytes": 143805
+  },
+  "diffs/crates__weft-core__Cargo.toml.diff": {
+    "sha256": "d90bf8c9b4dde80a7a854c71a34f5291d84e8055a40edea67764f0758e8d4b45",
+    "bytes": 465
+  },
+  "diffs/crates__weft-core__src__current_presence.rs.diff": {
+    "sha256": "222ffdd323b82b05f8dc7c086ae1444a2a3b90a9eeb2f61b03df336c7fb01425",
+    "bytes": 9164
+  },
+  "diffs/crates__weft-core__src__current_presence_model_requirements.rs.diff": {
+    "sha256": "b6540ba5da420d5dfa4cedd8686ffa5244cd536e6a38310553ff2033eb7a249b",
+    "bytes": 6061
+  },
+  "diffs/crates__weft-core__src__lib.rs.diff": {
+    "sha256": "eedf0d4df6ed82df2f5afee31b6e16a7994968bb97ad257fc314e5b2d5faf749",
+    "bytes": 319
+  },
+  "diffs/docs__helix__02-design__contracts__CONTRACT-015-current-presence-model-requirements.md.diff": {
+    "sha256": "70c08ff70bdbe2cfc596ee862af883ec96f934e57e8f6ea9084350c1f7f8cc8f",
+    "bytes": 9163
+  },
+  "diffs/docs__helix__02-design__module-boundaries.json.diff": {
+    "sha256": "021851e6c5a5fbfd3e18d25fd74a715314fae8f8ba1dcb2ef9c791a53d8aa764",
+    "bytes": 948
+  },
+  "doctests.log": {
+    "sha256": "1e11144ea2f92a74932415142913f5ad3de60e17b3718ae7bc95c00718f721b3",
+    "bytes": 7457
+  },
+  "extra-controls-first.log": {
+    "sha256": "1a1db732f8f064116c4e46b0f4f0694d55ea70425c6fbf1599391e0451bfe233",
+    "bytes": 607
+  },
+  "extra-controls-first.py": {
+    "sha256": "c2cf772168d627a554219da2426c2f382f7142d5b1ac797bce538cf72406e356",
+    "bytes": 3023
+  },
+  "extra-controls.json": {
+    "sha256": "8712115a30eff067453cf6e41e19d82907e25bd88db8eb8a53b0b150cbe9bfb0",
+    "bytes": 12256911
+  },
+  "extra-controls.log": {
+    "sha256": "4924e716a2e0d8e5cf10ce5ad976fb33274160a2f2bf4a9585170da0ed3a6326",
+    "bytes": 209
+  },
+  "extra-controls.py": {
+    "sha256": "6807d2c097d7b8269f19678dd6ae352410023277213f2f85fcb76a0b77fdc3ca",
+    "bytes": 3510
+  },
+  "feature-controls.json": {
+    "sha256": "fde2508fa7ee137c9bf3dce4d508e1935156f83885437b1a2f745d9b0cc6b1ae",
+    "bytes": 911
+  },
+  "feature-controls.log": {
+    "sha256": "69267c89fccf35eebf62a9dde54c99428c67bba957c2ef0443fcec0df2faa7aa",
+    "bytes": 741
+  },
+  "feature-controls.py": {
+    "sha256": "cedf09ef6939fdfea011dccafc51177acf8dba96294aca0be4ed941539cb602c",
+    "bytes": 2237
+  },
+  "feature-default.log": {
+    "sha256": "a9fb3e2ff82be5bc446bf3c7a148f39ec04dc11ab9a91ca2411144fe474e4e9f",
+    "bytes": 10666
+  },
+  "feature-explicit-new.log": {
+    "sha256": "8dd5fb7feb1f5b2814b485fcdbcbbd3780204e04fe2b29718e6cf268f56266e1",
+    "bytes": 7888
+  },
+  "feature-old-context-only.log": {
+    "sha256": "964f213ee8e77bffe6ac86aeaef81247a33b778a53dffc941ef90ee6978af670",
+    "bytes": 8573
+  },
+  "feature-probe/Cargo.lock": {
+    "sha256": "9357dbcc26cc7b0cd1bf6612996ea89049cb8ac930a941247f5f5ee582e602bf",
+    "bytes": 23214
+  },
+  "feature-probe/Cargo.toml": {
+    "sha256": "2f2ed1d8082d2b0db6b7c3819c6e2bcdd27a6bed5ad532a2915a640b974d416f",
+    "bytes": 390
+  },
+  "feature-probe/src/main.rs": {
+    "sha256": "3eeabe4656e4361cb6e99f0ef995537a8e9dfdd6e10645f450df6266f9fc9327",
+    "bytes": 150
+  },
+  "first-adversarial.json": {
+    "sha256": "a9ca12bc74c7abf25e73e299e18db8e001f5f8aaa1797cc2a0f5b4a9ddac3f69",
+    "bytes": 2668453
+  },
+  "first-adversarial.log": {
+    "sha256": "2f20b11ed797f68d9174911877d2bb4e4e5913009970a165beb60a06774dd6a0",
+    "bytes": 342
+  },
+  "first-adversarial.py": {
+    "sha256": "9c119311c0011c18e189b088c9826b198d4143387b9b49430a4ea62c811b29d3",
+    "bytes": 9594
+  },
+  "focused.log": {
+    "sha256": "dc8fbd8d7a0fd282aa607159dcec7eba19445302f9efc88deb969e43d15559ed",
+    "bytes": 8640
+  },
+  "frozen/crates/weft-core/Cargo.toml": {
+    "sha256": "bb3d73dc76d4c02ca1fe7a7f03cacf3a751daa6e6a14602ef98aba2bd0bfba78",
+    "bytes": 1672
+  },
+  "frozen/crates/weft-core/src/current_presence.rs": {
+    "sha256": "19634a18660c59d696cbfee3c0a91f2350074e850132dbd3955ca432d37bc34f",
+    "bytes": 21541
+  },
+  "frozen/crates/weft-core/src/current_presence_model_requirements.rs": {
+    "sha256": "96a6012a08cbcb6d5bd530110b21feb69e5eb52a39d1dc1e90b8c2a6b6632255",
+    "bytes": 5823
+  },
+  "frozen/crates/weft-core/src/lib.rs": {
+    "sha256": "3c44cf8f8c48ebde6bbd2b06131d375158fef08d8c1836800ab7607e9da0f3b3",
+    "bytes": 6161
+  },
+  "frozen/docs/helix/02-design/contracts/CONTRACT-015-current-presence-model-requirements.md": {
+    "sha256": "6689f4eff2513a04b6dbf6cf7e6258d4f607725d2528c77069d6acfeaaf08d49",
+    "bytes": 8794
+  },
+  "frozen/docs/helix/02-design/module-boundaries.json": {
+    "sha256": "9b6cf3d14f4bbdf5f1508bec6f7e481190df7dcd252412c212e2b9b25cf593cc",
+    "bytes": 142832
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/README.md": {
+    "sha256": "ee4a88be3182973b60063adfabcd563a8312d62d5fe8aeaa77170af642e23d6e",
+    "bytes": 3281
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/all-core-tests.log.gz": {
+    "sha256": "9de8f5e889d74259084bde41022bf61a17e2614bb049b086f683c1dc79f3020a",
+    "bytes": 10440
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/baseline-inherited-files.json": {
+    "sha256": "615575ae49ab9ba03a26b5df17fbf5ed124cbb5d7e11a94ad0f9a28cc316130b",
+    "bytes": 958507
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/boundaries-r2.log.gz": {
+    "sha256": "490c7abeb0d5865c3149cff4daa9008bea3f85c2082a48a212e3d46cbaa13b98",
+    "bytes": 817
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/boundaries.log.gz": {
+    "sha256": "0d32bfe7e6f1fa38c6480d2c6f88ea816f2dc2a6d610f9ebf76cdaa45badb17c",
+    "bytes": 374
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/check-weft-model-requirements-feature-boundary-20261016.py": {
+    "sha256": "a97d92634939d20107346f7b73933e82bc9211482407862b52ddb0a125802543",
+    "bytes": 2224
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/doctests.log.gz": {
+    "sha256": "3fe2df75f246e895f802286df65dcc7e8547d255fef138cb76ce0c57f0f9d42f",
+    "bytes": 2151
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/feature-default.log.gz": {
+    "sha256": "34003e3e9c770120fe3771c2e1824334dd40d8ca997e911754158c0dcb73caaa",
+    "bytes": 3000
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/feature-explicit-new.log.gz": {
+    "sha256": "6ebe3fa3bd50ea5b8374357aa184dba33edd2c0cde68b09e356bc41c08cbc85f",
+    "bytes": 2084
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/feature-old-context-only.log.gz": {
+    "sha256": "fc40d8a550feca94faa6bff543e6c93c50318abbfe646574e1106fd5bfde896d",
+    "bytes": 2283
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/final-core-tests.log.gz": {
+    "sha256": "f553330de3dacfc5bec58d47c328052b52abfec34664fa7e041feeedc4e96111",
+    "bytes": 10430
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/final-doctests.log.gz": {
+    "sha256": "b716f1d2602d9da3fbfacb2c804eb68d76478ab8dece93cbc1155c33c237dac3",
+    "bytes": 2151
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/final-specs.log.gz": {
+    "sha256": "a2e5c51e535a276c1bbb95898894271658d19f9abe9e07c50fba2f514e728e97",
+    "bytes": 203
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/freeze-core-tests.log.gz": {
+    "sha256": "b956b34783930d9b6310d8f10d4073d73d00fe72107ae170ef27520ee7d095e0",
+    "bytes": 10462
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/freeze-doctests.log.gz": {
+    "sha256": "c28f1a646e77a468189092a2b7b8cb5a497c53ea01b0d80a8f76a3ecc425452d",
+    "bytes": 2151
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/freeze-specs.log.gz": {
+    "sha256": "a2e5c51e535a276c1bbb95898894271658d19f9abe9e07c50fba2f514e728e97",
+    "bytes": 203
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/retention.json": {
+    "sha256": "ab882659e53a366c8f1731a91d33b0ffaa17bd3063e85de99e6318a67fd30fbb",
+    "bytes": 6840
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/specs.log.gz": {
+    "sha256": "a2e5c51e535a276c1bbb95898894271658d19f9abe9e07c50fba2f514e728e97",
+    "bytes": 203
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/tests.log.gz": {
+    "sha256": "7b4574cda38ee1b0f7e185e56d2346ac757252d05d80d69da8af24880c2accb0",
+    "bytes": 2719
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/weft-model-requirements-feature-boundary-20261016-initial-environment-failure.json": {
+    "sha256": "146bb7b96fea33ee255f5ade7206bddbeeaeac947faaec68a09228b0d7c5a446",
+    "bytes": 301
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/weft-model-requirements-feature-boundary-20261016.json": {
+    "sha256": "12f4ad3964a042eaa85a36cf8fb516359ca3307942ac64e6cc6c320f1f8ab76d",
+    "bytes": 884
+  },
+  "frozen/docs/helix/04-build/evidence/current-presence-model-requirements-20261016/weft-model-requirements-feature-default-20261016-initial-environment-failure.log": {
+    "sha256": "4e79744a05e6205230c404c2100f47e9bd76cbef33059b3ad5f478c9e21d9a20",
+    "bytes": 649
+  },
+  "inherited-audit.json": {
+    "sha256": "28d26d42f6afb9cdcdeaf5461c5930d51b0d70977ff912b7f8431e7346b9b9f6",
+    "bytes": 41
+  },
+  "mutants/collapse-requested-field-to-nested-descriptor/build.log": {
+    "sha256": "629ebfbdcf37596fda196d4f200b49563085004cc415eba92f07965a55641734",
+    "bytes": 8051
+  },
+  "mutants/collapse-requested-field-to-nested-descriptor/result.json": {
+    "sha256": "bcde73504198271d3904d40bb0fca43c71df86e1ced0a38aeb358e2b1012dc89",
+    "bytes": 44638
+  },
+  "mutants/collapse-requested-field-to-nested-descriptor/source.rs": {
+    "sha256": "7fda62b665a6cde82302ba805fce3798c8d9161476152d61104c75f766f92176",
+    "bytes": 5857
+  },
+  "mutants/omit-association-key/build.log": {
+    "sha256": "86283e1b0a5e1f505084c4a7cd70176bd63a3401f209cf346bd289e79b3d4b64",
+    "bytes": 8413
+  },
+  "mutants/omit-association-key/result.json": {
+    "sha256": "a7f634fdd96b0a8d36a8eefb72dd4a20162c1fa22a2b8da7d03736d362e20083",
+    "bytes": 42673
+  },
+  "mutants/omit-association-key/source.rs": {
+    "sha256": "cd1bcb827c329cab250306740b785c72aaf5ca31e252863f2ca6ea01ca540682",
+    "bytes": 5761
+  },
+  "mutants/omit-member-census/build.log": {
+    "sha256": "1475ece6aebbfda3e051424c993e80fc0146ac86cbea67cd131e658a90ef8c5f",
+    "bytes": 8050
+  },
+  "mutants/omit-member-census/result.json": {
+    "sha256": "9b390e488b0f52e90afeaa387ba031dbe71967ed54d304a880bbdccccada05c7",
+    "bytes": 41783
+  },
+  "mutants/omit-member-census/source.rs": {
+    "sha256": "3fc0cbaf2b1a9d1b7d93ab57aaed6f55ae6c8b3a53ae8801bd1fbc5748fb9938",
+    "bytes": 5815
+  },
+  "mutants/reverse-key-order/build.log": {
+    "sha256": "6fa0519d6462771e188057bfa2ea3ce91c2db8c176c1eec8ad53358a3b7faa4b",
+    "bytes": 8051
+  },
+  "mutants/reverse-key-order/result.json": {
+    "sha256": "591afce19e9c3be8b64a6e3620350df3c9fda70ceaf3f747c90ea6fded01378a",
+    "bytes": 42910
+  },
+  "mutants/reverse-key-order/source.rs": {
+    "sha256": "89d904e04bb03e6129970bd8dadd18aacdf4a03a1afc6802e42ecfa64909375d",
+    "bytes": 5861
+  },
+  "mutations.json": {
+    "sha256": "b361f489848697c851a4a95f9a084a9d3e2e7aaab6ee6d30863b26eee64dd589",
+    "bytes": 1466
+  },
+  "mutations.log": {
+    "sha256": "f7a09ac60a869180ffea0f6e274bf19426c53db11cfd7a32a61db5b86fc0ccaf",
+    "bytes": 124
+  },
+  "mutations.py": {
+    "sha256": "896b47af98381d3a0a37fb7e41301a2d4831c32f973c6036b9f2684a7af93e8d",
+    "bytes": 2992
+  },
+  "packet-audit.json": {
+    "sha256": "a5267628dd8a88b05d89ef19ce9a986fa0edc625e31a2df2393bb223f25b5917",
+    "bytes": 6666
+  },
+  "probe/Cargo.lock": {
+    "sha256": "6c914058b3de2b0e0acedab4bcfcb4b795290c437c2baf6abf123bd4efbdd630",
+    "bytes": 23221
+  },
+  "probe/Cargo.toml": {
+    "sha256": "b6dc1fa6316795b4fbd5e6a5a229231b0a260e873e1117d3ae38fa4ffc9923dc",
+    "bytes": 355
+  },
+  "probe/src/main.rs": {
+    "sha256": "f28e71fe3859f43a03329cf842c8abf1f177247fb153db6091b6836510e72308",
+    "bytes": 1197
+  },
+  "probe-build.log": {
+    "sha256": "e67297af5e5ff51a4953b1ac2b5535c97c941068c28a1b34def6f25c54e96304",
+    "bytes": 8397
+  },
+  "reconstruct.py": {
+    "sha256": "3e52b4ea7d71bef49bceb14bdd7c3a056aa072be95fcb6af603a70e37736a89a",
+    "bytes": 1156
+  },
+  "reconstruction-first-failure.log": {
+    "sha256": "969d7fd440b1c40b32fe83e1964c629bac1fa14107abbec17886d113ad0a7313",
+    "bytes": 348
+  },
+  "report-capacity.json": {
+    "sha256": "225ec6341ee7fe93170911daa7477da2bb91e568509a8516d9e8b795ba376f9c",
+    "bytes": 468
+  },
+  "report-capacity.log": {
+    "sha256": "70378630cf85c3c960dffb5f2ed9b2df4563b323ca6bf53f30ce16e83863c37a",
+    "bytes": 324
+  },
+  "report-capacity.py": {
+    "sha256": "530f3935b8c096846bc2a71319c588202c72fe918ca4428fb6044c310a545fa4",
+    "bytes": 2101
+  },
+  "restored-build.log": {
+    "sha256": "63346ed4a853cd088521e6eed0cd7420a58756b11ceceb703bfca9dffe157273",
+    "bytes": 8051
+  },
+  "review.json": {
+    "sha256": "e7f9cbaea46024dd7d2d698b516cc016b66d951cfdb0815d55ae2a9f145686c8",
+    "bytes": 6909
+  },
+  "review.zip": {
+    "sha256": "d4c81f46151ec7f6be51684e9ee68d1ec4cdafa9747f5454aa4f5f841f5db542",
+    "bytes": 312861
+  },
+  "run-cargo.py": {
+    "sha256": "9b46dd1913e14dd2e9517f45af8001f9eaee28a82b23b27f0b6e5c03fe15ac98",
+    "bytes": 552
+  },
+  "second-extra-controls.json": {
+    "sha256": "da65b0e6dca4380ad4548476e313fb6863c593e911499d4b8db9fa35de050086",
+    "bytes": 1836311
+  },
+  "second-extra-controls.log": {
+    "sha256": "52233604f240003d0752d988901df53ed07550ea1701745059fb2d04216f38b6",
+    "bytes": 152
+  },
+  "second-extra-controls.py": {
+    "sha256": "12622f88fbcebfe912520906112b373e7a2c2c87b1cb11a6b7d1eb62d2721ef8",
+    "bytes": 3057
+  },
+  "source-after.json": {
+    "sha256": "50195fe7ce5e16a40527b362eb1101244dfdbd981d666ea5004e92c1d3639a09",
+    "bytes": 1261
+  }
+}

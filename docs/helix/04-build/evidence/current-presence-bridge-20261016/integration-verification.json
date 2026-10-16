@@ -1,0 +1,18 @@
+{
+  "baseCommit": "3ac033baf05e6ae9e2f37d9647d2a4a320999f6e",
+  "reviewedBaseCommit": "54a822ae33eea7c820cbdbf5f9e9beaa002af9e7",
+  "all8ReviewedFilesByteIdentical": true,
+  "reviewSha256": "11a04d8ce84e9764b7fee67f4dce3129530ad83463a743129346f758ff4d47f0",
+  "reviewArtifacts": 158,
+  "reviewArchiveSha256": "443a9c21f0b6c01114854482a3e14757b773bbe562ed452e34187f6a0939330f",
+  "defaultPythonBuildConfigurationUnchanged": true,
+  "wasmSourceChanged": false,
+  "nativeDatabaseExecutedByBridgeReview": false,
+  "original132AcceptanceCasesPromoted": 0,
+  "integratedSpecsExitCode": 0,
+  "integratedModulesExitCode": 0,
+  "specArtifacts": 73,
+  "schemas": 96,
+  "workspacePackages": 11,
+  "boundaryTests": 16
+}

@@ -1,0 +1,12 @@
+{
+  "actualCompilerReplay": true,
+  "requestBytes": 597992,
+  "requirementsBytes": 9833820,
+  "requirementsSha256": "23d1451bd831aed015c63c6df054dce2ec4165543d115e806f7071d1c0aadea9",
+  "old8MiBRefused": true,
+  "new16MScanned": true,
+  "boundaryStrictnessControls": 16,
+  "seconds": 6.671567416982725,
+  "nativeAuthority": false,
+  "scope": "Actual issued Q and strict decoder capacity only; not complete native join/admission."
+}

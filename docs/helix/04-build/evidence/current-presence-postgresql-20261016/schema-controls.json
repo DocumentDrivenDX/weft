@@ -1,0 +1,1114 @@
+{
+  "scope": "Schema data consistency for actual Rust lowering/checker outputs over supplied UMF logical producer packets; no invocation/native authority proof",
+  "inputSha256": "9f0f952fa260697bf055ec22d20792565b4db295a86c2f82ca4949f5ee236710",
+  "producerPackets": 41,
+  "checks": 221,
+  "passed": true,
+  "observations": [
+    {
+      "id": "allowed:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "allowed:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "revoked:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-subject:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-staff:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-assignment-project:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "foreign-ownership-project:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-ownership:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:string:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:string:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:string:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:string:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:absent:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:absent:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:absent:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:absent:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:transformed-null:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:transformed-null:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:transformed-null:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "no-assignment:transformed-null:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "incomplete-coverage:withheld:binding",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "incomplete-coverage:withheld:compiled",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "incomplete-coverage:withheld:frame",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "incomplete-coverage:withheld:report",
+      "valid": true,
+      "expected": true
+    },
+    {
+      "id": "binding:missing:version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:missing:capabilities",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:missing:sourceRequestSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:missing:preparationSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:missing:sourceBindingSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:missing:relation",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:missing:header",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:missing:cells",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:unknown",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:old-version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "binding:unknown-header-column",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:capabilities",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:authority",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:securityReady",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:nativeAdmission",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:sourceRequestSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:preparationSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:materializationBindingSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:sql",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:parameters",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:resultColumns",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:disclosureHeader",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:privateResultColumns",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:missing:obligations",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:unknown",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:old-version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:authority",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:admission",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "compiled:unknown-header-column",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:sourceRequestSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:preparationSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:materializationBindingSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:compiledArtifactSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:expectedRowCount",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:header",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:rows",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:missing:resultRows",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:unknown",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:old-version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "frame:unknown-header-column",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:matched",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:authority",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:securityReady",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:nativeAdmission",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:sourceRequestSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:preparationSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:materializationBindingSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:compiledArtifactSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:transportInputSha256",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:missing:unresolved",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:unknown",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:old-version",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:authority",
+      "valid": false,
+      "expected": false
+    },
+    {
+      "id": "report:admission",
+      "valid": false,
+      "expected": false
+    }
+  ]
+}

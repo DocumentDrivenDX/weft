@@ -558,6 +558,12 @@ pub struct ApplicationLineagePreparation{inner:std::sync::Arc<weft_core::applica
 impl ApplicationLineagePreparation{
  pub fn json(&self)->&str{self.inner.json()}
  pub fn source_request_json(&self)->&str{self.inner.source_request_json()}
+ /// A separate issued presence object; .4 never enters the old designation path.
+ #[cfg(feature="current-presence-candidate")]
+ pub fn prepare_current_presence(&self)->weft_core::error::Result<CurrentPresencePreparation>{
+  let prepared=weft_core::current_presence::prepare(&self.inner)?;
+  Ok(CurrentPresencePreparation{original:std::sync::Arc::clone(&self.inner),preparation_json:prepared.json().to_owned()})
+ }
  pub fn current_query_designations_json(&self)->weft_core::error::Result<String>{weft_core::current_query_designation::derive(&self.inner).map(|d|d.json().to_owned())}
  /// Derive both original declarations before issuing a child; no input overrides.
  pub fn prepare_current_query(&self)->weft_core::error::Result<CurrentQueryPreparation>{
@@ -757,3 +763,81 @@ pub fn compile_search_json(request:&str)->String{weft_postgresql::search::compil
 
 #[cfg(feature="raw-postgresql-reads")]
 pub mod engine_read;
+/// Original-object presence custody, not JSON import or native permission.
+/// ```compile_fail
+/// use weft_runtime::CurrentPresencePreparation;
+/// fn import(raw:&str)->CurrentPresencePreparation{serde_json::from_str(raw).unwrap()}
+/// ```
+#[cfg(feature="current-presence-candidate")]
+pub struct CurrentPresencePreparation{
+ original:std::sync::Arc<weft_core::application_lineage::ApplicationLineage>,
+ preparation_json:String,
+}
+#[cfg(feature="current-presence-candidate")]
+impl CurrentPresencePreparation{
+ pub fn json(&self)->&str{&self.preparation_json}
+ pub fn is_from(&self,original:&ApplicationLineagePreparation)->bool{std::sync::Arc::ptr_eq(&self.original,&original.inner)}
+ pub fn native_request_json(&self)->weft_core::error::Result<String>{self.with_context(|context|context.native_request_json())}
+ /// Data-only requirements from the same actual retained original context.
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ pub fn model_requirements_json(&self)->weft_core::error::Result<String>{
+  self.with_context(|context|Ok(weft_core::current_presence_model_requirements::derive(context)?.json().to_owned()))
+ }
+ pub fn lower_postgresql_current_presence_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{
+  self.with_context(|context|Ok(weft_postgresql::current_presence::lower(context,binding)?.json().to_owned()))
+ }
+ pub fn check_postgresql_current_presence_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{
+  self.with_context(|context|weft_postgresql::current_presence::check(context,binding,input))
+ }
+ // Re-derive only the scoped borrow over the actual retained immutable parent.
+ // No source request/SQL/AST or success JSON is imported on any method call.
+ fn with_context<T>(&self,consume:impl FnOnce(&weft_core::current_presence::CurrentPresencePreparation<'_>)->weft_core::error::Result<T>)->weft_core::error::Result<T>{
+  let prepared=weft_core::current_presence::prepare(&self.original)?;
+  if prepared.json()!=self.preparation_json{return Err(weft_core::error::Diagnostic::new("WFT-CURRENT-PRESENCE-BRIDGE","capability","Current presence bridge refused"))}
+  consume(&prepared)
+ }
+}
+
+#[cfg(all(test,feature="current-presence-candidate"))]
+mod current_presence_bridge_tests{
+ use super::*;
+ use serde_json::{Value,json};
+ #[test]
+ fn actual_presence_bridge_preserves_issued_parent_and_all_producer_artifacts(){
+  let corpus:Value=serde_json::from_str(include_str!("../../../tests/current-query-presence/fixtures/actual-atomic-transport.json")).unwrap();
+  let emitted:Value=serde_json::from_str(include_str!("../../../tests/current-query-presence/fixtures/actual-atomic-transport-emitted.json")).unwrap();
+  for record in emitted.as_array().unwrap(){
+   let case=corpus["cases"].as_array().unwrap().iter().find(|c|c["id"]==record["id"]).unwrap();let raw=case["request"].to_string();
+   let original=prepare_application_lineage(&raw).unwrap();let child=original.prepare_current_presence().unwrap();
+   assert!(child.is_from(&original));let other=prepare_application_lineage(&raw).unwrap();assert!(!child.is_from(&other));
+   assert!(original.prepare_current_query().is_err());assert!(original.current_query_designations_json().is_err());
+   let core=weft_core::application_lineage::prepare(&raw).unwrap();let context=weft_core::current_presence::prepare(&core).unwrap();assert_eq!(child.json(),context.json());assert_eq!(child.native_request_json().unwrap(),context.native_request_json().unwrap());
+   drop(original);let binding=record["binding"].to_string();
+   let compiled:Value=serde_json::from_str(&child.lower_postgresql_current_presence_candidate_json(&binding).unwrap()).unwrap();assert_eq!(compiled,record["compiled"]);
+   let checked:Value=serde_json::from_str(&child.check_postgresql_current_presence_candidate_json(&binding,&record["frame"].to_string()).unwrap()).unwrap();assert_eq!(checked,record["report"]);assert_eq!(checked["authority"],false);
+  }
+ }
+ #[test]
+ fn old_parent_binding_and_wrong_transport_cannot_enter_new_bridge(){
+  let raw=include_str!("../../../tests/current-query-presence/fixtures/unadmitted-context.request.json");let original=prepare_application_lineage(raw).unwrap();let child=original.prepare_current_presence().unwrap();
+  assert!(child.lower_postgresql_current_presence_candidate_json("{}").is_err());assert!(child.check_postgresql_current_presence_candidate_json("{}","{}").is_err());
+  for version in ["weft-application-lineage/0.1-candidate","weft-application-lineage/0.2-candidate","weft-application-lineage/0.3-candidate"]{
+   let mut old:Value=serde_json::from_str(raw).unwrap();old["interfaceVersion"]=json!(version);old["sql"]=json!("SELECT r.resourceId FROM Resource r");let parent=prepare_application_lineage(&old.to_string()).unwrap();assert!(parent.prepare_current_presence().is_err());
+  }
+ }
+}
+
+#[cfg(all(test,feature="current-presence-model-requirements-candidate"))]
+mod current_presence_model_requirements_bridge_tests{
+ use super::*;
+ #[test]
+ fn requirements_use_the_same_original_arc_and_survive_parent_handle_drop(){
+  let raw=include_str!("../../../tests/current-query-presence/fixtures/unadmitted-context.request.json");
+  let original=prepare_application_lineage(raw).unwrap();let child=original.prepare_current_presence().unwrap();
+  let other=prepare_application_lineage(raw).unwrap();assert!(child.is_from(&original));assert!(!child.is_from(&other));
+  let core=weft_core::application_lineage::prepare(raw).unwrap();let context=weft_core::current_presence::prepare(&core).unwrap();
+  let expected=weft_core::current_presence_model_requirements::derive(&context).unwrap();assert_eq!(child.model_requirements_json().unwrap(),expected.json());
+  drop(original);assert_eq!(child.model_requirements_json().unwrap(),expected.json());
+  let report:serde_json::Value=serde_json::from_str(expected.json()).unwrap();assert_eq!(report["sourceRequestJson"],raw);assert_eq!(report["complete"],false);assert_eq!(report["authority"],false);
+ }
+}
