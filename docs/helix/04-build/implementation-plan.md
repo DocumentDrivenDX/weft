@@ -2586,3 +2586,18 @@ implementation, dependency selection, profile, publication or native acceptance
 changes. Evidence: `evidence/bounded-current-strings-20261015/module-boundary-repair-20261016/`.
 The separate new projection-lineage frontend is excluded from this correction.
 All132 original B-008 cases remain required.
+
+
+### Truss compiler-owned refinement integration observation — 2026-10-16
+
+Truss main includes a4306247; its stage module matches the original independently
+reviewed source byte-for-byte. The owner terminal records one native test passing
+14.158s, including exact signed64/masked output and a predicate-empty result.
+Separate all-denied/zero-population tests and a weakened-checker native control
+were not run in that command. Complete in-run source/payload/engine fingerprints
+are not retained; committed-source inspection and post-run published-wheel
+matching do not reconstruct those facts. Evidence:
+`evidence/truss-current-refinement-integration-20261016/`. This records integration
+and a qualified native observation, promotes zero original cases, and leaves
+all132 B-008 obligations open. Source-pinned adversarial native replay remains
+required before wider qualification.

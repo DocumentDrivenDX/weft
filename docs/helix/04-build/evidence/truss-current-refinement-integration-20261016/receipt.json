@@ -1,0 +1,40 @@
+{
+  "status": "merged-source-correspondence-and-qualified-native-test-observation",
+  "trussCommit": "a43062473e98ca71d0fd707c7b2ff3778229855d",
+  "observedRemoteMain": "3e63b9d6ccc3862dab827996e0da7930cf0345c8",
+  "integrationAncestorVerified": true,
+  "reviewSha256": "c476ae7da00c964e1d396ce93bec10194a1c84aa153cbfe7172e7a103652da8f",
+  "committedSources": [
+    {
+      "path": "packages/python/src/truss/_current_query_stage.py",
+      "sha256": "781416cbcd80b8875fb77ac847822e2614acd69b17a8c629211b5a5f7b5e9f22"
+    },
+    {
+      "path": "packages/python/tests/test_current_query_runtime_native.py",
+      "sha256": "386377040c751549a0a3967e6811e3fdf8c5db559a8cc90b0c6634f783b34329"
+    }
+  ],
+  "sourceArchiveSha256": "aa450277cccfef6ad975c37880adb1c57458ff06fc90449e1adb99e2ea4ca8f5",
+  "nativeExecutionItemSha256": "ed3388180c6a6aae2dbfb6bff5c43e60b96691c4d7e9371bb8a1b2cb47f748f0",
+  "nativeObservation": {
+    "test": "CurrentQueryRuntimeNativeTests.test_public_masked_projection_with_authorized_exact_raw_predicate",
+    "terminalExitCode": 0,
+    "testCount": 1,
+    "reportedSeconds": 14.158,
+    "covered": [
+      "masked result under exact signed64 predicate",
+      "adjacent signed64 predicate yields empty result",
+      "unsupported ordering refuses",
+      "public byte-limit refusal and private staging cleanup assertions"
+    ]
+  },
+  "postRunWheelReceiptSha256": "75168e8809bf358cd8a422cbf596fe7c8bfb9d250753a49cc769eb3f82a85aa4",
+  "limitations": [
+    "Native command retained no complete pre/post execution source or installed-payload fingerprint; committed-source inspection and post-run payload matching do not establish those missing facts",
+    "Separate all-denied and zero-population tests were not executed by this command",
+    "No retained corruption/weakened-barrier native test for this integration",
+    "Required-only facetless String/explicit signed64 route; no bounded-string, presence, aggregate or broad native backend qualification"
+  ],
+  "nativeAdmission": false,
+  "originalAcceptanceCasesPromoted": 0
+}
