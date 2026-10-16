@@ -1,0 +1,38 @@
+{
+  "review": "Astra Ultra canonical-date internal helper visibility plan",
+  "date": "2026-10-16",
+  "status": "PLAN_CLEAR_IMPLEMENTATION_PENDING",
+  "baseline": "baf0dab7b7a578135efa6e035e97f5238e6b8677",
+  "scope": "Change only validate_date_token and Parameters::push_date from pub to pub(crate); preserve their bodies, all callers, compiler protocol/schema/ABI behavior and the module boundary checker/inventory.",
+  "blocking_findings": [],
+  "proof": [
+    "weft-core exact is declared with private mod exact; new validate_date_token is called only by application_binary and backend_emission in weft-core. Crate-local visibility is sufficient.",
+    "New Parameters::push_date is called only by truss_runtime in weft-postgresql. It is an internal slot-construction helper, not a promised released public entrypoint. Crate-local visibility preserves the existing call path.",
+    "The actual boundary delta contains only these two lexical public declarations. scripts/module-boundaries.ts explicitly skips pub(crate), pub(super) and pub(in ...) declarations; its behavior and exact inventory should remain unchanged.",
+    "Neither helper body, validation rule, slot typing or generated SQL changes. No new interface, weakened boundary check, updated inventory or broad release claim is needed."
+  ],
+  "planned_validation": [
+    "Two existing canonical_date_runtime_tests compiler cases",
+    "Existing module-boundary check and its negative controls",
+    "Inspect actual two-line diff and unchanged checker/inventory before completed clearance"
+  ],
+  "limits": [
+    "Plan review only: at inspection git diff was empty and the two declarations remained pub; no completed-source or passing-test claim yet.",
+    "No native database tests or full128 PostgreSQL-suite rerun needed for visibility-only repair.",
+    "The original CI boundary failure remains retained as evidence; do not describe it as a successful run."
+  ],
+  "reviewer_actions": "Read-only call-graph, source/declaration inventory and checker inspection. No edits, test execution or agents.",
+  "source_sha256": {
+    "crates/weft-core/src/exact.rs": "9b444cc507fdbf5ac2b9431d0c22087e5fc2b08c162e9d65fa3e8aed02edca38",
+    "crates/weft-core/src/lib.rs": "3c44cf8f8c48ebde6bbd2b06131d375158fef08d8c1836800ab7607e9da0f3b3",
+    "crates/weft-core/src/application_binary.rs": "81e95c963d0cbd22b99fc6ff84670c529f2f42ad922af6496eeeb391ebc975fc",
+    "crates/weft-core/src/backend_emission.rs": "fccb5238144d8e4401326467538ee4d719a33927c4f6b36e0ea616d3d693c172",
+    "crates/weft-postgresql/src/lib.rs": "0320cc002b3b622dd7848ca0b14c67f309da84d4468fb8f61624ca15df2c4a15",
+    "crates/weft-postgresql/src/truss_runtime.rs": "489ad92957a6411702b0835f4cf9dd1998e830973a568021ddb6172ea22e6e30",
+    "scripts/module-boundaries.ts": "c5b847b85761a58f458b3db3f903a4ebb33e13a22cd75d40587f6256b622f0a6"
+  },
+  "boundary_delta": {
+    "path": "/private/tmp/weft-date-boundary-delta-20261016.jsonl",
+    "sha256": "34e2486a11f7802e7d1a4eb644244fdc7e2ef19b981652aeac1100bddbd825ea"
+  }
+}

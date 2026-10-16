@@ -1,0 +1,45 @@
+{
+  "review": "Astra Ultra completed canonical-date helper visibility correction",
+  "date": "2026-10-16",
+  "status": "SOURCE_AND_COMPLETED_CHECKS_CLEAR",
+  "baseline": "baf0dab7b7a578135efa6e035e97f5238e6b8677",
+  "recommendation": "Commit the exact two pub-to-pub(crate) corrections with retained original CI failure and corrected local evidence.",
+  "blocking_findings": [],
+  "findings": [
+    "Exact source comparison against HEAD proves only the two visibility declarations changed; both helper bodies and every caller are unchanged.",
+    "validate_date_token remains callable by core application_binary/backend_emission; Parameters::push_date remains callable by PostgreSQL truss_runtime. Both helpers are internal to their respective crates; no promised released external entrypoint is removed.",
+    "Boundary checker, ownership inventory and negative controls are unchanged. The scanner already distinguishes crate-local visibility from public exports, so no policy widening or accepted-inventory expansion occurs.",
+    "The original CI 38938758375 failed before tests due to these two newly lexical-public declarations. Corrected local checks do not relabel that CI run as passed."
+  ],
+  "validation": {
+    "exact_visibility_only_comparison": true,
+    "git_diff_check": "PASS",
+    "parent_run": [
+      {
+        "session": 99088,
+        "result": "modules:check PASS: actual Cargo graph and lexical ownership for 11 workspace packages; 16 boundary/negative tests PASS, 0 FAIL"
+      },
+      {
+        "session": 10370,
+        "result": "Both existing date compiler tests PASS in 0.07 s; 126 other PostgreSQL tests filtered out"
+      }
+    ],
+    "reviewer": "Read-only exact diff/call graph/log checks and receipt write. No tests, native execution, product edits or agents."
+  },
+  "limits": [
+    "No native behavior, protocol, schema, SQL, ABI or runtime-default change.",
+    "No full128-suite rerun/pass, installed wheel, publication or broader support claim.",
+    "Previously reviewed native evidence remains scoped to the original paired disposable candidate; no new native evidence is invented."
+  ],
+  "source_sha256": {
+    "crates/weft-core/src/exact.rs": "2f39da002aa9b300e2ba94b9cb1e1a53e75317f545cee6b81d72aaef2bb4857e",
+    "crates/weft-postgresql/src/lib.rs": "fd6c050cb945785b84790c2492f6ac15a8fe97cec2bd2f6e0193907f616fe004"
+  },
+  "evidence_sha256": {
+    "/private/tmp/weft-date-private-helper-boundaries-20261016.log": "5c752e8cc922370aef5d62b0841ce53784f9ad2fc8a7b07387afd8b5eacf5ad3",
+    "/private/tmp/weft-date-private-helper-tests-20261016.log": "d4b0fb7d259936efc4ad4aca7176d3be2ebbbba7c3dc06a3f0d31492d2ca1e4d",
+    "/private/tmp/weft-date-boundary-delta-20261016.jsonl": "34e2486a11f7802e7d1a4eb644244fdc7e2ef19b981652aeac1100bddbd825ea"
+  },
+  "plan_receipt": "/private/tmp/weft-date-visibility-plan-astra-20261016.json",
+  "plan_receipt_sha256": "0ec394a0c83dca061818c32ad2b3a4eeeb52667b348867b2b6ee1ffefc77d688"
+}
