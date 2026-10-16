@@ -1,0 +1,37 @@
+{
+  "review": "Astra Ultra canonical-date compiler release and subsequent atomic Truss adoption plan",
+  "date": "2026-10-16",
+  "status": "PLAN_CLEAR_WITH_EXACT_ARTIFACT_AND_ADOPTION_GATES",
+  "baseline": "5ed08ec898210a954a6a9033ffd8a6ca446ddf81",
+  "blocking_findings": [],
+  "plan": "Release Weft 0.4.39 with explicitly selected backend 0.4.41 and compile/backend/IR0.2.7 using existing five-platform wheel workflow; only after actual publication adopt exact matching compiler and logical ABI1.1 atomically on unreleased Truss main. No new native runtime compatibility, security or performance claim.",
+  "required_refinements": [
+    "Version changes must include crates/weft-python/Cargo.toml, crates/weft-python/pyproject.toml AND the weft-python Cargo.lock version. Existing wheel builds use --locked. Keep Rust toolchain, feature list, dependencies and other crate versions unchanged unless separately justified.",
+    "Reuse the existing exact-wheel smoke/report/gate pattern. Mandatory Date smoke on all five targets, uploaded report required; no hashFiles-based optional escape. Publisher for stable versions >=0.4.39 must require exactly five distinct Date wheel reports matching the same five baseline wheel names, source commit, version, wheel/module/shim hashes and fixed expected check sequence.",
+    "Positive tests must use the genuine captured native-query-bundle without rewriting its original modules/binding, validate bindingJson equals parsed binding and original source/ABI pins, then check compiled protocol/IR/backend, original binding slot and exact Date parameter token/type. Literal, typed and field-equality compilation are scoped compiler evidence, not native execution on five platforms.",
+    "Invalid-date refusal must produce no SQL and the expected Date-domain diagnostic. Old026, oldbackend and oldABI controls must be explicit. Recompute bindingSha256 after an intentional ABI mutation, so the negative tests exact ABI rejection rather than a trivial stale outer digest.",
+    "Add small publisher omission/mismatch controls using the existing validator style, including missing/duplicate wheel, source/version/pin mismatch and changed check outcome as appropriate; no new conformance framework or weakened existing gates.",
+    "Keep current native70/backend40 fixed-runtime release metadata and all old backend pins intact. Add a separate Date backend41 descriptor with target0.5, binding0.5 and exact logical query ABI1.1 SHA 9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f. Describe its selection as exact logical ABI, not a new fixed native71 support declaration.",
+    "Run all retained standard exact-wheel smoke commands plus Date against the frozen stable0.4.39 candidate, along with existing spec/boundary controls. Preserve the passing current CI requirement and final tag five-platform/publisher gates; do not infer release readiness solely from earlier development-wheel tests.",
+    "Retain immutable failed tags/history. Freeze source, build from the final release commit/tag, require exact final-source reports, then publish through existing checks/promotion policy. Local wheel hashes or workflow artifacts are not published adoption pins."
+  ],
+  "atomic_truss_adoption_after_publication": [
+    "Freshly download actual published wheels, SHA256SUMS and release reports/pins; verify final source/tag, all five platform results and installed module/shim hashes before deriving additive trusted cohorts.",
+    "In one reviewed Truss change update query dependency/compiler version check, backend41/interface027/IR027, ABI1.1 descriptor and query_abi SQL pin, regenerated native manifest, Date caller/native-slot/result validation, exact builder source revision and applicable release workflow/cohort pins. Preserve old released cohorts and genuine predecessor upgrade custody.",
+    "Keep changes on unreleased Truss main until native functional/adoption/upgrade and existing installed platform gates pass. Retain existing 1024-operation/performance deadlines and blockers. No SDK38 release, broad valid-schema, browser date, page/date-key, range/arithmetic or security qualification follows from compiler publication.",
+    "Use the previously reviewed basic public date workflow as the native adoption gate and retain existing meaningful query/numeric/authority/upgrade controls; never replace original failure checks or force compatible source pins."
+  ],
+  "current_evidence_scope": "Prior completed review established compiler Date2, core328, spec checks and one real four-object paired candidate native test. The browser fixture mismatch was independently repaired with focused1+2 tests; private helper boundary correction passed11 packages/16 controls plus Date2. None of those is a five-platform final0.4.39 artifact or Truss adoption result.",
+  "reviewer_actions": "Read-only release workflow, version/lock metadata, exact-wheel verifier and current Truss dependency/source checks. No edits, build, native tests, publication or agents.",
+  "input_sha256": {
+    ".github/workflows/release.yml": "2dfb866aef2839d6e5228bd729665729f11cda7ee3d524294b8da0a7da3abb72",
+    "scripts/release/verify-native70-smoke.py": "ddab9b4435ce1b4b7e7ea76ddc57ebcbc7ed2fdbac573645acfa7ea465cb7944",
+    "scripts/release/test-native70-smoke-gate.py": "db631a2078c9f16121e0d83d23621cfe4d6e8f9d33fdfd70bb048460bae4c828",
+    "tests/truss070/wheel-smoke.py": "34b781378c34b719ba86c775beffd296a23a5b721ac763c9aa8412632b01ab10",
+    "tests/truss-date/native-query-bundle.json": "956436903caf7cf32ae900891013a25ba183f2590559857829f3c17cc426a6bd",
+    "tests/truss-date/query-abi1.1.json": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f",
+    "crates/weft-python/Cargo.toml": "84d157972b4247f7ae3e739ee9a05f660d1a10baf86d0901be453b8959033ba3",
+    "crates/weft-python/pyproject.toml": "26e5a9e0fd60dc1ac99e60a6b92b0ad6eabca2cbc088cc16c89ed1baa1d9fa72",
+    "Cargo.lock": "fcd27a825d7e51ee94f79aba26137c579acb17cc68b8becd300087725f09976c"
+  }
+}
