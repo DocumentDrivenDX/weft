@@ -1,0 +1,39 @@
+{
+  "review": "Astra Ultra completed ABI description correction and isolated normal Date/page evidence",
+  "date": "2026-10-16",
+  "status": "CLEAR_FOR_SCOPED_COMMIT",
+  "baseline": "a6863d8815d266aff7819d88e9cf2f587476dfa0",
+  "blocking_findings": [],
+  "source": {
+    "path": "/private/tmp/weft-ashlar-local-spark-20261015/crates/weft-postgresql/src/truss_runtime.rs",
+    "sha256": "224fc7e919f72b24467cc7854fbe72db4e8492ecdcaf7be54e833f221d82452e",
+    "baseline_sha256": "489ad92957a6411702b0835f4cf9dd1998e830973a568021ddb6172ea22e6e30",
+    "diff": "Exactly one constraints string construction changes to format! with canonical_dates ? 1.1 : 1.0. Reviewer mechanically verified the entire source equals baseline with this sole replacement.",
+    "semantics": "Backend41 emitted description now agrees with its existing ABI1.1 binding and target checks. Every older backend retains exact original text. No query admission, compiler SQL, source validation, ABI shape, profile, visibility or deadline change."
+  },
+  "parent_run_validation": [
+    {
+      "session": 21626,
+      "scope": "Focused cargo test -p weft-postgresql canonical_date --offline --locked",
+      "result": "Terminal exit0;2 PASS,0 FAIL;0.02s test time. Remaining suites filtered. Existing warnings retained."
+    },
+    {
+      "session": 32461,
+      "scope": "Normal public DateQueryTests against isolated Truss candidate and stable local0.4.39 wheel",
+      "result": "Terminal exit0;1 PASS6.306s, normal fixture teardown. Four committed/reopened objects, literal/typed/join/presence/domain checks and two exact string-key pages.",
+      "wheel_sha256": "02d11bd1e8dcbe3f4014add710c0579e6681e03844b2342a099f14c1490b95c4",
+      "wheel_scope": "Pre-description-correction local macOS arm64 wheel; not final tag or published artifact. Reviewer independently confirmed wheel SHA; parent reports installed selection."
+    }
+  ],
+  "recommendation": "Commit the one-file description repair. Keep exact-source CI and final five-wheel publication gates; eventual Truss default adoption still requires actually published artifacts and the atomic paths in the adoption review.",
+  "limitations": [
+    "No whole-suite, five-platform, release publication, main SDK adoption, performance or expanded security claim.",
+    "Native Date/page test does not establish Date-key/range/arithmetic or arbitrary-decimal support.",
+    "No reviewer-run builds/tests/native jobs or product edits."
+  ],
+  "evidence_sha256": {
+    "/private/tmp/weft-date-description-tests-20261016.log": "0d056160d97639e5ebbc65eea46a351863ae68fe1c70b5821e98c9c4aa7ddd3f",
+    "/private/tmp/truss-stable-date-page-native-20261016.log": "b5104de850ef988e4bfcc898064c3a6e174501bb4409f83f801a58854efda75c",
+    "/private/tmp/test_compiled_date_query_native.py": "b809ab45e427a08fe6571ee233f5b0bc6798d2d5c8aed6aaaa42b4da22faf493"
+  }
+}
