@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "label": "installed-bytes",
+      "exitCode": 0
+    },
+    {
+      "label": "generate-reads",
+      "exitCode": 0
+    },
+    {
+      "label": "native-reads",
+      "exitCode": 0
+    },
+    {
+      "label": "generate-search",
+      "exitCode": 0
+    },
+    {
+      "label": "native-search",
+      "exitCode": 0
+    },
+    {
+      "label": "installed-bytes-final",
+      "exitCode": 0
+    }
+  ],
+  "project": "projects/umf-typed-sdk-qualification-20261016",
+  "projectUid": "3727b22a-1bd7-44ec-a9f7-80b8b82de954",
+  "sdkWheelSha256": "ee84683304f285e2f18997794dcbcda9a7573386b394a4ccc050a224216ff6aa",
+  "weftWheelSha256": "8ba258d8286624f2b065f5d5fc4d492ed8d86fd34a32cb1dbd4236197b4ee5ab",
+  "cleanupErrors": [],
+  "temporal": "HELD",
+  "scope": "Installed native Lakebase PostgreSQL 18.6 read/catalog/RLS/page/stream and exact search sync/async cohort. Protected engine actions, managed mutation authority and full backend acceptance remain separate gates."
+}

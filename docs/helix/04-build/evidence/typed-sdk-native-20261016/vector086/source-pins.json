@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "temporal": "HELD",
+  "sources": {
+    "crates/weft-core/src/search.rs": "b4cb9e9bace18047865ceaab6c2cea9f89897a799acd28890a585f0e20d8c8da",
+    "crates/weft-postgresql/src/search.rs": "a429860183328f590808f5444eabcb0c45930fd31f424f9cdfaa78014043e4de",
+    "scripts/check-native-sdk-browser.ts": "cb363c414aec3cdc12382d820f979a03fcf005adc9d03b7389efb13e40ab5537"
+  },
+  "wheelSha256": "8ba258d8286624f2b065f5d5fc4d492ed8d86fd34a32cb1dbd4236197b4ee5ab"
+}

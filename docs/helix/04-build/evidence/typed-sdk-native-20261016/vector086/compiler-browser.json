@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "browser": "151.0.7922.34",
+  "cases": [
+    "approve",
+    "guarded",
+    "postFail",
+    "createOrder",
+    "firstFalse",
+    "bulk",
+    "delta-action",
+    "delta-bulk",
+    "keyword",
+    "vector",
+    "vector-0.8.6",
+    "vector-version-refusal",
+    "spark",
+    "source-refusal",
+    "engine-truss",
+    "engine-current-truss",
+    "engine-drift-truss",
+    "engine-ashlar-spark4",
+    "engine-current-ashlar-spark4",
+    "engine-drift-ashlar-spark4",
+    "engine-ashlar-dbsql-20261016",
+    "engine-current-ashlar-dbsql-20261016",
+    "engine-drift-ashlar-dbsql-20261016"
+  ],
+  "exactPythonWasmPrograms": true,
+  "malformedUnicodeRefused": true,
+  "temporal": "HELD"
+}

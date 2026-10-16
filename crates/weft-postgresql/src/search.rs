@@ -353,7 +353,7 @@ fn compile(raw: &str) -> Result<Json> {
             },
             ident(&p.name)?
         ));
-        outputs.push(json!({"name":p.name,"field":p.field,"carrier":carrier,"nullable":nullable,"decoder":if carrier=="vector"{json!({"profile":"pgvector-text-float32/0.8.7","dimensions":r.vector_binding.as_ref().unwrap().dimensions})}else{Json::Null}}));
+        outputs.push(json!({"name":p.name,"field":p.field,"carrier":carrier,"nullable":nullable,"decoder":if carrier=="vector"{json!({"profile":format!("pgvector-text-float32/{}",r.vector_binding.as_ref().unwrap().extension_version),"dimensions":r.vector_binding.as_ref().unwrap().dimensions})}else{Json::Null}}));
     }
     let mut key_outputs = vec![];
     for (i, key) in table.key.iter().enumerate() {
@@ -507,6 +507,18 @@ mod tests {
                 .unwrap()
                 .is_empty());
             assert_eq!(a["approximate"], false);
+        }
+    }
+    #[test]
+    fn vector_native_version_is_exact_and_retained() {
+        for version in ["0.8.6", "0.8.7"] {
+            let mut r = request("vector");
+            r["vectorBinding"]["extensionVersion"] = json!(version);
+            let a = output(r);
+            assert_eq!(a["status"], "compiled", "{a}");
+            assert_eq!(a["request"]["vectorBinding"]["extensionVersion"], version);
+            assert!(a["nativeAdmission"]["parameters"].as_array().unwrap().iter()
+                .any(|p| p["source"]["literal"]["string"] == version));
         }
     }
     #[test]
