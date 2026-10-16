@@ -254,6 +254,7 @@ impl CurrentQueryPreparation{
  fn operand_count(&self,py:Python<'_>)->PyResult<usize>{self.check_original(py)?;Ok(self.inner.operand_count())}
  fn native_request_json(&self,py:Python<'_>)->PyResult<String>{self.check_original(py)?;self.inner.native_request_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))}
 
+
  #[cfg(feature="current-postgresql-scalar-candidate")]
  fn lower_postgresql_scalar_candidate_json(&self,py:Python<'_>,binding:&str)->PyResult<String>{
   self.check_original(py)?;self.inner.lower_postgresql_scalar_candidate_json(binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
@@ -309,6 +310,10 @@ impl CurrentPresencePreparation{
  fn source_preparation(&self,py:Python<'_>)->PyResult<Py<ApplicationLineagePreparation>>{self.check_original(py)?;Ok(self.original.clone_ref(py))}
  fn json(&self,py:Python<'_>)->PyResult<String>{self.check_original(py)?;Ok(self.inner.json().to_owned())}
  fn native_request_json(&self,py:Python<'_>)->PyResult<String>{self.check_original(py)?;self.inner.native_request_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))}
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ fn model_requirements_json(&self,py:Python<'_>)->PyResult<String>{
+  self.check_original(py)?;self.inner.model_requirements_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
  fn lower_postgresql_current_presence_candidate_json(&self,py:Python<'_>,binding_json:&Bound<'_,PyAny>)->PyResult<String>{
   self.check_original(py)?;let binding=presence_text(binding_json,4_000_000)?;self.inner.lower_postgresql_current_presence_candidate_json(&binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
  }
