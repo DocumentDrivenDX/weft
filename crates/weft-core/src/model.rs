@@ -36,6 +36,7 @@ pub struct Catalog {
     security_inputs: bool,
     pub(crate) identity_name_fallback: bool,
     pub(crate) exact_scalars: bool,
+    pub(crate) exact_dates: bool,
     pub(crate) bounded_current_strings: bool,
     pub(crate) documents: Vec<Value>,
 }
@@ -180,7 +181,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
+        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()

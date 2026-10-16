@@ -75,6 +75,17 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/authored_pages.rs",
+          "publicDeclarations": [
+            "const:LOCAL_VERSION",
+            "const:MANAGED_VERSION",
+            "struct:AuthoredPages",
+            "fn:local",
+            "fn:managed"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/binding.rs",
           "publicDeclarations": [
             "const:PROFILE",
@@ -286,7 +297,8 @@
             "mod:raw_read",
             "mod:local_spark4",
             "mod:raw_action",
-            "mod:raw_bulk"
+            "mod:raw_bulk",
+            "mod:authored_pages"
           ],
           "pathReferences": []
         },
@@ -3796,7 +3808,9 @@
           "path": "crates/weft-runtime/src/engine_read.rs",
           "publicDeclarations": [
             "fn:compile_json",
-            "fn:check_json"
+            "fn:check_json",
+            "fn:compile_page_json",
+            "fn:check_page_json"
           ],
           "pathReferences": []
         },
@@ -4026,7 +4040,9 @@
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
             "fn:compile_engine_read_json",
-            "fn:check_engine_read_json"
+            "fn:check_engine_read_json",
+            "fn:compile_engine_page_json",
+            "fn:check_engine_page_json"
           ],
           "pathReferences": []
         }
@@ -4112,7 +4128,9 @@
             "fn:designation_json",
             "fn:native_request_json",
             "fn:compile_engine_read_json",
-            "fn:check_engine_read_json"
+            "fn:check_engine_read_json",
+            "fn:compile_engine_page_json",
+            "fn:check_engine_page_json"
           ],
           "pathReferences": []
         }
@@ -4400,10 +4418,12 @@
         "scripts/local/test_public_integer_source.py",
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
+        "scripts/release/test-date-smoke-gate.py",
         "scripts/release/test-decimal12-smoke-gate.py",
         "scripts/release/test-native70-smoke-gate.py",
         "scripts/release/test-refinement-smoke-gate.py",
         "scripts/release/test_verify_promotion.py",
+        "scripts/release/verify-date-smoke.py",
         "scripts/release/verify-decimal12-smoke.py",
         "scripts/release/verify-native70-smoke.py",
         "scripts/release/verify-promotion.py",

@@ -94,3 +94,12 @@ pub fn validate_binary_token(value:&str)->Result<()> {
     if base64::engine::general_purpose::STANDARD.encode(bytes)!=value {return Err(Diagnostic::new("WFT-BINARY-DOMAIN","type","Canonical base64 required"));}
     Ok(())
 }
+
+/// Explicit Truss canonical date subset: Gregorian YYYY-MM-DD, years 0001..9999.
+/// UMF core declares the family; temporal refinements are not inferred here.
+pub(crate) fn validate_date_token(value:&str)->Result<()> {
+    let fail=||Diagnostic::new("WFT-DATE-DOMAIN","type","Canonical Gregorian YYYY-MM-DD required");
+    if value.len()!=10 || !value.is_ascii() {return Err(fail());}
+    crate::exact_instant::key(&format!("{value}T00:00:00Z")).map_err(|_|fail())?;
+    Ok(())
+}

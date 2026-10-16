@@ -136,6 +136,7 @@ impl<'a> Scope<'a> {
                     self.caps.insert(match scalar_type {
                         crate::application_model::ExactScalarType::Timestamp => "type.timestamp",
                         crate::application_model::ExactScalarType::Binary => "type.binary",
+                        crate::application_model::ExactScalarType::Date => "type.date",
                     }.into());
                 }
                 Shape::Sequence { .. } => {

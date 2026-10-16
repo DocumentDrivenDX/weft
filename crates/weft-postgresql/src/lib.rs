@@ -96,6 +96,12 @@ impl Parameters {
         self.0.push(ParameterSlot{position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Timestamp},value,origin});
         Ok(format!("${position}"))
     }
+    pub(crate) fn push_date(&mut self,value:String,origin:serde_json::Value)->Result<String> {
+        if value.len()!=10 || self.0.len()>=1024 {return Err(Diagnostic::new("WFT-LIMIT","emit","Date parameter bounds exceeded"));}
+        let position=self.0.len()+1;
+        self.0.push(ParameterSlot{position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Date},value,origin});
+        Ok(format!("${position}"))
+    }
     pub fn into_slots(self) -> Vec<ParameterSlot> {
         self.0
     }

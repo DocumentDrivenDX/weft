@@ -16,6 +16,14 @@ fn compile_original(method:&str,request:&Value)->Result<Value>{
     registry.register(weft_databricks::local_spark4::LocalSpark4).map_err(|_|"original local Spark backend registration refused")?;
     weft_core::compile::Compiler { registry }.compile_json(&encode(request))
   },
+  "ashlar-spark4-pages"=>{
+    let mut registry=weft_core::backend::Registry::default();registry.register(weft_databricks::authored_pages::local()).map_err(|_|"original local page backend registration refused")?;
+    weft_core::compile::Compiler { registry }.compile_json(&encode(request))
+  },
+  "ashlar-dbsql-20261016-pages"=>{
+    let mut registry=weft_core::backend::Registry::default();registry.register(weft_databricks::authored_pages::managed()).map_err(|_|"original managed page backend registration refused")?;
+    weft_core::compile::Compiler { registry }.compile_json(&encode(request))
+  },
   "ashlar-dbsql-20261016"=>{
     let mut registry=weft_core::backend::Registry::default();
     registry.register(weft_databricks::managed_20261016::Managed20261016).map_err(|_|"original managed build registration refused")?;
@@ -68,4 +76,63 @@ pub fn check_json(program:&str,current_request:&str)->String{response((||{let pr
   }
  }
  #[test]fn blocked_original_diagnostics_are_retained(){let mut r=request();r["parameters"]["price"]["value"]=json!("0.001");let p=program(&r);assert_eq!(p["status"],"blocked");assert_eq!(p["original"]["status"],"blocked");assert!(p["original"]["diagnostics"].as_array().is_some_and(|d|!d.is_empty()));}
+}
+
+/// Original authored-key page composition. Read catalog custody alone is never
+/// relabeled as a page; retain the complete native page response and recompile it.
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields,rename_all="camelCase")]
+struct PageRequest { version:String, compiler:String, request:Value, page_size:u16 }
+fn compile_page_original(method:&str,request:&Value,size:u16,after:Option<Vec<String>>)->Result<Value>{
+ if !matches!(method,"truss-runtime"|"ashlar-spark4-pages"|"ashlar-dbsql-20261016-pages") || !(1..=999).contains(&size){return Err("explicit original authored-key page compiler required")}
+ let base=compile_original(method,request)?;
+ if base["status"]!="compiled" {return Ok(base)}
+ let raw=if method=="truss-runtime"{weft_postgresql::truss_runtime::compile_page_json(&encode(request),size,after.clone())}else{
+  let mut factory=|_:&weft_core::model::Catalog,_:weft_core::backend::Plan<'_>,_:weft_core::compile::CompositionInput<'_>|{
+   let mut registry=weft_core::backend::Registry::default();
+   if method=="ashlar-spark4-pages"{registry.register(weft_databricks::authored_pages::local())?;}else{registry.register(weft_databricks::authored_pages::managed())?;}
+   Ok(registry)
+  };
+  weft_core::compile::Compiler::default().compile_typed_page_json_with_exact_numbers_factory(&encode(request),size,after.clone(),&mut factory)
+ };
+ let page=weft_core::json::checked_json(&raw).map_err(|_|"original page compiler output refused")?;
+ if page["status"]!="compiled" {return Ok(json!({"version":"weft.engine-page/0.1","status":"blocked","original":page}))}
+ let visible=base["outputs"].as_array().ok_or("complete visible output signature required")?.len();
+ if page["interfaceVersion"]!="weft-sql-page/0.2" || page["page"]["visibleOutputs"]!=visible || page["page"]["pageSize"]!=size {return Err("original typed page output and bound differ")}
+ let mut out=json!({"version":"weft.engine-page/0.1","status":"compiled","compiler":method,"request":request,"pageSize":size,"after":after,"page":page["page"],"artifact":page["artifact"],"outputs":base["outputs"]});
+ out["structuralDigest"]=json!({"owner":"weft-runtime-engine-page","version":"0.1","sha256":weft_core::json::sha256(encode(&out).as_bytes())});Ok(out)
+}
+fn page_response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-page/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-PAGE","message":code}]})).to_string()}
+pub fn compile_page_json(raw:&str)->String{page_response((||{
+ if raw.len()>4_194_304{return Err("bounded original page request required")}
+ let value=weft_core::json::checked_json(raw).map_err(|_|"page request framing refused")?;
+ let r:PageRequest=serde_json::from_value(value).map_err(|_|"closed page catalog request required")?;
+ if r.version!="weft.engine-page/0.1"{return Err("page catalog version differs")}
+ compile_page_original(&r.compiler,&r.request,r.page_size,None)
+})())}
+pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->String{page_response((||{
+ if program.len()>4_194_304||current_request.len()>4_194_304||after_json.len()>1_048_576{return Err("bounded original page program, current request and continuation required")}
+ let program=weft_core::json::checked_json(program).map_err(|_|"page program framing refused")?;
+ let current=weft_core::json::checked_json(current_request).map_err(|_|"current page request framing refused")?;
+ let after=weft_core::json::checked_json(after_json).map_err(|_|"page continuation framing refused")?;
+ let after:Option<Vec<String>>=serde_json::from_value(after).map_err(|_|"original lexical page continuation required")?;
+ if after.as_ref().is_some_and(|values|values.is_empty()||values.len()>1024||values.iter().any(|v|v.len()>1_048_576)){return Err("bounded complete page continuation required")}
+ if program["version"]!="weft.engine-page/0.1" || program["status"]!="compiled" || !program["after"].is_null(){return Err("original first-page catalog required")}
+ let method=program["compiler"].as_str().ok_or("original page compiler required")?;
+ let size=program["pageSize"].as_u64().and_then(|v|u16::try_from(v).ok()).ok_or("original page bound required")?;
+ let original=&program["request"];
+ if compile_page_original(method,original,size,None)?!=program{return Err("original page program differs from its compiler")}
+ // The existing read checker owns exact source/context and parameter inventory.
+ let base=compile_original(method,original)?;let checked=bind(&base,&current)?;
+ if checked["status"]!="compiled"{return Ok(checked)}
+ compile_page_original(method,&current,size,after)
+})())}
+#[cfg(test)]mod page_tests{
+ use super::*;
+ fn request()->Value{let mut r:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-request.json")).unwrap();r["sql"]=json!(r["sql"].as_str().unwrap().strip_suffix(" LIMIT 10").unwrap());r}
+ fn program(r:&Value)->Value{serde_json::from_str(&compile_page_json(&json!({"version":"weft.engine-page/0.1","compiler":"truss-runtime","request":r,"pageSize":2}).to_string())).unwrap()}
+ #[test]fn original_page_retains_hidden_key_and_native_continuation(){let r=request();let p=program(&r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["outputs"].as_array().unwrap().len(),2);assert_eq!(p["artifact"]["columns"].as_array().unwrap().len(),3);assert_eq!(p["page"]["keyOutputs"],json!([2]));let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"o-1\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");assert_eq!(a["after"],json!(["o-1"]));assert_ne!(a["artifact"]["sql"],p["artifact"]["sql"]);assert!(a["artifact"]["parameters"].as_array().unwrap().iter().any(|v|v["value"]=="o-1"));}
+ #[test]fn original_ashlar_page_compilation_retains_snapshot_key_obligation(){for (method,version,raw) in [("ashlar-spark4-pages",weft_databricks::authored_pages::LOCAL_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json")),("ashlar-dbsql-20261016-pages",weft_databricks::authored_pages::MANAGED_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-dbsql-20261016-request.json"))]{let mut r:Value=serde_json::from_str(raw).unwrap();assert_ne!(compile_page_original(method,&r,2,None).unwrap()["status"],"compiled");r["interfaceVersion"]=json!("weft-compile/0.2.2");r["target"]["backendVersion"]=json!(version);let p=compile_page_original(method,&r,2,None).unwrap();assert_eq!(p["status"],"compiled","{p}");assert!(p["artifact"]["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="ashlar.candidate.keyIntegrity"));let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"bar\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");}}
+ #[test]fn oversized_page_inputs_refuse_before_parsing(){let large=" ".repeat(4_194_305);let after=" ".repeat(1_048_577);for result in [compile_page_json(&large),check_page_json(&large,"{}","null"),check_page_json("{}",&large,"null"),check_page_json("{}","{}",&after)]{let value:Value=serde_json::from_str(&result).unwrap();assert_eq!(value["status"],"blocked");assert!(value["artifact"].is_null());}}
+ #[test]fn page_tampering_and_context_drift_refuse(){let r=request();let p=program(&r);assert_eq!(p["status"],"compiled","{p}");for mode in 0..6{let mut p=p.clone();let mut current=r.clone();match mode{0=>p["pageSize"]=json!(3),1=>p["page"]["keyOutputs"]=json!([0]),2=>p["artifact"]["sql"]=json!("SELECT 1"),3=>current["sql"]=json!("SELECT 1"),4=>current["parameters"]["status"]["family"]=json!("integer"),_=>p["after"]=json!(["o-1"])}let checked:Value=serde_json::from_str(&check_page_json(&p.to_string(),&current.to_string(),"null")).unwrap();assert_eq!(checked["status"],"blocked","{checked}");}for after in ["[]","[1]","{}","[\"a\",\"b\"]"]{let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),after)).unwrap();assert_eq!(a["status"],"blocked","{a}");}}
 }

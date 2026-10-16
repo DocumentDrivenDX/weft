@@ -1,0 +1,64 @@
+{
+  "scope": "Local stable-version candidate on macOS arm64; all existing release smoke commands plus Date. Not five-platform publication evidence.",
+  "sourceBaseline": "5ed08ec898210a954a6a9033ffd8a6ca446ddf81",
+  "workingTreeReleasePreparation": true,
+  "wheelSha256": "02d11bd1e8dcbe3f4014add710c0579e6681e03844b2342a099f14c1490b95c4",
+  "results": [
+    {
+      "name": "metadata",
+      "exitCode": 0
+    },
+    {
+      "name": "native066",
+      "exitCode": 0
+    },
+    {
+      "name": "current-query",
+      "exitCode": 0
+    },
+    {
+      "name": "native068",
+      "exitCode": 0
+    },
+    {
+      "name": "databricks",
+      "exitCode": 0
+    },
+    {
+      "name": "refinement",
+      "exitCode": 0
+    },
+    {
+      "name": "refinement-gate",
+      "exitCode": 0
+    },
+    {
+      "name": "query-abi",
+      "exitCode": 0
+    },
+    {
+      "name": "decimal12-gate",
+      "exitCode": 0
+    },
+    {
+      "name": "decimal12",
+      "exitCode": 0
+    },
+    {
+      "name": "native070-gate",
+      "exitCode": 0
+    },
+    {
+      "name": "native070",
+      "exitCode": 0
+    },
+    {
+      "name": "date-gate",
+      "exitCode": 0
+    },
+    {
+      "name": "date",
+      "exitCode": 0
+    }
+  ]
+}

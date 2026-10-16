@@ -1,0 +1,180 @@
+{
+  "review": "Astra Ultra completed Weft0.4.39 release preparation iteration",
+  "date": "2026-10-16",
+  "status": "CLEAR_FOR_PREPARATION_COMMIT_TAG_AND_PUBLICATION_GATES_REMAIN",
+  "baseline": "5ed08ec898210a954a6a9033ffd8a6ca446ddf81",
+  "blocking_findings": [],
+  "recommendation": "Commit the reviewed nine-file preparation. Create the immutable release tag only after the specified current CI gate succeeds and final source is frozen; rebuild/verify all five final tag wheels through the unchanged existing release/publisher gates. Do not adopt on Truss before actual publication and fresh asset verification.",
+  "source_review": "/private/tmp/weft-date-release-source-astra-20261016.json",
+  "source_review_sha256": "0b3786cb02aa39c7aed4afaadea40d65b14f1b7761c6bfb2a5e653723d14195e",
+  "file_sha256": {
+    ".github/workflows/release.yml": "079ee22d5531fd230c10cb00a4b1896a2ab7ee179ad515cfb3d2220ed4ae8e91",
+    "Cargo.lock": "f13f601e926d90d45f85d53e353d2764da2d455e55a93c29dff48d7d23946c71",
+    "crates/weft-python/Cargo.toml": "c6a9c6fe0cbf71cc7413cc2021cad45776db2ebe8c7f130696a1e457a3753e64",
+    "crates/weft-python/pyproject.toml": "8142e96625310779fe16aa30695f3418648c3f0bb3c7d7f906d85ab62f974afe",
+    "docs/helix/02-design/module-boundaries.json": "92c00a7efdbc043c5815f294fd9ced827abe85883c732aac77d8e1d5cef1cc5c",
+    "docs/helix/04-build/releases/v0.4.39.md": "b5630764deb68ca8292c4b8b163215c7cfd827ad80f45ec5bd13bfae9f4202d9",
+    "scripts/release/test-date-smoke-gate.py": "10c1bb4ef2684afa890e70f2a12f260b3e2c1b0f82a4edf8e11a5d195681d4b0",
+    "scripts/release/verify-date-smoke.py": "4509657c23e16b7ec826aae6c15334fca4e9b98190a1a364b8cca7fa9e3ba1a9",
+    "tests/truss-date/wheel-smoke.py": "d09701108ff40009635e7d2d1ca9cbde648accfd6da9265765120268ebd5f668"
+  },
+  "verified_findings": [
+    "Exact stable package and lock versions are0.4.39; features/dependencies and existing backend/runtime metadata remain unchanged.",
+    "Date smoke now binds the complete artifact to original request/model/binding and verifies precise invalid-date and old-ABI diagnostics. Existing unchanged public source captures are used, no synthetic source substitution.",
+    "Date publisher remains fail-closed for >=0.4.39 with five distinct matching reports, seven exact outcomes and exact ABI1.1; optional file step only supports historical tag dispatch and cannot bypass this publisher.",
+    "Local Date and baseline current-query reports match exact source/version/wheel/module/shim pins. Reviewer independently hashed actual wheel and both package payload entries; they match reports."
+  ],
+  "parent_run_validation": {
+    "wheel_build": {
+      "session": 80603,
+      "result": "Stable local0.4.39 --locked build PASS; macOS arm64 only"
+    },
+    "local_commands": {
+      "session": 67958,
+      "result": "All14 retained/new release smoke commands exit0",
+      "commands": [
+        {
+          "name": "metadata",
+          "exitCode": 0
+        },
+        {
+          "name": "native066",
+          "exitCode": 0
+        },
+        {
+          "name": "current-query",
+          "exitCode": 0
+        },
+        {
+          "name": "native068",
+          "exitCode": 0
+        },
+        {
+          "name": "databricks",
+          "exitCode": 0
+        },
+        {
+          "name": "refinement",
+          "exitCode": 0
+        },
+        {
+          "name": "refinement-gate",
+          "exitCode": 0
+        },
+        {
+          "name": "query-abi",
+          "exitCode": 0
+        },
+        {
+          "name": "decimal12-gate",
+          "exitCode": 0
+        },
+        {
+          "name": "decimal12",
+          "exitCode": 0
+        },
+        {
+          "name": "native070-gate",
+          "exitCode": 0
+        },
+        {
+          "name": "native070",
+          "exitCode": 0
+        },
+        {
+          "name": "date-gate",
+          "exitCode": 0
+        },
+        {
+          "name": "date",
+          "exitCode": 0
+        }
+      ]
+    },
+    "date_smoke": {
+      "controls": 7,
+      "checks": [
+        {
+          "id": "literal",
+          "status": "compiled"
+        },
+        {
+          "id": "typed-parameter",
+          "status": "compiled"
+        },
+        {
+          "id": "field-join",
+          "status": "compiled"
+        },
+        {
+          "id": "invalid-date",
+          "status": "blocked"
+        },
+        {
+          "id": "old-envelope",
+          "status": "blocked"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "old-abi",
+          "status": "blocked"
+        }
+      ]
+    },
+    "date_gate": "9 controls PASS",
+    "specs": "75 governed artifacts,100 schemas,636 scenarios PASS; no compiler/database/embedding execution by that command",
+    "boundaries": "11 workspace packages and16 controls PASS",
+    "yaml": "Parent reports parsed successfully; reviewer checked exact workflow diff"
+  },
+  "wheel": {
+    "path": "/private/tmp/weft039-stable-local-wheels-20261016/weft_sql-0.4.39-cp39-abi3-macosx_11_0_arm64.whl",
+    "pins": {
+      "wheelSha256": "02d11bd1e8dcbe3f4014add710c0579e6681e03844b2342a099f14c1490b95c4",
+      "nativeModuleSha256": "c65fd5805aa1fe00a41d96a44631cfd04567fee8219362049ce00bf60295b3fb",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "version": "0.4.39",
+    "sourceBaseline": "5ed08ec898210a954a6a9033ffd8a6ca446ddf81",
+    "workingTreeReleasePreparation": true,
+    "scope": "One local candidate, not final frozen-tag/five-platform/publication evidence"
+  },
+  "pending_gates": [
+    "Current CI38940048701 terminal success not established by this receipt; parent last reported live.",
+    "Freeze reviewed source and immutable tag; final five-platform reports/publisher validation must pass before publication.",
+    "Only actual published artifacts may supply Truss wheel/cohort/build pins; atomic SDK/native ABI adoption remains separate.",
+    "Truss1024/performance gates and existing security/support limitations remain unchanged."
+  ],
+  "evidence_sha256": {
+    "/private/tmp/weft039-local-smokes-20261016/current-query.json": "337cd604496f86f4bf3e57b2e8e6df1418f8ddaa5ffd07d119de6706ef818134",
+    "/private/tmp/weft039-local-smokes-20261016/current-query.log": "af31630231001216148983559fc667303b15dcc18519d720817569dde719a115",
+    "/private/tmp/weft039-local-smokes-20261016/databricks.json": "3516a78e1587b6630a244a6d50c12bea8d4fd5c0f5cf80f0745f6e0ed5d97b3c",
+    "/private/tmp/weft039-local-smokes-20261016/databricks.log": "defeb10f9671c449dbbc882df7fb087a5afcb8cf6772bcf4f3e0847930072f7f",
+    "/private/tmp/weft039-local-smokes-20261016/date-gate.log": "664d8f564d2bd4f9970b14155757749498242b7cf621901048621c2aa165eb3f",
+    "/private/tmp/weft039-local-smokes-20261016/date.json": "5431a98c1f629d943e2518fa86e88549a1e7b724d678b1aeaced85734fea7c99",
+    "/private/tmp/weft039-local-smokes-20261016/date.log": "f8a873a68c868a3d41f50788915f2751a5cf9c855b38e34bac612e5cea982e35",
+    "/private/tmp/weft039-local-smokes-20261016/decimal12-gate.log": "905e646ea8cb9583ba7e43db58a096c68bcc8d53caea7e5d7d69d77b90d5c7ac",
+    "/private/tmp/weft039-local-smokes-20261016/decimal12.json": "23e8a8aca11d0d6707c97b7d1ff742fe2b1189bf0effa50d7ea383120eac5226",
+    "/private/tmp/weft039-local-smokes-20261016/decimal12.log": "3385beeb6e0c2b3956ef44add6da0bd0cee6b1ae7d11b5dfc7bf43aabddbc11c",
+    "/private/tmp/weft039-local-smokes-20261016/metadata.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/weft039-local-smokes-20261016/native066.log": "271cb0e7da7d4de6a6b6a23793dbc167bb5e1fef0f135ee70f62ac5a739ca679",
+    "/private/tmp/weft039-local-smokes-20261016/native068.log": "3ce5fffde5dfc43f293af4676454e62bb1658319a7a7b041d339368deb14e424",
+    "/private/tmp/weft039-local-smokes-20261016/native070-gate.log": "905e646ea8cb9583ba7e43db58a096c68bcc8d53caea7e5d7d69d77b90d5c7ac",
+    "/private/tmp/weft039-local-smokes-20261016/native070.json": "38a1ab27e368e54c43d5afd874c0c71633d1718238e7e3c22b54fc1b2f6a6a14",
+    "/private/tmp/weft039-local-smokes-20261016/native070.log": "67f69ec84e35096c69eef90424f9e8d46c08a0e6a28c4b9b513ec79f1ce92418",
+    "/private/tmp/weft039-local-smokes-20261016/query-abi.log": "eaa46d080f4866c111a67c06d8c76f2eabc54e20db22df84eb5e35f72fad84ff",
+    "/private/tmp/weft039-local-smokes-20261016/refinement-gate.log": "b86a81f89af6f071f530871da9ae298d17af7b783863d57b375c6a5d2b33f2eb",
+    "/private/tmp/weft039-local-smokes-20261016/refinement.json": "fca0a0705635843780c95e07dbacb7682434a6bcecfb5d01c72527f751ce0b81",
+    "/private/tmp/weft039-local-smokes-20261016/refinement.log": "e16925811fe81b6c03668b3ac81480e87eb19aebf40102bd2a829a797a6492d5",
+    "/private/tmp/weft039-local-smokes-20261016/summary.json": "c2c9d723948c7d6b51f9fc6bdbf7834fb3cb58ddfcc8d5814c1ff8c8f17c1412",
+    "/private/tmp/weft039-local-smokes-runner-20261016.log": "2969d7a5eaa93bc985775747533b172d95bb3b54687d84f73fd045fef601109d",
+    "/private/tmp/weft039-stable-wheel-build-20261016.log": "9f224899e22adc08bfddfec4bf8ea9770bdd222d013eb3e478275950434f5e41",
+    "/private/tmp/weft039-stable-install-20261016.log": "78cf9f8981456297b4304c63574fa8e9674e4aa8a93bdee183b0dbe343c45b36",
+    "/private/tmp/weft039-release-specs-20261016.log": "d111e6eb95b286e8fbcc64e418b5a415c2ec480d40516f845e08bf19170f86f0",
+    "/private/tmp/weft039-release-boundaries-20261016.log": "ae8f0e536e800a911de32fb6933dbbc8c4f3d699f88fc721793704291603e209",
+    "/private/tmp/weft039-date-gate-tests-20261016.log": "664d8f564d2bd4f9970b14155757749498242b7cf621901048621c2aa165eb3f"
+  },
+  "reviewer_actions": "Read-only exact source, report/log and wheel ZIP payload checks; receipt writes only. No product changes, tests/builds/native runs, agents or publication."
+}

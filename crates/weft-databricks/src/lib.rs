@@ -44,3 +44,6 @@ pub mod local_spark4;
 pub mod raw_action;
 
 pub mod raw_bulk;
+
+/// Separate authored-Key page language candidates; no historical profile relabeling.
+pub mod authored_pages;

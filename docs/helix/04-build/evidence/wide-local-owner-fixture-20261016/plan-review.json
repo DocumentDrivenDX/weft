@@ -1,0 +1,36 @@
+{
+  "review": "Astra Ultra pinned-owner wide browser fixture regeneration plan",
+  "date": "2026-10-16",
+  "status": "PLAN_CLEAR",
+  "baseline": "96bbc920034997e504b60c628deb651757f51a29",
+  "scope": "Only regenerate the synthetic64 local-action fixture using its already pinned UMF producer, plus a pre-write producer guard in the existing generator. No compiler/runtime/public support or trust-pin change.",
+  "blocking_findings": [],
+  "source_proof": [
+    "Existing generator invokes public owner.prepareActionPlanModel for the same source-generated 64-field model and copies the original request fields. It currently writes without verifying producer compatibility.",
+    "Weft owner-pins.json already names exact UMF commit c1e316c42ebe2a3a87420a5edc7e1ae751137b5b and producer sha256:6b331c0b5118435a79eb19b3c66464b4ea1ed3e70134fc3b71e07913487a408b. That Git commit exists; its committed src/extensions/actions/plan-identity.ts declares the same producer.",
+    "The retained failing fixture contains prior producer sha256:633f8ad623cc150fd3f6e2c5fe5324a0a128393036aa34d9929bfadf1142c6e4. The compiler exact producer check must remain unchanged; regeneration must invoke original owner code, not relabel that old preparation."
+  ],
+  "implementation_constraints": [
+    "Read the owner source from exact committed Git objects into a disposable directory. Preserve source/spec bytes and verify dependencies/runtime versions; if dependency installation needs lock/patch metadata, use the same commit rather than substitute newer versions. Do not edit the UMF checkout or its producer declaration.",
+    "Before Bun.write, parse the actual returned preparation and compare its producer structurally and exactly to the existing local owner pin, including exact keys id/version/build. Do not rely on JSON object key-order equality or ignore extra producer fields. Verify returned artifact SHA corresponds to its original UTF-8 bytes.",
+    "Compare all non-preparation fixture fields semantically, and embedded model/snapshot/request original strings and pins byte-for-byte, to the retained fixture. Inspect the newly generated preparation semantic diff excluding producer and artifact SHA; any further difference needs explicit review rather than an assumed producer-only fix.",
+    "Retain the original failing test evidence and previous-producer negative fixture unchanged. No owner-pin widening, native/local crossover, schema rewriting, runtime guard suppression or broad qualification claim."
+  ],
+  "focused_validation": [
+    "truss_mutation::browser_tests::browser_mapping_lowers_original_selection_with_complete_record_preflight",
+    "original_local_preparation_compiles_without_crossing_native_producer",
+    "prepared_owner_cohort_refuses_previous_local_producer",
+    "Inspect exact final fixture/generator diff and unchanged owner pins; optionally exercise the new generator guard with the old producer before writing."
+  ],
+  "validation_scope": "Fixture/generator-only repair does not justify repeating the unrelated 536-second decimal test. Passing focused tests will close the known fixture mismatch, not independently qualify all platforms/browser runtime/release behavior.",
+  "reviewer_actions": "Source/Git-object inspection only; no archive generation, product changes, test runs or subagents.",
+  "input_sha256": {
+    "tests/mutation/generate-local-wide-fixture.ts": "e6910cbac9df1b89e3311503999e531825025b66c75722a1bf4a6d6f9efd9f59",
+    "tests/mutation/fixtures/local-products-64-input.json": "d37f3b6f25bce919ec7e5961d11e4aa09ccab31e57072b9a4d5c58725b914e9e",
+    "tests/mutation/fixtures/local-products-input.json": "71a8dad6cdaaa53ffda89cdce8286ed51da2a3550956e8c8a99beae6f69750ee",
+    "tests/mutation/fixtures/local-products-input-previous-producer.json": "2a17a1dc0df402ff6ea4fe10c14314e5f928951a70294e32734d04746616de8e",
+    "spec/upstream/actions-plan-local/owner-pins.json": "1ceaac93fe251f5019e1b967796d46eda680b2a635e6ff60af38428d65b84905",
+    "tests/mutation/compiler.rs": "08baacc301fc02d7cb744d432621eff328071de11404c471e31cfba12f931002"
+  },
+  "owner_plan_identity_sha256": "8a33d4439573e3b4190332ca187cd0276840e6619dae7986627e9c10cec3d017"
+}

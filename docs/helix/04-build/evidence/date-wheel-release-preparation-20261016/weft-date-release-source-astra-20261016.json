@@ -1,0 +1,46 @@
+{
+  "review": "Astra Ultra Weft0.4.39 date release preparation source review",
+  "date": "2026-10-16",
+  "status": "SOURCE_CLEAR_FOR_RELEASE_PREPARATION_COMMIT",
+  "baseline": "5ed08ec898210a954a6a9033ffd8a6ca446ddf81",
+  "scope": "Nine release-preparation files; no Truss default change, tag or publication.",
+  "cleared_aspects": [
+    "Stable0.4.39 versions agree in Cargo.toml, pyproject and Cargo.lock; dependencies/features/toolchains unchanged.",
+    "Optional-by-file wheel step is acceptable for old-tag dispatch because publisher unconditionally invokes date verifier and requires five reports for stable versions>=0.4.39. Absent smoke/report/verifier therefore cannot publish that release. This is an explicit adjustment to the original unconditional-step plan with equivalent fail-closed publication behavior.",
+    "Date verifier requires exactly five distinct baseline-matching wheels, exact commit/version/module/shim/wheel pins, seven fixed checks, exact ABI1.1 and false native/security admission. Small negative controls cover missing/duplicate reports, source/version/check/pin/ABI mismatch and invalid native admission.",
+    "All existing wheel/promotion/publication gates retained; date metadata is additive and leaves native70/backend40 fixed-runtime metadata unchanged.",
+    "Exactly two new release host-tool scripts are added to ownership inventory; boundary checker/policy remains unchanged.",
+    "Notes correctly scope canonical dates, explicit protocol/backend/ABI selection, prior paired candidate native evidence and separate Truss release/performance gates."
+  ],
+  "validation_status": "Parent stable0.4.39 macOS-arm64 wheel build and all14 existing/new release smoke commands PASS, including hardened Date7 and Date publication gate9. Specs75 artifacts/100 schemas/636 scenarios PASS; boundaries11 packages/16 controls PASS. Reviewer read exact source/logs/reports and verified wheel/payload hashes; no reviewer test execution.",
+  "limits": [
+    "Clear for preparation commit. Tag creation remains conditioned on the stated current CI result and frozen reviewed source; final five-platform/publisher gates remain mandatory.",
+    "Local reports are explicitly working-tree candidate evidence at baseline5ed08ec, not final-tag artifacts or published adoption pins.",
+    "No fixed native71, all-platform native query, TrussSDK38/security/performance qualification implied."
+  ],
+  "file_sha256": {
+    ".github/workflows/release.yml": "079ee22d5531fd230c10cb00a4b1896a2ab7ee179ad515cfb3d2220ed4ae8e91",
+    "Cargo.lock": "f13f601e926d90d45f85d53e353d2764da2d455e55a93c29dff48d7d23946c71",
+    "crates/weft-python/Cargo.toml": "c6a9c6fe0cbf71cc7413cc2021cad45776db2ebe8c7f130696a1e457a3753e64",
+    "crates/weft-python/pyproject.toml": "8142e96625310779fe16aa30695f3418648c3f0bb3c7d7f906d85ab62f974afe",
+    "docs/helix/02-design/module-boundaries.json": "92c00a7efdbc043c5815f294fd9ced827abe85883c732aac77d8e1d5cef1cc5c",
+    "docs/helix/04-build/releases/v0.4.39.md": "b5630764deb68ca8292c4b8b163215c7cfd827ad80f45ec5bd13bfae9f4202d9",
+    "scripts/release/test-date-smoke-gate.py": "10c1bb4ef2684afa890e70f2a12f260b3e2c1b0f82a4edf8e11a5d195681d4b0",
+    "scripts/release/verify-date-smoke.py": "4509657c23e16b7ec826aae6c15334fca4e9b98190a1a364b8cca7fa9e3ba1a9",
+    "tests/truss-date/wheel-smoke.py": "d09701108ff40009635e7d2d1ca9cbde648accfd6da9265765120268ebd5f668"
+  },
+  "resolved_findings": [
+    {
+      "priority": "P2",
+      "file": "tests/truss-date/wheel-smoke.py",
+      "issue": "Successful smoke results currently verify only backendVersion, IR and a parameter containing original binding. Add explicit interfaceVersion, full backend tuple, bindingSha256 and modelPins equality to the original request/modules before emitting a successful exact-artifact report. This implements the approved plan without a new case or framework."
+    },
+    {
+      "priority": "P2",
+      "file": "tests/truss-date/wheel-smoke.py",
+      "issue": "Old-ABI control correctly rehashes its changed binding, but should also require WFT-BINDING as the refusal diagnostic so an unrelated refusal cannot satisfy the ABI guard check."
+    }
+  ],
+  "blocking_findings": [],
+  "correction_verified": "Compiled Date cases now assert exact request/response interfaceVersion and dialect, full backend tuple, IR0.2.7, bindingSha256 and original modelPins; old-ABI control rehashes binding and asserts WFT-BINDING. Both earlier requested smoke hardenings are present."
+}

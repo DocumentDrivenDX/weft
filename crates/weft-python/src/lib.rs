@@ -43,6 +43,10 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compile_engine_read_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(check_engine_read_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_engine_page_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(check_engine_page_json, m)?)?;
     m.add_class::<MutationCompiler>()?;
     #[cfg(feature="truss-security-relationship-candidate")]
     {
@@ -336,3 +340,10 @@ impl CurrentPresencePreparation{
 impl CurrentPresencePreparation{
  fn check_original(&self,py:Python<'_>)->PyResult<()>{if !self.inner.is_from(&self.original.bind(py).borrow().inner){return Err(presence_failure())}Ok(())}
 }
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_engine_page_json(request:&str)->String{weft_runtime::engine_read::compile_page_json(request)}
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn check_engine_page_json(program:&str,current_request:&str,after_json:&str)->String{weft_runtime::engine_read::check_page_json(program,current_request,after_json)}

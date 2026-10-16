@@ -1,0 +1,54 @@
+{
+  "review": "Astra Ultra completed pinned-owner wide fixture repair",
+  "date": "2026-10-16",
+  "status": "SOURCE_AND_COMPLETED_EVIDENCE_CLEAR",
+  "recommendation": "Commit the two-file fixture/generator repair and bounded retained evidence. Compiler trust pins and production source are unchanged.",
+  "baseline": "96bbc920034997e504b60c628deb651757f51a29",
+  "blocking_findings": [],
+  "findings": [
+    "The generator calls public prepareActionPlanModel and now structurally checks exactly id/version/build against the existing local owner pin before Bun.write; missing, extra or mismatched fields refuse. The existing compiler producer check and negative fixtures are unchanged.",
+    "Reviewer independently compared old HEAD fixture with current fixture: every non-preparation value, embedded original model/snapshot byte string and request pin is unchanged. Parsed preparation excluding producer is identical; assignments, obligations, schema and action remain unchanged. The actual fresh UTF-8 preparation hash is 3814812c233a99f60876bfc385f3b1b09ccca82ec6e73f37af21045df18b3a3b and its producer matches the unchanged 6b331c0b5118435a79eb19b3c66464b4ea1ed3e70134fc3b71e07913487a408b owner build.",
+    "Parent regenerated from exact UMF commit c1e316c42ebe2a3a87420a5edc7e1ae751137b5b. Reviewer independently matched archived public entrypoint, actions/plans.ts, producer identity, package.json and the initially missing native tablespec resource to those committed Git bytes. No hermetic dependency/build claim is made.",
+    "The first import failed because the src/spec snapshot omitted a native resource. Its continued comparison was invalid evidence and is retained explicitly with evidenceValid=false and freshPublicOwnerCall=false. The successful later generation and semantic comparison are separately retained; no producer was manually relabeled.",
+    "README accurately distinguishes targeted repair from the earlier full 127-pass/one-failure suite and disclaims native action/security qualification. All seven compressed evidence payloads hash correctly and byte-match their original /private/tmp files."
+  ],
+  "parent_run_tests": [
+    {
+      "session": 74203,
+      "result": "Generator exit 0, exact already-pinned producer emitted through public owner call"
+    },
+    {
+      "session": 15929,
+      "result": "Previously failing browser mapping unit PASS 1 in 0.07 s, 127 filtered out"
+    },
+    {
+      "result": "mutation_compile local_ controls PASS 2 in 0.01 s: original_local_preparation_compiles_without_crossing_native_producer and prepared_owner_cohort_refuses_previous_local_producer; 8 filtered out"
+    }
+  ],
+  "limits": [
+    "Earlier PostgreSQL full run remains 127 PASS / 1 FAIL; the repaired one-case rerun is separate and must not be relabeled a single green 128-test run.",
+    "No new compiler/runtime/backend/wheel/default/release behavior or trust-pin widening. No native execution or security/publication qualification inferred.",
+    "Focused repair checks suffice for these fixture/generator-only changes; no unrelated long decimal rerun required."
+  ],
+  "reviewer_actions": "Read-only diff, semantic and byte comparisons, selected committed owner-source verification, logs and compressed-payload integrity checks. No product edits, tests or subagents.",
+  "source_sha256": {
+    "tests/mutation/fixtures/local-products-64-input.json": "63548288601e6fbe3b8776c7cdb9fa3f6741ac79ecc5128dc119a0669a3b347b",
+    "tests/mutation/generate-local-wide-fixture.ts": "a2a961b6ac456b89c9f602625038f90857b1860fa494681e0428aef8ad0e3375"
+  },
+  "evidence_sha256": {
+    "docs/helix/04-build/evidence/wide-local-owner-fixture-20261016/regeneration-and-tests.json.gz": "ad9b4d02e316af79328a46d0bca294f4a0b1dbd0d66be06b9f24ca3c8d21b538",
+    "docs/helix/04-build/evidence/wide-local-owner-fixture-20261016/plan-review.json": "81dcdab77ec1b2a2224f13b0326f286b8e09705be9e693b87fcea30d58f0169d",
+    "docs/helix/04-build/evidence/wide-local-owner-fixture-20261016/README.md": "6c8fba83035f39857d0634fe62fe4f6a1cadf09956cf46d58fe0824fc16d3e9e"
+  },
+  "original_payload_sha256": {
+    "/private/tmp/weft-wide-fixture-before-20261016.json": "d37f3b6f25bce919ec7e5961d11e4aa09ccab31e57072b9a4d5c58725b914e9e",
+    "/private/tmp/weft-wide-fixture-initial-owner-import-20261016.log": "2fb597c0fa0d7942870b09e2c5e3ce427589417303297a77c473aade7986c1d8",
+    "/private/tmp/weft-wide-fixture-initial-invalid-harness-20261016.json": "3a8f0663584df5aeb8bc4a4a100b1db913dd5e0e66eaad0255759992d9fc2f81",
+    "/private/tmp/weft-wide-fixture-regeneration-20261016.log": "09f9c4a2ffb91eebb3d9a44219e7f4958e0e60514d6c2cf0416e020164e3e742",
+    "/private/tmp/weft-wide-fixture-delta-20261016.json": "4e79e756e74546bfe12d882c974eea63e70288fa3b5441c9fb3ef75047f44a6a",
+    "/private/tmp/weft-wide-fixture-browser-test-20261016.log": "cfde69ad62e419407bbc03c342b2bf16685f8b84d192d7db6aeda3960476ee52",
+    "/private/tmp/weft-wide-fixture-cohort-tests-20261016.log": "f0d12a399091bafdee0ecf597eb7beaf3dc3b19e635d4e8bd8d80e9cda6b60f9"
+  },
+  "plan_receipt": "/private/tmp/weft-wide-browser-fixture-plan-astra-20261016.json",
+  "plan_receipt_sha256": "81dcdab77ec1b2a2224f13b0326f286b8e09705be9e693b87fcea30d58f0169d"
+}
