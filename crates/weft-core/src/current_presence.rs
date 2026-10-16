@@ -108,9 +108,9 @@ pub fn prepare(original:&ApplicationLineage)->Result<CurrentPresencePreparation<
 }
 
 #[cfg(test)]
-mod tests{
+pub(crate) mod tests{
  use super::*;
- fn fixture()->Value{
+ pub(crate) fn fixture()->Value{
   let mut request:Value=serde_json::from_str(include_str!("../../../tests/current-query-presence/fixtures/optional-token-lineage.request.json")).unwrap();
   let pins:Vec<Value>=request["opaqueSources"].as_array().unwrap().iter().map(|s|json!({"role":s["role"],"identity":s["identity"],"sha256":s["sha256"]})).collect();
   let ontology:Value=serde_json::from_str(request["opaqueSources"].as_array().unwrap().iter().find(|s|s["role"]=="ontology").unwrap()["utf8"].as_str().unwrap()).unwrap();
