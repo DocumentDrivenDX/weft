@@ -22,6 +22,10 @@ struct ReportSchema;
 struct RequestSchemaV02;
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-v0.2-candidate.schema.json")]
 struct ReportSchemaV02;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-request-v0.3-candidate.schema.json")]
+struct RequestSchemaV03;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-v0.3-candidate.schema.json")]
+struct ReportSchemaV03;
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct SourceIdentity {
@@ -117,12 +121,13 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         return Err(fail());
     }
     let value = checked_json(raw).map_err(|_| fail())?;
-    let extended=value["interfaceVersion"]=="weft-application-lineage/0.2-candidate";
-    if !(if extended{RequestSchemaV02::is_valid(&value)}else{RequestSchema::is_valid(&value)}) {
+    let bounded = value["interfaceVersion"] == "weft-application-lineage/0.3-candidate";
+    let extended=bounded || value["interfaceVersion"]=="weft-application-lineage/0.2-candidate";
+    if !(if bounded{RequestSchemaV03::is_valid(&value)}else if extended{RequestSchemaV02::is_valid(&value)}else{RequestSchema::is_valid(&value)}) {
         return Err(fail());
     }
     let request: Request = serde_json::from_value(value).map_err(|_| fail())?;
-    if request.interface_version != if extended{"weft-application-lineage/0.2-candidate"}else{"weft-application-lineage/0.1-candidate"}
+    if request.interface_version != if bounded{"weft-application-lineage/0.3-candidate"}else if extended{"weft-application-lineage/0.2-candidate"}else{"weft-application-lineage/0.1-candidate"}
         || request.opaque_sources.len() > 16
     {
         return Err(fail());
@@ -153,15 +158,15 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         &request.parameters,
         8_000_000,extended,
     )?;
-    let catalog = Catalog::prepare_security(request.modules)?;
+    let catalog = if bounded { Catalog::prepare_security_bounded_strings(request.modules)? } else { Catalog::prepare_security(request.modules)? };
     let (syntax, directions) = if extended{crate::application_syntax::parse_lineage_candidate(&request.sql)?}else{crate::application_syntax::parse_security(&request.sql)?};
-    let mut plan = crate::application_resolve::resolve(
+    let mut plan = if bounded { crate::application_resolve::resolve_bounded_current_strings(&catalog,syntax,request.parameters)? } else { crate::application_resolve::resolve(
         &catalog,
         syntax,
         request.parameters,
         request.read_profile,
-    )?;
-    if extended{plan.ir_version="weft-ir/application-lineage/0.2-candidate".into();}
+    )? };
+    if bounded{plan.ir_version="weft-ir/application-lineage/0.3-candidate".into();}else if extended{plan.ir_version="weft-ir/application-lineage/0.2-candidate".into();}
     if directions.len() != plan.order.len() {
         return Err(fail());
     }
@@ -204,9 +209,9 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         Ok(())
     })?;
     let plan_json = encode(&plan, 8_000_000)?;
-    let mut report = json!({"version":if extended{"weft.application.lineage/0.2-candidate"}else{"weft.application.lineage/0.1-candidate"},"securityReady":false,"authority":false,"sourceRequestJson":raw,"sourceRequestSha256":sha256(raw.as_bytes()),"modelPins":catalog.pins(),"sqlSha256":sha256(request.sql.as_bytes()),"applicationPlanJson":plan_json,"applicationPlanSha256":sha256(plan_json.as_bytes()),"orderDirections":directions.iter().map(|d|if *d{"desc"}else{"asc"}).collect::<Vec<_>>(),"scans":scans,"uses":uses,"unresolvedSources":unresolved});
+    let mut report = json!({"version":if bounded{"weft.application.lineage/0.3-candidate"}else if extended{"weft.application.lineage/0.2-candidate"}else{"weft.application.lineage/0.1-candidate"},"securityReady":false,"authority":false,"sourceRequestJson":raw,"sourceRequestSha256":sha256(raw.as_bytes()),"modelPins":catalog.pins(),"sqlSha256":sha256(request.sql.as_bytes()),"applicationPlanJson":plan_json,"applicationPlanSha256":sha256(plan_json.as_bytes()),"orderDirections":directions.iter().map(|d|if *d{"desc"}else{"asc"}).collect::<Vec<_>>(),"scans":scans,"uses":uses,"unresolvedSources":unresolved});
     if extended{report["readRequirements"]=crate::application_read_requirements::derive(&plan,&catalog)?;}
-    if !(if extended{ReportSchemaV02::is_valid(&report)}else{ReportSchema::is_valid(&report)}) {
+    if !(if bounded{ReportSchemaV03::is_valid(&report)}else if extended{ReportSchemaV02::is_valid(&report)}else{ReportSchema::is_valid(&report)}) {
         return Err(fail());
     }
     Ok(ApplicationLineage {
@@ -507,4 +512,46 @@ mod original_context_tests{
   assert_eq!(prepared.order_directions(),&[OrderDirection::Desc,OrderDirection::Asc]);assert_eq!(prepared.plan().order.len(),2);
   let report:Value=serde_json::from_str(prepared.json()).unwrap();assert_eq!(report["orderDirections"],json!(["desc","asc"]));
  }
+}
+
+#[cfg(test)]
+mod bounded_string_tests {
+    use super::*;
+    fn request() -> Value {
+        let mut r:Value=serde_json::from_str(include_str!("../../../tests/current-query-designation/fixtures/mixed-original-uses.request.json")).unwrap();
+        r["interfaceVersion"]=json!("weft-application-lineage/0.3-candidate");
+        r["sql"]=json!("SELECT r.token FROM Resource r WHERE r.token='😀' ORDER BY r.token DESC");
+        let mut d:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        d["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="token").unwrap()["facets"]=json!({"length":{"min":1,"max":3,"unit":"unicode-scalar"}});
+        let raw=d.to_string();r["modules"][0]["pin"]["sha256"]=json!(sha256(raw.as_bytes()));r["modules"][0]["documentJson"]=json!(raw);r
+    }
+    #[test]
+    fn bounded_original_source_and_type_survive_only_explicit_new_preparation() {
+        let r=request();let raw=r.to_string();let p=prepare(&raw).unwrap();
+        assert_eq!(p.source_request_json(),raw);
+        assert_eq!(p.catalog().inputs()[0].document_json,r["modules"][0]["documentJson"].as_str().unwrap());
+        assert_eq!(p.plan().ir_version,"weft-ir/application-lineage/0.3-candidate");
+        let report:Value=serde_json::from_str(p.json()).unwrap();assert_eq!(report["version"],"weft.application.lineage/0.3-candidate");
+        let uses=report["uses"].as_array().unwrap();assert!(uses.len()>=2);
+        for u in uses {assert_eq!(u["logicalType"]["facets"],json!({"length":{"min":1,"max":3,"unit":"unicode-scalar"}}));}
+        for version in ["0.1-candidate","0.2-candidate"] {let mut old=r.clone();old["interfaceVersion"]=json!(format!("weft-application-lineage/{version}"));assert!(prepare(&old.to_string()).is_err());}
+        // Public legacy re-resolution cannot erase the catalog's bounded profile.
+        let legacy_query=crate::application_syntax::parse("SELECT r.token FROM Resource r").unwrap();
+        assert!(crate::application_resolve::resolve(p.catalog(),legacy_query,Default::default(),None).is_err());
+        // The old designation factory must not silently accept this new source context.
+        assert!(crate::current_query_designation::derive(&p).is_err());
+    }
+    #[test]
+    fn original_literal_and_parameter_bounds_precede_false_and_limit_zero() {
+        for value in ["", "four", "😀😀😀😀"] {
+            let mut r=request();r["sql"]=json!(format!("SELECT r.token FROM Resource r WHERE FALSE AND r.token='{value}' LIMIT 0"));
+            assert!(prepare(&r.to_string()).is_err());
+            r["sql"]=json!("SELECT r.token FROM Resource r WHERE FALSE AND r.token=:v LIMIT 0");
+            r["parameters"]=json!({"v":{"family":"string","value":value}});assert!(prepare(&r.to_string()).is_err());
+        }
+        for value in ["😀", "e\u{301}", "😀éA"] {
+            let mut r=request();r["sql"]=json!("SELECT r.token FROM Resource r WHERE FALSE AND r.token=:v LIMIT 0");r["parameters"]=json!({"v":{"family":"string","value":value}});
+            let p=prepare(&r.to_string()).unwrap();assert!(p.json().contains(value));
+        }
+    }
 }

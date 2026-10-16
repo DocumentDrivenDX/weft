@@ -650,3 +650,47 @@ a matching contributor frame while refusing a wrong public result and a foreign
 target binding. A separately supervised tiny local Spark/Delta fixture MAY
 qualify the selected compiler/host mechanics only; it cannot close native
 security or Unity Catalog requirements.
+
+## CONTRACT-011 bounded String prerequisite (US-009-AC3/AC4)
+
+All checks are required for this compiler chunk; none accepts a native backend:
+
+- BSTR01: new source/designation/binding/refinement versions and exact capability
+  pair; old profiles/APIs refuse new contexts, including facetless selections.
+- BSTR02: exact min/max/unit metadata, safe integer endpoints, unknown/missing
+  facets and malformed domains; preserve original bytes, identities and bounds.
+- BSTR03: independent empty/min/max/supplementary/combining/normalization vectors;
+  byte-count, UTF16-count, grapheme-count and truncation countercontrols.
+- BSTR04: original literals/parameters validate before FALSE/LIMIT0; preserve
+  original type/value while effective String bounds differ; cross-family refusal.
+- BSTR05: every captured eligible/public cell is checked before relational work;
+  invalid filtered-away and LIMIT0 cells refuse, with no private value diagnostic.
+- BSTR06: field/field exact domain/scope pairing and per-occurrence isolation;
+  distinct self-join/output/filter/group/order uses never collapse by Field alone.
+- BSTR07: row and contributor semantics, COUNT/DISTINCT, empty/grouped results,
+  ordering ties/LIMIT and wrong public/bag occurrences; retain existing budgets.
+- BSTR08: prohibited/unresolved/missing modes refuse before SQL; no new operators,
+  disclosed SUM, nullable/absent/withheld carriers or native authority.
+- BSTR09: actual PostgreSQL and Databricks candidate lowerers plus shared checker
+  validate the same context; unsupported native premises remain explicit.
+- BSTR10: Rust/runtime/Python and real browser WASM parity over actual built
+  modules, exact source/artifact pins and old-profile regressions.
+- BSTR11: fresh independent Astra Ultra source/evidence review and adversarial
+  controls, retaining failures and qualification limits before owner integration.
+
+Native pg-raw.P03 remains open until its complete separate assertion passes,
+including required Token/null semantics and native gateway/bypass controls.
+
+The source-bound BSTR10 bridge cohort is executed by
+`tests/current-query-bounded/run-bridge-cohort.py`. Supply exact Cargo/Rust1.90,
+Python3.12.14, Maturin1.9.6, Bun1.4.2, wasm-bindgen0.2.105, and the declared
+Playwright1.62.1 module, plus isolated output/target directories outside the source
+checkout. The runner builds and installs separate bounded-feature and standard
+wheels; builds, retains and initializes both WASM feature sets in real Chromium;
+runs the authored Unicode/relational/old-entrypoint cases and legacy refinement,
+query-ABI and designation suites; and captures selected source digests before and
+after the whole campaign. It refuses changed source, a failed child or a timeout.
+Artifact/module/shim byte equality is checked against each installed wheel.
+The bridge vectors use declared cells; they never become native completeness or
+permission credentials. A passing local cohort does not accept US-009-AC3/AC4,
+pg-raw.P03, other platforms, current-main reconciliation or publication.

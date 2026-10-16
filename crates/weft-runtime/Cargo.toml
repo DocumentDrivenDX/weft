@@ -7,6 +7,8 @@ publish.workspace=true
 [features]
 raw-postgresql-reads=["dep:weft-postgresql"]
 current-spark-scalar-candidate=["application-lineage-candidate","dep:weft-databricks","weft-databricks/current-spark-scalar-candidate"]
+
+bounded-current-string-candidate=["current-query-refinement-candidate","weft-postgresql/bounded-current-string-candidate","weft-databricks/bounded-current-string-candidate"]
 current-query-refinement-candidate=["current-postgresql-scalar-candidate","current-databricks-scalar-candidate","weft-postgresql/current-query-refinement-candidate","weft-databricks/current-query-refinement-candidate"]
 current-databricks-scalar-candidate=["application-lineage-candidate","dep:weft-databricks"]
 truss-browser-local=["dep:weft-postgresql"]

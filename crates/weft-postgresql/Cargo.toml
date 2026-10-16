@@ -18,6 +18,7 @@ name = "candidate-compiler"
 path = "../../tests/truss-postgresql/compiler.rs"
 
 [features]
+bounded-current-string-candidate=["current-query-refinement-candidate","weft-core/bounded-current-string-candidate"]
 current-query-refinement-candidate=["weft-core/current-query-refinement-candidate"]
 conformance-original=[]
 

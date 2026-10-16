@@ -58,10 +58,15 @@ pub struct Lowered<'a> {
     pub output_types: &'a [LogicalType],
     pub encoding: Encoding,
 }
+fn capabilities<'de,D:serde::Deserializer<'de>>(d:D)->std::result::Result<Option<Vec<String>>,D::Error> {
+    Vec::<String>::deserialize(d).map(Some)
+}
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct Frame {
     version: String,
+    #[serde(default,deserialize_with="capabilities")]
+    capabilities: Option<Vec<String>>,
     source_request_sha256: String,
     designation_sha256: String,
     materialization_binding_sha256: String,
@@ -121,20 +126,15 @@ fn digest(s: &str) -> bool {
         && s.bytes()
             .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
 }
-fn supported(t: &LogicalType) -> bool {
-    !t.nullable
-        && match t.family {
-            Family::String => t.facets == json!({}),
-            Family::Integer => t.facets == json!({"integerWidth":{"bits":64,"signed":true}}),
-            _ => false,
-        }
+fn supported(t: &LogicalType,bounded:bool) -> bool {
+    crate::current_string_domain::supported(t,bounded)
 }
-fn scalar(value: &str, t: &LogicalType, canonical: bool) -> Result<Scalar> {
-    if !supported(t) {
+fn scalar(value: &str, t: &LogicalType, canonical: bool,bounded:bool) -> Result<Scalar> {
+    if !supported(t,bounded) {
         return Err(fail());
     }
     match t.family {
-        Family::String => Ok(Scalar::String(value.into())),
+        Family::String => {crate::current_string_domain::validate(t,value,bounded).map_err(|_|fail())?;Ok(Scalar::String(value.into()))},
         Family::Integer => {
             let n = value.parse::<i64>().map_err(|_| fail())?;
             if canonical && n.to_string() != value {
@@ -389,13 +389,20 @@ pub fn compare<'a>(
     lowered: Lowered<'a>,
     raw: &str,
 ) -> Result<()> {
-    compare_inner(context, lowered, raw).map_err(|_| fail())
+    compare_inner(context, lowered, raw,false).map_err(|_| fail())
+}
+/// Explicit new capability: validate bounds over every captured and public cell.
+#[cfg(feature="bounded-current-string-candidate")]
+pub fn compare_bounded<'a>(context:&'a CurrentQueryOperands<'a>,lowered:Lowered<'a>,raw:&str)->Result<()> {
+    compare_inner(context,lowered,raw,true).map_err(|_|fail())
 }
 fn compare_inner<'a>(
     context: &'a CurrentQueryOperands<'a>,
     data: Lowered<'a>,
     raw: &str,
+    bounded:bool,
 ) -> Result<()> {
+    if context.designation().supports_bounded_unicode_strings()!=bounded {return Err(fail());}
     let original = context.designation().preparation();
     let plan = original.plan();
     if matches!(data.encoding, Encoding::Rows) && plan.aggregate {
@@ -412,7 +419,8 @@ fn compare_inner<'a>(
         checked_json_bounded(raw, BYTES, 32, 1_000_000).map_err(|_| fail())?,
     )
     .map_err(|_| fail())?;
-    if frame.version != "weft.current-query.refinement-input/0.1-candidate"
+    if (if bounded {frame.capabilities.as_deref()!=Some(&["bounded-unicode-scalars".to_owned()][..])} else {frame.capabilities.is_some()})
+        || frame.version != if bounded {"weft.current-query.refinement-input/0.2-candidate"} else {"weft.current-query.refinement-input/0.1-candidate"}
         || frame.source_request_sha256 != sha256(original.source_request_json().as_bytes())
         || frame.designation_sha256 != sha256(context.designation().json().as_bytes())
         || frame.materialization_binding_sha256 != data.binding_sha256
@@ -508,7 +516,7 @@ fn compare_inner<'a>(
             let Shape::Scalar { logical_type } = desc.shape else {
                 return Err(fail());
             };
-            if !supported(&logical_type) || id == &s.domain && logical_type != s.logical_type {
+            if !supported(&logical_type,bounded) || id == &s.domain && logical_type != s.logical_type {
                 return Err(fail());
             }
         }
@@ -568,18 +576,20 @@ fn compare_inner<'a>(
                     logical_type,
                     ..
                 } => {
-                    scalar(value, logical_type, false)?;
+                    scalar(value, logical_type, false,bounded)?;
                     types.push((*logical_type).clone());
                     scopes.push(None);
                 }
             }
         }
-        if op.kind() == Kind::Equal
-            && (types.len() != 2
-                || types[0] != types[1]
-                || scopes[0].is_some() && scopes[1].is_some() && scopes[0] != scopes[1])
-        {
-            return Err(fail());
+        if op.kind()==Kind::Equal {
+            if types.len()!=2 {return Err(fail());}
+            let compatible=if scopes[1].is_some() {
+                crate::current_string_domain::same_domain(&types[0],&types[1],bounded)
+            } else if let Input::Literal{value,..}|Input::Parameter{value,..}=op.operands()[1].input() {
+                types[0]==types[1] || crate::current_string_domain::literal_compatible(&types[1],&types[0],value,bounded)
+            } else {false};
+            if !compatible || scopes[0].is_some() && scopes[1].is_some() && scopes[0]!=scopes[1] {return Err(fail());}
         }
         if op.kind() == Kind::Sum {
             let operand = op.operands().first().ok_or_else(fail)?;
@@ -705,11 +715,7 @@ fn compare_inner<'a>(
                 if t.family != family {
                     return Err(fail());
                 }
-                let captured = if family == Family::String {
-                    Scalar::String(value)
-                } else {
-                    scalar(&value, t, true)?
-                };
+                let captured = scalar(&value,t,true,bounded)?;
                 cells.insert(column, captured);
             }
             captured.push(Captured {
@@ -719,6 +725,19 @@ fn compare_inner<'a>(
         }
         rows.push(captured);
         keysets.push(keys);
+    }
+    if bounded {
+        for row in &frame.result_rows {
+            if row.len()!=data.output_types.len()+1 {return Err(fail());}
+            for (cell,t) in row.iter().zip(data.output_types) {
+                let Some(value)=cell else {return Err(fail());};
+                match t.family {
+                    Family::String=>crate::current_string_domain::validate(t,value,true).map_err(|_|fail())?,
+                    Family::Integer=>{let n=value.parse::<i64>().map_err(|_|fail())?;if n.to_string()!=*value {return Err(fail());}},
+                    _=>return Err(fail()),
+                }
+            }
+        }
     }
     let eval = Eval {
         context,

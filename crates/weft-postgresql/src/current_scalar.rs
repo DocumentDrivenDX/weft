@@ -121,6 +121,7 @@ struct Lineage {
     keys: BTreeMap<String, String>,
     contributor_bag: bool,
     live_original_integer_sum: bool,
+    bounded_unicode_strings: bool,
 }
 impl CurrentScalarSql<'_> {
     pub fn sql(&self) -> &str {
@@ -167,6 +168,10 @@ impl CurrentScalarSql<'_> {
                 value["privateGroupSources"] = groups.clone();
             }
         }
+        if self.context.designation().supports_bounded_unicode_strings() {
+            value["capabilities"]=json!(["bounded-unicode-scalars"]);
+            value["nativeRequirements"].as_array_mut().unwrap().push(json!("complete original/effective Unicode scalar length domain checks on every captured eligible cell before relational evaluation and every public cell before guarded release; SQL TEXT alone is insufficient"));
+        }
         value
     }
 }
@@ -176,17 +181,13 @@ struct Selected<'a> {
     sql: String,
 }
 struct Build<'a> {
+    bounded_unicode_strings: bool,
     selected: BTreeMap<(String, String), Selected<'a>>,
     used: BTreeSet<(String, String)>,
     parameters: Vec<Parameter>,
 }
-fn scalar_supported(t: &LogicalType) -> bool {
-    !t.nullable
-        && match t.family {
-            Family::String => t.facets == json!({}),
-            Family::Integer => t.facets == json!({"integerWidth":{"bits":64,"signed":true}}),
-            _ => false,
-        }
+fn scalar_supported(t: &LogicalType, bounded: bool) -> bool {
+    weft_core::current_string_domain::supported(t,bounded)
 }
 fn count_type(t: &LogicalType) -> Result<()> {
     if t.family != Family::Integer || t.nullable || t.facets != json!({}) {
@@ -194,8 +195,8 @@ fn count_type(t: &LogicalType) -> Result<()> {
     }
     Ok(())
 }
-fn native_type(t: &LogicalType) -> Result<&'static str> {
-    if !scalar_supported(t) {
+fn native_type(t: &LogicalType, bounded: bool) -> Result<&'static str> {
+    if !scalar_supported(t,bounded) {
         return Err(fail());
     }
     Ok(if t.family == Family::String {
@@ -242,7 +243,8 @@ impl Build<'_> {
                 logical_type,
                 ..
             } => {
-                let ty = native_type(logical_type)?;
+                let ty = native_type(logical_type,self.bounded_unicode_strings)?;
+                if logical_type.family==Family::String { weft_core::current_string_domain::validate(logical_type,value,self.bounded_unicode_strings).map_err(|_|fail())?; }
                 if value.contains('\0') || self.parameters.len() >= 1024 {
                     return Err(fail());
                 }
@@ -279,7 +281,12 @@ impl Build<'_> {
                 let (a, ta, sa) =
                     self.field(&format!("{path}/left"), &left.scan, &left.identity)?;
                 let (b, tb, sb) = self.value(&format!("{path}/right"), right)?;
-                if ta != tb || sb.is_some_and(|s| s != sa) {
+                let compatible=if sb.is_some() {
+                    weft_core::current_string_domain::same_domain(&ta,&tb,self.bounded_unicode_strings)
+                } else if let app::Value::Literal{value,..}|app::Value::Parameter{value,..}=right {
+                    ta==tb || weft_core::current_string_domain::literal_compatible(&tb,&ta,value,self.bounded_unicode_strings)
+                } else {false};
+                if !compatible || sb.is_some_and(|s| s != sa) {
                     return Err(fail());
                 }
                 Ok(format!("({a} OPERATOR(pg_catalog.=) {b})"))
@@ -312,6 +319,8 @@ fn lower_binding<'a>(
     lineage: Option<Lineage>,
 ) -> Result<CurrentScalarSql<'a>> {
     let designation = context.designation();
+    let bounded=lineage.as_ref().is_some_and(|l|l.bounded_unicode_strings);
+    if designation.supports_bounded_unicode_strings()!=bounded { return Err(fail()); }
     let original = designation.preparation();
     let plan = original.plan();
     if binding.version != "weft.postgresql.current-values/0.1-candidate"
@@ -426,7 +435,7 @@ fn lower_binding<'a>(
             let Shape::Scalar { logical_type } = descriptor.shape else {
                 return Err(fail());
             };
-            if !scalar_supported(&logical_type) {
+            if !scalar_supported(&logical_type,bounded) {
                 return Err(fail());
             }
         }
@@ -467,7 +476,7 @@ fn lower_binding<'a>(
         let Shape::Scalar { logical_type } = descriptor.shape else {
             return Err(fail());
         };
-        let ty = native_type(&logical_type)?;
+        let ty = native_type(&logical_type,bounded)?;
         let sql = format!(
             "{}.{}{}",
             ident(&value.scan)?,
@@ -543,6 +552,7 @@ fn lower_binding<'a>(
         }
     }
     let mut build = Build {
+        bounded_unicode_strings:bounded,
         selected,
         used: BTreeSet::new(),
         parameters: Vec::new(),
@@ -754,7 +764,7 @@ fn lower_binding<'a>(
             }
             let groups=plan.groups.iter().enumerate().map(|(index,field)|json!({"path":format!("groups/{index}"),"scan":field.scan,"field":field.identity})).collect::<Vec<_>>();
             Some(PrivateLineage {
-                version: if live_sum {
+                version: if bounded { "weft.postgresql.current-scalar/0.6-candidate" } else if live_sum {
                     "weft.postgresql.current-scalar/0.4-candidate"
                 } else {
                     "weft.postgresql.current-scalar/0.3-candidate"
@@ -773,7 +783,7 @@ fn lower_binding<'a>(
                 cells.push(json!({"position":position,"sourcePath":format!("outputs/{position}/expression"),"scan":scan,"field":identity}));
             }
             Some(PrivateLineage {
-                version: "weft.postgresql.current-scalar/0.2-candidate",
+                version: if bounded {"weft.postgresql.current-scalar/0.5-candidate"} else {"weft.postgresql.current-scalar/0.2-candidate"},
                 columns: json!([{"position":columns.len(),"name":"__weft_source_rows","purpose":"source-row-contribution","encoding":"jsonb-text:weft.stage-row-tuple/0.1-candidate","scans":scan_ids,"maxKeyUtf8Bytes":256}]),
                 cells: json!(cells),
                 groups: None,
@@ -839,6 +849,8 @@ struct RowScan {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct RowBinding {
     version: String,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    capabilities: Option<Vec<String>>,
     source_request_sha256: String,
     designation_sha256: String,
     source_binding_sha256: String,
@@ -886,6 +898,16 @@ pub fn lower_original_sum<'a>(
         true,
     )
 }
+/// Explicit bounded Unicode scalar candidate; no native authorization is conferred.
+#[cfg(feature="bounded-current-string-candidate")]
+pub fn lower_bounded_rows<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str)->Result<CurrentScalarSql<'a>> {
+    lower_keyed(context,binding_json,"weft.postgresql.current-values/0.5-candidate",false,false)
+}
+/// Explicit bounded Unicode scalar candidate with complete contributor bags.
+#[cfg(feature="bounded-current-string-candidate")]
+pub fn lower_bounded_contributors<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str)->Result<CurrentScalarSql<'a>> {
+    lower_keyed(context,binding_json,"weft.postgresql.current-values/0.5-candidate",true,false)
+}
 fn lower_keyed<'a>(
     context: &'a CurrentQueryOperands<'a>,
     binding_json: &str,
@@ -898,7 +920,10 @@ fn lower_keyed<'a>(
     }
     let raw = checked_json(binding_json).map_err(|_| fail())?;
     let binding: RowBinding = serde_json::from_value(raw.clone()).map_err(|_| fail())?;
-    if binding.version != version || serde_json::to_value(&binding).map_err(|_| fail())? != raw {
+    let bounded=version=="weft.postgresql.current-values/0.5-candidate";
+    if context.designation().supports_bounded_unicode_strings()!=bounded
+        || (if bounded { binding.capabilities.as_deref()!=Some(&["bounded-unicode-scalars".to_owned()][..]) } else { binding.capabilities.is_some() })
+        || binding.version != version || serde_json::to_value(&binding).map_err(|_| fail())? != raw {
         return Err(fail());
     }
     let mut keys = BTreeMap::new();
@@ -936,6 +961,7 @@ fn lower_keyed<'a>(
             keys,
             contributor_bag,
             live_original_integer_sum,
+            bounded_unicode_strings:bounded,
         }),
     )
 }
@@ -1389,6 +1415,72 @@ mod tests {
             .unwrap()
             .contains("\"eligible\" IS TRUE"));
     }
+    #[cfg(feature="bounded-current-string-candidate")]
+    mod bounded {
+        use super::*;
+        fn source()->Value {serde_json::from_str(include_str!("../../../tests/current-query-designation/fixtures/bounded-unicode-strings.request.json")).unwrap()}
+        fn materialization(g:&CurrentQueryOperands<'_>)->Value {
+            let mut b=binding(g);b["version"]=json!("weft.postgresql.current-values/0.5-candidate");b["capabilities"]=json!(["bounded-unicode-scalars"]);
+            for s in b["scans"].as_array_mut().unwrap(){s["relation"]["rowKeyColumn"]=json!("row_key");} b
+        }
+        fn frame(g:&CurrentQueryOperands<'_>,b:&Value,artifact:&Value,value:&str,contributor:bool)->Value {
+            let carrier=if contributor {json!({"version":"weft.stage-contributor-bag/0.1-candidate","tuples":[[{"scan":"s0","key":"k"}]]})} else {json!({"version":"weft.stage-row-tuple/0.1-candidate","rows":[{"scan":"s0","key":"k"}]})};
+            json!({"version":"weft.current-query.refinement-input/0.2-candidate","capabilities":["bounded-unicode-scalars"],"sourceRequestSha256":sha256(g.designation().preparation().source_request_json().as_bytes()),"designationSha256":sha256(g.designation().json().as_bytes()),"materializationBindingSha256":sha256(b.to_string().as_bytes()),"compiledArtifactSha256":sha256(artifact.to_string().as_bytes()),"scans":[{"scan":"s0","expectedRowCount":"1","rows":[{"key":"k","cells":{"token":{"family":"string","value":value}}}]}],"resultRows":[[value,carrier.to_string()]]})
+        }
+        // @covers US-009-AC3 @covers US-009-AC4
+        #[test]
+        fn bounded_rows_and_contributors_preserve_domains_and_close_old_entrypoints() {
+            for contributor in [false,true] {
+                let r=source();let p=application_lineage::prepare(&r.to_string()).unwrap();let d=current_query_designation::derive(&p).unwrap();let g=current_query_operands::derive(&d).unwrap();let b=materialization(&g);
+                let lowered=if contributor {lower_bounded_contributors(&g,&b.to_string())} else {lower_bounded_rows(&g,&b.to_string())}.unwrap();
+                let artifact=lowered.json();assert_eq!(artifact["version"],if contributor {"weft.postgresql.current-scalar/0.6-candidate"} else {"weft.postgresql.current-scalar/0.5-candidate"});
+                assert_eq!(artifact["parameters"][0]["value"],"😀");assert_eq!(artifact["parameters"][0]["logicalType"]["facets"]["length"]["max"],64);
+                let input=frame(&g,&b,&artifact,"😀",contributor);
+                let result=if contributor {check_bounded_contributors(&g,&b.to_string(),&input.to_string())} else {check_bounded_rows(&g,&b.to_string(),&input.to_string())}.unwrap();assert_eq!(result["matched"],true);assert_eq!(result["authority"],false);
+                assert!(lower_rows(&g,&b.to_string()).is_err());assert!(lower_contributors(&g,&b.to_string()).is_err());assert!(lower_original_sum(&g,&b.to_string()).is_err());
+                for caps in [json!(null),json!([]),json!(["bounded-unicode-scalars","live-original-integer-sum"]),json!(["other"])] {let mut bad=b.clone();bad["capabilities"]=caps;assert!(lower_bounded_rows(&g,&bad.to_string()).is_err());}
+            }
+        }
+        // @covers US-009-AC3
+        #[test]
+        fn bounded_captured_domains_validate_before_false_and_limit_zero() {
+            let mut r=source();r["sql"]=json!("SELECT r.token FROM Resource r WHERE FALSE AND r.token=:needle LIMIT 0");
+            let p=application_lineage::prepare(&r.to_string()).unwrap();let d=current_query_designation::derive(&p).unwrap();let g=current_query_operands::derive(&d).unwrap();let b=materialization(&g);let artifact=lower_bounded_rows(&g,&b.to_string()).unwrap().json();
+            for value in ["😀".to_owned(),"e\u{301}".to_owned(),"😀".repeat(64)] {let mut input=frame(&g,&b,&artifact,&value,false);input["resultRows"]=json!([]);assert!(check_bounded_rows(&g,&b.to_string(),&input.to_string()).is_ok());}
+            for value in ["".to_owned(),"😀".repeat(65)] {let mut input=frame(&g,&b,&artifact,&value,false);input["resultRows"]=json!([]);assert!(check_bounded_rows(&g,&b.to_string(),&input.to_string()).is_err());}
+        }
+        fn carrier(keys:&[usize])->String {
+            json!({"version":"weft.stage-contributor-bag/0.1-candidate","tuples":keys.iter().map(|i|json!([{"scan":"s0","key":format!("k{i}")}])).collect::<Vec<_>>()} ).to_string()
+        }
+        fn captured(g:&CurrentQueryOperands<'_>,b:&Value,a:&Value,values:&[&str],public:Value)->Value {
+            let mut input=frame(g,b,a,values[0],true);input["scans"][0]["expectedRowCount"]=json!(values.len().to_string());
+            input["scans"][0]["rows"]=json!(values.iter().enumerate().map(|(i,value)|json!({"key":format!("k{i}"),"cells":{"token":{"family":"string","value":value}}})).collect::<Vec<_>>());input["resultRows"]=public;input
+        }
+        // @covers US-009-AC3
+        #[test]
+        fn bounded_unicode_order_is_scalar_order_and_counts_keep_contributor_bags() {
+            for (sql,values,public) in [
+                ("SELECT r.token FROM Resource r ORDER BY r.token DESC",vec!["\u{e000}","😀"],json!([["😀",carrier(&[1])],["\u{e000}",carrier(&[0])]])),
+                ("SELECT r.token, COUNT(*) AS n FROM Resource r GROUP BY r.token ORDER BY r.token",vec!["😀","😀","e\u{301}"],json!([["e\u{301}","1",carrier(&[2])],["😀","2",carrier(&[0,1])]])),
+                ("SELECT COUNT(DISTINCT r.token) AS n FROM Resource r",vec!["😀","😀","e\u{301}"],json!([["2",carrier(&[0,1,2])]])),
+            ] {
+                let mut r=source();r["sql"]=json!(sql);r["parameters"]=json!({});
+                let p=application_lineage::prepare(&r.to_string()).unwrap();let d=current_query_designation::derive(&p).unwrap();let g=current_query_operands::derive(&d).unwrap();let b=materialization(&g);let a=lower_bounded_contributors(&g,&b.to_string()).unwrap().json();let input=captured(&g,&b,&a,&values,public);
+                assert!(check_bounded_contributors(&g,&b.to_string(),&input.to_string()).is_ok(),"{sql}");
+                let mut bad=input.clone();if bad["resultRows"].as_array().unwrap().len()>1 {bad["resultRows"].as_array_mut().unwrap().reverse();}else{bad["resultRows"][0][0]=json!("3");}
+                assert!(check_bounded_contributors(&g,&b.to_string(),&bad.to_string()).is_err());
+                let mut bad=input.clone();bad["scans"][0]["rows"][0]["cells"]["token"]["value"]=json!("");assert!(check_bounded_contributors(&g,&b.to_string(),&bad.to_string()).is_err());
+            }
+        }
+        // @covers US-009-AC3
+        #[test]
+        fn bounded_public_cells_and_refinement_versions_refuse_bad_inputs() {
+            let r=source();let p=application_lineage::prepare(&r.to_string()).unwrap();let d=current_query_designation::derive(&p).unwrap();let g=current_query_operands::derive(&d).unwrap();let b=materialization(&g);let artifact=lower_bounded_rows(&g,&b.to_string()).unwrap().json();let good=frame(&g,&b,&artifact,"😀",false);
+            for value in [json!(null),json!(""),json!("😀".repeat(65))] {let mut bad=good.clone();bad["resultRows"][0][0]=value;assert!(check_bounded_rows(&g,&b.to_string(),&bad.to_string()).is_err());}
+            let mut bad=good.clone();bad["version"]=json!("weft.current-query.refinement-input/0.1-candidate");assert!(check_bounded_rows(&g,&b.to_string(),&bad.to_string()).is_err());
+            for caps in [json!([]),json!(["other"]),json!(["bounded-unicode-scalars","bounded-unicode-scalars"])] {let mut bad=good.clone();bad["capabilities"]=caps;assert!(check_bounded_rows(&g,&b.to_string(),&bad.to_string()).is_err());}
+        }
+    }
 }
 
 /// Optional conditional result comparison; actual lowering precedes all input evaluation.
@@ -1419,6 +1511,16 @@ pub fn check_original_sum<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:
     })().map_err(|_|refinement_failure())
 }
 
+#[cfg(feature="bounded-current-string-candidate")]
+pub fn check_bounded_rows<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str,input_json:&str)->Result<Value>{
+    (||{let actual=lower_bounded_rows(context,binding_json)?;let binding:RowBinding=serde_json::from_str(binding_json).map_err(|_|fail())?;
+    refine_actual(context,actual,binding.values,binding_json,input_json,weft_core::current_query_refinement::Encoding::Rows)})().map_err(|_|refinement_failure())
+}
+#[cfg(feature="bounded-current-string-candidate")]
+pub fn check_bounded_contributors<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str,input_json:&str)->Result<Value>{
+    (||{let actual=lower_bounded_contributors(context,binding_json)?;let binding:RowBinding=serde_json::from_str(binding_json).map_err(|_|fail())?;
+    refine_actual(context,actual,binding.values,binding_json,input_json,weft_core::current_query_refinement::Encoding::Contributors)})().map_err(|_|refinement_failure())
+}
 #[cfg(feature="current-query-refinement-candidate")]
 fn refinement_failure()->Diagnostic{Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused")}
 #[cfg(feature="current-query-refinement-candidate")]
@@ -1434,8 +1536,17 @@ fn refine_actual<'a>(context:&'a CurrentQueryOperands<'a>,actual:CurrentScalarSq
             original_action:v.original_action,exposure:v.exposure.map(|m|match m{Exposure::Original=>"original",Exposure::Transformed=>"transformed"}.into())})
     }).collect::<Result<Vec<_>>>()?;
     let types=actual.columns().iter().map(|c|c.logical_type.clone()).collect::<Vec<_>>();
-    compare(context,Lowered{binding_sha256:&binding_sha,artifact_sha256:&artifact_sha,selections:&selections,output_types:&types,encoding},input_json)?;
-    Ok(json!({"version":"weft.current-query.refinement-result/0.1-candidate","matched":true,"authority":false,"securityReady":false,"nativeAdmission":"required",
+    let lowered=Lowered{binding_sha256:&binding_sha,artifact_sha256:&artifact_sha,selections:&selections,output_types:&types,encoding};
+    let bounded=context.designation().supports_bounded_unicode_strings();
+    if bounded {
+        #[cfg(feature="bounded-current-string-candidate")]
+        weft_core::current_query_refinement::compare_bounded(context,lowered,input_json)?;
+        #[cfg(not(feature="bounded-current-string-candidate"))]
+        return Err(refinement_failure());
+    } else {compare(context,lowered,input_json)?;}
+    let mut report=json!({"version":if bounded {"weft.current-query.refinement-result/0.2-candidate"} else {"weft.current-query.refinement-result/0.1-candidate"},"matched":true,"authority":false,"securityReady":false,"nativeAdmission":"required",
         "sourceRequestSha256":sha256(context.designation().preparation().source_request_json().as_bytes()),"designationSha256":sha256(context.designation().json().as_bytes()),
-        "materializationBindingSha256":binding_sha,"compiledArtifactSha256":artifact_sha,"refinementInputSha256":sha256(input_json.as_bytes())}))
+        "materializationBindingSha256":binding_sha,"compiledArtifactSha256":artifact_sha,"refinementInputSha256":sha256(input_json.as_bytes())});
+    if bounded {report["capabilities"]=json!(["bounded-unicode-scalars"]);}
+    Ok(report)
 }

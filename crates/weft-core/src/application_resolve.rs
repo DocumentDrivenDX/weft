@@ -42,10 +42,13 @@ pub fn resolve(
     parameters: Parameters,
     profile: Option<ir::ReadProfile>,
 ) -> Result<ir::Plan> {
-    resolve_inner(catalog,q,parameters,profile,ExactParameters::new(),false,false)
+    resolve_inner(catalog,q,parameters,profile,ExactParameters::new(),false,false,false)
 }
 pub(crate) fn resolve_with_exact(catalog:&Catalog,q:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,profile:Option<ir::ReadProfile>,timestamp_equality:bool)->Result<ir::Plan> {
-    resolve_inner(catalog,q,parameters,profile,exact_parameters,true,timestamp_equality)
+    resolve_inner(catalog,q,parameters,profile,exact_parameters,true,timestamp_equality,false)
+}
+pub(crate) fn resolve_bounded_current_strings(catalog:&Catalog,q:ast::Query,parameters:Parameters)->Result<ir::Plan> {
+    resolve_inner(catalog,q,parameters,None,ExactParameters::new(),false,false,true)
 }
 fn resolve_inner(
     catalog: &Catalog,
@@ -55,7 +58,11 @@ fn resolve_inner(
     exact_parameters:ExactParameters,
     binary_equality:bool,
     timestamp_equality:bool,
+    bounded_current_strings:bool,
 ) -> Result<ir::Plan> {
+    if catalog.bounded_current_strings != bounded_current_strings {
+        return Err(fail("WFT-VERSION", "Catalog requires its explicitly versioned bounded-string resolver"));
+    }
     let complete_entity = profile.as_ref().is_some_and(|p| p.subset == ir::Subset::CompleteEntity);
     if profile.as_ref().is_some_and(|p| match p.subset {
         ir::Subset::CompleteEntity => !matches!(p.version.as_str(), "weft-truss-entity-read/0.1.0" | "weft-truss-entity-read/0.2.0" | "weft-truss-entity-read/0.3.0"),
@@ -551,7 +558,7 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
     }
     query.order = columns;
     query.limit = Some(page_size + 1);
-    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }),exact_parameters,binary_equality,timestamp_equality)?;
+    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }),exact_parameters,binary_equality,timestamp_equality,false)?;
     plan.ir_version = if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else { "weft-ir/0.2.2" }.into();
     let visible_outputs = plan.outputs.len() - key.fields.len();
     let key_outputs = (visible_outputs..plan.outputs.len()).collect();

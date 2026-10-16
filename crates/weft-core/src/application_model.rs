@@ -300,7 +300,7 @@ impl Catalog {
                             } else { ExactScalarType::Binary } }
                         } else {
                             Shape::Scalar {
-                                logical_type: scalar_type(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers)?,
+                                logical_type: scalar_type(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers, c.bounded_current_strings)?,
                             }
                         }
                     }
@@ -369,7 +369,7 @@ impl Catalog {
                 quoted: true,
                 span: Span { start: 0, end: 0 },
             };
-            types.push(scalar_type(&field, &name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers)?);
+            types.push(scalar_type(&field, &name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers, self.bounded_current_strings)?);
             fields.push(id);
         }
         Ok(AuthoredKey {
@@ -574,7 +574,7 @@ impl Catalog {
                     if element["id"]!=identity.element {continue}
                     crate::model::selected08(&input.pin,element)?;
                     let name=Name{value:identity.element.clone(),quoted:true,span:crate::ir::Span{start:0,end:0}};
-                    let logical_type=scalar_type(element,&name,self.exact_numbers,self.exact_numbers)?;
+                    let logical_type=scalar_type(element,&name,self.exact_numbers,self.exact_numbers, self.bounded_current_strings)?;
                     found.push(Descriptor{identity:identity.clone(),availability:Some("required".into()),shape:Shape::Scalar{logical_type}});
                 }
             }

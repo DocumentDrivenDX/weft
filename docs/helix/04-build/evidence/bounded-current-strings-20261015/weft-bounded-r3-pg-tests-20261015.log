@@ -1,0 +1,276 @@
+   Compiling memchr v2.8.3
+   Compiling cfg-if v1.0.5
+   Compiling foldhash v0.2.0
+   Compiling equivalent v1.0.2
+   Compiling allocator-api2 v0.2.21
+   Compiling once_cell v1.21.4
+   Compiling ryu v1.0.23
+   Compiling itoa v1.0.18
+   Compiling serde_core v1.0.228
+   Compiling libc v0.2.190
+   Compiling zerocopy v0.8.59
+   Compiling smallvec v1.16.2
+   Compiling borrow-or-share v0.2.4
+   Compiling scopeguard v1.2.0
+   Compiling num-traits v0.2.19
+   Compiling regex-syntax v0.8.11
+   Compiling ref-cast v1.0.27
+   Compiling typenum v1.20.1
+   Compiling lock_api v0.4.14
+   Compiling micromap v0.3.0
+   Compiling percent-encoding v2.3.2
+   Compiling hashbrown v0.17.1
+   Compiling bit-vec v0.8.0
+   Compiling zmij v1.0.23
+   Compiling outref v0.5.2
+   Compiling vsimd v0.8.0
+   Compiling bytecount v0.6.9
+   Compiling num-cmp v0.1.0
+   Compiling aho-corasick v1.1.5
+   Compiling bit-set v0.8.0
+   Compiling num-integer v0.1.47
+   Compiling generic-array v0.14.7
+   Compiling num-complex v0.4.6
+   Compiling uuid-simd v0.8.0
+   Compiling strum v0.28.0
+   Compiling parking_lot_core v0.9.12
+   Compiling indexmap v2.14.2
+   Compiling cpufeatures v0.2.17
+   Compiling unicode-general-category v1.1.0
+   Compiling log v0.4.34
+   Compiling num-bigint v0.4.8
+   Compiling num-iter v0.1.46
+   Compiling data-encoding v2.11.1
+   Compiling sqlparser v0.63.0
+   Compiling parking_lot v0.12.5
+   Compiling base64 v0.22.1
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling regex-automata v0.4.18
+   Compiling jsonschema-regex v0.56.0
+   Compiling digest v0.10.7
+   Compiling toml_edit v0.25.15+spec-1.1.0
+   Compiling serde v1.0.228
+   Compiling serde_json v1.0.145
+   Compiling sha2 v0.10.9
+   Compiling num-rational v0.4.2
+   Compiling fluent-uri v0.4.1
+   Compiling email_address v0.2.9
+   Compiling num v0.4.3
+   Compiling proc-macro-crate v3.5.0
+   Compiling ahash v0.8.12 (/private/tmp/umf-weft-packaging-integration-20261015/vendor/ahash)
+   Compiling fraction v0.17.0
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+   Compiling referencing v0.56.0
+   Compiling jsonschema-value v0.56.0
+warning: `ahash` (lib) generated 4 warnings (1 duplicate)
+warning: `ahash` (lib) generated 4 warnings (3 duplicates)
+   Compiling regex v1.13.1
+   Compiling fancy-regex v0.19.2
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling jsonschema-macros v0.56.0
+   Compiling jsonschema v0.56.0
+   Compiling weft-core v0.1.0 (/private/tmp/umf-weft-packaging-integration-20261015/crates/weft-core)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:11:24
+   |
+11 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:837:8
+    |
+837 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:61:15
+   |
+61 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 10 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/umf-weft-packaging-integration-20261015/crates/weft-postgresql)
+warning: unused imports: `Requirement` and `admit_properties`
+    --> crates/weft-postgresql/src/property_definition.rs:1025:39
+     |
+1025 |             comparator_requirements::{admit_properties, registration_key, Requirement},
+     |                                       ^^^^^^^^^^^^^^^^                    ^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` on by default
+
+warning: variable does not need to be mutable
+   --> crates/weft-postgresql/src/row_join_definition.rs:842:13
+    |
+842 |         let mut binding: Value = serde_json::from_str(include_str!(
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: `weft-postgresql` (lib test) generated 2 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 46.30s
+     Running unittests src/lib.rs (/private/tmp/umf-bounded-string-target-r3-20261015/debug/deps/weft_postgresql-b6a57c2d091bbdfb)
+
+running 4 tests
+test security_guarded_transport::tests::bounded_writer_refuses_before_retaining_an_overrun_chunk ... ok
+test current_scalar::tests::bounded::bounded_captured_domains_validate_before_false_and_limit_zero ... FAILED
+test current_scalar::tests::bounded::bounded_public_cells_and_refinement_versions_refuse_bad_inputs ... FAILED
+test current_scalar::tests::bounded::bounded_rows_and_contributors_preserve_domains_and_close_old_entrypoints ... FAILED
+
+failures:
+
+---- current_scalar::tests::bounded::bounded_captured_domains_validate_before_false_and_limit_zero stdout ----
+
+thread 'current_scalar::tests::bounded::bounded_captured_domains_validate_before_false_and_limit_zero' panicked at crates/weft-postgresql/src/current_scalar.rs:1448:117:
+called `Result::unwrap()` on an `Err` value: Diagnostic { code: "WFT-CURRENT-QUERY-DESIGNATION", severity: "error", message: "Original current query designation refused", phase: "model", source_span: None }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- current_scalar::tests::bounded::bounded_public_cells_and_refinement_versions_refuse_bad_inputs stdout ----
+
+thread 'current_scalar::tests::bounded::bounded_public_cells_and_refinement_versions_refuse_bad_inputs' panicked at crates/weft-postgresql/src/current_scalar.rs:1455:132:
+called `Result::unwrap()` on an `Err` value: Diagnostic { code: "WFT-CURRENT-QUERY-DESIGNATION", severity: "error", message: "Original current query designation refused", phase: "model", source_span: None }
+
+---- current_scalar::tests::bounded::bounded_rows_and_contributors_preserve_domains_and_close_old_entrypoints stdout ----
+
+thread 'current_scalar::tests::bounded::bounded_rows_and_contributors_preserve_domains_and_close_old_entrypoints' panicked at crates/weft-postgresql/src/current_scalar.rs:1434:136:
+called `Result::unwrap()` on an `Err` value: Diagnostic { code: "WFT-CURRENT-QUERY-DESIGNATION", severity: "error", message: "Original current query designation refused", phase: "model", source_span: None }
+
+
+failures:
+    current_scalar::tests::bounded::bounded_captured_domains_validate_before_false_and_limit_zero
+    current_scalar::tests::bounded::bounded_public_cells_and_refinement_versions_refuse_bad_inputs
+    current_scalar::tests::bounded::bounded_rows_and_contributors_preserve_domains_and_close_old_entrypoints
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 104 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p weft-postgresql --lib`

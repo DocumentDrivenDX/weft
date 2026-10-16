@@ -7,6 +7,8 @@ publish.workspace=true
 crate-type=["cdylib"]
 [features]
 raw-postgresql-reads=["weft-runtime/raw-postgresql-reads"]
+
+bounded-current-string-candidate=["application-lineage-candidate","weft-runtime/bounded-current-string-candidate"]
 truss-browser-local=["weft-runtime/truss-browser-local"]
 application-lineage-candidate=["weft-runtime/application-lineage-candidate"]
 ashlar-databricks-compatible-revisions-candidate=["weft-runtime/ashlar-databricks-compatible-revisions-candidate"]
@@ -23,5 +25,6 @@ test-original=["weft-runtime/test-original"]
 truss-postgresql-candidate=["weft-runtime/truss-postgresql-candidate"]
 test-third=["weft-runtime/test-third"]
 [dependencies]
+js-sys="=0.3.82"
 weft-runtime={path="../weft-runtime"}
 wasm-bindgen="=0.2.105"

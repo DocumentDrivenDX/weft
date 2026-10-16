@@ -1,0 +1,42 @@
+
+running 13 tests
+test current_scalar::tests::actual_context_emits_dialect_specific_masked_read_raw_predicate_and_private_bag ... ok
+test current_scalar::tests::bounded::bounded_rows_and_contributors_preserve_domains_and_close_old_entrypoints ... ok
+test current_scalar::tests::grouped_projection_cannot_silently_fold_a_raw_group_into_a_masked_dto ... ok
+test current_scalar::tests::empty_queries_do_not_bypass_admission_and_all_counts_keep_lineage ... ok
+test current_scalar::tests::complete_group_and_join_bags_preserve_typed_scan_order ... ok
+test current_scalar::tests::bounded::bounded_public_cells_and_refinement_versions_refuse_bad_inputs ... ok
+test current_scalar::tests::bounded::bounded_captured_domains_validate_before_false_and_limit_zero ... ok
+test current_scalar::tests::duplicate_json_keys_and_explicit_null_omission_refuse ... ok
+test current_scalar::tests::bounded::bounded_unicode_order_is_scalar_order_and_counts_keep_contributor_bags ... ok
+test current_scalar::tests::original_sum_uses_guarded_decimal_accumulation_and_contextual_nullity ... ok
+test current_scalar::tests::version_profiles_never_downgrade_even_for_empty_count ... ok
+test current_scalar::tests::closed_binding_pins_presence_identities_and_modes_refuse ... ok
+test current_scalar::tests::identifiers_quote_without_interpolation_and_version_numbers_are_exact ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.42s
+
+
+running 19 tests
+test current_scalar::tests::effective_scalar_lookup_preserves_original_identity_and_refuses_non_scalar ... ok
+test current_scalar::tests::actual_original_context_lowers_masked_projection_and_separately_typed_raw_predicate ... ok
+test current_scalar::tests::contributor_bags_keep_count_and_distinct_input_rows_with_empty_aggregate_carrier ... ok
+test current_scalar::tests::row_versions_and_legacy_unknown_keys_refuse ... ok
+test current_scalar::tests::named_parameters_preserve_original_payload_and_no_field_count_has_eligibility_source ... ok
+test current_scalar::tests::bounded::bounded_captured_domains_validate_before_false_and_limit_zero ... ok
+test current_scalar::tests::bounded::bounded_public_cells_and_refinement_versions_refuse_bad_inputs ... ok
+test current_scalar::tests::joins_and_distinct_require_each_occurrence_and_matching_effective_scope ... ok
+test current_scalar::tests::grouped_field_count_and_private_group_paths_preserve_effective_domain_checks ... ok
+test current_scalar::tests::bounded::bounded_rows_and_contributors_preserve_domains_and_close_old_entrypoints ... ok
+test current_scalar::tests::hidden_group_with_count_and_canonical_group_projection_are_distinct_from_unsafe_projection_fold ... ok
+test current_scalar::tests::joined_rows_retain_both_sources_and_aggregates_do_not_claim_contribution ... ok
+test current_scalar::tests::literal_domain_mismatch_wrong_action_and_prohibited_empty_refuse ... ok
+test current_scalar::tests::contributor_versions_missing_keys_and_prohibited_uses_refuse_without_downgrade ... ok
+test current_scalar::tests::private_row_contribution_is_separate_from_public_columns_and_preserves_v1 ... ok
+test current_scalar::tests::bounded::bounded_unicode_order_is_scalar_order_and_counts_keep_contributor_bags ... ok
+test current_scalar::tests::original_integer_sum_uses_exact_numeric_accumulation_nullable_text_and_complete_bag ... ok
+test current_scalar::tests::scope_pins_closed_shapes_unknown_sources_and_identifier_injection_refuse_or_quote ... ok
+test current_scalar::tests::sum_context_cannot_route_through_predecessors_even_for_count_or_empty_work ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 90 filtered out; finished in 0.20s
+

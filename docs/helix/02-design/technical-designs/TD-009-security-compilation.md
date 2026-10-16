@@ -636,3 +636,13 @@ uses Spark-native unqualified builtins and requires host shadowing/runtime
 admission. Each target checker re-lowers the same actual CQP with its own target
 before invoking the unchanged core refinement comparison. This is a conditional
 local candidate, with no SUM or automatic public-wheel activation.
+
+## Explicit bounded current String candidate
+
+CONTRACT-011 governs the bounded String prerequisite for actual UMF disclosure
+carriers. Implement through original Catalog/ApplicationLineage preparation,
+version-paired designation/CQP, explicitly selected backend lowerers, and the
+same conditional relational checker. Share domain validation in Rust; no Python
+or JavaScript sidecar. Old versions and APIs remain closed. Native admission and
+nullable Token semantics remain separately unimplemented. Compiler tests must
+retain original/effective domains and literal provenance across different bounds.

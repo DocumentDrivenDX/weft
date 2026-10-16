@@ -1,0 +1,12 @@
+{
+  "baseCommit": "1ed81c11fa870d57ba21d4339132ff139b05641d",
+  "snapshotSha256": "4c990dcbe9580616576c14eba27b79064c3d38fbf0d1ec071a6b3878e4ac4577",
+  "sourceInputs": 1157,
+  "sourceInputsUnchanged": true,
+  "changedInputs": [],
+  "logSha256": "f896325210838e56cdb86b590e73a40bb1690110e5c96756077e2a2f6d8a5f8c",
+  "results": [
+    "test result: ok. 348 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 62.46s"
+  ],
+  "scope": "Frozen selected source component tests, not native backend acceptance or final main integration."
+}
