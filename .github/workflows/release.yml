@@ -83,8 +83,14 @@ jobs:
       - name: Verify exact installed wheel packaging and notices
         shell: bash
         run: |
-          version=$(python -c 'import importlib.metadata;print(importlib.metadata.version("weft-sql"))')
-          python scripts/release/verify-wheel-packaging.py --wheel dist/*.whl --version "$version" --output dist/packaging-${{ matrix.target }}.json
+          python - <<'PYTHON'
+          import importlib.metadata,pathlib,subprocess,sys
+          version=importlib.metadata.version('weft-sql')
+          if tuple(map(int,version.split('.')[:3])) >= (0,4,40):
+              subprocess.run([sys.executable,'scripts/release/test-wheel-packaging-version-gate.py'],check=True)
+              wheels=list(pathlib.Path('dist').glob('*.whl'));assert len(wheels)==1
+              subprocess.run([sys.executable,'scripts/release/verify-wheel-packaging.py','--wheel',str(wheels[0]),'--version',version,'--output','dist/packaging-${{ matrix.target }}.json'],check=True)
+          PYTHON
       - name: Smoke native68 namespace and mutation bindings
         if: hashFiles('tests/truss068/wheel-smoke.py') != ''
         shell: bash
@@ -176,7 +182,11 @@ jobs:
           root=pathlib.Path('dist');wheels=sorted(root.glob('*.whl'))
           assert len(wheels)==5
           packaging=[json.loads(p.read_text()) for p in sorted(root.glob('packaging-*.json'))]
-          assert len(packaging)==5 and {p['wheel']for p in packaging}=={w.name for w in wheels}
+          packaging_required=tuple(map(int,version.split('.')[:3])) >= (0,4,40)
+          if packaging_required:
+              assert len(packaging)==5 and {p['wheel']for p in packaging}=={w.name for w in wheels}
+          else:
+              assert packaging==[]
           for report in packaging:
               assert report['status']=='passed' and report['version']==version
               assert report['wheelSha256']==hashlib.sha256((root/report['wheel']).read_bytes()).hexdigest()

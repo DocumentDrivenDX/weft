@@ -1,0 +1,1 @@
+{"status": "passed", "checks": ["older tag does not invoke absent validator", "new version always invokes mandatory validator without existence waiver", "older publisher accepts original report inventory", "current and later publishers refuse missing reports", "five exact current reports accepted", "mismatched current report refused"]}

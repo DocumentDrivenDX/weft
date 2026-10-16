@@ -22,3 +22,9 @@ negative controls, Rust9 engine tests and the actual Truss native14 campaign.
 The release workflow parses with pinned Bun1.4.2; closed11-package boundaries pass.
 All local owned native runtimes stopped. Hosted full CI and five-wheel release
 remain required before public combined release or Truss default adoption.
+
+Focused review found the historical-tag checkout lacks the new validator. The
+corrected workflow requires packaging checks/reports for0.4.40 and later; older
+tags retain their original gates. Six actual-workflow snippet controls cover old
+checkout compatibility, mandatory new invocation, missing current/future reports,
+five exact reports and corrupt-report refusal. No script-existence waiver is used.
