@@ -1,0 +1,7 @@
+{
+  "umfCommit": "11b412e4a783fef8075aeb4109a286650a0bda28",
+  "path": "spec/core/schema-properties-document.schema.json",
+  "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+  "weftVendoredBytesIdentical": true,
+  "meaning": "Canonical0.8 target.key required; source endpoints declare module+element only"
+}

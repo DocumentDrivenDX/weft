@@ -130,8 +130,10 @@ issues data from the actual context. `std::ptr::eq(requirements.context(),
 &context)` MUST hold. A Resource Record whose selected Key is `[tenant, id]`
 MUST retain that order even if the native columns appear `[id, tenant]`.
 A token descriptor with `availability: absent-allowed` MUST retain that meaning.
-A graph declaration without an authored target Key remains in original source;
-this report does not manufacture an authored Key or admit that graph.
+An unadmitted graph declaration missing its canonical UMF0.8-required target Key
+remains in retained original source. Whole-source UMF admission MUST refuse that
+invalid declaration before graph or native admission. This record-only report
+MUST NOT manufacture a default Key or imply that the graph is valid.
 
 Construction order is explicit:
 

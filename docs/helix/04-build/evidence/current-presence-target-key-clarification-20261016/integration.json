@@ -1,0 +1,45 @@
+{
+  "baseline": "51459bd7b5533adec8e40022c0428813f5f4537d",
+  "source": {
+    "docs/helix/02-design/contracts/CONTRACT-015-current-presence-model-requirements.md": {
+      "bytes": 8954,
+      "sha256": "b1761dfcf3473fb62c6cbe05e3a6ce95ae8a08f6a0670be32dbc98c0c0f4fc52"
+    }
+  },
+  "files": {
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/README.md": {
+      "bytes": 1086,
+      "sha256": "3a63f1542a6f86ae82cc5ccf93d38efc2540078fd2d25379963e29272ff7858b"
+    },
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/audit.json": {
+      "bytes": 1839,
+      "sha256": "dc8d7458b1e5e29b5a236d7e90b5bedf0b320a1bc1acf8b68f7fb20bc3acb811"
+    },
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/audit.mjs": {
+      "bytes": 2754,
+      "sha256": "e91c6dc8bcffcc816585b3714cf3624cf84443e90a8cef1ecb7ee027efea19b7"
+    },
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/main-specs.log.gz": {
+      "bytes": 203,
+      "sha256": "a2e5c51e535a276c1bbb95898894271658d19f9abe9e07c50fba2f514e728e97"
+    },
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/reviewed-original-evidence.zip": {
+      "bytes": 4942,
+      "sha256": "022dff39a1c8a594329506e484ae389618907bcb9b78929330b324a4aa62d3df"
+    },
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/root-review.json": {
+      "bytes": 606,
+      "sha256": "38511642733b17dcc36f6062b389078ba73ff203126615ac07be7e8c3838ef60"
+    },
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/root-schema-audit.json": {
+      "bytes": 1839,
+      "sha256": "dc8d7458b1e5e29b5a236d7e90b5bedf0b320a1bc1acf8b68f7fb20bc3acb811"
+    },
+    "docs/helix/04-build/evidence/current-presence-target-key-clarification-20261016/upstream-custody.json": {
+      "bytes": 337,
+      "sha256": "acf54dd706e4ca302341bd10a5a313d258bdffed35bf6c31f92a9f4d28d3f7e8"
+    }
+  },
+  "runtimeChanged": false,
+  "rootReview": "passed"
+}

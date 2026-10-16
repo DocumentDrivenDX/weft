@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "finding": [],
+  "exactParagraphOnly": true,
+  "frontmatterUnchanged": true,
+  "upstreamCommittedSchemaSha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+  "schemaControls": 5,
+  "semanticAdmission": false,
+  "nativeAuthority": false,
+  "scope": "Root independent documentation/schema-shape review; unknown Key semantic resolution and full/native admission remain required.",
+  "contractSha256": "b1761dfcf3473fb62c6cbe05e3a6ce95ae8a08f6a0670be32dbc98c0c0f4fc52",
+  "rootAuditSha256": "dc8d7458b1e5e29b5a236d7e90b5bedf0b320a1bc1acf8b68f7fb20bc3acb811"
+}

@@ -1,0 +1,62 @@
+{
+  "version": "weft-target-key-schema-audit/0.1",
+  "baseline": "51459bd7b5533adec8e40022c0428813f5f4537d",
+  "schema": {
+    "path": "spec/upstream/umf-0.8.0.schema.json",
+    "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e"
+  },
+  "fixture": {
+    "path": "docs/helix/03-test/fixtures/security-graph-source/adoc.json",
+    "sha256": "37ba63adcfb8c618902fd708d09b5a0837674e393bc8817373b92e78a5bcfd73"
+  },
+  "checks": [
+    {
+      "name": "original graph model shape",
+      "schemaShapeAdmitted": true,
+      "errors": null
+    },
+    {
+      "name": "missing authored target Key refuses",
+      "schemaShapeAdmitted": false,
+      "errors": [
+        {
+          "instancePath": "/modules/0/relationships/0/target/0",
+          "schemaPath": "#/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "key"
+          },
+          "message": "must have required property 'key'"
+        }
+      ]
+    },
+    {
+      "name": "null target Key refuses",
+      "schemaShapeAdmitted": false,
+      "errors": [
+        {
+          "instancePath": "/modules/0/relationships/0/target/0/key",
+          "schemaPath": "#/$defs/id/type",
+          "keyword": "type",
+          "params": {
+            "type": "string"
+          },
+          "message": "must be string"
+        }
+      ]
+    },
+    {
+      "name": "source endpoint has no authored Key",
+      "schemaShapeAdmitted": true,
+      "errors": null
+    },
+    {
+      "name": "unknown Key ID needs semantic resolution beyond schema shape",
+      "schemaShapeAdmitted": true,
+      "errors": null
+    }
+  ],
+  "semanticAdmission": false,
+  "nativeAuthority": false,
+  "scope": "Original canonical schema shape only; target Key existence/domain and whole-source semantic admission require original UMF interpretation"
+}
