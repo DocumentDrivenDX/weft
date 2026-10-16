@@ -2635,6 +2635,18 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/current_presence.rs",
+          "publicDeclarations": [
+            "struct:CurrentPresenceSql",
+            "fn:context",
+            "fn:sql",
+            "fn:json",
+            "fn:lower",
+            "fn:check"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/current_scalar.rs",
           "publicDeclarations": [
             "struct:Parameter",
@@ -2774,7 +2786,8 @@
             "mod:security_native_codecs",
             "mod:raw_action",
             "mod:raw_bulk",
-            "mod:search"
+            "mod:search",
+            "mod:current_presence"
           ],
           "pathReferences": []
         },

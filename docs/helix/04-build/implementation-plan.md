@@ -2632,3 +2632,22 @@ doctests. Evidence and merged-source verification:
 `evidence/current-presence-context-20261016/`. This is source/type correspondence,
 not producer invocation, SQL/result ABI or authenticated native enforcement.
 All original132 B-008 cases remain required; zero cases are promoted.
+
+
+### Conditional PostgreSQL presence transport — 2026-10-16
+
+CONTRACT-013 adds a separate optional typed PG projection/check path over complete
+UMF disclosure-cell TEXT with held header and private scan/key lineage. Actual
+Core presence context and exact original source/binding/artifact bytes remain
+required. Independent review passes9 focusedRust,221schema,145transport,
+859producer/model and5type/feature controls. Owner full PostgreSQL library passes
+132unit tests, distinct from the original132 B-008 acceptance cases. Source and
+qualified evidence: `evidence/current-presence-postgresql-20261016/`.
+
+The reviewed contract's error wording is clarified by a retained editorial diff:
+lower failure produces no artifact; check failure produces no success report or
+public rows and cannot erase previously issued SQL. Host zero-release and cleanup
+obligations apply at either stage. All executable/schema/test bytes are unchanged
+from review. Actual producer/native-source/caller/current-cut composition, native
+transport and guarded enforcement, bridges, Databricks and the full original132
+acceptance scope remain unfinished. No case is promoted or public profile enabled.

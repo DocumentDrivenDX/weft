@@ -1,0 +1,287 @@
+{
+  "version": "review-evidence-manifest/1",
+  "reviewSha256": "d082ec02020e07b9a8820d4a771dd7bee619c87178621114260c5e409f5687d1",
+  "files": {
+    "add-supplement.py": {
+      "sha256": "96911cdc87ea54d07987471f959f0cbb8f8cf0defa04b7f621a1056235768acf",
+      "bytes": 3581
+    },
+    "borrow_escape-compile.log": {
+      "sha256": "791e83da8d351022e37cbffde642a67834e753fd1106b0de131814d5605c8fe5",
+      "bytes": 8630
+    },
+    "controls.py": {
+      "sha256": "141794fb49492a6f893a687ca5cb798c255d194011205b2276f50c4d0929a2c2",
+      "bytes": 8528
+    },
+    "deserialize-compile.log": {
+      "sha256": "f932cced9826293b821ff9c01bf5f50b8cf8b2352ae61f1322ea8c84cc80d371",
+      "bytes": 9195
+    },
+    "emitted.json": {
+      "sha256": "9f0f952fa260697bf055ec22d20792565b4db295a86c2f82ca4949f5ee236710",
+      "bytes": 224620
+    },
+    "feature-control.log": {
+      "sha256": "1dd4b17ac70d4bef7c9883970caafdf26d11bdc7343fd5de9e57936969823db1",
+      "bytes": 65
+    },
+    "feature-control.py": {
+      "sha256": "8e5f188b8ad968b18a184909edb7750f2ed370e2fe0bb97d76efe34b9fc21ba7",
+      "bytes": 1202
+    },
+    "feature-off.json": {
+      "sha256": "4facba5bfe3ac826e7664ed82dbe190e5728641e1418a948ad382c1d583293e7",
+      "bytes": 73
+    },
+    "feature-off.log": {
+      "sha256": "5a325f926260b4aa9455dc06bdc866d4c0bfe3354275caf8995e147c05b141ff",
+      "bytes": 8428
+    },
+    "feature-off/Cargo.lock": {
+      "sha256": "56b1569d049f9b06fa16073fd4448ef78ae276a860a0c0296f56920fc2bd8956",
+      "bytes": 23362
+    },
+    "feature-off/Cargo.toml": {
+      "sha256": "f5e08e96fd4b41eb74434a39176415395036875ac40aa8995aff82f2e9331bac",
+      "bytes": 230
+    },
+    "feature-off/src/main.rs": {
+      "sha256": "3a242afb4eaaba1de7f3b2bc3b885e561d1d5586c969812539bc1bd3500b9f66",
+      "bytes": 109
+    },
+    "final-custody.json": {
+      "sha256": "c003b6a2a9eee4157217e01d146e139ca732b5c50476425779c0d54746e69a99",
+      "bytes": 312667
+    },
+    "finalize.py": {
+      "sha256": "7cc95057515953a49c541c86ed23cf3a37e2194f7c5a8dd944d3ce571f7a0cfa",
+      "bytes": 12264
+    },
+    "first-probe-build-failure.log": {
+      "sha256": "afc4ea9cc1ed4b19dbc4d9dd4e9b6f26ba3eb2a3664f6f8c034de345adbd8ff1",
+      "bytes": 647
+    },
+    "first-reconstruction-failure.log": {
+      "sha256": "aaf6358333a7016d7ec3f440b040a0c4dc3c72a0484a741575d5c6b133d2e1f7",
+      "bytes": 177
+    },
+    "focused-rust.log": {
+      "sha256": "00675c8b4ca24515820fb47a2075ee15a6905659a0cdba75b0b6ead7f17d4645",
+      "bytes": 11724
+    },
+    "frozen/manifest.json": {
+      "sha256": "0bf437e049b9c26a9d204f5962130d0e066ba33886f5fd3a5e81b0d3f85054a1",
+      "bytes": 3513
+    },
+    "frozen/overlay/crates/weft-postgresql/Cargo.toml": {
+      "sha256": "b24fe5484a7ad5997328ce7c6b5a8e280bc3bd5da29780f936593d818a624bdd",
+      "bytes": 1052
+    },
+    "frozen/overlay/crates/weft-postgresql/src/current_presence.rs": {
+      "sha256": "7d3e05d57de0ecc71abf4b19203c6d2d0717a9e98897c32762e59d7b70e87623",
+      "bytes": 28731
+    },
+    "frozen/overlay/crates/weft-postgresql/src/lib.rs": {
+      "sha256": "caacb512cb177d5251bd927e029774d10cd32846849dde637a5d4d85018c6693",
+      "bytes": 10933
+    },
+    "frozen/overlay/docs/helix/02-design/contracts/CONTRACT-013-current-presence-transport.md": {
+      "sha256": "c135b0fdee4a1e1f85ef7a300ef1c4d32cfdb468397832ec264b945b3291508e",
+      "bytes": 10456
+    },
+    "frozen/overlay/docs/helix/02-design/contracts/current-presence-transport-input-v0.1-candidate.schema.json": {
+      "sha256": "810bad66d87c808546c00d9fc0d6647f4eb9a15c8f9ce843093e33cac011b9b9",
+      "bytes": 6828
+    },
+    "frozen/overlay/docs/helix/02-design/contracts/current-presence-transport-result-v0.1-candidate.schema.json": {
+      "sha256": "059992286df979c63c0421116562c2e02bfec37fafd9bee8de910feb7c338bfb",
+      "bytes": 6320
+    },
+    "frozen/overlay/docs/helix/02-design/contracts/postgresql-current-presence-binding-v0.1-candidate.schema.json": {
+      "sha256": "70600331253abc2af7790a438ea47498770b6fc2e3c2ece1eab693c1d08682e9",
+      "bytes": 6936
+    },
+    "frozen/overlay/docs/helix/02-design/contracts/postgresql-current-presence-sql-v0.1-candidate.schema.json": {
+      "sha256": "129d926cb2fc8353915694836eb3dcf6aba0ff606b9b16c1a1e4a2486eee0354",
+      "bytes": 10174
+    },
+    "frozen/overlay/docs/helix/02-design/module-boundaries.json": {
+      "sha256": "2102fd337911db50b3c158e6833edc05344b4dad0428b51e2489abb9d71ad614",
+      "bytes": 142156
+    },
+    "frozen/overlay/tests/current-query-presence/check-transport-schemas.ts": {
+      "sha256": "ef0c979b4534a350895d1a1ed5172e6d906663c766129cdd093d849173d80802",
+      "bytes": 3636
+    },
+    "frozen/overlay/tests/current-query-presence/fixtures/actual-atomic-transport.json": {
+      "sha256": "f19439e8da44419aa2c08252a8155aa2efc2dc807cbb1b90e0cace7297660a53",
+      "bytes": 1346461
+    },
+    "frozen/overlay/tests/current-query-presence/fixtures/unadmitted-context.request.json": {
+      "sha256": "2ebd655178b71bb49c48ff6997587cf51cd2a419a1793f95a24a6ec82d5dfe24",
+      "bytes": 19399
+    },
+    "frozen/supplied-evidence/weft-presence-actual-atomic-focused-r3b-20261016.log": {
+      "sha256": "b1a83a63a177be511b7533f66717537d3a3ab80d61f2502022405c16a02e4fad",
+      "bytes": 10926
+    },
+    "frozen/supplied-evidence/weft-presence-actual-emitted-r3-20261016.json": {
+      "sha256": "9f0f952fa260697bf055ec22d20792565b4db295a86c2f82ca4949f5ee236710",
+      "bytes": 224620
+    },
+    "frozen/supplied-evidence/weft-presence-postgresql-lib-r2-20261016.log": {
+      "sha256": "14b1374893322afefc2156088ec05f5de6dc8ece7b1dc9de9f4b2bc6156da907",
+      "bytes": 20673
+    },
+    "frozen/supplied-evidence/weft-presence-transport-schema-controls-r3-20261016.json": {
+      "sha256": "c15dbecb68eade3d5c1f1327e93fcbb3e151acc159a4d706a5e75ded8bbcbc2f",
+      "bytes": 23466
+    },
+    "frozen/supplied-evidence/weft-presence-transport-schema-controls-r3-20261016.log": {
+      "sha256": "857a7869ac3de7316c0e31fb5ef7fd3fa408ec72bf214a04c446af27936bf59f",
+      "bytes": 50
+    },
+    "frozen/supplied-evidence/weft-presence-transport-specs-r3-20261016.log": {
+      "sha256": "04b55e061151e7700d6174ab599ef988e9d854c86d4b42444ccdb9ba66ca35d2",
+      "bytes": 253
+    },
+    "independent-controls.json": {
+      "sha256": "98f781f880e587b852403c70f91c92f011f23fe1d297d5d10ff3da36ed923e3f",
+      "bytes": 9347315
+    },
+    "independent-controls.log": {
+      "sha256": "fb788fb25cc065066e2af7896f17d2877c5644dffff6095a0e1b4a71aa8f8f24",
+      "bytes": 46
+    },
+    "model-custody.json": {
+      "sha256": "fd0f7adf90c6735661d157bef895b5f8d04b4d9ee3ee0d204793ecce640ea4e9",
+      "bytes": 5008
+    },
+    "old_context-compile.log": {
+      "sha256": "3cb1bbc612e2aeecb1e2dff4dafad7f491c52ffe0d10b7ab7eeb2df99c113d7c",
+      "bytes": 8638
+    },
+    "old_to_new-compile.log": {
+      "sha256": "329b5c11fa8c1cdaaf4de3650c2894c3b7338b71892f34ddf9685fb9c784b05f",
+      "bytes": 8713
+    },
+    "owner-supplement/independent-endpoint-verification.json": {
+      "sha256": "7d4fe877078c2411f4793c9ab55471e1eea1144692d82e6f05a6cad517645bec",
+      "bytes": 5130
+    },
+    "owner-supplement/weft-presence-postgresql-library-r3-20261016.log": {
+      "sha256": "b093eec3d99ad6ca4181c541505a34d58e297fd0061531265184d0d24362ec02",
+      "bytes": 21574
+    },
+    "owner-supplement/weft-presence-transport-final-library-verification-20261016.json": {
+      "sha256": "6d2976f2a09ed7a1619d84632a5055ba700de23216aa1583c67baf5d19a7c784",
+      "bytes": 963
+    },
+    "owner-supplement/weft-presence-transport-modules-r3-20261016.log": {
+      "sha256": "9934d697021238773371ab51b9e99985a0597ab22265098349452b4b392f2c9b",
+      "bytes": 1878
+    },
+    "owner-supplement/weft-presence-transport-specs-r3-20261016.log": {
+      "sha256": "04b55e061151e7700d6174ab599ef988e9d854c86d4b42444ccdb9ba66ca35d2",
+      "bytes": 253
+    },
+    "probe-build.log": {
+      "sha256": "cf569bfd26320bf3fae512c767150725ca2a21270e869beb42ae18f0e3347528",
+      "bytes": 8120
+    },
+    "probe-runtime.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "probe/Cargo.lock": {
+      "sha256": "b669a20b51a1691ac25372a45d31d8157cdedeeab2c30a5d98b35827f22aade7",
+      "bytes": 23396
+    },
+    "probe/Cargo.toml": {
+      "sha256": "8f54c038d5668f1419b9c84d0a1ac4d78a0f23e346c7853ac3e4b43c1bd46596",
+      "bytes": 656
+    },
+    "probe/src/bin/borrow_escape.rs": {
+      "sha256": "db702a80bbb843725ae3bebb11202aa80cd9e54d5858fb18e73ef830a28f8df7",
+      "bytes": 320
+    },
+    "probe/src/bin/deserialize.rs": {
+      "sha256": "ee183752ee012f08e719b09a3cba6edfdfd949c83a7098447812ea572e4988f6",
+      "bytes": 131
+    },
+    "probe/src/bin/old_context.rs": {
+      "sha256": "2bbf52405a8baffae09f3413b05d7cd5e3f2b4b62216ea6632aae9941da4e55a",
+      "bytes": 137
+    },
+    "probe/src/bin/old_to_new.rs": {
+      "sha256": "0087626b613f48f10e2a0571d62bf350cb50b5ac486287530b9b5b5b3b4ebafd",
+      "bytes": 139
+    },
+    "probe/src/main.rs": {
+      "sha256": "7cc0ffa70753f0ffc8505af807b8be3cfa95dafedcde7170b5385c1255bad41a",
+      "bytes": 2047
+    },
+    "producer-custody.json": {
+      "sha256": "5a540605471098e0fddc3301873ccaf11564b94201f84702db990586578203c0",
+      "bytes": 68765
+    },
+    "reconstruction.json": {
+      "sha256": "239fce22d3bbcc4dcb9d52cfb07652cc82aff35dd1adec45af22ea19bcf43e62",
+      "bytes": 2799
+    },
+    "repository-inputs.json": {
+      "sha256": "3a7d62d0d96ec944550ececea0f5e28bdbff7afb08a767b3c4f01acf3da54851",
+      "bytes": 686404
+    },
+    "review.json": {
+      "sha256": "d082ec02020e07b9a8820d4a771dd7bee619c87178621114260c5e409f5687d1",
+      "bytes": 11287
+    },
+    "schema-replay.json": {
+      "sha256": "c15dbecb68eade3d5c1f1327e93fcbb3e151acc159a4d706a5e75ded8bbcbc2f",
+      "bytes": 23466
+    },
+    "schema-replay.log": {
+      "sha256": "857a7869ac3de7316c0e31fb5ef7fd3fa408ec72bf214a04c446af27936bf59f",
+      "bytes": 50
+    },
+    "setup_probe.py": {
+      "sha256": "6bb10720267b0b438104f7725569a92b6db08ba0ba6e9d55adae21b9b77e0feb",
+      "bytes": 382
+    },
+    "sources-before.json": {
+      "sha256": "27693203178757f4817b9603540af09792db34c37a549f760ba0d3e616f14822",
+      "bytes": 134783
+    },
+    "type-controls-initial/old_to_new-compile.log": {
+      "sha256": "26d0dcc3531333f1f75660ff8fbb92bbc2e8040e18cd20f5e912b544b1483558",
+      "bytes": 8019
+    },
+    "type-controls-initial/type-controls.json": {
+      "sha256": "61ede863b84b657f55ac383da61a36f555ce77caeedb6903f1e16bb9c2c2cb4d",
+      "bytes": 515
+    },
+    "type-controls-initial/type-controls.log": {
+      "sha256": "5f2f5a9f7f33209b32725847ffacee1053511f0ecbb4e991c86c11b65be0bf4b",
+      "bytes": 335
+    },
+    "type-controls-initial/type-controls.py": {
+      "sha256": "78e650a87f877032834a4463a8423972071cf5a32d1a062831acbfd508d93783",
+      "bytes": 1874
+    },
+    "type-controls.json": {
+      "sha256": "154d13e66964c618f0c8135e92e723f49134bdde800eaeae96fa1b7658fe41d5",
+      "bytes": 514
+    },
+    "type-controls.log": {
+      "sha256": "987e61c305cfdd76fb64dfa45a30f291d91e4007ded74973e7f8364f960195b1",
+      "bytes": 334
+    },
+    "type-controls.py": {
+      "sha256": "9ce4919f8494152b1a6afa39523e57085f9777e3e6e3e8fe0224017bc6245bb4",
+      "bytes": 1883
+    }
+  },
+  "reconstruction": "Exact baseCommit and frozen overlays; repository-inputs.json pins all reconstructed tracked file bytes. Excludes Cargo target binaries and copied node_modules implementations; external closure explicitly non-hermetic."
+}

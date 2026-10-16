@@ -1,0 +1,134 @@
+{
+  "version": "independent-component-review/1",
+  "reviewer": "Astra Ultra",
+  "status": "passed-with-scope-qualifications",
+  "remainingFindings": [],
+  "subject": "Weft PostgreSQL conditional tagged presence TEXT-cell projection and complete-row-bag transport",
+  "baseCommit": "1c1a7dba5d5ceea282fbe0cd75fc7f0fa0469194",
+  "whatChanged": "Twelve frozen files add an optional feature-gated typed PostgreSQL lower/check module, a draft contract and four closed data schemas, actual producer fixtures and schema controls. Existing compiler implementations and registration paths are unchanged.",
+  "evidenceItWorks": "Nine focused Rust tests, 221 schema controls, 145 independent Rust data-transport controls, 859 producer/model custody checks and five type/feature controls independently pass. Emitted artifacts and schema receipt are byte-identical to supplied evidence.",
+  "undo": "Do not integrate this optional overlay, or revert the twelve-file component and its feature exposure. No native resources, publication or owner checkout were modified by this review.",
+  "pins": {
+    "archive": "/private/tmp/weft-presence-transport-r1-review-20261016.zip",
+    "archiveSha256": "99488d9baba3b0b201f1efc270dcd29b3cbba9366e012510a433b8d4ad937dfb",
+    "moduleSha256": "7d3e05d57de0ecc71abf4b19203c6d2d0717a9e98897c32762e59d7b70e87623",
+    "contractSha256": "c135b0fdee4a1e1f85ef7a300ef1c4d32cfdb468397832ec264b945b3291508e",
+    "requiredUmfPacketSha256": "123be2df9ef80b9a1a25904ea6b886924ac8d63b52de88b4c5a6b34fdc020acb",
+    "emittedSha256": "9f0f952fa260697bf055ec22d20792565b4db295a86c2f82ca4949f5ee236710",
+    "schemaReceiptSha256": "c15dbecb68eade3d5c1f1327e93fcbb3e151acc159a4d706a5e75ded8bbcbc2f",
+    "selectedPrePostSources": 1052,
+    "completeReconstructedFileEndpointCount": 4392
+  },
+  "independentlyExecuted": [
+    {
+      "name": "Frozen focused Rust tests",
+      "count": 9,
+      "result": "passed",
+      "command": "cargo test --offline -p weft-postgresql --lib --features current-presence-candidate current_presence::tests -- --nocapture",
+      "cwd": "/private/tmp/weft-presence-transport-astra-20261016/reconstructed",
+      "rust": "1.90.0-aarch64-apple-darwin",
+      "evidence": [
+        "focused-rust.log",
+        "emitted.json"
+      ],
+      "qualification": "41 rendered actual UMF packets exercised, including 35 empty denied results; 25 original refused packets retained as refusal data, not executed transport. Tests synthesize resultRows and never connect to PostgreSQL."
+    },
+    {
+      "name": "Actual emitted JSON schemas",
+      "count": 221,
+      "result": "passed",
+      "command": "bun tests/current-query-presence/check-transport-schemas.ts ../emitted.json ../schema-replay.json",
+      "evidence": [
+        "schema-replay.json",
+        "schema-replay.log"
+      ],
+      "qualification": "Four actual emitted objects for each of 41 packets plus 57 schema negatives. Full capture and schema receipt bytes match supplied artifacts. Schema acceptance is data-shape validation, not authority."
+    },
+    {
+      "name": "Independent Rust transport matrix",
+      "count": 145,
+      "result": "passed",
+      "evidence": [
+        "controls.py",
+        "independent-controls.json",
+        "independent-controls.log",
+        "probe/src/main.rs",
+        "probe-build.log"
+      ],
+      "details": "Replays 41 issued preparations and exercises exact hash/header/mapping closure, unknown nested fields, old versions, UTF8 identifier/key limits, quoting, malformed/absent/withheld/transformed cells, SQL-native-null stand-ins, private tuple scan/key/version, missing and duplicate rows, canonical counts, 4096/4097 row boundary, repeated projections, reordered five-state bags with duplicate public values, and original .4 operator refusals."
+    },
+    {
+      "name": "Actual producer source and model custody",
+      "count": 859,
+      "result": "passed",
+      "evidence": [
+        "producer-custody.json",
+        "model-custody.json"
+      ],
+      "details": "66 case IDs, complete actual result/batchJson/inspectionStatus, exact four source-role UTF8/SHA values, exact model documents/revisions and module digests match the independently reviewed original UMF packet."
+    },
+    {
+      "name": "Typed ownership and compatibility boundary",
+      "count": 5,
+      "result": "passed",
+      "evidence": [
+        "type-controls.py",
+        "type-controls.json",
+        "deserialize-compile.log",
+        "old_context-compile.log",
+        "old_to_new-compile.log",
+        "borrow_escape-compile.log",
+        "feature-control.py",
+        "feature-off.json",
+        "feature-off.log"
+      ],
+      "details": "Artifact Deserialize fails E0277; new context into old API and old context into new API fail E0308; artifact escape from its borrowed context fails E0515; disabled module import fails E0432. Positive actual issued-context execution is covered by the Rust probe."
+    },
+    {
+      "name": "Frozen archive, exact reconstruction and source endpoint custody",
+      "result": "passed",
+      "selectedControls": 1067,
+      "evidence": [
+        "reconstruction.json",
+        "sources-before.json",
+        "repository-inputs.json",
+        "final-custody.json"
+      ],
+      "details": "All twelve overlay hashes and baseline hashes verified. All 1052 selected pre-test inputs remain unchanged. Every reconstructed tracked Git-base file plus overlays agrees at final endpoint. No owner checkout edit."
+    }
+  ],
+  "sourceAssessment": [
+    "CurrentPresenceSql has private fields, no Deserialize implementation, and borrows an actual issued CurrentPresencePreparation. Its new module is explicitly feature-gated. Existing scalar APIs retain their distinct operand types and unchanged code.",
+    "The lowerer validates exact original request/preparation/source-binding pins and policy/catalog/header model correspondence, closed binding shapes, unique mapped fields and physical columns, absence alternatives from original read requirements, and no unused cell mappings. Repeated projections preserve separate public positions against a shared original header column.",
+    "SQL uses quoted identifiers with escaped double quotes and projects complete native TEXT cells directly, retaining no scalar extraction, JSONB coercion or COALESCE of cells. The separately generated private key tuple is internal JSONB-text custody data; its presence does not authenticate native staging.",
+    "The checker lowers the original binding again, compares exact artifact/frame/header pins, preflights every expected cell and unique bounded key, then checks exact row multiplicity, private scan identity and byte-identical selected cell strings. Result ordering is irrelevant; projection positions, repeated outputs and duplicate values under different keys remain significant.",
+    "The structural checker deliberately does not establish CoreLiteral value/domain correctness, actual policy selectedOccurrence, storage truth or complete authenticated population. Independent scope controls confirm transport can match an unknown CoreLiteral object and a structurally valid but unauthenticated selected occurrence; both success outputs retain false authority/securityReady and mandatory whole-UMF obligations. This is consistent with CONTRACT-013, not semantic admission.",
+    "Generic lowering/check diagnostics expose no private keys, values, census or counts. Success reports contain only correspondence hashes and unresolved obligations. Header/body/row bounds and bounded serialization are explicit; combined maxima remain subject to earlier shared UMF budgets."
+  ],
+  "scopeQualifications": [
+    "This is Rust compiler/data-transport evidence only. No PostgreSQL or Databricks native execution, owned staging, eligibility type enforcement, native statement/result custody, actor/source/current-cut authentication, closing authority check, cancellation cleanup or guarded release was performed or approved.",
+    "Hosts must validate the complete actual UMF V2 batch/header/domains/values/selected occurrences before staging, and establish complete independent eligible population and count. The Rust transport checker cannot infer these facts from matching hashes or equal rows.",
+    "The independent finite control matrix is not an unbounded semantic or bag proof. The 66 upstream producer cases are single-resource logical fixtures; synthesized transport bags exercise the checker only.",
+    "Full updated PostgreSQL library regression was pending in the frozen packet. A later separately retained owner supplement reports 132 unit tests passed in 509.16s, exit 0; its log hash and all twelve current owner source endpoints match. That full campaign was not independently rerun here, and 132 library unit tests are not the original 132 acceptance cases. The earlier 122-test log remains qualified to its earlier prototype.",
+    "Original 132 Weft cases and all 158 UMF required cases remain in scope, with no case or backend promotion. No runtime ABI, Python/WASM exposure, registration/publication or native admission is granted.",
+    "Source custody is endpoint-based. Exact Git base and overlay plus selected import/build bytes are retained, but installed Cargo/Bun/toolchain dependency implementations are not a hermetic executable closure."
+  ],
+  "retainedReviewerHarnessCorrections": [
+    "Initial reconstruction used a tarfile extraction keyword unavailable in the system Python; it failed before extraction. A manually traversal-validated Git archive extraction succeeded. first-reconstruction-failure.log retained.",
+    "Initial external probe Cargo manifest omitted the repository ahash patch; offline dependency resolution failed before product compilation. first-probe-build-failure.log retained; final manifest copies the exact local ahash override and lock.",
+    "Initial old-to-new compile negative named a nonexistent current_query module and therefore did not count. type-controls-initial retains that attempt. Corrected exact current_query_operands module produces the required E0308 type mismatch."
+  ],
+  "governance": "Read applicable AGENTS/.helix, original parent contracts and frozen CONTRACT-013 under HELIX review. Draft/conditional status and the upstream ownership boundaries are preserved; no governed source edited.",
+  "evidenceManifest": "manifest.json",
+  "ownerSupplement": {
+    "file": "owner-supplement/weft-presence-transport-final-library-verification-20261016.json",
+    "fullLibraryLog": "owner-supplement/weft-presence-postgresql-library-r3-20261016.log",
+    "fullLibraryLogSha256": "b093eec3d99ad6ca4181c541505a34d58e297fd0061531265184d0d24362ec02",
+    "independentEndpointVerification": "owner-supplement/independent-endpoint-verification.json"
+  },
+  "editorialClarification": {
+    "location": "CONTRACT-013 Error Semantics",
+    "finding": false,
+    "interpretation": "Refusal is stage-specific: lower returns no artifact on failure; check returns no transport success report or rows on failure. A later checker refusal cannot retroactively erase a previously issued SQL artifact. Explicit host zero-release and complete cleanup obligations remain in force. Clarifying these stages would remove ambiguity without changing runtime behavior."
+  }
+}

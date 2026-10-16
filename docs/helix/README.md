@@ -106,3 +106,12 @@ are unchanged from historical native receipts; 53 changed outputs require native
 requalification. [Baseline and exact differences](04-build/evidence/main-integration-20261010/baseline.json)
 record that distinction. Fresh integrated host and CI qualification are separate
 merge gates; historical R6 receipts remain pinned to 2b88a9a.
+
+
+The optional [current-presence context](02-design/contracts/CONTRACT-012-current-presence-context.md)
+and [PostgreSQL tagged transport](02-design/contracts/CONTRACT-013-current-presence-transport.md)
+now have reviewed source/type/data-correspondence evidence. Complete disclosure
+cells retain explicit absence, withholding and null distinctions. Their
+[qualified evidence](04-build/evidence/current-presence-postgresql-20261016/README.md)
+does not establish native authority, producer invocation, execution or guarded
+release. Full B-008 acceptance remains open.

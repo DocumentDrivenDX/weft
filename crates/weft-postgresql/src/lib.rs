@@ -312,3 +312,6 @@ pub mod raw_action;
 pub mod raw_bulk;
 
 pub mod search;
+
+#[cfg(feature="current-presence-candidate")]
+pub mod current_presence;

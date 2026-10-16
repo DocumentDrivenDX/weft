@@ -1,0 +1,21 @@
+{
+  "sourcePacketSha256": "99488d9baba3b0b201f1efc270dcd29b3cbba9366e012510a433b8d4ad937dfb",
+  "all12FrozenSourceHashesUnchanged": true,
+  "postgresqlLibraryExitCode": 0,
+  "postgresqlLibraryUnitTests": 132,
+  "postgresqlLibrarySeconds": 509.16,
+  "actualEmittedFixtureBytesUnchanged": true,
+  "actualEmittedSha256": "9f0f952fa260697bf055ec22d20792565b4db295a86c2f82ca4949f5ee236710",
+  "schemaDataControls": 221,
+  "specArtifacts": 72,
+  "schemas": 96,
+  "modulePackages": 11,
+  "moduleTests": 16,
+  "nativeDatabaseExecuted": false,
+  "original132AcceptanceCasesPromoted": 0,
+  "logs": {
+    "weft-presence-postgresql-library-r3-20261016.log": "b093eec3d99ad6ca4181c541505a34d58e297fd0061531265184d0d24362ec02",
+    "weft-presence-transport-modules-r3-20261016.log": "9934d697021238773371ab51b9e99985a0597ab22265098349452b4b392f2c9b",
+    "weft-presence-transport-specs-r3-20261016.log": "04b55e061151e7700d6174ab599ef988e9d854c86d4b42444ccdb9ba66ca35d2"
+  }
+}
