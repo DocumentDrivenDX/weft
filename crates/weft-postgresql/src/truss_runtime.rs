@@ -127,6 +127,7 @@ pub struct Runtime {
     owned_runtime: bool,
     declarative_fields: bool,
     native_068: bool,
+    native_070: bool,
     query_abi_v1: bool,
     decimal12: bool,
     required_rebinding: bool,
@@ -165,7 +166,7 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.decimal12 { "0.4.39" } else if self.query_abi_v1 { "0.4.38" } else if self.native_068 { "0.4.37" } else if self.declarative_fields { "0.4.36" } else if self.owned_runtime { "0.4.35" } else if self.recursive_containers { "0.4.34" } else if self.keyed_rebinding { "0.4.33" } else if self.key_backfill { "0.4.32" } else if self.required_rebinding { "0.4.31" } else if self.catalog_rebinding { "0.4.30" } else if self.timestamp_equality { "0.4.29" } else if self.source_references { "0.4.28" } else if self.field_names { "0.4.27" } else if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
+        if self.native_070 { "0.4.40" } else if self.decimal12 { "0.4.39" } else if self.query_abi_v1 { "0.4.38" } else if self.native_068 { "0.4.37" } else if self.declarative_fields { "0.4.36" } else if self.owned_runtime { "0.4.35" } else if self.recursive_containers { "0.4.34" } else if self.keyed_rebinding { "0.4.33" } else if self.key_backfill { "0.4.32" } else if self.required_rebinding { "0.4.31" } else if self.catalog_rebinding { "0.4.30" } else if self.timestamp_equality { "0.4.29" } else if self.source_references { "0.4.28" } else if self.field_names { "0.4.27" } else if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
             "0.4.6"
         } else if self.retained_metadata {
             "0.4.5"
@@ -343,7 +344,7 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.query_abi_v1 { binding.release_id.as_str() } else if self.native_068 { "truss-catalog-runtime/0.68-candidate" } else if self.declarative_fields && binding.release_id == "truss-catalog-runtime/0.67-candidate" { "truss-catalog-runtime/0.67-candidate" } else if self.declarative_fields { "truss-catalog-runtime/0.66-candidate" } else if self.owned_runtime { "truss-catalog-runtime/0.65-candidate" } else if self.recursive_containers { "truss-catalog-runtime/0.64-candidate" } else if self.keyed_rebinding { "truss-catalog-runtime/0.63-candidate" } else if self.key_backfill { "truss-catalog-runtime/0.62-candidate" } else if self.required_rebinding { "truss-catalog-runtime/0.61-candidate" } else if self.catalog_rebinding { "truss-catalog-runtime/0.60-candidate" } else if self.timestamp_equality { "truss-catalog-runtime/0.59-candidate" } else if self.source_references { "truss-catalog-runtime/0.58-candidate" } else if self.field_names { "truss-catalog-runtime/0.57-candidate" } else if self.decimal_scale2 { "truss-catalog-runtime/0.56-candidate" } else if self.optional_binary { "truss-catalog-runtime/0.55-candidate" } else if self.binary_equality { "truss-catalog-runtime/0.54-candidate" } else if self.relationship_names { "truss-catalog-runtime/0.53-candidate" } else if self.parallel_edges { "truss-catalog-runtime/0.52-candidate" } else if self.engine_imports { "truss-catalog-runtime/0.51-candidate" } else if self.container_tightening { "truss-catalog-runtime/0.50-candidate" } else if self.relationship_tightening { "truss-catalog-runtime/0.49-candidate" } else if self.required_tightening { "truss-catalog-runtime/0.48-candidate" } else if self.record_evolution { "truss-catalog-runtime/0.47-candidate" } else if self.typed_key_pages { "truss-catalog-runtime/0.46-candidate" } else if self.typed_relationship_keys { "truss-catalog-runtime/0.45-candidate" } else if self.container_queries { "truss-catalog-runtime/0.44-candidate" } else if self.scalar_containers { "truss-catalog-runtime/0.43-candidate" } else if self.facet_evolution { "truss-catalog-runtime/0.42-candidate" } else if self.live_traversal { "truss-catalog-runtime/0.41-candidate" } else if self.typed_keys { "truss-catalog-runtime/0.40-candidate" } else if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
+                != if self.query_abi_v1 { binding.release_id.as_str() } else if self.native_070 { "truss-catalog-runtime/0.70-candidate" } else if self.native_068 { "truss-catalog-runtime/0.68-candidate" } else if self.declarative_fields && binding.release_id == "truss-catalog-runtime/0.67-candidate" { "truss-catalog-runtime/0.67-candidate" } else if self.declarative_fields { "truss-catalog-runtime/0.66-candidate" } else if self.owned_runtime { "truss-catalog-runtime/0.65-candidate" } else if self.recursive_containers { "truss-catalog-runtime/0.64-candidate" } else if self.keyed_rebinding { "truss-catalog-runtime/0.63-candidate" } else if self.key_backfill { "truss-catalog-runtime/0.62-candidate" } else if self.required_rebinding { "truss-catalog-runtime/0.61-candidate" } else if self.catalog_rebinding { "truss-catalog-runtime/0.60-candidate" } else if self.timestamp_equality { "truss-catalog-runtime/0.59-candidate" } else if self.source_references { "truss-catalog-runtime/0.58-candidate" } else if self.field_names { "truss-catalog-runtime/0.57-candidate" } else if self.decimal_scale2 { "truss-catalog-runtime/0.56-candidate" } else if self.optional_binary { "truss-catalog-runtime/0.55-candidate" } else if self.binary_equality { "truss-catalog-runtime/0.54-candidate" } else if self.relationship_names { "truss-catalog-runtime/0.53-candidate" } else if self.parallel_edges { "truss-catalog-runtime/0.52-candidate" } else if self.engine_imports { "truss-catalog-runtime/0.51-candidate" } else if self.container_tightening { "truss-catalog-runtime/0.50-candidate" } else if self.relationship_tightening { "truss-catalog-runtime/0.49-candidate" } else if self.required_tightening { "truss-catalog-runtime/0.48-candidate" } else if self.record_evolution { "truss-catalog-runtime/0.47-candidate" } else if self.typed_key_pages { "truss-catalog-runtime/0.46-candidate" } else if self.typed_relationship_keys { "truss-catalog-runtime/0.45-candidate" } else if self.container_queries { "truss-catalog-runtime/0.44-candidate" } else if self.scalar_containers { "truss-catalog-runtime/0.43-candidate" } else if self.facet_evolution { "truss-catalog-runtime/0.42-candidate" } else if self.live_traversal { "truss-catalog-runtime/0.41-candidate" } else if self.typed_keys { "truss-catalog-runtime/0.40-candidate" } else if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
                     "truss-catalog-runtime/0.33-candidate"
                 } else if self.retained_metadata {
                     "truss-catalog-runtime/0.32-candidate"
@@ -361,7 +362,7 @@ impl Backend for Runtime {
                     "truss-catalog-runtime/0.26-candidate"
                 }
             || (self.query_abi_v1 && !runtime_identity(&binding.release_id))
-            || (self.declarative_fields && !self.query_abi_v1 && binding.release_sha256 != if self.native_068 { "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc" } else if binding.release_id == "truss-catalog-runtime/0.67-candidate" { "8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee" } else { "99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a" })
+            || (self.declarative_fields && !self.query_abi_v1 && binding.release_sha256 != if self.native_070 { "0d292c3681986b3664ff3af9927039d10cf20ef029511e33ccd7d76c566041e3" } else if self.native_068 { "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc" } else if binding.release_id == "truss-catalog-runtime/0.67-candidate" { "8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee" } else { "99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a" })
             || binding.release_sha256.len() != 64
             || !binding
                 .release_sha256
@@ -1162,7 +1163,8 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
     let decimal12=version.as_deref()==Some("0.4.39");
     let query_abi_v1=decimal12 || version.as_deref()==Some("0.4.38");
     let native_068=version.as_deref()==Some("0.4.37");
-    let declarative_fields=query_abi_v1 || native_068 || version.as_deref()==Some("0.4.36");
+    let native_070=version.as_deref()==Some("0.4.40");
+    let declarative_fields=query_abi_v1 || native_068 || native_070 || version.as_deref()==Some("0.4.36");
     let owned_runtime=declarative_fields || version.as_deref()==Some("0.4.35");
     let recursive_containers=owned_runtime || version.as_deref()==Some("0.4.34");
     let keyed_rebinding=recursive_containers || version.as_deref()==Some("0.4.33");
@@ -1241,6 +1243,7 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
                 owned_runtime,
                 declarative_fields,
                 native_068,
+                native_070,
                 query_abi_v1,
                 decimal12,
                 required_rebinding,
@@ -1282,7 +1285,7 @@ fn mutation_scalar_expression(cell:&str,logical:&LogicalType)->String {
 }
 pub(crate) fn admit_mutation_mapping(c:&Context<'_>)->Result<Mapping>{
  let native_068=weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"]=="truss-catalog-runtime/0.68-candidate";
- let runtime=Runtime{native_068,query_abi_v1:false,decimal12:false,exact_numbers: true,relationships: true,pages: true,release_030: true,groups: true,selected_metadata: true,exact_scalars: true,retained_metadata: true,complete_entities: true,entity_times: true,import_loads: true,numeric_facets: true,typed_keys: true,live_traversal: true,facet_evolution: true,scalar_containers: true,container_queries: true,typed_relationship_keys: true,typed_key_pages: true,record_evolution: true,required_tightening: true,relationship_tightening: true,container_tightening: true,relationship_names: true,binary_equality: true,optional_binary: true,decimal_scale2: true,field_names: true,source_references: true,timestamp_equality: true,catalog_rebinding: true,key_backfill: true,keyed_rebinding: true,recursive_containers: true,owned_runtime: true,declarative_fields: matches!(weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"].as_str(), Some("truss-catalog-runtime/0.66-candidate" | "truss-catalog-runtime/0.67-candidate" | "truss-catalog-runtime/0.68-candidate")),required_rebinding: true,parallel_edges: true,engine_imports: true,typed_page_mode: false,continuation_filter: None};
+ let runtime=Runtime{native_068,native_070:false,query_abi_v1:false,decimal12:false,exact_numbers: true,relationships: true,pages: true,release_030: true,groups: true,selected_metadata: true,exact_scalars: true,retained_metadata: true,complete_entities: true,entity_times: true,import_loads: true,numeric_facets: true,typed_keys: true,live_traversal: true,facet_evolution: true,scalar_containers: true,container_queries: true,typed_relationship_keys: true,typed_key_pages: true,record_evolution: true,required_tightening: true,relationship_tightening: true,container_tightening: true,relationship_names: true,binary_equality: true,optional_binary: true,decimal_scale2: true,field_names: true,source_references: true,timestamp_equality: true,catalog_rebinding: true,key_backfill: true,keyed_rebinding: true,recursive_containers: true,owned_runtime: true,declarative_fields: matches!(weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"].as_str(), Some("truss-catalog-runtime/0.66-candidate" | "truss-catalog-runtime/0.67-candidate" | "truss-catalog-runtime/0.68-candidate")),required_rebinding: true,parallel_edges: true,engine_imports: true,typed_page_mode: false,continuation_filter: None};
  Ok(runtime.validate_binding(c)?.mapping)
 }
 pub(crate) fn mutation_type(mapping:&Mapping,record:&Identity)->Result<String>{Ok(mapping.record(record)?.type_id.clone())}
@@ -1341,6 +1344,26 @@ mod native068_tests {
   let b=bundle();let wrong=edit_binding(&b,|v|v["releaseSha256"]=json!("0".repeat(64)));assert_eq!(run(&request(&wrong,"SELECT COUNT(*) FROM products p","0.4.37"))["status"],"blocked");
   for id in["truss-catalog-runtime/0.69-candidate","truss-catalog-runtime/0.67-candidate"]{let wrong=edit_binding(&b,|v|{v["releaseId"]=json!(id);if id.ends_with("0.67-candidate"){v["releaseSha256"]=json!("8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee");}});assert_eq!(run(&request(&wrong,"SELECT COUNT(*) FROM products p","0.4.37"))["status"],"blocked");if id.ends_with("0.67-candidate"){assert_eq!(run(&request(&wrong,"SELECT COUNT(*) FROM products p","0.4.36"))["status"],"compiled");}}
  }
+ #[test]
+ fn native070_has_its_own_exact_query_and_page_contract() {
+  // Compiler-only namespace fixture. Actual native70 evidence is separate.
+  let b=edit_binding(&bundle(),|v| {v["releaseId"]=json!("truss-catalog-runtime/0.70-candidate");v["releaseSha256"]=json!("0d292c3681986b3664ff3af9927039d10cf20ef029511e33ccd7d76c566041e3");});
+  for sql in ["SELECT p.name FROM products p","SELECT COUNT(*) FROM products p"] {
+   let out=run(&request(&b,sql,"0.4.40"));assert_eq!(out["status"],"compiled","{out}");
+   assert_eq!(out["backend"]["backendVersion"],"0.4.40");
+   let old=run(&request(&b,sql,"0.4.37"));assert_eq!(old["status"],"blocked");assert!(old.get("sql").is_none());
+  }
+  for after in [None,Some(vec!["one".into()])] {
+   let out:Value=serde_json::from_str(&compile_page_json(&request(&b,"SELECT p.* FROM products p","0.4.40").to_string(),2,after)).unwrap();
+   assert_eq!(out["status"],"compiled","{out}");
+  }
+  for (id,digest) in [("truss-catalog-runtime/0.70-candidate","0".repeat(64)),("truss-catalog-runtime/0.71-candidate","0d292c3681986b3664ff3af9927039d10cf20ef029511e33ccd7d76c566041e3".into())] {
+   let wrong=edit_binding(&b,|v|{v["releaseId"]=json!(id);v["releaseSha256"]=json!(digest);});
+   let out=run(&request(&wrong,"SELECT p.name FROM products p","0.4.40"));assert_eq!(out["status"],"blocked");assert!(out.get("sql").is_none());
+  }
+  let old=run(&request(&bundle(),"SELECT p.name FROM products p","0.4.40"));assert_eq!(old["status"],"blocked");assert!(old.get("sql").is_none());
+ }
+
 }
 
 #[cfg(test)]

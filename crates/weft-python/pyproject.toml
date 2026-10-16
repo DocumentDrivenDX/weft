@@ -3,7 +3,7 @@ requires=["maturin==1.9.6"]
 build-backend="maturin"
 [project]
 name="weft-sql"
-version="0.4.36"
+version="0.4.37"
 requires-python=">=3.9"
 [tool.maturin]
 bindings="pyo3"
