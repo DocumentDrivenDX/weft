@@ -162,4 +162,103 @@ mod tests{
    });let original=crate::application_lineage::prepare(&request.to_string()).unwrap();assert!(prepare(&original).is_err(),"{case}");
   }
  }
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ #[test]
+ fn model_requirements_retain_original_parent_and_all_record_members(){
+  let request=fixture();let original=crate::application_lineage::prepare(&request.to_string()).unwrap();let context=prepare(&original).unwrap();
+  let requirements=crate::current_presence_model_requirements::derive(&context).unwrap();assert!(std::ptr::eq(requirements.context(),&context));
+  let report:Value=serde_json::from_str(requirements.json()).unwrap();assert_eq!(report["complete"],false);assert_eq!(report["authority"],false);assert_eq!(report["securityReady"],false);
+  assert_eq!(report["sourceRequestJson"],original.source_request_json());assert_eq!(report["preparationSha256"],sha256(context.json().as_bytes()));
+  assert_eq!(report["modelPins"],serde_json::to_value(original.catalog().pins()).unwrap());assert_eq!(report["records"].as_array().unwrap().len(),5);
+  // Independently authored complete expected Field/Key mapping, not generated
+  // from the source under test or from the implementation's traversal.
+  let mut actual=std::collections::BTreeMap::new();
+  for r in report["records"].as_array().unwrap(){actual.insert(r["record"]["element"].as_str().unwrap().to_owned(),json!({"fields":r["fields"].as_array().unwrap().iter().map(|f|f["field"]["element"].clone()).collect::<Vec<_>>(),"key":r["selectedKey"]["fields"].as_array().unwrap().iter().map(|f|f["element"].clone()).collect::<Vec<_>>()}));}
+  assert_eq!(serde_json::to_value(actual).unwrap(),json!({
+   "Staff":{"fields":["staffId"],"key":["staffId"]},
+   "Project":{"fields":["projectId"],"key":["projectId"]},
+   "Resource":{"fields":["resourceId","salary","token"],"key":["resourceId"]},
+   "Ownership":{"fields":["ownerId","ownerResource","ownerProject"],"key":["ownerId"]},
+   "Assignment":{"fields":["assignmentId","assignmentStaff","assignmentProject","active"],"key":["assignmentId"]}
+  }));
+  let resource=report["records"].as_array().unwrap().iter().find(|r|r["record"]["element"]=="Resource").unwrap();
+  assert_eq!(resource["fields"].as_array().unwrap().len(),3);assert_eq!(resource["selectedKey"]["fields"][0]["element"],"resourceId");
+  let token=resource["fields"].as_array().unwrap().iter().find(|f|f["field"]["element"]=="token").unwrap();assert_eq!(token["descriptors"][0]["availability"],"absent-allowed");
+ }
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ fn change_ontology(request:&mut Value,f:impl FnOnce(&mut Value)){
+  let source=request["opaqueSources"].as_array_mut().unwrap().iter_mut().find(|s|s["role"]=="ontology").unwrap();
+  let mut ontology:Value=serde_json::from_str(source["utf8"].as_str().unwrap()).unwrap();f(&mut ontology);let raw=ontology.to_string();let digest=sha256(raw.as_bytes());source["utf8"]=json!(raw);source["sha256"]=json!(digest);
+  change(request,|p|p["sources"].as_array_mut().unwrap().iter_mut().find(|s|s["role"]=="ontology").unwrap()["sha256"]=json!(digest));
+ }
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ #[test]
+ fn model_requirements_refuse_incomplete_foreign_duplicate_and_mismatched_records(){
+  for case in 0..7{
+   let mut request=fixture();change_ontology(&mut request,|o|match case{
+    0=>{o["entities"][2]["fields"].as_array_mut().unwrap().pop();},
+    1=>o["entities"][2]["fields"][0]["ref"]["elementId"]=json!("staffId"),
+    2=>{let e=o["entities"][0].clone();o["entities"].as_array_mut().unwrap().push(e);},
+    3=>o["entities"][2]["keyId"]=json!("missing"),
+    4=>o["associations"][0]["keyId"]=json!("missing"),
+    5=>o["entities"][2]["type"]["documentId"]=json!("foreign"),
+    _=>{let f=o["entities"][2]["fields"][0].clone();o["entities"][2]["fields"].as_array_mut().unwrap().push(f);},
+   });let original=crate::application_lineage::prepare(&request.to_string()).unwrap();let context=prepare(&original).unwrap();
+   assert!(crate::current_presence_model_requirements::derive(&context).is_err(),"case {case}");
+  }
+ }
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ #[test]
+ fn model_requirements_preserve_unknown_graph_source_without_claiming_closure(){
+  let mut request=fixture();change_ontology(&mut request,|o|o["x-future-graph"]=json!({"targetKey":null,"direction":"unknown","precision":"9007199254740993.000000001"}));
+  let original=crate::application_lineage::prepare(&request.to_string()).unwrap();let context=prepare(&original).unwrap();
+  let requirements=crate::current_presence_model_requirements::derive(&context).unwrap();let report:Value=serde_json::from_str(requirements.json()).unwrap();
+  assert_eq!(report["sourceRequestJson"],original.source_request_json());assert_eq!(report["complete"],false);assert!(report["unresolved"].as_array().unwrap().iter().any(|s|s.as_str().unwrap().contains("graph direction")));
+ }
+
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ #[test]
+ fn model_requirements_keep_composite_key_order_instead_of_member_order(){
+  let mut request=fixture();let module=&mut request["modules"][0];
+  let mut document:Value=serde_json::from_str(module["documentJson"].as_str().unwrap()).unwrap();
+  let resource=document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="Resource").unwrap();
+  resource["keys"][0]["fields"]=json!([{"module":"m","element":"salary"},{"module":"m","element":"resourceId"}]);
+  let raw=document.to_string();module["documentJson"]=json!(raw);module["pin"]["sha256"]=json!(sha256(raw.as_bytes()));let pin=module["pin"].clone();
+  change(&mut request,|p|p["modelPins"][0]=pin);
+  let original=crate::application_lineage::prepare(&request.to_string()).unwrap();let context=prepare(&original).unwrap();
+  let requirements=crate::current_presence_model_requirements::derive(&context).unwrap();let report:Value=serde_json::from_str(requirements.json()).unwrap();
+  let r=report["records"].as_array().unwrap().iter().find(|r|r["record"]["element"]=="Resource").unwrap();
+  assert_eq!(r["fields"][0]["field"]["element"],"resourceId");assert_eq!(r["selectedKey"]["fields"][0]["element"],"salary");assert_eq!(r["selectedKey"]["fields"][1]["element"],"resourceId");
+  // This changes compiler model requirements only. It does not repair or admit
+  // the fixture ontology's endpoint incidence for the new composite Key.
+  assert_eq!(report["complete"],false);
+ }
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ #[test]
+ fn model_requirements_equal_bytes_do_not_replace_actual_context_custody(){
+  let request=fixture().to_string();let first=crate::application_lineage::prepare(&request).unwrap();let second=crate::application_lineage::prepare(&request).unwrap();
+  let a=prepare(&first).unwrap();let b=prepare(&second).unwrap();let requirements=crate::current_presence_model_requirements::derive(&a).unwrap();
+  let other=crate::current_presence_model_requirements::derive(&b).unwrap();assert_eq!(requirements.json(),other.json());
+  assert!(std::ptr::eq(requirements.context(),&a));assert!(!std::ptr::eq(requirements.context(),&b));
+ }
+
+ #[cfg(feature="current-presence-model-requirements-candidate")]
+ #[test]
+ fn model_requirements_context_hashes_do_not_feed_back_into_persistent_binding(){
+  let first=fixture();let mut second=first.clone();change_ontology(&mut second,|o|o["x-original-order-control"]=json!({"revision":"independent-r2"}));
+  let binding=|r:&Value|r["opaqueSources"].as_array().unwrap().iter().find(|s|s["role"]=="native-binding").unwrap().clone();
+  let descriptor=binding(&first);assert_eq!(descriptor,binding(&second));
+  // The same independently supplied descriptor precedes both actual preparations.
+  // Neither construction imports a report or substitutes an earlier context.
+  let a=crate::application_lineage::prepare(&first.to_string()).unwrap();let b=crate::application_lineage::prepare(&second.to_string()).unwrap();
+  let ca=prepare(&a).unwrap();let cb=prepare(&b).unwrap();
+  let qa=crate::current_presence_model_requirements::derive(&ca).unwrap();let qb=crate::current_presence_model_requirements::derive(&cb).unwrap();
+  assert_eq!(ca.binding_scope().sha256,descriptor["sha256"].as_str().unwrap());assert_eq!(cb.binding_scope().sha256,ca.binding_scope().sha256);
+  let ra:Value=serde_json::from_str(qa.json()).unwrap();let rb:Value=serde_json::from_str(qb.json()).unwrap();
+  assert_ne!(ra["sourceRequestSha256"],rb["sourceRequestSha256"]);assert_ne!(ra["preparationSha256"],rb["preparationSha256"]);
+  assert_eq!(binding(&serde_json::from_str(ra["sourceRequestJson"].as_str().unwrap()).unwrap()),descriptor);
+  assert_eq!(binding(&serde_json::from_str(rb["sourceRequestJson"].as_str().unwrap()).unwrap()),descriptor);
+  assert!(std::ptr::eq(qa.context(),&ca));assert!(!std::ptr::eq(qa.context(),&cb));assert_eq!(ra["complete"],false);assert_eq!(rb["authority"],false);
+ }
+
 }
