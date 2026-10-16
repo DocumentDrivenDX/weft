@@ -396,3 +396,24 @@ Current/historical aggregate-root scope and descendant attribution remain native
 Truss obligations. This selection does not change mutation admission, install a
 protected query consumer or qualify B-008 security. Source/native development
 workflow evidence and matching published-wheel qualification remain distinct.
+
+## Explicit local Spark current contributors
+
+An explicitly selected `current-spark-scalar-candidate` feature MAY expose
+`CurrentQueryPreparation.lower_spark_current_contributors_candidate_json` and
+`check_spark_current_contributors_candidate_json`. It MUST retain the same
+actual-parent CQP custody and conditional host boundary. Its closed binding is
+`weft.spark.current-values/0.1-candidate`; its artifact is
+`weft.spark.current-scalar/0.1-candidate`. Databricks binding/artifact versions
+and `system.builtin` function qualification MUST remain unchanged. Neither
+profile may silently accept the other's binding. This Spark profile excludes
+SUM and does not create or imply a new standard-wheel release.
+
+The Spark compiler MUST select builtin names at owning emission sites, never
+rewrite rendered SQL or require function shims. Its unqualified Spark builtins
+require independently admitted Spark4 runtime/builtin/collation correspondence,
+stable catalog/database and absence of temporary or persistent user-function
+shadowing at opening and closing. Hosts still own genuine source/caller/cut,
+Delta identity/version/schema, complete eligible populations, policy/action
+decisions, finite capture and guarded release. Local fixture custody is not
+Unity Catalog or security admission.

@@ -639,3 +639,14 @@ projections and hidden order keys, including LIMIT 0. Test the inclusive
 repeated public-value/contributor-key UTF-8 payload against the 16,777,216-byte
 pre-limit bound. Successful small captured frames do not waive expanded-result
 limits or imply whole-process memory/timing assurance.
+
+## Explicit local Spark contributor candidate
+
+Feature-scoped controls MUST establish cross-target binding refusal, unchanged
+Databricks output, Spark-native builtin emission, no SUM-context downgrade and
+same-original refinement acceptance/refusal with exact target artifact anchors.
+An actual native Python child control MUST preserve parent identity and compare
+a matching contributor frame while refusing a wrong public result and a foreign
+target binding. A separately supervised tiny local Spark/Delta fixture MAY
+qualify the selected compiler/host mechanics only; it cannot close native
+security or Unity Catalog requirements.

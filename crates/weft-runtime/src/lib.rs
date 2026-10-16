@@ -616,6 +616,16 @@ impl CurrentQueryPreparation{
  /// Conditional Databricks SQL for the explicit original signed64 SUM context.
  #[cfg(feature="current-databricks-scalar-candidate")]
  pub fn lower_databricks_current_sum_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_databricks::current_scalar::lower_original_sum(operands,binding)?.json_string())}
+ /// Explicit local Spark contributors; no target inference or SUM fallback.
+ #[cfg(feature="current-spark-scalar-candidate")]
+ pub fn lower_spark_current_contributors_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{
+  self.with_context(|_,_,operands|weft_databricks::current_scalar::lower_spark_contributors(operands,binding)?.json_string())
+ }
+ #[cfg(feature="current-spark-scalar-candidate")]
+ pub fn check_spark_current_contributors_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{
+  self.with_context(|_,_,operands|Ok(weft_databricks::current_scalar::check_spark_contributors(operands,binding,input)?.to_string()))
+   .map_err(|_|weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-REFINEMENT","capability","Conditional current-query refinement refused"))
+ }
  /// Conditional result comparison under independently supplied native-host premises.
  #[cfg(feature="current-query-refinement-candidate")]
  pub fn check_postgresql_current_rows_candidate_json(&self,binding:&str,input:&str)->weft_core::error::Result<String>{

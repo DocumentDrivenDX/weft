@@ -110,8 +110,16 @@ pub struct ResultColumn {
     pub encoding: String,
 }
 /// Immutable compiler output, never a native permit or imported report.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum CurrentTarget { Databricks, Spark }
+impl CurrentTarget {
+    fn builtin(self, name: &str) -> String {
+        match self { Self::Databricks => format!("system.builtin.{name}"), Self::Spark => name.to_owned() }
+    }
+}
 pub struct CurrentScalarSql<'a> {
     context: &'a CurrentQueryOperands<'a>,
+    target: CurrentTarget,
     binding_sha256: String,
     relations: Value,
     sql: String,
@@ -170,6 +178,9 @@ impl CurrentScalarSql<'_> {
             if let Some(groups) = &private.groups {
                 value["privateGroupSources"] = groups.clone();
             }
+        }
+        if self.target == CurrentTarget::Spark {
+            value["nativeRequirements"].as_array_mut().unwrap().push(json!("explicit Spark4 local candidate: stable catalog/database and genuine builtin resolution; no temporary or persistent user function shadowing at opening and closing; no Unity Catalog authority inference"));
         }
         value["relations"] = self.relations.clone();
         value
@@ -302,26 +313,29 @@ pub fn lower<'a>(
     context: &'a CurrentQueryOperands<'a>,
     binding_json: &str,
 ) -> Result<CurrentScalarSql<'a>> {
-    parse(context, binding_json, false)
+    parse(context, binding_json, false, CurrentTarget::Databricks)
 }
 /// Explicit original signed64 SUM context; never a native permission.
 pub fn lower_original_sum<'a>(
     context: &'a CurrentQueryOperands<'a>,
     binding_json: &str,
 ) -> Result<CurrentScalarSql<'a>> {
-    parse(context, binding_json, true)
+    parse(context, binding_json, true, CurrentTarget::Databricks)
 }
 fn parse<'a>(
     context: &'a CurrentQueryOperands<'a>,
     binding_json: &str,
     live_sum: bool,
+    target: CurrentTarget,
 ) -> Result<CurrentScalarSql<'a>> {
     if binding_json.len() > 4_000_000 {
         return Err(fail());
     }
     let raw = checked_json(binding_json).map_err(|_| fail())?;
     let binding: Binding = serde_json::from_value(raw.clone()).map_err(|_| fail())?;
-    let version = if live_sum {
+    let version = if target == CurrentTarget::Spark {
+        "weft.spark.current-values/0.1-candidate"
+    } else if live_sum {
         "weft.databricks.current-values/0.2-candidate"
     } else {
         "weft.databricks.current-values/0.1-candidate"
@@ -329,7 +343,7 @@ fn parse<'a>(
     if binding.version != version || serde_json::to_value(&binding).map_err(|_| fail())? != raw {
         return Err(fail());
     }
-    lower_binding(context, binding, sha256(binding_json.as_bytes()), live_sum)
+    lower_binding(context, binding, sha256(binding_json.as_bytes()), live_sum, target)
 }
 fn native_version(s: &str) -> Result<i64> {
     if s.is_empty() || !s.bytes().all(|b| b.is_ascii_digit()) || s.len() > 1 && s.starts_with('0') {
@@ -352,6 +366,7 @@ fn lower_binding<'a>(
     binding: Binding,
     binding_sha256: String,
     live_sum: bool,
+    target: CurrentTarget,
 ) -> Result<CurrentScalarSql<'a>> {
     let designation = context.designation();
     let original = designation.preparation();
@@ -680,7 +695,7 @@ fn lower_binding<'a>(
                 }
                 let (sql, _, _) = build.field(&key.0, &argument.scan, &argument.identity)?;
                 (
-                    format!("CASE WHEN system.builtin.count(*) = 0 THEN CAST(NULL AS DECIMAL(38,0)) WHEN system.builtin.try_sum(CAST({sql} AS DECIMAL(38,0))) IS NULL THEN system.builtin.raise_error('WFT-CAPABILITY') ELSE system.builtin.try_sum(CAST({sql} AS DECIMAL(38,0))) END"),
+                    format!("CASE WHEN {count}(*) = 0 THEN CAST(NULL AS DECIMAL(38,0)) WHEN {sum}(CAST({sql} AS DECIMAL(38,0))) IS NULL THEN {raise}('WFT-CAPABILITY') ELSE {sum}(CAST({sql} AS DECIMAL(38,0))) END", count=target.builtin("count"),sum=target.builtin("try_sum"),raise=target.builtin("raise_error")),
                     Some(argument.identity.clone()),
                     None,
                     logical_type.clone(),
@@ -690,7 +705,7 @@ fn lower_binding<'a>(
             app::Expression::Count { logical_type } => {
                 count_type(logical_type)?;
                 (
-                    "CASE WHEN system.builtin.count(*) < 0 THEN system.builtin.raise_error('WFT-CAPABILITY') ELSE system.builtin.count(*) END".into(),
+                    format!("CASE WHEN {count}(*) < 0 THEN {raise}('WFT-CAPABILITY') ELSE {count}(*) END",count=target.builtin("count"),raise=target.builtin("raise_error")),
                     None,
                     None,
                     logical_type.clone(),
@@ -708,7 +723,7 @@ fn lower_binding<'a>(
                     &argument.identity,
                 )?;
                 (
-                    format!("CASE WHEN system.builtin.count(DISTINCT {s}) < 0 THEN system.builtin.raise_error('WFT-CAPABILITY') ELSE system.builtin.count(DISTINCT {s}) END"),
+                    format!("CASE WHEN {count}(DISTINCT {s}) < 0 THEN {raise}('WFT-CAPABILITY') ELSE {count}(DISTINCT {s}) END",count=target.builtin("count"),raise=target.builtin("raise_error")),
                     Some(argument.identity.clone()),
                     None,
                     logical_type.clone(),
@@ -774,19 +789,19 @@ fn lower_binding<'a>(
             native_type: "STRING".into(),
         });
         row_sql.push(format!(
-            "system.builtin.named_struct('scan',CAST(:{marker} AS STRING),'key',{}.{})",
-            alias(scan)?,
+            "{}('scan',CAST(:{marker} AS STRING),'key',{}.{})",
+            target.builtin("named_struct"), alias(scan)?,
             ident(key)?
         ));
         scan_ids.push(scan.clone());
     }
-    let tuple = format!("system.builtin.array({})", row_sql.join(","));
+    let tuple = format!("{}({})", target.builtin("array"), row_sql.join(","));
     let tuples = if plan.aggregate {
-        format!("system.builtin.collect_list({tuple})")
+        format!("{}({tuple})",target.builtin("collect_list"))
     } else {
-        format!("system.builtin.array({tuple})")
+        format!("{}({tuple})",target.builtin("array"))
     };
-    output_sql.push(format!("system.builtin.to_json(system.builtin.named_struct('version','weft.stage-contributor-bag/0.1-candidate','tuples',{tuples})) AS `__weft_contributors`"));
+    output_sql.push(format!("{}({}('version','weft.stage-contributor-bag/0.1-candidate','tuples',{tuples})) AS `__weft_contributors`",target.builtin("to_json"),target.builtin("named_struct")));
     let mut cells = Vec::new();
     for (position, output) in plan.outputs.iter().enumerate() {
         let (kind, path, sources) = match &output.expression {
@@ -819,7 +834,9 @@ fn lower_binding<'a>(
     }
     let group_sources=plan.groups.iter().enumerate().map(|(index,field)|json!({"path":format!("groups/{index}"),"scan":field.scan,"field":field.identity})).collect::<Vec<_>>();
     let private = Some(PrivateLineage {
-        version: if live_sum {
+        version: if target == CurrentTarget::Spark {
+            "weft.spark.current-scalar/0.1-candidate"
+        } else if live_sum {
             "weft.databricks.current-scalar/0.2-candidate"
         } else {
             "weft.databricks.current-scalar/0.1-candidate"
@@ -858,6 +875,7 @@ fn lower_binding<'a>(
     }
     Ok(CurrentScalarSql {
         context,
+        target,
         binding_sha256,
         relations: serde_json::to_value(&binding.scans).map_err(|_| fail())?,
         sql,
@@ -1170,6 +1188,35 @@ mod tests {
             .is_err());
         }
     }
+    #[cfg(feature="current-spark-scalar-candidate")]
+    #[test]
+    fn spark_contributors_has_closed_target_and_same_original_refinement() {
+        let mut r=request(false); r["sql"]=json!("SELECT COUNT(*) AS n FROM Resource r"); r["parameters"]=json!({});
+        let p=application_lineage::prepare(&r.to_string()).unwrap();
+        let d=current_query_designation::derive(&p).unwrap();
+        let g=current_query_operands::derive(&d).unwrap();
+        let db=binding(&g); let db_raw=db.to_string(); let original=lower(&g,&db_raw).unwrap().json();
+        let mut b=db.clone();b["version"]=json!("weft.spark.current-values/0.1-candidate");let raw=b.to_string();
+        assert!(lower(&g,&raw).is_err());assert!(lower_spark_contributors(&g,&db_raw).is_err());
+        let compiled=lower_spark_contributors(&g,&raw).unwrap().json();
+        assert_eq!(compiled["version"],"weft.spark.current-scalar/0.1-candidate");
+        assert!(!compiled["sql"].as_str().unwrap().contains("system.builtin."));
+        assert!(compiled["sql"].as_str().unwrap().contains("count(*)"));
+        assert!(original["sql"].as_str().unwrap().contains("system.builtin.count(*)"));
+        for key in ["parameters","resultColumns","privateResultColumns","publicCellSources","privateGroupSources","relations"] {
+            assert_eq!(compiled[key],original[key]);
+        }
+        assert_eq!(lower(&g,&db_raw).unwrap().json(),original);
+        let artifact=lower_spark_contributors(&g,&raw).unwrap().json_string().unwrap();
+        let bag=json!({"version":"weft.stage-contributor-bag/0.1-candidate","tuples":[[{"scan":"s0","key":"k1"}],[{"scan":"s0","key":"k2"}]]}).to_string();
+        let mut frame=json!({"version":"weft.current-query.refinement-input/0.1-candidate", "sourceRequestSha256":compiled["sourceRequestSha256"],"designationSha256":compiled["designationSha256"],"materializationBindingSha256":sha256(raw.as_bytes()),"compiledArtifactSha256":sha256(artifact.as_bytes()),"scans":[{"scan":"s0","expectedRowCount":"2","rows":[{"key":"k1","cells":{}},{"key":"k2","cells":{}}]}],"resultRows":[["2",bag]]});
+        let report=check_spark_contributors(&g,&raw,&frame.to_string()).unwrap();assert_eq!(report["matched"],true);assert_eq!(report["authority"],false);
+        frame["resultRows"][0][0]=json!("3");assert!(check_spark_contributors(&g,&raw,&frame.to_string()).is_err());
+        frame["resultRows"][0][0]=json!("2");frame["compiledArtifactSha256"]=json!(sha256(lower(&g,&db_raw).unwrap().json_string().unwrap().as_bytes()));
+        assert!(check_spark_contributors(&g,&raw,&frame.to_string()).is_err());
+        let sum=request(true);let p=application_lineage::prepare(&sum.to_string()).unwrap();let d=current_query_designation::derive(&p).unwrap();let g=current_query_operands::derive(&d).unwrap();let mut b=binding(&g);b["version"]=json!("weft.spark.current-values/0.1-candidate");assert!(lower_spark_contributors(&g,&b.to_string()).is_err());
+    }
+
 }
 
 /// Optional conditional result comparison; actual lowering precedes all input evaluation.
@@ -1210,4 +1257,19 @@ fn refine_actual<'a>(context:&'a CurrentQueryOperands<'a>,actual:CurrentScalarSq
     Ok(json!({"version":"weft.current-query.refinement-result/0.1-candidate","matched":true,"authority":false,"securityReady":false,"nativeAdmission":"required",
         "sourceRequestSha256":sha256(context.designation().preparation().source_request_json().as_bytes()),"designationSha256":sha256(context.designation().json().as_bytes()),
         "materializationBindingSha256":binding_sha,"compiledArtifactSha256":artifact_sha,"refinementInputSha256":sha256(input_json.as_bytes())}))
+}
+
+/// Explicit local Spark contributor dialect; never a Databricks fallback or SUM profile.
+#[cfg(feature="current-spark-scalar-candidate")]
+pub fn lower_spark_contributors<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str)->Result<CurrentScalarSql<'a>>{
+    parse(context,binding_json,false,CurrentTarget::Spark).map_err(|_|Diagnostic::new("WFT-CURRENT-SPARK-SQL","capability","Conditional current Spark SQL refused"))
+}
+/// The same-original Spark lowerer owns the artifact anchors before comparison.
+#[cfg(feature="current-spark-scalar-candidate")]
+pub fn check_spark_contributors<'a>(context:&'a CurrentQueryOperands<'a>,binding_json:&str,input_json:&str)->Result<Value>{
+    (||{
+        let actual=lower_spark_contributors(context,binding_json)?;
+        let binding:Binding=serde_json::from_str(binding_json).map_err(|_|fail())?;
+        refine_actual(context,actual,binding.values,binding_json,input_json,weft_core::current_query_refinement::Encoding::Contributors)
+    })().map_err(|_|refinement_failure())
 }

@@ -247,3 +247,14 @@ that substitution using its independently authenticated complete source/capture
 custody. Tests MUST retain this countermodel: a count mismatch is a refinement
 refusal; a consistent forged world is not proof that this checker can discover
 missing native rows. A report is never source completeness or permission.
+
+## Explicit Spark contributor target
+
+The optional `current-spark-scalar-candidate` checker MUST invoke its actual
+Spark contributor lowerer on the same original CQP and exact
+`weft.spark.current-values/0.1-candidate` binding before comparing cells. The
+result and input frames retain this contract's existing versions and contributor
+bag semantics; artifact hashes MUST bind the distinct Spark artifact bytes. A
+Databricks artifact or binding cannot substitute, even when result values agree.
+No Spark SUM checker, implicit engine selection, runtime permission or native
+completeness claim follows from this profile.

@@ -625,3 +625,14 @@ slots at 1,000,000 and public-value/contributor-key UTF-8 text occurrences at
 these limits. Borrowed source/group/order values avoid copying large values before
 checking expected payload. These are semantic size limits, not allocation tracing
 or whole-process resource assurance. CONTRACT-010 defines the exact accounting.
+
+## Explicit local Spark contributor emission
+
+The Databricks scalar owner may share private generation mechanics with an
+explicit Spark contributor target through an internally closed target enum.
+Only that enum selects function references at emission sites and closed binding
+and artifact versions. Databricks output remains identical; the Spark target
+uses Spark-native unqualified builtins and requires host shadowing/runtime
+admission. Each target checker re-lowers the same actual CQP with its own target
+before invoking the unchanged core refinement comparison. This is a conditional
+local candidate, with no SUM or automatic public-wheel activation.

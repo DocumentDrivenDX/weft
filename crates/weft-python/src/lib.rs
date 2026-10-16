@@ -165,6 +165,17 @@ impl CurrentQueryPreparation{
  fn lower_databricks_current_contributors_candidate_json(&self,py:Python<'_>,binding:&str)->PyResult<String>{self.check_original(py)?;self.inner.lower_databricks_current_contributors_candidate_json(binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))}
  #[cfg(feature="current-databricks-scalar-candidate")]
  fn lower_databricks_current_sum_candidate_json(&self,py:Python<'_>,binding:&str)->PyResult<String>{self.check_original(py)?;self.inner.lower_databricks_current_sum_candidate_json(binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))}
+ #[cfg(feature="current-spark-scalar-candidate")]
+ fn lower_spark_current_contributors_candidate_json(&self,py:Python<'_>,binding:&str)->PyResult<String>{
+  self.check_original(py)?;
+  self.inner.lower_spark_current_contributors_candidate_json(binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
+ #[cfg(feature="current-spark-scalar-candidate")]
+ fn check_spark_current_contributors_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>,refinement_input_json:&Bound<'_,PyAny>)->PyResult<String>{
+  self.check_original(py).map_err(|_|refinement_python_failure())?;
+  let binding=refinement_text(original_binding_json,4_000_000)?;let input=refinement_text(refinement_input_json,16_777_216)?;
+  self.inner.check_spark_current_contributors_candidate_json(&binding,&input).map_err(|_|refinement_python_failure())
+ }
  #[cfg(feature="current-query-refinement-candidate")]
  fn check_postgresql_current_rows_candidate_json(&self,py:Python<'_>,original_binding_json:&Bound<'_,PyAny>,refinement_input_json:&Bound<'_,PyAny>)->PyResult<String>{
   self.check_original(py).map_err(|_|refinement_python_failure())?;
