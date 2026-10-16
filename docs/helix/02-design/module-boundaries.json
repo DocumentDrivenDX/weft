@@ -4272,6 +4272,7 @@
       ],
       "sources": [
         "scripts/build-site.mjs",
+        "scripts/check-native-sdk-browser.ts",
         "scripts/check-security-relational-sql-native.py",
         "scripts/check-site.mjs",
         "scripts/check-specs.ts",

@@ -1,0 +1,524 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-reporting-integration/crates/weft-core)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:11:24
+   |
+11 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:837:8
+    |
+837 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:61:15
+   |
+61 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-reporting-integration/crates/weft-postgresql)
+   Compiling weft-databricks v0.1.0 (/private/tmp/weft-reporting-integration/crates/weft-databricks)
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:61:15
+   |
+61 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: method `terminal_key` is never used
+   --> crates/weft-core/src/path_ir.rs:122:12
+    |
+ 54 | impl PathRead {
+    | ------------- method in this implementation
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: `weft-core` (lib) generated 10 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+warning: constant `SALES_SQL` is never used
+ --> crates/weft-databricks/tests/../../../tests/ashlar-databricks/common.rs:3:11
+  |
+3 | pub const SALES_SQL: &str = "SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name";
+  |           ^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: function `compound_request` is never used
+  --> crates/weft-databricks/tests/../../../tests/ashlar-databricks/common.rs:51:8
+   |
+51 | pub fn compound_request(shape: &str, optional: bool) -> Value {
+   |        ^^^^^^^^^^^^^^^^
+
+   Compiling weft-runtime v0.1.0 (/private/tmp/weft-reporting-integration/crates/weft-runtime)
+warning: `weft-databricks` (test "relationship_degree") generated 2 warnings
+warning: `weft-databricks` (test "paths") generated 2 warnings (2 duplicates)
+warning: variant `Upgrade` is never constructed
+  --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:21:5
+   |
+ 9 | pub(crate) enum Behavior {
+   |                 -------- variant in this enum
+...
+21 |     Upgrade,
+   |     ^^^^^^^
+   |
+   = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `target` is never used
+   --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:297:15
+    |
+297 | pub(crate) fn target(candidate: bool) -> Target {
+    |               ^^^^^^
+
+warning: `weft-core` (test "compile-envelope") generated 2 warnings
+warning: unused imports: `Requirement` and `admit_properties`
+    --> crates/weft-postgresql/src/property_definition.rs:1025:39
+     |
+1025 |             comparator_requirements::{admit_properties, registration_key, Requirement},
+     |                                       ^^^^^^^^^^^^^^^^                    ^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` on by default
+
+warning: variable does not need to be mutable
+    --> crates/weft-postgresql/src/truss_runtime.rs:1409:13
+     |
+1409 |         let mut r=request("SELECT a.* FROM \"A\" a");
+     |             ----^
+     |             |
+     |             help: remove this `mut`
+     |
+     = note: `#[warn(unused_mut)]` on by default
+
+warning: unused variable: `t`
+   --> crates/weft-postgresql/tests/security_guarded_transport.rs:233:7
+    |
+233 |  let (t,source)=match &output.output().expression{Expression::Count{logical_type}=>(logical_type,None),Expression::Sum{argument,logical_t...
+    |       ^ help: if this is intentional, prefix it with an underscore: `_t`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: variable does not need to be mutable
+   --> crates/weft-postgresql/src/row_join_definition.rs:842:13
+    |
+842 |         let mut binding: Value = serde_json::from_str(include_str!(
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+
+warning: `weft-postgresql` (test "security_guarded_transport") generated 1 warning
+warning: `weft-core` (lib test) generated 4 warnings (1 duplicate) (run `cargo fix --lib -p weft-core --tests` to apply 1 suggestion)
+warning: `weft-postgresql` (lib test) generated 3 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 3 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 32.60s
+     Running unittests src/lib.rs (/private/tmp/sdk-weft-complete-target/debug/deps/weft_core-05460614b7742b29)
+
+running 10 tests
+test security_evaluation::faithful_fact_tests::raw_literal_objects_cannot_masquerade_through_typed_fact_consumers ... ok
+test security_obligation_custody::faithful_parameter_tests::raw_manifest_reserved_looking_keys_are_ordinary_opaque_members ... ok
+test security_candidate_incidence::tests::raw_composite_endpoint_retains_order_domain_and_source_custody ... ok
+test application_lineage::tests::raw_source_bytes_are_not_reinterpreted_and_source_overrides_refuse ... ok
+test security_candidate_incidence::tests::raw_witness_projects_endpoints_from_one_source_bound_record ... ok
+test security_candidate_incidence::tests::raw_population_admission_budgets_identity_and_all_sources ... ok
+test security_record_homes::tests::actual_raw_typed_and_discriminated_homes_keep_natural_keys_and_scan_occurrences ... ok
+test security_candidate_incidence::tests::mixed_raw_ownership_and_graph_membership_keep_project_correlation ... ok
+test security_case_catalog::tests::catalog_exact_minus_one_ledgers_and_raw_snapshot_bounds ... ok
+test security_evaluation::faithful_fact_tests::actual_simulation_refuses_raw_value_wrapped_keys_fields_and_context ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 318 filtered out; finished in 0.25s
+
+     Running unittests src/bin/frontend.rs (/private/tmp/sdk-weft-complete-target/debug/deps/frontend-3a62c32290a0da11)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running ../../tests/application/model.rs (/private/tmp/sdk-weft-complete-target/debug/deps/application_model-bbc0f3d4367ffd86)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 18 filtered out; finished in 0.00s
+
+     Running ../../tests/application/resolve.rs (/private/tmp/sdk-weft-complete-target/debug/deps/application_resolve-0fc1aaed0c46b03d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running ../../tests/application/syntax.rs (/private/tmp/sdk-weft-complete-target/debug/deps/application_syntax-2713adefeabf00f6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running ../../tests/register-backend/pipeline.rs (/private/tmp/sdk-weft-complete-target/debug/deps/backend_pipeline-8c4bfc768e9ddc39)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 18 filtered out; finished in 0.00s
+
+     Running ../../tests/register-backend/registry.rs (/private/tmp/sdk-weft-complete-target/debug/deps/backend_registry-715847ff3b9637e8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running ../../tests/compile/envelope.rs (/private/tmp/sdk-weft-complete-target/debug/deps/compile_envelope-2f3141ad7db917a4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running tests/frontend.rs (/private/tmp/sdk-weft-complete-target/debug/deps/frontend-041f0d9f9f8d327c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running tests/mathematical08.rs (/private/tmp/sdk-weft-complete-target/debug/deps/mathematical08-a63583bc9253a68b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running ../../tests/mutation/compiler.rs (/private/tmp/sdk-weft-complete-target/debug/deps/mutation_compile-bf70719ab7c3f94b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running ../../tests/mutation/embedding.rs (/private/tmp/sdk-weft-complete-target/debug/deps/mutation_embedding-e6ae8f7e2a83a0aa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/original08.rs (/private/tmp/sdk-weft-complete-target/debug/deps/original08-fbd9f10d5defc33e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running ../../tests/qualify-and-evolve/properties.rs (/private/tmp/sdk-weft-complete-target/debug/deps/qualification_properties-e69a4caba473bcb4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running ../../tests/qualify-and-evolve/resources.rs (/private/tmp/sdk-weft-complete-target/debug/deps/qualification_resources-116e3ec32b5f2c64)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running tests/security_admission.rs (/private/tmp/sdk-weft-complete-target/debug/deps/security_admission-2e3535e85b4333b8)
+
+running 4 tests
+test draft_raw_ir_retains_nested_witness_slots_ordered_carriers_and_source_custody ... ok
+test draft_policy_checks_raw_correlated_terms_and_intrinsic_types ... ok
+test draft_selected_ownership_and_single_document_raw_endpoints_are_not_inferred ... ok
+test draft_selected_ontology_closes_raw_members_and_refuses_semantic_substitutions ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 71 filtered out; finished in 0.06s
+
+     Running tests/security_literals.rs (/private/tmp/sdk-weft-complete-target/debug/deps/security_literals-8431cab09e0f5c48)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/security_parameter_sources.rs (/private/tmp/sdk-weft-complete-target/debug/deps/security_parameter_sources-b683e7054692ed43)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests/security_source_context.rs (/private/tmp/sdk-weft-complete-target/debug/deps/security_source_context-d09d7de932fbf48f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/private/tmp/sdk-weft-complete-target/debug/deps/weft_databricks-6b301b8e1f61000a)
+
+running 4 tests
+test current_scalar::tests::actual_context_emits_dialect_specific_masked_read_raw_predicate_and_private_bag ... ok
+test raw_read::tests::snapshot_is_compiler_owned_and_arguments_stay_bound ... ok
+test current_scalar::tests::grouped_projection_cannot_silently_fold_a_raw_group_into_a_masked_dto ... ok
+test raw_read::tests::unsupported_snapshot_and_query_meaning_refuse ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.04s
+
+     Running ../../tests/ashlar-databricks/binding.rs (/private/tmp/sdk-weft-complete-target/debug/deps/ashlar_binding-796e76bcf3090a68)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running ../../tests/ashlar-databricks/compiler.rs (/private/tmp/sdk-weft-complete-target/debug/deps/ashlar_compiler-0954a39cf4109d9e)
+
+running 1 test
+test raw_value_wrappers_cannot_substitute_authored_relationship_correspondence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 57 filtered out; finished in 0.04s
+
+     Running tests/paths.rs (/private/tmp/sdk-weft-complete-target/debug/deps/paths-dc51f6ade19d7063)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+
+     Running tests/relationship_degree.rs (/private/tmp/sdk-weft-complete-target/debug/deps/relationship_degree-8edacb802e2a950b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/private/tmp/sdk-weft-complete-target/debug/deps/weft_postgresql-7fdb0eace785b93b)
+
+running 13 tests
+test security_native_codecs::tests::numeric_raw_cast_boundaries_match_postgresql_storage_format ... ok
+test raw_read::raw_read_tests::raw_read_retains_native_privilege_and_complete_cursor_order_provenance ... ok
+test raw_read::raw_read_tests::raw_read_grouping_and_decimal_input_refuse_before_sql_exists ... ok
+test raw_read::raw_read_tests::raw_read_three_edges_admit_and_four_refuse_at_build ... ok
+test raw_read::raw_read_tests::raw_read_model_source_and_target_are_build_time_boundaries ... ok
+test raw_read::raw_read_tests::raw_read_compiles_deterministically_with_native_role_obligations ... ok
+test raw_read::raw_read_tests::raw_read_refuses_unreviewable_or_side_effecting_shapes ... ok
+test current_scalar::tests::actual_original_context_lowers_masked_projection_and_separately_typed_raw_predicate ... ok
+test raw_action::tests::unknown_selected_action_and_frame_escape_are_not_ignored ... ok
+test raw_action::tests::wrong_original_source_and_missing_role_mapping_refuse_before_program ... ok
+test raw_action::tests::original_source_pins_and_native_markers_are_deterministic ... ok
+test raw_bulk::tests::bounded_set_program_retains_original_sources ... ok
+test raw_bulk::tests::sentinel_order_and_source_boundaries_refuse ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 110 filtered out; finished in 0.14s
+
+     Running ../../tests/truss-postgresql/binding.rs (/private/tmp/sdk-weft-complete-target/debug/deps/candidate_binding-beea122d2c8a40d9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running ../../tests/truss-postgresql/compiler.rs (/private/tmp/sdk-weft-complete-target/debug/deps/candidate_compiler-bbbefa3bbe75ed48)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 18 filtered out; finished in 0.00s
+
+     Running tests/runtime_release.rs (/private/tmp/sdk-weft-complete-target/debug/deps/runtime_release-5a7c3bbf5af407cc)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/security_graph.rs (/private/tmp/sdk-weft-complete-target/debug/deps/security_graph-e0b952fde3c06dd1)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running tests/security_guarded_transport.rs (/private/tmp/sdk-weft-complete-target/debug/deps/security_guarded_transport-7015b45e973840ae)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.00s
+
+     Running ../../tests/truss-query-abi/compiler.rs (/private/tmp/sdk-weft-complete-target/debug/deps/truss_query_abi-9e1a7af18d152721)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/private/tmp/sdk-weft-complete-target/debug/deps/weft_runtime-7dca5fe207fad42f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/private/tmp/sdk-weft-complete-target/debug/deps/weft_runtime-778b9251ac8d4987)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running unittests src/security_mapping_cli.rs (/private/tmp/sdk-weft-complete-target/debug/deps/weft_security_mapping-28420730702ed2b7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/compatible_revisions.rs (/private/tmp/sdk-weft-complete-target/debug/deps/compatible_revisions-0fe2d60619190fc2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/implicit_arithmetic_input.rs (/private/tmp/sdk-weft-complete-target/debug/deps/implicit_arithmetic_input-cfb47434363df1ed)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/input.rs (/private/tmp/sdk-weft-complete-target/debug/deps/input-b1faa3f67131b64c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests/paths_cli.rs (/private/tmp/sdk-weft-complete-target/debug/deps/paths_cli-fbb591d8bdd2a00f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/paths_keys_cli.rs (/private/tmp/sdk-weft-complete-target/debug/deps/paths_keys_cli-8e7be2b96c56db9f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/paths_keys_having.rs (/private/tmp/sdk-weft-complete-target/debug/deps/paths_keys_having-d587539fd04f3551)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

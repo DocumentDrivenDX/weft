@@ -83,19 +83,19 @@ impl MutationCompiler {
 
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
-pub fn compile_raw_read_json(request:&str)->String {weft_runtime::compile_raw_read_json(request)}
+pub fn compile_raw_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> { let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_raw_read_json(&original)) }
 
 #[cfg(feature="raw-postgresql-reads")]
-#[wasm_bindgen]
-pub fn compile_native_action_json(request:&str)->String{weft_runtime::compile_native_action_json(request)}
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_native_action_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> { let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_native_action_json(&original)) }
 
 #[cfg(feature="raw-postgresql-reads")]
-#[wasm_bindgen]
-pub fn compile_native_bulk_json(request:&str)->String{weft_runtime::compile_native_bulk_json(request)}
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_native_bulk_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> { let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_native_bulk_json(&original)) }
 
 #[cfg(feature="raw-postgresql-reads")]
-#[wasm_bindgen]
-pub fn compile_search_json(request:&str)->String{weft_runtime::compile_search_json(request)}
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_search_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> { let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_search_json(&original)) }
 /// Validate the primitive JS string before wasm-bindgen can replace unpaired
 /// UTF-16 units. Work and allocation are bounded by the actual framed input.
 fn strict_text(value:&js_sys::JsString,maximum:usize)->Result<String,wasm_bindgen::JsValue>{

@@ -1,7 +1,7 @@
 {
   "owner": "DocumentDrivenDX/umf",
   "revision": "266c584c31f98ae9147b4d130224abbcee1fd0b7",
-  "path": "spec/semantic/actions.schema.json",
+  "path": "spec/extensions/actions/schema.json",
   "sha256": "0263c21ddd91347bf3afc2b7ab14b2c0943f1da5f5c493658cd105277f6d8d09",
   "purpose": "closed original action-schema validation for source-bound native programs; no execution authority"
 }
