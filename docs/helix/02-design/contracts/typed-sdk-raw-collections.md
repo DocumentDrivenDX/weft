@@ -127,6 +127,29 @@ per-column types/facets/nullability/generation. Added or missing native columns
 must refuse even for an empty table. Hosts execute all original pre/post programs
 unchanged and withhold buffered rows on any failed or changed obligation.
 
+## Spark approximate distinct candidate
+
+The original Spark4 snapshot read compiler accepts the closed logical function
+`APPROX_COUNT_DISTINCT(qualifiedField)` with one unmodified scalar Field. It emits
+native `approx_count_distinct(field, 0.05)` after the original filter, retaining
+original grouping, output ordering and post-aggregate LIMIT. It does not cap the
+input relation. Nonaggregate projected Fields must occur in the original GROUP
+BY. Numeric operands require the original native ColumnSet/binding custody;
+Binary, Vector, expression operands, DISTINCT modifiers, window/filter clauses
+and caller-selected precision refuse in this initial profile.
+
+The Integer/non-null output carries `approximate:true` and an `approximation`
+descriptor naming HyperLogLog++, Apache Spark4.0.1, and an error object
+`{kind:"relative-standard-deviation",value:"0.05",hardBound:false}`. This names
+the native documented relative standard deviation; it does not promise a
+maximum absolute or relative error for each answer. Native nulls are ignored
+and empty/all-null input returns zero. The authoritative native algorithm and
+parameter definition are documented in the
+[Spark4.0.1 SQL reference](https://spark.apache.org/docs/4.0.1/api/sql/index.html#approx_count_distinct).
+Source controls do not establish native qualification. PostgreSQL, UC current,
+managed mutations and registered engines do not acquire this capability by
+sharing the logical function spelling.
+
 ## Qualification
 
 Compiler source tests and installed-wheel controls are precursor evidence only.

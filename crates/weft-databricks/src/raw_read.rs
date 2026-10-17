@@ -288,7 +288,9 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
     let GroupByExpr::Expressions(group, modifiers) = &s.group_by else {
         return Err("grouping unsupported");
     };
-    if !group.is_empty() || !modifiers.is_empty() {
+    let aggregate=crate::raw_aggregates::requested(s);
+    if aggregate&&(current_catalog.is_some()||transaction){return Err("Spark approximate aggregate belongs to original snapshot read profile")}
+    if (!group.is_empty()&&!aggregate) || !modifiers.is_empty() {
         return Err("grouping unsupported");
     };
     let TableFactor::Table {
@@ -359,7 +361,9 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
     if s.projection.is_empty() || s.projection.len() > 256 {
         return Err("projection budget");
     };
-    for item in &s.projection {
+    let aggregation=if aggregate{Some(crate::raw_aggregates::lower(&l,s,shapes.is_some())?)}else{None};
+    if let Some(a)=&aggregation{projection=a.sql.clone();outputs=a.outputs.clone();}
+    else { for item in &s.projection {
         let (e, out) = match item {
             SelectItem::ExprWithAlias { expr, alias } => (expr, name(alias)),
             SelectItem::UnnamedExpr(e) => {
@@ -384,6 +388,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
         projection.push(format!("{} AS {}", c.0, ident(&out)?));
         outputs.push(json!({"name":out,"carrier":c.1,"nullable":c.2}));
     }
+    }
     if let Some(selected)=current_projection {
         if current_catalog.is_none()||selected.is_empty()||selected.len()>256{return Err("bounded current projection required")}
         projection.clear();outputs.clear();let mut selected_names=BTreeSet::new();
@@ -398,6 +403,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
     if let Some(e) = &s.selection {
         sql += &format!(" WHERE {}", l.predicate(e)?)
     };
+    if let Some(a)=&aggregation{if !a.groups.is_empty(){sql+=&format!(" GROUP BY {}",a.groups.join(", "));}}
     if let Some(order) = &q.order_by {
         let OrderByKind::Expressions(items) = &order.kind else {
             return Err("static ordering required");
@@ -407,10 +413,10 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
             if i.with_fill.is_some() {
                 return Err("ordering modifier unsupported");
             };
-            let c = l.column(&i.expr)?;
+            let order_sql=if let Some(a)=&aggregation{match &i.expr{Expr::Identifier(id)=>a.order.get(&name(id)).cloned().ok_or("aggregate ordering must name an original projected output")?,e=>{let c=l.column(e)?;if !a.groups.contains(&c.0){return Err("aggregate ordering Field must be grouped")};c.0}}}else{l.column(&i.expr)?.0};
             parts.push(format!(
                 "{} {} NULLS {}",
-                c.0,
+                order_sql,
                 match i.options.sort {
                     None | Some(OrderBySort::Asc) => "ASC",
                     Some(OrderBySort::Desc) => "DESC",
@@ -497,6 +503,13 @@ mod tests {
     }
     fn output(r: J) -> J {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    #[test]
+    fn original_hll_projection_preserves_algorithm_guarantee_and_group_scope(){
+        for sql in ["SELECT APPROX_COUNT_DISTINCT(o.status) AS estimated FROM sales.order o", "SELECT o.status AS status, APPROX_COUNT_DISTINCT(o.id) AS estimated FROM sales.order o GROUP BY o.status ORDER BY estimated DESC LIMIT 3"]{
+            let mut r=request();r["parameters"]=json!([]);r["sql"]=json!(sql);let a=output(r.clone());assert_eq!(a["status"],"compiled","{a}");assert_eq!(a["sourceSql"],r["sql"]);let estimated=a["outputs"].as_array().unwrap().last().unwrap();assert_eq!(estimated["carrier"],"integer");assert_eq!(estimated["nullable"],false);assert_eq!(estimated["approximation"]["algorithm"],"HyperLogLog++");assert_eq!(estimated["approximation"]["error"],json!({"kind":"relative-standard-deviation","value":"0.05","hardBound":false}));assert!(a["sql"].as_str().unwrap().contains("approx_count_distinct("));assert!(!a["sql"].as_str().unwrap().contains("FROM (SELECT"));
+        }
+        for sql in ["SELECT o.id AS id, APPROX_COUNT_DISTINCT(o.status) AS estimated FROM sales.order o", "SELECT APPROX_COUNT_DISTINCT(DISTINCT o.id) AS estimated FROM sales.order o", "SELECT APPROX_COUNT_DISTINCT(o.id,0.01) AS estimated FROM sales.order o", "SELECT APPROX_COUNT_DISTINCT(o.id) FILTER(WHERE o.id IS NOT NULL) AS estimated FROM sales.order o", "SELECT APPROX_COUNT_DISTINCT(o.id) OVER() AS estimated FROM sales.order o", "SELECT APPROX_COUNT_DISTINCT(other.id) AS estimated FROM sales.order o", "SELECT APPROX_COUNT_DISTINCT(o.id) AS estimated FROM sales.order o ORDER BY o.status"]{let mut r=request();r["parameters"]=json!([]);r["sql"]=json!(sql);assert_ne!(output(r)["status"],"compiled","{sql}");}
     }
     #[test]
     fn snapshot_is_compiler_owned_and_arguments_stay_bound() {

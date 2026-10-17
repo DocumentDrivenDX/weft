@@ -388,6 +388,16 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/raw_aggregates.rs",
+          "publicDeclarations": [
+            "field:sql",
+            "field:outputs",
+            "field:groups",
+            "field:order"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/raw_bulk.rs",
           "publicDeclarations": [
             "fn:compile_json",

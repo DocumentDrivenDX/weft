@@ -39,6 +39,7 @@ pub mod current_scalar;
 
 pub mod raw_read;
 mod raw_numeric;
+mod raw_aggregates;
 
 pub mod local_spark4;
 
