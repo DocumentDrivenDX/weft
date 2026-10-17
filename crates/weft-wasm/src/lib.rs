@@ -169,3 +169,14 @@ pub fn compile_engine_export_json(program:&js_sys::JsString,current_request:&js_
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen]
 pub fn compile_unity_search_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_unity_search_json(&original))}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_managed_action_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_managed_action_json(&original))}
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_managed_bulk_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_managed_bulk_json(&original))}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_related_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_related_read_json(&original))}

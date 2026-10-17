@@ -46,6 +46,7 @@ struct Lower<'a> {
     used_columns: std::cell::RefCell<BTreeSet<(String,String)>>,
     used_functions: std::cell::RefCell<BTreeSet<String>>,
     used_operators: std::cell::RefCell<BTreeSet<String>>,
+    relationship_keys: BTreeMap<String,Json>,
     request: &'a Request,
     scans: BTreeMap<String, (&'a Table, bool)>,
     slots: Vec<String>,
@@ -96,6 +97,16 @@ fn term_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,col
     for (i,p) in parameters.iter_mut().enumerate(){p["name"]=json!(format!("__umf_term_{}",i+1));}
     let names=parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>();
     Ok(json!({"source":index.request().source,"index":index.index(),"nativeBinding":index.binding(),"logicalTable":table.logical,"nativeTable":table.native,"nativeColumn":column.native,"configuration":configuration,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"dbapiParameterOrder":names,"parameters":parameters}}))
+}
+pub(crate) fn relationship_key_metadata(table:&Table,logical:&[String],schema:&Option<String>)->Result<Json>{
+    let native=logical.iter().map(|field|table.columns.iter().find(|c|c.logical==*field).map(|c|c.native.clone()).ok_or("relationship Key field lacks scalar binding")).collect::<Result<Vec<_>>>()?;
+    if native.is_empty()||native.len()>16{return Err("relationship Key bound")}
+    let literal=|value:&str|json!({"source":{"literal":{"string":value}},"carrier":"string"});
+    let mut parameters=vec![match schema{Some(value)=>literal(value),None=>json!({"source":{"appSchema":true},"carrier":"string"})},literal(&table.native),literal(&serde_json::to_string(&native).unwrap())];
+    for(i,p)in parameters.iter_mut().enumerate(){p["name"]=json!(format!("__umf_relkey_{}",i+1));}
+    let render=|dbapi:bool|{let slot=|n:usize|if dbapi{format!("%(__umf_relkey_{n})s::pg_catalog.text")}else{format!("${n}::pg_catalog.text")};
+        format!("SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace WHERE ns.nspname={} AND t.relname={} AND t.relkind='r' AND i.indisunique AND i.indisvalid AND i.indisready AND i.indislive AND i.indimmediate AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indnkeyatts={} AND (SELECT pg_catalog.jsonb_agg(a.attname ORDER BY k.ordinality) FROM pg_catalog.unnest(i.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,ordinality) JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid AND a.attnum=k.attnum WHERE k.ordinality<=i.indnkeyatts AND a.attnotnull AND NOT a.attisdropped)={}::pg_catalog.jsonb) AS correspondence",slot(1),slot(2),native.len(),slot(3))};
+    Ok(json!({"logicalTable":table.logical,"logicalFields":logical,"nativeFields":native,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"parameters":parameters,"dbapiParameterOrder":parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>()}}))
 }
 impl<'a> Lower<'a> {
     fn table(&mut self, f: &TableFactor, left: bool) -> Result<(String, String)> {
@@ -522,7 +533,9 @@ impl<'a> Lower<'a> {
 }
 pub(crate) fn lower(admitted: &AdmittedRead) -> Result<Json> { lower_profile(admitted,true) }
 pub(crate) fn lower_search_input(admitted:&AdmittedRead)->Result<Json>{lower_profile(admitted,false)}
-fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
+fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {lower_profile_inner(admitted,bounded,false,false,&[],None)}
+pub(crate) fn lower_related_fragment(admitted:&AdmittedRead,bounded:bool,prefix:&[String],predicate:Option<&str>)->Result<Json>{lower_profile_inner(admitted,bounded,true,true,prefix,predicate)}
+fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_limit:bool,allow_unused:bool,prefix:&[String],additional_predicate:Option<&str>) -> Result<Json> {
     let r = admitted.request();
     let q = admitted.query();
     if r.snapshots.is_some() || r.version != "weft.raw-read/0.1"
@@ -634,9 +647,10 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         used_columns: Default::default(),
         used_functions: Default::default(),
         used_operators: Default::default(),
+        relationship_keys: Default::default(),
         request: r,
         scans: BTreeMap::new(),
-        slots: vec![],
+        slots: prefix.to_vec(),
         used: BTreeSet::new(),
         group_values: None,
     };
@@ -655,22 +669,24 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         let (old, pairs) = l.join_pairs(on, &a)?;
         let source = l.scans[&old].0;
         let target = l.scans[&a].0;
-        let rel = r
+        let matches = r
             .binding
             .relationships
             .iter()
-            .find(|rel| {
+            .filter(|rel| {
                 rel.to_one
                     && rel.source == source.logical
                     && rel.target == target.logical
                     && rel.pairs.iter().cloned().collect::<BTreeSet<_>>() == pairs
             })
-            .ok_or("join is not a declared to-one relationship")?;
-        if rel.id.is_empty()
-            || rel.pairs.iter().map(|p| p[1].clone()).collect::<Vec<_>>() != target.key
-        {
+            .collect::<Vec<_>>();
+        if matches.len()!=1{return Err("join is not a unique original declared to-one relationship")}
+        let rel=matches[0];
+        if rel.id.is_empty() {
             return Err("relationship does not cover declared target unique key");
         }
+        let relation_fields=rel.pairs.iter().map(|p|p[1].clone()).collect::<Vec<_>>();
+        if relation_fields!=target.key {l.relationship_keys.insert(weft_core::mutation::canonical(&json!([rel.module,rel.id,rel.target,relation_fields])),relationship_key_metadata(target,&relation_fields,&r.binding.schema)?);}
         from += &format!(
             " {} JOIN {} ON {}",
             if left { "LEFT" } else { "INNER" },
@@ -854,12 +870,13 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     }
     let mut sql = format!("SELECT {} FROM {}", projection.join(", "), from);
     if let Some(e) = &s.selection {
-        sql += &format!(" WHERE {}", l.predicate(e, false)?)
+        let predicate=l.predicate(e,false)?;sql+=&if additional_predicate.is_some(){format!(" WHERE ({predicate})")}else{format!(" WHERE {predicate}")};
     }
+    if let Some(extra)=additional_predicate {sql+=&format!(" {} ({extra})",if s.selection.is_some(){"AND"}else{"WHERE"});}
     if let Some(after) = after_filter {
         sql += &format!(
             " {} {}",
-            if s.selection.is_some() {
+            if s.selection.is_some()||additional_predicate.is_some() {
                 "AND"
             } else {
                 "WHERE"
@@ -894,6 +911,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
                 let position=outputs.iter().position(|o|o.name==name(id)).ok_or("ordering output alias absent")?;
                 scalars[position].clone().ok_or("native projection cannot be ordered")?
             } else {l.value(&item.expr,true)?};
+            if c.aggregate&&!aggregate{return Err("aggregate ordering requires aggregate or grouped projection")}
             if aggregate && !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql) {
                 return Err("ungrouped ordering");
             }
@@ -940,8 +958,8 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         if l.slots.contains(&reserved)||cursor_parameters.iter().any(|p|p.name==reserved){return Err("reserved stream page size collision")}
         l.slots.push(reserved.clone());cursor_parameters.push(Parameter{name:reserved,carrier:Carrier::Integer,nullable:false});
         sql+=&format!(" LIMIT ${}::pg_catalog.int8",l.slots.len());
-    } else if bounded {sql += &format!(" LIMIT {}", limit);}
-    if l.used.len() != r.parameters.len() {
+    } else if bounded||preserve_source_limit&&q.limit_clause.is_some() {sql += &format!(" LIMIT {}", limit);}
+    if !allow_unused&&l.used.len() != r.parameters.len() {
         return Err("unused declared parameter");
     }
     let mut obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":if bounded{json!(limit)}else{Json::Null},"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
@@ -954,6 +972,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     }
     if r.stream_page_size {obligations["streamPageSize"]=json!({"parameter":"__umf_page_size","minimum":1,"maximum":limit});}
     if let Some(mode)=&r.binding.schema_binding { obligations["schemaBinding"]=serde_json::to_value(mode).map_err(|_|"schema binding serialization")?; }
+    if !l.relationship_keys.is_empty(){obligations["nativeRelationshipKeys"]=json!({"version":"umf.native-relationship-keys/0.1","nativeCatalogBeforeAfter":true,"keys":l.relationship_keys.values().collect::<Vec<_>>()});}
     if !l.term_indexes.is_empty() {
         obligations["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":l.term_indexes.values().collect::<Vec<_>>()});
     }
@@ -978,7 +997,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     let mut selected_columns:BTreeMap<String,BTreeSet<String>>=BTreeMap::new();
     for(alias,logical)in l.used_columns.borrow().iter(){let table=l.scans[alias].0;let native=table.columns.iter().find(|c|c.logical==*logical).map(|c|c.native.clone()).or_else(||native_columns.get(&(alias.clone(),logical.clone())).map(|c|c.native.clone())).ok_or("used native column missing original mapping")?;selected_columns.entry(table.native.clone()).or_default().insert(native);}
     for(table,_)in l.scans.values(){selected_columns.entry(table.native.clone()).or_default();}
-    let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"anyColumn":columns.is_empty()})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
+    let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"tablePrivilegeRequired":true,"columnPrivilegesSufficient":false,"reason":"LOCK TABLE ACCESS SHARE"})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
     let mut result = json!({"version":if bounded{"weft.raw-read/0.1"}else{"weft.search-input/0.1"},"status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced_tables});
     result["privilegeInventory"]=privilege_inventory;
     let digest = weft_core::json::sha256(result.to_string().as_bytes());

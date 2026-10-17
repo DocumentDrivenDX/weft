@@ -8,6 +8,7 @@ license.workspace=true
 name="weft"
 crate-type=["cdylib"]
 [features]
+managed-delta-mutation-candidate=["weft-runtime/managed-delta-mutation-candidate"]
 current-presence-graph-requirements-candidate=["current-presence-model-requirements-candidate","weft-runtime/current-presence-graph-requirements-candidate"]
 current-presence-model-requirements-candidate=["current-presence-candidate","weft-runtime/current-presence-model-requirements-candidate"]
 current-presence-candidate=["application-lineage-candidate","weft-runtime/current-presence-candidate"]

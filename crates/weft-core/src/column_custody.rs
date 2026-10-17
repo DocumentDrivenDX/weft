@@ -32,7 +32,8 @@ pub fn native_type(raw:&str)->Result<String>{
  }}
  Ok(chars.into_iter().filter(|c|!c.is_ascii_whitespace()).collect::<String>().to_ascii_lowercase())
 }
-pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
+/// Resolve exact source custody before a target selects Record-relevant sets.
+pub fn original_column_set<'a>(model_sha256:&str,doc:&'a Value,target:&Value,custody:&NativeColumns)->Result<&'a Value>{
  let source=&custody.column_set;
  if doc["vocabularies"]["umf.access"]["version"]!="0.1.0"||source.document_id!=doc["id"]||source.core_version!="0.8.0"||source.document_sha256!=model_sha256{return Err("ColumnSet original model source differs")}
  let mut sets=vec![];
@@ -42,7 +43,14 @@ pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeC
    }
  }
  if sets.len()!=1{return Err("unique source-pinned original ColumnSet required")}
- let set=sets[0];let b=&custody.binding;
+ let set=sets[0];
+ if set["target"]!=*target||!exact_keys(set,&["binding","target","columns"],&[])||!exact_keys(&set["binding"],&["sourceId","module"],&[])||set["columns"].as_array().is_none()||custody.binding.source_id.is_empty()||set["binding"]["sourceId"]!=custody.binding.source_id||set["binding"]["module"].as_str().is_none_or(str::is_empty){return Err("original ColumnSet source/target differs")}
+ crate::json::checked_json(&custody.binding.document_json).map_err(|_|"original binding JSON refused")?;
+ if crate::json::sha256(custody.binding.document_json.as_bytes())!=custody.binding.document_sha256{return Err("original binding source pin differs")}
+ Ok(set)
+}
+pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
+ let set=original_column_set(model_sha256,doc,target,custody)?;let b=&custody.binding;
  if !exact_keys(set,&["binding","target","columns"],&[])||!exact_keys(&set["binding"],&["sourceId","module"],&[])||b.source_id.is_empty(){return Err("closed original ColumnSet required")}
  let binding=crate::json::checked_json(&b.document_json).map_err(|_|"original binding JSON refused")?;
  if crate::json::sha256(b.document_json.as_bytes())!=b.document_sha256||binding["umf"]!="0.8.0"||binding["vocabularies"]["umf.binding"]["version"]!="0.2.0"||binding["id"].as_str().is_none_or(str::is_empty)||set["binding"]!=json!({"sourceId":b.source_id,"module":record["module"]})||set["target"]!=*target{return Err("ColumnSet binding/source/target differs")}
@@ -90,4 +98,70 @@ pub fn generation(doc:&Value,custody:&NativeColumns,field:&Value)->Result<Value>
  let value=values[0].get("generation").ok_or("original generation absent")?;
  if !(value.is_null()||matches!(value.as_str(),Some("identity"|"stored-expression"|"default"))){return Err("original generation unsupported")}
  Ok(value.clone())
+}
+
+/// Validate the original Vector declaration without granting search or native
+/// execution authority. The caller still owns source admission and physical
+/// storage/decoder qualification. The original document is only borrowed.
+pub fn vector_declaration<'a>(doc:&'a Value,record:&Value,field:&Value)->Result<&'a Value>{
+ fn locate<'a>(doc:&'a Value,r:&Value)->Result<&'a Value>{
+  if !exact_keys(r,&["module","element"],&[]){return Err("exact original Field/Record reference required")}
+  doc["modules"].as_array().ok_or("original modules absent")?.iter().find(|m|m["id"]==r["module"])
+   .and_then(|m|m["elements"].as_array()).and_then(|e|e.iter().find(|e|e["id"]==r["element"]))
+   .ok_or("original Vector declaration reference absent")
+ }
+ let body=locate(doc,record)?;let members=body["members"].as_array().ok_or("original Record members absent")?;
+ if body["kind"]!="record"||!members.contains(field){return Err("Vector Field outside original Record")}
+ let indexes=doc["modules"].as_array().ok_or("original modules absent")?.iter()
+  .flat_map(|m|m["extensions"]["umf.access"]["search"].as_array().into_iter().flatten())
+  .filter(|i|i["kind"]=="vector"&&i["record"]==*record&&i["vector"]["field"]==*field).collect::<Vec<_>>();
+ if indexes.len()!=1{return Err("unique original Vector index declaration required")}
+ let index=indexes[0];let vector=&index["vector"];
+ if !exact_keys(index,&["id","record","kind","exactness","filterable","vector"],&[])
+  ||index["id"].as_str().is_none_or(str::is_empty)||!matches!(index["exactness"].as_str(),Some("exact"|"approximate"))
+  ||!exact_keys(vector,&["field","model","dimensions","metric","computedBy"],&["source"])
+  ||!exact_keys(&vector["model"],&["id","version"],&[])
+  ||vector["model"]["id"].as_str().is_none_or(str::is_empty)||vector["model"]["version"].as_str().is_none_or(str::is_empty)
+  ||!matches!(vector["metric"].as_str(),Some("cosine"|"dot"|"l2"))
+  ||!matches!(vector["computedBy"].as_str(),Some("host"|"target")) {return Err("original Vector index declaration malformed")}
+ let filterable=index["filterable"].as_array().ok_or("original filterable Field inventory absent")?;let mut seen=std::collections::BTreeSet::new();
+ for reference in filterable {if !members.contains(reference)||locate(doc,reference)?["kind"]!="field"||!seen.insert(field_key(reference)){return Err("original filterable Field outside Record or repeated")}}
+ if vector["computedBy"]=="target"&&vector.get("source").is_none(){return Err("target-computed Vector requires original source text")}
+ if let Some(source)=vector.get("source") {let text=locate(doc,source)?;
+  if !members.contains(source)||text["kind"]!="field"||text["cardinality"]!="one"||text["scalarType"]!="string" {return Err("original Vector source must be one text Field of its Record")}
+ }
+ let dimensions=vector["dimensions"].as_u64().filter(|n|*n>0).ok_or("positive original Vector dimensions required")?;
+ let embedding=locate(doc,field)?;let leaf=locate(doc,&embedding["itemType"])?;
+ if embedding["kind"]!="field"||embedding["cardinality"]!="array"||embedding["facets"]!=json!({"collectionSize":{"min":dimensions,"max":dimensions}})
+  ||leaf["kind"]!="field"||leaf["scalarType"]!="float"||leaf["cardinality"]!="one"||leaf["nullability"]!="required"
+  ||leaf.get("allowedValues").is_some()||leaf["extensions"].as_object().is_none_or(|m|!m.is_empty())
+  ||leaf.get("facets").is_some_and(|f|f.as_object().is_none_or(|m|!m.is_empty())) {return Err("original fixed float32 Vector Field declaration differs")}
+ Ok(vector)
+}
+
+#[cfg(test)]
+mod vector_declaration_tests {
+ use super::*;
+ fn admitted(mut change:impl FnMut(&mut Value))->raw_read::AdmittedRead{
+  let mut r:Value=serde_json::from_str(include_str!("../../../tests/native-columns/vector-request.json")).unwrap();
+  let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();change(&mut doc);
+  let source=doc.to_string();r["binding"]["modelSha256"]=json!(crate::json::sha256(source.as_bytes()));r["binding"]["modelJson"]=json!(source);
+  raw_read::admit_json(&r.to_string()).unwrap()
+ }
+ #[test]
+ fn valid_original_declaration_is_borrowed_without_changing_extension_content(){
+  let a=admitted(|_|{});let before=a.original_document().clone();let record=json!({"module":"commerce","element":"Order"});let field=json!({"module":"commerce","element":"embedding"});
+  let vector=vector_declaration(a.original_document(),&record,&field).unwrap();assert_eq!(vector["dimensions"],3);assert_eq!(vector["model"],json!({"id":"spark-fixture","version":"1"}));
+  assert_eq!(a.original_document(),&before);
+  let mut unknown=before.clone();unknown["modules"][0]["extensions"]["vendor.future"]=json!({"opaque":[1,null,{"content":"retained"}]});let exact=unknown.clone();vector_declaration(&unknown,&record,&field).unwrap();assert_eq!(unknown,exact);
+ }
+ #[test]
+ fn malformed_selected_vector_meaning_refuses_without_source_mutation(){
+  for fault in 0..7{let a=admitted(|doc|{let v=&mut doc["modules"][0]["extensions"]["umf.access"]["search"][0]["vector"];match fault{
+   0=>v["metric"]=json!("unknown"),1=>{v.as_object_mut().unwrap().remove("model");},2=>v["model"]["version"]=json!(""),
+   3=>v["computedBy"]=json!("unknown"),4=>{v["computedBy"]=json!("target");v.as_object_mut().unwrap().remove("source");},
+   5=>{v["computedBy"]=json!("target");v["source"]=json!({"module":"commerce","element":"big"});},
+   _=>v["model"]["unknownMeaning"]=json!(true),
+  }});let before=a.original_document().clone();assert!(vector_declaration(a.original_document(),&json!({"module":"commerce","element":"Order"}),&json!({"module":"commerce","element":"embedding"})).is_err(),"fault {fault}");assert_eq!(a.original_document(),&before);}
+ }
 }

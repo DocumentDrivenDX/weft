@@ -382,21 +382,36 @@
         {
           "path": "crates/weft-databricks/src/raw_action.rs",
           "publicDeclarations": [
-            "fn:compile_json"
+            "fn:compile_json",
+            "fn:compile_managed_json"
           ],
           "pathReferences": []
         },
         {
           "path": "crates/weft-databricks/src/raw_bulk.rs",
           "publicDeclarations": [
-            "fn:compile_json"
+            "fn:compile_json",
+            "fn:compile_managed_json"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_pages.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
           "path": "crates/weft-databricks/src/raw_read.rs",
           "publicDeclarations": [
             "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/spark_shapes.rs",
+          "publicDeclarations": [
+            "field:native",
+            "field:metadata"
           ],
           "pathReferences": []
         },
@@ -1153,9 +1168,11 @@
             "field:version",
             "fn:field_key",
             "fn:native_type",
+            "fn:original_column_set",
             "fn:admit_columns",
             "fn:row_null",
-            "fn:generation"
+            "fn:generation",
+            "fn:vector_declaration"
           ],
           "pathReferences": []
         },
@@ -1810,6 +1827,7 @@
             "field:key",
             "struct:Relationship",
             "field:id",
+            "field:module",
             "field:source",
             "field:target",
             "field:pairs",
@@ -1838,6 +1856,7 @@
             "field:snapshots",
             "field:keyset",
             "field:stream_page_size",
+            "field:snapshot",
             "struct:AdmittedRead",
             "fn:request",
             "fn:query",
@@ -2910,7 +2929,8 @@
             "mod:raw_action",
             "mod:raw_bulk",
             "mod:search",
-            "mod:current_presence"
+            "mod:current_presence",
+            "mod:related_read"
           ],
           "pathReferences": []
         },
@@ -3259,6 +3279,13 @@
             "field:structural_check_sql",
             "fn:scan_source",
             "fn:render_expression"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/related_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -3972,7 +3999,10 @@
             "fn:lower_postgresql_current_presence_candidate_json",
             "fn:check_postgresql_current_presence_candidate_json",
             "mod:engine_export",
-            "fn:compile_unity_search_json"
+            "fn:compile_unity_search_json",
+            "fn:compile_managed_action_json",
+            "fn:compile_managed_bulk_json",
+            "fn:compile_related_read_json"
           ],
           "pathReferences": []
         },
@@ -4125,7 +4155,10 @@
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",
-            "fn:compile_engine_export_json"
+            "fn:compile_engine_export_json",
+            "fn:compile_managed_action_json",
+            "fn:compile_managed_bulk_json",
+            "fn:compile_related_read_json"
           ],
           "pathReferences": []
         }
@@ -4215,7 +4248,10 @@
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",
             "fn:compile_engine_export_json",
-            "fn:compile_unity_search_json"
+            "fn:compile_unity_search_json",
+            "fn:compile_managed_action_json",
+            "fn:compile_managed_bulk_json",
+            "fn:compile_related_read_json"
           ],
           "pathReferences": []
         }

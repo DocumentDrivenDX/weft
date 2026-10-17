@@ -11,10 +11,17 @@ pub(crate) fn columns(a:&AdmittedRead,table:&Table)->Result<BTreeMap<String,Proj
  if packet.target!=target||packet.sets.is_empty()||packet.sets.len()>256{return Err("native ColumnSet target/inventory differs")}
  let doc=a.original_document();let record=a.original_record(&table.logical)?;
  let reference=json!({"module":record.identity.module,"element":record.identity.element});
- let mut admitted=vec![];
- for set in &packet.sets {if let Ok(facts)=custody::admit_columns(&a.request().binding.model_sha256,doc,&target,set,table,&reference){admitted.push((set,facts))}}
- if admitted.len()!=1{return Err("unique original native ColumnSet for Record required")}
- let(set,facts)=admitted.remove(0);let mut result=BTreeMap::new();
+ let mut facts=BTreeMap::new();let mut owners=BTreeMap::new();let members=record.value["members"].as_array().ok_or("Record members absent")?;
+ for set in &packet.sets {
+  let original=custody::original_column_set(&a.request().binding.model_sha256,doc,&target,set)?;
+  if !original["columns"].as_array().unwrap().iter().any(|c|members.contains(&c["field"])){continue}
+  for (field,shape) in custody::admit_columns(&a.request().binding.model_sha256,doc,&target,set,table,&reference)? {
+   if facts.insert(field.clone(),shape).is_some(){return Err("duplicate original native column declaration")};owners.insert(field,set);
+  }
+ }
+ if facts.is_empty(){return Err("original native ColumnSet for Record required")}
+ let mut physical=std::collections::BTreeSet::new();for (native,_,_)in facts.values(){if !physical.insert(native){return Err("duplicate native physical column")}}
+ let mut result=BTreeMap::new();
  for member in record.value["members"].as_array().ok_or("Record members absent")? {
   let Some((native,ty,_))=facts.get(&custody::field_key(member)) else {continue};
   let owner=doc["modules"].as_array().unwrap().iter().find(|m|m["id"]==member["module"]).ok_or("Field module absent")?;
@@ -31,17 +38,15 @@ pub(crate) fn columns(a:&AdmittedRead,table:&Table)->Result<BTreeMap<String,Proj
    Some("integer")=>{let w=&facets["integerWidth"];let expected=match w["bits"].as_u64(){Some(16)=>"smallint",Some(32)=>"integer",Some(64)=>"bigint",_=>return Err("PG signed native width required")};if w["signed"]!=true||w.as_object().is_none_or(|m|m.len()!=2)||facets.as_object().is_none_or(|m|m.len()!=1)||ty!=expected{return Err("PG Integer native shape differs")};meta["integerWidth"]=w.clone();},
    Some("decimal")=>{let p=facets["precision"].as_u64().filter(|v|(1..=1000).contains(v)).ok_or("PG numeric precision required")?;let s=facets["scale"].as_u64().filter(|v|*v<=p).ok_or("PG numeric scale required")?;if facets.as_object().is_none_or(|m|m.len()!=2)||ty!=&format!("numeric({p},{s})"){return Err("PG Decimal native shape differs")};meta["precision"]=json!(p);meta["scale"]=json!(s);},
    Some("binary")=>{if ty!="bytea"||facets.as_object().is_none_or(|m|!m.is_empty()){return Err("PG Binary native shape differs")};meta["decoder"]=json!({"profile":"pg-bytea/0.1"});},
-   Some("vector")=>{let size=&facets["collectionSize"];let n=size["min"].as_u64().filter(|v|(1..=16000).contains(v)).ok_or("PG vector dimensions required")?;
-    let leaf=doc["modules"].as_array().unwrap().iter().find(|m|m["id"]==field["itemType"]["module"]).and_then(|m|m["elements"].as_array().unwrap().iter().find(|v|v["id"]==field["itemType"]["element"])).ok_or("PG Vector leaf absent")?;
-    let indexed=doc["modules"].as_array().unwrap().iter().flat_map(|m|m["extensions"]["umf.access"]["search"].as_array().into_iter().flatten()).any(|i|i["kind"]=="vector"&&i["record"]==reference&&i["vector"]["field"]==*member&&i["vector"]["dimensions"]==n);
-    if !indexed||facets.as_object().is_none_or(|m|m.len()!=1)||size!=&json!({"min":n,"max":n})||leaf["scalarType"]!="float"||leaf["cardinality"]!="one"||leaf["nullability"]!="required"||leaf.get("allowedValues").is_some()||leaf["extensions"].as_object().is_none_or(|m|!m.is_empty())||leaf.get("facets").is_some_and(|m|m.as_object().is_none_or(|m|!m.is_empty()))||ty!=&format!("vector({n})"){return Err("PG Vector native shape differs")}
+   Some("vector")=>{let declaration=custody::vector_declaration(doc,&reference,member)?;let n=declaration["dimensions"].as_u64().filter(|v|(1..=16000).contains(v)).ok_or("PG vector dimensions required")?;
+    if ty!=&format!("vector({n})"){return Err("PG Vector native shape differs")}
     let ext=packet.vector_extension.as_ref().ok_or("PG vector extension pin required")?;if !matches!(ext.version.as_str(),"0.8.6"|"0.8.7")||ext.schema.is_empty(){return Err("PG vector extension pin unsupported")};
     meta["dimensions"]=json!(n);meta["decoder"]=json!({"profile":format!("pgvector-text-float32/{}",ext.version),"dimensions":n});meta["extensionSchema"]=json!(ext.schema);meta["extensionVersion"]=json!(ext.version);
    },
    _=>return Err("native projection source carrier/shape unsupported")
   }
   if let Some(c)=table.columns.iter().find(|c|c.logical==logical){if c.native!=*native||serde_json::to_value(&c.carrier).unwrap()!=meta["carrier"]||json!(c.nullable)!=meta["nullable"]{return Err("original native column differs from scalar binding")}}else if !vector&&field["scalarType"]!="binary"{return Err("native scalar column missing scalar binding")}
-  result.insert(logical.to_string(),ProjectionColumn{native:native.clone(),metadata:meta,generation:custody::generation(doc,set,member)?});
+  result.insert(logical.to_string(),ProjectionColumn{native:native.clone(),metadata:meta,generation:custody::generation(doc,owners[&custody::field_key(member)],member)?});
  }
  for c in &table.columns {if !result.contains_key(&c.logical){return Err("bound scalar column absent from native custody")};if matches!(c.carrier,Carrier::Integer|Carrier::Decimal)&&result[&c.logical].metadata["carrier"]!=serde_json::to_value(&c.carrier).unwrap(){return Err("numeric custody differs")}}
  Ok(result)

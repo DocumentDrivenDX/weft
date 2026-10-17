@@ -312,4 +312,19 @@ mod raw_read_tests {
         r["keyset"]=json!(false);assert_eq!(compile(r)["status"],"blocked");
     }
 
+    #[test]
+    fn alternate_relationship_key_preserves_selected_key_and_requires_native_uniqueness(){
+        let mut r=request();let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        doc["modules"][0]["elements"].as_array_mut().unwrap().push(json!({"id":"Customer_code","name":"code","kind":"field","scalarType":"integer","cardinality":"one","nullability":"required","extensions":{}}));
+        r["binding"]["tables"][1]["columns"].as_array_mut().unwrap().push(json!({"logical":"code","native":"code","carrier":"integer","nullable":false}));
+        let record=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|v|v["id"]=="Customer").unwrap();
+        record["members"].as_array_mut().unwrap().push(json!({"module":"commerce","element":"Customer_code"}));
+        record["keys"].as_array_mut().unwrap().push(json!({"id":"Customer_code_key","name":"Customer code key","fields":[{"module":"commerce","element":"Customer_code"}],"primary":false}));
+        doc["modules"][0]["relationships"][0]["target"][0]["key"]=json!("Customer_code_key");
+        let raw=doc.to_string();r["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));r["binding"]["modelJson"]=json!(raw);r["binding"]["relationships"][0]["pairs"]=json!([["customer_id","code"]]);r["parameters"]=json!([]);
+        r["sql"]=json!("SELECT o.id AS id, c.id AS customer_id FROM commerce.\"Order\" o LEFT JOIN commerce.\"Customer\" c ON o.customer_id=c.code LIMIT 10");
+        let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["binding"]["tables"][1]["key"],json!(["id"]));assert_eq!(p["obligations"]["nativeRelationshipKeys"]["keys"][0]["logicalFields"],json!(["code"]));
+        r["binding"]["relationships"][0]["pairs"]=json!([["customer_id","id"]]);assert_eq!(compile(r)["status"],"blocked");
+    }
+
 }

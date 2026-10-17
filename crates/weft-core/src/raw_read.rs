@@ -7,7 +7,7 @@ use sqlparser::{
     dialect::PostgreSqlDialect,
     parser::Parser,
 };
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::BTreeMap;
 type Result<T> = std::result::Result<T, &'static str>;
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
@@ -37,6 +37,8 @@ pub struct Table {
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Relationship {
     pub id: String,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub module: Option<String>,
     pub source: Vec<String>,
     pub target: Vec<String>,
     pub pairs: Vec<[String; 2]>,
@@ -81,7 +83,10 @@ pub struct Request {
     pub keyset: bool,
     #[serde(default,skip_serializing_if="std::ops::Not::not")]
     pub stream_page_size: bool,
+    #[serde(default, skip_serializing_if="snapshot_false")]
+    pub snapshot: bool,
 }
+fn snapshot_false(value:&bool)->bool{!*value}
 pub(crate) fn validate_model(binding: &Binding) -> Result<()> {
     prepare_model(binding).map(|_| ())
 }
@@ -119,7 +124,6 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
         span: crate::ir::Span { start: 0, end: 0 },
     };
     let mut records = BTreeMap::new();
-    let mut key_ids: BTreeMap<Vec<String>, BTreeSet<String>> = BTreeMap::new();
     for table in &binding.tables {
         if table.logical.len() != 2 {
             return Err("logical table path");
@@ -179,17 +183,7 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
         {
             return Err("binding key not declared in UMF");
         }
-        key_ids.insert(
-            table.logical.clone(),
-            record.value["keys"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .filter(|k| k["fields"] == json!(key))
-                .map(|k| k["id"].as_str().unwrap().to_owned())
-                .collect(),
-        );
-        records.insert(table.logical.clone(), record);
+        if records.insert(table.logical.clone(), record).is_some(){return Err("ambiguous duplicate logical table binding")}
     }
     for rel in &binding.relationships {
         let source = records
@@ -200,6 +194,7 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             .ok_or("relationship target binding")?;
         let declared: Vec<&Json> = modules
             .iter()
+            .filter(|m|rel.module.as_ref().is_none_or(|name|m["id"]==name.as_str()))
             .flat_map(|m| m["relationships"].as_array().into_iter().flatten())
             .filter(|r| r["id"] == rel.id)
             .collect();
@@ -207,7 +202,21 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             return Err("relationship identity absent/ambiguous in UMF");
         };
         let d = declared[0];
-        if !key_ids[&rel.target].contains(d["target"][0]["key"].as_str().unwrap_or(""))
+        let target_key=target.value["keys"].as_array().and_then(|keys|keys.iter().find(|k|k["id"]==d["target"][0]["key"])).ok_or("relationship target Key absent")?;
+        let target_fields=target_key["fields"].as_array().ok_or("relationship target Key fields absent")?.iter().map(|reference| {
+            let module=modules.iter().find(|m|m["id"]==reference["module"]).ok_or("relationship target Field module absent")?;
+            let field=module["elements"].as_array().unwrap().iter().find(|f|f["id"]==reference["element"]).ok_or("relationship target Field absent")?;
+            let logical=field["name"].as_str().ok_or("relationship target Field name absent")?;
+            if !binding.tables.iter().find(|t|t.logical==rel.target).unwrap().columns.iter().any(|c|c.logical==logical){return Err("relationship target Key field unbound")}
+            Ok(logical.to_string())
+        }).collect::<Result<Vec<_>>>()?;
+        for pair in &rel.pairs {
+            let source_table=binding.tables.iter().find(|t|t.logical==rel.source).unwrap();let target_table=binding.tables.iter().find(|t|t.logical==rel.target).unwrap();
+            let source_column=source_table.columns.iter().find(|c|c.logical==pair[0]).ok_or("relationship source Field unbound")?;
+            let target_column=target_table.columns.iter().find(|c|c.logical==pair[1]).ok_or("relationship target Field unbound")?;
+            if source_column.carrier!=target_column.carrier{return Err("relationship native logical carrier mismatch")}
+        }
+        if rel.pairs.iter().map(|p|p[1].clone()).collect::<Vec<_>>()!=target_fields
             || d["extensions"].as_object().is_some_and(|m| !m.is_empty())
             || d["directed"] != true
             || d["targetMultiplicity"]["max"] != 1
@@ -269,6 +278,7 @@ impl AdmittedRead {
 pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     let v = crate::json::checked_json(raw).map_err(|_| "invalid or duplicate JSON")?;
     let request: Request = serde_json::from_value(v).map_err(|_| "invalid read request")?;
+    if request.snapshot && (!request.keyset || !matches!(request.target.as_str(), "spark-delta4" | "unity-catalog")){return Err("snapshot pages require an explicit Delta snapshot target")}
     if request.version != "weft.raw-read/0.1"
         || request.sql.len() > 65536
         || request.parameters.len() > 64

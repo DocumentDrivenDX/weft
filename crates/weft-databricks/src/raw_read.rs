@@ -2,54 +2,43 @@
 //! Administrative local profile; no Unity Catalog service qualification.
 use serde_json::{json, Value as J};
 use sqlparser::ast::*;
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap,BTreeSet};
 use weft_core::raw_read::{AdmittedRead, Carrier, Request, Table};
 type Result<T> = std::result::Result<T, &'static str>;
-fn ident(s: &str) -> Result<String> {
+pub(crate) fn ident(s: &str) -> Result<String> {
     if s.is_empty() || s.len() > 255 || s.contains('\0') {
         return Err("bounded native identifier required");
     };
     Ok(format!("`{}`", s.replace('`', "``")))
 }
-fn name(i: &Ident) -> String {
+pub(crate) fn name(i: &Ident) -> String {
     if i.quote_style.is_some() {
         i.value.clone()
     } else {
         i.value.to_ascii_lowercase()
     }
 }
-struct Lower<'a> {
-    request: &'a Request,
-    table: &'a Table,
-    alias: String,
-    slots: Vec<String>,
-    used: BTreeSet<String>,
+pub(crate) struct Lower<'a> {
+    pub(crate) request: &'a Request,
+    pub(crate) table: &'a Table,
+    pub(crate) alias: String,
+    pub(crate) scans: Option<BTreeMap<String,(&'a Table,bool)>>,
+    pub(crate) slots: Vec<String>,
+    pub(crate) used: BTreeSet<String>,
 }
 impl Lower<'_> {
-    fn column(&self, e: &Expr) -> Result<(String, Carrier, bool)> {
-        let Expr::CompoundIdentifier(parts) = e else {
-            return Err("qualified scalar Field required");
-        };
-        if parts.len() != 2 || name(&parts[0]) != self.alias {
-            return Err("Field owner differs");
-        };
-        let field = name(&parts[1]);
-        let c = self
-            .table
-            .columns
-            .iter()
-            .find(|c| c.logical == field)
-            .ok_or("Field binding absent")?;
-        Ok((
-            format!("{}.{}", ident(&self.alias)?, ident(&c.native)?),
-            c.carrier.clone(),
-            c.nullable,
-        ))
+    pub(crate) fn column(&self, e: &Expr) -> Result<(String, Carrier, bool)> {
+        let Expr::CompoundIdentifier(parts)=e else{return Err("qualified scalar Field required")};
+        if parts.len()!=2{return Err("qualified scalar Field required")};
+        let alias=name(&parts[0]);let field=name(&parts[1]);
+        let (table,nullable)=if let Some(scans)=&self.scans {*scans.get(&alias).ok_or("Field owner differs")?}else{if alias!=self.alias{return Err("Field owner differs")};(self.table,false)};
+        let column=table.columns.iter().find(|c|c.logical==field).ok_or("Field binding absent")?;
+        Ok((format!("{}.{}",ident(&alias)?,ident(&column.native)?),column.carrier.clone(),column.nullable||nullable))
     }
-    fn scalar(&mut self, e: &Expr) -> Result<(String, Carrier, bool)> {
+    pub(crate) fn scalar(&mut self, e: &Expr) -> Result<(String, Carrier, bool)> {
         match e {
             Expr::Nested(e) => self.scalar(e),
-            Expr::CompoundIdentifier(_) => self.column(e),
+            Expr::CompoundIdentifier(_) => {let column=self.column(e)?;if self.request.binding.native_columns.is_some()&&matches!(column.1,Carrier::Integer|Carrier::Decimal){return Err("numeric Spark predicates require separate exact parameter-domain qualification")};Ok(column)},
             Expr::Value(v) => match &v.value {
                 Value::Placeholder(p) => {
                     let key = p.strip_prefix(':').ok_or("named parameter required")?;
@@ -104,7 +93,7 @@ impl Lower<'_> {
             _ => Err("scalar operation unsupported"),
         }
     }
-    fn predicate(&mut self, e: &Expr) -> Result<String> {
+    pub(crate) fn predicate(&mut self, e: &Expr) -> Result<String> {
         match e {
             Expr::Nested(e) => Ok(format!("({})", self.predicate(e)?)),
             Expr::BinaryOp { left, op, right }
@@ -191,24 +180,25 @@ impl Lower<'_> {
         }
     }
 }
-fn lower(a: &AdmittedRead) -> Result<J> { lower_inner(a,false,None,None,false) }
-pub(crate) fn lower_transaction(a:&AdmittedRead)->Result<J>{ lower_inner(a,true,None,None,false) }
-pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false)}
+fn lower(a: &AdmittedRead) -> Result<J> {if a.request().keyset {crate::raw_pages::lower(a)}else{lower_inner(a,false,None,None,false,a.request().binding.native_columns.is_some())}}
+pub(crate) fn lower_transaction(a:&AdmittedRead)->Result<J>{ lower_inner(a,true,None,None,false,false) }
+pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false,false)}
 // Only sibling compiler admission may supply these already validated projections.
 pub(crate) fn lower_current_projected(a:&AdmittedRead,catalog:&str,projection:&[(String,J)])->Result<J>{
-    lower_inner(a,false,Some(catalog),Some(projection),true)
+    lower_inner(a,false,Some(catalog),Some(projection),true,false)
 }
-pub(crate) fn lower_current_shaped(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,true)}
-fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>, current_projection:Option<&[(String,J)]>, current_shapes:bool) -> Result<J> {
+pub(crate) fn lower_current_shaped(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,true,false)}
+pub(crate) fn lower_managed_transaction(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,true,Some(catalog),None,false,false)}
+fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>, current_projection:Option<&[(String,J)]>, current_shapes:bool,spark_shapes:bool) -> Result<J> {
     let r = a.request();
     if matches!(&r.binding.schema_binding,Some(weft_core::raw_read::SchemaBinding::SearchPath)) {return Err("search-path schema binding belongs to PostgreSQL profile")}
     if matches!(&r.binding.schema_binding,Some(weft_core::raw_read::SchemaBinding::Qualified)) && r.binding.schema.is_none(){return Err("qualified schema binding requires explicit schema")}
-    if r.binding.native_columns.is_some(){return Err("native ColumnSet envelope not admitted by this Databricks profile")}
+    if r.binding.native_columns.is_some()&&!spark_shapes{return Err("native ColumnSet envelope not admitted by this Databricks profile")}
     if r.stream_page_size {return Err("stream page size requires explicit snapshot page profile")}
 
     let q = a.query();
     if r.version != "weft.raw-read/0.1"
-        || r.target != if current_catalog.is_some(){"unity-catalog-current"}else{"spark-delta4"}
+        || r.target != if current_catalog.is_some(){if transaction{"databricks-managed-delta"}else{"unity-catalog-current"}}else{"spark-delta4"}
         || (!transaction && r.binding.schema.is_none())
         || r.keyset
     {
@@ -289,7 +279,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
         .ok_or("bound source table absent")?;
     // Spark LONG has a finite native domain. Unbounded core integers must never
     // be silently narrowed by this backend. Decimal shapes require own profile.
-    if !(current_catalog.is_some()&&current_shapes) && table
+    if !(current_catalog.is_some()&&current_shapes||spark_shapes) && table
         .columns
         .iter()
         .any(|c| matches!(c.carrier, Carrier::Integer | Carrier::Decimal))
@@ -312,9 +302,11 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
         request: r,
         table,
         alias: name(&alias.name),
+        scans: None,
         slots: vec![],
         used: BTreeSet::new(),
     };
+    let shapes=if spark_shapes{Some(crate::spark_shapes::columns(a,table)?)}else{None};
     let mut outputs = vec![];
     let mut projection = vec![];
     let mut names = BTreeSet::new();
@@ -335,6 +327,13 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
         if !names.insert(out.clone()) {
             return Err("duplicate output");
         };
+        if let Some(shapes)=&shapes {
+            let Expr::CompoundIdentifier(parts)=e else{return Err("original direct Spark projection required")};
+            if parts.len()!=2||name(&parts[0])!=l.alias{return Err("original Spark projection owner differs")};
+            let shape=shapes.get(&name(&parts[1])).ok_or("projected Field outside original Spark ColumnSet")?;
+            let mut meta=shape.metadata.clone();meta["name"]=json!(out);
+            projection.push(format!("{}.{} AS {}",ident(&l.alias)?,ident(&shape.native)?,ident(&out)?));outputs.push(meta);continue;
+        }
         let c = l.column(e)?;
         projection.push(format!("{} AS {}", c.0, ident(&out)?));
         outputs.push(json!({"name":out,"carrier":c.1,"nullable":c.2}));
@@ -424,6 +423,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
         .join(" OR ");
     let check=format!("SELECT COUNT(*) AS violations FROM (SELECT {} FROM {native} GROUP BY {} HAVING COUNT(*) <> 1 OR {nulls}) AS invalid_keys",keys.join(", "),keys.join(", "));
     let mut out = json!({"version":"weft.raw-read/0.1","status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"binding":r.binding,"sourceSql":r.sql,"nativeChecks":[{"sql":check,"expected":0}],"snapshotTables":version.map(|v|vec![json!({"table":table.native,"version":v})]).unwrap_or_default(),"lockSql":[],"cursorParameters":[],"cursorOutputs":[],"cursorOrdering":[],"referencedTables":[{"logical":table.logical,"native":table.native,"columns":table.columns}],"obligations":{"transaction":"snapshot-read","principal":"administrative-single-tenant","ansiEnabled":true,"sparkVersion":"4.0.1","deltaVersion":"4.0.0","binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"uuid-and-version"}});
+    if let Some(shapes)=&shapes {out["referencedTables"][0]["columns"]=json!(shapes.iter().map(|(logical,shape)|{let mut c=shape.metadata.clone();c["logical"]=json!(logical);c["native"]=json!(shape.native);c}).collect::<Vec<_>>());}
     if current_catalog.is_some(){
         out["version"]=json!("weft.unity-current-selection/0.1");
         out["obligations"]=json!({"transaction":"current-read","principal":"native-managed-current-principal","ansiEnabled":true,"binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"native-current-uuid","nativeAdmissionEachOperation":true,"temporalQualification":"held"});
@@ -474,7 +474,7 @@ mod tests {
                     r.as_object_mut().unwrap().remove("snapshots");
                 }
                 1 => r["snapshots"]["orders"] = json!(u64::MAX),
-                2 => r["keyset"] = json!(true),
+                2 => r["sql"] = json!("SELECT o.id AS id FROM sales.order o ORDER BY o.id LIMIT 10 OFFSET 1"),
                 3 => r["sql"] = json!("DELETE FROM sales.order"),
                 _ => r["target"] = json!("unity-catalog"),
             };

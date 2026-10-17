@@ -6,6 +6,7 @@ publish.workspace=true
 [lib]
 crate-type=["cdylib"]
 [features]
+managed-delta-mutation-candidate=["weft-runtime/managed-delta-mutation-candidate"]
 raw-postgresql-reads=["weft-runtime/raw-postgresql-reads"]
 
 bounded-current-string-candidate=["application-lineage-candidate","weft-runtime/bounded-current-string-candidate"]

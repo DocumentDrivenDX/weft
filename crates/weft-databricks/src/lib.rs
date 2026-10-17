@@ -49,3 +49,6 @@ pub mod raw_bulk;
 pub mod authored_pages;
 
 pub mod unity_search;
+
+mod raw_pages;
+mod spark_shapes;

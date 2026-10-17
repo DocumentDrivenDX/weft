@@ -635,7 +635,7 @@ pub fn admit_json(raw: &str) -> ActionResult<AdmittedAction> {
     let request: ActionRequest =
         serde_json::from_value(parsed).map_err(|_| "exact native-action request required")?;
     if request.version != "weft.native-action/0.1"
-        || !matches!(request.target.as_str(), "postgresql18" | "lakebase18" | "spark-delta4")
+        || !matches!(request.target.as_str(), "postgresql18" | "lakebase18" | "spark-delta4" | "databricks-managed-delta")
         || request.session_principal != "human"
     {
         return Err("NATIVE_PROFILE_UNSUPPORTED");

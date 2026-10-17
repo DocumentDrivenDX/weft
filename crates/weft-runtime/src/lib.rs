@@ -880,3 +880,11 @@ pub mod engine_export;
 
 #[cfg(feature="raw-postgresql-reads")]
 pub fn compile_unity_search_json(request:&str)->String{weft_databricks::unity_search::compile_json(request)}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+pub fn compile_managed_action_json(request:&str)->String{weft_databricks::raw_action::compile_managed_json(request)}
+#[cfg(feature="managed-delta-mutation-candidate")]
+pub fn compile_managed_bulk_json(request:&str)->String{weft_databricks::raw_bulk::compile_managed_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+pub fn compile_related_read_json(request:&str)->String{weft_postgresql::related_read::compile_json(request)}
