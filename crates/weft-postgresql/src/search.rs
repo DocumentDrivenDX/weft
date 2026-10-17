@@ -147,7 +147,7 @@ fn compile(raw: &str) -> Result<Json> {
                     filter_fields(e, out)?;
                 }
             }
-            Expr::Function(f) if f.name.0.len()==1 && matches!(&f.name.0[0],ObjectNamePart::Identifier(i) if matches!(name(i).as_str(), "starts_with"|"in_empty"|"matches_all_terms"|"matches_any_terms")) => {
+            Expr::Function(f) if f.name.0.len()==1 && matches!(&f.name.0[0],ObjectNamePart::Identifier(i) if matches!(name(i).as_str(), "starts_with"|"in_empty"|"matches_all_terms"|"matches_any_term")) => {
                 // The original raw owner has already admitted the complete function grammar.
                 // This pass only inventories every referenced Field for filterability.
                 let FunctionArguments::List(args)=&f.args else {return Err("search filter function arguments unavailable")};
@@ -520,6 +520,20 @@ mod tests {
     fn output(mut r: Json) -> Json {
         r["selection"]["binding"]["nativeCatalogFence"]=json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    #[test]
+    fn actual_public_filter_declarations_keep_original_owner_admission(){
+        let fixture:Json=serde_json::from_str(include_str!("../../../tests/native-search/public-filter-requests-r25.json")).unwrap();
+        let cases=fixture["requests"].as_array().unwrap();assert_eq!(cases.len(),12);
+        let mut red=0;
+        for case in cases {
+            let raw=case["requestText"].as_str().unwrap();assert_eq!(weft_core::json::sha256(raw.as_bytes()),case["requestSha256"]);
+            let compiled=match case["compilerApi"].as_str().unwrap(){"compile_search_json"=>compile_json(raw),"compile_raw_read_json"=>crate::raw_read::compile_json(raw),_=>panic!("unknown captured owner API")};
+            let p:Json=serde_json::from_str(&compiled).unwrap();assert_eq!(p["status"],"compiled","{}: {p}",case["declaration"]);
+            assert!(p["obligations"].get("nativeCatalogFence").is_some());assert!(p["version"].as_str().unwrap().ends_with("/0.2"));
+            if case["baselineStatus"]=="blocked"{assert_eq!(case["declaration"],"any_terms");red+=1;}else{assert_eq!(weft_core::json::sha256(compiled.as_bytes()),case["baselineProgramSha256"],"unrelated actual program changed: {}",case["declaration"]);}
+        }
+        assert_eq!(red,1);
     }
     #[test]
     fn ranked_and_filter_term_configuration_obligations_are_executable(){
