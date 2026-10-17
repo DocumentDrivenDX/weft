@@ -28,3 +28,18 @@ it cannot be confused with the immutable stable 0.4.41 release cohort. This pack
 is not public wheel evidence. Term filters, aggregate/bucket additions, broader
 search and managed mutations remain separate prerequisites. SDK temporal
 qualification remains **HELD**.
+
+## Generated SDK native replay
+
+The SDK owner's fresh public schema/catalog CLI replay executes all 22 native
+PostgreSQL18.6 compiler/read/catalog/Key tests in 14.909s with zero skips or
+failures, then stops its owned server. It uses the exact private Weft prefix
+wheel SHA256 `e1d4e2491a1e0d64617761e4efb16527d979e3d6c55bc7358693ceb7ac542bcf`
+from compiler source `39131af6c4ad57dac8fe8ceca1f5db0e04fedb36`, paired with the
+SDK owner's r5 runtime candidate `c360781c`. Native prefix cases include empty,
+case-sensitive, `%`, `_`, backslash, composed/decomposed Unicode and U+1D11E,
+literal percent/underscore/backslash, nullable left-join fields and caller-role
+RLS. NULL rows remain excluded by the strict predicate. The owner restores the
+original fixture values in final cleanup. Receipts retain actual test outcomes;
+this is local PostgreSQL evidence, not Lakebase service, public wheel or complete
+WR-A11 term-filter qualification. Temporal remains held.
