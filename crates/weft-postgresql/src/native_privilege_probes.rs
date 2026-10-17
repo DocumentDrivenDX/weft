@@ -778,6 +778,17 @@ pub fn check_json(program: &str) -> String {
 }
 
 #[cfg(test)]
+fn with_catalog_fence(mut request: Value) -> Value {
+    let fence = json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});
+    for owner in ["selection", "action"] {
+        if let Some(binding) = request.get_mut(owner).and_then(|value| value.get_mut("binding")) {
+            binding["nativeCatalogFence"] = fence.clone();
+        }
+    }
+    request
+}
+
+#[cfg(test)]
 mod tests {
     use super::*;
     fn request() -> Value {
@@ -804,7 +815,7 @@ mod tests {
           (include_str!("../../../tests/native-actions/source-exact-action-request.json"),crate::raw_action::compile_json as fn(&str)->String),
           (include_str!("../../../tests/native-actions/source-exact-bulk-request.json"),crate::raw_bulk::compile_json as fn(&str)->String),
         ] {
-            let request:Value=serde_json::from_str(file).unwrap();let program:Value=serde_json::from_str(&api(file)).unwrap();assert_eq!(program["status"],"compiled","{program}");
+            let request=with_catalog_fence(serde_json::from_str(file).unwrap());let program:Value=serde_json::from_str(&api(&request.to_string())).unwrap();assert_eq!(program["status"],"compiled","{program}");
             let packet=json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_source_exact"});
             let report=build(&packet.to_string()).unwrap();assert_eq!(report["complete"],false);
             assert_eq!(report["statements"].as_array().unwrap().iter().filter(|v|v["role"]=="projection-admission").count(),program["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len());
@@ -1049,6 +1060,10 @@ mod search_tests {
             .as_array_mut()
             .unwrap()
             .retain(|p| p["field"]["element"] != "embedding");
+        let blocked: Value =
+            serde_json::from_str(&crate::search::compile_json(&request.to_string())).unwrap();
+        assert_eq!(blocked["status"], "blocked", "{blocked}");
+        request = with_catalog_fence(request);
         let program: Value =
             serde_json::from_str(&crate::search::compile_json(&request.to_string())).unwrap();
         assert_eq!(program["status"], "compiled", "{program}");
@@ -1066,8 +1081,8 @@ mod search_tests {
             include_str!("../../../tests/native-search/keyword-request.json"),
             include_str!("../../../tests/native-search/vector-request.json"),
         ] {
-            let request: Value = serde_json::from_str(raw).unwrap();
-            let program: Value = serde_json::from_str(&crate::search::compile_json(raw)).unwrap();
+            let request = with_catalog_fence(serde_json::from_str(raw).unwrap());
+            let program: Value = serde_json::from_str(&crate::search::compile_json(&request.to_string())).unwrap();
             assert_eq!(program["status"], "compiled", "{program}");
             let packet = json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_search"});
             let report = build(&packet.to_string()).unwrap();
@@ -1078,6 +1093,9 @@ mod search_tests {
             assert_eq!(
                 report["statements"].as_array().unwrap().len(),
                 2 + array(&program, "preflights").unwrap().len()
+                    + program["obligations"]["keywordConfiguration"]["configurations"]
+                        .as_array().map_or(0, Vec::len)
+                    + usize::from(program["obligations"].get("nativeCatalogFence").is_some())
             );
             for statement in report["statements"].as_array().unwrap() {
                 assert_eq!(
@@ -1092,6 +1110,7 @@ mod search_tests {
                 array(&program["selectionTemplate"], "lockSql")
                     .unwrap()
                     .len()
+                    + usize::from(program["obligations"].get("nativeCatalogFence").is_some())
             );
             assert_eq!(report["complete"], false);
             if program["statement"]["parameters"]
@@ -1244,8 +1263,9 @@ mod composed_term_probe_tests {
     #[test]
     fn composed_term_and_keyword_guards_are_original_statement_inventory(){
         for (raw,bulk) in [(include_str!("../../../tests/native-actions/source-exact-terms-bulk-request.json"),true),(include_str!("../../../tests/native-search/source-exact-terms-keyword-request.json"),false)] {
-            let request:Value=serde_json::from_str(raw).unwrap();
-            let program:Value=serde_json::from_str(&if bulk {crate::raw_bulk::compile_json(raw)}else{crate::search::compile_json(raw)}).unwrap();
+            let request=with_catalog_fence(serde_json::from_str(raw).unwrap());
+            let raw=request.to_string();
+            let program:Value=serde_json::from_str(&if bulk {crate::raw_bulk::compile_json(&raw)}else{crate::search::compile_json(&raw)}).unwrap();
             assert_eq!(program["status"],"compiled","{program}");
             let packet=json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_terms"});
             let report:Value=serde_json::from_str(&compile_json(&packet.to_string())).unwrap();assert_eq!(report["status"],"compiled","{report}");
