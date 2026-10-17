@@ -251,6 +251,8 @@ fn compile(raw: &str) -> Result<Value> {
         let mut composed=term.clone();composed["indexes"]=json!(indexes);
         program["obligations"]["termFilter"]=composed;
     }
+    crate::native_catalog_fence::attach(&r.action.binding,&mut program["obligations"])?;
+    crate::native_catalog_fence::seal_version(&mut program)?;
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes());
     program["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-bulk","version":"0.1","sha256":digest});
@@ -297,7 +299,7 @@ mod tests {
         r["action"]=action.clone();r["selection"]["binding"]=action["binding"].clone();r["selection"]["verificationProfile"]=json!("source-exact/0.1");
         let p:Value=serde_json::from_str(&compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");
         assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
-        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),3);
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
         assert_eq!(p["obligations"]["nativeProjection"],p["actionTemplate"]["obligations"]["nativeProjection"]);
         for c in p["obligations"]["nativeProjection"]["columns"].as_array().unwrap(){assert!(c["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_catalog.to_regclass(pg_catalog.quote_ident("));assert!(c["nativeAdmission"]["parameters"].as_array().unwrap().iter().all(|p|p["source"].get("literal").is_some()));}
         r["action"].as_object_mut().unwrap().remove("verificationProfile");assert_eq!(serde_json::from_str::<Value>(&compile_json(&r.to_string())).unwrap()["status"],"blocked");

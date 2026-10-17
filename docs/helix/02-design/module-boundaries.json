@@ -1928,6 +1928,12 @@
             "field:pairs",
             "field:to_one",
             "enum:SchemaBinding",
+            "struct:NativeCatalogFence",
+            "field:version",
+            "field:schema",
+            "field:view",
+            "field:owner",
+            "field:owner_profile",
             "struct:Binding",
             "field:version",
             "field:schema",
@@ -1937,6 +1943,7 @@
             "field:model_sha256",
             "field:model_json",
             "field:native_columns",
+            "field:native_catalog_fence",
             "enum:ParameterContainer",
             "struct:Parameter",
             "field:name",
@@ -2010,7 +2017,8 @@
             "fn:record",
             "fn:admit_json",
             "fn:admit_unity_json",
-            "fn:admit_terms"
+            "fn:admit_terms",
+            "fn:admit_keyword_effects"
           ],
           "pathReferences": []
         },
@@ -3048,6 +3056,11 @@
             "struct:OriginalMutationBackend",
             "fn:new"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/native_catalog_fence.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {

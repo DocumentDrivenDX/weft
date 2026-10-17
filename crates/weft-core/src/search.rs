@@ -403,3 +403,29 @@ pub fn admit_terms(read:&raw_read::AdmittedRead,table:&[String],column:&str)->Re
     let probe=json!({"version":"weft.search/0.1","source":source,"selection":request,"queryParameter":"__umf_term_query","topK":1,"projection":[{"field":field_ref,"name":"term_field"}],"vectorBinding":null,"allowPartial":false});
     admit_profile(&probe.to_string(),true,None)
 }
+
+/// Admit each explicitly authored keyword index of a mutation's original Record.
+/// The constructed logical Key scan is metadata context only and is never executed.
+pub fn admit_keyword_effects(binding:&raw_read::Binding,target:&str,table:&[String])->Result<Vec<AdmittedSearch>,&'static str>{
+    raw_read::validate_catalog_fence(binding,target)?;
+    let record=raw_read::binding_record(binding,table)?;
+    let record_ref=json!({"module":record.identity.module,"element":record.identity.element});
+    let original=checked_json(&binding.model_json).map_err(|_|"keyword effects original source refused")?;
+    let native=binding.tables.iter().find(|t|t.logical==table).ok_or("keyword effects table unbound")?;
+    let quote=|name:&str|format!("\"{}\"",name.replace('"',"\"\""));
+    let columns=native.key.iter().map(|k|format!("r.{} AS {}",quote(k),quote(k))).collect::<Vec<_>>().join(", ");
+    let logical=table.iter().map(|n|quote(n)).collect::<Vec<_>>().join(".");
+    let selection=json!({"version":"weft.raw-read/0.1","target":target,"sql":format!("SELECT {columns} FROM {logical} AS r"),"binding":binding,"parameters":[],"rowCap":1});
+    let mut out=vec![];
+    for (mi,module) in original["modules"].as_array().ok_or("keyword effects modules absent")?.iter().enumerate(){
+        let Some(indexes)=module["extensions"]["umf.access"]["search"].as_array() else{continue};
+        for (ii,index) in indexes.iter().enumerate(){
+            if index["kind"]!="keyword"||index["record"]!=record_ref{continue}
+            let first=index["keyword"]["source"].as_array().and_then(|a|a.first()).ok_or("keyword effects source fields absent")?;
+            let source=json!({"documentId":original["id"],"coreVersion":"0.8.0","documentSha256":binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
+            let request=json!({"version":"weft.search/0.1","source":source,"selection":selection,"queryParameter":"__umf_effect_query","topK":1,"projection":[{"field":first,"name":"effect_field"}],"vectorBinding":null,"allowPartial":true});
+            out.push(admit_profile(&request.to_string(),false,None)?);
+        }
+    }
+    Ok(out)
+}

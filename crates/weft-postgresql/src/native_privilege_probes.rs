@@ -365,7 +365,7 @@ fn positional_statement(
     )
 }
 fn append_projection_statements(statements:&mut Vec<Value>,program:&Value,table:&str)->Result<()>{
-    for (kind,entries,role) in [("nativeProjection","columns","projection-admission"),("termFilter","indexes","term-index-admission"),("keywordConfiguration","configurations","keyword-configuration-admission")] {
+    for (kind,entries,role) in [("nativeProjection","columns","projection-admission"),("termFilter","indexes","term-index-admission"),("keywordConfiguration","configurations","keyword-configuration-admission"),("textSearchEffects","indexes","text-search-effects-admission")] {
         if let Some(packet)=program["obligations"].get(kind) {
             for (i,item) in array(packet,entries)?.iter().enumerate(){
                 let a=&item["nativeAdmission"];
@@ -644,6 +644,14 @@ fn mutation_report(request: &Request, program: Value, table: &str) -> Result<Val
     )
 }
 fn finish_report(mut result: Value) -> Result<Value> {
+    let fence=result["program"]["obligations"].get("nativeCatalogFence").cloned();
+    if let Some(fence)=fence {
+        let sql=fence["lockSql"].as_str().ok_or("original catalog fence lock absent")?;
+        result["locks"].as_array_mut().ok_or("original locks inventory absent")?.push(json!({"path":"/obligations/nativeCatalogFence/lockSql","role":"catalog-fence-lock","sql":sql,"sqlSha256":sha(sql),"analysis":"native-lock-privilege","tablePrivilege":"MAINTAIN","executeBusinessSql":false}));
+        let a=&fence["nativeAdmission"];
+        let probe=statement("/obligations/nativeCatalogFence/nativeAdmission/sql".into(),"catalog-fence-admission",a["sql"].as_str().ok_or("original fence admission SQL absent")?,array(a,"parameters")?,array(a,"dbapiParameterOrder")?,&ident(result["probeTable"].as_str().ok_or("probe table absent")?)?,1)?;
+        result["statements"].as_array_mut().ok_or("original statements inventory absent")?.push(probe);
+    }
     let hash = sha(&weft_core::mutation::canonical(&result));
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-privilege-probes","version":"0.1","sha256":hash});

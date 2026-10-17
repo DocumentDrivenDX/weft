@@ -487,9 +487,11 @@ fn compile(raw: &str) -> Result<Json> {
     let mut result = json!({"version":"weft.search/0.1","status":"compiled","profile":"umf.access.search/0.1","request":r,"target":r.selection.target,"source":r.source,"binding":binding,"index":index,"nativeIndex":admitted.binding(),"mechanism":mechanism,"scoreKind":kind,"queryParameter":r.query_parameter,"topK":r.top_k,"approximate":false,"partial":admitted.binding()["filtering"]=="partial","nativeAdmission":admission,"preflights":preflights,"statement":{"sql":sql,"parameters":parameters},"outputs":outputs,"keyOutputs":key_outputs,"selectionTemplate":read,"obligations":{"transaction":"repeatable-read-read-only","sameStatementAuthorization":true,"nativeIndexCorrespondence":"host-observed-original-index-and-column-types","filtering":"before-ranking-complete-matching-set","exactTieBreak":"complete-selected-Key-ascending","timeout":"one-call-deadline","noEmbeddingService":true}});
     if read["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1" {result["obligations"]["nativeProjection"]=read["obligations"]["nativeProjection"].clone();}
     if let Some(term)=read["obligations"].get("termFilter") {result["obligations"]["termFilter"]=term.clone();}
-    if r.selection.verification_profile.as_deref()==Some("source-exact/0.1")&&index["kind"]=="keyword" {
+    if index["kind"]=="keyword" {
         result["obligations"]["keywordConfiguration"]=json!({"version":"umf.keyword-configuration/0.1","nativeCatalogBeforeAfter":true,"configurations":[crate::raw_read::keyword_configuration_metadata(&serde_json::to_value(&r.source).unwrap(),index)?]});
     }
+    crate::native_catalog_fence::attach(&r.selection.binding,&mut result["obligations"])?;
+    crate::native_catalog_fence::seal_version(&mut result)?;
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&result).as_bytes());
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-search","version":"0.1","sha256":digest});

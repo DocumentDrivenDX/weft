@@ -47,6 +47,16 @@ pub struct Relationship {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all="kebab-case")]
 pub enum SchemaBinding { Qualified, SearchPath }
+/// Explicit native deployment facts; never a grant or authentication credential.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(deny_unknown_fields, rename_all = "camelCase")]
+pub struct NativeCatalogFence {
+    pub version:String,
+    pub schema:String,
+    pub view:String,
+    pub owner:String,
+    pub owner_profile:String,
+}
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Binding {
@@ -60,6 +70,15 @@ pub struct Binding {
     pub model_json: String,
     #[serde(default,skip_serializing_if="Option::is_none")]
     pub native_columns: Option<Json>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub native_catalog_fence: Option<NativeCatalogFence>,
+}
+pub(crate) fn validate_catalog_fence(binding:&Binding,target:&str)->Result<()> {
+    if let Some(fence)=&binding.native_catalog_fence {
+        if !matches!(target,"postgresql18"|"lakebase18")||fence.version!="umf.pg-ts-fence/0.1"||fence.owner_profile!="non-login-maintainer/0.1" {return Err("unsupported native catalog fence profile")}
+        for name in [&fence.schema,&fence.view,&fence.owner] {if name.is_empty()||name.len()>63||name.contains('\0'){return Err("native catalog fence identifier outside profile")}}
+    }
+    Ok(())
 }
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all="lowercase")]
@@ -301,6 +320,7 @@ impl AdmittedRead {
 pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     let v = crate::json::checked_json(raw).map_err(|_| "invalid or duplicate JSON")?;
     let request: Request = serde_json::from_value(v).map_err(|_| "invalid read request")?;
+    validate_catalog_fence(&request.binding,&request.target)?;
     if let Some(profile)=&request.verification_profile {
         if profile!="source-exact/0.1" || !matches!(request.target.as_str(),"postgresql18"|"lakebase18") {return Err("unsupported source verification profile")}
         if request.binding.native_columns.is_none(){return Err("source-exact verification requires original native ColumnSet facts")}

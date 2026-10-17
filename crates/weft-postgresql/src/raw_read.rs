@@ -124,6 +124,42 @@ fn term_index_metadata_source(index:&weft_core::search::AdmittedSearch,table:&Ta
     let names=parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>();
     Ok(json!({"source":index.request().source,"index":index.index(),"nativeBinding":index.binding(),"logicalTable":table.logical,"nativeTable":table.native,"nativeColumn":column.native,"configuration":configuration,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"dbapiParameterOrder":names,"parameters":parameters}}))
 }
+pub(crate) fn action_keyword_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,schema:&Option<String>)->Result<Json>{
+ let fields=index.index()["keyword"]["source"].as_array().ok_or("keyword effects fields absent")?;
+ let mut columns=vec![];
+ for field in fields {
+  let column=table.columns.iter().find(|c|index.selection().original_field_ref(&table.logical,&c.logical).is_ok_and(|r|r==*field)).ok_or("keyword effects original scalar Field unbound")?;
+  if !matches!(column.carrier,Carrier::String){return Err("keyword effects String Field required")}
+  columns.push(column);
+ }
+ if columns.is_empty(){return Err("keyword mutation effects source Field required")}
+ let language=index.index()["keyword"]["analyzer"]["language"].as_str().ok_or("keyword effects analyzer absent")?;
+ let mut value=term_index_metadata_source(index,table,columns[0],schema,&format!("pg_catalog.{language}"),true)?;
+ if columns.len()>1 {
+  let mut parameters=value["nativeAdmission"]["parameters"].as_array().unwrap().clone();
+  let mut pieces=vec!["COALESCE(%I, %L::text)".to_owned();columns.len()];
+  let text=pieces.drain(..).reduce(|a,b|format!("(({a} || ' '::text) || {b})")).unwrap();
+  let mut column_slots=vec![5usize];
+  for (i,c) in columns.iter().skip(1).enumerate(){let n=6+i;column_slots.push(n);parameters.push(json!({"name":format!("__umf_term_{n}"),"carrier":"string","source":{"literal":{"string":c.native}}}));}
+  let format_slot=6+columns.len()-1;
+  parameters.push(json!({"name":format!("__umf_term_{format_slot}"),"carrier":"string","source":{"literal":{"string":format!("to_tsvector(%L::regconfig, {text})")}}}));
+  for dbapi in [false,true] {
+   let neutral=schema.is_none();let slot=|n:usize|if dbapi{format!("%(__umf_term_{n})s::pg_catalog.text")}else{format!("${}::pg_catalog.text",if neutral{n-1}else{n})};
+   let pattern=if dbapi{"to_tsvector(%%L::regconfig, COALESCE(%%I, %%L::text))"}else{"to_tsvector(%L::regconfig, COALESCE(%I, %L::text))"};
+   let old=format!("pg_catalog.format('{pattern}',{},{},''::pg_catalog.text)",slot(4),slot(5));
+   let args=std::iter::once(slot(4)).chain(column_slots.iter().flat_map(|n|[slot(*n),"''::pg_catalog.text".to_owned()])).collect::<Vec<_>>().join(", ");
+   let new=format!("pg_catalog.format({}, {args})",slot(format_slot));
+   let key=if dbapi{"dbapiSql"}else{"sql"};let sql=value["nativeAdmission"][key].as_str().unwrap();
+   if !sql.contains(&old){return Err("keyword mutation original expression shape differs")}
+   value["nativeAdmission"][key]=json!(sql.replace(&old,&new));
+  }
+  value["nativeAdmission"]["dbapiParameterOrder"]=json!(parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>());
+  value["nativeAdmission"]["parameters"]=json!(parameters);
+ }
+ value.as_object_mut().unwrap().remove("nativeColumn");
+ value["nativeColumns"]=json!(columns.iter().map(|c|&c.native).collect::<Vec<_>>());
+ Ok(value)
+}
 pub(crate) fn relationship_metadata(admitted:&AdmittedRead,relationship:&weft_core::raw_read::Relationship)->Result<Json>{native_relationships::admission(admitted,relationship)}
 pub(crate) fn relationship_key_metadata(table:&Table,logical:&[String],schema:&Option<String>)->Result<Json>{
     let native=logical.iter().map(|field|table.columns.iter().find(|c|c.logical==*field).map(|c|c.native.clone()).ok_or("relationship Key field lacks scalar binding")).collect::<Result<Vec<_>>>()?;
@@ -1072,6 +1108,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
     if !l.term_indexes.is_empty() {
         obligations["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":l.term_indexes.values().collect::<Vec<_>>()});
     }
+    crate::native_catalog_fence::attach(&r.binding,&mut obligations)?;
     let lock_sql: Vec<String> = l
         .scans
         .values()
@@ -1097,6 +1134,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
     let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"semanticFields":semantic_fields,"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"tablePrivilegeRequired":true,"columnPrivilegesSufficient":false,"reason":"LOCK TABLE ACCESS SHARE"})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
     let mut result = json!({"version":if bounded{"weft.raw-read/0.1"}else{"weft.search-input/0.1"},"status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced_tables});
     result["privilegeInventory"]=privilege_inventory;
+    crate::native_catalog_fence::seal_version(&mut result)?;
     let digest = weft_core::json::sha256(result.to_string().as_bytes());
     result["structuralDigest"] = json!(digest);
     Ok(result)

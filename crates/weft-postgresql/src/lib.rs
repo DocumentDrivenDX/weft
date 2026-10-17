@@ -1,3 +1,4 @@
+mod native_catalog_fence;
 pub mod current_scalar;
 pub mod truss_mutation;
 pub mod raw_read;

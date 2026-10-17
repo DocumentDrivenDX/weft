@@ -98,6 +98,7 @@ fn lower(raw:&str)->Result<Json>{
  }
  for key in ["tables","functions","operators","indexObjects","semanticFields"]{merge_array(&mut result,&source_program,&format!("/privilegeInventory/{key}"));}
  result["relatedRequest"]=original;result["rootLogicalTable"]=json!(target_table.logical);result["relatedSourceSql"]=json!(source_program["sql"]);result["sourceSql"]=request.target["sql"].clone();
+ crate::native_catalog_fence::attach(&target.request().binding,&mut result["obligations"])?;crate::native_catalog_fence::seal_version(&mut result)?;
  result.as_object_mut().unwrap().remove("structuralDigest");result["structuralDigest"]=json!(weft_core::json::sha256(result.to_string().as_bytes()));Ok(result)
 }
 pub fn compile_json(raw:&str)->String{lower(raw).unwrap_or_else(|reason|json!({"version":"weft.raw-read/0.1","status":"blocked","diagnostics":[{"code":"WFT-RELATED-READ","message":reason}]})).to_string()}

@@ -441,17 +441,43 @@ fn compile(source: &str) -> Result<Value> {
         let mut tables=std::collections::BTreeSet::new();
         for entity in admitted.entities().values(){tables.insert(entity.key.table.clone());}
         for field in admitted.fields().values(){tables.insert(field.table.clone());}
-        let mut admissions=vec![];
+        let mut admissions=vec![];let mut index_tables=vec![];let mut keyword_effects=vec![];
         for logical in tables {
             let table=r.binding.tables.iter().find(|t|t.logical==logical).ok_or("original action native table absent")?;
             let record=weft_core::raw_read::binding_record(&r.binding,&logical)?;
             let columns=crate::raw_read::native_projection::columns_for(&r.binding,&r.target,&doc,&record,table,true)?;
             for column in columns.values(){admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_admission(column,table,&r.binding.schema)}));}
             admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
+            let mut allowed=vec![];
+            for index in weft_core::search::admit_keyword_effects(&r.binding,&r.target,&logical)? {
+                let metadata=crate::raw_read::action_keyword_index_metadata(&index,table,&r.binding.schema)?;
+                allowed.push(metadata["nativeBinding"]["native"].as_str().ok_or("keyword mutation index name absent")?.to_owned());
+                keyword_effects.push(metadata);
+            }
+            let mut native_keys=vec![];
+            for key in record.value["keys"].as_array().ok_or("original Record Keys absent")? {
+                let mut native_fields=vec![];
+                for reference in key["fields"].as_array().ok_or("original Key fields absent")? {
+                    let module=doc["modules"].as_array().unwrap().iter().find(|m|m["id"]==reference["module"]).ok_or("original Key Field module absent")?;
+                    let field=module["elements"].as_array().unwrap().iter().find(|f|f["id"]==reference["element"]).ok_or("original Key Field absent")?;
+                    let name=field["name"].as_str().ok_or("original Key Field name absent")?;
+                    native_fields.push(columns.get(name).ok_or("original Key native column absent")?.native.clone());
+                }
+                if native_fields.is_empty(){return Err("original Key native inventory empty")}
+                native_keys.push(native_fields);
+            }
+            if native_keys.is_empty(){return Err("original mutation Record Keys required")}
+            let native_admission=crate::native_catalog_fence::mutation_index_admission(table,&r.binding.schema,&allowed,&native_keys);
+            admissions.push(json!({"nativeAdmission":native_admission}));
+            index_tables.push(json!({"logicalTable":logical,"nativeTable":table.native,"allowedIndexes":allowed,"originalKeys":native_keys,"nativeAdmission":native_admission}));
         }
         if admissions.is_empty(){return Err("source-exact action requires touched native table inventory")}
         result["obligations"]["nativeProjection"]=json!({"version":"umf.native-columns/0.1","verificationProfile":"source-exact/0.1","nativeCatalogBeforeAfter":true,"columns":admissions});
+        result["obligations"]["mutationIndexEffects"]=json!({"version":"umf.pg-index-effects/0.1","nativeCatalogBeforeAfter":true,"tables":index_tables});
+        if !keyword_effects.is_empty(){result["obligations"]["textSearchEffects"]=json!({"version":"umf.pg-ts-effects/0.1","nativeCatalogBeforeAfter":true,"indexes":keyword_effects});}
     }
+    crate::native_catalog_fence::attach(&r.binding,&mut result["obligations"])?;
+    crate::native_catalog_fence::seal_version(&mut result)?;
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&result).as_bytes());
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-action","version":"0.1","sha256":digest});
@@ -478,7 +504,7 @@ mod tests {
         let r:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-action-request.json")).unwrap();
         let p=compile_value(&r);assert_eq!(p["status"],"compiled","{p}");
         assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
-        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),3);
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
         assert!(p["obligations"]["nativeProjection"]["columns"][0]["nativeAdmission"]["sql"].as_str().unwrap().contains("co.oid=a.attcollation"));
         for c in p["obligations"]["nativeProjection"]["columns"].as_array().unwrap(){assert!(c["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_catalog.to_regclass(pg_catalog.quote_ident("));assert!(c["nativeAdmission"]["parameters"].as_array().unwrap().iter().all(|p|p["source"].get("literal").is_some()));}
         let mut qualified=r.clone();qualified["binding"]["schema"]=json!("owned_schema");
