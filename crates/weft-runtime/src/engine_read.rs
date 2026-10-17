@@ -383,6 +383,10 @@ mod sdk_presence_tests {
   assert!(p["artifact"]["sql"].as_str().unwrap().contains("'null'"));
   if let Ok(path)=std::env::var("WEFT_SDK_PRESENCE_SAMPLE"){std::fs::write(path,serde_json::to_string_pretty(&p).unwrap()).unwrap();}
  }
+ #[test]fn new_presence_profile_requires_original_core08_domain(){
+  let mut r=request();let mut doc:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();doc["umf"]=json!("0.7.0");let text=doc.to_string();let hash=weft_core::json::sha256(text.as_bytes());let old=r["modules"][0]["pin"]["sha256"].as_str().unwrap().to_string();r["modules"][0]["documentJson"]=json!(text);r["modules"][0]["pin"]["umfVersion"]=json!("0.7.0");r["modules"][0]["pin"]["sha256"]=json!(hash);let binding=r["target"]["bindingJson"].as_str().unwrap().replace(&old,&hash).replace("0.8.0","0.7.0");r["target"]["bindingSha256"]=json!(weft_core::json::sha256(binding.as_bytes()));r["target"]["bindingJson"]=json!(binding);
+  let p=compile_original("ashlar-spark4-sdk",&r).unwrap();assert_eq!(p["status"],"blocked");assert!(p["original"]["diagnostics"].as_array().unwrap().iter().any(|d|d["code"]=="WFT-SDK-PRESENCE"));
+ }
  #[test]fn original_legacy_bytes_and_temporal_refusals_are_preserved(){
   let baseline:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-presence-legacy-baseline.json")).unwrap();
   for row in baseline["programs"].as_array().unwrap(){let text=match row["fixture"].as_str().unwrap(){"native-ashlar-spark4-request.json"=>include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json"),"ashlar-fields-only-request.json"=>include_str!("../../../tests/engine-catalog/ashlar-fields-only-request.json"),_=>include_str!("../../../tests/engine-catalog/native-ashlar-dbsql-20261016-request.json")};let r:Value=serde_json::from_str(text).unwrap();let p=compile_original(row["compiler"].as_str().unwrap(),&r).unwrap();assert_eq!(weft_core::json::sha256(encode(&p).as_bytes()),row["sha256"],"legacy bytes differ");}

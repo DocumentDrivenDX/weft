@@ -6,6 +6,7 @@ publish.workspace=true
 [lib]
 crate-type=["cdylib"]
 [features]
+ashlar-sdk-ordered-page-candidate=["weft-runtime/ashlar-sdk-ordered-page-candidate"]
 managed-delta-mutation-candidate=["weft-runtime/managed-delta-mutation-candidate"]
 raw-postgresql-reads=["weft-runtime/raw-postgresql-reads"]
 

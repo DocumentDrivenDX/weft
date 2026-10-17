@@ -8,7 +8,7 @@
     "truss-runtime-binary"
   ],
   "tests": {
-    "candidateRuntime": 37,
+    "candidateRuntime": 38,
     "candidateRuntimeSkipped": 0,
     "commonFeaturesRuntime": 26,
     "moduleBoundariesPackages": 11
@@ -18,7 +18,8 @@
     "S5 missing/null one nullish sort class, S6 selected authored Key ASC suffix, full typed cursor and exact native comparisons",
     "Related source/target Key custody separate; source wildcard and explicit direction/nulls/LIMIT preserved; no default source cap",
     "Truss binary direct Fields only; original native Truss wire/state domain separate from Ashlar envelope; selectedKey explicit native-primary correspondence on pages",
-    "temporal and LEFT/interface0.3 remain refused in new scalar profile; old native profiles remain unchanged"
+    "temporal and LEFT/interface0.3 remain refused in new scalar profile; old native profiles remain unchanged",
+    "new scalar presence profile requires original Core0.8.0 pins; actual0.7 document/pin refusal retained"
   ],
   "historicalBaseline": "Frozen R22 reproduces B006 stale golden; complete actual responses identical under common features. Historical receipt/logs retained; current-release source-produced expected artifact added with provenance.",
   "unqualified": [
@@ -57,5 +58,6 @@
       "path": "weft-engine02-feature-boundary-r1.log",
       "sha256": "2e2beb7983df48ca20d6222c2f09a7c09b576ca2d44c4f6648dfa62d7c53365d"
     }
-  ]
+  ],
+  "bindingFeatureForwarding": "explicit same candidate feature forwarded by Python and WASM crates; default features unchanged"
 }
