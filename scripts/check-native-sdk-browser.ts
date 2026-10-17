@@ -13,6 +13,17 @@ for(const [name,predicate,parameters] of [
 ] as const){
  cases.push({name:'raw-read-null-safe-'+name,method:'compile_raw_read_json',request:JSON.stringify({version:'weft.raw-read/0.1',target:'postgresql18',sql:'SELECT o.id AS id FROM sales.order AS o WHERE '+predicate+' ORDER BY o.id ASC LIMIT 10',binding:action.binding,parameters,rowCap:10,keyset:false})});
 }
+const aggregateBase=await Bun.file('tests/raw-postgresql/read-request.json').json();
+for(const [name,sql,parameters,expected] of [
+ ['prefix-parameter','SELECT o.id AS id FROM "commerce"."Order" AS o WHERE STARTS_WITH(o.status,:prefix)',[{name:'prefix',carrier:'string',nullable:false}],'compiled'],
+ ['prefix-literal',`SELECT o.id AS id FROM "commerce"."Order" AS o WHERE STARTS_WITH(o.status,'%_\\')`,[],'compiled'],
+ ['prefix-wrong-carrier','SELECT o.id AS id FROM "commerce"."Order" AS o WHERE STARTS_WITH(o.status,1)',[],'blocked'],
+ ['aggregate-bucket','SELECT BUCKET_WIDTH(o.amount,0.25) AS bucket, SUM(o.id) AS total, AVG_SCALE(o.amount,2) AS average FROM "commerce"."Order" AS o GROUP BY BUCKET_WIDTH(o.amount,0.25) ORDER BY average DESC',[],'compiled'],
+ ['aggregate-distinct','SELECT COUNT(DISTINCT o.status) AS unique_status, AVG_SCALE(o.amount,1000) AS average FROM "commerce"."Order" AS o',[],'compiled'],
+ ['aggregate-bound-scale-refusal','SELECT AVG_SCALE(o.amount,:scale) AS average FROM "commerce"."Order" AS o',[{name:'scale',carrier:'integer',nullable:false}],'blocked'],
+] as const){const r=structuredClone(aggregateBase);r.sql=sql;r.parameters=parameters;cases.push({name,method:'compile_raw_read_json',request:JSON.stringify(r),expected});}
+const termBase=(await Bun.file('tests/native-search/keyword-request.json').json()).selection;
+for(const fn of ['MATCHES_ALL_TERMS','MATCHES_ANY_TERM']){const r=structuredClone(termBase);r.sql='SELECT r.id AS id FROM "search"."Doc" AS r WHERE '+fn+'(r.body,:terms)';r.parameters=[{name:'terms',carrier:'string',nullable:false}];cases.push({name:'terms-'+fn,method:'compile_raw_read_json',request:JSON.stringify(r)});}
 for(const name of ['approve','guarded','postFail','createOrder','firstFalse']){const r=structuredClone(action);r.source.action=name;const doc=JSON.parse(r.binding.modelJson);r.source.actionPointer='/modules/0/extensions/umf.actions/actions/'+doc.modules[0].extensions['umf.actions'].actions.findIndex((a:any)=>a.id===name);cases.push({name,method:'compile_native_action_json',request:JSON.stringify(r)});}
 const bulk={version:'weft.native-bulk/0.1',selection:{version:'weft.raw-read/0.1',target:'postgresql18',sql:'SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC',binding:action.binding,parameters:[],rowCap:4},action,maxItems:3,actionInputs:{},parameters:[]};cases.push({name:'bulk',method:'compile_native_bulk_json',request:JSON.stringify(bulk)});
 const deltaAction=structuredClone(action);deltaAction.target='spark-delta4';
@@ -20,7 +31,7 @@ cases.push({name:'delta-action',method:'compile_native_action_json',request:JSON
 const deltaBulk=structuredClone(bulk);deltaBulk.action=deltaAction;deltaBulk.selection.target='spark-delta4';
 cases.push({name:'delta-bulk',method:'compile_native_bulk_json',request:JSON.stringify(deltaBulk)});
 for(const name of ['keyword','vector'])cases.push({name,method:'compile_search_json',request:await Bun.file('tests/native-search/'+name+'-request.json').text()});
-for(const kind of ['ann','hybrid'])cases.push({name:'unity-'+kind,method:'compile_unity_search_json',request:await Bun.file('tests/native-search/unity-'+kind+'-request.json').text()});
+for(const kind of ['ann','hybrid','shaped'])cases.push({name:'unity-'+kind,method:'compile_unity_search_json',request:await Bun.file('tests/native-search/unity-'+kind+'-request.json').text()});
 const unityRefused=await Bun.file('tests/native-search/unity-ann-request.json').json();unityRefused.allowPartial=false;cases.push({name:'unity-partial-refusal',method:'compile_unity_search_json',request:JSON.stringify(unityRefused),expected:'blocked'});
 const vector086=await Bun.file('tests/native-search/vector-request.json').json();vector086.vectorBinding.extensionVersion='0.8.6';cases.push({name:'vector-0.8.6',method:'compile_search_json',request:JSON.stringify(vector086)});
 const vectorUnknown=structuredClone(vector086);vectorUnknown.vectorBinding.extensionVersion='unknown';cases.push({name:'vector-version-refusal',method:'compile_search_json',request:JSON.stringify(vectorUnknown),expected:'blocked'});
@@ -94,7 +105,7 @@ const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const name=new UR
 const browser=await chromium.launch({headless:true});try{const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);await page.waitForFunction(()=>!!(window as any).api);const actual=await page.evaluate(cases=>cases.map(c=>JSON.parse((window as any).api[c.method](...(c.arguments??[c.request])))),cases);
 function canonical(value:any):string{return JSON.stringify(value,(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);}
 if(canonical(actual)!==canonical(expected))throw Error('WASM differs from installed Rust Python output');
-const unicode=await page.evaluate(()=>['compile_raw_read_json','compile_native_action_json','compile_native_bulk_json','compile_search_json','compile_engine_read_json','compile_engine_page_json'].every(name=>{try{(window as any).api[name]('\ud800');return false;}catch{return true;}}));const engineUnicode=await page.evaluate(()=>{const bad=String.fromCharCode(0xd800);for(const args of [[bad,'{}'],['{}',bad]]){try{(window as any).api.check_engine_read_json(...args);return false;}catch{}}return true;});if(!engineUnicode)throw Error('Engine comparison replaced malformed UTF16');
+const unicode=await page.evaluate(()=>['compile_raw_read_json','compile_native_action_json','compile_native_bulk_json','compile_search_json','compile_unity_search_json','compile_engine_read_json','compile_engine_page_json'].every(name=>{try{(window as any).api[name]('\ud800');return false;}catch{return true;}}));const engineUnicode=await page.evaluate(()=>{const bad=String.fromCharCode(0xd800);for(const args of [[bad,'{}'],['{}',bad]]){try{(window as any).api.check_engine_read_json(...args);return false;}catch{}}return true;});if(!engineUnicode)throw Error('Engine comparison replaced malformed UTF16');
 if(!unicode)throw Error('Original malformed UTF16 was silently replaced');
 const pageUnicode=await page.evaluate(()=>{const bad=String.fromCharCode(0xd800);for(const args of [[bad,'{}','null'],['{}',bad,'null'],['{}','{}',bad]]){try{(window as any).api.check_engine_page_json(...args);return false;}catch{}}return true;});if(!pageUnicode)throw Error('Page comparison replaced malformed UTF16');
 const exportUnicode=await page.evaluate(()=>{const bad=String.fromCharCode(0xd800);for(const args of [[bad,'{}'],['{}',bad]]){try{(window as any).api.compile_engine_export_json(...args);return false;}catch{}}return true;});if(!exportUnicode)throw Error('Export comparison replaced malformed UTF16');

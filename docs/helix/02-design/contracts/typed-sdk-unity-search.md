@@ -44,10 +44,26 @@ The exact candidate fixture is retained under `tests/native-search/`.
 
 The compiler independently admits the complete original UMF model and selected
 index declarations and unique native bindings. It refuses unsupported selected
-meaning rather than dropping it. Scalar String/Boolean current projections and
-a required single String selected Key are the initial hydration subset; numeric
-and vector hydration projections remain refused pending their native carrier
-qualification. Search input cannot aggregate, reorder, truncate or add unknown
+meaning rather than dropping it. Current projection descriptors cover String,
+Boolean, the selected indexed Vector, and explicitly shaped Integer, Decimal and
+Binary; a required single String selected Key remains mandatory. Projecting the
+Vector requires `managed.vectorBinding.nativeType` equal to `array<float>` or
+`array<double>`. Outputs retain `carrier:"vector"`, `dimensions`, `nullable` and
+`nativeType`; native double elements must still fit the exact float32 model
+carrier without rounding.
+
+Additional `managed.projectionBindings` are exact `{field,native,nativeType}`
+objects. Integer requires authored signed widths 8/16/32/64 matching
+`tinyint`/`smallint`/`int`/`bigint`; unbounded, unsigned and other widths refuse.
+Decimal requires authored precision 1..38 and scale 0..precision matching exact
+`decimal(p,s)`; Binary requires `binary` and no unqualified facets. Output and
+`currentTable.columns` descriptors retain `integerWidth` or `precision`/`scale`
+as appropriate. Every numeric scalar binding requires a matching original shape.
+No generated SQL casts or rounding repair a mismatched physical representation.
+These are compiler candidate carriers; actual managed metadata and driver value
+qualification remain separate required gates.
+
+Search input cannot aggregate, reorder, truncate or add unknown
 query modifiers. Every predicate Field must occur in each selected index's
 original `filterable` inventory.
 

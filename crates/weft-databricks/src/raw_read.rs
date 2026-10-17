@@ -191,10 +191,15 @@ impl Lower<'_> {
         }
     }
 }
-fn lower(a: &AdmittedRead) -> Result<J> { lower_inner(a,false,None) }
-pub(crate) fn lower_transaction(a:&AdmittedRead)->Result<J>{ lower_inner(a,true,None) }
-pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog))}
-fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>) -> Result<J> {
+fn lower(a: &AdmittedRead) -> Result<J> { lower_inner(a,false,None,None,false) }
+pub(crate) fn lower_transaction(a:&AdmittedRead)->Result<J>{ lower_inner(a,true,None,None,false) }
+pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false)}
+// Only sibling compiler admission may supply these already validated projections.
+pub(crate) fn lower_current_projected(a:&AdmittedRead,catalog:&str,projection:&[(String,J)])->Result<J>{
+    lower_inner(a,false,Some(catalog),Some(projection),true)
+}
+pub(crate) fn lower_current_shaped(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,true)}
+fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>, current_projection:Option<&[(String,J)]>, current_shapes:bool) -> Result<J> {
     let r = a.request();
     let q = a.query();
     if r.version != "weft.raw-read/0.1"
@@ -279,7 +284,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>)
         .ok_or("bound source table absent")?;
     // Spark LONG has a finite native domain. Unbounded core integers must never
     // be silently narrowed by this backend. Decimal shapes require own profile.
-    if table
+    if !(current_catalog.is_some()&&current_shapes) && table
         .columns
         .iter()
         .any(|c| matches!(c.carrier, Carrier::Integer | Carrier::Decimal))
@@ -328,6 +333,16 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>)
         let c = l.column(e)?;
         projection.push(format!("{} AS {}", c.0, ident(&out)?));
         outputs.push(json!({"name":out,"carrier":c.1,"nullable":c.2}));
+    }
+    if let Some(selected)=current_projection {
+        if current_catalog.is_none()||selected.is_empty()||selected.len()>256{return Err("bounded current projection required")}
+        projection.clear();outputs.clear();let mut selected_names=BTreeSet::new();
+        for (native,output) in selected {
+            let out=output["name"].as_str().ok_or("named current projection required")?;
+            if !selected_names.insert(out){return Err("duplicate current output")}
+            projection.push(format!("{}.{} AS {}",ident(&l.alias)?,ident(native)?,ident(out)?));
+            outputs.push(output.clone());
+        }
     }
     let mut sql=format!("SELECT {} FROM {native} AS {}",projection.join(", "),ident(&l.alias)?);
     if let Some(e) = &s.selection {

@@ -1,0 +1,157 @@
+{
+  "allowPartial": true,
+  "projection": [
+    {
+      "field": {
+        "element": "id",
+        "module": "search"
+      },
+      "name": "id"
+    },
+    {
+      "field": {
+        "element": "body",
+        "module": "search"
+      },
+      "name": "body"
+    },
+    {
+      "field": {
+        "module": "search",
+        "element": "embedding"
+      },
+      "name": "embedding"
+    },
+    {
+      "field": {
+        "module": "search",
+        "element": "count"
+      },
+      "name": "count"
+    },
+    {
+      "field": {
+        "module": "search",
+        "element": "amount"
+      },
+      "name": "amount"
+    },
+    {
+      "field": {
+        "module": "search",
+        "element": "payload"
+      },
+      "name": "payload"
+    }
+  ],
+  "queryParameter": "__umf_search_query",
+  "selection": {
+    "binding": {
+      "modelJson": "{\"umf\":\"0.8.0\",\"id\":\"typed-search-e2e\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"search\",\"namespace\":\"search\",\"elements\":[{\"id\":\"id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"body\",\"name\":\"body\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"embedding\",\"name\":\"embedding\",\"kind\":\"field\",\"cardinality\":\"array\",\"nullability\":\"required\",\"extensions\":{},\"itemType\":{\"module\":\"search\",\"element\":\"component\"},\"facets\":{\"collectionSize\":{\"min\":3,\"max\":3}}},{\"id\":\"component\",\"name\":\"component\",\"kind\":\"field\",\"scalarType\":\"float\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Doc\",\"name\":\"Doc\",\"kind\":\"record\",\"members\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"},{\"module\":\"search\",\"element\":\"embedding\"},{\"module\":\"search\",\"element\":\"count\"},{\"module\":\"search\",\"element\":\"amount\"},{\"module\":\"search\",\"element\":\"payload\"}],\"keys\":[{\"id\":\"doc-key\",\"fields\":[{\"module\":\"search\",\"element\":\"id\"}],\"primary\":true,\"name\":\"Document identity\"}],\"extensions\":{}},{\"id\":\"count\",\"name\":\"count\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"amount\",\"name\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":38,\"scale\":10}},{\"id\":\"payload\",\"name\":\"payload\",\"kind\":\"field\",\"scalarType\":\"binary\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"selectedKey\":{\"module\":\"search\",\"element\":\"Doc\",\"key\":\"doc-key\"},\"fields\":[{\"field\":{\"module\":\"search\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"body\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"component\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"count\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"payload\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}]}],\"columns\":[],\"search\":[{\"id\":\"text\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"keyword\",\"exactness\":\"approximate\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"keyword\":{\"source\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"ranking\":{\"family\":\"implementation-defined\"},\"analyzer\":\"implementation-defined\",\"syntax\":\"plain\"}},{\"id\":\"semantic\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"vector\",\"exactness\":\"approximate\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"vector\":{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"source\":{\"module\":\"search\",\"element\":\"body\"},\"model\":{\"id\":\"fixture-embedder\",\"version\":\"1\"},\"dimensions\":3,\"metric\":\"l2\",\"computedBy\":\"host\"}}],\"searchBindings\":[{\"index\":\"text\",\"target\":{\"platform\":\"unity-catalog\",\"majorVersion\":\"2026-10-16\"},\"native\":\"sdk_qualification.sdk_search.docs_index\",\"freshness\":\"asynchronous\",\"maxK\":100,\"filtering\":\"partial\"},{\"index\":\"semantic\",\"target\":{\"platform\":\"unity-catalog\",\"majorVersion\":\"2026-10-16\"},\"native\":\"sdk_qualification.sdk_search.docs_index\",\"freshness\":\"asynchronous\",\"maxK\":100,\"filtering\":\"partial\"}]}}}]}",
+      "modelSha256": "df6ee1fe782ccecfc805ab52924a567ad00134a0659f0c801a7c20563d999fa7",
+      "relationships": [],
+      "schema": "sdk_search",
+      "tables": [
+        {
+          "columns": [
+            {
+              "carrier": "string",
+              "logical": "id",
+              "native": "id",
+              "nullable": false
+            },
+            {
+              "carrier": "string",
+              "logical": "body",
+              "native": "body",
+              "nullable": false
+            },
+            {
+              "logical": "count",
+              "native": "count",
+              "carrier": "integer",
+              "nullable": false
+            },
+            {
+              "logical": "amount",
+              "native": "amount",
+              "carrier": "decimal",
+              "nullable": false
+            }
+          ],
+          "key": [
+            "id"
+          ],
+          "logical": [
+            "search",
+            "Doc"
+          ],
+          "native": "docs"
+        }
+      ],
+      "version": "umf.raw-read-binding/0.1"
+    },
+    "keyset": false,
+    "parameters": [],
+    "rowCap": 1000,
+    "sql": "SELECT \"r\".\"id\" AS \"id\" FROM \"search\".\"Doc\" AS \"r\"",
+    "target": "unity-catalog-current",
+    "version": "weft.raw-read/0.1"
+  },
+  "source": {
+    "coreVersion": "0.8.0",
+    "documentId": "typed-search-e2e",
+    "documentSha256": "df6ee1fe782ccecfc805ab52924a567ad00134a0659f0c801a7c20563d999fa7",
+    "module": "search",
+    "pointer": "/modules/0/extensions/umf.access/search/1"
+  },
+  "topK": 3,
+  "version": "weft.unity-search/0.1",
+  "managed": {
+    "target": {
+      "platform": "unity-catalog",
+      "majorVersion": "2026-10-16"
+    },
+    "catalog": "sdk_qualification",
+    "schema": "sdk_search",
+    "tableId": "00000000-0000-0000-0000-000000000001",
+    "indexType": "DIRECT_ACCESS",
+    "endpointName": "praxis-attachments",
+    "indexName": "sdk_qualification.sdk_search.docs_index",
+    "vectorBinding": {
+      "field": {
+        "module": "search",
+        "element": "embedding"
+      },
+      "native": "embedding",
+      "dimensions": 3,
+      "nativeType": "array<float>"
+    },
+    "projectionBindings": [
+      {
+        "field": {
+          "module": "search",
+          "element": "count"
+        },
+        "native": "count",
+        "nativeType": "bigint"
+      },
+      {
+        "field": {
+          "module": "search",
+          "element": "amount"
+        },
+        "native": "amount",
+        "nativeType": "decimal(38,10)"
+      },
+      {
+        "field": {
+          "module": "search",
+          "element": "payload"
+        },
+        "native": "payload",
+        "nativeType": "binary"
+      }
+    ]
+  }
+}
