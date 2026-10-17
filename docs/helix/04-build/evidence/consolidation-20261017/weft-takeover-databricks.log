@@ -1,0 +1,261 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:11:24
+   |
+11 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: unused variable: `sdk_read_parameters`
+   --> crates/weft-core/src/compile.rs:424:21
+    |
+424 |                 let sdk_read_parameters=req.parameters.clone().unwrap_or_default();
+    |                     ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:837:8
+    |
+837 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:61:15
+   |
+61 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/application_ir.rs:178:16
+    |
+175 | impl ReadOrder {
+    | -------------- associated function in this implementation
+...
+178 |  pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}
+    |                ^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 12 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+   Compiling weft-databricks v0.1.0 (/Users/erik/Projects/consolidation-20261017-tgY2Hv/weft-integration/crates/weft-databricks)
+warning: unused variable: `ordered`
+   --> crates/weft-databricks/src/candidate/application.rs:200:5
+    |
+200 |     ordered:Option<&OrderedPage>,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_ordered`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:54:9
+   |
+54 |     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+   |         ----^^^^^^^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:79:9
+   |
+79 |     let mut order = source
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/weft-databricks/src/candidate/navigation.rs:142:9
+    |
+142 |     let mut obligations=admitted.obligations;
+    |         ----^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: function `lower_current` is never used
+   --> crates/weft-databricks/src/raw_read.rs:231:15
+    |
+231 | pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false,false)}
+    |               ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-databricks` (lib test) generated 5 warnings (run `cargo fix --lib -p weft-databricks --tests` to apply 3 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.04s
+     Running unittests src/lib.rs (target/debug/deps/weft_databricks-6b301b8e1f61000a)
+
+running 43 tests
+test mathematical_integer::tests::exact_representation_boundary_does_not_bound_logical_type ... ok
+test candidate::navigation::tests::identical_source_meaning_deduplicates_but_distinct_meaning_refuses ... ok
+test candidate::related_keys::tests::fresh_names_use_actual_scan_and_owned_cte_inventory ... ok
+test mathematical_integer::tests::existing_manifest_refuses_before_binding_dispatch ... ok
+test native_profile::tests::engine_pinned_registration_retains_candidate_gate_and_exact_emission ... ok
+test current_scalar::tests::actual_context_emits_dialect_specific_masked_read_raw_predicate_and_private_bag ... ok
+test raw_action::tests::postgres_profile_never_lowers_as_delta ... ok
+test raw_action::tests::delta_program_retains_original_action_and_same_commit_duties ... ok
+test current_scalar::tests::empty_queries_do_not_bypass_admission_and_all_counts_keep_lineage ... ok
+test raw_numeric::tests::operands_are_single_owned_occurrences_and_numeric_coercion_is_absent ... ok
+test current_scalar::tests::grouped_projection_cannot_silently_fold_a_raw_group_into_a_masked_dto ... ok
+test raw_pages::tests::live_page_does_not_require_snapshot_configuration ... ok
+test current_scalar::tests::complete_group_and_join_bags_preserve_typed_scan_order ... ok
+test raw_action::tests::managed_action_is_explicit_direct_dml_with_original_source ... ok
+test raw_numeric::tests::bounded_list_program_retains_original_parameter_and_s8_json_transport ... ok
+test raw_pages::tests::original_spark_numeric_binary_projections_keep_physical_shapes ... ok
+test raw_pages::tests::live_and_snapshot_are_distinct_original_programs ... ok
+test raw_pages::tests::separate_record_columnsets_use_only_their_original_record_bindings ... ok
+test raw_action::tests::managed_target_cannot_use_local_or_postgres_entrypoints ... ok
+test raw_pages::tests::stream_page_size_is_an_original_bounded_parameter ... ok
+test mathematical_integer::tests::explicit_profile_classifies_bounded_integer_and_decimal_sum_capacity ... ok
+test current_scalar::tests::duplicate_json_keys_and_explicit_null_omission_refuse ... ok
+test raw_pages::tests::refuse_missing_snapshot_key_join_or_reserved_parameters ... ok
+test raw_numeric::tests::literal_membership_uses_s8_and_empty_resolves_original_field ... ok
+test raw_pages::tests::source_bound_spark_shapes_preserve_exact_columns_and_refuse_wrong_custody ... ok
+test raw_numeric::tests::numeric_list_uses_original_full_shape_custody_without_numeric_array_casts ... ok
+test raw_read::tests::snapshot_is_compiler_owned_and_arguments_stay_bound ... ok
+test unity_search::tests::ann_current_hydration_and_native_hybrid_are_owned ... ok
+test unity_search::tests::original_vector_projection_has_exact_native_carrier ... ok
+test unity_search::tests::unsupported_native_meaning_is_closed ... ok
+test mathematical_integer::tests::only_explicit_profile_admits_original_unbounded_fields_and_retains_tokens ... ok
+test raw_read::tests::unsupported_snapshot_and_query_meaning_refuse ... ok
+test unity_search::tests::current_nullability_preserves_original_view_and_column_sets ... ok
+test unity_search::tests::predicate_and_hybrid_inventory_never_silently_broaden ... ok
+test raw_bulk::managed_tests::managed_bulk_refuses_local_snapshot_and_service_role_shortcuts ... ok
+test unity_search::tests::original_column_custody_refuses_mismatches ... ok
+test raw_read::tests::original_hll_projection_preserves_algorithm_guarantee_and_group_scope ... ok
+test current_scalar::tests::original_sum_uses_guarded_decimal_accumulation_and_contextual_nullity ... ok
+test raw_bulk::managed_tests::managed_bulk_retains_original_and_direct_transaction_sql ... ok
+test current_scalar::tests::version_profiles_never_downgrade_even_for_empty_count ... ok
+test unity_search::tests::numeric_and_binary_projection_shapes_are_exact ... ok
+test current_scalar::tests::closed_binding_pins_presence_identities_and_modes_refuse ... ok
+test current_scalar::tests::identifiers_quote_without_interpolation_and_version_numbers_are_exact ... ok
+
+test result: ok. 43 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+

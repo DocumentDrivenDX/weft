@@ -1,0 +1,48 @@
+{
+  "profile": "repository-consolidation/1",
+  "date": "2026-10-17",
+  "scope": "Owner-authorized source consolidation and cleanup; no release, native acceptance refresh, or registry publication claim",
+  "testedParent": "77ff0819a106498ca41a11ae4f70006aa8957416",
+  "checks": [
+    {
+      "log": "weft-takeover-tests.log",
+      "sha256": "e7e2ad0ae80170f83a5e3e63ad97a6fd0dc599e17bfa40f90b114a894dce3454",
+      "scope": "Core Rust unit suite",
+      "passed": 333
+    },
+    {
+      "log": "weft-takeover-databricks.log",
+      "sha256": "df0204b0e8aa22d17dec5e5f4a8291091bc4fb55ded219b8b27df243f1ec6592",
+      "scope": "Databricks backend Rust unit suite",
+      "passed": 43
+    },
+    {
+      "log": "weft-takeover-postgresql.log",
+      "sha256": "17a6cfc9e59ffe40ebdbcb9d81df046f2a7974beb8faf71f46274edb54f29c2a",
+      "scope": "PostgreSQL backend suite; one previously pending decimal test excluded",
+      "passed": 176
+    }
+  ],
+  "recovery": {
+    "directory": "/Users/erik/Projects/consolidation-20261017-tgY2Hv",
+    "bundle": "weft-takeover-all-refs.bundle",
+    "dirtyArchive": "weft-takeover-source-dirty.tar.gz",
+    "dirtyArchiveSha256": "c4e429e2dc329f956da13babab32de6042d99e7404f1cb9dfe4e9a78b37d58c7",
+    "sourceFilesVerified": 156
+  },
+  "remainingLocalBranches": [
+    "codex/b005-truss-postgres 1a65fbf994a1e788d0a970ac7028531d268872b6",
+    "codex/b006-ashlar-databricks de83b0023729a14ed798044e178b5fef3375235a",
+    "codex/b007-conformance 94b2de5e303fe53f0c9432458119b6fe1eef187c",
+    "codex/b008-lineage02-checkpoint fe099d2cc6ca41fcd7867dd1b53bc17d153029c0",
+    "codex/consolidation-20261017 77ff0819a106498ca41a11ae4f70006aa8957416",
+    "codex/raw-terms-20261016 aef70b75df5329a2183d999bd7b0b8d3c1026194",
+    "input/application-read-requirements 5adeb852344aecf21c46981d846878790202fb1b",
+    "main 98b079b24d3933df3eaed7adbf28878b13fd3bcd"
+  ],
+  "limitations": [
+    "Historical divergent branches and dirty-source candidates remain preserved for semantic reconciliation; they are not silently replaced by ancestry or patch equivalence.",
+    "Historical UMF semantic-type core0.9 collides with current UUID/128-bit core0.9; owner disposition pending.",
+    "property_definition::tests::original_decimal_domains_compile_both_storage_homes remains a separately pending long-running test; 1 test filtered from PostgreSQL run."
+  ]
+}
