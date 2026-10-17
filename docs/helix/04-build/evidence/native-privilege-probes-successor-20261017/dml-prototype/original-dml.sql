@@ -1,0 +1,1 @@
+UPDATE "orders" SET "status" = ($1::pg_catalog.text COLLATE pg_catalog."C") WHERE "id" IS NOT DISTINCT FROM ($2::pg_catalog.text COLLATE pg_catalog."C") RETURNING "id"

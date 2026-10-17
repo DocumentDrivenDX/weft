@@ -1,0 +1,6 @@
+{
+  "crates/weft-core/src/raw_bulk.rs": "060b55f9895ccd6bef2c2c8262352ff08be4e6794eb919f5a6d2c5c1405cd0a2",
+  "crates/weft-core/src/raw_read.rs": "aa9cc45de0445bf735c911964ccdbb1f7d2642cf4f26b5909ccb85dbc8b81631",
+  "crates/weft-postgresql/src/native_privilege_probes.rs": "98ff961703426fa3186b40a7bc22d2a350aa7c572d5280696e61a3a828bf43f9",
+  "crates/weft-postgresql/src/raw_bulk.rs": "2ec149084c4d34e0fea037e15c56f0853d9400237cd2fd8e5b9b441304d5a304"
+}

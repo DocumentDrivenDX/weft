@@ -1,0 +1,1 @@
+CREATE RULE __weft_privilege_rule AS ON INSERT TO pg_temp.__weft_privilege_event DO INSTEAD (UPDATE "orders" SET "status" = ((SELECT p1 FROM pg_temp.__weft_privilege_inputs)::pg_catalog.text COLLATE pg_catalog."C") WHERE "id" IS NOT DISTINCT FROM ((SELECT p2 FROM pg_temp.__weft_privilege_inputs)::pg_catalog.text COLLATE pg_catalog."C") RETURNING "id")

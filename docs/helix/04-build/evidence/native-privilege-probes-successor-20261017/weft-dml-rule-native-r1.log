@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-dml-rule-prototype.py", line 4, in <module>
+    import psycopg
+ModuleNotFoundError: No module named 'psycopg'

@@ -84,7 +84,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedBulk, &'static str> {
         if !r
             .parameters
             .iter()
-            .any(|v| v.name == p.name && v.carrier == p.carrier && v.nullable == p.nullable)
+            .any(|v| v == p)
         {
             return Err("native bulk filter parameter differs");
         }
@@ -108,7 +108,12 @@ pub fn admit_json(raw: &str) -> Result<AdmittedBulk, &'static str> {
             .iter()
             .find(|p| p.name == *name)
             .ok_or("bulk action parameter absent")?;
-        if bound.carrier != f.carrier || bound.nullable != f.nullable {
+        if bound.container.is_some()
+            || bound.element_nullable.is_some()
+            || bound.max_items.is_some()
+            || bound.carrier != f.carrier
+            || bound.nullable != f.nullable
+        {
             return Err("bulk scalar carrier differs");
         }
     }

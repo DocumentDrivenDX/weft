@@ -1,5 +1,5 @@
 //! Bounded native set-based UPDATE program, separate from manifest mutation.
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 use sqlparser::ast::*;
 use weft_core::{raw_action::ActionField, raw_bulk, raw_read::Carrier};
 type Result<T> = std::result::Result<T, &'static str>;
@@ -192,7 +192,18 @@ fn compile(raw: &str) -> Result<Value> {
         .map(|(col, alias)| format!("{col} IS NOT DISTINCT FROM __umf_keys.{alias}"))
         .collect::<Vec<_>>()
         .join(" AND ");
-    let sql=format!("UPDATE {native_table} SET {} WHERE EXISTS (SELECT 1 FROM ROWS FROM ({}) AS __umf_keys({}) WHERE {predicate}) AND ({}) RETURNING {}",assignments.join(", "),arrays.iter().map(|a|format!("pg_catalog.unnest({a})")).collect::<Vec<_>>().join(", "),aliases.join(", "),changed.join(" OR "),keys.join(", "));
+    let sql = format!(
+        "UPDATE {native_table} SET {} WHERE EXISTS (SELECT 1 FROM ROWS FROM ({}) AS __umf_keys({}) WHERE {predicate}) AND ({}) RETURNING {}",
+        assignments.join(", "),
+        arrays
+            .iter()
+            .map(|a| format!("pg_catalog.unnest({a})"))
+            .collect::<Vec<_>>()
+            .join(", "),
+        aliases.join(", "),
+        changed.join(" OR "),
+        keys.join(", ")
+    );
     let slots = read["parameterOrder"]
         .as_array()
         .unwrap()
@@ -204,7 +215,14 @@ fn compile(raw: &str) -> Result<Value> {
                 .iter()
                 .find(|p| p.name == *name.as_str().unwrap())
                 .unwrap();
-            json!({"source":{"bulkInput":p.name},"carrier":p.carrier})
+            let mut slot = json!({"source":{"bulkInput":p.name},"carrier":p.carrier});
+            if p.container.is_some() {
+                slot["nullable"] = json!(p.nullable);
+                slot["container"] = serde_json::to_value(&p.container).unwrap();
+                slot["elementNullable"] = json!(p.element_nullable);
+                slot["maxItems"] = json!(p.max_items);
+            }
+            slot
         })
         .collect::<Vec<_>>();
     let selection = json!({"sql":read["sql"],"parameters":slots});
@@ -243,18 +261,24 @@ mod tests {
         assert_eq!(out["binding"], request["action"]["binding"]);
         assert_eq!(out["security"], request["action"]["security"]);
         assert_eq!(out["maxItems"], 3);
-        assert!(out["selection"]["sql"]
-            .as_str()
-            .unwrap()
-            .ends_with("LIMIT 4 FOR UPDATE"));
-        assert!(!out["preview"]["sql"]
-            .as_str()
-            .unwrap()
-            .contains("FOR UPDATE"));
-        assert!(out["update"]["sql"]
-            .as_str()
-            .unwrap()
-            .starts_with("UPDATE "));
+        assert!(
+            out["selection"]["sql"]
+                .as_str()
+                .unwrap()
+                .ends_with("LIMIT 4 FOR UPDATE")
+        );
+        assert!(
+            !out["preview"]["sql"]
+                .as_str()
+                .unwrap()
+                .contains("FOR UPDATE")
+        );
+        assert!(
+            out["update"]["sql"]
+                .as_str()
+                .unwrap()
+                .starts_with("UPDATE ")
+        );
         assert!(out["update"]["sql"].as_str().unwrap().contains("ROWS FROM"));
         assert!(out.get("manifest").is_none());
         assert_eq!(
@@ -266,10 +290,123 @@ mod tests {
     fn sentinel_order_and_source_boundaries_refuse() {
         for change in 0..5 {
             let mut r = request();
-            match change{0=>r["maxItems"]=json!(0),1=>r["selection"]["rowCap"]=json!(3),2=>r["selection"]["sql"]=json!("SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.status ASC"),3=>r["selection"]["sql"]=json!("SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC LIMIT 1"),_=>r["action"]["source"]["documentSha256"]=json!("wrong")};
+            match change {
+                0 => r["maxItems"] = json!(0),
+                1 => r["selection"]["rowCap"] = json!(3),
+                2 => {
+                    r["selection"]["sql"] = json!(
+                        "SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.status ASC"
+                    )
+                }
+                3 => {
+                    r["selection"]["sql"] = json!(
+                        "SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC LIMIT 1"
+                    )
+                }
+                _ => r["action"]["source"]["documentSha256"] = json!("wrong"),
+            };
             let out = result(&r);
             assert_eq!(out["status"], "blocked", "{out}");
             assert!(out.get("update").is_none());
+        }
+    }
+}
+
+#[cfg(test)]
+mod list_parameter_tests {
+    use super::*;
+    fn request() -> Value {
+        let action: Value = serde_json::from_str(include_str!(
+            "../../../tests/native-actions/action-request.json"
+        ))
+        .unwrap();
+        json!({"version":"weft.native-bulk/0.1","selection":{"version":"weft.raw-read/0.1","target":"postgresql18","sql":"SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC","binding":action["binding"],"parameters":[],"rowCap":4},"action":action,"maxItems":3,"actionInputs":{},"parameters":[]})
+    }
+    fn compile(r: &Value) -> Value {
+        serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    fn list_request() -> Value {
+        let mut r = request();
+        let p = json!({"name":"statuses","carrier":"string","nullable":false,"container":"list","elementNullable":true,"maxItems":8});
+        r["parameters"] = json!([p]);
+        r["selection"]["parameters"] = r["parameters"].clone();
+        r["selection"]["sql"] = json!(
+            "SELECT o.id AS id,o.status AS status FROM sales.order AS o WHERE o.status IN (:statuses) ORDER BY o.id ASC"
+        );
+        r
+    }
+    #[test]
+    fn selection_list_metadata_is_original_and_old_scalar_artifact_is_identical() {
+        let scalar = compile(&request());
+        assert_eq!(scalar["status"], "compiled", "{scalar}");
+        assert_eq!(
+            scalar["structuralDigest"]["sha256"],
+            "f34aa692fefcf4b225e3e793c56fc9f4e4bf9b62220d6b2ff40bd365a6caa5f1"
+        );
+        let r = list_request();
+        let p = compile(&r);
+        assert_eq!(p["status"], "compiled", "{p}");
+        let slot = &p["selection"]["parameters"][0];
+        assert_eq!(slot["source"], json!({"bulkInput":"statuses"}));
+        assert_eq!(slot["container"], "list");
+        assert_eq!(slot["nullable"], false);
+        assert_eq!(slot["elementNullable"], true);
+        assert_eq!(slot["maxItems"], 8);
+        assert!(
+            p["selection"]["sql"]
+                .as_str()
+                .unwrap()
+                .contains("::pg_catalog.text[]")
+        );
+        assert_eq!(p["parameters"], r["parameters"]);
+        for (field, value) in [
+            ("container", Value::Null),
+            ("elementNullable", json!(false)),
+            ("maxItems", json!(7)),
+            ("nullable", json!(true)),
+        ] {
+            let mut invalid = r.clone();
+            invalid["parameters"][0][field] = value;
+            assert_eq!(compile(&invalid)["status"], "blocked", "{field}");
+        }
+    }
+    #[test]
+    fn action_value_parameters_remain_scalar_even_when_selection_lists_are_supported() {
+        let mut r = request();
+        let mut doc: Value =
+            serde_json::from_str(r["action"]["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        let action = &mut doc["modules"][0]["extensions"]["umf.actions"]["actions"][0];
+        action["parameters"].as_array_mut().unwrap().push(json!({"id":"next","kind":"value","field":{"module":"sales","element":"status"},"required":true}));
+        action["binding"]["effects"][0]["values"][0]["value"] = json!({"parameter":"next"});
+        let raw = doc.to_string();
+        let hash = weft_core::json::sha256(raw.as_bytes());
+        r["action"]["binding"]["modelJson"] = json!(raw);
+        r["action"]["binding"]["modelSha256"] = json!(hash);
+        r["action"]["source"]["documentSha256"] = json!(hash);
+        let mut ontology: Value = serde_json::from_str(
+            r["action"]["security"]["ontology"]["utf8"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        ontology["documents"][0]["revision"] = json!(hash);
+        let ontology = ontology.to_string();
+        r["action"]["security"]["ontology"]["sha256"] =
+            json!(weft_core::json::sha256(ontology.as_bytes()));
+        r["action"]["security"]["ontology"]["utf8"] = json!(ontology);
+        r["selection"]["binding"] = r["action"]["binding"].clone();
+        r["actionInputs"] = json!({"next":"new_status"});
+        r["parameters"] = json!([{"name":"new_status","carrier":"string","nullable":false}]);
+        let p = compile(&r);
+        assert_eq!(p["status"], "compiled", "{p}");
+        for (field, value) in [
+            ("container", json!("list")),
+            ("elementNullable", json!(true)),
+            ("maxItems", json!(8)),
+        ] {
+            let mut invalid = r.clone();
+            invalid["parameters"][0][field] = value;
+            assert_eq!(compile(&invalid)["status"], "blocked", "{field}");
         }
     }
 }

@@ -61,10 +61,10 @@ pub struct Binding {
     #[serde(default,skip_serializing_if="Option::is_none")]
     pub native_columns: Option<Json>,
 }
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all="lowercase")]
 pub enum ParameterContainer { List }
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Parameter {
     pub name: String,
