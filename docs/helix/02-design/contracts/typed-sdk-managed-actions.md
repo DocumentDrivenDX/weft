@@ -7,7 +7,7 @@ ddx:
   links:
     - id: weft.typed-sdk-delta-actions
       kind: informed_by
-    - id: weft.typed-sdk-managed-build
+    - id: weft.typed-sdk-managed-build-20261016
       kind: informed_by
   authoring:
     home: repo

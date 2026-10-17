@@ -7,15 +7,18 @@ ddx:
   links:
     - id: weft.typed-sdk-raw-collections
       kind: informed_by
-    - id: CONTRACT-070
-      kind: informed_by
-    - id: CONTRACT-072
-      kind: informed_by
   authoring:
     home: repo
 ---
 
 # Original source-exact native column verification
+
+Upstream requirements: UMF
+[CONTRACT-070](https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/02-design/contracts/CONTRACT-070-access-extension.md)
+and
+[CONTRACT-072](https://github.com/DocumentDrivenDX/umf/blob/main/docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md).
+These are external source citations; the local artifact graph retains the Weft
+contract relationship above.
 
 The optional original RawRead and ActionRequest selector
 `verificationProfile:"source-exact/0.1"` admits PostgreSQL18/Lakebase18 only.
