@@ -39,3 +39,7 @@ native qualification is also pending at this checkpoint and will be appended.
 
 No Lakebase service execution, managed search, BM25 ranking, public0.4.42 release
 or complete WR-A11/SDK acceptance follows. Temporal qualification remains HELD.
+
+## Final installed runtime cohort
+
+The final `r6b` actual installed SDK wheel passed **74 native checks**: English 24, simple nullable 25 and English nullable 25. Both sync and async paths exercise each semantic set, wrong native GIN analyzer refusal, and an actual native text configuration change after initial admission with buffered rows withheld by the closing guard. Every PostgreSQL server stopped. SDK wheel SHA256 is `4f7b256a4f3734daf8311c34efeafc31421003fbb758839a3c98a6c91086e557`; the original combined Weft wheel remains `b2dabbfa966d718a6449c4d00edc8da0e18e8a319a86101d685c4a8b64628b8a`. Independent installed byte custody matches all 35 SDK payloads and both Weft payloads to wheel bytes and retained build-source hashes. See final-r6b campaign, installed-payload and build receipts. These receipts supersede the provisional runtime identity limitation above; they do not broaden search/analyzer/temporal scope.
