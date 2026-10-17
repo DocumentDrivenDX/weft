@@ -34,6 +34,10 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_raw_read_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_native_privilege_probes_json,m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(check_native_privilege_probes_json,m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_related_read_json,m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_native_action_json, m)?)?;
@@ -302,6 +306,13 @@ fn refinement_text(value:&Bound<'_,PyAny>,maximum:usize)->PyResult<String>{
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]
 pub fn compile_raw_read_json(request:&str)->String {weft_runtime::compile_raw_read_json(request)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_native_privilege_probes_json(request:&str)->String{weft_runtime::compile_native_privilege_probes_json(request)}
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn check_native_privilege_probes_json(program:&str)->String{weft_runtime::check_native_privilege_probes_json(program)}
 
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]

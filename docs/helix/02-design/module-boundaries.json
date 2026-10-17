@@ -2966,6 +2966,7 @@
             "mod:current_scalar",
             "mod:truss_mutation",
             "mod:raw_read",
+            "mod:native_privilege_probes",
             "mod:mutation",
             "mod:truss_runtime",
             "mod:pg18",
@@ -3064,6 +3065,14 @@
             "fn:sum_sql",
             "fn:require_type",
             "fn:require"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/native_privilege_probes.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
           ],
           "pathReferences": []
         },
@@ -4097,6 +4106,8 @@
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend",
             "fn:compile_raw_read_json",
+            "fn:compile_native_privilege_probes_json",
+            "fn:check_native_privilege_probes_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
@@ -4260,6 +4271,8 @@
           "path": "crates/weft-python/src/lib.rs",
           "publicDeclarations": [
             "fn:compile_raw_read_json",
+            "fn:compile_native_privilege_probes_json",
+            "fn:check_native_privilege_probes_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
@@ -4340,6 +4353,8 @@
             "fn:lower_selection_json",
             "fn:compile_json",
             "fn:compile_raw_read_json",
+            "fn:compile_native_privilege_probes_json",
+            "fn:check_native_privilege_probes_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",

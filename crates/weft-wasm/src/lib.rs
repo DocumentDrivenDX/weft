@@ -87,6 +87,13 @@ pub fn compile_raw_read_json(request:&js_sys::JsString)->Result<String,wasm_bind
 
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_native_privilege_probes_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_native_privilege_probes_json(&original))}
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn check_native_privilege_probes_json(program:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(program,4_194_304)?;Ok(weft_runtime::check_native_privilege_probes_json(&original))}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_native_action_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> { let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_native_action_json(&original)) }
 
 #[cfg(feature="raw-postgresql-reads")]

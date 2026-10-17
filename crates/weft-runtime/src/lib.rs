@@ -753,6 +753,11 @@ pub fn compile_raw_read_json(request:&str)->String {
 }
 
 #[cfg(feature="raw-postgresql-reads")]
+pub fn compile_native_privilege_probes_json(request:&str)->String{weft_postgresql::native_privilege_probes::compile_json(request)}
+#[cfg(feature="raw-postgresql-reads")]
+pub fn check_native_privilege_probes_json(program:&str)->String{weft_postgresql::native_privilege_probes::check_json(program)}
+
+#[cfg(feature="raw-postgresql-reads")]
 pub fn compile_native_action_json(request:&str)->String{if weft_core::json::checked_json(request).ok().is_some_and(|v|v["target"]=="spark-delta4"){weft_databricks::raw_action::compile_json(request)}else{weft_postgresql::raw_action::compile_json(request)}}
 
 #[cfg(feature="raw-postgresql-reads")]
