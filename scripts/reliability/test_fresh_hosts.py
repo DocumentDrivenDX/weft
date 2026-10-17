@@ -14,7 +14,7 @@ class FreshHostTests(unittest.TestCase):
    with self.assertRaises(RuntimeError):validate_blocked_security(leaked,version,code)
  def test_optimized_helpers_refuse_before_qualification(self):
   helpers=[ROOT/'tests/qualify-and-evolve'/name for name in ('prepare-qualified-host-corpus.py','qualified-host-python.py','host-resources.py')]
-  helpers.extend([ROOT/'docs/helix/04-build/evidence/main-integration-20261010/baseline-generator.py',ROOT/BASELINE/'baseline-generator.py'])
+  helpers.extend([ROOT/'docs/helix/04-build/evidence/main-integration-20261010/baseline-generator.py',ROOT/'docs/helix/04-build/evidence/main-ed2-integration-20261010/baseline/baseline-generator.py',ROOT/BASELINE/'baseline-generator.py'])
   for helper in helpers:
    result=subprocess.run([sys.executable,'-O',str(helper)],cwd=ROOT,capture_output=True,text=True)
    self.assertNotEqual(result.returncode,0);self.assertEqual(result.stdout,'');self.assertIn('Qualification requires nonoptimized Python',result.stderr)
@@ -72,5 +72,29 @@ class MainBaselineTests(unittest.TestCase):
    elif mode=='missing-null-key':records[0]['response']['unaccounted']=None
    else:changes[0]['differences'][0]['main']='wrong'
    with self.assertRaises(RuntimeError):reconcile_main_baseline(historical,records,summary,changes)
+
+
+class DeclarationBaselineTests(unittest.TestCase):
+ def test_reviewed_change_is_exact_additive_ashlar_metadata_only(self):
+  import importlib.util
+  spec=importlib.util.spec_from_file_location('baseline_refresh',ROOT/BASELINE/'baseline-generator.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  source={'backend':{'backendId':'ashlar.databricks','backendVersion':'0.1.0-qualified','interfaceVersion':'weft-backend/0.2.0','targetProfile':'dbsql2026.39-qualified'},'sql':'SELECT exact_original','qualification':{'operations':[{'declaration':{'languageProfiles':copy.deepcopy(module.OLD),'unknown':{'retained':True}}}]}}
+  original=copy.deepcopy(source);expected=copy.deepcopy(source);expected['qualification']['operations'][0]['declaration']['languageProfiles'].append(module.ADDITION)
+  self.assertEqual(module.advance_declarations(source),expected);self.assertEqual(source,original)
+  for key,value in [('backendId','truss.postgresql'),('backendVersion','future'),('targetProfile','future')]:
+   other=copy.deepcopy(source);other['backend'][key]=value;self.assertEqual(module.advance_declarations(other),other)
+  for profiles in [[],module.OLD+[module.ADDITION],[module.OLD[0]],None]:
+   other=copy.deepcopy(source);other['qualification']['operations'][0]['declaration']['languageProfiles']=profiles
+   with self.assertRaises(RuntimeError):module.advance_declarations(other)
+ def test_current_baseline_preserves_requests_and_historical_native_gaps(self):
+  import gzip
+  from reliability.fresh_hosts import load_main_baseline
+  path=ROOT/'docs/helix/04-build/evidence/B-007-qualified-registration/compiled-artifacts.jsonl.gz'
+  historical=[json.loads(line) for line in gzip.decompress(path.read_bytes()).decode().splitlines()]
+  records,receipt=load_main_baseline(ROOT,path,historical)
+  self.assertEqual(len(records),2181);self.assertEqual(receipt['changedOutputs'],965);self.assertEqual(receipt['historicalIdenticalOutputs'],1216)
+  self.assertEqual(receipt['reviewedDeclarationCases'],964);self.assertFalse(receipt['independentlyBuiltReference'])
+  reviewed=ROOT/BASELINE/'reviewed-declaration-differences.json.gz'
+  self.assertEqual(hashlib.sha256(reviewed.read_bytes()).hexdigest(),receipt['reviewedDeclarationDifferencesSha256'])
 
 if __name__=='__main__':unittest.main()

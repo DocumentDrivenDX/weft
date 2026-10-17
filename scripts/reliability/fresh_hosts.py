@@ -4,7 +4,7 @@ if __package__ in (None,''):sys.path.insert(0,str(pathlib.Path(__file__).resolve
 from reliability.config import load_config
 from reliability.process import run
 ROOT=pathlib.Path(__file__).resolve().parents[2]
-BASELINE=pathlib.Path('docs/helix/04-build/evidence/main-ed2-integration-20261010/baseline')
+BASELINE=pathlib.Path('docs/helix/04-build/evidence/main-consolidation-20261017/baseline')
 def canonical_json(value):
  return json.dumps(value,sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False)
 
