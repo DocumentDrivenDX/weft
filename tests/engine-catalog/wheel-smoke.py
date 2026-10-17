@@ -1,5 +1,5 @@
 """Exact installed-wheel SDK compiler custody; no native authority is granted."""
-import argparse,copy,hashlib,importlib,json,pathlib,subprocess,tomllib,zipfile
+import argparse,copy,hashlib,importlib,json,pathlib,subprocess,sys,tempfile,tomllib,zipfile
 import weft
 p=argparse.ArgumentParser();p.add_argument('--wheel',type=pathlib.Path,required=True);p.add_argument('--output',type=pathlib.Path,required=True);a=p.parse_args()
 root=pathlib.Path(__file__).resolve().parents[2]
@@ -52,6 +52,27 @@ for compiler,fixture,page_compiler,backend in [
     page=run(compiler+'-page',weft.compile_engine_page_json,dict(version='weft.engine-page/0.1',compiler=page_compiler,request=r,pageSize=2))
     assert run(compiler+'-page-check',weft.check_engine_page_json,page,r,None)==page
     assert any(o['id']=='ashlar.candidate.keyIntegrity' for o in page['artifact']['obligations'])
+# Combined 0.4.42 adds issued presence/model/Graph APIs without changing legacy modes.
+if tuple(map(int,weft.__version__.split('.'))) >= (0,4,42):
+    assert callable(weft.prepare_application_lineage)
+    for method in ('model_requirements_json','graph_requirements_json','lower_postgresql_current_presence_candidate_json','check_postgresql_current_presence_candidate_json'):
+        assert callable(getattr(weft.CurrentPresencePreparation,method))
+    raw=(root/'tests/current-query-presence/fixtures/unadmitted-context.request.json').read_text()
+    parent=weft.prepare_application_lineage(raw);child=parent.prepare_current_presence()
+    assert type(child) is weft.CurrentPresencePreparation and child.source_preparation() is parent
+    assert json.loads(child.graph_requirements_json())['nativeAdmission']=='required'
+    checks.append(dict(id='presence-issued-class',status='passed'))
+    with tempfile.TemporaryDirectory(prefix='weft-presence-wheel-') as temporary:
+        for label,script,mode in [('presence-model-requirements','python-model-requirements-bridge.py','combined'),('presence-graph-requirements','python-graph-requirements-bridge.py','combined'),('presence-postgresql-lower-check','python-bridge.py','combined')]:
+            receipt=pathlib.Path(temporary)/(label+'.json')
+            result=subprocess.run([sys.executable,'-I','-B',str(root/'tests/current-query-presence'/script),str(shim.parent.parent),mode,str(receipt)],check=True,capture_output=True,text=True)
+            summary=json.loads(result.stdout)
+            if script=='python-graph-requirements-bridge.py':assert type(summary['passed']) is int and summary['passed']==len(summary['checks']) and summary['passed']>0 and summary['nativeAdmission'] is False
+            else:assert summary['passed'] is True and type(summary['checks']) is int and summary['checks']>0 and summary['nativeDatabase'] is False
+            if receipt.exists():
+                detail=json.loads(receipt.read_bytes());assert detail['passed'] is True
+                if 'nativeModuleSha256' in detail:assert detail['nativeModuleSha256']==before['nativeModuleSha256']
+            checks.append(dict(id=label,status='passed'))
 assert pins()==before
 report=dict(version=weft.__version__,sourceCommit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),wheel=a.wheel.name,pinsBeforeAfter=before,controls=len(checks),checks=checks,nativeAdmission=False,securityReady=False,temporalQualification='held')
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(dict(controls=len(checks),nativeAdmission=False,temporalQualification='held')))

@@ -14,3 +14,13 @@ for c in [r[:-1],[r[0]]*5]:
     except AssertionError:controls+=1
     else:raise AssertionError('missing/duplicate reports')
 print(dict(validatorControls=controls,nativeAdmission=False,temporalQualification='held'))
+
+# Previous 0.4.41 inventories stay exact; combined 0.4.42 must prove the additional APIs.
+b42=[dict(row,sourceCommit='a'*40,version='0.4.42',controls=len(m['EXPECTED_042']),checks=copy.deepcopy(m['EXPECTED_042']),nativeAdmission=False,securityReady=False,temporalQualification='held') for row in b]
+m['validate'](b42,b,'a'*40,'0.4.42')
+for field,value in [('controls',len(m['EXPECTED'])),('checks',copy.deepcopy(m['EXPECTED'])),('checks',list(reversed(m['EXPECTED_042'])))]:
+    bad=copy.deepcopy(b42);bad[0][field]=value
+    try:m['validate'](bad,b,'a'*40,'0.4.42')
+    except AssertionError:controls+=1
+    else:raise AssertionError('combined '+field)
+print(dict(combinedValidatorControls=controls,nativeAdmission=False,temporalQualification='held'))
