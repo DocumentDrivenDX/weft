@@ -2,7 +2,7 @@
 use super::*;
 use weft_core::{application_ir as app, application_model::Shape, ir::Span};
 
-fn legacy(field: &app::Field) -> Expression {
+pub(super) fn legacy(field: &app::Field) -> Expression {
     Expression::Field {
         scan: field.scan.clone(),
         identity: field.identity.clone(),
@@ -69,7 +69,7 @@ pub(super) fn value(lower: &mut Lower<'_>, v: &app::Value) -> Result<String> {
         }
     }
 }
-fn predicate(
+pub(super) fn predicate(
     lower: &mut Lower<'_>,
     relations: &relationships::Traversals,
     p: &app::Predicate,
@@ -130,13 +130,7 @@ fn representation(ty: &LogicalType) -> Representation {
         },
     }
 }
-pub(super) fn lower(
-    context: &Context<'_>,
-    binding: &Binding,
-    plan: &app::Plan,
-) -> Result<TargetPlan> {
-    let mut lower = Lower::new(binding);
-    lower.mathematical_profile=context.target.id==crate::mathematical_integer::PROFILE;
+pub(super) fn collect_plan(context: &Context<'_>, lower: &mut Lower<'_>, plan: &app::Plan) -> Result<()> {
     lower
         .scans
         .insert(plan.source.occurrence.clone(), plan.source.record.clone());
@@ -145,14 +139,14 @@ pub(super) fn lower(
             .scans
             .insert(join.right.occurrence.clone(), join.right.record.clone());
         for p in &join.on {
-            collect_predicate(&mut lower, p)?;
+            collect_predicate(lower, p)?;
         }
     }
     for p in &plan.filters {
-        collect_predicate(&mut lower, p)?;
+        collect_predicate(lower, p)?;
     }
     for f in plan.groups.iter().chain(&plan.order) {
-        field(&mut lower, f);
+        field(lower, f);
     }
     for output in &plan.outputs {
         match &output.expression {
@@ -172,7 +166,7 @@ pub(super) fn lower(
                         .insert((scan.clone(), serde_json::to_string(identity).unwrap()));
                 }
                 field(
-                    &mut lower,
+                    lower,
                     &app::Field {
                         scan: scan.clone(),
                         identity: identity.clone(),
@@ -181,14 +175,26 @@ pub(super) fn lower(
                     },
                 );
             }
-            app::Expression::Sum { argument, .. } => field(&mut lower, argument),
+            app::Expression::Sum { argument, .. } => field(lower, argument),
             app::Expression::Count { .. } => {}
             app::Expression::RelatedKeys { .. } => {}
         }
     }
+    Ok(())
+}
+
+pub(super) fn lower(
+    context: &Context<'_>,
+    binding: &Binding,
+    plan: &app::Plan,
+) -> Result<TargetPlan> {
+    let mut lower = Lower::new(binding);
+    lower.mathematical_profile=context.target.id==crate::mathematical_integer::PROFILE;
+    collect_plan(context, &mut lower, plan)?;
     let mut relations = relationships::Traversals::collect(&mut lower, plan)?;
     lower.prepare()?;
-    let relationship_checks = relations.prepare(&mut lower)?;
+    let mut relationship_checks = relations.prepare(&mut lower)?;
+    let navigation = super::navigation::prepare(context, binding, plan, &mut lower, &relations, &mut relationship_checks)?;
     let mut from = binding::quote(&plan.source.occurrence);
     for join in &plan.joins {
         let on = join
@@ -202,11 +208,12 @@ pub(super) fn lower(
             binding::quote(&join.right.occurrence)
         );
     }
-    let filters = plan
+    let mut filters = plan
         .filters
         .iter()
         .map(|p| predicate(&mut lower, &relations, p))
         .collect::<Result<Vec<_>>>()?;
+    if let Some((membership, _)) = &navigation { filters.push(membership.clone()); }
     let groups = plan
         .groups
         .iter()
@@ -360,6 +367,7 @@ pub(super) fn lower(
             failure_code: "WFT-NUMERIC-DOMAIN".into(),
         },
     ];
+    if let Some((_, source_obligations)) = navigation { obligations.extend(source_obligations); }
     if !lower.compound_checks.is_empty() {
         obligations.push(Obligation{id:"ashlar.candidate.compoundIntegrity".into(),parameters:json!({"phase":"before-user-query","checks":lower.compound_checks,"success":"one exact STRING count equal to 0 per check","samePublicationRequired":true,"encoding":"ashlar-weft-json-value/0.1-candidate","nativeNull":false,"numericLeaves":"exact strings","limits":{"depthExclusive":128,"nodesPerValue":100000},"execution":"native recursion/resource errors refuse atomically; no partial values"}),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into()});
     }

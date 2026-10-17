@@ -148,6 +148,9 @@ pub struct Output {
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Plan {
+    /// Original compiler-owned source entity selection. Ordinary plans omit it.
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub navigation: Option<Box<Navigation>>,
     pub ir_version: String,
     pub module_pins: Vec<ModelPin>,
     pub read_profile: Option<ReadProfile>,
@@ -162,4 +165,20 @@ pub struct Plan {
     pub outputs: Vec<Output>,
     pub order: Vec<Field>,
     pub limit: Option<u16>,
+}
+
+/// Prepared by Core from original source SQL and canonical relationship identity.
+/// Private members prevent a host from fabricating an admitted source selection.
+#[derive(Debug,Clone,Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct Navigation {
+    version:String,
+    source:Box<Plan>,
+    relationship:RelationshipRead,
+}
+impl Navigation {
+    pub fn source(&self)->&Plan{&self.source}
+    pub(crate) fn source_mut(&mut self)->&mut Plan{&mut self.source}
+    pub fn relationship(&self)->&RelationshipRead{&self.relationship}
+    pub(crate) fn new(source:Plan,relationship:RelationshipRead)->Self{Self{version:"weft.engine-navigation/0.1".into(),source:Box::new(source),relationship}}
 }

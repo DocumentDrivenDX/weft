@@ -54,6 +54,9 @@ fn compile_original(method:&str,request:&Value)->Result<Value>{
   },
   _=>return Err("unrecognized original engine compiler")};
  let artifact=weft_core::json::checked_json(&raw).map_err(|_|"original compiler output refused")?;
+ wrap_artifact(method,request,artifact)
+}
+pub(crate) fn wrap_artifact(method:&str,request:&Value,artifact:Value)->Result<Value>{
  if artifact["status"]!="compiled" {return Ok(json!({"version":"weft.engine-read/0.1","status":"blocked","original":artifact}))}
  if request.get("exactParameters").is_some_and(|p|p.as_object().is_none_or(|m|!m.is_empty())){return Err("engine catalog exact binary/temporal parameter profile not selected")}
  let parameters=request["parameters"].as_object().ok_or("complete declared parameter object required")?;
@@ -69,7 +72,8 @@ fn checked_program(program:&Value)->Result<(&str,&Value)>{
  if program["version"]!="weft.engine-read/0.1"||program["status"]!="compiled"{return Err("original compiled engine catalog required")}
  let method=program["compiler"].as_str().ok_or("original compiler required")?;
  let request=&program["request"];
- if compile_original(method,request)?!=*program{return Err("original engine program differs from its compiler")}
+ let expected=if let Some(packet)=program.get("relatedRequest"){crate::engine_related_read::compile_value(packet)?}else{compile_original(method,request)?};
+ if expected!=*program{return Err("original engine program differs from its compiler")}
  Ok((method,request))
 }
 fn bind(program:&Value,request:&Value)->Result<Value>{
@@ -79,7 +83,7 @@ fn bind(program:&Value,request:&Value)->Result<Value>{
  let before=original["parameters"].as_object().ok_or("original parameter inventory required")?;
  let after=request["parameters"].as_object().ok_or("current parameter inventory required")?;
  if before.keys().ne(after.keys())||before.iter().any(|(name,value)|after[name]["family"]!=value["family"]){return Err("engine parameter inventory or family differs")}
- compile_original(method,request)
+ if let Some(packet)=program.get("relatedRequest"){let mut packet=packet.clone();packet["source"]["parameters"]=request["parameters"].clone();packet["target"]["parameters"]=request["parameters"].clone();crate::engine_related_read::compile_value(&packet)}else{compile_original(method,request)}
 }
 fn response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-read/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-READ","message":code}]})).to_string()}
 pub fn compile_json(raw:&str)->String{response((||{let v=weft_core::json::checked_json(raw).map_err(|_|"request framing refused")?;let r:Request=serde_json::from_value(v).map_err(|_|"closed engine catalog request required")?;if r.version!="weft.engine-read/0.1"{return Err("engine catalog version differs")};compile_original(&r.compiler,&r.request)})())}

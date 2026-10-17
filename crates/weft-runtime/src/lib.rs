@@ -763,6 +763,8 @@ pub fn compile_search_json(request:&str)->String{weft_postgresql::search::compil
 
 #[cfg(feature="raw-postgresql-reads")]
 pub mod engine_read;
+#[cfg(feature="raw-postgresql-reads")]
+pub mod engine_related_read;
 /// Original-object presence custody, not JSON import or native permission.
 /// ```compile_fail
 /// use weft_runtime::CurrentPresencePreparation;

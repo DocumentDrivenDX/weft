@@ -165,6 +165,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/candidate/navigation.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/candidate/path_lowering.rs",
           "publicDeclarations": [],
           "pathReferences": []
@@ -594,6 +599,7 @@
             "field:name",
             "field:expression",
             "struct:Plan",
+            "field:navigation",
             "field:ir_version",
             "field:module_pins",
             "field:read_profile",
@@ -607,7 +613,10 @@
             "field:aggregate",
             "field:outputs",
             "field:order",
-            "field:limit"
+            "field:limit",
+            "struct:Navigation",
+            "fn:source",
+            "fn:relationship"
           ],
           "pathReferences": []
         },
@@ -665,7 +674,23 @@
             "field:target_multiplicity",
             "field:target_lifecycle",
             "fn:relationship_read",
+            "fn:relationship_read_identity",
             "fn:scalar_descriptor_by_identity"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_navigation.rs",
+          "publicDeclarations": [
+            "struct:Input",
+            "field:source_sql",
+            "field:relationship_module",
+            "field:relationship_id",
+            "field:inverse",
+            "field:source",
+            "field:source_exact",
+            "field:target",
+            "field:target_exact"
           ],
           "pathReferences": []
         },
@@ -992,7 +1017,8 @@
             "struct:Registry",
             "fn:register",
             "fn:manifest",
-            "fn:compile"
+            "fn:compile",
+            "fn:selection"
           ],
           "pathReferences": []
         },
@@ -1215,6 +1241,7 @@
             "fn:compile_decimal12_typed_page_json_with_exact_numbers_factory",
             "fn:compile_identity_names_json_with_exact_numbers_factory",
             "fn:compile_cursor_json_with_exact_numbers_factory",
+            "fn:compile_navigation_json_with_factory",
             "mod:v04",
             "mod:v041",
             "mod:v042"
@@ -1498,6 +1525,7 @@
             "mod:security_association_ref",
             "mod:security_source",
             "mod:application_ir",
+            "mod:application_navigation",
             "mod:application_model",
             "mod:application_resolve",
             "mod:application_syntax",
@@ -3761,7 +3789,8 @@
             "struct:TargetPlan",
             "fn:compile_json",
             "fn:compile_page_json",
-            "fn:compile_cursor_json"
+            "fn:compile_cursor_json",
+            "fn:compile_navigation_json"
           ],
           "pathReferences": []
         },
@@ -3947,6 +3976,13 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-runtime/src/engine_related_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/implicit_arithmetic.rs",
           "publicDeclarations": [
             "fn:compile_json"
@@ -4016,6 +4052,7 @@
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
             "mod:engine_read",
+            "mod:engine_related_read",
             "struct:CurrentPresencePreparation",
             "fn:json",
             "fn:is_from",
@@ -4178,6 +4215,7 @@
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
             "fn:compile_engine_read_json",
+            "fn:compile_engine_related_read_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",
@@ -4270,6 +4308,7 @@
             "fn:designation_json",
             "fn:native_request_json",
             "fn:compile_engine_read_json",
+            "fn:compile_engine_related_read_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",

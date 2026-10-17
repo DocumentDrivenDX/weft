@@ -491,6 +491,7 @@ fn resolve_inner(
     s.caps.insert("project".into());
     let extended=q.limit==Some(0)||q.predicates.iter().any(|p|matches!(p,ast::Predicate::Boolean{..}))||q.outputs.iter().any(|o|matches!(o.output,ast::Output::CountDistinct(_)));
     Ok(ir::Plan {
+        navigation:None,
         ir_version: if extended {"weft-ir/application-lineage/0.2-candidate"}else if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
         module_pins: catalog.pins(),
         read_profile: profile,

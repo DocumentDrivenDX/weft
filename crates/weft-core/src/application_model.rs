@@ -480,6 +480,21 @@ impl Catalog {
             .at(&name.span));
         }
         let (module, rel, inverse) = matches[0];
+        self.relationship_read_definition(source,module,rel,inverse)
+    }
+    /// Resolve original relationship identity and direction without a name alias.
+    pub fn relationship_read_identity(&self,source:&Record,module_id:&str,id:&str,inverse:bool)->Result<RelationshipRead>{
+        let mut found=Vec::new();
+        for module in self.documents[source.document]["modules"].as_array().unwrap(){
+            if module["id"]!=module_id||!self.inputs()[source.document].selected_module_ids.iter().any(|m|m==module_id){continue}
+            if let Some(relationships)=module["relationships"].as_array(){for rel in relationships{if rel["id"]==id{found.push((module,rel));}}}
+        }
+        if found.len()!=1{return Err(fail("Original relationship identity is missing or ambiguous"))}
+        let(module,rel)=found[0];let side=if inverse{"target"}else{"source"};
+        if !rel[side].as_array().is_some_and(|ends|ends.iter().any(|e|e["module"]==source.identity.module&&e["element"]==source.identity.element)){return Err(fail("Original relationship direction does not start at source Record"))}
+        self.relationship_read_definition(source,module,rel,inverse)
+    }
+    fn relationship_read_definition(&self,source:&Record,module:&Value,rel:&Value,inverse:bool)->Result<RelationshipRead>{
         crate::model::reference08(&source.pin, rel, &["id", "name", "title", "description", "source", "target", "directed", "sourceMultiplicity", "targetMultiplicity", "targetLifecycle", "associationRecord", "inverse"])?;
         for endpoint in rel["source"].as_array().unwrap() { crate::model::reference08(&source.pin, endpoint, &["module", "element"])?; }
         for endpoint in rel["target"].as_array().unwrap() { crate::model::reference08(&source.pin, endpoint, &["module", "element", "key"])?; }

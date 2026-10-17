@@ -87,7 +87,7 @@ fn valid_languages(profiles: &[LanguageProfile], interface: &str) -> bool {
         && profiles.iter().all(|p| {
             matches!(
                 profile_key(p),
-                ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0")
+                ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0") | ("weft-sql/0.2.0", "weft-ir/engine-navigation/0.1")
             ) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
                 || (interface == "weft-backend/0.2.7" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.7"))
                 || (interface == "weft-backend/0.2.6" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.6"))
@@ -791,6 +791,8 @@ impl Registry {
         })?
     }
 }
+/// Exact original application selection, including admitted source navigation.
+pub fn selection(plan: Plan<'_>)->Selection{selected(plan)}
 fn selected(plan: Plan<'_>) -> Selection {
     use crate::{
         application_ir::{Expression as AE, Predicate as AP, Value as AV},
@@ -920,6 +922,9 @@ fn selected(plan: Plan<'_>) -> Selection {
             s.types.extend(p.type_graph.iter().map(|d|d.identity.clone()));
         }
         Plan::V02(p) => {
+            if let Some(navigation)=&p.navigation{
+                let source=selected(Plan::V02(navigation.source()));s.records.extend(source.records);s.fields.extend(source.fields);s.types.extend(source.types);s.relationships.extend(source.relationships);rel(navigation.relationship(),&mut s);
+            }
             s.records.push(p.source.record.clone());
             for j in &p.joins {
                 s.records.push(j.right.record.clone());

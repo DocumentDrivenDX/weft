@@ -40,6 +40,7 @@ pub mod security_candidate_incidence;
 pub mod security_association_ref;
 pub mod security_source;
 pub mod application_ir;
+pub mod application_navigation;
 pub mod application_model;
 pub mod application_resolve;
 pub mod application_syntax;

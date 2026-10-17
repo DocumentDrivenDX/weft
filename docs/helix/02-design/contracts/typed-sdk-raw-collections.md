@@ -150,6 +150,33 @@ Source controls do not establish native qualification. PostgreSQL, UC current,
 managed mutations and registered engines do not acquire this capability by
 sharing the logical function spelling.
 
+## Registered-engine navigation candidate
+
+The separate original engine navigation entrypoint admits the source and target
+against the same original model, binding and parameter context. Core re-resolves
+the original source SQL, resolves the canonical relationship module/id and
+explicit direction, and requires the directed endpoints to match the actual
+source and target Records. Grouped or aggregate source queries cannot establish
+source entity identity. Navigation nesting refuses in this initial packet.
+
+The application plan carries a compiler-created `navigation` extension only in
+`weft-ir/engine-navigation/0.1`; ordinary plans omit the property and preserve
+historical bytes. Its version is `weft.engine-navigation/0.1`, its source is the
+complete original source Plan, and its relationship is the canonical original
+RelationshipRead. Native backends must independently admit source dependencies,
+not merely the target projection. The required capability is
+`relationship.sourceSelection`.
+
+The backend owns correlated membership over original object IDs and edge
+relations. The source filter, joins, explicit order and explicit LIMIT execute
+before target membership; an absent source LIMIT must not acquire a default
+row cap. Original source projection never substitutes an authored Key for native
+object identity. EXISTS deduplicates target occurrences while preserving the
+target query's own selected Key, aggregation, ordering and delivery semantics.
+Original source obligations propagate. No runtime or SDK may parse or rewrite
+native SQL to compose this operation. Source implementation and compiler tests
+remain unqualified until actual original-engine E2Es pass on one frozen cohort.
+
 ## Qualification
 
 Compiler source tests and installed-wheel controls are precursor evidence only.
