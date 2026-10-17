@@ -190,11 +190,6 @@
           "pathReferences": []
         },
         {
-          "path": "crates/weft-databricks/src/column_custody.rs",
-          "publicDeclarations": [],
-          "pathReferences": []
-        },
-        {
           "path": "crates/weft-databricks/src/compatible_profile.rs",
           "publicDeclarations": [
             "const:VERSION",
@@ -1139,6 +1134,32 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/column_custody.rs",
+          "publicDeclarations": [
+            "type:Columns",
+            "struct:BindingDocument",
+            "field:source_id",
+            "field:document_json",
+            "field:document_sha256",
+            "struct:NativeColumns",
+            "field:column_set",
+            "field:binding",
+            "struct:NativeColumnsEnvelope",
+            "field:target",
+            "field:sets",
+            "field:vector_extension",
+            "struct:VectorExtension",
+            "field:schema",
+            "field:version",
+            "fn:field_key",
+            "fn:native_type",
+            "fn:admit_columns",
+            "fn:row_null",
+            "fn:generation"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/compile.rs",
           "publicDeclarations": [
             "const:MAX_REQUEST_BYTES",
@@ -1466,6 +1487,7 @@
             "mod:security_aggregate_results",
             "mod:security_operand_values",
             "mod:current_query_refinement",
+            "mod:column_custody",
             "mod:raw_read",
             "mod:raw_action",
             "mod:raw_bulk",
@@ -1792,13 +1814,16 @@
             "field:target",
             "field:pairs",
             "field:to_one",
+            "enum:SchemaBinding",
             "struct:Binding",
             "field:version",
             "field:schema",
+            "field:schema_binding",
             "field:tables",
             "field:relationships",
             "field:model_sha256",
             "field:model_json",
+            "field:native_columns",
             "struct:Parameter",
             "field:name",
             "field:carrier",
@@ -1812,9 +1837,13 @@
             "field:row_cap",
             "field:snapshots",
             "field:keyset",
+            "field:stream_page_size",
             "struct:AdmittedRead",
             "fn:request",
             "fn:query",
+            "fn:original_document",
+            "fn:original_record",
+            "fn:original_field_ref",
             "fn:admit_json"
           ],
           "pathReferences": []
@@ -3136,6 +3165,13 @@
           "publicDeclarations": [
             "fn:compile_json"
           ],
+          "pathReferences": [
+            "crates/weft-postgresql/src/raw_read_projection.rs"
+          ]
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read_projection.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {

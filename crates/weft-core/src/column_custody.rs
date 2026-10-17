@@ -1,22 +1,29 @@
-//! Original ColumnSet/binding custody shared by explicit Databricks profiles.
+//! Original ColumnSet/binding custody shared by explicit target profiles.
 //! Core admits the UMF model first. These facts grant no native permission or
 //! cross-profile qualification; each caller owns physical type and runtime gates.
 use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};
-use weft_core::{raw_read,search};
+use crate::{raw_read,search};
 type Result<T>=std::result::Result<T,&'static str>;
-pub(crate) type Columns=std::collections::BTreeMap<String,(String,String,bool)>;
+pub type Columns=std::collections::BTreeMap<String,(String,String,bool)>;
 #[derive(Deserialize,Serialize)]
 #[serde(deny_unknown_fields,rename_all="camelCase")]
-pub(crate) struct BindingDocument{pub(crate) source_id:String,pub(crate) document_json:String,pub(crate) document_sha256:String}
+pub struct BindingDocument{pub source_id:String,pub document_json:String,pub document_sha256:String}
 #[derive(Deserialize,Serialize)]
 #[serde(deny_unknown_fields,rename_all="camelCase")]
-pub(crate) struct NativeColumns{pub(crate) column_set:search::Source,pub(crate) binding:BindingDocument}
-pub(crate) fn field_key(v:&Value)->String{weft_core::mutation::canonical(v)}
+pub struct NativeColumns{pub column_set:search::Source,pub binding:BindingDocument}
+/// Closed original-source envelope; each target independently admits its profile.
+#[derive(Deserialize,Serialize)]
+#[serde(deny_unknown_fields,rename_all="camelCase")]
+pub struct NativeColumnsEnvelope{pub target:Value,pub sets:Vec<NativeColumns>,#[serde(default,skip_serializing_if="Option::is_none")]pub vector_extension:Option<VectorExtension>}
+#[derive(Deserialize,Serialize)]
+#[serde(deny_unknown_fields,rename_all="camelCase")]
+pub struct VectorExtension{pub schema:String,pub version:String}
+pub fn field_key(v:&Value)->String{crate::mutation::canonical(v)}
 fn exact_keys(v:&Value,required:&[&str],optional:&[&str])->bool{
  v.as_object().is_some_and(|m|required.iter().all(|k|m.contains_key(*k))&&m.keys().all(|k|required.contains(&k.as_str())||optional.contains(&k.as_str())))
 }
-pub(crate) fn native_type(raw:&str)->Result<String>{
+pub fn native_type(raw:&str)->Result<String>{
  if raw.len()>100||!raw.is_ascii(){return Err("bounded native type spelling required")}
  let chars=raw.chars().collect::<Vec<_>>();
  for (i,c) in chars.iter().enumerate(){if c.is_ascii_whitespace(){
@@ -25,7 +32,7 @@ pub(crate) fn native_type(raw:&str)->Result<String>{
  }}
  Ok(chars.into_iter().filter(|c|!c.is_ascii_whitespace()).collect::<String>().to_ascii_lowercase())
 }
-pub(crate) fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
+pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
  let source=&custody.column_set;
  if doc["vocabularies"]["umf.access"]["version"]!="0.1.0"||source.document_id!=doc["id"]||source.core_version!="0.8.0"||source.document_sha256!=model_sha256{return Err("ColumnSet original model source differs")}
  let mut sets=vec![];
@@ -37,8 +44,8 @@ pub(crate) fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&
  if sets.len()!=1{return Err("unique source-pinned original ColumnSet required")}
  let set=sets[0];let b=&custody.binding;
  if !exact_keys(set,&["binding","target","columns"],&[])||!exact_keys(&set["binding"],&["sourceId","module"],&[])||b.source_id.is_empty(){return Err("closed original ColumnSet required")}
- let binding=weft_core::json::checked_json(&b.document_json).map_err(|_|"original binding JSON refused")?;
- if weft_core::json::sha256(b.document_json.as_bytes())!=b.document_sha256||binding["umf"]!="0.8.0"||binding["vocabularies"]["umf.binding"]["version"]!="0.2.0"||binding["id"].as_str().is_none_or(str::is_empty)||set["binding"]!=json!({"sourceId":b.source_id,"module":record["module"]})||set["target"]!=*target{return Err("ColumnSet binding/source/target differs")}
+ let binding=crate::json::checked_json(&b.document_json).map_err(|_|"original binding JSON refused")?;
+ if crate::json::sha256(b.document_json.as_bytes())!=b.document_sha256||binding["umf"]!="0.8.0"||binding["vocabularies"]["umf.binding"]["version"]!="0.2.0"||binding["id"].as_str().is_none_or(str::is_empty)||set["binding"]!=json!({"sourceId":b.source_id,"module":record["module"]})||set["target"]!=*target{return Err("ColumnSet binding/source/target differs")}
  let payload=&binding["extensions"]["umf.binding"];
  if !exact_keys(payload,&["profile","logical","target","elements","fields","relationships","indexes"],&[])||!exact_keys(&payload["logical"],&["documentId","coreVersion"],&[])||!exact_keys(&payload["target"],&["system","version"],&["subset"]){return Err("closed original binding profile required")}
  if payload["profile"]!="umf-binding-2"||payload["logical"]!=json!({"documentId":doc["id"],"coreVersion":"0.8.0"})||payload["target"]["system"]!=target["platform"]||payload["target"]["version"]!=target["majorVersion"]||payload["target"]["subset"]!="typed-access-columns/0.1"{return Err("original binding logical/native target differs")}
@@ -59,7 +66,7 @@ pub(crate) fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&
  }
  Ok(columns)
 }
-pub(crate) fn row_null(doc:&Value,record:&Value,reference:&Value,original_columns:&Columns)->Result<bool>{
+pub fn row_null(doc:&Value,record:&Value,reference:&Value,original_columns:&Columns)->Result<bool>{
  let views=doc["modules"].as_array().unwrap().iter().flat_map(|m|m["extensions"]["umf.access"]["views"].as_array().into_iter().flatten()).filter(|v|v["record"]==*record).collect::<Vec<_>>();
  if views.len()!=1{return Err("unique original current Record view required")}
 
@@ -73,4 +80,14 @@ pub(crate) fn row_null(doc:&Value,record:&Value,reference:&Value,original_column
    if *not_null==nullable{return Err("original ColumnSet notNull contradicts row view")}
    for module in doc["modules"].as_array().unwrap(){for set in module["extensions"]["umf.access"]["columns"].as_array().into_iter().flatten(){for column in set["columns"].as_array().into_iter().flatten(){if column["field"]==*reference&&column["notNull"]!=!nullable{return Err("another authored ColumnSet contradicts original row view")}}}}
    Ok(nullable)
+}
+
+/// Source generation retained independently of target type admission.
+pub fn generation(doc:&Value,custody:&NativeColumns,field:&Value)->Result<Value>{
+ let set=doc.pointer(&custody.column_set.pointer).ok_or("original ColumnSet pointer absent")?;
+ let values=set["columns"].as_array().ok_or("original ColumnSet columns absent")?.iter().filter(|c|c["field"]==*field).collect::<Vec<_>>();
+ if values.len()!=1{return Err("original generation Field absent/ambiguous")}
+ let value=values[0].get("generation").ok_or("original generation absent")?;
+ if !(value.is_null()||matches!(value.as_str(),Some("identity"|"stored-expression"|"default"))){return Err("original generation unsupported")}
+ Ok(value.clone())
 }

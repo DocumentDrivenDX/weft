@@ -43,14 +43,21 @@ pub struct Relationship {
     pub to_one: bool,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all="kebab-case")]
+pub enum SchemaBinding { Qualified, SearchPath }
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Binding {
     pub version: String,
     pub schema: Option<String>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub schema_binding: Option<SchemaBinding>,
     pub tables: Vec<Table>,
     pub relationships: Vec<Relationship>,
     pub model_sha256: String,
     pub model_json: String,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub native_columns: Option<Json>,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
@@ -72,8 +79,20 @@ pub struct Request {
     pub snapshots: Option<BTreeMap<String,u64>>,
     #[serde(default)]
     pub keyset: bool,
+    #[serde(default,skip_serializing_if="std::ops::Not::not")]
+    pub stream_page_size: bool,
 }
 pub(crate) fn validate_model(binding: &Binding) -> Result<()> {
+    prepare_model(binding).map(|_| ())
+}
+
+#[derive(Debug)]
+struct AdmittedModel {
+    document: Json,
+    records: BTreeMap<Vec<String>, crate::model::Record>,
+}
+
+fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
     let doc = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
     if crate::json::sha256(binding.model_json.as_bytes()) != binding.model_sha256 {
         return Err("model source pin mismatch");
@@ -204,13 +223,14 @@ pub(crate) fn validate_model(binding: &Binding) -> Result<()> {
             return Err("relationship endpoints/multiplicity differ from UMF");
         }
     }
-    Ok(())
+    Ok(AdmittedModel { document: doc, records })
 }
 
 #[derive(Debug)]
 pub struct AdmittedRead {
     request: Request,
     query: Query,
+    model: AdmittedModel,
 }
 impl AdmittedRead {
     pub fn request(&self) -> &Request {
@@ -218,6 +238,32 @@ impl AdmittedRead {
     }
     pub fn query(&self) -> &Query {
         &self.query
+    }
+    /// The exact parsed source whose bytes and core semantics passed admission.
+    pub fn original_document(&self) -> &Json {
+        &self.model.document
+    }
+    /// Resolve a logical binding path through the admitted Catalog, never by ID guessing.
+    pub fn original_record(&self, logical_table: &[String]) -> Result<&crate::model::Record> {
+        self.model.records.get(logical_table).ok_or("table outside admitted binding")
+    }
+    /// Resolve even an unbound projection Field through original Record membership.
+    pub fn original_field_ref(&self, logical_table: &[String], logical_column: &str) -> Result<Json> {
+        let record = self.original_record(logical_table)?;
+        let modules = self.model.document["modules"].as_array().ok_or("model modules")?;
+        let members = record.value["members"].as_array().ok_or("record members")?;
+        let mut found = None;
+        for member in members {
+            let module = modules.iter().find(|m| m["id"] == member["module"])
+                .ok_or("missing member module")?;
+            let field = module["elements"].as_array().ok_or("module elements")?.iter()
+                .find(|f| f["id"] == member["element"]).ok_or("missing member")?;
+            if field["kind"] == "field" && field["name"] == logical_column {
+                if found.is_some() { return Err("column absent/ambiguous in UMF"); }
+                found = Some(member.clone());
+            }
+        }
+        found.ok_or("column absent/ambiguous in UMF")
     }
 }
 pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
@@ -230,7 +276,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     {
         return Err("unsupported raw-read version or input budget");
     }
-    validate_model(&request.binding)?;
+    let model = prepare_model(&request.binding)?;
     let mut statements =
         Parser::parse_sql(&PostgreSqlDialect {}, &request.sql).map_err(|_| "SQL parse refused")?;
     if statements.len() != 1 {
@@ -242,5 +288,59 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     Ok(AdmittedRead {
         request,
         query: *query,
+        model,
     })
+}
+
+#[cfg(test)]
+mod source_identity_tests {
+    use super::*;
+
+    #[test]
+    fn resolved_source_identity_is_not_logical_name_guessing() {
+        let mut request: Json = serde_json::from_str(include_str!("../../../tests/raw-read/source-identity.json")).unwrap();
+        let mut doc: Json = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        fn remap(value: &mut Json) {
+            match value {
+                Json::String(s) => {
+                    *s = match s.as_str() {
+                        "commerce" => "module-identity".into(),
+                        "Order" => "record-order-identity".into(),
+                        "Customer" => "record-customer-identity".into(),
+                        _ => s.clone(),
+                    };
+                }
+                Json::Array(a) => a.iter_mut().for_each(remap),
+                Json::Object(o) => o.values_mut().for_each(remap),
+                _ => {}
+            }
+        }
+        remap(&mut doc);
+        doc["modules"][0]["namespace"] = json!("commerce");
+        for element in doc["modules"][0]["elements"].as_array_mut().unwrap() {
+            if element["id"] == "record-order-identity" { element["name"] = json!("Order"); }
+            if element["id"] == "record-customer-identity" { element["name"] = json!("Customer"); }
+        }
+        // Status is a real original member omitted from the flat scalar binding.
+        request["binding"]["tables"][0]["columns"].as_array_mut().unwrap()
+            .retain(|c| c["logical"] != "status");
+        let source = serde_json::to_string(&doc).unwrap();
+        request["binding"]["modelSha256"] = json!(crate::json::sha256(source.as_bytes()));
+        request["binding"]["modelJson"] = json!(source);
+        let admitted = admit_json(&request.to_string()).unwrap();
+        let table = vec!["commerce".into(), "Order".into()];
+        let record = admitted.original_record(&table).unwrap();
+        assert_eq!(record.identity.module, "module-identity");
+        assert_eq!(record.identity.element, "record-order-identity");
+        assert_eq!(admitted.original_document(), &doc);
+        assert_eq!(admitted.original_field_ref(&table, "status").unwrap(),
+            json!({"module":"module-identity", "element":"Order_status"}));
+        assert!(admitted.original_record(&["module-identity".into(), "record-order-identity".into()]).is_err());
+        assert!(admitted.original_field_ref(&table, "missing").is_err());
+        assert!(admitted.original_field_ref(&table, "Customer_name").is_err());
+        // Callers receive owned references, not mutation access to the retained source.
+        let mut reference = admitted.original_field_ref(&table, "status").unwrap();
+        reference["element"] = json!("tampered");
+        assert_eq!(admitted.original_field_ref(&table, "status").unwrap()["element"], "Order_status");
+    }
 }

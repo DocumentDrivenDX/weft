@@ -5,6 +5,9 @@ use serde_json::{json, Value as Json};
 use sqlparser::ast::*;
 use std::collections::{BTreeMap, BTreeSet};
 use weft_core::raw_read::{AdmittedRead, Carrier, Parameter, Request, Table};
+#[path="raw_read_projection.rs"]
+mod native_projection;
+
 trait PgCarrier {
     fn sql(&self) -> &str;
 }
@@ -24,8 +27,10 @@ type Result<T> = std::result::Result<T, &'static str>;
 #[serde(rename_all = "camelCase")]
 struct Output {
     name: String,
-    carrier: Carrier,
+    carrier: Json,
     nullable: bool,
+    #[serde(flatten)]
+    metadata: serde_json::Map<String,Json>,
 }
 #[derive(Clone)]
 struct Scalar {
@@ -38,6 +43,9 @@ struct Scalar {
 struct Lower<'a> {
     admitted: &'a AdmittedRead,
     term_indexes: BTreeMap<String,Json>,
+    used_columns: std::cell::RefCell<BTreeSet<(String,String)>>,
+    used_functions: std::cell::RefCell<BTreeSet<String>>,
+    used_operators: std::cell::RefCell<BTreeSet<String>>,
     request: &'a Request,
     scans: BTreeMap<String, (&'a Table, bool)>,
     slots: Vec<String>,
@@ -147,6 +155,7 @@ impl<'a> Lower<'a> {
             .iter()
             .find(|c| c.logical == f)
             .ok_or("unknown column")?;
+        self.used_columns.borrow_mut().insert((a.clone(),f.clone()));
         Ok(Scalar {
             sql: if c.carrier==Carrier::String {format!("{}.{} COLLATE pg_catalog.\"C\"", ident(&a)?,ident(&c.native)?)} else {format!("{}.{}", ident(&a)?, ident(&c.native)?)},
             carrier: c.carrier.clone(),
@@ -219,6 +228,8 @@ impl<'a> Lower<'a> {
             let c=self.column(field)?;let width=self.value(width,false)?;
             if !matches!(c.carrier,Carrier::Integer|Carrier::Decimal) {return Err("numeric bucket field required")};
             let value=format!("{}::pg_catalog.numeric",c.sql);
+            self.used_functions.borrow_mut().extend(["pg_catalog.div","pg_catalog.mod"].map(str::to_string));
+            self.used_operators.borrow_mut().extend(["-","*","<","<>"].map(str::to_string));
             let quotient=format!("pg_catalog.div({value}, {})",width.sql);
             let remainder=format!("pg_catalog.mod({value}, {})",width.sql);
             let sql=format!("(({quotient} - CASE WHEN {value}<0 AND {remainder}<>0 THEN 1 ELSE 0 END) * {})",width.sql);
@@ -243,6 +254,8 @@ impl<'a> Lower<'a> {
             if scale>1000 {return Err("AVG_SCALE scale budget")};
             let c=self.column(field)?;
             if !matches!(c.carrier,Carrier::Integer|Carrier::Decimal) {return Err("numeric aggregate input required")};
+            self.used_functions.borrow_mut().extend(["pg_catalog.count","pg_catalog.sum","pg_catalog.div","pg_catalog.mod","pg_catalog.abs","pg_catalog.round","pg_catalog.sign"].map(str::to_string));
+            self.used_operators.borrow_mut().extend(["+","*",">","="].map(str::to_string));
             let power=format!("1{}", "0".repeat(usize::from(scale)));
             let factor=if scale==0 {"1".into()} else {format!("0.{}1", "0".repeat(usize::from(scale)-1))};
             let count=format!("pg_catalog.count({})::pg_catalog.numeric",c.sql);
@@ -291,6 +304,7 @@ impl<'a> Lower<'a> {
             }
             _ => return Err("aggregate input"),
         };
+        self.used_functions.borrow_mut().insert(format!("pg_catalog.{op}"));
         let rendered = if distinct {
             format!("pg_catalog.count(DISTINCT {sql})")
         } else if op == "sum" {
@@ -318,6 +332,7 @@ impl<'a> Lower<'a> {
         Ok(c)
     }
     fn predicate(&mut self, e: &Expr, aggregates: bool) -> Result<String> {
+        if let Expr::BinaryOp{op,..}=e {if !matches!(op,BinaryOperator::And|BinaryOperator::Or){self.used_operators.borrow_mut().insert(op.to_string());}}
         match e {
             Expr::Nested(e) => Ok(format!("({})", self.predicate(e, aggregates)?)),
             Expr::BinaryOp { left, op, right }
@@ -394,12 +409,15 @@ impl<'a> Lower<'a> {
                     let identity=weft_core::mutation::canonical(&json!({"source":index.request().source,"table":table.logical,"field":logical}));
                     let metadata=term_index_metadata(&index,table,column,&self.request.binding.schema,configuration)?;
                     self.term_indexes.insert(identity,metadata);
+                    self.used_functions.borrow_mut().extend(["pg_catalog.tsvector_to_array","pg_catalog.to_tsvector"].map(str::to_string));
+                    self.used_operators.borrow_mut().insert(if function==["matches_all_terms"]{"<@"}else{"&&"}.into());
                     let field_terms=format!("pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('{configuration}'::pg_catalog.regconfig, {}))",field.sql);
                     let query_terms=format!("pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('{configuration}'::pg_catalog.regconfig, {}))",prefix.sql);
                     return Ok(if function==["matches_all_terms"] {format!("({query_terms} OPERATOR(pg_catalog.<@) {field_terms})")} else {format!("({query_terms} OPERATOR(pg_catalog.&&) {field_terms})")});
                 }
                 // PostgreSQL's strict prefix function compares the actual UTF-8
                 // text bytes. No pattern is formed and NULL remains UNKNOWN.
+                self.used_functions.borrow_mut().insert("pg_catalog.starts_with".into());
                 Ok(format!("pg_catalog.starts_with({} COLLATE pg_catalog.\"C\", {} COLLATE pg_catalog.\"C\")", field.sql, prefix.sql))
             }
             Expr::IsDistinctFrom(left, right) | Expr::IsNotDistinctFrom(left, right) => {
@@ -526,6 +544,11 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     if let Some(schema) = &r.binding.schema {
         ident(schema)?;
     }
+    match &r.binding.schema_binding {
+        Some(weft_core::raw_read::SchemaBinding::Qualified) if r.binding.schema.is_none()=>return Err("qualified schemaBinding requires explicit schema"),
+        Some(weft_core::raw_read::SchemaBinding::SearchPath) if r.binding.schema.is_some()=>return Err("search-path schemaBinding requires runtime app schema"),
+        _=>()
+    }
     if r.sql.len() > 65536 || r.parameters.len() > 64 || r.binding.tables.len() > 256 {
         return Err("input limit");
     }
@@ -608,6 +631,9 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     let mut l = Lower {
         admitted,
         term_indexes: BTreeMap::new(),
+        used_columns: Default::default(),
+        used_functions: Default::default(),
+        used_operators: Default::default(),
         request: r,
         scans: BTreeMap::new(),
         slots: vec![],
@@ -677,6 +703,14 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         group_values.insert(c.sql.clone());
         groups.push(c.sql)
     }
+    let mut native_columns=BTreeMap::new();
+    if r.binding.native_columns.is_some(){
+        for (alias,(table,_)) in &l.scans {
+            for (logical,c) in native_projection::columns(admitted,table)? {
+                native_columns.insert((alias.clone(),logical),c);
+            }
+        }
+    }
     let mut outputs = vec![];
     let mut projection = vec![];
     let mut scalars = vec![];
@@ -695,20 +729,33 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         if !output_names.insert(alias.clone()) {
             return Err("duplicate output name");
         }
+        if let Expr::CompoundIdentifier(parts)=expr {if parts.len()==2 {
+            if let Some(c)=native_columns.get(&(name(&parts[0]),name(&parts[1]))) {
+                if matches!(c.metadata["carrier"].as_str(),Some("binary"|"vector")) {
+                    l.used_columns.borrow_mut().insert((name(&parts[0]),name(&parts[1])));
+                    projection.push(format!("{}.{} AS {}",ident(&name(&parts[0]))?,ident(&c.native)?,ident(&alias)?));
+                    let mut metadata=c.metadata.as_object().unwrap().clone();let carrier=metadata.remove("carrier").unwrap();let nullable=metadata.remove("nullable").unwrap().as_bool().unwrap()||l.scans[&name(&parts[0])].1;
+                    outputs.push(Output{name:alias,carrier,nullable,metadata});scalars.push(None);continue;
+                }
+            }
+        }}
         let c = l.value(expr, true)?;
         projection.push(format!("{} AS {}", c.sql, ident(&alias)?));
+        let mut metadata=serde_json::Map::new();
+        if let Expr::CompoundIdentifier(parts)=expr {if parts.len()==2 {if let Some(n)=native_columns.get(&(name(&parts[0]),name(&parts[1]))) {metadata=n.metadata.as_object().unwrap().clone();metadata.remove("carrier");metadata.remove("nullable");}}}
         outputs.push(Output {
             name: alias,
-            carrier: c.carrier.clone(),
+            carrier: serde_json::to_value(&c.carrier).unwrap(),
             nullable: c.nullable,
+            metadata,
         });
-        scalars.push(c);
+        scalars.push(Some(c));
     }
-    let aggregate = scalars.iter().any(|c| c.aggregate) || !groups.is_empty();
+    let aggregate = scalars.iter().flatten().any(|c| c.aggregate) || !groups.is_empty();
     if aggregate
         && scalars
             .iter()
-            .any(|c| !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql))
+            .any(|c| c.as_ref().is_none_or(|c| !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql)))
     {
         return Err("ungrouped projected column");
     }
@@ -769,8 +816,9 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
             }
             cursor_outputs.push(Output {
                 name: outname.clone(),
-                carrier: c.carrier.clone(),
+                carrier: serde_json::to_value(&c.carrier).unwrap(),
                 nullable: c.nullable,
+                metadata: Default::default(),
             });
             projection.push(format!("{} AS {}", c.sql, ident(&outname)?));
             let cmp = match item.options.sort {
@@ -844,7 +892,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
             };
             let c=if let Expr::Identifier(id)=&item.expr {
                 let position=outputs.iter().position(|o|o.name==name(id)).ok_or("ordering output alias absent")?;
-                scalars[position].clone()
+                scalars[position].clone().ok_or("native projection cannot be ordered")?
             } else {l.value(&item.expr,true)?};
             if aggregate && !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql) {
                 return Err("ungrouped ordering");
@@ -886,11 +934,26 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         },
         _ => return Err("offset/limit outside profile"),
     };
-    if bounded {sql += &format!(" LIMIT {}", limit);}
+    if r.stream_page_size {
+        if !bounded||!r.keyset{return Err("stream page size requires bounded keyset profile")}
+        let reserved="__umf_page_size".to_string();
+        if l.slots.contains(&reserved)||cursor_parameters.iter().any(|p|p.name==reserved){return Err("reserved stream page size collision")}
+        l.slots.push(reserved.clone());cursor_parameters.push(Parameter{name:reserved,carrier:Carrier::Integer,nullable:false});
+        sql+=&format!(" LIMIT ${}::pg_catalog.int8",l.slots.len());
+    } else if bounded {sql += &format!(" LIMIT {}", limit);}
     if l.used.len() != r.parameters.len() {
         return Err("unused declared parameter");
     }
     let mut obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":if bounded{json!(limit)}else{Json::Null},"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
+    if !native_columns.is_empty(){
+        let mut admissions=vec![];let mut seen=BTreeSet::new();
+        for ((alias,_),column) in &native_columns {let table=l.scans[alias].0;
+            if seen.insert((table.native.clone(),column.native.clone())) {admissions.push(json!({"nativeAdmission":native_projection::admission(column,table,&r.binding.schema)}));}
+        }
+        obligations["nativeProjection"]=json!({"version":"umf.native-columns/0.1","nativeCatalogBeforeAfter":true,"columns":admissions});
+    }
+    if r.stream_page_size {obligations["streamPageSize"]=json!({"parameter":"__umf_page_size","minimum":1,"maximum":limit});}
+    if let Some(mode)=&r.binding.schema_binding { obligations["schemaBinding"]=serde_json::to_value(mode).map_err(|_|"schema binding serialization")?; }
     if !l.term_indexes.is_empty() {
         obligations["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":l.term_indexes.values().collect::<Vec<_>>()});
     }
@@ -907,8 +970,17 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         .collect::<BTreeSet<_>>()
         .into_iter()
         .collect();
-    let referenced_tables: Vec<Json> = l.scans.values().map(|(table,_)| json!({"logical":table.logical,"native":table.native,"columns":table.columns})).collect();
+    let referenced_tables: Vec<Json> = l.scans.iter().map(|(alias,(table,_))| {
+        let mut columns=table.columns.iter().map(|c|serde_json::to_value(c).unwrap()).collect::<Vec<_>>();
+        for ((owner,logical),c) in &native_columns {if owner==alias&&!table.columns.iter().any(|x|x.logical==*logical) {let mut item=c.metadata.clone();item["logical"]=json!(logical);item["native"]=json!(c.native);columns.push(item);}}
+        json!({"logical":table.logical,"native":table.native,"columns":columns})
+    }).collect();
+    let mut selected_columns:BTreeMap<String,BTreeSet<String>>=BTreeMap::new();
+    for(alias,logical)in l.used_columns.borrow().iter(){let table=l.scans[alias].0;let native=table.columns.iter().find(|c|c.logical==*logical).map(|c|c.native.clone()).or_else(||native_columns.get(&(alias.clone(),logical.clone())).map(|c|c.native.clone())).ok_or("used native column missing original mapping")?;selected_columns.entry(table.native.clone()).or_default().insert(native);}
+    for(table,_)in l.scans.values(){selected_columns.entry(table.native.clone()).or_default();}
+    let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"anyColumn":columns.is_empty()})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
     let mut result = json!({"version":if bounded{"weft.raw-read/0.1"}else{"weft.search-input/0.1"},"status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced_tables});
+    result["privilegeInventory"]=privilege_inventory;
     let digest = weft_core::json::sha256(result.to_string().as_bytes());
     result["structuralDigest"] = json!(digest);
     Ok(result)

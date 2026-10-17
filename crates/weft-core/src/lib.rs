@@ -187,6 +187,8 @@ pub mod security_operand_values;
 #[cfg(feature="current-query-refinement-candidate")]
 pub mod current_query_refinement;
 
+pub mod column_custody;
+
 pub mod raw_read;
 
 pub mod raw_action;

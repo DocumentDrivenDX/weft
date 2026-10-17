@@ -201,6 +201,11 @@ pub(crate) fn lower_current_projected(a:&AdmittedRead,catalog:&str,projection:&[
 pub(crate) fn lower_current_shaped(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,true)}
 fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>, current_projection:Option<&[(String,J)]>, current_shapes:bool) -> Result<J> {
     let r = a.request();
+    if matches!(&r.binding.schema_binding,Some(weft_core::raw_read::SchemaBinding::SearchPath)) {return Err("search-path schema binding belongs to PostgreSQL profile")}
+    if matches!(&r.binding.schema_binding,Some(weft_core::raw_read::SchemaBinding::Qualified)) && r.binding.schema.is_none(){return Err("qualified schema binding requires explicit schema")}
+    if r.binding.native_columns.is_some(){return Err("native ColumnSet envelope not admitted by this Databricks profile")}
+    if r.stream_page_size {return Err("stream page size requires explicit snapshot page profile")}
+
     let q = a.query();
     if r.version != "weft.raw-read/0.1"
         || r.target != if current_catalog.is_some(){"unity-catalog-current"}else{"spark-delta4"}

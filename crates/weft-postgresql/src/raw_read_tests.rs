@@ -27,6 +27,24 @@ mod raw_read_tests {
           assert_eq!(p["outputs"].as_array().unwrap().iter().map(|v|v["nullable"].as_bool().unwrap()).collect::<Vec<_>>(),nullable,"{p}");
         }
     }
+    #[test]
+    fn native_projection_retains_original_binary_vector_and_admission(){
+        let r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request.json")).unwrap();
+        let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["outputs"][2]["carrier"],"vector");assert_eq!(p["outputs"][5]["decoder"]["profile"],"pg-bytea/0.1");
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),6);
+        for sql in ["SELECT r.embedding AS embedding FROM search.\"Doc\" r ORDER BY embedding LIMIT 10","SELECT COUNT(r.embedding) AS n FROM search.\"Doc\" r LIMIT 10"] {let mut bad=r.clone();bad["sql"]=json!(sql);assert_eq!(compile(bad)["status"],"blocked");}
+        let mut bad=r.clone();bad["binding"]["nativeColumns"]["vectorExtension"]["version"]=json!("0.8.8");assert_eq!(compile(bad)["status"],"blocked");
+        for (field,ty) in [("payload","text"),("embedding","array<double>"),("count","numeric(20,0)"),("amount","numeric(38,9)")] {
+            let mut bad=r.clone();let mut doc:Value=serde_json::from_str(bad["binding"]["modelJson"].as_str().unwrap()).unwrap();
+            let cols=doc["modules"][0]["extensions"]["umf.access"]["columns"][0]["columns"].as_array_mut().unwrap();for c in cols {if c["field"]["element"]==field {c["type"]=json!(ty);}}
+            let raw=doc.to_string();let sha=weft_core::json::sha256(raw.as_bytes());bad["binding"]["modelJson"]=json!(raw);bad["binding"]["modelSha256"]=json!(sha);bad["binding"]["nativeColumns"]["sets"][0]["columnSet"]["documentSha256"]=json!(sha);
+            assert_eq!(compile(bad)["status"],"blocked","{field}/{ty}");
+        }
+        let mut bad=r.clone();bad["binding"]["nativeColumns"]["target"]["platform"]=json!("spark");assert_eq!(compile(bad)["status"],"blocked");
+        let mut bad=r.clone();bad["binding"]["nativeColumns"]["sets"][0]["binding"]["documentSha256"]=json!("0".repeat(64));assert_eq!(compile(bad)["status"],"blocked");
+
+    }
     fn compile(r: Value) -> Value {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }
@@ -280,6 +298,18 @@ mod raw_read_tests {
         assert_eq!(out["referencedTables"].as_array().unwrap().len(),1);
         assert_eq!(out["referencedTables"][0]["native"],"orders");
         assert_eq!(out["referencedTables"][0]["columns"][0]["native"],"id");
+    }
+
+    #[test]
+    fn explicit_schema_binding_and_stream_limit_are_owner_bound(){
+        let mut r=request();r["parameters"]=json!([]);r["sql"]=json!("SELECT o.id AS id FROM commerce.\"Order\" o ORDER BY o.id LIMIT 7");
+        r["binding"]["schemaBinding"]=json!("qualified");r["binding"]["schema"]=json!("app_one");
+        let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["obligations"]["schemaBinding"],"qualified");
+        r["binding"]["schemaBinding"]=json!("search-path");assert_eq!(compile(r.clone())["status"],"blocked");
+        r["binding"]["schema"]=Value::Null;r["keyset"]=json!(true);r["streamPageSize"]=json!(true);
+        let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["obligations"]["streamPageSize"],json!({"parameter":"__umf_page_size","minimum":1,"maximum":7}));
+        assert!(p["sql"].as_str().unwrap().ends_with("::pg_catalog.int8"));assert_eq!(p["cursorParameters"].as_array().unwrap().last().unwrap()["name"],"__umf_page_size");
+        r["keyset"]=json!(false);assert_eq!(compile(r)["status"],"blocked");
     }
 
 }

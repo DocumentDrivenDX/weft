@@ -3,7 +3,7 @@ use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};
 use sqlparser::ast::*;
 use weft_core::{raw_read,search};
-use crate::column_custody::{NativeColumns,field_key};
+use weft_core::column_custody::{NativeColumns,field_key};
 type Result<T>=std::result::Result<T,&'static str>;
 #[derive(Deserialize,Serialize)]
 #[serde(deny_unknown_fields,rename_all="camelCase")]
@@ -58,10 +58,10 @@ fn compile(raw:&str)->Result<Value>{
  let doc:Value=serde_json::from_str(&r.selection.binding.model_json).unwrap();
  let module=doc["modules"].as_array().unwrap().iter().find(|v|v["id"]==admitted.index()["record"]["module"]).ok_or("original Record module absent")?;
  if path!=vec![module["namespace"].as_str().ok_or("Record namespace absent")?.to_string(),admitted.record()["name"].as_str().ok_or("Record name absent")?.to_string()]{return Err("selected Record/table owner differs")}
- let original_columns=crate::column_custody::admit_columns(&r.selection.binding.model_sha256,&doc,&m.target,&m.native_columns,table,&admitted.index()["record"])?;
+ let original_columns=weft_core::column_custody::admit_columns(&r.selection.binding.model_sha256,&doc,&m.target,&m.native_columns,table,&admitted.index()["record"])?;
  let (vector_native,vector_type,_)=original_columns.get(&field_key(&m.vector_binding.field)).ok_or("original vector ColumnSet absent")?;
  if vector_native!=&m.vector_binding.native||vector_type!="array<float>"{return Err("original vector binding must be ARRAY<FLOAT>")}
- let row_nullable=|reference:&Value|crate::column_custody::row_null(&doc,&admitted.index()["record"],reference,&original_columns);
+ let row_nullable=|reference:&Value|weft_core::column_custody::row_null(&doc,&admitted.index()["record"],reference,&original_columns);
  for c in &table.columns {
    let members=admitted.record()["members"].as_array().unwrap();
    let matches=members.iter().filter(|member|doc["modules"].as_array().unwrap().iter().find(|m|m["id"]==member["module"]).and_then(|m|m["elements"].as_array().unwrap().iter().find(|f|f["id"]==member["element"])).is_some_and(|f|f["name"]==c.logical)).collect::<Vec<_>>();
