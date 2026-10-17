@@ -152,7 +152,11 @@ impl MutationRegistry {
                 "../../../spec/upstream/actions-plan-local/owner-pins.json"
             )).expect("pinned local owner resource");
             let expected_owner = if local { &local_owner } else { &owner };
-            if prepared["producer"] != expected_owner["producer"] {
+            let current_owner: Value = serde_json::from_str(include_str!(
+                "../../../spec/upstream/actions-plan-current/owner-pins.json"
+            )).expect("checked current original producer resource");
+            if prepared["producer"] != expected_owner["producer"]
+                && prepared["producer"] != current_owner["producer"] {
                 return Err(fail(
                     "ACTION",
                     "action",
@@ -502,4 +506,40 @@ fn generated(value: Value) -> MResult<Artifact> {
         sha256: sha256(utf8.as_bytes()),
         utf8,
     })
+}
+
+#[cfg(test)]
+mod current_preparation_tests {
+    use super::*;
+    #[test]
+    fn current_preparations_compile_and_preserve_compile_boundary_custody() {
+        for (raw,request) in [
+            (include_str!("../../../spec/upstream/actions-plan-current/standard-registration.json"),include_str!("../../../spec/upstream/actions-plan-current/standard-request.json")),
+            (include_str!("../../../spec/upstream/actions-plan-current/local-registration.json"),include_str!("../../../spec/upstream/actions-plan-current/local-request.json"))] {
+            let registration:ActionRegistration=serde_json::from_str(raw).unwrap();
+            let registry=MutationRegistry::new(vec![registration.clone()]).unwrap();
+            let request:Value=serde_json::from_str(request).unwrap();
+            let response:Value=serde_json::from_str(&registry.compile_json(&request.to_string())).unwrap();assert_eq!(response["status"],"compiled","{response}");
+            let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();prepared["target"]["element"]=json!("foreign-original-target");altered.preparation=generated(prepared).unwrap();
+            let registry=MutationRegistry::new(vec![altered]).unwrap();
+            let response:Value=serde_json::from_str(&registry.compile_json(&request.to_string())).unwrap();assert_eq!(response["status"],"blocked","{response}");assert!(response.get("plan").is_none());
+            for mode in 0..3 {let mut altered=request.clone();match mode {0=>altered["model"]["sha256"]=json!("0".repeat(64)),1=>altered["modelPin"]["revision"]=json!("foreign"),_=>altered["action"]["identity"]["action"]=json!("foreign")};
+                let response:Value=serde_json::from_str(&MutationRegistry::new(vec![registration.clone()]).unwrap().compile_json(&altered.to_string())).unwrap();assert_eq!(response["status"],"blocked","{mode}: {response}");assert!(response.get("plan").is_none());}
+        }
+    }
+    #[test]
+    fn checked_original_current_standard_and_local_preparations() {
+        for raw in [include_str!("../../../spec/upstream/actions-plan-current/standard-registration.json"), include_str!("../../../spec/upstream/actions-plan-current/local-registration.json")] {
+            let registration:ActionRegistration=serde_json::from_str(raw).unwrap();
+            assert!(MutationRegistry::new(vec![registration.clone()]).is_ok());
+            for build in ["sha256:ea8280583fe9d7757fbf8df21d1753eaa787857371b9366858e28c9a113b98a1", "sha256:0000000000000000000000000000000000000000000000000000000000000000"] {
+                let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();
+                prepared["producer"]["build"]=json!(build);altered.preparation=generated(prepared).unwrap();
+                assert!(MutationRegistry::new(vec![altered]).is_err());
+            }
+            let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();
+            prepared["action"]["identity"]["action"]=json!("foreign-original-action");altered.preparation=generated(prepared).unwrap();
+            assert!(MutationRegistry::new(vec![altered]).is_err());
+        }
+    }
 }

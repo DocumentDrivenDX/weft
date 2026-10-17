@@ -1,0 +1,42 @@
+{
+  "interfaceVersion": "weft-mutation-compile/0.1.0",
+  "dialect": "weft-mutation/0.1.0",
+  "sql": "UPDATE products SET name = 'Foo' WHERE id = 'bar'",
+  "parameters": {},
+  "model": {
+    "mediaType": "application/json",
+    "utf8": "{\n  \"umf\": \"0.8.0\",\n  \"id\": \"product-local-action-demo\",\n  \"vocabularies\": {\n    \"umf.actions\": {\n      \"version\": \"0.1.0\"\n    }\n  },\n  \"modules\": [\n    {\n      \"id\": \"sales\",\n      \"namespace\": \"sales\",\n      \"elements\": [\n        {\n          \"id\": \"product-id\",\n          \"name\": \"id\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"product-name\",\n          \"name\": \"name\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"products\",\n          \"name\": \"products\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"sales\",\n              \"element\": \"product-id\"\n            },\n            {\n              \"module\": \"sales\",\n              \"element\": \"product-name\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"pk\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"sales\",\n                  \"element\": \"product-id\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {}\n        }\n      ],\n      \"extensions\": {\n        \"umf.actions\": {\n          \"actions\": [\n            {\n              \"id\": \"set-name-local\",\n              \"name\": \"Set local product name\",\n              \"description\": \"Set one name in this browser-local Truss store using an issued local-owner capability.\",\n              \"parameters\": [\n                {\n                  \"id\": \"products\",\n                  \"kind\": \"entity\",\n                  \"target\": {\n                    \"module\": \"sales\",\n                    \"element\": \"products\",\n                    \"key\": \"pk\"\n                  },\n                  \"required\": true\n                },\n                {\n                  \"id\": \"name-value\",\n                  \"kind\": \"value\",\n                  \"field\": {\n                    \"module\": \"sales\",\n                    \"element\": \"product-name\"\n                  },\n                  \"required\": true\n                }\n              ],\n              \"outputs\": [],\n              \"preconditions\": [],\n              \"postconditions\": [],\n              \"failures\": [],\n              \"reads\": [],\n              \"writes\": [\n                {\n                  \"id\": \"customer-write\",\n                  \"record\": {\n                    \"module\": \"sales\",\n                    \"element\": \"products\"\n                  },\n                  \"selector\": {\n                    \"language\": \"umf.actions.keys\",\n                    \"version\": \"1\",\n                    \"expression\": \"{\\\"entity\\\":\\\"products\\\"}\",\n                    \"references\": [\n                      {\n                        \"parameter\": \"products\"\n                      }\n                    ]\n                  },\n                  \"maxEntities\": 1,\n                  \"fields\": [\n                    {\n                      \"module\": \"sales\",\n                      \"element\": \"product-name\"\n                    }\n                  ],\n                  \"relationships\": [],\n                  \"create\": false,\n                  \"delete\": false\n                }\n              ],\n              \"binding\": {\n                \"kind\": \"recipe\",\n                \"profile\": {\n                  \"id\": \"graph-write\",\n                  \"version\": \"1\"\n                },\n                \"effects\": [\n                  {\n                    \"id\": \"set-name\",\n                    \"kind\": \"set\",\n                    \"entity\": {\n                      \"parameter\": \"products\"\n                    },\n                    \"values\": [\n                      {\n                        \"field\": {\n                          \"module\": \"sales\",\n                          \"element\": \"product-name\"\n                        },\n                        \"value\": {\n                          \"parameter\": \"name-value\"\n                        }\n                      }\n                    ]\n                  }\n                ]\n              },\n              \"authorization\": {\n                \"kind\": \"policy\",\n                \"profile\": {\n                  \"id\": \"umf.actions.local-store-owner\",\n                  \"version\": \"1\"\n                },\n                \"resources\": [\n                  \"customer-write\"\n                ]\n              },\n              \"attribution\": {\n                \"subject\": \"actor-profile\",\n                \"profile\": {\n                  \"id\": \"umf.actions.local-owner\",\n                  \"version\": \"1\"\n                }\n              },\n              \"atomicity\": \"single-store\",\n              \"idempotency\": \"caller-key-optional\",\n              \"result\": {\n                \"identities\": \"created-and-changed\",\n                \"version\": \"store-opaque\",\n                \"receipt\": \"read-at-least\"\n              }\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n",
+    "sha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27"
+  },
+  "modelPin": {
+    "documentId": "product-local-action-demo",
+    "revision": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+    "umfVersion": "0.8.0",
+    "sha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27"
+  },
+  "action": {
+    "identity": {
+      "module": "sales",
+      "action": "set-name-local"
+    },
+    "documentSha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+    "invocation": {
+      "id": "umf.actions.local-tx",
+      "version": "1"
+    }
+  },
+  "target": {
+    "module": "sales",
+    "element": "products",
+    "key": "pk"
+  },
+  "selectionProfile": {
+    "id": "weft.update-selection",
+    "version": "1"
+  },
+  "batchSize": 2,
+  "limits": {
+    "maxItems": 10000,
+    "maxManifestBytes": 16777216
+  }
+}
