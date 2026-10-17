@@ -66,6 +66,18 @@ for(const [name,request] of [['date-output',combinedRequest('SELECT a.day FROM A
  if(await owner.exited!==0)throw Error('Underlying native Date compilation regressed: '+await new Response(owner.stderr).text());
  cases.push({name:'engine-truss041-'+name+'-held',method:'compile_engine_read_json',request:JSON.stringify({version:'weft.engine-read/0.1',compiler:'truss-runtime',request}),expected:'blocked'});
 }
+const exportRequest=await Bun.file('tests/engine-catalog/native-truss-export-request.json').json();
+const exportInput=JSON.stringify({version:'weft.engine-page/0.1',compiler:'truss-runtime',request:exportRequest,pageSize:999});
+const exportChild=Bun.spawn([python,'-I','-B','-c','import sys,weft;print(weft.compile_engine_page_json(sys.stdin.read()))'],{stdin:new Blob([exportInput]),stdout:'pipe',stderr:'pipe'});
+const exportProgram=await new Response(exportChild.stdout).text();if(await exportChild.exited!==0)throw Error('Original export page fixture failed');
+cases.push({name:'engine-export-original-cursor',method:'compile_engine_export_json',request:'',arguments:[exportProgram,JSON.stringify(exportRequest)]});
+const exportBound=structuredClone(exportRequest);exportBound.parameters.status.value='different export value';
+cases.push({name:'engine-export-bound-parameters',method:'compile_engine_export_json',request:'',arguments:[exportProgram,JSON.stringify(exportBound)]});
+const exportAltered=JSON.parse(exportProgram);exportAltered.page.keyOutputs=[0];
+cases.push({name:'engine-export-program-tamper',method:'compile_engine_export_json',request:'',arguments:[JSON.stringify(exportAltered),JSON.stringify(exportRequest)],expected:'blocked'});
+exportBound.target.bindingSha256='0'.repeat(64);
+cases.push({name:'engine-export-native-context-drift',method:'compile_engine_export_json',request:'',arguments:[exportProgram,JSON.stringify(exportBound)],expected:'blocked'});
+cases.push({name:'engine-export-legacy-profile-refusal',method:'compile_engine_export_json',request:'',arguments:[pageProgram,JSON.stringify(pageRequest)],expected:'blocked'});
 const child=Bun.spawn([python,'-I','-B','-c','import sys,json,weft\nprint(json.dumps([json.loads(getattr(weft,c["method"])(*c.get("arguments",[c["request"]]))) for c in json.load(sys.stdin)]))'],{stdin:new Blob([JSON.stringify(cases)]),stdout:'pipe',stderr:'pipe'});const expected=JSON.parse(await new Response(child.stdout).text());if(await child.exited!==0)throw Error(await new Response(child.stderr).text());
 if(expected.some((e:any,i:number)=>e.status!==(cases[i].expected??(cases[i].name==='source-refusal'?'blocked':'compiled'))))throw Error('Native expected fixtures did not exercise success/refusal');
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const name=new URL(req.url).pathname.slice(1);if(name==='weft_wasm.js'||name==='weft_wasm_bg.wasm')return new Response(Bun.file(resolve(wasmDirectory,name)),{headers:{'content-type':name.endsWith('.wasm')?'application/wasm':'text/javascript'}});return new Response('<script type="module">import init,* as api from "/weft_wasm.js";await init();window.api=api;</script>',{headers:{'content-type':'text/html'}});}});
@@ -75,4 +87,5 @@ if(canonical(actual)!==canonical(expected))throw Error('WASM differs from instal
 const unicode=await page.evaluate(()=>['compile_raw_read_json','compile_native_action_json','compile_native_bulk_json','compile_search_json','compile_engine_read_json','compile_engine_page_json'].every(name=>{try{(window as any).api[name]('\ud800');return false;}catch{return true;}}));const engineUnicode=await page.evaluate(()=>{const bad=String.fromCharCode(0xd800);for(const args of [[bad,'{}'],['{}',bad]]){try{(window as any).api.check_engine_read_json(...args);return false;}catch{}}return true;});if(!engineUnicode)throw Error('Engine comparison replaced malformed UTF16');
 if(!unicode)throw Error('Original malformed UTF16 was silently replaced');
 const pageUnicode=await page.evaluate(()=>{const bad=String.fromCharCode(0xd800);for(const args of [[bad,'{}','null'],['{}',bad,'null'],['{}','{}',bad]]){try{(window as any).api.check_engine_page_json(...args);return false;}catch{}}return true;});if(!pageUnicode)throw Error('Page comparison replaced malformed UTF16');
+const exportUnicode=await page.evaluate(()=>{const bad=String.fromCharCode(0xd800);for(const args of [[bad,'{}'],['{}',bad]]){try{(window as any).api.compile_engine_export_json(...args);return false;}catch{}}return true;});if(!exportUnicode)throw Error('Export comparison replaced malformed UTF16');
 await Bun.write(output,JSON.stringify({status:'pass',browser:browser.version(),cases:cases.map(c=>c.name),exactPythonWasmPrograms:true,malformedUnicodeRefused:true,temporal:'HELD'},null,2)+'\n');console.log('native SDK WASM parity: pass');}finally{await browser.close();server.stop(true);}

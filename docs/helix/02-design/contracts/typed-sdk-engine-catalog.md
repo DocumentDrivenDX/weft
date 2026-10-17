@@ -76,3 +76,41 @@ Real compiler tests cover valid binding, exact decimal text, model/binding/SQL
 drift, parameter-family drift and complete original diagnostics. Engine E2Es
 must additionally prove protected execution and original source correspondence;
 compiler custody tests alone do not qualify engine adoption.
+
+## Truss cursor export candidate — 2026-10-16
+
+`compile_engine_export_json(program,current_request)` is a proposed explicit
+`weft.engine-export/0.1` interface for an original initial Truss engine-page
+program only. It first performs the complete existing page-program comparison
+with no continuation. Only declared current parameter values may differ. The
+original page program, request, source/backend/binding context and authored Key
+metadata remain retained. A successful result grants no native permission.
+
+The owner compiler resolves the same original page source and authored Key,
+retaining hidden Key outputs and ordering, then constructs an unbounded logical
+cursor plan (`limit: null`, no generated continuation filter). PostgreSQL lowering
+uses a distinct backend `truss.postgresql.runtime` version `0.4.42` and target
+`truss-runtime-pg18.6-export/0.1`; it emits no result LIMIT. The ordinary0.4.41
+registration and all existing read/page artifacts remain unchanged. No host may
+remove LIMIT text or reinterpret a bounded logical plan as an unbounded one.
+
+The export result retains the complete original program, checked current page
+program, current original request, complete derived export request/artifact and
+output/Key signature, covered by the owner structural digest. The derived
+request explicitly selects the export backend; this transformation is owned by
+the compiler, not guessed by the SDK. The full export artifact is independently
+checked for its own compile/IR versions, model pins, binding digest, backend and
+closed obligations. Its additional `truss.runtime.cursor-export/0.1` obligation
+requires a Truss-owned fixed data portal and fresh current native binding/actor/
+scope admission before and after each bounded fetch. Hosts without this handler
+must refuse before data execution.
+
+The new core cursor-plan factory must reject caller ORDER/LIMIT, continuations,
+read-profile/security overrides and unsupported selected carriers under the same
+closed authored-Key page rules. Its logical plan must describe actual unlimited
+cursor delivery; ordinary bounded factories may not select this mode. Python
+and browser WASM expose the same Rust custody implementation with bounded strict
+JSON inputs. Compiler proof must cover original/context/program drift, ordinary
+profile refusal, true limit-free IR/SQL and full signature correspondence.
+Truss native snapshot/authorization/cleanup evidence is separately required;
+compiler acceptance does not qualify a stream, protected policy or temporal SDK.

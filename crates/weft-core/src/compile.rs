@@ -99,45 +99,51 @@ pub struct Compiler {
 }
 impl Compiler {
     pub fn compile_json(&self, raw: &str) -> String {
-        self.compile_json_internal(raw, None, None, false, None, false)
+        self.compile_json_internal(raw, None, None, false, None, false, false)
     }
     pub fn compile_json_with_factory(
         &self,
         raw: &str,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory), None, false, None, false)
+        self.compile_json_internal(raw, Some(factory), None, false, None, false, false)
     }
     /// Only a trusted embedding selects this additional numeric interpretation.
     pub fn compile_json_with_exact_numbers_factory(&self,raw:&str,factory:&mut RegistryFactory<'_>)->String{
-        self.compile_json_internal(raw,Some(factory),None,true, None, false)
+        self.compile_json_internal(raw,Some(factory),None,true, None, false, false)
     }
     pub fn compile_json_with_security_factory(
         &self,
         raw: &str,
         factory: &mut crate::security_backend::SecurityRegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, None, Some(factory), false, None, false)
+        self.compile_json_internal(raw, None, Some(factory), false, None, false, false)
     }
     /// Explicit host-selected authored-key page composition; ordinary compilation is unchanged.
     pub fn compile_page_json_with_exact_numbers_factory(
         &self, raw: &str, page_size: u16, after: Option<Vec<String>>,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory), None, true, Some((page_size, after, false, false)), false)
+        self.compile_json_internal(raw, Some(factory), None, true, Some((page_size, after, false, false)), false, false)
     }
     pub fn compile_typed_page_json_with_exact_numbers_factory(&self,raw:&str,page_size:u16,after:Option<Vec<String>>,factory:&mut RegistryFactory<'_>) -> String {
-        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true,false)), false)
+        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true,false)), false, false)
     }
 
     /// Explicit decimal(12,2) key extension; existing page factories stay closed.
     pub fn compile_decimal12_typed_page_json_with_exact_numbers_factory(&self,raw:&str,page_size:u16,after:Option<Vec<String>>,factory:&mut RegistryFactory<'_>) -> String {
-        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true,true)), true)
+        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true,true)), true, false)
     }
 
     /// Explicit name-or-stable-ID profile; legacy factories remain name-only.
     pub fn compile_identity_names_json_with_exact_numbers_factory(&self,raw:&str,factory:&mut RegistryFactory<'_>)->String {
-        self.compile_json_internal(raw,Some(factory),None,true,None,true)
+        self.compile_json_internal(raw,Some(factory),None,true,None,true, false)
+    }
+
+    /// Explicit cursor delivery over one authored-Key source. Hosts own fetching
+    /// and snapshot/current-authority enforcement; ordinary factories stay bounded.
+    pub fn compile_cursor_json_with_exact_numbers_factory(&self,raw:&str,batch_size:u16,factory:&mut RegistryFactory<'_>)->String {
+        self.compile_json_internal(raw,Some(factory),None,true,Some((batch_size,None,true,true)),true,true)
     }
 
     fn compile_json_internal(
@@ -148,6 +154,7 @@ impl Compiler {
         exact_numbers: bool,
         page: Option<(u16, Option<Vec<String>>, bool, bool)>,
         identity_name_fallback: bool,
+        cursor_delivery: bool,
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
@@ -324,6 +331,14 @@ impl Compiler {
                     Some(page) => page.plan.clone(),
                     None => if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7") {crate::application_resolve::resolve_with_exact(&catalog,query,req.parameters.unwrap_or_default(),req.exact_parameters.unwrap_or_default(),req.read_profile,timestamp_equality)?} else {crate::application_resolve::resolve(&catalog, query, req.parameters.unwrap_or_default(), req.read_profile)?},
                 };
+                if cursor_delivery {
+                    if req.interface_version != "weft-compile/0.2.7" || page_plan.is_none() {
+                        return Err(Diagnostic::new("WFT-PROFILE","input","Cursor delivery requires an explicit authored-Key compile0.2.7 plan"));
+                    }
+                    // The logical plan describes the unlimited portal, not the
+                    // bounded fetches performed by its separately admitted host.
+                    plan.limit = None;
+                }
                 if catalog.exact_dates {
                     plan.ir_version="weft-ir/0.2.7".into();
                     if !Plan027::is_valid(&serde_json::to_value(&plan).expect("typed canonical date plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates canonical date semantics"));}
@@ -349,6 +364,11 @@ impl Compiler {
                     req.target, req.options.allow_candidate, factory,
                 )?;
                 if let Some(page) = page_plan {
+                    if cursor_delivery {
+                        return Ok(json!({"interfaceVersion":"weft-sql-cursor/0.1","status":"compiled","artifact":artifact,
+                            "cursor":{"visibleOutputs":page.visible_outputs,"keyOutputs":page.key_outputs,"batchSize":page.page_size,
+                                "generatedOrderPositions":(0..page.plan.order.len()).collect::<Vec<_>>()}}));
+                    }
                     return Ok(json!({"interfaceVersion":if page.typed_keys {"weft-sql-page/0.2"} else {"weft-sql-page/0.1"}, "status":"compiled", "artifact":artifact,
                         "page":{"visibleOutputs":page.visible_outputs,"keyOutputs":page.key_outputs,"pageSize":page.page_size,
                             "generatedContinuationFilter":if page.continuation_values.is_empty(){None}else{Some(page.plan.filters.len()-1)},

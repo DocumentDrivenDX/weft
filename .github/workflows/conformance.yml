@@ -183,6 +183,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
+      # Select the installed minimal compiler without auto-installing unrelated
+      # rust-toolchain.toml rustfmt/WASM components in this host-only job.
+      RUSTUP_TOOLCHAIN: "1.90.0"
       CARGO_BUILD_JOBS: "1"
       CARGO_PROFILE_TEST_OPT_LEVEL: "1"
       CARGO_PROFILE_TEST_DEBUG_ASSERTIONS: "true"

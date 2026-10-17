@@ -874,3 +874,6 @@ mod current_presence_graph_requirements_bridge_tests {
   drop(original);assert_eq!(child.graph_requirements_json().unwrap(),expected.json());
  }
 }
+
+#[cfg(feature="raw-postgresql-reads")]
+pub mod engine_export;

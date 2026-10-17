@@ -131,6 +131,7 @@ pub struct Runtime {
     query_abi_v1: bool,
     decimal12: bool,
     canonical_dates: bool,
+    cursor_delivery: bool,
     required_rebinding: bool,
     parallel_edges: bool,
     engine_imports: bool,
@@ -154,6 +155,7 @@ impl Runtime {
         }
     }
     fn target(&self) -> &'static str {
+        if self.cursor_delivery { return "truss-runtime-pg18.6-export/0.1"; }
         if self.query_abi_v1 {
             QUERY_ABI_TARGET
         } else if self.pages {
@@ -167,7 +169,7 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.canonical_dates { "0.4.41" } else if self.native_070 { "0.4.40" } else if self.decimal12 { "0.4.39" } else if self.query_abi_v1 { "0.4.38" } else if self.native_068 { "0.4.37" } else if self.declarative_fields { "0.4.36" } else if self.owned_runtime { "0.4.35" } else if self.recursive_containers { "0.4.34" } else if self.keyed_rebinding { "0.4.33" } else if self.key_backfill { "0.4.32" } else if self.required_rebinding { "0.4.31" } else if self.catalog_rebinding { "0.4.30" } else if self.timestamp_equality { "0.4.29" } else if self.source_references { "0.4.28" } else if self.field_names { "0.4.27" } else if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
+        if self.cursor_delivery { "0.4.42" } else if self.canonical_dates { "0.4.41" } else if self.native_070 { "0.4.40" } else if self.decimal12 { "0.4.39" } else if self.query_abi_v1 { "0.4.38" } else if self.native_068 { "0.4.37" } else if self.declarative_fields { "0.4.36" } else if self.owned_runtime { "0.4.35" } else if self.recursive_containers { "0.4.34" } else if self.keyed_rebinding { "0.4.33" } else if self.key_backfill { "0.4.32" } else if self.required_rebinding { "0.4.31" } else if self.catalog_rebinding { "0.4.30" } else if self.timestamp_equality { "0.4.29" } else if self.source_references { "0.4.28" } else if self.field_names { "0.4.27" } else if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
             "0.4.6"
         } else if self.retained_metadata {
             "0.4.5"
@@ -244,6 +246,10 @@ fn literal(s: &str) -> Result<String> {
         s.replace('\\', "\\\\").replace('\'', "''")
     ))
 }
+fn cursor_obligation()->Obligation {
+    Obligation { id:"truss.runtime.cursor-export/0.1".into(),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into(),
+        parameters:json!({"data":"fixed-insensitive-no-scroll-portal","authority":"fresh-native-before-and-after-each-fetch","cleanup":"owned-transaction-only"}) }
+}
 fn obligation() -> Obligation {
     Obligation {
         id: "truss.runtime.context/0.1".into(),
@@ -310,7 +316,7 @@ impl Backend for Runtime {
             dialect_profile: "weft-sql/0.2.0".into(),
             ir_version: if self.canonical_dates { "weft-ir/0.2.7" } else if self.timestamp_equality { "weft-ir/0.2.6" } else if self.binary_equality { "weft-ir/0.2.5" } else if self.import_loads { "weft-ir/0.2.4" } else if self.entity_times { "weft-ir/0.2.3" } else if self.complete_entities { "weft-ir/0.2.2" } else if self.exact_scalars { "weft-ir/0.2.1" } else { "weft-ir/0.2.0" }.into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:if self.canonical_dates{"weft-backend/0.2.7"}else if self.timestamp_equality{"weft-backend/0.2.6"}else if self.binary_equality{"weft-backend/0.2.5"}else if self.import_loads{"weft-backend/0.2.4"}else if self.entity_times{"weft-backend/0.2.3"}else if self.complete_entities{"weft-backend/0.2.2"}else if self.exact_scalars{"weft-backend/0.2.1"}else{"weft-backend/0.2.0"}.into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.canonical_dates{"truss-runtime-query-abi/1.1".into()}else if self.query_abi_v1{"truss-runtime-query-abi/1.0".into()}else if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.canonical_dates{vec!["type.date".into(),"compare.date.equal".into(),"compare.date.optionalEqual".into()]}else{vec![]}).chain(if self.decimal12{vec!["type.decimal12Scale2".into()]}else{vec![]}).chain(if self.query_abi_v1{vec!["relationship.owned".into()]}else{vec![]}).chain(if self.declarative_fields{vec!["schema.declarativeScalarFields".into()]}else{vec![]}).chain(if self.complete_entities{vec!["project.nativeMetadata".into(),"relationship.completeKeys".into()]}else{vec![]}).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).chain(if self.exact_scalars{vec!["type.timestamp".into(),"type.binary".into()]}else{vec![]}).chain(if self.decimal_scale2{vec!["type.decimal.scale2".into()]}else{vec![]}).chain(if self.optional_binary{vec!["compare.binary.optionalEqual".into()]}else{vec![]}).chain(if self.binary_equality{vec!["compare.binary.equal".into()]}else{vec![]}).chain(if self.timestamp_equality{vec!["compare.timestamp.instantEqual".into(),"compare.timestamp.optionalInstantEqual".into()]}else{vec![]}).chain(if self.container_queries{vec!["value.sequence".into(),"value.map".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":if self.query_abi_v1{"rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"}else{"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:self.constraints(if self.recursive_containers{"Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record/composed ownership; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0".into()}else if self.timestamp_equality{"Explicit umf-rfc3339-exact-instant/1.0.0 equality over original stored and operand tokens; arbitrary fractional digits within1MiB; unknown local offset retained separately; no timestamp keys or native timestamp casts".into()}else if self.decimal_scale2{"Exact declared decimal18,2 or18,4 scalar/item/key/page domains; preserve original tokens and refuse nonrepresentable values without rounding; existing binary and optional-binary equality retained".into()}else if self.optional_binary{"Singular required or absent-allowed binary byte equality; absent and null yield SQL UNKNOWN/nonmatch; empty bytes remain a value; canonical typed binary parameters, filters, INNER joins and page filters; timestamps remain projection-only".into()}else if self.binary_equality{"Required singular binary byte equality, canonical base64 literals and explicitly typed binary parameters; INNER joins and page filters; timestamps remain projection-only".into()}else if self.typed_key_pages{"Explicit typed SQL-page entrypoint with required string/boolean/integer/decimal18,4 primary keys and lexical lossless continuations; legacy explicit entity-page profiles remain string-only; typed relationship keys and flat container projections retained".into()}else if self.typed_relationship_keys{"Required string/boolean/integer/decimal18,4 relationship keys; typed comparison/order with original numeric token projection; complete and bounded lists; flat container/entity projections; page keys remain required strings; no binary/timestamp relationship keys or nested values".into()}else if self.container_queries{"Projection-only one-level sequences/maps with required singular scalar item descriptors; exact numeric item text; outer presence; no nested structures, container comparisons or unnesting; complete rootless entity fields and original current item authority".into()}else if self.complete_entities{"Explicit complete entity metadata and complete required-string relationship key lists; maximum100 per list, excess refuses the whole query; original attribution evidence required; rootless scalar records only".into()}else if self.exact_scalars{"Projection-only timestamp/binary exact text tokens; no temporal/binary comparison, grouping, parameters or keys".into()}else if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}),obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:if self.canonical_dates{"weft-backend/0.2.7"}else if self.timestamp_equality{"weft-backend/0.2.6"}else if self.binary_equality{"weft-backend/0.2.5"}else if self.import_loads{"weft-backend/0.2.4"}else if self.entity_times{"weft-backend/0.2.3"}else if self.complete_entities{"weft-backend/0.2.2"}else if self.exact_scalars{"weft-backend/0.2.1"}else{"weft-backend/0.2.0"}.into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":if self.cursor_delivery{"fixed-insensitive-cursor"}else{"live"}}),storage_layout_revision:if self.canonical_dates{"truss-runtime-query-abi/1.1".into()}else if self.query_abi_v1{"truss-runtime-query-abi/1.0".into()}else if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.canonical_dates{vec!["type.date".into(),"compare.date.equal".into(),"compare.date.optionalEqual".into()]}else{vec![]}).chain(if self.decimal12{vec!["type.decimal12Scale2".into()]}else{vec![]}).chain(if self.query_abi_v1{vec!["relationship.owned".into()]}else{vec![]}).chain(if self.declarative_fields{vec!["schema.declarativeScalarFields".into()]}else{vec![]}).chain(if self.complete_entities{vec!["project.nativeMetadata".into(),"relationship.completeKeys".into()]}else{vec![]}).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).chain(if self.exact_scalars{vec!["type.timestamp".into(),"type.binary".into()]}else{vec![]}).chain(if self.decimal_scale2{vec!["type.decimal.scale2".into()]}else{vec![]}).chain(if self.optional_binary{vec!["compare.binary.optionalEqual".into()]}else{vec![]}).chain(if self.binary_equality{vec!["compare.binary.equal".into()]}else{vec![]}).chain(if self.timestamp_equality{vec!["compare.timestamp.instantEqual".into(),"compare.timestamp.optionalInstantEqual".into()]}else{vec![]}).chain(if self.container_queries{vec!["value.sequence".into(),"value.map".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":if self.query_abi_v1{"rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"}else{"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:self.constraints(if self.recursive_containers{"Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record/composed ownership; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0".into()}else if self.timestamp_equality{"Explicit umf-rfc3339-exact-instant/1.0.0 equality over original stored and operand tokens; arbitrary fractional digits within1MiB; unknown local offset retained separately; no timestamp keys or native timestamp casts".into()}else if self.decimal_scale2{"Exact declared decimal18,2 or18,4 scalar/item/key/page domains; preserve original tokens and refuse nonrepresentable values without rounding; existing binary and optional-binary equality retained".into()}else if self.optional_binary{"Singular required or absent-allowed binary byte equality; absent and null yield SQL UNKNOWN/nonmatch; empty bytes remain a value; canonical typed binary parameters, filters, INNER joins and page filters; timestamps remain projection-only".into()}else if self.binary_equality{"Required singular binary byte equality, canonical base64 literals and explicitly typed binary parameters; INNER joins and page filters; timestamps remain projection-only".into()}else if self.typed_key_pages{"Explicit typed SQL-page entrypoint with required string/boolean/integer/decimal18,4 primary keys and lexical lossless continuations; legacy explicit entity-page profiles remain string-only; typed relationship keys and flat container projections retained".into()}else if self.typed_relationship_keys{"Required string/boolean/integer/decimal18,4 relationship keys; typed comparison/order with original numeric token projection; complete and bounded lists; flat container/entity projections; page keys remain required strings; no binary/timestamp relationship keys or nested values".into()}else if self.container_queries{"Projection-only one-level sequences/maps with required singular scalar item descriptors; exact numeric item text; outer presence; no nested structures, container comparisons or unnesting; complete rootless entity fields and original current item authority".into()}else if self.complete_entities{"Explicit complete entity metadata and complete required-string relationship key lists; maximum100 per list, excess refuses the whole query; original attribution evidence required; rootless scalar records only".into()}else if self.exact_scalars{"Projection-only timestamp/binary exact text tokens; no temporal/binary comparison, grouping, parameters or keys".into()}else if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}),obligations:if self.cursor_delivery{vec![obligation(),cursor_obligation()]}else{vec![obligation()]},status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if c.binding.profile != self.profile()
@@ -862,12 +868,16 @@ impl Backend for Runtime {
             .map(u32::from)
             .unwrap_or(m.binding.maximum_result_rows + 1)
             .min(m.binding.maximum_result_rows + 1);
-        sql.push_str(&format!(" LIMIT {limit}"));
+        if self.cursor_delivery {
+            if plan.limit.is_some() || plan.page_key.is_none() || plan.order.is_empty() {
+                return Err(fail("Unbounded authored-Key cursor plan required"));
+            }
+        } else { sql.push_str(&format!(" LIMIT {limit}")); }
         Ok(TargetPlan(Emission {
             sql,
             parameters: build.parameters.into_slots(),
             columns,
-            obligations: vec![obligation()],
+            obligations: if self.cursor_delivery {vec![obligation(),cursor_obligation()]} else {vec![obligation()]},
         }))
     }
     fn emit(&self, _: &Context<'_>, p: &TargetPlan) -> Result<Emission> {
@@ -1157,17 +1167,21 @@ impl Build<'_> {
     }
 }
 pub fn compile_json(request: &str) -> String {
-    compile_internal(request, None)
+    compile_internal(request, None, false)
 }
 /// Authored-key SQL page composition over the same accepted Truss runtime binding.
 pub fn compile_page_json(request: &str, page_size: u16, after: Option<Vec<String>>) -> String {
-    compile_internal(request, Some((page_size, after)))
+    compile_internal(request, Some((page_size, after)), false)
 }
-fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> String {
+/// Separate cursor-delivery registration; ordinary runtime compilation cannot select it.
+pub fn compile_cursor_json(request:&str,batch_size:u16)->String {
+    compile_internal(request,Some((batch_size,None)),true)
+}
+fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>, cursor_delivery:bool) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let canonical_dates=version.as_deref()==Some("0.4.41");
+    let canonical_dates=version.as_deref()==Some("0.4.41") || cursor_delivery && version.as_deref()==Some("0.4.42");
     let decimal12=canonical_dates || version.as_deref()==Some("0.4.39");
     let query_abi_v1=decimal12 || version.as_deref()==Some("0.4.38");
     let native_068=version.as_deref()==Some("0.4.37");
@@ -1255,6 +1269,7 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
                 query_abi_v1,
                 decimal12,
                 canonical_dates,
+                cursor_delivery,
                 required_rebinding,
                 parallel_edges,
                 engine_imports,
@@ -1263,6 +1278,11 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
                     match plan { Plan::V02(p) => Some(p.filters.len()-1), _ => return Err(fail("Page application plan required")) }
                 } else { None },
             };
+            // Existing export/ordinary compiler tests inspect the actual
+            // selected manifest, not a reconstructed artifact-side label.
+            #[cfg(test)]
+            assert_eq!(backend.describe()?.target_profiles[0].session_settings["read_context"],
+                if cursor_delivery {json!("fixed-insensitive-cursor")} else {json!("live")});
             if page.is_some() && !complete_entities { return Err(fail("SQL page transport requires runtime backend 0.4.6")); }
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()
@@ -1276,7 +1296,7 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
         };
     let compiler = weft_core::compile::Compiler::default();
     if let Some((size, after)) = page.clone() {
-        if decimal12 { compiler.compile_decimal12_typed_page_json_with_exact_numbers_factory(request,size,after,&mut factory) } else if typed_key_pages { compiler.compile_typed_page_json_with_exact_numbers_factory(request,size,after,&mut factory) } else { compiler.compile_page_json_with_exact_numbers_factory(request, size, after, &mut factory) }
+        if cursor_delivery { compiler.compile_cursor_json_with_exact_numbers_factory(request,size,&mut factory) } else if decimal12 { compiler.compile_decimal12_typed_page_json_with_exact_numbers_factory(request,size,after,&mut factory) } else if typed_key_pages { compiler.compile_typed_page_json_with_exact_numbers_factory(request,size,after,&mut factory) } else { compiler.compile_page_json_with_exact_numbers_factory(request, size, after, &mut factory) }
     } else if numeric {
         if decimal12 { compiler.compile_identity_names_json_with_exact_numbers_factory(request, &mut factory) } else { compiler.compile_json_with_exact_numbers_factory(request, &mut factory) }
     } else {
@@ -1294,7 +1314,7 @@ fn mutation_scalar_expression(cell:&str,logical:&LogicalType)->String {
 }
 pub(crate) fn admit_mutation_mapping(c:&Context<'_>)->Result<Mapping>{
  let native_068=weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"]=="truss-catalog-runtime/0.68-candidate";
- let runtime=Runtime{native_068,native_070:false,query_abi_v1:false,decimal12:false,canonical_dates:false,exact_numbers: true,relationships: true,pages: true,release_030: true,groups: true,selected_metadata: true,exact_scalars: true,retained_metadata: true,complete_entities: true,entity_times: true,import_loads: true,numeric_facets: true,typed_keys: true,live_traversal: true,facet_evolution: true,scalar_containers: true,container_queries: true,typed_relationship_keys: true,typed_key_pages: true,record_evolution: true,required_tightening: true,relationship_tightening: true,container_tightening: true,relationship_names: true,binary_equality: true,optional_binary: true,decimal_scale2: true,field_names: true,source_references: true,timestamp_equality: true,catalog_rebinding: true,key_backfill: true,keyed_rebinding: true,recursive_containers: true,owned_runtime: true,declarative_fields: matches!(weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"].as_str(), Some("truss-catalog-runtime/0.66-candidate" | "truss-catalog-runtime/0.67-candidate" | "truss-catalog-runtime/0.68-candidate")),required_rebinding: true,parallel_edges: true,engine_imports: true,typed_page_mode: false,continuation_filter: None};
+ let runtime=Runtime{native_068,native_070:false,query_abi_v1:false,decimal12:false,canonical_dates:false,cursor_delivery:false,exact_numbers: true,relationships: true,pages: true,release_030: true,groups: true,selected_metadata: true,exact_scalars: true,retained_metadata: true,complete_entities: true,entity_times: true,import_loads: true,numeric_facets: true,typed_keys: true,live_traversal: true,facet_evolution: true,scalar_containers: true,container_queries: true,typed_relationship_keys: true,typed_key_pages: true,record_evolution: true,required_tightening: true,relationship_tightening: true,container_tightening: true,relationship_names: true,binary_equality: true,optional_binary: true,decimal_scale2: true,field_names: true,source_references: true,timestamp_equality: true,catalog_rebinding: true,key_backfill: true,keyed_rebinding: true,recursive_containers: true,owned_runtime: true,declarative_fields: matches!(weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"].as_str(), Some("truss-catalog-runtime/0.66-candidate" | "truss-catalog-runtime/0.67-candidate" | "truss-catalog-runtime/0.68-candidate")),required_rebinding: true,parallel_edges: true,engine_imports: true,typed_page_mode: false,continuation_filter: None};
  Ok(runtime.validate_binding(c)?.mapping)
 }
 pub(crate) fn mutation_type(mapping:&Mapping,record:&Identity)->Result<String>{Ok(mapping.record(record)?.type_id.clone())}
@@ -1480,5 +1500,22 @@ mod canonical_date_runtime_tests {
         }
         let mut r=request("SELECT a.day FROM A a");r["interfaceVersion"]=json!("weft-compile/0.2.6");let old=run(&r);assert_eq!(old["status"],"blocked","{old}");assert!(old.get("sql").is_none());
         r["interfaceVersion"]=json!("weft-compile/0.2.7");r["target"]["backendVersion"]=json!("0.4.39");let old=run(&r);assert_eq!(old["status"],"blocked","{old}");assert!(old.get("sql").is_none());
+    }
+}
+
+#[cfg(test)] mod cursor_manifest_tests {
+    use super::*;
+    #[test]
+    fn explicit_cursor_and_ordinary_registrations_keep_distinct_data_contexts() {
+        // These calls execute the cfg(test) assertion on each actual selected
+        // manifest, including the cursor registration hidden from ordinary APIs.
+        let request:serde_json::Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-export-request.json")).unwrap();
+        let ordinary:serde_json::Value=serde_json::from_str(&compile_json(&request.to_string())).unwrap();
+        assert_eq!(ordinary["status"],"compiled","{ordinary}");
+        let mut export=request;export["target"]["backendVersion"]=json!("0.4.42");export["target"]["targetProfile"]=json!("truss-runtime-pg18.6-export/0.1");
+        let cursor:serde_json::Value=serde_json::from_str(&compile_cursor_json(&export.to_string(),999)).unwrap();
+        assert_eq!(cursor["status"],"compiled","{cursor}");
+        assert_eq!(cursor["artifact"]["logicalPlan"]["limit"],serde_json::Value::Null);
+        assert_eq!(cursor["artifact"]["backend"]["backendVersion"],"0.4.42");
     }
 }
