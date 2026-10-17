@@ -278,6 +278,37 @@ impl<'a> Lower<'a> {
                 }
                 Ok(format!("{} {} {}", l.sql, op, r.sql))
             }
+            Expr::IsDistinctFrom(left, right) | Expr::IsNotDistinctFrom(left, right) => {
+                fn is_null(expr: &Expr) -> bool {
+                    match expr {
+                        Expr::Value(value) => matches!(value.value, Value::Null),
+                        Expr::Nested(inner) => is_null(inner),
+                        _ => false,
+                    }
+                }
+                let distinct = matches!(e, Expr::IsDistinctFrom(_, _));
+                match (is_null(left), is_null(right)) {
+                    (true, true) => return Ok(if distinct { "FALSE" } else { "TRUE" }.into()),
+                    (true, false) | (false, true) => {
+                        let scalar = self.predicate_value(
+                            if is_null(left) { right } else { left }, aggregates,
+                        )?;
+                        return Ok(format!("{} IS {}NULL", scalar.sql, if distinct { "NOT " } else { "" }));
+                    }
+                    (false, false) => {}
+                }
+                let l = self.predicate_value(left, aggregates)?;
+                let r = self.predicate_value(right, aggregates)?;
+                if l.carrier != r.carrier {
+                    return Err("comparison carrier mismatch");
+                }
+                let op = if distinct {
+                    "IS DISTINCT FROM"
+                } else {
+                    "IS NOT DISTINCT FROM"
+                };
+                Ok(format!("{} {} {}", l.sql, op, r.sql))
+            }
             Expr::Between{expr,negated,low,high}=>{let value=self.predicate_value(expr,aggregates)?;let low=self.predicate_value(low,aggregates)?;let high=self.predicate_value(high,aggregates)?;if value.carrier!=low.carrier||value.carrier!=high.carrier{return Err("BETWEEN carrier mismatch")};Ok(format!("{} {}BETWEEN {} AND {}",value.sql,if *negated{"NOT "}else{""},low.sql,high.sql))},
             Expr::InList{expr,list,negated}=>{let value=self.predicate_value(expr,aggregates)?;if list.len()>1000{return Err("IN list budget")};if list.is_empty(){return Ok(if *negated{"TRUE"}else{"FALSE"}.into())};let items=list.iter().map(|expr|{let item=self.predicate_value(expr,aggregates)?;if item.carrier!=value.carrier{return Err("IN carrier mismatch")};Ok(item.sql)}).collect::<Result<Vec<_>>>()?;Ok(format!("{} {}IN ({})",value.sql,if *negated{"NOT "}else{""},items.join(", ")))},
             Expr::IsNull(e) => Ok(format!(

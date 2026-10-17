@@ -12,6 +12,77 @@ mod raw_read_tests {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }
     #[test]
+    fn raw_read_null_safe_distinctness_retains_typed_nullable_parameters() {
+        for op in ["IS DISTINCT FROM", "IS NOT DISTINCT FROM"] {
+            for (column, carrier, nullable) in [
+                ("amount", "decimal", true),
+                ("amount", "decimal", false),
+                ("status", "string", true),
+                ("status", "string", false),
+                ("id", "integer", true),
+            ] {
+                let mut r = request();
+                r["sql"] = json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE o.{column} {op} :value"));
+                r["parameters"] = json!([{"name":"value","carrier":carrier,"nullable":nullable}]);
+                let out = compile(r);
+                assert_eq!(out["status"], "compiled", "{out}");
+                assert!(out["sql"].as_str().unwrap().contains(op));
+                assert_eq!(out["parameterOrder"], json!(["value"]));
+                assert_eq!(out["parameters"][0]["nullable"], nullable);
+            }
+            for predicate in [
+                format!("o.amount {op} 1.20"),
+                format!("o.status {op} 'ready'"),
+                format!("o.customer_id {op} o.id"),
+            ] {
+                let mut r = request();
+                r["sql"] = json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE {predicate}"));
+                r["parameters"] = json!([]);
+                assert_eq!(compile(r)["status"], "compiled");
+            }
+            for (predicate, emitted) in [
+                (format!("o.amount {op} NULL"), if op == "IS DISTINCT FROM" { "\"o\".\"amount\" IS NOT NULL" } else { "\"o\".\"amount\" IS NULL" }),
+                (format!("(NULL) {op} o.status"), if op == "IS DISTINCT FROM" { "\"o\".\"status\" IS NOT NULL" } else { "\"o\".\"status\" IS NULL" }),
+                (format!("NULL {op} (NULL)"), if op == "IS DISTINCT FROM" { "WHERE FALSE" } else { "WHERE TRUE" }),
+            ] {
+                let mut r = request();
+                r["sql"] = json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE {predicate}"));
+                r["parameters"] = json!([]);
+                let out = compile(r);
+                assert_eq!(out["status"], "compiled", "{out}");
+                assert!(out["sql"].as_str().unwrap().contains(emitted), "{out}");
+            }
+            for unsupported in ["evil()", "TRUE"] {
+                let mut r = request();
+                r["sql"] = json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE o.amount {op} {unsupported}"));
+                r["parameters"] = json!([]);
+                let out = compile(r);
+                assert_eq!(out["status"], "blocked");
+                assert!(out.get("sql").is_none());
+            }
+            let mut r = request();
+            r["sql"] = json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE o.amount {op} o.status"));
+            r["parameters"] = json!([]);
+            let out = compile(r);
+            assert_eq!(out["status"], "blocked");
+            assert_eq!(out["diagnostics"][0]["message"], "comparison carrier mismatch");
+            assert!(out.get("sql").is_none());
+
+            let mut r = request();
+            r["sql"] = json!(format!("SELECT o.status AS status, sum(o.amount) AS total FROM \"commerce\".\"Order\" AS o GROUP BY o.status HAVING o.amount {op} :minimum"));
+            let out = compile(r);
+            assert_eq!(out["status"], "blocked");
+            assert_eq!(out["diagnostics"][0]["message"], "ungrouped HAVING column");
+            assert!(out.get("sql").is_none());
+            let mut r = request();
+            r["sql"] = json!(format!("SELECT o.status AS status, sum(o.amount) AS total FROM \"commerce\".\"Order\" AS o GROUP BY o.status HAVING NULL {op} o.amount"));
+            r["parameters"] = json!([]);
+            let out = compile(r);
+            assert_eq!(out["status"], "blocked");
+            assert_eq!(out["diagnostics"][0]["message"], "ungrouped HAVING column");
+        }
+    }
+    #[test]
     fn raw_read_compiles_deterministically_with_native_role_obligations() {
         let r = request();
         let a = compile(r.clone());
