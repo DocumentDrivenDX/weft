@@ -1,0 +1,104 @@
+{
+  "version": "0.4.41",
+  "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+  "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+  "pinsBeforeAfter": {
+    "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+    "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "controls": 22,
+  "checks": [
+    {
+      "id": "read",
+      "status": "compiled"
+    },
+    {
+      "id": "read-check",
+      "status": "compiled"
+    },
+    {
+      "id": "page",
+      "status": "compiled"
+    },
+    {
+      "id": "page-check",
+      "status": "compiled"
+    },
+    {
+      "id": "export",
+      "status": "compiled"
+    },
+    {
+      "id": "read-context-drift",
+      "status": "blocked"
+    },
+    {
+      "id": "page-context-drift",
+      "status": "blocked"
+    },
+    {
+      "id": "export-context-drift",
+      "status": "blocked"
+    },
+    {
+      "id": "export-program-drift",
+      "status": "blocked"
+    },
+    {
+      "id": "distinct",
+      "status": "compiled"
+    },
+    {
+      "id": "distinct-null",
+      "status": "compiled"
+    },
+    {
+      "id": "not-distinct",
+      "status": "compiled"
+    },
+    {
+      "id": "not-distinct-null",
+      "status": "compiled"
+    },
+    {
+      "id": "distinct-carrier-mismatch",
+      "status": "blocked"
+    },
+    {
+      "id": "ashlar-spark4-read",
+      "status": "compiled"
+    },
+    {
+      "id": "ashlar-spark4-read-check",
+      "status": "compiled"
+    },
+    {
+      "id": "ashlar-spark4-page",
+      "status": "compiled"
+    },
+    {
+      "id": "ashlar-spark4-page-check",
+      "status": "compiled"
+    },
+    {
+      "id": "ashlar-dbsql-20261016-read",
+      "status": "compiled"
+    },
+    {
+      "id": "ashlar-dbsql-20261016-read-check",
+      "status": "compiled"
+    },
+    {
+      "id": "ashlar-dbsql-20261016-page",
+      "status": "compiled"
+    },
+    {
+      "id": "ashlar-dbsql-20261016-page-check",
+      "status": "compiled"
+    }
+  ],
+  "nativeAdmission": false,
+  "securityReady": false,
+  "temporalQualification": "held"
+}

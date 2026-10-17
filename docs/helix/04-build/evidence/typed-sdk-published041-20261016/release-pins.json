@@ -1,0 +1,3153 @@
+{
+  "tag": "v0.4.41",
+  "commit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+  "workflowCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+  "distribution": "weft-sql",
+  "version": "0.4.41",
+  "features": [
+    "raw-postgresql-reads",
+    "ashlar-databricks-qualified",
+    "truss-postgresql-pg18",
+    "current-postgresql-scalar-candidate",
+    "current-databricks-scalar-candidate",
+    "current-query-refinement-candidate"
+  ],
+  "wheelPackaging": [
+    {
+      "status": "passed",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+      "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+      "python": "3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated"
+    },
+    {
+      "status": "passed",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+      "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+      "python": "3.11.17 (main, Oct  1 2026, 14:33:38) [GCC 13.3.0]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated"
+    },
+    {
+      "status": "passed",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+      "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+      "python": "3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated"
+    },
+    {
+      "status": "passed",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+      "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated"
+    },
+    {
+      "status": "passed",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+      "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated"
+    }
+  ],
+  "currentQuerySmoke": [
+    {
+      "scope": "Exact installed standard wheel current-query source/conditional SQL APIs only; no database/native permission or security qualification",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+        "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "python": "3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
+      "checks": [
+        {
+          "id": "original-source-custody-and-abi2-masked-read-raw-predicate",
+          "compiledSha256": "6d98d085ba0089bf867663917e93e289bfd7c72cdb00f259ca033a81676e21f0"
+        },
+        {
+          "id": "abi3-complete-count-bag",
+          "compiledSha256": "eccce4c031e4de9ee1fb1a081a9e438f4b6937f5be3757ead4a60c49cdd9e47d"
+        },
+        {
+          "id": "explicit-abi4-original-sum",
+          "compiledSha256": "ecfd1ac02fce24efadf64131764ea5598964825c7343340d3987e2a66a3a30c3"
+        },
+        {
+          "id": "no-context-downgrade",
+          "refused": true
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Exact installed standard wheel current-query source/conditional SQL APIs only; no database/native permission or security qualification",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+        "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "python": "3.11.17 (main, Oct  1 2026, 14:33:38) [GCC 13.3.0]",
+      "checks": [
+        {
+          "id": "original-source-custody-and-abi2-masked-read-raw-predicate",
+          "compiledSha256": "6d98d085ba0089bf867663917e93e289bfd7c72cdb00f259ca033a81676e21f0"
+        },
+        {
+          "id": "abi3-complete-count-bag",
+          "compiledSha256": "eccce4c031e4de9ee1fb1a081a9e438f4b6937f5be3757ead4a60c49cdd9e47d"
+        },
+        {
+          "id": "explicit-abi4-original-sum",
+          "compiledSha256": "ecfd1ac02fce24efadf64131764ea5598964825c7343340d3987e2a66a3a30c3"
+        },
+        {
+          "id": "no-context-downgrade",
+          "refused": true
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Exact installed standard wheel current-query source/conditional SQL APIs only; no database/native permission or security qualification",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+        "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "python": "3.11.9 (v3.11.9:de54cf5be3, Apr  2 2024, 07:12:50) [Clang 13.0.0 (clang-1300.0.29.30)]",
+      "checks": [
+        {
+          "id": "original-source-custody-and-abi2-masked-read-raw-predicate",
+          "compiledSha256": "6d98d085ba0089bf867663917e93e289bfd7c72cdb00f259ca033a81676e21f0"
+        },
+        {
+          "id": "abi3-complete-count-bag",
+          "compiledSha256": "eccce4c031e4de9ee1fb1a081a9e438f4b6937f5be3757ead4a60c49cdd9e47d"
+        },
+        {
+          "id": "explicit-abi4-original-sum",
+          "compiledSha256": "ecfd1ac02fce24efadf64131764ea5598964825c7343340d3987e2a66a3a30c3"
+        },
+        {
+          "id": "no-context-downgrade",
+          "refused": true
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Exact installed standard wheel current-query source/conditional SQL APIs only; no database/native permission or security qualification",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+        "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "checks": [
+        {
+          "id": "original-source-custody-and-abi2-masked-read-raw-predicate",
+          "compiledSha256": "6d98d085ba0089bf867663917e93e289bfd7c72cdb00f259ca033a81676e21f0"
+        },
+        {
+          "id": "abi3-complete-count-bag",
+          "compiledSha256": "eccce4c031e4de9ee1fb1a081a9e438f4b6937f5be3757ead4a60c49cdd9e47d"
+        },
+        {
+          "id": "explicit-abi4-original-sum",
+          "compiledSha256": "ecfd1ac02fce24efadf64131764ea5598964825c7343340d3987e2a66a3a30c3"
+        },
+        {
+          "id": "no-context-downgrade",
+          "refused": true
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Exact installed standard wheel current-query source/conditional SQL APIs only; no database/native permission or security qualification",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "version": "0.4.41",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+        "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "checks": [
+        {
+          "id": "original-source-custody-and-abi2-masked-read-raw-predicate",
+          "compiledSha256": "6d98d085ba0089bf867663917e93e289bfd7c72cdb00f259ca033a81676e21f0"
+        },
+        {
+          "id": "abi3-complete-count-bag",
+          "compiledSha256": "eccce4c031e4de9ee1fb1a081a9e438f4b6937f5be3757ead4a60c49cdd9e47d"
+        },
+        {
+          "id": "explicit-abi4-original-sum",
+          "compiledSha256": "ecfd1ac02fce24efadf64131764ea5598964825c7343340d3987e2a66a3a30c3"
+        },
+        {
+          "id": "no-context-downgrade",
+          "refused": true
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false
+    }
+  ],
+  "sdkCompilerSmoke": [
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+        "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "read",
+          "status": "compiled"
+        },
+        {
+          "id": "read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "export",
+          "status": "compiled"
+        },
+        {
+          "id": "read-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "page-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-program-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-carrier-mismatch",
+          "status": "blocked"
+        },
+        {
+          "id": "ashlar-spark4-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page-check",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "temporalQualification": "held"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+        "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "read",
+          "status": "compiled"
+        },
+        {
+          "id": "read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "export",
+          "status": "compiled"
+        },
+        {
+          "id": "read-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "page-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-program-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-carrier-mismatch",
+          "status": "blocked"
+        },
+        {
+          "id": "ashlar-spark4-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page-check",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "temporalQualification": "held"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+        "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "read",
+          "status": "compiled"
+        },
+        {
+          "id": "read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "export",
+          "status": "compiled"
+        },
+        {
+          "id": "read-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "page-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-program-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-carrier-mismatch",
+          "status": "blocked"
+        },
+        {
+          "id": "ashlar-spark4-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page-check",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "temporalQualification": "held"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+        "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "read",
+          "status": "compiled"
+        },
+        {
+          "id": "read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "export",
+          "status": "compiled"
+        },
+        {
+          "id": "read-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "page-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-program-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-carrier-mismatch",
+          "status": "blocked"
+        },
+        {
+          "id": "ashlar-spark4-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page-check",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "temporalQualification": "held"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+        "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "read",
+          "status": "compiled"
+        },
+        {
+          "id": "read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "export",
+          "status": "compiled"
+        },
+        {
+          "id": "read-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "page-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-context-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "export-program-drift",
+          "status": "blocked"
+        },
+        {
+          "id": "distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct",
+          "status": "compiled"
+        },
+        {
+          "id": "not-distinct-null",
+          "status": "compiled"
+        },
+        {
+          "id": "distinct-carrier-mismatch",
+          "status": "blocked"
+        },
+        {
+          "id": "ashlar-spark4-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-spark4-page-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-read-check",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page",
+          "status": "compiled"
+        },
+        {
+          "id": "ashlar-dbsql-20261016-page-check",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "temporalQualification": "held"
+    }
+  ],
+  "sdkTemporalQualification": "held",
+  "currentDatabricksSmoke": [
+    {
+      "scope": "Actual candidate native Python descriptors/custody only; no database permissions or native security admission",
+      "controls": 32,
+      "checks": [
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:0",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:1",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:2",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:3",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:4",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:5",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:11",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:12",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:13",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:14",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:15",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:16",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:17",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:18",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:24",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:25",
+          "refused": true
+        },
+        {
+          "id": "actual-same-original-candidate-emits-conditional-sql",
+          "passed": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_scalar_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_rows_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_contributors_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_sum_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "original-parent-retained",
+          "passed": true
+        }
+      ],
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+        "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Actual candidate native Python descriptors/custody only; no database permissions or native security admission",
+      "controls": 32,
+      "checks": [
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:0",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:1",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:2",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:3",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:4",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:5",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:11",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:12",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:13",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:14",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:15",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:16",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:17",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:18",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:24",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:25",
+          "refused": true
+        },
+        {
+          "id": "actual-same-original-candidate-emits-conditional-sql",
+          "passed": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_scalar_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_rows_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_contributors_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_sum_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "original-parent-retained",
+          "passed": true
+        }
+      ],
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+        "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Actual candidate native Python descriptors/custody only; no database permissions or native security admission",
+      "controls": 32,
+      "checks": [
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:0",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:1",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:2",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:3",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:4",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:5",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:11",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:12",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:13",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:14",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:15",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:16",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:17",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:18",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:24",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:25",
+          "refused": true
+        },
+        {
+          "id": "actual-same-original-candidate-emits-conditional-sql",
+          "passed": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_scalar_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_rows_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_contributors_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_sum_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "original-parent-retained",
+          "passed": true
+        }
+      ],
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+        "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Actual candidate native Python descriptors/custody only; no database permissions or native security admission",
+      "controls": 32,
+      "checks": [
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:0",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:1",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:2",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:3",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:4",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:5",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:11",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:12",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:13",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:14",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:15",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:16",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:17",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:18",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:24",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:25",
+          "refused": true
+        },
+        {
+          "id": "actual-same-original-candidate-emits-conditional-sql",
+          "passed": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_scalar_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_rows_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_contributors_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_sum_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "original-parent-retained",
+          "passed": true
+        }
+      ],
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+        "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "scope": "Actual candidate native Python descriptors/custody only; no database permissions or native security admission",
+      "controls": 32,
+      "checks": [
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:0",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:1",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:2",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:3",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:4",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:refuse-import:5",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:11",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_contributors_candidate_json:no-authority-override:12",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:13",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:14",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:15",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:16",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:17",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:refuse-import:18",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:NoneType",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:str",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:dict",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:ApplicationLineagePreparation",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:foreign-self:object",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:24",
+          "refused": true
+        },
+        {
+          "id": "lower_databricks_current_sum_candidate_json:no-authority-override:25",
+          "refused": true
+        },
+        {
+          "id": "actual-same-original-candidate-emits-conditional-sql",
+          "passed": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_scalar_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_rows_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_contributors_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "old-postgresql-consumer-refuses:lower_postgresql_current_sum_candidate_json",
+          "refused": true
+        },
+        {
+          "id": "original-parent-retained",
+          "passed": true
+        }
+      ],
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+        "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "nativeAdmission": false,
+      "securityReady": false
+    }
+  ],
+  "currentQueryRefinementSmoke": [
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+        "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "checks": [
+        {
+          "id": "postgresql/rows",
+          "matched": true
+        },
+        {
+          "id": "postgresql/rows/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors",
+          "matched": true
+        },
+        {
+          "id": "postgresql/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum",
+          "matched": true
+        },
+        {
+          "id": "postgresql/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors",
+          "matched": true
+        },
+        {
+          "id": "databricks/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum",
+          "matched": true
+        },
+        {
+          "id": "databricks/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/unknown-frame",
+          "refused": true
+        }
+      ],
+      "controls": 30,
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+        "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "checks": [
+        {
+          "id": "postgresql/rows",
+          "matched": true
+        },
+        {
+          "id": "postgresql/rows/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors",
+          "matched": true
+        },
+        {
+          "id": "postgresql/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum",
+          "matched": true
+        },
+        {
+          "id": "postgresql/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors",
+          "matched": true
+        },
+        {
+          "id": "databricks/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum",
+          "matched": true
+        },
+        {
+          "id": "databricks/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/unknown-frame",
+          "refused": true
+        }
+      ],
+      "controls": 30,
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+        "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "checks": [
+        {
+          "id": "postgresql/rows",
+          "matched": true
+        },
+        {
+          "id": "postgresql/rows/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors",
+          "matched": true
+        },
+        {
+          "id": "postgresql/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum",
+          "matched": true
+        },
+        {
+          "id": "postgresql/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors",
+          "matched": true
+        },
+        {
+          "id": "databricks/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum",
+          "matched": true
+        },
+        {
+          "id": "databricks/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/unknown-frame",
+          "refused": true
+        }
+      ],
+      "controls": 30,
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+        "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "checks": [
+        {
+          "id": "postgresql/rows",
+          "matched": true
+        },
+        {
+          "id": "postgresql/rows/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors",
+          "matched": true
+        },
+        {
+          "id": "postgresql/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum",
+          "matched": true
+        },
+        {
+          "id": "postgresql/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors",
+          "matched": true
+        },
+        {
+          "id": "databricks/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum",
+          "matched": true
+        },
+        {
+          "id": "databricks/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/unknown-frame",
+          "refused": true
+        }
+      ],
+      "controls": 30,
+      "nativeAdmission": false,
+      "securityReady": false
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+        "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "checks": [
+        {
+          "id": "postgresql/rows",
+          "matched": true
+        },
+        {
+          "id": "postgresql/rows/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/rows/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors",
+          "matched": true
+        },
+        {
+          "id": "postgresql/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum",
+          "matched": true
+        },
+        {
+          "id": "postgresql/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "postgresql/sum/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors",
+          "matched": true
+        },
+        {
+          "id": "databricks/contributors/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/contributors/unknown-frame",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum",
+          "matched": true
+        },
+        {
+          "id": "databricks/sum/foreign-source",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/wrong-public",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/duplicate-key",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/missing-input",
+          "refused": true
+        },
+        {
+          "id": "databricks/sum/unknown-frame",
+          "refused": true
+        }
+      ],
+      "controls": 30,
+      "nativeAdmission": false,
+      "securityReady": false
+    }
+  ],
+  "trussDecimal12Smoke": [
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+        "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-0",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-1",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-2",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-3",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-4",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-5",
+          "status": "compiled"
+        },
+        {
+          "id": "nonrepresentable-0",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-1",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-2",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-3",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-4",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-5",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-6",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.38",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.37",
+          "status": "blocked"
+        },
+        {
+          "id": "related-decimal-key",
+          "status": "compiled"
+        },
+        {
+          "id": "first-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "next-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "bad-typed-page",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-new-backend",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+        "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-0",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-1",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-2",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-3",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-4",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-5",
+          "status": "compiled"
+        },
+        {
+          "id": "nonrepresentable-0",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-1",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-2",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-3",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-4",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-5",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-6",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.38",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.37",
+          "status": "blocked"
+        },
+        {
+          "id": "related-decimal-key",
+          "status": "compiled"
+        },
+        {
+          "id": "first-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "next-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "bad-typed-page",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-new-backend",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+        "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-0",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-1",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-2",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-3",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-4",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-5",
+          "status": "compiled"
+        },
+        {
+          "id": "nonrepresentable-0",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-1",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-2",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-3",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-4",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-5",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-6",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.38",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.37",
+          "status": "blocked"
+        },
+        {
+          "id": "related-decimal-key",
+          "status": "compiled"
+        },
+        {
+          "id": "first-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "next-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "bad-typed-page",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-new-backend",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+        "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-0",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-1",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-2",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-3",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-4",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-5",
+          "status": "compiled"
+        },
+        {
+          "id": "nonrepresentable-0",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-1",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-2",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-3",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-4",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-5",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-6",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.38",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.37",
+          "status": "blocked"
+        },
+        {
+          "id": "related-decimal-key",
+          "status": "compiled"
+        },
+        {
+          "id": "first-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "next-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "bad-typed-page",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-new-backend",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+        "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 22,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-0",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-1",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-2",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-3",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-4",
+          "status": "compiled"
+        },
+        {
+          "id": "exact-parameter-5",
+          "status": "compiled"
+        },
+        {
+          "id": "nonrepresentable-0",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-1",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-2",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-3",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-4",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-5",
+          "status": "blocked"
+        },
+        {
+          "id": "nonrepresentable-6",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.38",
+          "status": "blocked"
+        },
+        {
+          "id": "old-version-0.4.37",
+          "status": "blocked"
+        },
+        {
+          "id": "related-decimal-key",
+          "status": "compiled"
+        },
+        {
+          "id": "first-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "next-typed-page",
+          "status": "compiled"
+        },
+        {
+          "id": "bad-typed-page",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "genuine-unnamed-new-backend",
+          "status": "compiled"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."
+    }
+  ],
+  "trussDecimal12Backend": {
+    "backendVersion": "0.4.39",
+    "targetProfile": "truss-runtime-pg18.6/0.5",
+    "bindingProfile": "truss-runtime-binding/0.5",
+    "capability": "type.decimal12Scale2",
+    "nativeAdmission": false
+  },
+  "trussQueryAbiBackend": {
+    "backendVersion": "0.4.38",
+    "targetProfile": "truss-runtime-pg18.6/0.5",
+    "bindingProfile": "truss-runtime-binding/0.5",
+    "queryAbi": {
+      "identity": "truss-postgresql-logical-query",
+      "version": "1.0",
+      "sha256": "9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806"
+    },
+    "nativeAdmission": false
+  },
+  "trussDateBackend": {
+    "backendVersion": "0.4.41",
+    "targetProfile": "truss-runtime-pg18.6/0.5",
+    "bindingProfile": "truss-runtime-binding/0.5",
+    "queryAbi": {
+      "identity": "truss-postgresql-logical-query",
+      "version": "1.1",
+      "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+    },
+    "nativeAdmission": false
+  },
+  "trussDateSmoke": [
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+        "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 7,
+      "checks": [
+        {
+          "id": "literal",
+          "status": "compiled"
+        },
+        {
+          "id": "typed-parameter",
+          "status": "compiled"
+        },
+        {
+          "id": "field-join",
+          "status": "compiled"
+        },
+        {
+          "id": "invalid-date",
+          "status": "blocked"
+        },
+        {
+          "id": "old-envelope",
+          "status": "blocked"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "old-abi",
+          "status": "blocked"
+        }
+      ],
+      "queryAbi": {
+        "identity": "truss-postgresql-logical-query",
+        "version": "1.1",
+        "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+      },
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact-wheel compiler checks over genuine paired-candidate Truss source; no native action/security/performance qualification"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+        "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 7,
+      "checks": [
+        {
+          "id": "literal",
+          "status": "compiled"
+        },
+        {
+          "id": "typed-parameter",
+          "status": "compiled"
+        },
+        {
+          "id": "field-join",
+          "status": "compiled"
+        },
+        {
+          "id": "invalid-date",
+          "status": "blocked"
+        },
+        {
+          "id": "old-envelope",
+          "status": "blocked"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "old-abi",
+          "status": "blocked"
+        }
+      ],
+      "queryAbi": {
+        "identity": "truss-postgresql-logical-query",
+        "version": "1.1",
+        "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+      },
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact-wheel compiler checks over genuine paired-candidate Truss source; no native action/security/performance qualification"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+        "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 7,
+      "checks": [
+        {
+          "id": "literal",
+          "status": "compiled"
+        },
+        {
+          "id": "typed-parameter",
+          "status": "compiled"
+        },
+        {
+          "id": "field-join",
+          "status": "compiled"
+        },
+        {
+          "id": "invalid-date",
+          "status": "blocked"
+        },
+        {
+          "id": "old-envelope",
+          "status": "blocked"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "old-abi",
+          "status": "blocked"
+        }
+      ],
+      "queryAbi": {
+        "identity": "truss-postgresql-logical-query",
+        "version": "1.1",
+        "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+      },
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact-wheel compiler checks over genuine paired-candidate Truss source; no native action/security/performance qualification"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+        "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 7,
+      "checks": [
+        {
+          "id": "literal",
+          "status": "compiled"
+        },
+        {
+          "id": "typed-parameter",
+          "status": "compiled"
+        },
+        {
+          "id": "field-join",
+          "status": "compiled"
+        },
+        {
+          "id": "invalid-date",
+          "status": "blocked"
+        },
+        {
+          "id": "old-envelope",
+          "status": "blocked"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "old-abi",
+          "status": "blocked"
+        }
+      ],
+      "queryAbi": {
+        "identity": "truss-postgresql-logical-query",
+        "version": "1.1",
+        "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+      },
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact-wheel compiler checks over genuine paired-candidate Truss source; no native action/security/performance qualification"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+        "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 7,
+      "checks": [
+        {
+          "id": "literal",
+          "status": "compiled"
+        },
+        {
+          "id": "typed-parameter",
+          "status": "compiled"
+        },
+        {
+          "id": "field-join",
+          "status": "compiled"
+        },
+        {
+          "id": "invalid-date",
+          "status": "blocked"
+        },
+        {
+          "id": "old-envelope",
+          "status": "blocked"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "old-abi",
+          "status": "blocked"
+        }
+      ],
+      "queryAbi": {
+        "identity": "truss-postgresql-logical-query",
+        "version": "1.1",
+        "sha256": "9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"
+      },
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Exact-wheel compiler checks over genuine paired-candidate Truss source; no native action/security/performance qualification"
+    }
+  ],
+  "trussBackendSelection": "closed-runtime-hash",
+  "trussNative70Smoke": [
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+        "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 5,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "count",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "wrong-runtime-digest",
+          "status": "blocked"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Genuine native70 public catalog/write/read binding through exact wheel compiler; compilation only, no action or security admission"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+        "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 5,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "count",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "wrong-runtime-digest",
+          "status": "blocked"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Genuine native70 public catalog/write/read binding through exact wheel compiler; compilation only, no action or security admission"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+        "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 5,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "count",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "wrong-runtime-digest",
+          "status": "blocked"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Genuine native70 public catalog/write/read binding through exact wheel compiler; compilation only, no action or security admission"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-win_amd64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+        "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 5,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "count",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "wrong-runtime-digest",
+          "status": "blocked"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Genuine native70 public catalog/write/read binding through exact wheel compiler; compilation only, no action or security admission"
+    },
+    {
+      "version": "0.4.41",
+      "sourceCommit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+      "wheel": "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pinsBeforeAfter": {
+        "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+        "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "controls": 5,
+      "checks": [
+        {
+          "id": "projection",
+          "status": "compiled"
+        },
+        {
+          "id": "count",
+          "status": "compiled"
+        },
+        {
+          "id": "page",
+          "status": "compiled"
+        },
+        {
+          "id": "old-backend",
+          "status": "blocked"
+        },
+        {
+          "id": "wrong-runtime-digest",
+          "status": "blocked"
+        }
+      ],
+      "nativeAdmission": false,
+      "securityReady": false,
+      "scope": "Genuine native70 public catalog/write/read binding through exact wheel compiler; compilation only, no action or security admission"
+    }
+  ],
+  "trussBackend": "0.4.40",
+  "trussRuntime": "truss-catalog-runtime/0.70-candidate",
+  "trussRuntimeSha256": "0d292c3681986b3664ff3af9927039d10cf20ef029511e33ccd7d76c566041e3",
+  "supportedTrussRuntimes": [
+    {
+      "releaseId": "truss-catalog-runtime/0.66-candidate",
+      "sha256": "99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a"
+    },
+    {
+      "releaseId": "truss-catalog-runtime/0.67-candidate",
+      "sha256": "8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee"
+    },
+    {
+      "releaseId": "truss-catalog-runtime/0.68-candidate",
+      "sha256": "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc"
+    },
+    {
+      "releaseId": "truss-catalog-runtime/0.70-candidate",
+      "sha256": "0d292c3681986b3664ff3af9927039d10cf20ef029511e33ccd7d76c566041e3"
+    }
+  ],
+  "trussSupportProfile": "0.17",
+  "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+  "umfExactInstantCommit": "cbb6fb87",
+  "rust": "1.90.0",
+  "maturin": "1.9.6"
+}
