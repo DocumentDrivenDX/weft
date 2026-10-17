@@ -15,7 +15,15 @@ fn compile(program:&str,current:&str)->Result<Value,&'static str> {
     let mut derived=request.clone();
     derived["target"]["backendVersion"]=json!("0.4.42");
     derived["target"]["targetProfile"]=json!("truss-runtime-pg18.6-export/0.1");
-    let response=weft_core::json::checked_json(&weft_postgresql::truss_runtime::compile_cursor_json(&encode(&derived),size)).map_err(|_|"Original cursor compiler response refused")?;
+    let mut export_related=None;
+    let raw=if let Some(packet)=checked.get("relatedRequest"){
+        let read=crate::engine_related_read::page_read_packet(packet)?;
+        let source_sql=read["source"]["sql"].as_str().ok_or("Original navigation source required")?;
+        let relationship=&read["relationship"];let input=weft_core::application_navigation::Input{source_sql:source_sql.into(),relationship_module:relationship["module"].as_str().ok_or("Original navigation module required")?.into(),relationship_id:relationship["id"].as_str().ok_or("Original navigation id required")?.into(),inverse:relationship["direction"]=="inverse"};
+        let mut packet=packet.clone();packet["target"]=derived.clone();packet["source"]["target"]=derived["target"].clone();export_related=Some(packet);
+        weft_postgresql::truss_runtime::compile_navigation_json(&encode(&derived),&input,Some((size,None)),true)
+    }else{weft_postgresql::truss_runtime::compile_cursor_json(&encode(&derived),size)};
+    let response=weft_core::json::checked_json(&raw).map_err(|_|"Original cursor compiler response refused")?;
     if response["status"]!="compiled" {return Ok(json!({"version":"weft.engine-export/0.1","status":"blocked","original":response}))}
     if response["interfaceVersion"]!="weft-sql-cursor/0.1" {return Err("Explicit cursor response required")}
     let mut expected_plan=checked["artifact"]["logicalPlan"].clone();
@@ -32,6 +40,7 @@ fn compile(program:&str,current:&str)->Result<Value,&'static str> {
     let mut out=json!({"version":"weft.engine-export/0.1","status":"compiled","compiler":"truss-runtime-cursor",
         "program":original,"checkedPage":checked,"request":request,"exportRequest":derived,
         "artifact":artifact,"cursor":response["cursor"]});
+    if let Some(packet)=export_related{out["exportRelatedRequest"]=packet;}
     out["structuralDigest"]=json!({"owner":"weft-runtime-engine-export","version":"0.1","sha256":weft_core::json::sha256(encode(&out).as_bytes())});
     Ok(out)
 }

@@ -124,3 +124,58 @@ pub(super) fn prepare(
     let _ = binding; // Admission above independently consumed the same full binding.
     Ok(Some((membership, admitted.obligations)))
 }
+
+/// A repeated identical whole-publication obligation is one obligation. A
+/// distinct source meaning must never disappear into an ID-indexed host map.
+pub(super) fn merge_source_obligations(
+    target: &mut Vec<Obligation>,
+    source: Vec<Obligation>,
+) -> Result<()> {
+    for obligation in source {
+        if let Some(existing) = target.iter().find(|item| item.id == obligation.id) {
+            if existing != &obligation {
+                return Err(fail(
+                    "WFT-OBLIGATION",
+                    "Distinct source and target obligations share an unsupported ID",
+                ));
+            }
+        } else {
+            target.push(obligation);
+        }
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn original() -> Obligation {
+        Obligation {
+            id: "ashlar.candidate.publication".into(),
+            parameters: json!({"publication":"original","modelPins":[{"revision":"owned"}]}),
+            owner: ObligationOwner::Host,
+            failure_code: "WFT-OBLIGATION".into(),
+        }
+    }
+    #[test]
+    fn identical_source_meaning_deduplicates_but_distinct_meaning_refuses() {
+        let first = original();
+        let mut target = vec![first.clone()];
+        merge_source_obligations(&mut target, vec![first.clone()]).unwrap();
+        assert_eq!(target, vec![first.clone()]);
+        for mode in 0..3 {
+            let mut different = first.clone();
+            match mode {
+                0 => different.parameters["publication"] = json!("other"),
+                1 => different.owner = ObligationOwner::Backend,
+                _ => different.failure_code = "OTHER".into(),
+            };
+            assert!(merge_source_obligations(&mut target, vec![different]).is_err());
+            assert_eq!(target, vec![first.clone()]);
+        }
+        let mut additional = first.clone();
+        additional.id = "source-specific-native-proof".into();
+        merge_source_obligations(&mut target, vec![additional.clone()]).unwrap();
+        assert_eq!(target, vec![first, additional]);
+    }
+}

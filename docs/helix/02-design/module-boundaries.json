@@ -3978,7 +3978,8 @@
         {
           "path": "crates/weft-runtime/src/engine_related_read.rs",
           "publicDeclarations": [
-            "fn:compile_json"
+            "fn:compile_json",
+            "fn:compile_page_json"
           ],
           "pathReferences": []
         },
@@ -4216,6 +4217,7 @@
             "fn:compile_search_json",
             "fn:compile_engine_read_json",
             "fn:compile_engine_related_read_json",
+            "fn:compile_engine_related_page_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",
@@ -4309,6 +4311,7 @@
             "fn:native_request_json",
             "fn:compile_engine_read_json",
             "fn:compile_engine_related_read_json",
+            "fn:compile_engine_related_page_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",

@@ -367,7 +367,6 @@ pub(super) fn lower(
             failure_code: "WFT-NUMERIC-DOMAIN".into(),
         },
     ];
-    if let Some((_, source_obligations)) = navigation { obligations.extend(source_obligations); }
     if !lower.compound_checks.is_empty() {
         obligations.push(Obligation{id:"ashlar.candidate.compoundIntegrity".into(),parameters:json!({"phase":"before-user-query","checks":lower.compound_checks,"success":"one exact STRING count equal to 0 per check","samePublicationRequired":true,"encoding":"ashlar-weft-json-value/0.1-candidate","nativeNull":false,"numericLeaves":"exact strings","limits":{"depthExclusive":128,"nodesPerValue":100000},"execution":"native recursion/resource errors refuse atomically; no partial values"}),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into()});
     }
@@ -414,6 +413,7 @@ pub(super) fn lower(
         let check=format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {keys} FROM {} GROUP BY {keys} HAVING {count} > 1) duplicate_keys",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", "),binding::quote(&plan.source.occurrence));
         obligations.push(Obligation{id:"ashlar.candidate.keyIntegrity".into(),parameters:json!({"phase":"before-user-query","key":key,"checks":[{"sql":check,"failureCode":"WFT-BINDING"}],"success":"one exact STRING count equal to 0","continuation":"same immutable publication, original binding and effective policy across pages; ORDER BY alone proves no continuity"}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()});
     }
+    if let Some((_, source_obligations)) = navigation { super::navigation::merge_source_obligations(&mut obligations, source_obligations)?; }
     Ok(TargetPlan(Emission {
         sql,
         parameters: lower.parameters,

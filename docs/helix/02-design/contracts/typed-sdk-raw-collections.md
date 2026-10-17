@@ -177,6 +177,24 @@ Original source obligations propagate. No runtime or SDK may parse or rewrite
 native SQL to compose this operation. Source implementation and compiler tests
 remain unqualified until actual original-engine E2Es pass on one frozen cohort.
 
+The related page packet is `weft.engine-related-page/0.1`, with the same
+compiler/source/target/relationship fields plus `pageSize` (1..999). Its result
+retains the ordinary `weft.engine-page/0.1` frame, exact complete `relatedRequest`,
+hidden original authored-Key outputs and original native continuation. Shared
+parameters are partitioned by original Core AST uses with an exact complete
+union; source-only, target-only and shared parameters remain bound. Surplus,
+missing and case-colliding declarations refuse. Native publication obligations
+are deduplicated only when their entire original values agree; differing
+same-ID source/target obligations refuse.
+
+The existing original Truss export composition retains the complete related page
+and changes only outer delivery to its distinct ABI1.1 cursor profile. The source
+selection, explicit source LIMIT, original source/target binding and hidden Key
+inventory must remain equal. Caller page ordering in this increment is the
+complete required original primary Key ASC (explicit NULLS is redundant only
+after the same non-null proof); other declared ordering and alternate selected
+Key cursor profiles are not qualified by that normalization.
+
 ## Qualification
 
 Compiler source tests and installed-wheel controls are precursor evidence only.

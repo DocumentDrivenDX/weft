@@ -145,6 +145,12 @@ pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->Strin
  let after:Option<Vec<String>>=serde_json::from_value(after).map_err(|_|"original lexical page continuation required")?;
  if after.as_ref().is_some_and(|values|values.is_empty()||values.len()>1024||values.iter().any(|v|v.len()>1_048_576)){return Err("bounded complete page continuation required")}
  if program["version"]!="weft.engine-page/0.1" || program["status"]!="compiled" || !program["after"].is_null(){return Err("original first-page catalog required")}
+ if let Some(packet)=program.get("relatedRequest"){
+  if crate::engine_related_read::compile_page_value(packet,None)?!=program{return Err("original related page differs from its compiler")}
+  let read=crate::engine_related_read::page_read_packet(packet)?;let base=crate::engine_related_read::compile_value(&read)?;let checked=bind(&base,&current)?;
+  if checked["status"]!="compiled"{return Ok(json!({"version":"weft.engine-page/0.1","status":"blocked","original":checked}))}
+  let mut packet=packet.clone();packet["source"]["parameters"]=current["parameters"].clone();packet["target"]["parameters"]=current["parameters"].clone();return crate::engine_related_read::compile_page_value(&packet,after)
+ }
  let method=program["compiler"].as_str().ok_or("original page compiler required")?;
  let size=program["pageSize"].as_u64().and_then(|v|u16::try_from(v).ok()).ok_or("original page bound required")?;
  let original=&program["request"];
