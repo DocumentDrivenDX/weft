@@ -5,6 +5,7 @@ edition.workspace = true
 publish.workspace = true
 rust-version = "1.90"
 [features]
+engine-ordered-page-candidate=[]
 current-presence-graph-requirements-candidate=["current-presence-model-requirements-candidate"]
 current-presence-model-requirements-candidate=["current-presence-context-candidate"]
 current-presence-context-candidate=["tagged-current-projection-candidate"]

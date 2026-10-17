@@ -39,6 +39,8 @@ pub mod security_candidate_dependencies;
 pub mod security_candidate_incidence;
 pub mod security_association_ref;
 pub mod security_source;
+#[cfg(feature="engine-ordered-page-candidate")]
+pub mod application_ordered_page;
 pub mod application_ir;
 pub mod application_navigation;
 pub mod application_model;

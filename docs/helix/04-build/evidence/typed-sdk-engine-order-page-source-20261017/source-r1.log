@@ -1,0 +1,133 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-sdk-prefix-20261016/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:61:15
+   |
+61 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: method `terminal_key` is never used
+   --> crates/weft-core/src/path_ir.rs:122:12
+    |
+ 54 | impl PathRead {
+    | ------------- method in this implementation
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: `weft-core` (lib test) generated 4 warnings (run `cargo fix --lib -p weft-core --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 31.70s
+     Running unittests src/lib.rs (/private/tmp/weft-unity-search-isolated-r3-target/debug/deps/weft_core-ed9ad28c1c49ffdc)
+
+running 3 tests
+test application_ordered_page::tests::original_alternate_key_and_full_mixed_tuple_are_preserved_without_native_enrollment ... FAILED
+test application_ordered_page::tests::original_syntax_parameter_and_historical_profile_boundaries_remain_closed ... FAILED
+test application_ordered_page::tests::incomplete_or_foreign_cursor_and_state_domains_refuse ... FAILED
+
+failures:
+
+---- application_ordered_page::tests::original_alternate_key_and_full_mixed_tuple_are_preserved_without_native_enrollment stdout ----
+
+thread 'application_ordered_page::tests::original_alternate_key_and_full_mixed_tuple_are_preserved_without_native_enrollment' panicked at crates/weft-core/src/application_ordered_page.rs:396:35:
+called `Result::unwrap()` on an `Err` value: Diagnostic { code: "WFT-MODEL", severity: "error", message: "Document violates the pinned UMF envelope", phase: "model", source_span: None }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- application_ordered_page::tests::original_syntax_parameter_and_historical_profile_boundaries_remain_closed stdout ----
+
+thread 'application_ordered_page::tests::original_syntax_parameter_and_historical_profile_boundaries_remain_closed' panicked at crates/weft-core/src/application_ordered_page.rs:396:35:
+called `Result::unwrap()` on an `Err` value: Diagnostic { code: "WFT-MODEL", severity: "error", message: "Document violates the pinned UMF envelope", phase: "model", source_span: None }
+
+---- application_ordered_page::tests::incomplete_or_foreign_cursor_and_state_domains_refuse stdout ----
+
+thread 'application_ordered_page::tests::incomplete_or_foreign_cursor_and_state_domains_refuse' panicked at crates/weft-core/src/application_ordered_page.rs:396:35:
+called `Result::unwrap()` on an `Err` value: Diagnostic { code: "WFT-MODEL", severity: "error", message: "Document violates the pinned UMF envelope", phase: "model", source_span: None }
+
+
+failures:
+    application_ordered_page::tests::incomplete_or_foreign_cursor_and_state_domains_refuse
+    application_ordered_page::tests::original_alternate_key_and_full_mixed_tuple_are_preserved_without_native_enrollment
+    application_ordered_page::tests::original_syntax_parameter_and_historical_profile_boundaries_remain_closed
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 331 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p weft-core --lib`
