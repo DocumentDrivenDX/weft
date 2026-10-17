@@ -1,0 +1,7 @@
+# Published 0.4.41 SDK compiler qualification
+
+Stable [v0.4.41](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.41) was published on 2026-10-17 UTC from exact source `4289fa35cd6f75ea7e25975154d1b3d4dd3e707e`. Its tree matches reviewed PR20 source `c0658320313336efd4d08acb29f1a01dd7db5c4b`. Full compiler/evidence run 38993769975 and build-only five-platform release run 38993829747 succeeded before tagging. Exact-tag run [38998125597](https://github.com/DocumentDrivenDX/weft/actions/runs/38998125597) completed all five platform wheel jobs and publication successfully. CI diagnostics were read through Code Review; GitHub repository metadata supplied only the tag run ID after merged-PR discovery returned 409.
+
+All 47 public assets match the published GitHub asset size and SHA256 digest. Five wheel archives also match SHA256SUMS; each archive native module and shim matches its exact-wheel smoke reports and release pins. Closed SDK, Date, native70, Decimal12 and refinement validators pass against the same source/version/wheel current-query baseline. A fresh Python 3.14.8 ARM installation from the public release reran all 22 SDK compiler controls successfully. The retained machine receipts contain complete hashes.
+
+SDK temporal qualification remains **HELD**; compilation grants no native admission. This receipt does not change Truss defaults, qualify broader managed search/mutation features, or claim complete SDK acceptance. Earlier release assets and tags remain preserved.

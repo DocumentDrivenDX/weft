@@ -1,0 +1,36 @@
+{
+  "tag": "v0.4.41",
+  "commit": "4289fa35cd6f75ea7e25975154d1b3d4dd3e707e",
+  "publishedAt": "2026-10-17T03:25:04Z",
+  "assetsVerified": 47,
+  "wheels": {
+    "weft_sql-0.4.41-cp39-abi3-macosx_10_12_x86_64.whl": {
+      "wheelSha256": "674fc07e4599d731949092d9d5e2977beedfa1a9d2450c86e6996a75edf93e63",
+      "nativeModuleSha256": "c3cfcd4cff9ac876f9db723d39b476e0d658c9712552e2efe399955bf6823109",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "weft_sql-0.4.41-cp39-abi3-macosx_11_0_arm64.whl": {
+      "wheelSha256": "863e6487b513610d25581d8307bf5cea5df6928bc704171ec256f00c68b155dc",
+      "nativeModuleSha256": "2879b4f997c61ae1f122ae1502adffc1f2964ab8a1e34422e86d33f7210d7848",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": {
+      "wheelSha256": "fa030290149774d032157fe1cb426df7c21dbe51845a5154bdf835d32918b4bd",
+      "nativeModuleSha256": "d699eb2040a2b4d94bb0fb4c6df0a168814ffcbad6d703ff508cc3491a57d38b",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "weft_sql-0.4.41-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+      "wheelSha256": "f7cb3612303db4a1d95ae66b3624ad678f3f80df0a1bc70b86d2909f6fdb9266",
+      "nativeModuleSha256": "6af3c8946eefb9940f5e13a170e53af6841e3addb3d67f2210e31757cae8b4e1",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    },
+    "weft_sql-0.4.41-cp39-abi3-win_amd64.whl": {
+      "wheelSha256": "4ebcac84931e983f346d85d190118811a172efa02f03d8ea8fdd382cd26eafa6",
+      "nativeModuleSha256": "02a7f9daa28f5d42dbdf82573e3cdf36f7f9630cdf376490528db42688ab8088",
+      "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+    }
+  },
+  "sdkControlsPerWheel": 22,
+  "temporalQualification": "held",
+  "nativeAdmission": false
+}
