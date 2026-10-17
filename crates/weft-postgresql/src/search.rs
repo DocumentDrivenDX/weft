@@ -147,6 +147,15 @@ fn compile(raw: &str) -> Result<Json> {
                     filter_fields(e, out)?;
                 }
             }
+            Expr::Function(f) if f.name.0.len()==1 && matches!(&f.name.0[0],ObjectNamePart::Identifier(i) if matches!(name(i).as_str(), "starts_with"|"in_empty"|"matches_all_terms"|"matches_any_terms")) => {
+                // The original raw owner has already admitted the complete function grammar.
+                // This pass only inventories every referenced Field for filterability.
+                let FunctionArguments::List(args)=&f.args else {return Err("search filter function arguments unavailable")};
+                for arg in &args.args {
+                    let FunctionArg::Unnamed(FunctionArgExpr::Expr(e))=arg else {return Err("search filter function operand unavailable")};
+                    filter_fields(e,out)?;
+                }
+            }
             Expr::Value(_) => {}
             _ => return Err("search filter expression unavailable"),
         };
@@ -276,7 +285,9 @@ fn compile(raw: &str) -> Result<Json> {
                 .iter()
                 .find(|p| p.name == *name.as_str().unwrap())
                 .unwrap();
-            json!({"source":{"input":p.name},"carrier":p.carrier})
+            let mut slot=json!({"source":{"input":p.name},"carrier":p.carrier});
+            if let Some(container)=&p.container {slot["container"]=json!(container);slot["nullable"]=json!(p.nullable);slot["elementNullable"]=json!(p.element_nullable);slot["maxItems"]=json!(p.max_items);}
+            slot
         })
         .collect::<Vec<_>>();
     parameters.push(json!({"source":{"input":r.query_parameter},"carrier":if index["kind"]=="vector"{"vector"}else{"string"}}));
@@ -475,6 +486,10 @@ fn compile(raw: &str) -> Result<Json> {
     let admission = json!({"sql":format!("SELECT ({common} AND ({extra})) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname={app} AND ns.nspname={app} AND idx.relname={native_index} AND t.relname={table_name}"),"parameters":admission_parameters});
     let mut result = json!({"version":"weft.search/0.1","status":"compiled","profile":"umf.access.search/0.1","request":r,"target":r.selection.target,"source":r.source,"binding":binding,"index":index,"nativeIndex":admitted.binding(),"mechanism":mechanism,"scoreKind":kind,"queryParameter":r.query_parameter,"topK":r.top_k,"approximate":false,"partial":admitted.binding()["filtering"]=="partial","nativeAdmission":admission,"preflights":preflights,"statement":{"sql":sql,"parameters":parameters},"outputs":outputs,"keyOutputs":key_outputs,"selectionTemplate":read,"obligations":{"transaction":"repeatable-read-read-only","sameStatementAuthorization":true,"nativeIndexCorrespondence":"host-observed-original-index-and-column-types","filtering":"before-ranking-complete-matching-set","exactTieBreak":"complete-selected-Key-ascending","timeout":"one-call-deadline","noEmbeddingService":true}});
     if read["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1" {result["obligations"]["nativeProjection"]=read["obligations"]["nativeProjection"].clone();}
+    if let Some(term)=read["obligations"].get("termFilter") {result["obligations"]["termFilter"]=term.clone();}
+    if r.selection.verification_profile.as_deref()==Some("source-exact/0.1")&&index["kind"]=="keyword" {
+        result["obligations"]["keywordConfiguration"]=json!({"version":"umf.keyword-configuration/0.1","nativeCatalogBeforeAfter":true,"configurations":[crate::raw_read::keyword_configuration_metadata(&serde_json::to_value(&r.source).unwrap(),index)?]});
+    }
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&result).as_bytes());
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-search","version":"0.1","sha256":digest});
@@ -502,6 +517,29 @@ mod tests {
     }
     fn output(r: Json) -> Json {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    #[test]
+    fn ranked_and_filter_term_configuration_obligations_are_executable(){
+        let r:Json=serde_json::from_str(include_str!("../../../tests/native-search/source-exact-terms-keyword-request.json")).unwrap();
+        let p=output(r.clone());assert_eq!(p["status"],"compiled","{p}");
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/ranked-keyword.json"),p.to_string()).unwrap();}
+        let a=&p["obligations"]["keywordConfiguration"]["configurations"][0];
+        assert_eq!(a["source"],p["source"]);assert_eq!(a["index"],p["index"]);
+        assert!(a["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_ts_config_map"));
+        assert!(a["nativeAdmission"]["sql"].as_str().unwrap().contains("dictinitoption"));
+        let mut filtered=r.clone();filtered["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE MATCHES_ALL_TERMS(r.body,:terms)");
+        filtered["selection"]["parameters"]=json!([{"name":"terms","carrier":"string","nullable":false}]);
+        let q=output(filtered.clone());assert_eq!(q["status"],"compiled","{q}");
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-term-prefilter.json"),q.to_string()).unwrap();}
+        assert_eq!(q["obligations"]["termFilter"],q["selectionTemplate"]["obligations"]["termFilter"]);
+        assert!(q["obligations"]["termFilter"]["indexes"].as_array().unwrap().len()>0);
+        let mut listed=r.clone();listed["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE r.id IN (:ids)");
+        listed["selection"]["parameters"]=json!([{"name":"ids","carrier":"string","nullable":false,"container":"list","elementNullable":true,"maxItems":8}]);
+        let q=output(listed.clone());assert_eq!(q["status"],"compiled","{q}");
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-list.json"),q.to_string()).unwrap();}
+        let slot=&q["statement"]["parameters"][0];assert_eq!(slot["container"],"list");assert_eq!(slot["nullable"],false);assert_eq!(slot["elementNullable"],true);assert_eq!(slot["maxItems"],8);
+        listed["selection"]["parameters"][0]["maxItems"]=json!(1001);assert_eq!(output(listed)["status"],"blocked");
+        filtered["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE UNSUPPORTED(r.body,:terms)");assert_eq!(output(filtered)["status"],"blocked");
     }
     #[test]
     fn source_exact_search_preserves_executed_full_column_admissions(){

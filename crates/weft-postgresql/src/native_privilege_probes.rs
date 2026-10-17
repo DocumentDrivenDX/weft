@@ -365,14 +365,17 @@ fn positional_statement(
     )
 }
 fn append_projection_statements(statements:&mut Vec<Value>,program:&Value,table:&str)->Result<()>{
-    if let Some(packet)=program["obligations"].get("nativeProjection") {
-        for (i,item) in array(packet,"columns")?.iter().enumerate(){
-            let a=&item["nativeAdmission"];
-            statements.push(statement(format!("/obligations/nativeProjection/columns/{i}/nativeAdmission/sql"),"projection-admission",a["sql"].as_str().ok_or("original native projection SQL absent")?,array(a,"parameters")?,array(a,"dbapiParameterOrder")?,table,1)?);
+    for (kind,entries,role) in [("nativeProjection","columns","projection-admission"),("termFilter","indexes","term-index-admission"),("keywordConfiguration","configurations","keyword-configuration-admission")] {
+        if let Some(packet)=program["obligations"].get(kind) {
+            for (i,item) in array(packet,entries)?.iter().enumerate(){
+                let a=&item["nativeAdmission"];
+                statements.push(statement(format!("/obligations/{kind}/{entries}/{i}/nativeAdmission/sql"),role,a["sql"].as_str().ok_or("original admission SQL absent")?,array(a,"parameters")?,array(a,"dbapiParameterOrder")?,table,1)?);
+            }
         }
     }
     Ok(())
 }
+
 fn search_report(request: &Request, program: Value, table: &str) -> Result<Value> {
     let mut native_types = BTreeMap::new();
     let mut vector_type = None;
@@ -1218,5 +1221,23 @@ mod mutation_tests {
                 .iter()
                 .any(|s| s["path"].as_str().unwrap().contains("actionTemplate"))
         );
+    }
+}
+
+#[cfg(test)]
+mod composed_term_probe_tests {
+    use super::*;
+    #[test]
+    fn composed_term_and_keyword_guards_are_original_statement_inventory(){
+        for (raw,bulk) in [(include_str!("../../../tests/native-actions/source-exact-terms-bulk-request.json"),true),(include_str!("../../../tests/native-search/source-exact-terms-keyword-request.json"),false)] {
+            let request:Value=serde_json::from_str(raw).unwrap();
+            let program:Value=serde_json::from_str(&if bulk {crate::raw_bulk::compile_json(raw)}else{crate::search::compile_json(raw)}).unwrap();
+            assert_eq!(program["status"],"compiled","{program}");
+            let packet=json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_terms"});
+            let report:Value=serde_json::from_str(&compile_json(&packet.to_string())).unwrap();assert_eq!(report["status"],"compiled","{report}");
+            let path=if bulk{"/obligations/termFilter/indexes/0/nativeAdmission/sql"}else{"/obligations/keywordConfiguration/configurations/0/nativeAdmission/sql"};
+            assert!(report["statements"].as_array().unwrap().iter().any(|s|s["path"]==path));
+            assert_eq!(serde_json::from_str::<Value>(&check_json(&report.to_string())).unwrap(),report);
+        }
     }
 }

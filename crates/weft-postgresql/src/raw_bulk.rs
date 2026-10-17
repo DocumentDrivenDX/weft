@@ -241,6 +241,15 @@ fn compile(raw: &str) -> Result<Value> {
         selected_admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.selection.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
         let mut packet=template["obligations"]["nativeProjection"].clone();let values=packet["columns"].as_array_mut().unwrap();for value in selected_admissions {if !values.contains(&value){values.push(value);}}program["obligations"]["nativeProjection"]=packet;
     }
+    if let Some(term)=read["obligations"].get("termFilter") {
+        let table=r.selection.binding.tables.iter().find(|t|t.logical==effect.entity.key.table).ok_or("bulk term source table absent")?;
+        let mut indexes=vec![];
+        for original in term["indexes"].as_array().ok_or("bulk original term inventory absent")? {
+            let column=table.columns.iter().find(|c|original["nativeColumn"]==c.native).ok_or("bulk original term column absent")?;
+            indexes.push(crate::raw_read::action_term_index_metadata(admitted.selection(),table,column)?);
+        }
+        program["obligations"]["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":indexes});
+    }
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes());
     program["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-bulk","version":"0.1","sha256":digest});
@@ -262,6 +271,24 @@ mod tests {
     }
     fn result(request: &Value) -> Value {
         serde_json::from_str(&compile_json(&request.to_string())).unwrap()
+    }
+    #[test]
+    fn term_selection_admissions_survive_mutation_composition(){
+        let r:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-bulk-request.json")).unwrap();
+        for neutral in [false,true] {
+            let mut r=r.clone();if neutral {r["selection"]["binding"].as_object_mut().unwrap().remove("schema");r["action"]["binding"].as_object_mut().unwrap().remove("schema");}
+            let p=result(&r);assert_eq!(p["status"],"compiled","{p}");
+            if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/bulk-{}.json",if neutral{"neutral"}else{"qualified"}),p.to_string()).unwrap();}
+            if !neutral {let old:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-read-r20.json")).unwrap();assert_eq!(p["readTemplate"],old,"standalone raw term contract remains unchanged");}
+            let top=&p["obligations"]["termFilter"];let original=&p["readTemplate"]["obligations"]["termFilter"];
+            assert_eq!(top["version"],original["version"]);assert_eq!(top["nativeCatalogBeforeAfter"],true);
+            assert_eq!(top["indexes"].as_array().unwrap().len(),1);
+            let mut a=top["indexes"][0].clone();let mut b=original["indexes"][0].clone();a.as_object_mut().unwrap().remove("nativeAdmission");b.as_object_mut().unwrap().remove("nativeAdmission");assert_eq!(a,b);
+            let admission=&top["indexes"][0]["nativeAdmission"];
+            assert!(admission["sql"].as_str().unwrap().contains("pg_ts_config_map"));
+            assert!(admission["parameters"].as_array().unwrap().iter().all(|p|p["source"].get("literal").is_some()));
+            if neutral {assert!(admission["sql"].as_str().unwrap().contains("to_regclass(pg_catalog.quote_ident("));}
+        }
     }
     #[test]
     fn source_exact_bulk_unions_both_original_admission_packets(){

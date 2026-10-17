@@ -79,9 +79,8 @@ fn object(n: &ObjectName) -> Result<Vec<String>> {
         })
         .collect()
 }
-fn term_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,column:&weft_core::raw_read::Column,schema:&Option<String>,configuration:&str)->Result<Json> {
-    let language=configuration.strip_prefix("pg_catalog.").ok_or("term configuration namespace")?;
-    if !matches!(language,"simple"|"english") {return Err("term analyzer unsupported")};
+fn term_configuration_guard(language:&str,language_sql:&str)->Result<String>{
+    if !matches!(language,"simple"|"english"){return Err("term analyzer unsupported")}
     let aliases=["asciiword","word","numword","email","url","host","sfloat","version","hword_numpart","hword_part","hword_asciipart","numhword","asciihword","hword","url_path","file","float","int","uint"];
     let mut expected=aliases.iter().map(|alias|{
         let stem=language=="english"&&matches!(*alias,"asciiword"|"word"|"hword_part"|"hword_asciipart"|"asciihword"|"hword");
@@ -89,17 +88,39 @@ fn term_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,col
     }).collect::<Vec<_>>();
     expected.sort_by(|a,b|a[0].as_str().unwrap().cmp(b[0].as_str().unwrap()));
     let expected=Json::Array(expected).to_string().replace('\'',"''");
+    let language=language_sql;
+    Ok(format!("EXISTS(SELECT 1 FROM pg_catalog.pg_ts_config AS cfg JOIN pg_catalog.pg_namespace AS cn ON cn.oid=cfg.cfgnamespace JOIN pg_catalog.pg_ts_parser AS parser ON parser.oid=cfg.cfgparser JOIN pg_catalog.pg_namespace AS pn ON pn.oid=parser.prsnamespace WHERE cn.nspname='pg_catalog' AND cfg.cfgname={language} AND pn.nspname='pg_catalog' AND parser.prsname='default' AND (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(tt.alias,m.mapseqno,dn.nspname,d.dictname,tn.nspname,template.tmplname,d.dictinitoption) ORDER BY tt.alias COLLATE pg_catalog.\"C\",m.mapseqno) FROM pg_catalog.pg_ts_config_map AS m JOIN pg_catalog.ts_token_type(parser.oid) AS tt ON tt.tokid=m.maptokentype JOIN pg_catalog.pg_ts_dict AS d ON d.oid=m.mapdict JOIN pg_catalog.pg_namespace AS dn ON dn.oid=d.dictnamespace JOIN pg_catalog.pg_ts_template AS template ON template.oid=d.dicttemplate JOIN pg_catalog.pg_namespace AS tn ON tn.oid=template.tmplnamespace WHERE m.mapcfg=cfg.oid)='{expected}'::pg_catalog.jsonb)"))
+}
+pub(crate) fn keyword_configuration_metadata(source:&Json,index:&Json)->Result<Json>{
+    let language=index["keyword"]["analyzer"]["language"].as_str().ok_or("keyword analyzer language absent")?;
+    let render=|dbapi:bool|->Result<String>{Ok(format!("SELECT ({}) AS correspondence",term_configuration_guard(language,if dbapi{"%(__umf_keyword_configuration_1)s::pg_catalog.text"}else{"$1::pg_catalog.text"})?))};
+    Ok(json!({"source":source,"index":index,"configuration":format!("pg_catalog.{language}"),"nativeAdmission":{"sql":render(false)?,"dbapiSql":render(true)?,"parameters":[{"name":"__umf_keyword_configuration_1","carrier":"string","source":{"literal":{"string":language}}}],"dbapiParameterOrder":["__umf_keyword_configuration_1"]}}))
+}
+fn term_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,column:&weft_core::raw_read::Column,schema:&Option<String>,configuration:&str)->Result<Json> {
+    term_index_metadata_source(index,table,column,schema,configuration,false)
+}
+pub(crate) fn action_term_index_metadata(read:&AdmittedRead,table:&Table,column:&weft_core::raw_read::Column)->Result<Json>{
+    let index=weft_core::search::admit_terms(read,&table.logical,&column.logical)?;
+    let language=index.index()["keyword"]["analyzer"]["language"].as_str().ok_or("term analyzer language absent")?;
+    term_index_metadata_source(&index,table,column,&read.request().binding.schema,&format!("pg_catalog.{language}"),true)
+}
+fn term_index_metadata_source(index:&weft_core::search::AdmittedSearch,table:&Table,column:&weft_core::raw_read::Column,schema:&Option<String>,configuration:&str,action:bool)->Result<Json>{
+    let language=configuration.strip_prefix("pg_catalog.").ok_or("term configuration namespace")?;
+    if !matches!(language,"simple"|"english") {return Err("term analyzer unsupported")};
+    let language_source=language;let neutral=action&&schema.is_none();
     let render=|dbapi:bool| {
-        let slot=|n:u8|if dbapi{format!("%(__umf_term_{n})s::pg_catalog.text")}else{format!("${n}::pg_catalog.text")};
-        let app=slot(1);let index=slot(2);let table=slot(3);let language=slot(4);let column=slot(5);
-        let config=format!("EXISTS(SELECT 1 FROM pg_catalog.pg_ts_config AS cfg JOIN pg_catalog.pg_namespace AS cn ON cn.oid=cfg.cfgnamespace JOIN pg_catalog.pg_ts_parser AS parser ON parser.oid=cfg.cfgparser JOIN pg_catalog.pg_namespace AS pn ON pn.oid=parser.prsnamespace WHERE cn.nspname='pg_catalog' AND cfg.cfgname={language} AND pn.nspname='pg_catalog' AND parser.prsname='default' AND (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(tt.alias,m.mapseqno,dn.nspname,d.dictname,tn.nspname,template.tmplname,d.dictinitoption) ORDER BY tt.alias COLLATE pg_catalog.\"C\",m.mapseqno) FROM pg_catalog.pg_ts_config_map AS m JOIN pg_catalog.ts_token_type(parser.oid) AS tt ON tt.tokid=m.maptokentype JOIN pg_catalog.pg_ts_dict AS d ON d.oid=m.mapdict JOIN pg_catalog.pg_namespace AS dn ON dn.oid=d.dictnamespace JOIN pg_catalog.pg_ts_template AS template ON template.oid=d.dicttemplate JOIN pg_catalog.pg_namespace AS tn ON tn.oid=template.tmplnamespace WHERE m.mapcfg=cfg.oid)='{expected}'::pg_catalog.jsonb)");
+        let slot=|n:u8|if neutral&&n==1{unreachable!("schema slot omitted for original mutation relation")}else if dbapi{format!("%(__umf_term_{n})s::pg_catalog.text")}else{format!("${}::pg_catalog.text",if neutral{n-1}else{n})};
+        let index=slot(2);let table=slot(3);let language=slot(4);let column=slot(5);
+        let config=term_configuration_guard(language_source,&language).expect("closed admitted term analyzer");
+        let scope=if neutral{format!("t.oid=pg_catalog.to_regclass(pg_catalog.quote_ident({table})) AND ins.nspname=ns.nspname")}else{let app=slot(1);format!("ins.nspname={app} AND ns.nspname={app}")};
         let pattern=if dbapi{"to_tsvector(%%L::regconfig, COALESCE(%%I, %%L::text))"}else{"to_tsvector(%L::regconfig, COALESCE(%I, %L::text))"};
-        format!("SELECT (i.indisvalid AND i.indisready AND i.indislive AND i.indnkeyatts=1 AND i.indnatts=1 AND i.indpred IS NULL AND am.amname='gin' AND opc.opcname='tsvector_ops' AND opns.nspname='pg_catalog' AND i.indkey[0]=0 AND i.indexprs IS NOT NULL AND pg_catalog.pg_get_indexdef(i.indexrelid,1,true)=pg_catalog.format('{pattern}',{language},{column},''::pg_catalog.text) AND {config}) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname={app} AND ns.nspname={app} AND idx.relname={index} AND t.relname={table}")
+        format!("SELECT (i.indisvalid AND i.indisready AND i.indislive AND i.indnkeyatts=1 AND i.indnatts=1 AND i.indpred IS NULL AND am.amname='gin' AND opc.opcname='tsvector_ops' AND opns.nspname='pg_catalog' AND i.indkey[0]=0 AND i.indexprs IS NOT NULL AND pg_catalog.pg_get_indexdef(i.indexrelid,1,true)=pg_catalog.format('{pattern}',{language},{column},''::pg_catalog.text) AND {config}) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE {scope} AND idx.relname={index} AND t.relname={table}")
     };
     let literal=|text:&str|json!({"source":{"literal":{"string":text}},"carrier":"string"});
     let schema_parameter=match schema {Some(s)=>literal(s),None=>json!({"source":{"appSchema":true},"carrier":"string"})};
     let mut parameters=vec![schema_parameter,literal(index.binding()["native"].as_str().ok_or("term native index required")?),literal(&table.native),literal(language),literal(&column.native)];
     for (i,p) in parameters.iter_mut().enumerate(){p["name"]=json!(format!("__umf_term_{}",i+1));}
+    if neutral{parameters.remove(0);}
     let names=parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>();
     Ok(json!({"source":index.request().source,"index":index.index(),"nativeBinding":index.binding(),"logicalTable":table.logical,"nativeTable":table.native,"nativeColumn":column.native,"configuration":configuration,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"dbapiParameterOrder":names,"parameters":parameters}}))
 }

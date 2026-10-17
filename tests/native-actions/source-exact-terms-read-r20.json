@@ -1,0 +1,474 @@
+{
+  "binding": {
+    "modelJson": "{\"umf\":\"0.8.0\",\"id\":\"typed-native-actions-e2e\",\"vocabularies\":{\"umf.actions\":{\"version\":\"0.1.0\"},\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"name\":\"id\"},{\"id\":\"status\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"name\":\"status\"},{\"id\":\"order\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"id\"},{\"module\":\"sales\",\"element\":\"status\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"sales\",\"element\":\"id\"}]}],\"extensions\":{},\"name\":\"order\"}],\"extensions\":{\"umf.actions\":{\"actions\":[{\"id\":\"approve\",\"name\":\"Approve\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"guarded\",\"name\":\"Guarded\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[{\"id\":\"NOT_DRAFT\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"op\\\":\\\"eq\\\",\\\"args\\\":[{\\\"state\\\":\\\"pre\\\",\\\"frame\\\":\\\"order-read\\\",\\\"field\\\":{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"status\\\"}},{\\\"literal\\\":{\\\"string\\\":\\\"draft\\\"}}]}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"NOT_DRAFT\",\"message\":\"NOT_DRAFT\"}}],\"postconditions\":[],\"failures\":[{\"code\":\"NOT_DRAFT\",\"message\":\"NOT_DRAFT\",\"retryable\":false}],\"reads\":[{\"id\":\"order-read\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"postFail\",\"name\":\"Post fail\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[{\"id\":\"POST_REFUSED\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"literal\\\":{\\\"boolean\\\":false}}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"POST_REFUSED\",\"message\":\"POST_REFUSED\"}}],\"failures\":[{\"code\":\"POST_REFUSED\",\"message\":\"POST_REFUSED\",\"retryable\":false}],\"reads\":[{\"id\":\"order-read\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"createOrder\",\"name\":\"Create order\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"id\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"id\"},\"required\":true},{\"id\":\"status\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"create-order\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"key\\\":\\\"pk\\\",\\\"components\\\":[{\\\"input\\\":\\\"id\\\"}]}\",\"references\":[{\"parameter\":\"id\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"id\"},{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":true,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"create-order\",\"kind\":\"create\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"key\":\"pk\",\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"id\"},\"value\":{\"parameter\":\"id\"}},{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"parameter\":\"status\"}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"firstFalse\",\"name\":\"First false\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[{\"id\":\"FIRST\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"literal\\\":{\\\"boolean\\\":false}}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"FIRST\",\"message\":\"FIRST\"}},{\"id\":\"LATER_ERROR\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"op\\\":\\\"eq\\\",\\\"args\\\":[{\\\"state\\\":\\\"pre\\\",\\\"frame\\\":\\\"gone-read\\\",\\\"field\\\":{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"status\\\"}},{\\\"literal\\\":{\\\"string\\\":\\\"draft\\\"}}]}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"LATER_ERROR\",\"message\":\"LATER_ERROR\"}}],\"postconditions\":[],\"failures\":[{\"code\":\"FIRST\",\"message\":\"FIRST\",\"retryable\":false},{\"code\":\"LATER_ERROR\",\"message\":\"LATER_ERROR\",\"retryable\":false}],\"reads\":[{\"id\":\"gone-read\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"key\\\":\\\"pk\\\",\\\"components\\\":[{\\\"literal\\\":{\\\"string\\\":\\\"gone\\\"}}]}\",\"references\":[]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]},\"umf.access\":{\"views\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selectedKey\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"fields\":[{\"field\":{\"module\":\"sales\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}]}],\"columns\":[{\"binding\":{\"sourceId\":\"native-action-original-columns\",\"module\":\"sales\"},\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"columns\":[{\"field\":{\"module\":\"sales\",\"element\":\"id\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"C\"}},{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"C\"}}]}],\"search\":[{\"id\":\"status-text\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"kind\":\"keyword\",\"exactness\":\"exact\",\"filterable\":[{\"module\":\"sales\",\"element\":\"status\"}],\"keyword\":{\"source\":[{\"module\":\"sales\",\"element\":\"status\"}],\"ranking\":{\"family\":\"implementation-defined\"},\"analyzer\":{\"language\":\"english\",\"stemming\":true},\"syntax\":\"plain\"}}],\"searchBindings\":[{\"index\":\"status-text\",\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"native\":\"orders_status_text\",\"freshness\":\"transactional\",\"maxK\":100,\"filtering\":\"complete\"}]}}}]}",
+    "modelSha256": "79249818e14feff72881b1be4184ca055a4e5476dab37a86419116e9dffb9ff9",
+    "nativeColumns": {
+      "sets": [
+        {
+          "binding": {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"action-original-binding-doc\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}},\"modules\":[],\"extensions\":{\"umf.binding\":{\"profile\":\"umf-binding-2\",\"logical\":{\"documentId\":\"typed-native-actions-e2e\",\"coreVersion\":\"0.8.0\"},\"target\":{\"system\":\"postgresql\",\"version\":\"18\",\"subset\":\"typed-access-columns/0.1\"},\"elements\":[{\"module\":\"sales\",\"element\":\"order\",\"table\":\"orders\"}],\"fields\":[{\"module\":\"sales\",\"element\":\"id\",\"storage\":\"column\",\"column\":\"id\"},{\"module\":\"sales\",\"element\":\"status\",\"storage\":\"column\",\"column\":\"status\"}],\"relationships\":[],\"indexes\":[]}}}",
+            "documentSha256": "097b9117f0d20f5586454d6a0176f5d3308ed4dc348255a04316703656515bf8",
+            "sourceId": "native-action-original-columns"
+          },
+          "columnSet": {
+            "coreVersion": "0.8.0",
+            "documentId": "typed-native-actions-e2e",
+            "documentSha256": "79249818e14feff72881b1be4184ca055a4e5476dab37a86419116e9dffb9ff9",
+            "module": "sales",
+            "pointer": "/modules/0/extensions/umf.access/columns/0"
+          }
+        }
+      ],
+      "target": {
+        "majorVersion": "18",
+        "platform": "postgresql"
+      }
+    },
+    "relationships": [],
+    "schema": null,
+    "tables": [
+      {
+        "columns": [
+          {
+            "carrier": "string",
+            "logical": "id",
+            "native": "id",
+            "nullable": false
+          },
+          {
+            "carrier": "string",
+            "logical": "status",
+            "native": "status",
+            "nullable": false
+          }
+        ],
+        "key": [
+          "id"
+        ],
+        "logical": [
+          "sales",
+          "order"
+        ],
+        "native": "orders"
+      }
+    ],
+    "version": "umf.raw-read-binding/0.1"
+  },
+  "cursorOrdering": [],
+  "cursorOutputs": [],
+  "cursorParameters": [],
+  "lockSql": [
+    "LOCK TABLE \"orders\" IN ACCESS SHARE MODE"
+  ],
+  "obligations": {
+    "baseTablesOnly": true,
+    "nativeProjection": {
+      "columns": [
+        {
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_native_1",
+              "__umf_native_2",
+              "__umf_native_3",
+              "__umf_native_4",
+              "__umf_native_5",
+              "__umf_native_6"
+            ],
+            "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_native_1",
+                "source": {
+                  "appSchema": true
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_2",
+                "source": {
+                  "literal": {
+                    "string": "orders"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_3",
+                "source": {
+                  "literal": {
+                    "string": "id"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_4",
+                "source": {
+                  "literal": {
+                    "string": "text"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_5",
+                "source": {
+                  "literal": {
+                    "string": "pg_catalog"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_6",
+                "source": {
+                  "literal": {
+                    "string": "C"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE $4::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE $4::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=$5::pg_catalog.text AND co.collname=$6::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+          }
+        },
+        {
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_native_1",
+              "__umf_native_2",
+              "__umf_native_3",
+              "__umf_native_4",
+              "__umf_native_5",
+              "__umf_native_6"
+            ],
+            "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_native_1",
+                "source": {
+                  "appSchema": true
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_2",
+                "source": {
+                  "literal": {
+                    "string": "orders"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_3",
+                "source": {
+                  "literal": {
+                    "string": "status"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_4",
+                "source": {
+                  "literal": {
+                    "string": "text"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_5",
+                "source": {
+                  "literal": {
+                    "string": "pg_catalog"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_6",
+                "source": {
+                  "literal": {
+                    "string": "C"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE $4::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE $4::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=$5::pg_catalog.text AND co.collname=$6::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+          }
+        },
+        {
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_inventory_1",
+              "__umf_inventory_2",
+              "__umf_inventory_3"
+            ],
+            "dbapiSql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_inventory_1",
+                "source": {
+                  "appSchema": true
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_inventory_2",
+                "source": {
+                  "literal": {
+                    "string": "orders"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_inventory_3",
+                "source": {
+                  "literal": {
+                    "string": "[\"id\",\"status\"]"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=$1::pg_catalog.text AND c.relname=$2::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text($3::pg_catalog.text::pg_catalog.json)))"
+          }
+        }
+      ],
+      "nativeCatalogBeforeAfter": true,
+      "verificationProfile": "source-exact/0.1",
+      "version": "umf.native-columns/0.1"
+    },
+    "noBypassRls": true,
+    "principal": "caller-connection-role",
+    "rls": "native-caller-role",
+    "rowCap": 4,
+    "schema": null,
+    "searchPath": [
+      "pg_catalog",
+      "$appSchema"
+    ],
+    "termFilter": {
+      "indexes": [
+        {
+          "configuration": "pg_catalog.english",
+          "index": {
+            "exactness": "exact",
+            "filterable": [
+              {
+                "element": "status",
+                "module": "sales"
+              }
+            ],
+            "id": "status-text",
+            "keyword": {
+              "analyzer": {
+                "language": "english",
+                "stemming": true
+              },
+              "ranking": {
+                "family": "implementation-defined"
+              },
+              "source": [
+                {
+                  "element": "status",
+                  "module": "sales"
+                }
+              ],
+              "syntax": "plain"
+            },
+            "kind": "keyword",
+            "record": {
+              "element": "order",
+              "module": "sales"
+            }
+          },
+          "logicalTable": [
+            "sales",
+            "order"
+          ],
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_term_1",
+              "__umf_term_2",
+              "__umf_term_3",
+              "__umf_term_4",
+              "__umf_term_5"
+            ],
+            "dbapiSql": "SELECT (i.indisvalid AND i.indisready AND i.indislive AND i.indnkeyatts=1 AND i.indnatts=1 AND i.indpred IS NULL AND am.amname='gin' AND opc.opcname='tsvector_ops' AND opns.nspname='pg_catalog' AND i.indkey[0]=0 AND i.indexprs IS NOT NULL AND pg_catalog.pg_get_indexdef(i.indexrelid,1,true)=pg_catalog.format('to_tsvector(%%L::regconfig, COALESCE(%%I, %%L::text))',%(__umf_term_4)s::pg_catalog.text,%(__umf_term_5)s::pg_catalog.text,''::pg_catalog.text) AND EXISTS(SELECT 1 FROM pg_catalog.pg_ts_config AS cfg JOIN pg_catalog.pg_namespace AS cn ON cn.oid=cfg.cfgnamespace JOIN pg_catalog.pg_ts_parser AS parser ON parser.oid=cfg.cfgparser JOIN pg_catalog.pg_namespace AS pn ON pn.oid=parser.prsnamespace WHERE cn.nspname='pg_catalog' AND cfg.cfgname=%(__umf_term_4)s::pg_catalog.text AND pn.nspname='pg_catalog' AND parser.prsname='default' AND (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(tt.alias,m.mapseqno,dn.nspname,d.dictname,tn.nspname,template.tmplname,d.dictinitoption) ORDER BY tt.alias COLLATE pg_catalog.\"C\",m.mapseqno) FROM pg_catalog.pg_ts_config_map AS m JOIN pg_catalog.ts_token_type(parser.oid) AS tt ON tt.tokid=m.maptokentype JOIN pg_catalog.pg_ts_dict AS d ON d.oid=m.mapdict JOIN pg_catalog.pg_namespace AS dn ON dn.oid=d.dictnamespace JOIN pg_catalog.pg_ts_template AS template ON template.oid=d.dicttemplate JOIN pg_catalog.pg_namespace AS tn ON tn.oid=template.tmplnamespace WHERE m.mapcfg=cfg.oid)='[[\"asciihword\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"asciiword\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"email\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"file\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"float\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"host\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"hword\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"hword_asciipart\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"hword_numpart\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"hword_part\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"int\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"numhword\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"numword\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"sfloat\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"uint\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"url\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"url_path\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"version\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"word\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"]]'::pg_catalog.jsonb)) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname=%(__umf_term_1)s::pg_catalog.text AND ns.nspname=%(__umf_term_1)s::pg_catalog.text AND idx.relname=%(__umf_term_2)s::pg_catalog.text AND t.relname=%(__umf_term_3)s::pg_catalog.text",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_term_1",
+                "source": {
+                  "appSchema": true
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_term_2",
+                "source": {
+                  "literal": {
+                    "string": "orders_status_text"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_term_3",
+                "source": {
+                  "literal": {
+                    "string": "orders"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_term_4",
+                "source": {
+                  "literal": {
+                    "string": "english"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_term_5",
+                "source": {
+                  "literal": {
+                    "string": "status"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT (i.indisvalid AND i.indisready AND i.indislive AND i.indnkeyatts=1 AND i.indnatts=1 AND i.indpred IS NULL AND am.amname='gin' AND opc.opcname='tsvector_ops' AND opns.nspname='pg_catalog' AND i.indkey[0]=0 AND i.indexprs IS NOT NULL AND pg_catalog.pg_get_indexdef(i.indexrelid,1,true)=pg_catalog.format('to_tsvector(%L::regconfig, COALESCE(%I, %L::text))',$4::pg_catalog.text,$5::pg_catalog.text,''::pg_catalog.text) AND EXISTS(SELECT 1 FROM pg_catalog.pg_ts_config AS cfg JOIN pg_catalog.pg_namespace AS cn ON cn.oid=cfg.cfgnamespace JOIN pg_catalog.pg_ts_parser AS parser ON parser.oid=cfg.cfgparser JOIN pg_catalog.pg_namespace AS pn ON pn.oid=parser.prsnamespace WHERE cn.nspname='pg_catalog' AND cfg.cfgname=$4::pg_catalog.text AND pn.nspname='pg_catalog' AND parser.prsname='default' AND (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(tt.alias,m.mapseqno,dn.nspname,d.dictname,tn.nspname,template.tmplname,d.dictinitoption) ORDER BY tt.alias COLLATE pg_catalog.\"C\",m.mapseqno) FROM pg_catalog.pg_ts_config_map AS m JOIN pg_catalog.ts_token_type(parser.oid) AS tt ON tt.tokid=m.maptokentype JOIN pg_catalog.pg_ts_dict AS d ON d.oid=m.mapdict JOIN pg_catalog.pg_namespace AS dn ON dn.oid=d.dictnamespace JOIN pg_catalog.pg_ts_template AS template ON template.oid=d.dicttemplate JOIN pg_catalog.pg_namespace AS tn ON tn.oid=template.tmplnamespace WHERE m.mapcfg=cfg.oid)='[[\"asciihword\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"asciiword\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"email\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"file\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"float\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"host\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"hword\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"hword_asciipart\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"hword_numpart\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"hword_part\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"],[\"int\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"numhword\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"numword\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"sfloat\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"uint\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"url\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"url_path\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"version\",1,\"pg_catalog\",\"simple\",\"pg_catalog\",\"simple\",null],[\"word\",1,\"pg_catalog\",\"english_stem\",\"pg_catalog\",\"snowball\",\"language = ''english'', stopwords = ''english''\"]]'::pg_catalog.jsonb)) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname=$1::pg_catalog.text AND ns.nspname=$1::pg_catalog.text AND idx.relname=$2::pg_catalog.text AND t.relname=$3::pg_catalog.text"
+          },
+          "nativeBinding": {
+            "filtering": "complete",
+            "freshness": "transactional",
+            "index": "status-text",
+            "maxK": 100,
+            "native": "orders_status_text",
+            "target": {
+              "majorVersion": "18",
+              "platform": "postgresql"
+            }
+          },
+          "nativeColumn": "status",
+          "nativeTable": "orders",
+          "source": {
+            "coreVersion": "0.8.0",
+            "documentId": "typed-native-actions-e2e",
+            "documentSha256": "79249818e14feff72881b1be4184ca055a4e5476dab37a86419116e9dffb9ff9",
+            "module": "sales",
+            "pointer": "/modules/0/extensions/umf.access/search/0"
+          }
+        }
+      ],
+      "nativeCatalogBeforeAfter": true,
+      "version": "umf.raw-term-filter/0.1"
+    },
+    "timeout": "per-call",
+    "transaction": "read-only"
+  },
+  "outputs": [
+    {
+      "carrier": "string",
+      "collation": {
+        "name": "C",
+        "schema": "pg_catalog"
+      },
+      "name": "id",
+      "nativeType": "text",
+      "nullable": false
+    },
+    {
+      "carrier": "string",
+      "collation": {
+        "name": "C",
+        "schema": "pg_catalog"
+      },
+      "name": "status",
+      "nativeType": "text",
+      "nullable": false
+    }
+  ],
+  "parameterOrder": [
+    "terms"
+  ],
+  "parameters": [
+    {
+      "carrier": "string",
+      "name": "terms",
+      "nullable": false
+    }
+  ],
+  "privilegeInventory": {
+    "complete": false,
+    "functions": [
+      "pg_catalog.to_tsvector",
+      "pg_catalog.tsvector_to_array"
+    ],
+    "indexObjects": [
+      {
+        "native": "orders_status_text",
+        "usage": "native-term-admission"
+      }
+    ],
+    "operators": [
+      "<@"
+    ],
+    "semanticFields": [],
+    "tables": [
+      {
+        "columnPrivilegesSufficient": false,
+        "columns": [
+          "id",
+          "status"
+        ],
+        "native": "orders",
+        "privilege": "SELECT",
+        "reason": "LOCK TABLE ACCESS SHARE",
+        "schema": null,
+        "tablePrivilegeRequired": true
+      }
+    ],
+    "unresolved": [
+      "native-function-and-operator-overload-closure"
+    ],
+    "version": "weft.native-privileges/0.1"
+  },
+  "referencedTables": [
+    {
+      "columns": [
+        {
+          "carrier": "string",
+          "logical": "id",
+          "native": "id",
+          "nullable": false
+        },
+        {
+          "carrier": "string",
+          "logical": "status",
+          "native": "status",
+          "nullable": false
+        }
+      ],
+      "logical": [
+        "sales",
+        "order"
+      ],
+      "native": "orders"
+    }
+  ],
+  "sourceSql": "SELECT o.id AS id,o.status AS status FROM sales.order o WHERE MATCHES_ALL_TERMS(o.status,:terms) ORDER BY o.id",
+  "sql": "SELECT \"o\".\"id\" COLLATE pg_catalog.\"C\" AS \"id\", \"o\".\"status\" COLLATE pg_catalog.\"C\" AS \"status\" FROM \"orders\" AS \"o\" WHERE (pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('pg_catalog.english'::pg_catalog.regconfig, $1::pg_catalog.text)) OPERATOR(pg_catalog.<@) pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('pg_catalog.english'::pg_catalog.regconfig, \"o\".\"status\" COLLATE pg_catalog.\"C\"))) ORDER BY \"o\".\"id\" COLLATE pg_catalog.\"C\" ASC NULLS LAST LIMIT 4",
+  "status": "compiled",
+  "structuralDigest": "4974a81b1581b6e3494160899e1a459e810fe2c2afaff703f1aca9ec8e7f1107",
+  "target": "postgresql18",
+  "version": "weft.raw-read/0.1"
+}
