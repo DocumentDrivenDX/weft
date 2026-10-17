@@ -1,0 +1,402 @@
+{
+  "binding": {
+    "modelJson": "{\"id\":\"praxis-read-test\",\"modules\":[{\"elements\":[{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}},\"id\":\"Order_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}},\"id\":\"Order_customer_id\",\"kind\":\"field\",\"name\":\"customer_id\",\"nullability\":\"absent-allowed\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_status\",\"kind\":\"field\",\"name\":\"status\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":6},\"id\":\"Order_amount\",\"kind\":\"field\",\"name\":\"amount\",\"nullability\":\"required\",\"scalarType\":\"decimal\"},{\"extensions\":{},\"id\":\"Order\",\"keys\":[{\"fields\":[{\"element\":\"Order_id\",\"module\":\"commerce\"}],\"id\":\"Order_key\",\"name\":\"Order key\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"Order_id\",\"module\":\"commerce\"},{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},{\"element\":\"Order_status\",\"module\":\"commerce\"},{\"element\":\"Order_amount\",\"module\":\"commerce\"},{\"module\":\"commerce\",\"element\":\"Order_customer_code\"}],\"name\":\"Order\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}},\"id\":\"Customer_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Customer_name\",\"kind\":\"field\",\"name\":\"name\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"extensions\":{},\"id\":\"Customer\",\"keys\":[{\"fields\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"}],\"id\":\"Customer_key\",\"name\":\"Customer key\",\"primary\":true},{\"id\":\"Customer_code_key\",\"name\":\"customer code\",\"fields\":[{\"module\":\"commerce\",\"element\":\"Customer_code\"}]}],\"kind\":\"record\",\"members\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"},{\"element\":\"Customer_name\",\"module\":\"commerce\"},{\"module\":\"commerce\",\"element\":\"Customer_code\"}],\"name\":\"Customer\"},{\"id\":\"Order_customer_code\",\"name\":\"customer_code\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer_code\",\"name\":\"code\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{},\"id\":\"commerce\",\"namespace\":\"commerce\",\"relationships\":[{\"directed\":true,\"id\":\"customer\",\"name\":\"customer\",\"source\":[{\"element\":\"Order\",\"module\":\"commerce\"}],\"sourceMultiplicity\":{\"max\":\"*\",\"min\":0},\"target\":[{\"element\":\"Customer\",\"key\":\"Customer_code_key\",\"module\":\"commerce\"}],\"targetLifecycle\":\"independent\",\"targetMultiplicity\":{\"max\":1,\"min\":1}}]}],\"umf\":\"0.8.0\",\"vocabularies\":{}}",
+    "modelSha256": "ff09363ca0fb2796cf27c0f6b3e13b8914e1eb09d9da61734e988b78bece2748",
+    "relationships": [
+      {
+        "id": "customer",
+        "pairs": [
+          [
+            "customer_code",
+            "code"
+          ]
+        ],
+        "source": [
+          "commerce",
+          "Order"
+        ],
+        "target": [
+          "commerce",
+          "Customer"
+        ],
+        "toOne": true
+      }
+    ],
+    "schema": "weft_r13_fixture",
+    "tables": [
+      {
+        "columns": [
+          {
+            "carrier": "integer",
+            "logical": "id",
+            "native": "id",
+            "nullable": false
+          },
+          {
+            "carrier": "integer",
+            "logical": "customer_id",
+            "native": "customer_id",
+            "nullable": true
+          },
+          {
+            "carrier": "string",
+            "logical": "status",
+            "native": "status",
+            "nullable": false
+          },
+          {
+            "carrier": "decimal",
+            "logical": "amount",
+            "native": "amount",
+            "nullable": false
+          },
+          {
+            "carrier": "string",
+            "logical": "customer_code",
+            "native": "customer_code",
+            "nullable": false
+          }
+        ],
+        "key": [
+          "id"
+        ],
+        "logical": [
+          "commerce",
+          "Order"
+        ],
+        "native": "orders"
+      },
+      {
+        "columns": [
+          {
+            "carrier": "integer",
+            "logical": "id",
+            "native": "id",
+            "nullable": false
+          },
+          {
+            "carrier": "string",
+            "logical": "name",
+            "native": "name",
+            "nullable": false
+          },
+          {
+            "carrier": "string",
+            "logical": "code",
+            "native": "code",
+            "nullable": false
+          }
+        ],
+        "key": [
+          "id"
+        ],
+        "logical": [
+          "commerce",
+          "Customer"
+        ],
+        "native": "customers"
+      }
+    ],
+    "version": "umf.raw-read-binding/0.1"
+  },
+  "cursorOrdering": [],
+  "cursorOutputs": [],
+  "cursorParameters": [],
+  "lockSql": [
+    "LOCK TABLE \"weft_r13_fixture\".\"customers\" IN ACCESS SHARE MODE",
+    "LOCK TABLE \"weft_r13_fixture\".\"orders\" IN ACCESS SHARE MODE"
+  ],
+  "obligations": {
+    "baseTablesOnly": true,
+    "nativeRelationshipKeys": {
+      "keys": [
+        {
+          "logicalFields": [
+            "code"
+          ],
+          "logicalTable": [
+            "commerce",
+            "Customer"
+          ],
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_relkey_1",
+              "__umf_relkey_2",
+              "__umf_relkey_3"
+            ],
+            "dbapiSql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace WHERE ns.nspname=%(__umf_relkey_1)s::pg_catalog.text AND t.relname=%(__umf_relkey_2)s::pg_catalog.text AND t.relkind='r' AND i.indisunique AND i.indisvalid AND i.indisready AND i.indislive AND i.indimmediate AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indnkeyatts=1 AND EXISTS(SELECT 1 FROM pg_catalog.pg_class ix JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE ix.oid=i.indexrelid AND am.amname='btree' AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(i.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,pos) JOIN pg_catalog.pg_attribute a ON a.attrelid=t.oid AND a.attnum=k.attnum JOIN pg_catalog.pg_type ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace tn ON tn.oid=ty.typnamespace LEFT JOIN pg_catalog.pg_opclass op ON op.oid=i.indclass[(k.pos-1)::pg_catalog.int4] LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation WHERE k.pos<=i.indnkeyatts AND (a.attnotnull AND NOT a.attisdropped AND tn.nspname='pg_catalog' AND ons.nspname='pg_catalog' AND op.opcmethod=ix.relam AND op.opcname=CASE ty.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops' WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops' WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END AND i.indcollation[(k.pos-1)::pg_catalog.int4]=a.attcollation AND (a.attcollation=0 OR co.collisdeterministic)) IS NOT TRUE)) AND (SELECT pg_catalog.jsonb_agg(a.attname ORDER BY k.ordinality) FROM pg_catalog.unnest(i.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,ordinality) JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid AND a.attnum=k.attnum WHERE k.ordinality<=i.indnkeyatts AND a.attnotnull AND NOT a.attisdropped AND i.indcollation[(k.ordinality-1)::pg_catalog.int4]=a.attcollation AND (a.attcollation=0 OR EXISTS(SELECT 1 FROM pg_catalog.pg_collation co WHERE co.oid=a.attcollation AND co.collisdeterministic)))=%(__umf_relkey_3)s::pg_catalog.text::pg_catalog.jsonb) AS correspondence",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_relkey_1",
+                "source": {
+                  "literal": {
+                    "string": "weft_r13_fixture"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_relkey_2",
+                "source": {
+                  "literal": {
+                    "string": "customers"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_relkey_3",
+                "source": {
+                  "literal": {
+                    "string": "[\"code\"]"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace WHERE ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND t.relkind='r' AND i.indisunique AND i.indisvalid AND i.indisready AND i.indislive AND i.indimmediate AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indnkeyatts=1 AND EXISTS(SELECT 1 FROM pg_catalog.pg_class ix JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE ix.oid=i.indexrelid AND am.amname='btree' AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(i.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,pos) JOIN pg_catalog.pg_attribute a ON a.attrelid=t.oid AND a.attnum=k.attnum JOIN pg_catalog.pg_type ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace tn ON tn.oid=ty.typnamespace LEFT JOIN pg_catalog.pg_opclass op ON op.oid=i.indclass[(k.pos-1)::pg_catalog.int4] LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation WHERE k.pos<=i.indnkeyatts AND (a.attnotnull AND NOT a.attisdropped AND tn.nspname='pg_catalog' AND ons.nspname='pg_catalog' AND op.opcmethod=ix.relam AND op.opcname=CASE ty.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops' WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops' WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END AND i.indcollation[(k.pos-1)::pg_catalog.int4]=a.attcollation AND (a.attcollation=0 OR co.collisdeterministic)) IS NOT TRUE)) AND (SELECT pg_catalog.jsonb_agg(a.attname ORDER BY k.ordinality) FROM pg_catalog.unnest(i.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,ordinality) JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid AND a.attnum=k.attnum WHERE k.ordinality<=i.indnkeyatts AND a.attnotnull AND NOT a.attisdropped AND i.indcollation[(k.ordinality-1)::pg_catalog.int4]=a.attcollation AND (a.attcollation=0 OR EXISTS(SELECT 1 FROM pg_catalog.pg_collation co WHERE co.oid=a.attcollation AND co.collisdeterministic)))=$3::pg_catalog.text::pg_catalog.jsonb) AS correspondence"
+          },
+          "nativeFields": [
+            "code"
+          ]
+        }
+      ],
+      "nativeCatalogBeforeAfter": true,
+      "version": "umf.native-relationship-keys/0.1"
+    },
+    "nativeRelationships": {
+      "nativeCatalogBeforeAfter": true,
+      "relationships": [
+        {
+          "completeNativeSnapshotRequired": false,
+          "id": "customer",
+          "logicalPairs": [
+            [
+              "customer_code",
+              "code"
+            ]
+          ],
+          "module": "commerce",
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_fk_1",
+              "__umf_fk_2",
+              "__umf_fk_3",
+              "__umf_fk_4",
+              "__umf_fk_5"
+            ],
+            "dbapiSql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class s ON s.oid=c.conrelid JOIN pg_catalog.pg_namespace ns ON ns.oid=s.relnamespace JOIN pg_catalog.pg_class t ON t.oid=c.confrelid JOIN pg_catalog.pg_namespace nt ON nt.oid=t.relnamespace WHERE ns.nspname=%(__umf_fk_1)s::pg_catalog.text AND nt.nspname=%(__umf_fk_1)s::pg_catalog.text AND s.relname=%(__umf_fk_2)s::pg_catalog.text AND t.relname=%(__umf_fk_3)s::pg_catalog.text AND s.relkind='r' AND t.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent IN (s.oid,t.oid) OR inh.inhrelid IN (s.oid,t.oid)) AND c.contype='f' AND c.convalidated AND c.conenforced AND NOT c.condeferrable AND NOT c.condeferred AND NOT c.conperiod AND c.confmatchtype IN ('s','f') AND (SELECT pg_catalog.jsonb_agg(at.attname ORDER BY k.ord) FROM pg_catalog.unnest(c.conkey) WITH ORDINALITY AS k(attnum,ord) JOIN pg_catalog.pg_attribute at ON at.attrelid=s.oid AND at.attnum=k.attnum WHERE NOT at.attisdropped)=%(__umf_fk_4)s::pg_catalog.text::pg_catalog.jsonb AND (SELECT pg_catalog.jsonb_agg(at.attname ORDER BY k.ord) FROM pg_catalog.unnest(c.confkey) WITH ORDINALITY AS k(attnum,ord) JOIN pg_catalog.pg_attribute at ON at.attrelid=t.oid AND at.attnum=k.attnum WHERE NOT at.attisdropped)=%(__umf_fk_5)s::pg_catalog.text::pg_catalog.jsonb AND pg_catalog.cardinality(c.conpfeqop)=1 AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(c.conpfeqop) AS e(oid) JOIN pg_catalog.pg_operator o ON o.oid=e.oid JOIN pg_catalog.pg_namespace opns ON opns.oid=o.oprnamespace WHERE opns.nspname<>'pg_catalog' OR o.oprname<>'=') AND (SELECT pg_catalog.count(*) FROM pg_catalog.pg_trigger tr JOIN pg_catalog.pg_proc p ON p.oid=tr.tgfoid JOIN pg_catalog.pg_namespace pn ON pn.oid=p.pronamespace WHERE tr.tgconstraint=c.oid AND tr.tgisinternal AND tr.tgenabled IN ('O','A') AND pn.nspname='pg_catalog' AND pg_catalog.starts_with(p.proname::pg_catalog.text,'RI_FKey_'))=4 AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(c.conkey) AS fkcol(attnum) JOIN pg_catalog.pg_attribute fa ON fa.attrelid=s.oid AND fa.attnum=fkcol.attnum LEFT JOIN pg_catalog.pg_collation fc ON fc.oid=fa.attcollation WHERE fa.attcollation<>0 AND (fc.oid IS NULL OR NOT fc.collisdeterministic)) AND EXISTS(SELECT 1 FROM pg_catalog.pg_index fi WHERE fi.indexrelid=c.conindid AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(fi.indkey::pg_catalog.int2[]) WITH ORDINALITY AS fkcol(attnum,ord) JOIN pg_catalog.pg_attribute fa ON fa.attrelid=t.oid AND fa.attnum=fkcol.attnum LEFT JOIN pg_catalog.pg_collation fc ON fc.oid=fa.attcollation WHERE fkcol.ord<=fi.indnkeyatts AND (fi.indcollation[(fkcol.ord-1)::pg_catalog.int4]<>fa.attcollation OR (fa.attcollation<>0 AND (fc.oid IS NULL OR NOT fc.collisdeterministic))))) AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(c.conkey) AS k(attnum) JOIN pg_catalog.pg_attribute at ON at.attrelid=s.oid AND at.attnum=k.attnum WHERE NOT at.attnotnull) AND EXISTS(SELECT 1 FROM pg_catalog.pg_index exact_index WHERE exact_index.indexrelid=c.conindid AND exact_index.indisunique AND exact_index.indisvalid AND exact_index.indisready AND exact_index.indislive AND exact_index.indimmediate AND exact_index.indexprs IS NULL AND exact_index.indpred IS NULL AND exact_index.indnkeyatts=pg_catalog.cardinality(c.confkey) AND EXISTS(SELECT 1 FROM pg_catalog.pg_class ix JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE ix.oid=exact_index.indexrelid AND am.amname='btree' AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(exact_index.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,pos) JOIN pg_catalog.pg_attribute a ON a.attrelid=t.oid AND a.attnum=k.attnum JOIN pg_catalog.pg_type ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace tn ON tn.oid=ty.typnamespace LEFT JOIN pg_catalog.pg_opclass op ON op.oid=exact_index.indclass[(k.pos-1)::pg_catalog.int4] LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation WHERE k.pos<=exact_index.indnkeyatts AND (NOT a.attisdropped AND tn.nspname='pg_catalog' AND ons.nspname='pg_catalog' AND op.opcmethod=ix.relam AND op.opcname=CASE ty.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops' WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops' WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END AND exact_index.indcollation[(k.pos-1)::pg_catalog.int4]=a.attcollation AND (a.attcollation=0 OR co.collisdeterministic)) IS NOT TRUE))))",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_fk_1",
+                "source": {
+                  "literal": {
+                    "string": "weft_r13_fixture"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_fk_2",
+                "source": {
+                  "literal": {
+                    "string": "orders"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_fk_3",
+                "source": {
+                  "literal": {
+                    "string": "customers"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_fk_4",
+                "source": {
+                  "literal": {
+                    "string": "[\"customer_code\"]"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_fk_5",
+                "source": {
+                  "literal": {
+                    "string": "[\"code\"]"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_constraint c JOIN pg_catalog.pg_class s ON s.oid=c.conrelid JOIN pg_catalog.pg_namespace ns ON ns.oid=s.relnamespace JOIN pg_catalog.pg_class t ON t.oid=c.confrelid JOIN pg_catalog.pg_namespace nt ON nt.oid=t.relnamespace WHERE ns.nspname=$1::pg_catalog.text AND nt.nspname=$1::pg_catalog.text AND s.relname=$2::pg_catalog.text AND t.relname=$3::pg_catalog.text AND s.relkind='r' AND t.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent IN (s.oid,t.oid) OR inh.inhrelid IN (s.oid,t.oid)) AND c.contype='f' AND c.convalidated AND c.conenforced AND NOT c.condeferrable AND NOT c.condeferred AND NOT c.conperiod AND c.confmatchtype IN ('s','f') AND (SELECT pg_catalog.jsonb_agg(at.attname ORDER BY k.ord) FROM pg_catalog.unnest(c.conkey) WITH ORDINALITY AS k(attnum,ord) JOIN pg_catalog.pg_attribute at ON at.attrelid=s.oid AND at.attnum=k.attnum WHERE NOT at.attisdropped)=$4::pg_catalog.text::pg_catalog.jsonb AND (SELECT pg_catalog.jsonb_agg(at.attname ORDER BY k.ord) FROM pg_catalog.unnest(c.confkey) WITH ORDINALITY AS k(attnum,ord) JOIN pg_catalog.pg_attribute at ON at.attrelid=t.oid AND at.attnum=k.attnum WHERE NOT at.attisdropped)=$5::pg_catalog.text::pg_catalog.jsonb AND pg_catalog.cardinality(c.conpfeqop)=1 AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(c.conpfeqop) AS e(oid) JOIN pg_catalog.pg_operator o ON o.oid=e.oid JOIN pg_catalog.pg_namespace opns ON opns.oid=o.oprnamespace WHERE opns.nspname<>'pg_catalog' OR o.oprname<>'=') AND (SELECT pg_catalog.count(*) FROM pg_catalog.pg_trigger tr JOIN pg_catalog.pg_proc p ON p.oid=tr.tgfoid JOIN pg_catalog.pg_namespace pn ON pn.oid=p.pronamespace WHERE tr.tgconstraint=c.oid AND tr.tgisinternal AND tr.tgenabled IN ('O','A') AND pn.nspname='pg_catalog' AND pg_catalog.starts_with(p.proname::pg_catalog.text,'RI_FKey_'))=4 AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(c.conkey) AS fkcol(attnum) JOIN pg_catalog.pg_attribute fa ON fa.attrelid=s.oid AND fa.attnum=fkcol.attnum LEFT JOIN pg_catalog.pg_collation fc ON fc.oid=fa.attcollation WHERE fa.attcollation<>0 AND (fc.oid IS NULL OR NOT fc.collisdeterministic)) AND EXISTS(SELECT 1 FROM pg_catalog.pg_index fi WHERE fi.indexrelid=c.conindid AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(fi.indkey::pg_catalog.int2[]) WITH ORDINALITY AS fkcol(attnum,ord) JOIN pg_catalog.pg_attribute fa ON fa.attrelid=t.oid AND fa.attnum=fkcol.attnum LEFT JOIN pg_catalog.pg_collation fc ON fc.oid=fa.attcollation WHERE fkcol.ord<=fi.indnkeyatts AND (fi.indcollation[(fkcol.ord-1)::pg_catalog.int4]<>fa.attcollation OR (fa.attcollation<>0 AND (fc.oid IS NULL OR NOT fc.collisdeterministic))))) AND pg_catalog.current_setting('session_replication_role')='origin' AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(c.conkey) AS k(attnum) JOIN pg_catalog.pg_attribute at ON at.attrelid=s.oid AND at.attnum=k.attnum WHERE NOT at.attnotnull) AND EXISTS(SELECT 1 FROM pg_catalog.pg_index exact_index WHERE exact_index.indexrelid=c.conindid AND exact_index.indisunique AND exact_index.indisvalid AND exact_index.indisready AND exact_index.indislive AND exact_index.indimmediate AND exact_index.indexprs IS NULL AND exact_index.indpred IS NULL AND exact_index.indnkeyatts=pg_catalog.cardinality(c.confkey) AND EXISTS(SELECT 1 FROM pg_catalog.pg_class ix JOIN pg_catalog.pg_am am ON am.oid=ix.relam WHERE ix.oid=exact_index.indexrelid AND am.amname='btree' AND NOT EXISTS(SELECT 1 FROM pg_catalog.unnest(exact_index.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,pos) JOIN pg_catalog.pg_attribute a ON a.attrelid=t.oid AND a.attnum=k.attnum JOIN pg_catalog.pg_type ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace tn ON tn.oid=ty.typnamespace LEFT JOIN pg_catalog.pg_opclass op ON op.oid=exact_index.indclass[(k.pos-1)::pg_catalog.int4] LEFT JOIN pg_catalog.pg_namespace ons ON ons.oid=op.opcnamespace LEFT JOIN pg_catalog.pg_collation co ON co.oid=a.attcollation WHERE k.pos<=exact_index.indnkeyatts AND (NOT a.attisdropped AND tn.nspname='pg_catalog' AND ons.nspname='pg_catalog' AND op.opcmethod=ix.relam AND op.opcname=CASE ty.typname WHEN 'int2' THEN 'int2_ops' WHEN 'int4' THEN 'int4_ops' WHEN 'int8' THEN 'int8_ops' WHEN 'numeric' THEN 'numeric_ops' WHEN 'text' THEN 'text_ops' WHEN 'varchar' THEN 'text_ops' WHEN 'bool' THEN 'bool_ops' END AND exact_index.indcollation[(k.pos-1)::pg_catalog.int4]=a.attcollation AND (a.attcollation=0 OR co.collisdeterministic)) IS NOT TRUE))))"
+          },
+          "nativePairs": [
+            [
+              "customer_code",
+              "code"
+            ]
+          ],
+          "sourceMultiplicity": {
+            "max": "*",
+            "min": 0
+          },
+          "sourceTable": [
+            "commerce",
+            "Order"
+          ],
+          "targetMultiplicity": {
+            "max": 1,
+            "min": 1
+          },
+          "targetTable": [
+            "commerce",
+            "Customer"
+          ]
+        }
+      ],
+      "version": "umf.native-relationships/0.1"
+    },
+    "noBypassRls": true,
+    "principal": "caller-connection-role",
+    "rls": "native-caller-role",
+    "rowCap": 10,
+    "schema": "weft_r13_fixture",
+    "searchPath": [
+      "pg_catalog"
+    ],
+    "timeout": "per-call",
+    "transaction": "read-only"
+  },
+  "outputs": [
+    {
+      "carrier": "integer",
+      "name": "id",
+      "nullable": false
+    },
+    {
+      "carrier": "integer",
+      "name": "customer",
+      "nullable": false
+    }
+  ],
+  "parameterOrder": [],
+  "parameters": [],
+  "privilegeInventory": {
+    "complete": false,
+    "functions": [],
+    "indexObjects": [],
+    "operators": [
+      "="
+    ],
+    "semanticFields": [],
+    "tables": [
+      {
+        "columnPrivilegesSufficient": false,
+        "columns": [
+          "code",
+          "id"
+        ],
+        "native": "customers",
+        "privilege": "SELECT",
+        "reason": "LOCK TABLE ACCESS SHARE",
+        "schema": "weft_r13_fixture",
+        "tablePrivilegeRequired": true
+      },
+      {
+        "columnPrivilegesSufficient": false,
+        "columns": [
+          "customer_code",
+          "id"
+        ],
+        "native": "orders",
+        "privilege": "SELECT",
+        "reason": "LOCK TABLE ACCESS SHARE",
+        "schema": "weft_r13_fixture",
+        "tablePrivilegeRequired": true
+      }
+    ],
+    "unresolved": [
+      "native-function-and-operator-overload-closure"
+    ],
+    "version": "weft.native-privileges/0.1"
+  },
+  "referencedTables": [
+    {
+      "columns": [
+        {
+          "carrier": "integer",
+          "logical": "id",
+          "native": "id",
+          "nullable": false
+        },
+        {
+          "carrier": "string",
+          "logical": "name",
+          "native": "name",
+          "nullable": false
+        },
+        {
+          "carrier": "string",
+          "logical": "code",
+          "native": "code",
+          "nullable": false
+        }
+      ],
+      "logical": [
+        "commerce",
+        "Customer"
+      ],
+      "native": "customers"
+    },
+    {
+      "columns": [
+        {
+          "carrier": "integer",
+          "logical": "id",
+          "native": "id",
+          "nullable": false
+        },
+        {
+          "carrier": "integer",
+          "logical": "customer_id",
+          "native": "customer_id",
+          "nullable": true
+        },
+        {
+          "carrier": "string",
+          "logical": "status",
+          "native": "status",
+          "nullable": false
+        },
+        {
+          "carrier": "decimal",
+          "logical": "amount",
+          "native": "amount",
+          "nullable": false
+        },
+        {
+          "carrier": "string",
+          "logical": "customer_code",
+          "native": "customer_code",
+          "nullable": false
+        }
+      ],
+      "logical": [
+        "commerce",
+        "Order"
+      ],
+      "native": "orders"
+    }
+  ],
+  "sourceSql": "SELECT o.id AS id, c.id AS customer FROM commerce.\"Order\" o INNER JOIN commerce.\"Customer\" c ON o.customer_code=c.code ORDER BY o.id LIMIT 10",
+  "sql": "SELECT \"o\".\"id\" AS \"id\", \"c\".\"id\" AS \"customer\" FROM \"weft_r13_fixture\".\"orders\" AS \"o\" INNER JOIN \"weft_r13_fixture\".\"customers\" AS \"c\" ON \"o\".\"customer_code\" COLLATE pg_catalog.\"C\" = \"c\".\"code\" COLLATE pg_catalog.\"C\" ORDER BY \"o\".\"id\" ASC NULLS LAST LIMIT 10",
+  "status": "compiled",
+  "structuralDigest": "4ad1bcae04fadd5ab89c9f12b773446c0f6f85cb9b606fe05370ba68b98b3f3c",
+  "target": "postgresql18",
+  "version": "weft.raw-read/0.1"
+}

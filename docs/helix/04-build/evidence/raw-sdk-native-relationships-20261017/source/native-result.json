@@ -1,0 +1,217 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "deterministic-default-opclass-positive",
+      "expected": true,
+      "before": [
+        [
+          "relationship",
+          true
+        ],
+        [
+          "alternate-key",
+          true
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          true
+        ],
+        [
+          "alternate-key",
+          true
+        ]
+      ],
+      "rowCount": 2
+    },
+    {
+      "name": "native-casefold-fk-and-alternate-key-refused",
+      "expected": false,
+      "before": [
+        [
+          "relationship",
+          false
+        ],
+        [
+          "alternate-key",
+          false
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          false
+        ],
+        [
+          "alternate-key",
+          false
+        ]
+      ],
+      "rowCount": null
+    },
+    {
+      "name": "native-custom-target-opclass-refused",
+      "expected": false,
+      "before": [
+        [
+          "relationship",
+          false
+        ],
+        [
+          "alternate-key",
+          false
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          false
+        ],
+        [
+          "alternate-key",
+          false
+        ]
+      ],
+      "rowCount": null
+    },
+    {
+      "name": "native-custom-inverse-unique-opclass-refused",
+      "observed": [
+        [
+          "relationship",
+          false
+        ],
+        [
+          "alternate-key",
+          true
+        ]
+      ]
+    },
+    {
+      "name": "finite-degree-positive-zero-fk-not-an-edge",
+      "expected": true,
+      "before": [
+        [
+          "relationship",
+          true
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          true
+        ]
+      ],
+      "rowCount": 4
+    },
+    {
+      "name": "finite-degree-read-committed-refused",
+      "expected": false,
+      "before": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "rowCount": null
+    },
+    {
+      "name": "finite-degree-read-write-refused",
+      "expected": false,
+      "before": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "rowCount": null
+    },
+    {
+      "name": "finite-degree-zero-neighbor-target-refused",
+      "expected": false,
+      "before": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "rowCount": null
+    },
+    {
+      "name": "finite-degree-excess-neighbor-target-refused",
+      "expected": false,
+      "before": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "rowCount": null
+    },
+    {
+      "name": "finite-degree-filtered-native-rls-scope-refused",
+      "expected": false,
+      "before": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          false
+        ]
+      ],
+      "rowCount": null
+    },
+    {
+      "name": "finite-degree-restored-positive",
+      "expected": true,
+      "before": [
+        [
+          "relationship",
+          true
+        ]
+      ],
+      "after": [
+        [
+          "relationship",
+          true
+        ]
+      ],
+      "rowCount": 4
+    }
+  ],
+  "checkCount": 11,
+  "schemasRemoved": true,
+  "moduleSha256": "41a907705278dd80f07c1761303948fb24cb59ab57e7d4f57695836e18518583",
+  "temporal": "HELD",
+  "scope": "original owner Boolean admission and unchanged SQL; not SDK E2E"
+}
