@@ -236,6 +236,8 @@ pub fn prepare(
 /// Original navigation source ordering. Its explicit source limit remains a
 /// source selection bound, never a page/default delivery cap.
 pub(crate) fn prepare_source(catalog:&Catalog,sql:&str,parameters:Parameters,selected:&SelectedKey)->Result<(Plan,Vec<crate::application_ir::ReadSortSlot>)>{
+    let query=ast::parse_security(sql)?.0;
+    if !query.joins.is_empty()&&(!query.order.is_empty()||query.limit.is_some()){return Err(Diagnostic::new("WFT-ORDERED-SOURCE","resolve","Ordered or limited joined source requires separately admitted source identity ordering proof"));}
     let ordered=prepare_inner(catalog,sql,parameters,selected,1,None,true)?;
     let mut base=ordered.base;
     base.required_capabilities.retain(|c|!matches!(c.as_str(),"page.ordered"|"cursor.stateTuple"));
@@ -243,6 +245,8 @@ pub(crate) fn prepare_source(catalog:&Catalog,sql:&str,parameters:Parameters,sel
     Ok((base,ordered.sort_slots.iter().map(crate::application_ir::ReadSortSlot::from_page).collect()))
 }
 pub(crate) fn prepare_read(catalog:&Catalog,sql:&str,parameters:Parameters,selected:&SelectedKey)->Result<Plan>{
+ let query=ast::parse_security(sql)?.0;
+ if !query.joins.is_empty(){return Err(Diagnostic::new("WFT-ORDERED-READ","resolve","Ordered joined result requires an original unique result tuple Key profile"));}
  let ordered=prepare_inner(catalog,sql,parameters,selected,1,None,true)?;
  let mut base=ordered.base;
  base.required_capabilities.retain(|c|!matches!(c.as_str(),"page.ordered"|"cursor.stateTuple"));

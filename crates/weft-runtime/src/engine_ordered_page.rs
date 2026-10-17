@@ -74,6 +74,13 @@ pub fn check_json(program:&str,current:&str,after:&str)->String{response((||{
 mod tests {
  use super::*;
  fn packet()->Value{serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-ordered-page-request.json")).unwrap()}
+ #[test]fn original_joined_tuple_ties_refuse_without_owner_uniqueness_proof(){
+  let input:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-ordered-join-refusal-request.json")).unwrap();let out:Value=serde_json::from_str(&crate::engine_read::compile_json(&input.to_string())).unwrap();assert_eq!(out["status"],"blocked");assert!(out["original"]["diagnostics"].as_array().unwrap().iter().any(|d|d["code"]=="WFT-ORDERED-READ"));
+  let mut related:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-ordered-related-request.json")).unwrap();related["source"]["sql"]=input["request"]["sql"].clone();let out=related_read(&related).unwrap();assert_eq!(out["status"],"blocked");assert!(out["original"]["diagnostics"].as_array().unwrap().iter().any(|d|d["code"]=="WFT-ORDERED-SOURCE"));
+  // Unbounded source joins retain original identity-only EXISTS semantics; no
+  // selection cap/order can distinguish equal occurrences of one source entity.
+  related["source"]["sql"]=json!("SELECT r.id AS id FROM sales.\"order\" r JOIN sales.customer c ON r.id=c.customerName");let out=related_read(&related).unwrap();assert_eq!(out["status"],"compiled","{out}");let sql=out["artifact"]["sql"].as_str().unwrap();assert!(sql.contains("EXISTS"));assert_eq!(out["relatedRequest"]["source"]["sql"],related["source"]["sql"]);
+ }
  #[test]fn original_related_keys_output_keeps_distinct_sealed_decoder(){
   let input:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-ordered-related-request.json")).unwrap();let mut request=input["source"].clone();request["sql"]=json!("SELECT r.id AS id,RELATED_KEYS(r.customers,2) AS customer_keys FROM sales.\"order\" r LIMIT 3");
   let program=crate::engine_read::compile_with_order(input["compiler"].as_str().unwrap(),&request,None).unwrap();assert_eq!(program["status"],"compiled","{program}");assert_eq!(program["outputs"][1]["carrier"],"related-keys");assert_eq!(program["outputs"][1]["missing"],false);assert_eq!(program["outputs"][1]["decoder"]["profile"],"ashlar-related-keys-string/0.1");

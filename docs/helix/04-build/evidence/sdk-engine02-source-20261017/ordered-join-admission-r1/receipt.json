@@ -1,0 +1,47 @@
+{
+  "status": "ACTUAL ORIGINAL API ADMISSION; native not executed",
+  "compilerSource": "e3e66bd46843009b00caeb1bfeab8a3de0677330",
+  "wheelSha256": "6f77a6bcdb26548678a1bd15c6d22f24ecfcdaa72e0563c490404139c621c61f",
+  "sourceDataSatisfyingOriginalKeys": {
+    "order": [
+      {
+        "id": "O1",
+        "tenant": "A",
+        "code": "C1",
+        "score": 9
+      }
+    ],
+    "customer": [
+      {
+        "customerId": "C1",
+        "customerName": "O1"
+      },
+      {
+        "customerId": "C2",
+        "customerName": "O1"
+      }
+    ]
+  },
+  "distinctOutputRowsWithEqualEffectiveSort": [
+    {
+      "id": "O1",
+      "customer_id": "C1",
+      "sort": [
+        9,
+        "A",
+        "O1"
+      ]
+    },
+    {
+      "id": "O1",
+      "customer_id": "C2",
+      "sort": [
+        9,
+        "A",
+        "O1"
+      ]
+    }
+  ],
+  "originalGuardScope": "keyIntegrity GROUP BY root CTE only; customer Key unique remains satisfied; joined output multiplicity not checked",
+  "programSha256": "b2759a8fa6f43be87d47b7ee85200df6bf447535928b41ba70284001ea904f71"
+}
