@@ -190,6 +190,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/column_custody.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/compatible_profile.rs",
           "publicDeclarations": [
             "const:VERSION",
