@@ -1,0 +1,16 @@
+{
+  "compilerSource": "39131af6c4ad57dac8fe8ceca1f5db0e04fedb36",
+  "compilerWheelSha256": "e1d4e2491a1e0d64617761e4efb16527d979e3d6c55bc7358693ceb7ac542bcf",
+  "ownerRuntimeCandidate": "c360781c",
+  "testsPassed": 22,
+  "testsSkipped": 0,
+  "durationSeconds": 14.909,
+  "serverStopped": true,
+  "ownerPacketHashes": {
+    "run.py": "61bd7d2bef9d7f329b08f0e8de160092dc8b7ec945fde62e6b1fad38ec22a975",
+    "generate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compiler-native-catalog.log": "b71004a3d737ef70dca1418f32e5c4750041f37ea7bfc698ea44fbe34f670cf1",
+    "result.json": "5b19c18f44baaa93ce87f3a0b3f27d7ab670b4e44f851e0a5b0284c094dd0bcf"
+  },
+  "temporalQualification": "held"
+}

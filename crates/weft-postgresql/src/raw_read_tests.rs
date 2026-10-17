@@ -12,6 +12,33 @@ mod raw_read_tests {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }
     #[test]
+    fn raw_read_prefix_is_binary_not_a_pattern() {
+        for target in ["postgresql18", "lakebase18"] {
+            for prefix in ["", "50%_", "a\\", "é", "é", "𝄞", "O'Reilly"] {
+                let mut r = request();
+                r["target"] = json!(target);
+                r["sql"] = json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE STARTS_WITH(o.status, '{}')", prefix.replace('\'', "''")));
+                r["parameters"] = json!([]);
+                let out = compile(r);
+                assert_eq!(out["status"], "compiled", "{out}");
+                assert!(out["sql"].as_str().unwrap().contains("pg_catalog.starts_with("));
+                assert!(!out["sql"].as_str().unwrap().contains("LIKE"));
+            }
+        }
+        for nullable in [false,true] {
+            let mut r=request();r["sql"]=json!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE NOT STARTS_WITH((o.status), (:prefix))");r["parameters"]=json!([{ "name":"prefix", "carrier":"string", "nullable":nullable }]);
+            let out=compile(r);assert_eq!(out["status"],"compiled","{out}");assert_eq!(out["parameterOrder"],json!(["prefix"]));assert_eq!(out["parameters"][0]["nullable"],nullable);assert!(out["sql"].as_str().unwrap().contains("$1::pg_catalog.text"));
+        }
+    }
+    #[test]
+    fn raw_read_prefix_rejects_wrong_types_modifiers_and_ungrouped_having() {
+        for predicate in ["STARTS_WITH(o.amount, '1')", "STARTS_WITH(o.status, 1)", "STARTS_WITH(o.status, NULL)", "STARTS_WITH(o.status, o.status)", "STARTS_WITH('x', 'x')", "evil.starts_with(o.status, 'a')", "STARTS_WITH(DISTINCT o.status, 'a')", "STARTS_WITH(o.status)", "STARTS_WITH(o.status, 'a', 'b')", "STARTS_WITH(o.status, evil())", "MATCHES_ALL_TERMS(o.status, 'a')"] {
+            let mut r=request();r["sql"]=json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" AS o WHERE {predicate}"));r["parameters"]=json!([]);let out=compile(r);assert_eq!(out["status"],"blocked","{predicate}: {out}");assert!(out.get("sql").is_none());
+        }
+        let mut r=request();r["sql"]=json!("SELECT count(*) AS n FROM \"commerce\".\"Order\" AS o HAVING STARTS_WITH(o.status, 'a')");r["parameters"]=json!([]);let out=compile(r);assert_eq!(out["status"],"blocked");
+        let mut r=request();r["sql"]=json!("SELECT o.status AS status, count(*) AS n FROM \"commerce\".\"Order\" AS o GROUP BY o.status HAVING STARTS_WITH(o.status, 'a')");r["parameters"]=json!([]);let out=compile(r);assert_eq!(out["status"],"compiled","{out}");
+    }
+    #[test]
     fn raw_read_null_safe_distinctness_retains_typed_nullable_parameters() {
         for op in ["IS DISTINCT FROM", "IS NOT DISTINCT FROM"] {
             for (column, carrier, nullable) in [
