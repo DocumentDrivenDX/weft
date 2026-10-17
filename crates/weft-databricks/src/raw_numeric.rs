@@ -41,6 +41,17 @@ mod tests {
         for predicate in ["o.status=:values","o.status IN(:values,'x')","o.status IN(:missing)"]{r["sql"]=json!(format!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE {predicate} LIMIT 10"));let p:Value=serde_json::from_str(&crate::raw_read::compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"blocked","{predicate}: {p}");}
     }
     #[test]
+    fn numeric_list_uses_original_full_shape_custody_without_numeric_array_casts(){
+        let original:Value=serde_json::from_str(include_str!("../../../tests/spark-pages/full-shape-list-request.json")).unwrap();
+        for (field,carrier) in [("big","integer"),("amount","decimal")] {
+            let mut r=original.clone();r["parameters"]=json!([{"name":"values","carrier":carrier,"nullable":false,"container":"list","elementNullable":true,"maxItems":1000}]);
+            let sql=r["sql"].as_str().unwrap();let (selection,ordering)=sql.split_once(" ORDER BY ").unwrap();r["sql"]=json!(format!("{selection} WHERE o.{field} IN(:values) ORDER BY {ordering}"));
+            let p:Value=serde_json::from_str(&crate::raw_read::compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");
+            let sql=p["sql"].as_str().unwrap();assert!(sql.contains("from_json(:p1,'ARRAY<STRING>'"));assert!(sql.contains("regexp_replace"));assert!(!sql.contains(" AS DOUBLE")&&!sql.contains("ARRAY<DECIMAL"));
+            assert!(p["obligations"].get("numericPredicateParameters").is_none());assert_eq!(p["obligations"]["listPredicateParameters"]["parameters"][0]["carrier"],carrier);
+        }
+    }
+    #[test]
     fn literal_membership_uses_s8_and_empty_resolves_original_field(){
         let mut r:Value=serde_json::from_str(include_str!("../../../tests/spark-pages/read-request.json")).unwrap();r["keyset"]=json!(false);r["snapshots"]=json!({"orders":1});r["parameters"]=json!([]);
         for op in ["IN","NOT IN"]{r["sql"]=json!(format!("SELECT o.id AS id FROM \"commerce\".\"Order\" o WHERE o.status {op} (NULL,'missing') LIMIT 10"));let p:Value=serde_json::from_str(&crate::raw_read::compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");let sql=p["sql"].as_str().unwrap();assert!(sql.contains("THEN CAST(NULL AS BOOLEAN) ELSE (FALSE OR"));assert!(sql.contains("IS NOT NULL AND"));}

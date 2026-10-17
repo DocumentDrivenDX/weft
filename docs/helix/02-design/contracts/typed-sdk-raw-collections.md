@@ -99,6 +99,12 @@ enforcement triggers. Parent/child inheritance topology refuses; relkind alone
 does not prove that a table scan is a single admitted physical relation. Required forward participation requires NOT NULL source
 components. Inverse maximum1 requires an actual immediate native unique index
 over source FK components; nullable absent tuples remain permitted.
+Referenced and inverse unique indexes must retain the admitted built-in
+pg_catalog B-tree opclass for each scalar physical type. Index and attribute
+collations must match and be deterministic (or the type must be noncollatable).
+The same correspondence governs alternate relationship Keys independently of
+the selected paging Key. A nondeterministic casefold index/FK cannot establish
+the binary equality used by the original relationship query.
 
 Other finite/minimum inverse degrees require the original distinct-source-Key
 neighbor count, including zero-neighbor target rows. This candidate admits that
