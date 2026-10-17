@@ -34,6 +34,11 @@ fn compile_original(method:&str,request:&Value)->Result<Value>{
  let raw=match method{
   "truss-runtime"=>weft_postgresql::truss_runtime::compile_json(&encode(request)),
   "registered"=>crate::compile_json(&encode(request)),
+  "ashlar-spark4-fields"=>{
+    let mut registry=weft_core::backend::Registry::default();
+    registry.register(weft_databricks::local_spark4_fields::LocalSpark4Fields).map_err(|_|"original direct Field registration refused")?;
+    weft_core::compile::Compiler {registry}.compile_field_projection_json(&encode(request))
+  },
   "ashlar-spark4"=>{
     let mut registry=weft_core::backend::Registry::default();
     registry.register(weft_databricks::local_spark4::LocalSpark4).map_err(|_|"original local Spark backend registration refused")?;
@@ -240,5 +245,48 @@ mod related_output_tests {
   }
   let mut forged=p.clone();forged["outputs"][1]["decoder"]["bound"]=json!(1);
   let checked:Value=serde_json::from_str(&check_json(&forged.to_string(),&p["request"].to_string())).unwrap();assert_eq!(checked["status"],"blocked");
+ }
+}
+
+#[cfg(all(test,feature="ashlar-databricks-candidate"))]
+mod original_field_projection_tests {
+ use super::*;
+ fn request()->Value{serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-fields-only-request.json")).unwrap()}
+ #[test]fn exact_original_field_decimal38_and_uint64_do_not_widen_old_profile(){
+  let request=request();let p=compile_original("ashlar-spark4-fields",&request).unwrap();
+  assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["request"],request);
+  let columns=p["artifact"]["columns"].as_array().unwrap();assert_eq!(columns.len(),5);
+  assert_eq!(columns[4]["representation"]["logicalType"]["facets"],json!({"precision":38,"scale":6}));
+  assert_eq!(columns[3]["representation"]["logicalType"]["facets"],json!({"integerWidth":{"bits":64,"signed":false}}));
+  let mut old=request.clone();old["target"]["backendVersion"]=json!(weft_databricks::local_spark4::VERSION);old["target"]["targetProfile"]=json!(weft_databricks::local_spark4::PROFILE);
+  assert_ne!(compile_original("ashlar-spark4",&old).unwrap()["status"],"compiled");
+  assert_ne!(compile_original("ashlar-spark4-fields",&old).unwrap()["status"],"compiled");
+ }
+ #[test]fn field_only_original_profile_refuses_broader_semantics(){
+  let base=request();
+  for sql in [
+   "SELECT r.wideAmount AS value FROM sales.\"order\" r WHERE r.id='a' ORDER BY r.id LIMIT 10",
+   "SELECT r.wideAmount AS value FROM sales.\"order\" r JOIN sales.customer c ON r.id=c.customerId ORDER BY r.id LIMIT 10",
+   "SELECT COUNT(*) AS value FROM sales.\"order\" r ORDER BY r.id LIMIT 10",
+   "SELECT r AS value FROM sales.\"order\" r ORDER BY r.id LIMIT 10",
+   "SELECT r.wideAmount AS value FROM sales.\"order\" r ORDER BY r.wideAmount LIMIT 10",
+   "SELECT r.wideAmount AS value FROM sales.\"order\" r ORDER BY r.id",
+   "SELECT r.wideAmount AS value FROM (SELECT r.id FROM sales.\"order\" r) r ORDER BY r.id LIMIT 10"
+  ]{let mut r=base.clone();r["sql"]=json!(sql);assert_ne!(compile_original("ashlar-spark4-fields",&r).unwrap()["status"],"compiled","{sql}");}
+  for optional in [true,false] {
+   let mut r=base.clone();let mut doc:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+   let field=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|f|f["id"]=="wideAmount").unwrap();
+   if optional{field["nullability"]=json!("absent-allowed");}else{field["cardinality"]=json!("array");}
+   let source=doc.to_string();let hash=weft_core::json::sha256(source.as_bytes());
+   let old_hash=r["modules"][0]["pin"]["revision"].as_str().unwrap().to_owned();
+   r["modules"][0]["documentJson"]=json!(source);r["modules"][0]["pin"]["revision"]=json!(hash);r["modules"][0]["pin"]["sha256"]=json!(hash);
+   let binding=r["target"]["bindingJson"].as_str().unwrap().replace(&old_hash,&hash);
+   r["target"]["bindingSha256"]=json!(weft_core::json::sha256(binding.as_bytes()));r["target"]["bindingJson"]=json!(binding);
+   let out=compile_original("ashlar-spark4-fields",&r).unwrap();assert_ne!(out["status"],"compiled","{out}");
+   if optional {assert!(out["original"]["diagnostics"].as_array().unwrap().iter().any(|d|d["code"]=="WFT-FIELD-PROFILE"),"{out}");}
+  }
+  for (key,value) in [("interfaceVersion",json!("weft-compile/0.2.5")),("parameters",json!({"amount":{"family":"decimal","facets":{"precision":38,"scale":6},"nullable":false}}))] {
+   let mut r=base.clone();r[key]=value;assert_ne!(compile_original("ashlar-spark4-fields",&r).unwrap()["status"],"compiled");
+  }
  }
 }

@@ -33,6 +33,7 @@ pub struct ModuleInput {
 pub struct Catalog {
     inputs: Vec<ModuleInput>,
     pub(crate) exact_numbers: bool,
+    pub(crate) field_projection_decimal38: bool,
     security_inputs: bool,
     pub(crate) identity_name_fallback: bool,
     pub(crate) exact_scalars: bool,
@@ -181,7 +182,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
+        Ok(Self { inputs, documents, exact_numbers:false, field_projection_decimal38:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()
@@ -331,7 +332,7 @@ impl Catalog {
             // Derive the ideal scalar domain, leaving original selected source bytes untouched.
             ideal={let mut v=field.clone();v["nullability"]=Value::String("required".into());v};&ideal
         } else {field};
-        let logical_type = scalar_type(selected, name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers, self.bounded_current_strings)?;
+        let logical_type = scalar_type_projected(selected, name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers, self.bounded_current_strings, self.field_projection_decimal38)?;
         Ok((
             identity,
             logical_type,
@@ -341,6 +342,9 @@ impl Catalog {
 }
 
 pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool, mathematical_decimal: bool, bounded_strings: bool) -> Result<LogicalType> {
+    scalar_type_projected(field,name,mathematical_integer,mathematical_decimal,bounded_strings,false)
+}
+pub(crate) fn scalar_type_projected(field: &Value, name: &Name, mathematical_integer: bool, mathematical_decimal: bool, bounded_strings: bool, field_decimal38:bool) -> Result<LogicalType> {
     let err = || {
         Diagnostic::new("WFT-TYPE", "type", "Selected field meaning is unsupported").at(&name.span)
     };
@@ -393,7 +397,7 @@ pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool
     if family == Family::Decimal && !(mathematical_decimal && facets==json!({})) {
         let p = facets["precision"].as_u64().ok_or_else(err)?;
         let s = facets["scale"].as_u64().ok_or_else(err)?;
-        if !(1..=28).contains(&p) || s > p {
+        if !(1..=if field_decimal38 {38}else{28}).contains(&p) || s > p {
             return Err(err());
         }
     }

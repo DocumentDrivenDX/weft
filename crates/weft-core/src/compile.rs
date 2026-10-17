@@ -151,7 +151,7 @@ impl Compiler {
     pub fn compile_navigation_json_with_factory(&self,raw:&str,navigation:&crate::application_navigation::Input,factory:&mut RegistryFactory<'_>,exact_numbers:bool,identity_names:bool,page:Option<(u16,Option<Vec<String>>,bool)>)->String{
         let cursor=page.as_ref().is_some_and(|(_,_,cursor)|*cursor);
         let decimal12=crate::json::checked_json(raw).is_ok_and(|r|matches!(r["interfaceVersion"].as_str(),Some("weft-compile/0.2.6"|"weft-compile/0.2.7")));
-        self.compile_json_navigation_internal(raw,Some(factory),None,exact_numbers,page.map(|(size,after,_)|(size,after,true,decimal12)),identity_names,cursor,Some(navigation))
+        self.compile_json_navigation_internal(raw,Some(factory),None,exact_numbers,page.map(|(size,after,_)|(size,after,true,decimal12)),identity_names,cursor,Some(navigation),false)
     }
     fn compile_json_internal(
         &self,
@@ -163,7 +163,11 @@ impl Compiler {
         identity_name_fallback: bool,
         cursor_delivery: bool,
     ) -> String {
-        self.compile_json_navigation_internal(raw,factory,security_factory,exact_numbers,page,identity_name_fallback,cursor_delivery,None)
+        self.compile_json_navigation_internal(raw,factory,security_factory,exact_numbers,page,identity_name_fallback,cursor_delivery,None,false)
+    }
+    /// Trusted original direct-Field profile; parameters and ordinary profiles stay closed.
+    pub fn compile_field_projection_json(&self,raw:&str)->String {
+        self.compile_json_navigation_internal(raw,None,None,false,None,false,false,None,true)
     }
     fn compile_json_navigation_internal(
         &self,
@@ -175,6 +179,7 @@ impl Compiler {
         identity_name_fallback: bool,
         cursor_delivery: bool,
         navigation:Option<&crate::application_navigation::Input>,
+        field_projection_decimal38:bool,
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
@@ -285,6 +290,21 @@ impl Compiler {
             }
             crate::json::checked_json(&req.target.binding_json)
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
+            if field_projection_decimal38 {
+                let query=crate::application_syntax::parse(&req.sql)?;
+                if req.interface_version!="weft-compile/0.2.0" || req.dialect!="weft-sql/0.2.0"
+                    || req.target.backend_id!="ashlar.databricks" || req.target.backend_version!="0.1.0-local-spark4-fields-candidate"
+                    || req.target.target_profile!="spark4.0.1-delta4.0.0-fields-candidate"
+                    || exact_numbers || navigation.is_some() || page.is_some() || cursor_delivery
+                    || security_factory.is_some() || req.security.is_some() || req.read_profile.is_some()
+                    || req.timestamp_comparison_profile.is_some() || req.exact_parameters.is_some()
+                    || req.parameters.as_ref().is_some_and(|p|!p.is_empty())
+                    || !query.predicates.is_empty() || !query.joins.is_empty() || !query.groups.is_empty()
+                    || query.limit.is_none() || query.order.len()!=1
+                    || query.outputs.is_empty() || query.outputs.iter().any(|p|!matches!(p.output,crate::application_syntax::Output::Field(_))) {
+                    return Err(Diagnostic::new("WFT-FIELD-PROFILE","input","Direct required Field-only profile refuses broader semantics"));
+                }
+            }
             let mut catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
                 crate::model::Catalog::prepare_security(req.modules)?
             } else if exact_numbers {
@@ -293,6 +313,7 @@ impl Compiler {
                 crate::model::Catalog::prepare(req.modules)?
             };
             catalog.identity_name_fallback = identity_name_fallback;
+            catalog.field_projection_decimal38=field_projection_decimal38;
             catalog.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6" | "weft-compile/0.2.7");
             catalog.exact_dates = req.interface_version=="weft-compile/0.2.7";
             if let Some(source)=req.security.as_ref() {

@@ -2,7 +2,7 @@
 use crate::{
     error::{Diagnostic, Result},
     ir::{Identity, LogicalType, Span},
-    model::{scalar_type, Catalog, Record},
+    model::{scalar_type, scalar_type_projected, Catalog, Record},
     syntax::Name,
 };
 use serde::Serialize;
@@ -300,7 +300,7 @@ impl Catalog {
                             } else if v["scalarType"]=="date" { ExactScalarType::Date } else { ExactScalarType::Binary } }
                         } else {
                             Shape::Scalar {
-                                logical_type: scalar_type(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers, c.bounded_current_strings)?,
+                                logical_type: scalar_type_projected(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers, c.bounded_current_strings, c.field_projection_decimal38)?,
                             }
                         }
                     }

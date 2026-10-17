@@ -42,6 +42,7 @@ mod raw_numeric;
 mod raw_aggregates;
 
 pub mod local_spark4;
+pub mod local_spark4_fields;
 
 pub mod raw_action;
 

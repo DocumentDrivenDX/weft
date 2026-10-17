@@ -301,6 +301,7 @@
             "mod:current_scalar",
             "mod:raw_read",
             "mod:local_spark4",
+            "mod:local_spark4_fields",
             "mod:raw_action",
             "mod:raw_bulk",
             "mod:authored_pages",
@@ -314,6 +315,15 @@
             "const:VERSION",
             "const:PROFILE",
             "struct:LocalSpark4"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4_fields.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:LocalSpark4Fields"
           ],
           "pathReferences": []
         },
@@ -1242,6 +1252,7 @@
             "fn:compile_identity_names_json_with_exact_numbers_factory",
             "fn:compile_cursor_json_with_exact_numbers_factory",
             "fn:compile_navigation_json_with_factory",
+            "fn:compile_field_projection_json",
             "mod:v04",
             "mod:v041",
             "mod:v042"
