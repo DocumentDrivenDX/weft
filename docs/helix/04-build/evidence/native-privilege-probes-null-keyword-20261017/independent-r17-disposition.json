@@ -1,0 +1,94 @@
+[
+  {
+    "name": "search-0",
+    "status": "compiled",
+    "statements": 2,
+    "rules": 0
+  },
+  {
+    "name": "search-1",
+    "status": "compiled",
+    "statements": 3,
+    "rules": 0
+  },
+  {
+    "name": "search-2",
+    "status": "compiled",
+    "statements": 3,
+    "rules": 0
+  },
+  {
+    "name": "search-3",
+    "status": "compiled",
+    "statements": 2,
+    "rules": 0
+  },
+  {
+    "name": "search-4",
+    "status": "compiled",
+    "statements": 3,
+    "rules": 0
+  },
+  {
+    "name": "search-5",
+    "status": "compiled",
+    "statements": 3,
+    "rules": 0
+  },
+  {
+    "name": "search-6",
+    "status": "blocked",
+    "diagnostics": [
+      {
+        "code": "WFT-NATIVE-PRIVILEGE-PROBES",
+        "message": "original vector schema absent"
+      }
+    ]
+  },
+  {
+    "name": "search-7",
+    "status": "blocked",
+    "diagnostics": [
+      {
+        "code": "WFT-NATIVE-PRIVILEGE-PROBES",
+        "message": "original vector schema absent"
+      }
+    ]
+  },
+  {
+    "name": "action-0",
+    "status": "compiled",
+    "statements": 9,
+    "rules": 3
+  },
+  {
+    "name": "action-1",
+    "status": "compiled",
+    "statements": 12,
+    "rules": 3
+  },
+  {
+    "name": "action-2",
+    "status": "compiled",
+    "statements": 12,
+    "rules": 3
+  },
+  {
+    "name": "action-3",
+    "status": "compiled",
+    "statements": 8,
+    "rules": 3
+  },
+  {
+    "name": "action-4",
+    "status": "compiled",
+    "statements": 13,
+    "rules": 3
+  },
+  {
+    "name": "action-6",
+    "status": "compiled",
+    "statements": 4,
+    "rules": 3
+  }
+]

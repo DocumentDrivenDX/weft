@@ -367,7 +367,11 @@ fn positional_statement(
 fn search_report(request: &Request, program: Value, table: &str) -> Result<Value> {
     let mut native_types = BTreeMap::new();
     let mut vector_type = None;
-    if let Some(vector) = request.request.get("vectorBinding") {
+    if let Some(vector) = request
+        .request
+        .get("vectorBinding")
+        .filter(|v| !v.is_null())
+    {
         let schema = vector["extensionSchema"]
             .as_str()
             .ok_or("original vector schema absent")?;
@@ -993,6 +997,28 @@ mod source_semantic_field_tests {
 #[cfg(test)]
 mod search_tests {
     use super::*;
+    #[test]
+    fn keyword_without_vector_projection_accepts_original_null_binding() {
+        let mut request: Value = serde_json::from_str(include_str!(
+            "../../../tests/native-search/keyword-request.json"
+        ))
+        .unwrap();
+        request["vectorBinding"] = Value::Null;
+        request["projection"]
+            .as_array_mut()
+            .unwrap()
+            .retain(|p| p["field"]["element"] != "embedding");
+        let program: Value =
+            serde_json::from_str(&crate::search::compile_json(&request.to_string())).unwrap();
+        assert_eq!(program["status"], "compiled", "{program}");
+        let packet = json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_keyword"});
+        let report = build(&packet.to_string()).unwrap();
+        assert_eq!(report["status"], "compiled");
+        assert_eq!(
+            serde_json::from_str::<Value>(&check_json(&report.to_string())).unwrap(),
+            report
+        );
+    }
     #[test]
     fn original_keyword_and_vector_program_paths_and_typmod_casts_are_preserved() {
         for raw in [

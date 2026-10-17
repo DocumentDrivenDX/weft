@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-combined-sdk-local-r17/smoke.py", line 103, in <module>
+    p=api(label,'compile_native_privilege_probes_json',packet)
+  File "/private/tmp/weft-combined-sdk-local-r17/smoke.py", line 16, in api
+    p=json.loads(getattr(weft,method)(json.dumps(req)));assert p['status']=='compiled',(label,p);results.append({'name':label,'status':'pass'});(out/(label+'.json')).write_text(json.dumps(p,indent=2)+'\n');return p
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('original-search-6', {'diagnostics': [{'code': 'WFT-NATIVE-PRIVILEGE-PROBES', 'message': 'original vector schema absent'}], 'status': 'blocked', 'version': 'weft.native-privilege-probes/0.1'})
