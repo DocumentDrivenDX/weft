@@ -571,3 +571,58 @@ mod related_tests {
         assert_eq!(q["complete"], false);
     }
 }
+
+#[cfg(test)]
+mod source_semantic_field_tests {
+    use super::*;
+    #[test]
+    fn related_constant_folded_source_field_is_retained_but_not_fabricated_as_native_used_column() {
+        let mut source: Value = serde_json::from_str(include_str!(
+            "../../../tests/raw-postgresql/read-request.json"
+        ))
+        .unwrap();
+        source["parameters"] = json!([]);
+        source["sql"] = json!(
+            "SELECT o.id AS id FROM commerce.\"Order\" o WHERE NOT IN_EMPTY(o.status) ORDER BY o.id DESC LIMIT 2"
+        );
+        let mut target = source.clone();
+        target["sql"] =
+            json!("SELECT c.id AS id FROM commerce.\"Customer\" c ORDER BY c.id LIMIT 10");
+        let native = source["binding"]["tables"][0]["native"].clone();
+        let request = json!({"version":"weft.related-read/0.1","source":source,"target":target,"relationship":{"module":"commerce","id":"customer","direction":"forward"}});
+        let program: Value =
+            serde_json::from_str(&crate::related_read::compile_json(&request.to_string())).unwrap();
+        assert_eq!(program["status"], "compiled", "{program}");
+        let p = json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_source"});
+        let q = build(&p.to_string()).unwrap();
+        assert!(
+            q["grantSemantics"]["semanticFields"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(
+                    |f| f["logicalTable"] == json!(["commerce", "Order"]) && f["field"] == "status"
+                )
+        );
+        let used = q["grantSemantics"]["tables"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|t| t["native"] == native)
+            .unwrap();
+        assert!(
+            !used["columns"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|c| c == "status")
+        );
+        assert!(
+            !q["statements"][0]["sql"]
+                .as_str()
+                .unwrap()
+                .contains("\"status\"")
+        );
+        assert_eq!(q["complete"], false);
+    }
+}
