@@ -63,3 +63,21 @@ search-path resolution, pre/post withholding, serialized legacy refusal and
 same-source wheel/browser/native proofs remain separate gates. Temporal remains
 HELD; native privilege completeness and managed mutation qualification are not
 changed by this profile.
+
+## Exact search projection and vector identity
+
+For this exact profile, search direct outputs reuse the already admitted original
+PG projection metadata, including RowView nullability, integer/Decimal facets,
+Binary decoder and fixed float32 Vector decoder/dimensions. They do not extend
+the global operand Carrier enum or infer a native mapping from an output type.
+Legacy generic search output bytes remain unchanged. Binary uses the original
+bytea value; the existing original search Vector text representation is retained.
+No SDK SQL rewriting or numeric/vector rounding is introduced.
+
+Any explicitly supplied search vectorBinding must match the original complete
+native column facts for field/native name, dimensions, extension schema and exact
+extension version. Keyword projection can read its originally declared Vector
+through those source facts without inventing an ANN query vector binding.
+The exact physical Vector type must also have its original extension membership
+in pg_depend, in addition to matching qualified type name/typmod and the installed
+extension identity/version. Legacy generic lowering does not gain this guarantee.

@@ -171,8 +171,15 @@ fn compile(raw: &str) -> Result<Json> {
         Some(schema) => format!("{}.{}", ident(schema)?, ident(&table.native)?),
         None => ident(&table.native)?,
     };
+    let source_columns=if r.selection.verification_profile.as_deref()==Some("source-exact/0.1") {Some(crate::raw_read::native_projection::columns(admitted.selection(),table)?)}else{None};
+    if let (Some(columns),Some(vector))=(&source_columns,&r.vector_binding) {
+        let original=field(&doc,&vector.field)?;let logical=original["name"].as_str().ok_or("source-exact vector Field name absent")?;
+        let c=columns.get(logical).ok_or("source-exact vector Field column absent")?;
+        if c.metadata["carrier"]!="vector"||c.native!=vector.native||c.metadata["dimensions"]!=json!(vector.dimensions)||c.metadata["extensionSchema"]!=vector.extension_schema||c.metadata["extensionVersion"]!=vector.extension_version{return Err("source-exact vector binding differs from original native column facts")}
+    }
     let native_column = |reference: &Json| -> Result<(String, String, bool)> {
         let f = field(&doc, reference)?;
+        if let Some(columns)=&source_columns {let c=columns.get(f["name"].as_str().ok_or("source-exact projection Field name absent")?).ok_or("source-exact projection Field column absent")?;return Ok((ident(&c.native)?,c.metadata["carrier"].as_str().unwrap().to_string(),c.metadata["nullable"].as_bool().unwrap()));}
         if let Some(vector) = &r.vector_binding {
             if vector.field == *reference {
                 return Ok((
@@ -353,7 +360,13 @@ fn compile(raw: &str) -> Result<Json> {
             },
             ident(&p.name)?
         ));
-        outputs.push(json!({"name":p.name,"field":p.field,"carrier":carrier,"nullable":nullable,"decoder":if carrier=="vector"{json!({"profile":format!("pgvector-text-float32/{}",r.vector_binding.as_ref().unwrap().extension_version),"dimensions":r.vector_binding.as_ref().unwrap().dimensions})}else{Json::Null}}));
+        let mut output=json!({"name":p.name,"field":p.field,"carrier":carrier,"nullable":nullable});
+        if let Some(columns)=&source_columns {
+            let original=field(&doc,&p.field)?;let c=&columns[original["name"].as_str().unwrap()];
+            for(key,value)in c.metadata.as_object().unwrap(){output[key]=value.clone();}
+            if output.get("decoder").is_none(){output["decoder"]=Json::Null;}
+        }else{output["decoder"]=if carrier=="vector"{json!({"profile":format!("pgvector-text-float32/{}",r.vector_binding.as_ref().unwrap().extension_version),"dimensions":r.vector_binding.as_ref().unwrap().dimensions})}else{Json::Null};}
+        outputs.push(output);
     }
     let mut key_outputs = vec![];
     for (i, key) in table.key.iter().enumerate() {
@@ -497,6 +510,23 @@ mod tests {
         assert_eq!(p["obligations"]["nativeProjection"],p["selectionTemplate"]["obligations"]["nativeProjection"]);
         assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
         assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
+    }
+    #[test]
+    fn source_exact_full_record_and_vector_binding_pins_are_preserved(){
+        let r:Json=serde_json::from_str(include_str!("../../../tests/native-search/source-exact-full-record-request.json")).unwrap();
+        let p=output(r.clone());assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["outputs"].as_array().unwrap().len(),6);
+        for (name,carrier,native) in [("payload","binary","bytea"),("count","integer","bigint"),("amount","decimal","numeric(38,10)"),("embedding","vector","vector(3)")]{let c=p["outputs"].as_array().unwrap().iter().find(|c|c["name"]==name).unwrap();assert_eq!(c["carrier"],carrier);assert_eq!(c["nativeType"],native);}
+        assert_eq!(p["outputs"][5]["decoder"]["profile"],"pg-bytea/0.1");
+        for (key,value)in [("extensionVersion",json!("0.8.6")),("extensionSchema",json!("wrong_schema")),("native",json!("wrong_column")),("dimensions",json!(4))]{let mut bad=r.clone();bad["vectorBinding"][key]=value;assert_eq!(output(bad)["status"],"blocked", "{key}");}
+        let mut projected=r.clone();projected["vectorBinding"]=Json::Null;let q=output(projected);assert_eq!(q["status"],"compiled","{q}");assert_eq!(q["outputs"][2]["decoder"],p["outputs"][2]["decoder"]);
+        // Original current RowView can narrow an absent-allowed Core Field only
+        // with every authored native ColumnSet providing the corresponding NOTNULL.
+        let mut narrowed=r.clone();let mut doc:Json=serde_json::from_str(narrowed["selection"]["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="embedding").unwrap()["nullability"]=json!("absent-allowed");
+        let raw=doc.to_string();let sha=weft_core::json::sha256(raw.as_bytes());narrowed["selection"]["binding"]["modelJson"]=json!(raw);narrowed["selection"]["binding"]["modelSha256"]=json!(sha);narrowed["source"]["documentSha256"]=json!(sha);narrowed["selection"]["binding"]["nativeColumns"]["sets"][0]["columnSet"]["documentSha256"]=json!(sha);
+        let q=output(narrowed);assert_eq!(q["status"],"compiled","{q}");assert_eq!(q["outputs"][2]["nullable"],false);
+
     }
     #[test]
     fn exact_search_owns_filter_snapshot_and_native_admission() {

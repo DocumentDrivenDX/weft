@@ -118,6 +118,7 @@ mod raw_read_tests {
         assert_eq!(admissions.len(),7);
         assert!(admissions.iter().any(|a|a["nativeAdmission"]["sql"].as_str().unwrap().contains("co.oid=a.attcollation")));
         assert!(admissions.iter().any(|a|a["nativeAdmission"]["sql"].as_str().unwrap().contains("a.attcollation=0")));
+        assert!(admissions.iter().any(|a|a["nativeAdmission"]["sql"].as_str().unwrap().contains("dep.objid=ty.oid")));
         assert!(admissions.iter().any(|a|a["nativeAdmission"]["parameters"].as_array().unwrap().iter().any(|p|p["source"]["literal"]["string"]=="default")));
         for profile in ["source-exact/0.2",""]{let mut b=r.clone();b["verificationProfile"]=json!(profile);assert_eq!(compile(b)["status"],"blocked");}
         let mut b=r.clone();b["binding"].as_object_mut().unwrap().remove("nativeColumns");assert_eq!(compile(b)["status"],"blocked");
@@ -129,7 +130,7 @@ mod raw_read_tests {
             assert_eq!(compile(b)["status"],"blocked");
         }
         let legacy:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request.json")).unwrap();
-        assert!(compile(legacy)["obligations"]["nativeProjection"].get("verificationProfile").is_none());
+        let lp=compile(legacy);assert!(lp["obligations"]["nativeProjection"].get("verificationProfile").is_none());assert!(lp["obligations"]["nativeProjection"]["columns"].as_array().unwrap().iter().all(|a|!a["nativeAdmission"]["sql"].as_str().unwrap().contains("dep.objid=ty.oid")));
     }
     fn compile(r: Value) -> Value {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
