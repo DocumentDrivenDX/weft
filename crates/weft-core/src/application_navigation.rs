@@ -48,6 +48,14 @@ pub(crate) fn prepare(
         }
         crate::application_resolve::resolve(catalog, query, parameters, None)?
     };
+    finish(catalog,input,source,target)
+}
+#[cfg(feature="engine-ordered-page-candidate")]
+pub(crate) fn prepare_sdk(catalog:&Catalog,input:&Input,parameters:Parameters,selected:&crate::application_ordered_page::SelectedKey,target:&Plan)->Result<Navigation>{
+    let(source,order)=crate::application_ordered_page::prepare_source(catalog,&input.source_sql,parameters,selected)?;
+    Ok(finish(catalog,input,source,target)?.with_source_order(selected.clone(),order))
+}
+fn finish(catalog:&Catalog,input:&Input,source:Plan,target:&Plan)->Result<Navigation>{
     if source.aggregate || !source.groups.is_empty() || source.navigation.is_some() {
         return Err(fail(
             "Navigation source must retain ungrouped original entity identity",

@@ -404,6 +404,8 @@ pub fn projection_columns(
                 add_owner(&join.right.occurrence, &join.right.record)?;
             }
         }
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     let selected_property =
         |scan: &String, identity: &weft_core::ir::Identity| -> Result<&PropertyAdmission> {
@@ -511,6 +513,8 @@ pub fn projection_columns(
                 });
             }
         }
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     Ok(columns)
 }

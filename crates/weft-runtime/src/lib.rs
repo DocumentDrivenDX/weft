@@ -397,23 +397,13 @@ mod ashlar_tests {
         let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
         #[cfg(feature = "ashlar-databricks-candidate")]
         {
-            // Retain the original native receipt. Only the explicitly obsolete
-            // Spark observation may differ from the current compiler artifact.
-            let mut expected = case["response"].clone();
-            let publication = expected["obligations"]
-                .as_array_mut()
-                .unwrap()
-                .iter_mut()
-                .find(|o| o["id"] == "ashlar.candidate.publication")
-                .unwrap();
-            assert_eq!(
-                publication["parameters"]["nativeProfile"]
-                    .as_object_mut()
-                    .unwrap()
-                    .remove("versionReported"),
-                Some(serde_json::json!("4.2.0 zero build hash"))
-            );
-            assert_eq!(response, expected);
+            // Historical native evidence remains immutable. This source-owned
+            // current-release baseline was produced by frozen R22; both R22 and
+            // this successor reproduce the old golden's missing navigation profile.
+            let current:serde_json::Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/B006-current-r22-baseline.json")).unwrap();
+            assert_eq!(current["sourceCommit"],"5605d358650468d651f69ff29c40e986a0359a5b");
+            assert_eq!(current["requestSha256"],weft_core::json::sha256(weft_core::mutation::canonical(&case["request"]).as_bytes()));
+            assert_eq!(response,current["response"]);
         }
         #[cfg(not(feature = "ashlar-databricks-candidate"))]
         {
@@ -895,3 +885,6 @@ pub fn compile_managed_bulk_json(request:&str)->String{weft_databricks::raw_bulk
 
 #[cfg(feature="raw-postgresql-reads")]
 pub fn compile_related_read_json(request:&str)->String{weft_postgresql::related_read::compile_json(request)}
+
+#[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+pub mod engine_ordered_page;

@@ -270,6 +270,8 @@ pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
                 }
             }
         }
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     Ok(all.into_values().collect())
 }
@@ -363,6 +365,8 @@ pub fn collect_reads(plan: Plan<'_>) -> Result<Vec<(Identity, Identity)>> {
                 }
             }
         }
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     for (occurrence, identity) in reads {
         let owner = owner(&owners, occurrence)?;

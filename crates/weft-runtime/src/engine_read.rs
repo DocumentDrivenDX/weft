@@ -5,7 +5,7 @@ use serde_json::{json,Value};
 type Result<T>=std::result::Result<T,&'static str>;
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields,rename_all="camelCase")]
-struct Request { version:String, compiler:String, request:Value }
+struct Request { version:String, compiler:String, request:Value,#[serde(default)]order_key:Option<Value> }
 fn encode(v:&Value)->String{weft_core::mutation::canonical(v)}
 fn related_output(column:&Value,artifact:&Value)->Result<Value>{
  let truss=artifact["backend"]["backendId"]=="truss.postgresql.runtime";
@@ -16,7 +16,8 @@ fn related_output(column:&Value,artifact:&Value)->Result<Value>{
  let key=&representation["key"];let fields=key["fields"].as_array().ok_or("original related Key Fields required")?;let types=key["types"].as_array().ok_or("original related Key types required")?;
  let supported=|t:&Value|{if t["nullable"]!=false{return false}let facets=&t["facets"];match t["family"].as_str(){Some("string")=>facets==&json!({}),Some("boolean") if truss=>facets==&json!({}),Some("integer") if truss=>facets==&json!({})||facets==&json!({"integerWidth":{"bits":64,"signed":true}}),Some("decimal") if truss=>[json!({"precision":18,"scale":4}),json!({"precision":18,"scale":2}),json!({"precision":12,"scale":2})].contains(facets),_=>false}};
  if fields.is_empty()||fields.len()!=types.len()||types.iter().any(|t|!supported(t)){return Err("original required related Key profile differs from engine decoder")}
- let expressions=artifact["logicalPlan"]["outputs"].as_array().ok_or("original application output inventory required")?;
+ let logical=if artifact["logicalPlan"].get("base").is_some(){&artifact["logicalPlan"]["base"]}else{&artifact["logicalPlan"]};
+ let expressions=logical["outputs"].as_array().ok_or("original application output inventory required")?;
  let selected=expressions.iter().filter(|output|output["name"]==column["outputName"]).collect::<Vec<_>>();
  if selected.len()!=1{return Err("unique original related expression required")}
  let expression=&selected[0]["expression"];let relationship=&expression["relationship"];
@@ -30,10 +31,35 @@ fn related_output(column:&Value,artifact:&Value)->Result<Value>{
  let id=key["id"].as_str().filter(|id|!id.is_empty()).ok_or("original authored Key id required")?;
  Ok(json!({"name":column["outputName"],"carrier":"related-keys","nullable":false,"decoder":{"profile":if truss{"truss-related-keys/0.1"}else{"ashlar-related-keys-string/0.1"},"bound":bound,"relationship":{"module":relationship["identity"]["module"],"id":relationship["identity"]["relationship"],"direction":if inverse{"inverse"}else{"forward"}},"key":{"module":target["module"],"record":target["element"],"key":id,"components":components},"target":target,"representation":representation,"modelPins":pins}}))
 }
-fn compile_original(method:&str,request:&Value)->Result<Value>{
+#[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+pub(crate) fn compile_with_order(method:&str,request:&Value,key:Option<&Value>)->Result<Value>{
+ if !matches!(method,"ashlar-spark4-sdk"|"ashlar-spark4-sdk-pages"){if key.is_some(){return Err("legacy engine cannot accept orderKey")};return compile_original(method,request)}
+ let selected=key.map(|v|serde_json::from_value::<weft_core::application_ordered_page::SelectedKey>(v.clone())).transpose().map_err(|_|"closed original orderKey required")?;
+ let mut registry=weft_core::backend::Registry::default();if method=="ashlar-spark4-sdk"{registry.register(weft_databricks::local_spark4_sdk::LocalSpark4Sdk)}else{registry.register(weft_databricks::local_spark4_sdk_pages::LocalSpark4SdkPages)}.map_err(|_|"original SDK backend registration refused")?;
+ let raw=weft_core::compile::Compiler{registry}.compile_sdk_read_json(&encode(request),selected.as_ref(),None,None);
+ let mut out=wrap_artifact(method,request,weft_core::json::checked_json(&raw).map_err(|_|"original ordered read framing refused")?)?;
+ if out["status"]=="compiled"{if let Some(key)=key{out.as_object_mut().unwrap().remove("structuralDigest");out["orderKey"]=key.clone();seal_ordered(&mut out);}}
+ Ok(out)
+}
+#[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+fn seal_ordered(out:&mut Value){out["structuralDigest"]=json!({"owner":"weft-runtime-engine-read","version":"0.2","sha256":weft_core::json::sha256(encode(out).as_bytes())});}
+pub(crate) fn compile_original(method:&str,request:&Value)->Result<Value>{
  let raw=match method{
   "truss-runtime"=>weft_postgresql::truss_runtime::compile_json(&encode(request)),
+  #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+  "truss-runtime-binary"=>weft_postgresql::truss_runtime::compile_json(&encode(request)),
   "registered"=>crate::compile_json(&encode(request)),
+  #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+  "ashlar-spark4-sdk-pages"=>{
+    let mut registry=weft_core::backend::Registry::default();registry.register(weft_databricks::local_spark4_sdk_pages::LocalSpark4SdkPages).map_err(|_|"original ordered page registration refused")?;
+    weft_core::compile::Compiler{registry}.compile_sdk_presence_json(&encode(request))
+  },
+  #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+  "ashlar-spark4-sdk"=>{
+    let mut registry=weft_core::backend::Registry::default();
+    registry.register(weft_databricks::local_spark4_sdk::LocalSpark4Sdk).map_err(|_|"original SDK presence registration refused")?;
+    weft_core::compile::Compiler {registry}.compile_sdk_presence_json(&encode(request))
+  },
   "ashlar-spark4-fields"=>{
     let mut registry=weft_core::backend::Registry::default();
     registry.register(weft_databricks::local_spark4_fields::LocalSpark4Fields).map_err(|_|"original direct Field registration refused")?;
@@ -61,23 +87,56 @@ fn compile_original(method:&str,request:&Value)->Result<Value>{
  let artifact=weft_core::json::checked_json(&raw).map_err(|_|"original compiler output refused")?;
  wrap_artifact(method,request,artifact)
 }
+fn logical_plan_scalar<'a>(artifact:&'a Value,identity:&Value)->Result<&'a Value>{
+ let plan=&artifact["logicalPlan"];let graph=plan["typeGraph"].as_array().ok_or("original scalar sibling type graph required")?;let nodes=graph.iter().filter(|d|d["identity"]==*identity).collect::<Vec<_>>();if nodes.len()!=1{return Err("unique original scalar sibling required")};Ok(nodes[0])
+}
 pub(crate) fn wrap_artifact(method:&str,request:&Value,artifact:Value)->Result<Value>{
  if artifact["status"]!="compiled" {return Ok(json!({"version":"weft.engine-read/0.1","status":"blocked","original":artifact}))}
  if request.get("exactParameters").is_some_and(|p|p.as_object().is_none_or(|m|!m.is_empty())){return Err("engine catalog exact binary/temporal parameter profile not selected")}
  let parameters=request["parameters"].as_object().ok_or("complete declared parameter object required")?;
  for parameter in parameters.values(){let p=parameter.as_object().ok_or("original scalar parameter required")?;if p.len()!=2||!p.contains_key("family")||!p.contains_key("value")||!matches!(p["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal"))||!p["value"].is_string(){return Err("closed non-temporal scalar parameter required")}}
+ let sdk=matches!(method,"ashlar-spark4-sdk"|"ashlar-spark4-sdk-pages");
+ let binary=method=="truss-runtime-binary";
+ let logical=if artifact["logicalPlan"].get("base").is_some(){&artifact["logicalPlan"]["base"]}else{&artifact["logicalPlan"]};
+ let visible=if artifact["logicalPlan"].get("base").is_some(){logical["outputs"].as_array().ok_or("original visible outputs required")?.len()}else{artifact["columns"].as_array().ok_or("original columns required")?.len()};
  let columns=artifact["columns"].as_array().ok_or("complete engine output inventory required")?;let mut outputs=vec![];
- for column in columns{let representation=&column["representation"];if representation["kind"]=="relatedKeys"{outputs.push(related_output(column,&artifact)?);continue;}let logical=match representation["kind"].as_str(){Some("scalar")=>&representation["logicalType"],Some("value")=>{let descriptor=artifact["logicalPlan"]["typeGraph"].as_array().ok_or("original output type graph required")?.iter().find(|d|d["identity"]==representation["descriptor"]).ok_or("original output descriptor absent")?;if descriptor["kind"]!="scalar" || !matches!(descriptor["type"]["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal")){return Err("engine output carrier profile unsupported")};outputs.push(json!({"name":column["outputName"],"carrier":descriptor["type"]["family"],"nullable":descriptor["type"]["nullable"]==true||descriptor["availability"]=="absent-allowed"}));continue;},_=>return Err("engine output representation unsupported")};
-  if !matches!(logical["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal")){return Err("engine output carrier profile unsupported")};outputs.push(json!({"name":column["outputName"],"carrier":logical["family"],"nullable":logical["nullable"]}));
+ if binary && request["modules"].as_array().is_none_or(|m|m.is_empty()||m.iter().any(|m|m["pin"]["umfVersion"]!="0.8.0")){return Err("explicit original Core08 binary/scalar state domain required")}
+ if binary && (request["interfaceVersion"]!="weft-compile/0.2.7" || artifact["backend"]["backendId"]!="truss.postgresql.runtime" || artifact["backend"]["backendVersion"]!="0.4.41" || artifact["backend"]["targetProfile"]!="truss-runtime-pg18.6/0.5") {return Err("original pinned Truss binary domain profile required")}
+ for column in columns.iter().take(visible){
+ if binary {let expressions=logical["outputs"].as_array().ok_or("original direct binary-profile expressions required")?;let selected=expressions.iter().filter(|o|o["name"]==column["outputName"]).collect::<Vec<_>>();if selected.len()!=1||selected[0]["expression"]["op"]!="field"||column["sourceIdentities"]!=json!([selected[0]["expression"]["identity"]]){return Err("binary-profile projection must retain original direct Field identity")}}
+ let representation=&column["representation"];if representation["kind"]=="relatedKeys"{let mut output=related_output(column,&artifact)?;if sdk {output["missing"]=json!(false);}outputs.push(output);continue;}let logical=match representation["kind"].as_str(){Some("scalar")=>&representation["logicalType"],Some("value")=>{let descriptor=logical["typeGraph"].as_array().ok_or("original output type graph required")?.iter().find(|d|d["identity"]==representation["descriptor"]).ok_or("original output descriptor absent")?;if binary && descriptor["kind"]=="exactScalar" && descriptor["scalarType"]=="binary" {
+ if representation!=&json!({"kind":"value","descriptor":descriptor["identity"],"nativeNull":true})||column["sourceIdentities"]!=json!([descriptor["identity"]])||column["nullable"]!=false{return Err("original direct binary source representation required")}
+ let identity=&descriptor["identity"];let modules=request["modules"].as_array().ok_or("original binary source modules required")?;
+ let source=modules.iter().find(|m|m["pin"]["documentId"]==identity["documentId"]&&m["pin"]["revision"]==identity["revision"]&&m["pin"]["umfVersion"]=="0.8.0").ok_or("binary Core08 state domain not established")?;
+ let doc=weft_core::json::checked_json(source["documentJson"].as_str().ok_or("original Core08 binary source required")?).map_err(|_|"original binary source framing refused")?;
+ if doc["umf"]!="0.8.0"{return Err("binary Core08 source domain required")}
+ let optional=match descriptor["availability"].as_str(){Some("required")=>false,Some("absent-allowed")=>true,_=>return Err("binary availability domain not established")};
+ outputs.push(json!({"name":column["outputName"],"carrier":"binary","nullable":optional,"missing":optional,"source":identity,"representation":representation,"modelPins":artifact["modelPins"],"stateDomain":{"version":"umf.core08-binary/0.1","states":if optional{json!(["missing","null","value"])}else{json!(["value"])}},"decoder":{"profile":"truss-binary/0.1"}}));continue;
  }
- let mut out=json!({"version":"weft.engine-read/0.1","status":"compiled","compiler":method,"request":request,"artifact":artifact,"outputs":outputs});
- out["structuralDigest"]=json!({"owner":"weft-runtime-engine-read","version":"0.1","sha256":weft_core::json::sha256(encode(&out).as_bytes())});Ok(out)
+ if descriptor["kind"]!="scalar" || !matches!(descriptor["type"]["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal")){return Err("engine output carrier profile unsupported")};if sdk||binary {
+ if representation["nativeNull"]!=true || !column["sourceIdentities"].as_array().is_some_and(|ids|ids==&vec![descriptor["identity"].clone()]) {return Err("original direct Field representation/source differs")}
+ outputs.push(json!({"name":column["outputName"],"carrier":descriptor["type"]["family"],"nullable":descriptor["type"]["nullable"]==true||(binary&&descriptor["availability"]=="absent-allowed"),"missing":descriptor["availability"]=="absent-allowed","source":descriptor["identity"],"representation":representation,"modelPins":artifact["modelPins"]}));
+ }else{outputs.push(json!({"name":column["outputName"],"carrier":descriptor["type"]["family"],"nullable":descriptor["type"]["nullable"]==true||descriptor["availability"]=="absent-allowed"}));}continue;},_=>return Err("engine output representation unsupported")};
+  if !matches!(logical["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal")){return Err("engine output carrier profile unsupported")};if binary {
+ let ids=column["sourceIdentities"].as_array().filter(|ids|ids.len()==1).ok_or("original binary-profile sibling must be a direct Field")?;let identity=&ids[0];
+ let descriptor=logical_plan_scalar(&artifact,identity)?;
+ if descriptor["type"]!=*logical||descriptor["kind"]!="scalar"{return Err("original scalar sibling descriptor differs")}
+ let optional=descriptor["availability"]=="absent-allowed";if !optional&&descriptor["availability"]!="required"{return Err("original scalar sibling availability unavailable")}
+ outputs.push(json!({"name":column["outputName"],"carrier":logical["family"],"nullable":logical["nullable"]==true||optional,"missing":optional,"source":identity,"representation":representation,"modelPins":artifact["modelPins"]}));
+ }else{outputs.push(json!({"name":column["outputName"],"carrier":logical["family"],"nullable":logical["nullable"]}));}
+ }
+ let version=if sdk||binary {"0.2"}else{"0.1"};
+ let mut out=json!({"version":format!("weft.engine-read/{version}"),"status":"compiled","compiler":method,"request":request,"artifact":artifact,"outputs":outputs});
+ out["structuralDigest"]=json!({"owner":"weft-runtime-engine-read","version":version,"sha256":weft_core::json::sha256(encode(&out).as_bytes())});Ok(out)
 }
 fn checked_program(program:&Value)->Result<(&str,&Value)>{
- if program["version"]!="weft.engine-read/0.1"||program["status"]!="compiled"{return Err("original compiled engine catalog required")}
+ if !matches!(program["version"].as_str(),Some("weft.engine-read/0.1"|"weft.engine-read/0.2"))||program["status"]!="compiled"{return Err("original compiled engine catalog required")}
  let method=program["compiler"].as_str().ok_or("original compiler required")?;
  let request=&program["request"];
- let expected=if let Some(packet)=program.get("relatedRequest"){crate::engine_related_read::compile_value(packet)?}else{compile_original(method,request)?};
+ let expected=if let Some(packet)=program.get("relatedRequest"){crate::engine_related_read::compile_value(packet)?}else{
+ #[cfg(feature="ashlar-sdk-ordered-page-candidate")]let out=compile_with_order(method,request,program.get("orderKey"))?;
+ #[cfg(not(feature="ashlar-sdk-ordered-page-candidate"))]let out=compile_original(method,request)?;
+ out};
  if expected!=*program{return Err("original engine program differs from its compiler")}
  Ok((method,request))
 }
@@ -88,10 +147,15 @@ fn bind(program:&Value,request:&Value)->Result<Value>{
  let before=original["parameters"].as_object().ok_or("original parameter inventory required")?;
  let after=request["parameters"].as_object().ok_or("current parameter inventory required")?;
  if before.keys().ne(after.keys())||before.iter().any(|(name,value)|after[name]["family"]!=value["family"]){return Err("engine parameter inventory or family differs")}
- if let Some(packet)=program.get("relatedRequest"){let mut packet=packet.clone();packet["source"]["parameters"]=request["parameters"].clone();packet["target"]["parameters"]=request["parameters"].clone();crate::engine_related_read::compile_value(&packet)}else{compile_original(method,request)}
+ if let Some(packet)=program.get("relatedRequest"){let mut packet=packet.clone();packet["source"]["parameters"]=request["parameters"].clone();packet["target"]["parameters"]=request["parameters"].clone();crate::engine_related_read::compile_value(&packet)}else{
+ #[cfg(feature="ashlar-sdk-ordered-page-candidate")]return compile_with_order(method,request,program.get("orderKey"));
+ #[cfg(not(feature="ashlar-sdk-ordered-page-candidate"))]compile_original(method,request)}
 }
 fn response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-read/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-READ","message":code}]})).to_string()}
-pub fn compile_json(raw:&str)->String{response((||{let v=weft_core::json::checked_json(raw).map_err(|_|"request framing refused")?;let r:Request=serde_json::from_value(v).map_err(|_|"closed engine catalog request required")?;if r.version!="weft.engine-read/0.1"{return Err("engine catalog version differs")};compile_original(&r.compiler,&r.request)})())}
+pub fn compile_json(raw:&str)->String{response((||{let v=weft_core::json::checked_json(raw).map_err(|_|"request framing refused")?;let r:Request=serde_json::from_value(v).map_err(|_|"closed engine catalog request required")?;if r.version!=if matches!(r.compiler.as_str(),"ashlar-spark4-sdk"|"ashlar-spark4-sdk-pages"|"truss-runtime-binary"){"weft.engine-read/0.2"}else{"weft.engine-read/0.1"}{return Err("engine catalog version differs")};{
+ #[cfg(feature="ashlar-sdk-ordered-page-candidate")]return compile_with_order(&r.compiler,&r.request,r.order_key.as_ref());
+ #[cfg(not(feature="ashlar-sdk-ordered-page-candidate"))]{if r.order_key.is_some(){return Err("ordered read feature not selected")};compile_original(&r.compiler,&r.request)}
+ }})())}
 pub fn check_json(program:&str,current_request:&str)->String{response((||{let program=weft_core::json::checked_json(program).map_err(|_|"program framing refused")?;let request=weft_core::json::checked_json(current_request).map_err(|_|"request framing refused")?;bind(&program,&request)})())}
 #[cfg(test)]mod tests{
  use super::*;
@@ -114,12 +178,12 @@ pub fn check_json(program:&str,current_request:&str)->String{response((||{let pr
 /// relabeled as a page; retain the complete native page response and recompile it.
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields,rename_all="camelCase")]
-struct PageRequest { version:String, compiler:String, request:Value, page_size:u16 }
+struct PageRequest { version:String, compiler:String, request:Value, page_size:u16,#[serde(default)]selected_key:Option<Value> }
 fn compile_page_original(method:&str,request:&Value,size:u16,after:Option<Vec<String>>)->Result<Value>{
- if !matches!(method,"truss-runtime"|"ashlar-spark4-pages"|"ashlar-dbsql-20261016-pages") || !(1..=999).contains(&size){return Err("explicit original authored-key page compiler required")}
+ if !matches!(method,"truss-runtime"|"truss-runtime-binary"|"ashlar-spark4-pages"|"ashlar-dbsql-20261016-pages") || !(1..=999).contains(&size){return Err("explicit original authored-key page compiler required")}
  let base=compile_original(method,request)?;
  if base["status"]!="compiled" {return Ok(json!({"version":"weft.engine-page/0.1","status":"blocked","original":base}))}
- let raw=if method=="truss-runtime"{weft_postgresql::truss_runtime::compile_page_json(&encode(request),size,after.clone())}else{
+ let raw=if matches!(method,"truss-runtime"|"truss-runtime-binary"){weft_postgresql::truss_runtime::compile_page_json(&encode(request),size,after.clone())}else{
   let mut factory=|_:&weft_core::model::Catalog,_:weft_core::backend::Plan<'_>,_:weft_core::compile::CompositionInput<'_>|{
    let mut registry=weft_core::backend::Registry::default();
    if method=="ashlar-spark4-pages"{registry.register(weft_databricks::authored_pages::local())?;}else{registry.register(weft_databricks::authored_pages::managed())?;}
@@ -131,25 +195,39 @@ fn compile_page_original(method:&str,request:&Value,size:u16,after:Option<Vec<St
  if page["status"]!="compiled" {return Ok(json!({"version":"weft.engine-page/0.1","status":"blocked","original":page}))}
  let visible=base["outputs"].as_array().ok_or("complete visible output signature required")?.len();
  if page["interfaceVersion"]!="weft-sql-page/0.2" || page["page"]["visibleOutputs"]!=visible || page["page"]["pageSize"]!=size {return Err("original typed page output and bound differ")}
- let mut out=json!({"version":"weft.engine-page/0.1","status":"compiled","compiler":method,"request":request,"pageSize":size,"after":after,"page":page["page"],"artifact":page["artifact"],"outputs":base["outputs"]});
- out["structuralDigest"]=json!({"owner":"weft-runtime-engine-page","version":"0.1","sha256":weft_core::json::sha256(encode(&out).as_bytes())});Ok(out)
+ let version=if method=="truss-runtime-binary"{"0.2"}else{"0.1"};
+ let mut out=json!({"version":format!("weft.engine-page/{version}"),"status":"compiled","compiler":method,"request":request,"pageSize":size,"after":after,"page":page["page"],"artifact":page["artifact"],"outputs":base["outputs"]});
+ out["structuralDigest"]=json!({"owner":"weft-runtime-engine-page","version":version,"sha256":weft_core::json::sha256(encode(&out).as_bytes())});Ok(out)
+}
+fn binary_page(request:&Value,size:u16,after:Option<Vec<String>>,key:Option<&Value>)->Result<Value>{
+ let key=key.ok_or("original selectedKey required for binary page")?;
+ if key.as_object().is_none_or(|m|m.len()!=3||!["module","record","key"].iter().all(|k|m.get(*k).is_some_and(|v|v.as_str().is_some_and(|s|!s.is_empty())))){return Err("closed original selectedKey required")}
+ let mut out=compile_page_original("truss-runtime-binary",request,size,after)?;if out["status"]!="compiled"{return Ok(out)}
+ let plan=&out["artifact"]["logicalPlan"];if key["module"]!=plan["source"]["record"]["module"]||key["record"]!=plan["source"]["record"]["element"]||key["key"]!=plan["pageKey"]["id"]{return Err("selectedKey differs from original native authored page Key")}
+ out.as_object_mut().unwrap().remove("structuralDigest");out["selectedKey"]=key.clone();out["structuralDigest"]=json!({"owner":"weft-runtime-engine-page","version":"0.2","sha256":weft_core::json::sha256(encode(&out).as_bytes())});Ok(out)
 }
 fn page_response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-page/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-PAGE","message":code}]})).to_string()}
-pub fn compile_page_json(raw:&str)->String{page_response((||{
+pub fn compile_page_json(raw:&str)->String{
+ #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+ if weft_core::json::checked_json(raw).is_ok_and(|v|v["version"]=="weft.engine-page/0.2"&&v["compiler"]!="truss-runtime-binary"){return crate::engine_ordered_page::compile_json(raw);}
+ page_response((||{
  if raw.len()>4_194_304{return Err("bounded original page request required")}
  let value=weft_core::json::checked_json(raw).map_err(|_|"page request framing refused")?;
  let r:PageRequest=serde_json::from_value(value).map_err(|_|"closed page catalog request required")?;
- if r.version!="weft.engine-page/0.1"{return Err("page catalog version differs")}
- compile_page_original(&r.compiler,&r.request,r.page_size,None)
+ if r.version!=if r.compiler=="truss-runtime-binary"{"weft.engine-page/0.2"}else{"weft.engine-page/0.1"}{return Err("page catalog version differs")}
+ if r.compiler=="truss-runtime-binary"{binary_page(&r.request,r.page_size,None,r.selected_key.as_ref())}else{if r.selected_key.is_some(){return Err("legacy page rejects selectedKey")};compile_page_original(&r.compiler,&r.request,r.page_size,None)}
 })())}
-pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->String{page_response((||{
+pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->String{
+ #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+ if weft_core::json::checked_json(program).is_ok_and(|v|v["version"]=="weft.engine-page/0.2"&&v["compiler"]!="truss-runtime-binary"){return crate::engine_ordered_page::check_json(program,current_request,after_json);}
+ page_response((||{
  if program.len()>4_194_304||current_request.len()>4_194_304||after_json.len()>1_048_576{return Err("bounded original page program, current request and continuation required")}
  let program=weft_core::json::checked_json(program).map_err(|_|"page program framing refused")?;
  let current=weft_core::json::checked_json(current_request).map_err(|_|"current page request framing refused")?;
  let after=weft_core::json::checked_json(after_json).map_err(|_|"page continuation framing refused")?;
  let after:Option<Vec<String>>=serde_json::from_value(after).map_err(|_|"original lexical page continuation required")?;
  if after.as_ref().is_some_and(|values|values.is_empty()||values.len()>1024||values.iter().any(|v|v.len()>1_048_576)){return Err("bounded complete page continuation required")}
- if program["version"]!="weft.engine-page/0.1" || program["status"]!="compiled" || !program["after"].is_null(){return Err("original first-page catalog required")}
+ if program["version"]!=if program["compiler"]=="truss-runtime-binary"{"weft.engine-page/0.2"}else{"weft.engine-page/0.1"} || program["status"]!="compiled" || !program["after"].is_null(){return Err("original first-page catalog required")}
  if let Some(packet)=program.get("relatedRequest"){
   if crate::engine_related_read::compile_page_value(packet,None)?!=program{return Err("original related page differs from its compiler")}
   let read=crate::engine_related_read::page_read_packet(packet)?;let base=crate::engine_related_read::compile_value(&read)?;let checked=bind(&base,&current)?;
@@ -159,11 +237,11 @@ pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->Strin
  let method=program["compiler"].as_str().ok_or("original page compiler required")?;
  let size=program["pageSize"].as_u64().and_then(|v|u16::try_from(v).ok()).ok_or("original page bound required")?;
  let original=&program["request"];
- if compile_page_original(method,original,size,None)?!=program{return Err("original page program differs from its compiler")}
+ if (if method=="truss-runtime-binary"{binary_page(original,size,None,program.get("selectedKey"))?}else{compile_page_original(method,original,size,None)?})!=program{return Err("original page program differs from its compiler")}
  // The existing read checker owns exact source/context and parameter inventory.
  let base=compile_original(method,original)?;let checked=bind(&base,&current)?;
  if checked["status"]!="compiled"{return Ok(json!({"version":"weft.engine-page/0.1","status":"blocked","original":checked}))}
- compile_page_original(method,&current,size,after)
+ if method=="truss-runtime-binary"{binary_page(&current,size,after,program.get("selectedKey"))}else{compile_page_original(method,&current,size,after)}
 })())}
 #[cfg(test)]mod page_tests{
  use super::*;
@@ -288,5 +366,64 @@ mod original_field_projection_tests {
   for (key,value) in [("interfaceVersion",json!("weft-compile/0.2.5")),("parameters",json!({"amount":{"family":"decimal","facets":{"precision":38,"scale":6},"nullable":false}}))] {
    let mut r=base.clone();r[key]=value;assert_ne!(compile_original("ashlar-spark4-fields",&r).unwrap()["status"],"compiled");
   }
+ }
+}
+
+#[cfg(all(test,feature="ashlar-sdk-ordered-page-candidate"))]
+mod sdk_presence_tests {
+ use super::*;
+ fn request()->Value{serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-presence-request.json")).unwrap()}
+ #[test]fn original_scalar_presence_keeps_null_missing_and_source_distinct(){
+  let r=request();let packet=json!({"version":"weft.engine-read/0.2","compiler":"ashlar-spark4-sdk","request":r});
+  let p:Value=serde_json::from_str(&compile_json(&packet.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["version"],"weft.engine-read/0.2");assert_eq!(p["request"],r);
+  assert_eq!(p["outputs"][0]["missing"],false);assert_eq!(p["outputs"][0]["nullable"],false);
+  assert_eq!(p["outputs"][1]["missing"],true);assert_eq!(p["outputs"][1]["nullable"],true);
+  for (i,o) in p["outputs"].as_array().unwrap().iter().enumerate(){assert_eq!(o["representation"],p["artifact"]["columns"][i]["representation"]);assert_eq!(o["modelPins"],p["artifact"]["modelPins"]);assert_eq!(o["source"],p["artifact"]["columns"][i]["sourceIdentities"][0]);}
+  let checked:Value=serde_json::from_str(&check_json(&p.to_string(),&r.to_string())).unwrap();assert_eq!(checked,p);
+  assert!(p["artifact"]["sql"].as_str().unwrap().contains("'null'"));
+  if let Ok(path)=std::env::var("WEFT_SDK_PRESENCE_SAMPLE"){std::fs::write(path,serde_json::to_string_pretty(&p).unwrap()).unwrap();}
+ }
+ #[test]fn original_legacy_bytes_and_temporal_refusals_are_preserved(){
+  let baseline:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-presence-legacy-baseline.json")).unwrap();
+  for row in baseline["programs"].as_array().unwrap(){let text=match row["fixture"].as_str().unwrap(){"native-ashlar-spark4-request.json"=>include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json"),"ashlar-fields-only-request.json"=>include_str!("../../../tests/engine-catalog/ashlar-fields-only-request.json"),_=>include_str!("../../../tests/engine-catalog/native-ashlar-dbsql-20261016-request.json")};let r:Value=serde_json::from_str(text).unwrap();let p=compile_original(row["compiler"].as_str().unwrap(),&r).unwrap();assert_eq!(weft_core::json::sha256(encode(&p).as_bytes()),row["sha256"],"legacy bytes differ");}
+  for temporal in ["date","timestamp","local-date-time"] {
+   let mut r=request();let mut doc:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();doc["modules"][0]["elements"][1]["scalarType"]=json!(temporal);
+   let old=r["modules"][0]["pin"]["revision"].as_str().unwrap().to_string();let text=doc.to_string();let hash=weft_core::json::sha256(text.as_bytes());r["modules"][0]["documentJson"]=json!(text);r["modules"][0]["pin"]["revision"]=json!(hash);r["modules"][0]["pin"]["sha256"]=json!(hash);let binding=r["target"]["bindingJson"].as_str().unwrap().replace(&old,&hash);r["target"]["bindingSha256"]=json!(weft_core::json::sha256(binding.as_bytes()));r["target"]["bindingJson"]=json!(binding);
+   assert_ne!(compile_original("ashlar-spark4-sdk",&r).unwrap()["status"],"compiled","Temporal carrier must remain held");
+  }
+ }
+ #[test]fn old_versions_forged_states_source_and_computed_outputs_refuse(){
+  let r=request();for version in ["weft.engine-read/0.1","weft.engine-read/0.3"] {let p:Value=serde_json::from_str(&compile_json(&json!({"version":version,"compiler":"ashlar-spark4-sdk","request":r}).to_string())).unwrap();assert_ne!(p["status"],"compiled");}
+  let p=compile_original("ashlar-spark4-sdk",&r).unwrap();for key in ["missing","nullable","source","representation","modelPins"] {let mut forged=p.clone();forged["outputs"][1][key]=Value::Null;let checked:Value=serde_json::from_str(&check_json(&forged.to_string(),&r.to_string())).unwrap();assert_eq!(checked["status"],"blocked");}
+  let mut computed=r.clone();computed["sql"]=json!("SELECT COUNT(*) AS value FROM sales.\"order\" r");assert_ne!(compile_original("ashlar-spark4-sdk",&computed).unwrap()["status"],"compiled");
+  let mut legacy=r.clone();legacy["target"]["backendVersion"]=json!(weft_databricks::local_spark4::VERSION);legacy["target"]["targetProfile"]=json!(weft_databricks::local_spark4::PROFILE);assert_ne!(compile_original("ashlar-spark4",&legacy).unwrap()["status"],"compiled");
+ }
+}
+
+#[cfg(all(test,feature="ashlar-sdk-ordered-page-candidate"))]mod binary_domain_tests{
+ use super::*;
+ fn request()->Value{serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-binary-request.json")).unwrap()}
+ #[test]fn original_core08_binary_state_domain_is_distinct_from_ashlar_envelopes(){
+  let r=request();let out=compile_original("truss-runtime-binary",&r).unwrap();assert_eq!(out["status"],"compiled","{out}");assert_eq!(out["version"],"weft.engine-read/0.2");assert_eq!(out["outputs"][1]["carrier"],"binary");assert_eq!(out["outputs"][1]["stateDomain"]["states"],json!(["value"]));assert_eq!(out["outputs"][1]["nullable"],false);assert_eq!(out["outputs"][2]["stateDomain"]["states"],json!(["missing","null","value"]));assert_eq!(out["outputs"][2]["nullable"],true);assert_eq!(out["outputs"][2]["missing"],true);
+  assert_eq!(bind(&out,&r).unwrap(),out);assert!(compile_original("truss-runtime",&r).is_err());
+  let mut forged=out.clone();forged["outputs"][1]["stateDomain"]["states"]=json!(["null","value"]);forged.as_object_mut().unwrap().remove("structuralDigest");forged["structuralDigest"]=json!({"owner":"weft-runtime-engine-read","version":"0.2","sha256":weft_core::json::sha256(encode(&forged).as_bytes())});assert!(bind(&forged,&r).is_err());
+  if let Ok(dir)=std::env::var("WEFT_BINARY_SAMPLE_DIR"){std::fs::create_dir_all(&dir).unwrap();std::fs::write(format!("{dir}/read.json"),serde_json::to_string_pretty(&out).unwrap()).unwrap();}
+ }
+ #[test]fn original_optional_scalar_sibling_preserves_missing_and_null(){
+  let mut r=request();let mut doc:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();let field=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="A-optional").unwrap();field["scalarType"]=json!("string");let text=doc.to_string();let hash=weft_core::json::sha256(text.as_bytes());r["modules"][0]["documentJson"]=json!(text);r["modules"][0]["pin"]["sha256"]=json!(hash);let mut binding:Value=serde_json::from_str(r["target"]["bindingJson"].as_str().unwrap()).unwrap();binding["documents"][0]["sha256"]=json!(hash);let text=binding.to_string();r["target"]["bindingSha256"]=json!(weft_core::json::sha256(text.as_bytes()));r["target"]["bindingJson"]=json!(text);
+  let out=compile_original("truss-runtime-binary",&r).unwrap();assert_eq!(out["status"],"compiled","{out}");assert_eq!(out["outputs"][2]["carrier"],"string");assert_eq!(out["outputs"][2]["missing"],true);assert_eq!(out["outputs"][2]["nullable"],true);assert_eq!(out["outputs"][0]["missing"],false);
+  if let Ok(dir)=std::env::var("WEFT_BINARY_SAMPLE_DIR"){std::fs::create_dir_all(&dir).unwrap();std::fs::write(format!("{dir}/optional-scalar-sibling.json"),serde_json::to_string_pretty(&out).unwrap()).unwrap();}
+ }
+ #[test]fn binary_projection_page_delegates_original_scalar_key_cursor(){
+  let captured:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-binary-page-request.json")).unwrap();assert_ne!(compile_page_original("truss-runtime-binary",&captured,2,None).unwrap()["status"],"compiled","captured nonprimary ordering remains an original owner refusal");let mut r=captured.clone();r["sql"]=json!("SELECT a.\"A-label\" AS label,a.blob AS blob,a.optional_blob AS optional_blob FROM \"A\" a");let key=json!({"module":"m","record":"A","key":"a-primary"});assert!(binary_page(&r,2,None,None).is_err());assert!(binary_page(&r,2,None,Some(&json!({"module":"m","record":"A","key":"z-alt"}))).is_err());let p=binary_page(&r,2,None,Some(&key)).unwrap();assert_eq!(p["selectedKey"],key);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["version"],"weft.engine-page/0.2");assert_eq!(p["outputs"][1]["carrier"],"binary");let checked:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"null")).unwrap();assert_eq!(checked,p);
+  if let Ok(dir)=std::env::var("WEFT_BINARY_SAMPLE_DIR"){std::fs::create_dir_all(&dir).unwrap();std::fs::write(format!("{dir}/page.json"),serde_json::to_string_pretty(&p).unwrap()).unwrap();}
+ }
+}
+
+#[cfg(all(test,not(feature="ashlar-sdk-ordered-page-candidate")))]mod sdk_feature_boundary{
+ use super::*;
+ #[test]fn new_engine_profiles_require_explicit_candidate_feature(){
+  let request:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/ashlar-sdk-presence-request.json")).unwrap();
+  for method in ["ashlar-spark4-sdk","ashlar-spark4-sdk-pages","truss-runtime-binary"]{let out:Value=serde_json::from_str(&compile_json(&json!({"version":"weft.engine-read/0.2","compiler":method,"request":request}).to_string())).unwrap();assert_eq!(out["status"],"blocked");assert!(out.get("artifact").is_none());}
  }
 }

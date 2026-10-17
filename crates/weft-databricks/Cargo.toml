@@ -23,3 +23,4 @@ current-spark-scalar-candidate=["current-query-refinement-candidate"]
 
 bounded-current-string-candidate=["current-query-refinement-candidate","weft-core/bounded-current-string-candidate"]
 current-query-refinement-candidate=["weft-core/current-query-refinement-candidate"]
+sdk-ordered-page-candidate=["weft-core/engine-ordered-page-candidate"]

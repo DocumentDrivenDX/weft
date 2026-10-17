@@ -160,6 +160,9 @@ pub(super) fn collect_plan(context: &Context<'_>, lower: &mut Lower<'_>, plan: &
                     lower.compounds.insert((scan.clone(),serde_json::to_string(identity).unwrap()),graph);
                     continue;
                 };
+                if context.target.id==crate::local_spark4_sdk::PROFILE && logical_type.nullable {
+                    lower.native_null.insert((scan.clone(),serde_json::to_string(identity).unwrap()));
+                }
                 if d.availability.as_deref() == Some("absent-allowed") {
                     lower
                         .optional
@@ -183,14 +186,33 @@ pub(super) fn collect_plan(context: &Context<'_>, lower: &mut Lower<'_>, plan: &
     Ok(())
 }
 
-pub(super) fn lower(
+#[cfg(feature="sdk-ordered-page-candidate")]
+use weft_core::application_ordered_page::OrderedPage;
+#[cfg(not(feature="sdk-ordered-page-candidate"))]
+struct OrderedPage;
+pub(super) fn lower(context:&Context<'_>,binding:&Binding,plan:&app::Plan)->Result<TargetPlan>{lower_inner(context,binding,plan,None)}
+#[cfg(feature="sdk-ordered-page-candidate")]
+pub(super) fn lower_ordered(context:&Context<'_>,binding:&Binding,page:&OrderedPage)->Result<TargetPlan>{lower_inner(context,binding,page.base(),Some(page))}
+fn lower_inner(
     context: &Context<'_>,
     binding: &Binding,
     plan: &app::Plan,
+    ordered:Option<&OrderedPage>,
 ) -> Result<TargetPlan> {
     let mut lower = Lower::new(binding);
     lower.mathematical_profile=context.target.id==crate::mathematical_integer::PROFILE;
+    lower.scalar_presence_profile=context.target.id==crate::local_spark4_sdk::PROFILE;
     collect_plan(context, &mut lower, plan)?;
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    if let Some(page)=ordered {
+        for slot in page.sort_slots(){
+            field(&mut lower,&app::Field{scan:plan.source.occurrence.clone(),identity:slot.identity().clone(),logical_type:slot.logical_type().clone(),span:Span{start:0,end:0}});
+            let id=(plan.source.occurrence.clone(),serde_json::to_string(slot.identity()).unwrap());
+            if slot.missing(){lower.optional.insert(id.clone());}
+            if slot.logical_type().nullable {lower.native_null.insert(id);}
+        }
+    }
+    if let Some(order)=&plan.read_order {for slot in order.sort_slots(){let id=(plan.source.occurrence.clone(),serde_json::to_string(slot.identity()).unwrap());if slot.missing(){lower.optional.insert(id.clone());}if slot.nullable(){lower.native_null.insert(id);}}}
     let mut relations = relationships::Traversals::collect(&mut lower, plan)?;
     lower.prepare()?;
     let mut relationship_checks = relations.prepare(&mut lower)?;
@@ -219,11 +241,12 @@ pub(super) fn lower(
         .iter()
         .map(|f| lower.expression(&legacy(f)))
         .collect::<Result<Vec<_>>>()?;
-    let order = plan
+    let mut order = plan
         .order
         .iter()
         .map(|f| lower.expression(&legacy(f)).map(|sql| format!("{sql} ASC")))
         .collect::<Result<Vec<_>>>()?;
+    if let Some(spec)=&plan.read_order {order=spec.sort_slots().iter().map(|slot|{let f=app::Field{scan:plan.source.occurrence.clone(),identity:slot.identity().clone(),logical_type:slot.logical_type().clone(),span:Span{start:0,end:0}};lower.expression(&legacy(&f)).map(|sql|format!("{sql} {} NULLS {}",if slot.descending(){"DESC"}else{"ASC"},if slot.nulls_first(){"FIRST"}else{"LAST"}))}).collect::<Result<Vec<_>>>()?;}
     let mut outputs = Vec::new();
     let mut columns = Vec::new();
     let mut related_joins = Vec::new();
@@ -313,7 +336,12 @@ pub(super) fn lower(
                 .map(|p| (p.clone(), identity.clone())),
             _ => None,
         };
-        let (sql, repr, nullable) = if let Some((present, identity)) = optional {
+        let sdk_field=if context.target.id==crate::local_spark4_sdk::PROFILE {match &output.expression {app::Expression::Field{identity,..}=>Some(identity.clone()),_=>None}}else{None};
+        let (sql, repr, nullable) = if let Some(identity)=sdk_field {
+            let present=optional.as_ref().map(|(p,_)|p.as_str()).unwrap_or("TRUE");
+            let scalar=if ty.family==Family::Boolean {sql.clone()}else{format!("CAST({sql} AS STRING)")};
+            (format!("CASE WHEN NOT ({present}) THEN to_json(named_struct('state', 'absent')) WHEN {sql} IS NULL THEN to_json(named_struct('state', 'null')) ELSE to_json(named_struct('state', 'value', 'value', {scalar})) END"),Representation::Value{descriptor:identity,native_null:true,outer_join:None},false)
+        } else if let Some((present, identity)) = optional {
             let scalar = if ty.family == Family::Boolean {
                 sql
             } else {
@@ -337,6 +365,12 @@ pub(super) fn lower(
             nullable,
         });
     }
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    if let Some(page)=ordered {
+        let native=ordered::append(&mut lower,plan,page,&mut outputs,&mut columns)?;
+        order=native.order;
+        if let Some(predicate)=native.after {filters.push(predicate);}
+    }
     for join in related_joins {
         from.push_str(&format!(" {join}"));
     }
@@ -355,9 +389,11 @@ pub(super) fn lower(
     if !order.is_empty() {
         sql.push_str(&format!(" ORDER BY {}", order.join(", ")));
     }
-    if let Some(limit) = plan.limit {
-        sql.push_str(&format!(" LIMIT {limit}"));
-    }
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    let limit=ordered.map(|p|p.page_size()+1).or(plan.limit);
+    #[cfg(not(feature="sdk-ordered-page-candidate"))]
+    let limit=plan.limit;
+    if let Some(limit) = limit {sql.push_str(&format!(" LIMIT {limit}"));}
     let mut obligations = vec![
         publication(binding),
         Obligation {
@@ -413,6 +449,9 @@ pub(super) fn lower(
         let check=format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {keys} FROM {} GROUP BY {keys} HAVING {count} > 1) duplicate_keys",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", "),binding::quote(&plan.source.occurrence));
         obligations.push(Obligation{id:"ashlar.candidate.keyIntegrity".into(),parameters:json!({"phase":"before-user-query","key":key,"checks":[{"sql":check,"failureCode":"WFT-BINDING"}],"success":"one exact STRING count equal to 0","continuation":"same immutable publication, original binding and effective policy across pages; ORDER BY alone proves no continuity"}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()});
     }
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    if let Some(page)=ordered {obligations.push(Obligation{id:"ashlar.candidate.orderedPage".into(),parameters:json!({"version":"ashlar.ordered-page/0.1","selectedKey":page.selected_key(),"sortSlots":page.sort_slots(),"keySlots":page.key_slots(),"pageSize":page.page_size(),"requirements":["authorize every hidden original sort Field before native execution","retain exact state/value tuple and selected Key with original immutable publication and actor context","missing and null share ordering class but keep distinct transported states","native Unicode binary and exact numeric comparisons; no tuple comparison or cursor value rewriting"]}),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into()});}
+    if let Some(order)=&plan.read_order {obligations.push(Obligation{id:"ashlar.candidate.orderedRead".into(),parameters:json!({"version":"ashlar.ordered-read/0.1","selectedKey":order.selected_key(),"sortSlots":order.sort_slots(),"literalLimit":plan.limit,"authority":"original selected Key integrity and every ordering Field under the same immutable publication"}),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into()});}
     if let Some((_, source_obligations)) = navigation { super::navigation::merge_source_obligations(&mut obligations, source_obligations)?; }
     Ok(TargetPlan(Emission {
         sql,
@@ -421,3 +460,7 @@ pub(super) fn lower(
         obligations,
     }))
 }
+
+#[cfg(feature="sdk-ordered-page-candidate")]
+#[path="ordered_page.rs"]
+mod ordered;

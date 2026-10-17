@@ -148,7 +148,9 @@
         {
           "path": "crates/weft-databricks/src/candidate/application.rs",
           "publicDeclarations": [],
-          "pathReferences": []
+          "pathReferences": [
+            "crates/weft-databricks/src/candidate/ordered_page.rs"
+          ]
         },
         {
           "path": "crates/weft-databricks/src/candidate/arithmetic.rs",
@@ -167,6 +169,14 @@
         {
           "path": "crates/weft-databricks/src/candidate/navigation.rs",
           "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/candidate/ordered_page.rs",
+          "publicDeclarations": [
+            "field:order",
+            "field:after"
+          ],
           "pathReferences": []
         },
         {
@@ -305,7 +315,9 @@
             "mod:raw_action",
             "mod:raw_bulk",
             "mod:authored_pages",
-            "mod:unity_search"
+            "mod:unity_search",
+            "mod:local_spark4_sdk",
+            "mod:local_spark4_sdk_pages"
           ],
           "pathReferences": []
         },
@@ -324,6 +336,23 @@
             "const:VERSION",
             "const:PROFILE",
             "struct:LocalSpark4Fields"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4_sdk.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:LocalSpark4Sdk"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4_sdk_pages.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "struct:LocalSpark4SdkPages"
           ],
           "pathReferences": []
         },
@@ -609,6 +638,7 @@
             "field:name",
             "field:expression",
             "struct:Plan",
+            "field:read_order",
             "field:navigation",
             "field:ir_version",
             "field:module_pins",
@@ -624,9 +654,21 @@
             "field:outputs",
             "field:order",
             "field:limit",
+            "struct:ReadOrder",
+            "fn:selected_key",
+            "fn:sort_slots",
+            "struct:ReadSortSlot",
+            "fn:identity",
+            "fn:logical_type",
+            "fn:descending",
+            "fn:nulls_first",
+            "fn:nullable",
+            "fn:missing",
             "struct:Navigation",
             "fn:source",
-            "fn:relationship"
+            "fn:relationship",
+            "fn:source_order",
+            "fn:source_selected_key"
           ],
           "pathReferences": []
         },
@@ -727,6 +769,7 @@
             "fn:equal_slots",
             "fn:strict_slot",
             "struct:OrderedPage",
+            "fn:version",
             "fn:source_sql",
             "fn:base",
             "fn:selected_key",
@@ -1291,6 +1334,10 @@
             "fn:compile_cursor_json_with_exact_numbers_factory",
             "fn:compile_navigation_json_with_factory",
             "fn:compile_field_projection_json",
+            "fn:compile_sdk_presence_json",
+            "fn:compile_sdk_ordered_json",
+            "fn:compile_sdk_navigation_json",
+            "fn:compile_sdk_read_json",
             "mod:v04",
             "mod:v041",
             "mod:v042"
@@ -1619,6 +1666,7 @@
             "field:pin",
             "field:value",
             "field:document",
+            "fn:sdk_scalar_presence",
             "fn:inputs",
             "fn:prepare_exact_numbers",
             "fn:prepare",
@@ -4041,6 +4089,14 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-runtime/src/engine_ordered_page.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/engine_read.rs",
           "publicDeclarations": [
             "fn:compile_json",
@@ -4143,7 +4199,8 @@
             "fn:compile_unity_search_json",
             "fn:compile_managed_action_json",
             "fn:compile_managed_bulk_json",
-            "fn:compile_related_read_json"
+            "fn:compile_related_read_json",
+            "mod:engine_ordered_page"
           ],
           "pathReferences": []
         },

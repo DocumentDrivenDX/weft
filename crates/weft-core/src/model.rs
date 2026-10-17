@@ -34,6 +34,7 @@ pub struct Catalog {
     inputs: Vec<ModuleInput>,
     pub(crate) exact_numbers: bool,
     pub(crate) field_projection_decimal38: bool,
+    pub(crate) sdk_scalar_presence: bool,
     security_inputs: bool,
     pub(crate) identity_name_fallback: bool,
     pub(crate) exact_scalars: bool,
@@ -84,6 +85,8 @@ struct Envelope;
 #[jsonschema::validator(path = "../../spec/upstream/umf-0.8.0.schema.json")]
 struct Envelope08;
 impl Catalog {
+    /// Immutable evidence of the trusted SDK scalar presence preparation path.
+    pub fn sdk_scalar_presence(&self)->bool {self.sdk_scalar_presence}
     /// New host-selected profile only; authored names always take precedence.
     pub(crate) fn query_name<'a>(&self, element: &'a Value) -> Option<&'a str> {
         element.get("name").and_then(Value::as_str).or_else(|| {
@@ -182,7 +185,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false, field_projection_decimal38:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
+        Ok(Self { inputs, documents, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()

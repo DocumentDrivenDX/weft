@@ -99,6 +99,8 @@ pub struct OrderedPage {
     after_branches: Vec<AfterBranch>,
 }
 impl OrderedPage {
+    pub fn version(&self)->&str{self.version}
+    pub(crate) fn base_mut(&mut self)->&mut Plan{&mut self.base}
     pub fn source_sql(&self) -> &str {
         &self.source_sql
     }
@@ -229,12 +231,34 @@ pub fn prepare(
     page_size: u16,
     after: Option<Cursor>,
 ) -> Result<OrderedPage> {
+    prepare_inner(catalog,sql,parameters,selected,page_size,after,false)
+}
+/// Original navigation source ordering. Its explicit source limit remains a
+/// source selection bound, never a page/default delivery cap.
+pub(crate) fn prepare_source(catalog:&Catalog,sql:&str,parameters:Parameters,selected:&SelectedKey)->Result<(Plan,Vec<crate::application_ir::ReadSortSlot>)>{
+    let ordered=prepare_inner(catalog,sql,parameters,selected,1,None,true)?;
+    let mut base=ordered.base;
+    base.required_capabilities.retain(|c|!matches!(c.as_str(),"page.ordered"|"cursor.stateTuple"));
+    base.order=ordered.sort_slots.iter().map(|s|crate::application_ir::Field{scan:base.source.occurrence.clone(),identity:s.identity.clone(),logical_type:s.logical_type.clone(),span:Span{start:0,end:0}}).collect();
+    Ok((base,ordered.sort_slots.iter().map(crate::application_ir::ReadSortSlot::from_page).collect()))
+}
+pub(crate) fn prepare_read(catalog:&Catalog,sql:&str,parameters:Parameters,selected:&SelectedKey)->Result<Plan>{
+ let ordered=prepare_inner(catalog,sql,parameters,selected,1,None,true)?;
+ let mut base=ordered.base;
+ base.required_capabilities.retain(|c|!matches!(c.as_str(),"page.ordered"|"cursor.stateTuple"));
+ base.order=ordered.sort_slots.iter().map(|s|crate::application_ir::Field{scan:base.source.occurrence.clone(),identity:s.identity.clone(),logical_type:s.logical_type.clone(),span:Span{start:0,end:0}}).collect();
+ base.ir_version="weft-ir/engine-ordered-read/0.1".into();
+ base.read_order=Some(crate::application_ir::ReadOrder::new(ordered.selected_key,ordered.sort_slots.iter().map(crate::application_ir::ReadSortSlot::from_page).collect()));
+ Ok(base)
+}
+fn prepare_inner(catalog:&Catalog,sql:&str,parameters:Parameters,selected:&SelectedKey,page_size:u16,after:Option<Cursor>,source_mode:bool)->Result<OrderedPage>{
     if !(1..=999).contains(&page_size) {
         return Err(fail("Original ordered page size must be1..999"));
     }
     let (query, directions) = ast::parse_security(sql)?;
-    if query.limit.is_some()
-        || !query.joins.is_empty()
+    if (!source_mode && query.limit.is_some())
+        || (!source_mode && !query.joins.is_empty())
+        || (!source_mode && query.outputs.iter().any(|o|matches!(o.output,ast::Output::Entity(_))))
         || !query.groups.is_empty()
         || query.outputs.iter().any(|o| {
             matches!(
@@ -242,7 +266,6 @@ pub fn prepare(
                 ast::Output::Count
                     | ast::Output::CountDistinct(_)
                     | ast::Output::Sum(_)
-                    | ast::Output::Entity(_)
             )
         })
     {
@@ -315,7 +338,18 @@ pub fn prepare(
     let mut base_query = query.clone();
     base_query.order.clear();
     base_query.order_nulls.clear();
-    let base = application_resolve::resolve(catalog, base_query, parameters, None)?;
+    let mut base = application_resolve::resolve(catalog, base_query, parameters, None)?;
+    // Hidden ordering values remain original selected Field dependencies. Retain
+    // descriptors even when the public projection omits them.
+    for slot in &slots {
+        let (_,graph)=catalog.member_descriptor_by_identity(&record,&slot.identity)?;
+        for descriptor in graph {if !base.type_graph.iter().any(|d|d.identity==descriptor.identity){base.type_graph.push(descriptor);}}
+    }
+    for slot in &slots {let family=match slot.logical_type.family{Family::String=>"string",Family::Boolean=>"boolean",Family::Integer=>"integer",Family::Decimal=>"decimal"};base.required_capabilities.push(format!("type.{family}"));if slot.missing{base.required_capabilities.push("value.presence".into());}}
+    base.page_key=Some(key.clone());
+    for capability in ["page.ordered","cursor.stateTuple","key.uniqueStable","order.asc"] {if !base.required_capabilities.iter().any(|c|c==capability){base.required_capabilities.push(capability.into());}}
+    if slots.iter().any(|s|s.descending){base.required_capabilities.push("order.desc".into());}
+    base.required_capabilities.sort();base.required_capabilities.dedup();
     for (i, s) in slots.iter_mut().enumerate() {
         s.value_output = base.outputs.len() + i * 2;
         s.state_output = s.value_output + 1;

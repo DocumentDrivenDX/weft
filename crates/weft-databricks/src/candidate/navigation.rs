@@ -44,6 +44,7 @@ pub(super) fn prepare(
     let admitted = validate_mapping(&source_context, false)?;
     let mut source_lower = Lower::new(&admitted.mapping);
     source_lower.mathematical_profile = lower.mathematical_profile;
+    source_lower.scalar_presence_profile=lower.scalar_presence_profile;
     // Original parameter origins share one ordered native slot inventory.
     source_lower.parameters = std::mem::take(&mut lower.parameters);
     application::collect_plan(&source_context, &mut source_lower, source)?;
@@ -51,6 +52,10 @@ pub(super) fn prepare(
         .physical_ids
         .insert(source.source.occurrence.clone());
     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    if let Some(slots)=navigation.source_order(){
+        for slot in slots{let id=(source.source.occurrence.clone(),serde_json::to_string(slot.identity()).unwrap());if slot.missing(){source_lower.optional.insert(id.clone());}if slot.logical_type().nullable{source_lower.native_null.insert(id);}}
+    }
     source_lower.prepare()?;
     let source_relationship_checks = source_relations.prepare(&mut source_lower)?;
     let mut from = binding::quote(&source.source.occurrence);
@@ -71,11 +76,16 @@ pub(super) fn prepare(
         .iter()
         .map(|p| application::predicate(&mut source_lower, &source_relations, p))
         .collect::<Result<Vec<_>>>()?;
-    let order = source
+    let mut order = source
         .order
         .iter()
         .map(|field| source_lower.expression(&application::legacy(field)))
         .collect::<Result<Vec<_>>>()?;
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    if let Some(slots)=navigation.source_order(){order=slots.iter().map(|slot|{
+        let field=app::Field{scan:source.source.occurrence.clone(),identity:slot.identity().clone(),logical_type:slot.logical_type().clone(),span:weft_core::ir::Span{start:0,end:0}};
+        source_lower.expression(&application::legacy(&field)).map(|value|format!("{value} {} NULLS {}",if slot.descending(){"DESC"}else{"ASC"},if slot.nulls_first(){"FIRST"}else{"LAST"}))
+    }).collect::<Result<Vec<_>>>()?;}
     // Projection is deliberately the original source object identity. Original
     // output dependencies were still collected/admitted above; arbitrary source
     // projection values never become graph identities.
@@ -110,6 +120,13 @@ pub(super) fn prepare(
         "{} AS ({selection_sql})",
         binding::quote(&selected)
     ));
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    let source_key_obligation=if let Some(selected)=navigation.source_selected_key(){
+        let key=source.page_key.as_ref().ok_or_else(||fail("WFT-BINDING","Original source selected Key required"))?;
+        let fields=key.fields.iter().zip(&key.types).map(|(identity,ty)|source_lower.expression(&Expression::Field{scan:source.source.occurrence.clone(),identity:identity.clone(),logical_type:ty.clone(),span:weft_core::ir::Span{start:0,end:0}})).collect::<Result<Vec<_>>>()?;
+        let fields=fields.join(", ");let count=count_sql();let sql=format!("WITH {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {fields} FROM {} GROUP BY {fields} HAVING {count}>1) source_duplicate_keys",source_lower.ctes.join(", "),binding::quote(&source.source.occurrence));
+        Some(Obligation{id:"ashlar.candidate.sourceKeyIntegrity".into(),parameters:json!({"version":"ashlar.navigation-source-key/0.1","phase":"before-user-query","sourceRecord":source.source.record,"selectedKey":selected,"key":key,"checks":[{"sql":sql,"failureCode":"WFT-BINDING"}],"success":"one exact STRING count equal to 0","samePublicationRequired":true,"authority":"complete authorized original source Record and hidden ordering Fields"}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()})
+    }else{None};
     lower.parameters = source_lower.parameters;
     lower.checks.extend(source_lower.checks);
     lower.compound_checks.extend(source_lower.compound_checks);
@@ -122,7 +139,10 @@ pub(super) fn prepare(
     // EXISTS deduplicates edge/source occurrences only for target membership;
     // source LIMIT ran on its original ordered bag before this selection.
     let _ = binding; // Admission above independently consumed the same full binding.
-    Ok(Some((membership, admitted.obligations)))
+    let mut obligations=admitted.obligations;
+    #[cfg(feature="sdk-ordered-page-candidate")]
+    if let Some(obligation)=source_key_obligation{obligations.push(obligation);}
+    Ok(Some((membership, obligations)))
 }
 
 /// A repeated identical whole-publication obligation is one obligation. A

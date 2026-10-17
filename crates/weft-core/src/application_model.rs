@@ -300,7 +300,7 @@ impl Catalog {
                             } else if v["scalarType"]=="date" { ExactScalarType::Date } else { ExactScalarType::Binary } }
                         } else {
                             Shape::Scalar {
-                                logical_type: scalar_type_projected(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers, c.bounded_current_strings, c.field_projection_decimal38)?,
+                                logical_type: {let mut ty=scalar_type_projected(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers, c.bounded_current_strings, c.field_projection_decimal38)?;if c.sdk_scalar_presence && availability=="absent-allowed" {ty.nullable=true;}ty},
                             }
                         }
                     }

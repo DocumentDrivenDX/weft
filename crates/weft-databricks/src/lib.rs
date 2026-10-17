@@ -55,3 +55,8 @@ pub mod unity_search;
 
 mod raw_pages;
 mod spark_shapes;
+
+pub mod local_spark4_sdk;
+
+#[cfg(feature="sdk-ordered-page-candidate")]
+pub mod local_spark4_sdk_pages;

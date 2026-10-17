@@ -1186,6 +1186,7 @@ mod tests {
             _ => unreachable!(),
         };
         let application = weft_core::application_ir::Plan {
+        read_order:None,
         navigation:None,
             ir_version: "weft-ir/0.2.0".into(),
             module_pins: plan.module_pins.clone(),
@@ -4540,6 +4541,7 @@ mod tests {
             _ => unreachable!(),
         };
         let mut application_plan = weft_core::application_ir::Plan {
+        read_order:None,
         navigation:None,
             ir_version: "weft-ir/0.2.0".into(),
             module_pins: plan.module_pins.clone(),

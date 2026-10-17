@@ -1,0 +1,21 @@
+{
+  "source": "5605d358650468d651f69ff29c40e986a0359a5b",
+  "wheelSha256": "f92e23d68afc6619e41e76f19e8760871eb86fe1ad1bf44de66c47c27ca48dc8",
+  "programs": [
+    {
+      "compiler": "ashlar-spark4",
+      "fixture": "native-ashlar-spark4-request.json",
+      "sha256": "e4e15e189e9f5975147823bfba954197d048025b422ee73a2207bf8e76614b6a"
+    },
+    {
+      "compiler": "ashlar-spark4-fields",
+      "fixture": "ashlar-fields-only-request.json",
+      "sha256": "0143940c79d5098b96f2ce44eae04fc76d57816f9593f10687637912b3fc7a96"
+    },
+    {
+      "compiler": "ashlar-dbsql-20261016",
+      "fixture": "native-ashlar-dbsql-20261016-request.json",
+      "sha256": "d68235f47f6e29deeb90b779037842c27203a34b07be188a3d0c01f355663fbd"
+    }
+  ]
+}

@@ -68,6 +68,8 @@ fn native(
     }
 }
 pub(crate) fn compile_value(packet: &Value) -> Result<Value> {
+    #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+    if packet["version"]=="weft.engine-related-read/0.2"{return crate::engine_ordered_page::related_read(packet);}
     let request: Request = serde_json::from_value(packet.clone())
         .map_err(|_| "closed original engine navigation packet required")?;
     if request.version != "weft.engine-related-read/0.1"
@@ -437,6 +439,9 @@ pub(crate) fn compile_page_value(packet: &Value, after: Option<Vec<String>>) -> 
     Ok(out)
 }
 pub fn compile_page_json(raw: &str) -> String {
+    #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+    if weft_core::json::checked_json(raw).is_ok_and(|p|p["version"]=="weft.engine-related-page/0.2"){return crate::engine_ordered_page::compile_json(raw);}
+
     let result = (|| {
         if raw.len() > 4_194_304 {
             return Err("bounded original engine related page packet required");

@@ -291,6 +291,7 @@ impl RelationshipAdmission {
             )
             .collect();
         let plan = weft_core::application_ir::Plan {
+        read_order:None,
         navigation:None,
             ir_version: "weft-ir/0.2.0".into(),
             module_pins: vec![record.pin.clone()],

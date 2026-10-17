@@ -54,6 +54,8 @@ pub(crate) fn validate(
     selection: &Selection,
     assessments: &[crate::backend::Assessment],
 ) -> Result<()> {
+    #[cfg(feature="engine-ordered-page-candidate")]
+    if let Plan::Ordered(page)=plan {return validate_ordered(page,emission,selection,assessments);}
     if emission.sql.trim().is_empty()
         || emission.sql.len() > 1024 * 1024
         || emission.sql.contains('\0')
@@ -140,6 +142,8 @@ pub(crate) fn validate(
         } else if emission.obligations.iter().any(|o|o.id=="outerJoin.matchIntegrity") {return Err(fail("Inner-only plan cannot invent outer join authority"));}
     }
     let expected: Vec<(&str, Expected<'_>)> = match plan {
+        #[cfg(feature="engine-ordered-page-candidate")]
+        Plan::Ordered(_)=>unreachable!(),
         Plan::V01(p) => {
             let Node::Project { outputs, .. } = &p.root else {
                 return Err(fail("Resolved 0.1 plan needs a projection root"));
@@ -237,7 +241,7 @@ pub(crate) fn validate(
                 scalar(column,&LogicalType{family,facets,nullable:false})
             },
             Expected::Field(scan, identity) => {
-                let graph=match plan {Plan::V02(p)=>&p.type_graph,Plan::V03(p)=>&p.type_graph,Plan::V01(_)=>unreachable!()};
+                let graph=match plan {Plan::V02(p)=>&p.type_graph,Plan::V03(p)=>&p.type_graph,Plan::V01(_)=>unreachable!(),#[cfg(feature="engine-ordered-page-candidate")] Plan::Ordered(_)=>unreachable!()};
                 let descriptor = graph
                     .iter()
                     .find(|d| &d.identity == identity)
@@ -727,4 +731,19 @@ mod tests {
         let mut reordered=p.clone();reordered.outer_join_scans=vec!["s0".into()];assert!(validate(Plan::V03(&reordered),&e,&selection,&a).is_err());
     }
 
+}
+
+#[cfg(feature="engine-ordered-page-candidate")]
+fn validate_ordered(page:&crate::application_ordered_page::OrderedPage,emission:&Emission,selection:&Selection,assessments:&[crate::backend::Assessment])->Result<()> {
+ let visible=page.base().outputs.len();
+ if emission.columns.len()!=visible+2*page.sort_slots().len(){return Err(fail("Original full ordering state/value output inventory required"));}
+ let mut projected=emission.clone();projected.columns.truncate(visible);
+ validate(Plan::V02(page.base()),&projected,selection,assessments)?;
+ for (i,slot) in page.sort_slots().iter().enumerate(){
+  let (v,s)=slot.hidden_outputs();if v!=visible+2*i || s!=v+1{return Err(fail("Original ordered hidden positions differ"));}
+  let value=&emission.columns[v];let state=&emission.columns[s];
+  if value.position!=v+1 || state.position!=s+1 || value.output_name!=format!("__weft_sort_value_{i}") || state.output_name!=format!("__weft_sort_state_{i}") || value.source_identities!=vec![slot.identity().clone()] || state.source_identities!=vec![slot.identity().clone()] || value.nullable || state.nullable {return Err(fail("Original ordering source/state correspondence differs"));}
+  if !matches!(&value.representation,Representation::Value{descriptor,native_null:true,outer_join:None} if descriptor==slot.identity()) || !scalar(state,&LogicalType{family:Family::String,facets:serde_json::json!({}),nullable:false}) {return Err(fail("Original full state transport required"));}
+ }
+ Ok(())
 }

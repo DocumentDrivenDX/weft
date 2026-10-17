@@ -283,6 +283,8 @@ pub(crate) fn lower_scoped(
                 add(&join.right.occurrence, &join.right.record, &join.right.pin)?;
             }
         }
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     let namespace = Identifier::new(
         context.binding_value["basis"]["namespace"]

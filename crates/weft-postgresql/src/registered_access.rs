@@ -168,6 +168,8 @@ pub fn requests(plan: Plan<'_>) -> Result<Vec<Request>> {
                 }
             }
         }
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     let mut unique = BTreeMap::new();
     for (scan, field) in fields {
@@ -250,6 +252,8 @@ fn lower_with_owners<'a>(
                 scans.insert(join.right.occurrence.clone(), join.right.record.clone());
             }
         }
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     let aliases: BTreeMap<_, _> = scans
         .keys()
@@ -380,6 +384,8 @@ fn context_pin(context: &Context<'_>) -> Result<String> {
         Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => serde_json::to_value(plan),
         Plan::V02(plan) => serde_json::to_value(plan),
+            #[allow(unreachable_patterns)]
+        _=>return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION","capability","This PostgreSQL profile does not admit the original ordered-page IR")),
     }
     .map_err(|_| fail("Prepared plan encoding refused"))?;
     let bytes = serde_json::to_vec(&(context.plan.language(), plan, &context.binding.sha256))

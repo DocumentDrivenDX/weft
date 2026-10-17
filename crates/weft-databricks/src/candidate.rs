@@ -227,6 +227,7 @@ fn collect(
 }
 struct Lower<'a> {
     mathematical_profile: bool,
+    scalar_presence_profile: bool,
     binding: &'a Binding,
     scans: BTreeMap<String, Identity>,
     fields: BTreeMap<(String, String), (Identity, LogicalType)>,
@@ -248,6 +249,7 @@ impl<'a> Lower<'a> {
         Self {
             binding,
             mathematical_profile: false,
+            scalar_presence_profile: false,
             scans: BTreeMap::new(),
             fields: BTreeMap::new(),
             expressions: BTreeMap::new(),
@@ -374,7 +376,7 @@ impl<'a> Lower<'a> {
                         let present = format!("{variant} IS NOT NULL");
                         if native_null {
                             if crate::mathematical_integer::unbounded(&ty) {return Err(fail("WFT-CAPABILITY","Optional unbounded Integer requires separate public token/null profile"));}
-                            self.checks.push(json!({"representabilityOnly":true,"field":identity,"record":id,"propertyId":property_id,"encoding":binding::NATIVE_NULL_ENCODING,"sql":format!("SELECT CAST({} AS STRING) AS violations FROM {table} r WHERE {owner} AND ({variant} IS NULL)",count_sql()),"failureCode":"WFT-CAPABILITY"}));
+                            if !self.scalar_presence_profile || !optional {self.checks.push(json!({"representabilityOnly":true,"field":identity,"record":id,"propertyId":property_id,"encoding":binding::NATIVE_NULL_ENCODING,"sql":format!("SELECT CAST({} AS STRING) AS violations FROM {table} r WHERE {owner} AND ({variant} IS NULL)",count_sql()),"failureCode":"WFT-CAPABILITY"}));}
                         }
                         let valid=if native_null {format!("schema_of_variant(parse_json(r.props_json)) RLIKE '^OBJECT' AND (({variant} IS NULL) OR is_variant_null({variant}) OR ({valid}))")}else{valid};
                         let valid = if optional {
@@ -585,7 +587,7 @@ fn numeric_guard(value: &str, ty: &LogicalType) -> String {
 
 // All historical registrations retain the single-revision admission boundary.
 pub(crate) fn validate_mapping(c: &Context<'_>, allow_compatible: bool) -> Result<Validated<Binding>> {
-        let binding = if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
+        let binding = if c.target.id==crate::local_spark4_sdk::PROFILE {binding::admit_sdk(c.catalog,c.binding_value)?}else if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
         if !allow_compatible && binding.records.iter().any(|r| !r.compatible_schema_revisions.is_empty()) {
             return Err(fail("WFT-BINDING", "Compatible physical revisions require the separate candidate registration"));
         }
@@ -624,3 +626,6 @@ pub(crate) fn validate_mapping(c: &Context<'_>, allow_compatible: bool) -> Resul
             coverage: c.selection.clone(),
         })
 }
+
+#[cfg(feature="sdk-ordered-page-candidate")]
+pub(crate) fn lower_sdk_ordered(c:&Context<'_>,binding:&Binding,page:&weft_core::application_ordered_page::OrderedPage)->Result<TargetPlan>{application::lower_ordered(c,binding,page)}
