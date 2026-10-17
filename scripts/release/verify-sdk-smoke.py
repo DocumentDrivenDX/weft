@@ -1,6 +1,8 @@
 """Closed five-wheel SDK compiler publication gate; reports confer no authority."""
 EXPECTED=[dict(id=name,status=status) for name,status in [('read','compiled'),('read-check','compiled'),('page','compiled'),('page-check','compiled'),('export','compiled'),('read-context-drift','blocked'),('page-context-drift','blocked'),('export-context-drift','blocked'),('export-program-drift','blocked'),('distinct','compiled'),('distinct-null','compiled'),('not-distinct','compiled'),('not-distinct-null','compiled'),('distinct-carrier-mismatch','blocked')]]
 EXPECTED += [dict(id=compiler+'-'+suffix,status='compiled') for compiler in ('ashlar-spark4','ashlar-dbsql-20261016') for suffix in ('read','read-check','page','page-check')]
+EXPECTED_042=EXPECTED+[dict(id=name,status='passed') for name in ('presence-issued-class','presence-model-requirements','presence-graph-requirements','presence-postgresql-lower-check')]
+def expected(version):return EXPECTED_042 if tuple(map(int,version.split('.'))) >= (0,4,42) else EXPECTED
 FIELDS={'version','sourceCommit','wheel','pinsBeforeAfter','controls','checks','nativeAdmission','securityReady','temporalQualification'}
 def validate(reports,baseline,commit,version):
     assert len(reports)==len(baseline)==5
@@ -10,7 +12,7 @@ def validate(reports,baseline,commit,version):
         assert set(report)==FIELDS
         assert report['sourceCommit']==commit and report['version']==version
         assert report['pinsBeforeAfter']==by_wheel[report['wheel']]['pinsBeforeAfter']
-        assert type(report['controls']) is int and report['controls']==len(EXPECTED)
-        assert report['checks']==EXPECTED
+        assert type(report['controls']) is int and report['controls']==len(expected(version))
+        assert report['checks']==expected(version)
         assert report['nativeAdmission'] is False and report['securityReady'] is False
         assert report['temporalQualification']=='held'

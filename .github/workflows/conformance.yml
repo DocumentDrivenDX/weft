@@ -208,7 +208,7 @@ jobs:
           cargo test --locked -p weft-runtime --features current-presence-graph-requirements-candidate --lib current_presence
       - name: Build separate default, model-only and Graph native wheels
         run: |
-          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --no-default-features --out "$RUNNER_TEMP/graph-wheels/default"
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --no-default-features --features pyo3/extension-module --out "$RUNNER_TEMP/graph-wheels/default"
           maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --no-default-features --features current-presence-model-requirements-candidate --out "$RUNNER_TEMP/graph-wheels/model"
           maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --no-default-features --features current-presence-graph-requirements-candidate --out "$RUNNER_TEMP/graph-wheels/graph"
       - name: Actual native Python custody and feature isolation
