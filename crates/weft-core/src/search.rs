@@ -101,13 +101,14 @@ fn locate<'a>(doc: &'a Value, r: &Value) -> Result<&'a Value, &'static str> {
         })
         .ok_or("search reference absent")
 }
-pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
+pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> { admit_profile(raw,false) }
+fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> {
     let r: SearchRequest =
         serde_json::from_value(checked_json(raw).map_err(|_| "bounded search JSON required")?)
             .map_err(|_| "exact search request required")?;
     if r.version != "weft.search/0.1"
         || !(1..=1000).contains(&r.top_k)
-        || r.selection.keyset
+        || (r.selection.keyset && !terms)
         || r.query_parameter.is_empty()
         || r.query_parameter.len() > 64
         || r.selection
@@ -355,4 +356,46 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
         request: r,
         selection,
     })
+}
+
+/// Resolve one explicitly authored single-field keyword index for an unranked
+/// raw predicate. This returns metadata only; native correspondence stays a host
+/// obligation, and ordinary ranked search keeps its original admission profile.
+pub fn admit_terms(read:&raw_read::AdmittedRead,table:&[String],column:&str)->Result<AdmittedSearch,&'static str> {
+    if table.len()!=2 {return Err("TERM_INDEX: logical owner required")};
+    let request=read.request();
+    let doc=checked_json(&request.binding.model_json).map_err(|_|"TERM_INDEX: original source refused")?;
+    let modules=doc["modules"].as_array().ok_or("TERM_INDEX: original modules required")?;
+    let mut owners=vec![];
+    for module in modules {
+        if module["namespace"]!=table[0] {continue};
+        for record in module["elements"].as_array().ok_or("TERM_INDEX: element inventory required")? {
+            if record["kind"]=="record" && record["name"]==table[1] {owners.push((module,record));}
+        }
+    }
+    if owners.len()!=1 {return Err("TERM_INDEX: unique original Record required")};
+    let (module,record)=owners[0];
+    let record_ref=json!({"module":module["id"],"element":record["id"]});
+    let mut fields=vec![];
+    for reference in record["members"].as_array().ok_or("TERM_INDEX: original members required")? {
+        let field=locate(&doc,reference)?;
+        if field["name"]==column {fields.push(reference.clone());}
+    }
+    if fields.len()!=1 {return Err("TERM_INDEX: unique original Field required")};
+    let field_ref=&fields[0];
+    let mut found=vec![];
+    for (mi,module) in modules.iter().enumerate() {
+        let Some(indices)=module["extensions"]["umf.access"]["search"].as_array() else {continue};
+        for (ii,index) in indices.iter().enumerate() {
+            if index["kind"]=="keyword" && index["record"]==record_ref && index["keyword"]["source"]==json!([field_ref]) {
+                found.push((mi,ii,module,index));
+            }
+        }
+    }
+    if found.len()!=1 {return Err("TERM_INDEX: one declared single-field keyword index required")};
+    let (mi,ii,module,index)=found[0];
+    if index["keyword"]["analyzer"]=="implementation-defined" {return Err("TERM_ANALYZER: explicit supported analyzer required")};
+    let source=json!({"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":request.binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
+    let probe=json!({"version":"weft.search/0.1","source":source,"selection":request,"queryParameter":"__umf_term_query","topK":1,"projection":[{"field":field_ref,"name":"term_field"}],"vectorBinding":null,"allowPartial":false});
+    admit_profile(&probe.to_string(),true)
 }

@@ -36,6 +36,8 @@ struct Scalar {
     fields: BTreeSet<(String, String)>,
 }
 struct Lower<'a> {
+    admitted: &'a AdmittedRead,
+    term_indexes: BTreeMap<String,Json>,
     request: &'a Request,
     scans: BTreeMap<String, (&'a Table, bool)>,
     slots: Vec<String>,
@@ -62,6 +64,30 @@ fn object(n: &ObjectName) -> Result<Vec<String>> {
             _ => Err("dynamic object name"),
         })
         .collect()
+}
+fn term_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,column:&weft_core::raw_read::Column,schema:&Option<String>,configuration:&str)->Result<Json> {
+    let language=configuration.strip_prefix("pg_catalog.").ok_or("term configuration namespace")?;
+    if !matches!(language,"simple"|"english") {return Err("term analyzer unsupported")};
+    let aliases=["asciiword","word","numword","email","url","host","sfloat","version","hword_numpart","hword_part","hword_asciipart","numhword","asciihword","hword","url_path","file","float","int","uint"];
+    let mut expected=aliases.iter().map(|alias|{
+        let stem=language=="english"&&matches!(*alias,"asciiword"|"word"|"hword_part"|"hword_asciipart"|"asciihword"|"hword");
+        json!([alias,1,"pg_catalog",if stem{"english_stem"}else{"simple"},"pg_catalog",if stem{"snowball"}else{"simple"},if stem{json!("language = 'english', stopwords = 'english'")}else{Json::Null}])
+    }).collect::<Vec<_>>();
+    expected.sort_by(|a,b|a[0].as_str().unwrap().cmp(b[0].as_str().unwrap()));
+    let expected=Json::Array(expected).to_string().replace('\'',"''");
+    let render=|dbapi:bool| {
+        let slot=|n:u8|if dbapi{format!("%(__umf_term_{n})s::pg_catalog.text")}else{format!("${n}::pg_catalog.text")};
+        let app=slot(1);let index=slot(2);let table=slot(3);let language=slot(4);let column=slot(5);
+        let config=format!("EXISTS(SELECT 1 FROM pg_catalog.pg_ts_config AS cfg JOIN pg_catalog.pg_namespace AS cn ON cn.oid=cfg.cfgnamespace JOIN pg_catalog.pg_ts_parser AS parser ON parser.oid=cfg.cfgparser JOIN pg_catalog.pg_namespace AS pn ON pn.oid=parser.prsnamespace WHERE cn.nspname='pg_catalog' AND cfg.cfgname={language} AND pn.nspname='pg_catalog' AND parser.prsname='default' AND (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(tt.alias,m.mapseqno,dn.nspname,d.dictname,tn.nspname,template.tmplname,d.dictinitoption) ORDER BY tt.alias COLLATE pg_catalog.\"C\",m.mapseqno) FROM pg_catalog.pg_ts_config_map AS m JOIN pg_catalog.ts_token_type(parser.oid) AS tt ON tt.tokid=m.maptokentype JOIN pg_catalog.pg_ts_dict AS d ON d.oid=m.mapdict JOIN pg_catalog.pg_namespace AS dn ON dn.oid=d.dictnamespace JOIN pg_catalog.pg_ts_template AS template ON template.oid=d.dicttemplate JOIN pg_catalog.pg_namespace AS tn ON tn.oid=template.tmplnamespace WHERE m.mapcfg=cfg.oid)='{expected}'::pg_catalog.jsonb)");
+        let pattern=if dbapi{"to_tsvector(%%L::regconfig, COALESCE(%%I, %%L::text))"}else{"to_tsvector(%L::regconfig, COALESCE(%I, %L::text))"};
+        format!("SELECT (i.indisvalid AND i.indisready AND i.indislive AND i.indnkeyatts=1 AND i.indnatts=1 AND i.indpred IS NULL AND am.amname='gin' AND opc.opcname='tsvector_ops' AND opns.nspname='pg_catalog' AND i.indkey[0]=0 AND i.indexprs IS NOT NULL AND pg_catalog.pg_get_indexdef(i.indexrelid,1,true)=pg_catalog.format('{pattern}',{language},{column},''::pg_catalog.text) AND {config}) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname={app} AND ns.nspname={app} AND idx.relname={index} AND t.relname={table}")
+    };
+    let literal=|text:&str|json!({"source":{"literal":{"string":text}},"carrier":"string"});
+    let schema_parameter=match schema {Some(s)=>literal(s),None=>json!({"source":{"appSchema":true},"carrier":"string"})};
+    let mut parameters=vec![schema_parameter,literal(index.binding()["native"].as_str().ok_or("term native index required")?),literal(&table.native),literal(language),literal(&column.native)];
+    for (i,p) in parameters.iter_mut().enumerate(){p["name"]=json!(format!("__umf_term_{}",i+1));}
+    let names=parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>();
+    Ok(json!({"source":index.request().source,"index":index.index(),"nativeBinding":index.binding(),"logicalTable":table.logical,"nativeTable":table.native,"nativeColumn":column.native,"configuration":configuration,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"dbapiParameterOrder":names,"parameters":parameters}}))
 }
 impl<'a> Lower<'a> {
     fn table(&mut self, f: &TableFactor, left: bool) -> Result<(String, String)> {
@@ -323,7 +349,9 @@ impl<'a> Lower<'a> {
                 Ok(format!("{} {} {}", l.sql, op, r.sql))
             }
             Expr::Function(f) => {
-                if object(&f.name)? != ["starts_with"]
+                let function=object(&f.name)?;
+                let is_term=function==["matches_all_terms"] || function==["matches_any_term"];
+                if (function != ["starts_with"] && !is_term)
                     || f.uses_odbc_syntax
                     || !matches!(f.parameters, FunctionArguments::None)
                     || !f.within_group.is_empty()
@@ -349,10 +377,26 @@ impl<'a> Lower<'a> {
                 if !matches!(unnest(prefix), Expr::Value(v) if matches!(v.value, Value::SingleQuotedString(_) | Value::Placeholder(_))) {
                     return Err("prefix requires a literal or declared parameter");
                 }
+                let source_field=field;
                 let field = self.predicate_value(field, aggregates)?;
                 let prefix = self.predicate_value(prefix, aggregates)?;
                 if field.carrier != Carrier::String || prefix.carrier != Carrier::String {
                     return Err("prefix string carriers required");
+                }
+                if is_term {
+                    let Expr::CompoundIdentifier(parts)=unnest(source_field) else {return Err("term source field required")};
+                    let alias=name(&parts[0]);let logical=name(&parts[1]);
+                    let table=self.scans.get(&alias).ok_or("term source alias absent")?.0;
+                    let index=weft_core::search::admit_terms(self.admitted,&table.logical,&logical)?;
+                    let language=index.index()["keyword"]["analyzer"]["language"].as_str().ok_or("explicit term analyzer required")?;
+                    let configuration=match language {"english"=>"pg_catalog.english","simple"=>"pg_catalog.simple",_=>return Err("unsupported term analyzer")};
+                    let column=table.columns.iter().find(|c|c.logical==logical).ok_or("term native column absent")?;
+                    let identity=weft_core::mutation::canonical(&json!({"source":index.request().source,"table":table.logical,"field":logical}));
+                    let metadata=term_index_metadata(&index,table,column,&self.request.binding.schema,configuration)?;
+                    self.term_indexes.insert(identity,metadata);
+                    let field_terms=format!("pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('{configuration}'::pg_catalog.regconfig, {}))",field.sql);
+                    let query_terms=format!("pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('{configuration}'::pg_catalog.regconfig, {}))",prefix.sql);
+                    return Ok(if function==["matches_all_terms"] {format!("({query_terms} OPERATOR(pg_catalog.<@) {field_terms})")} else {format!("({query_terms} OPERATOR(pg_catalog.&&) {field_terms})")});
                 }
                 // PostgreSQL's strict prefix function compares the actual UTF-8
                 // text bytes. No pattern is formed and NULL remains UNKNOWN.
@@ -561,6 +605,8 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         return Err("one root and at most three joins required");
     }
     let mut l = Lower {
+        admitted,
+        term_indexes: BTreeMap::new(),
         request: r,
         scans: BTreeMap::new(),
         slots: vec![],
@@ -830,7 +876,10 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     if l.used.len() != r.parameters.len() {
         return Err("unused declared parameter");
     }
-    let obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":if bounded{json!(limit)}else{Json::Null},"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
+    let mut obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":if bounded{json!(limit)}else{Json::Null},"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
+    if !l.term_indexes.is_empty() {
+        obligations["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":l.term_indexes.values().collect::<Vec<_>>()});
+    }
     let lock_sql: Vec<String> = l
         .scans
         .values()

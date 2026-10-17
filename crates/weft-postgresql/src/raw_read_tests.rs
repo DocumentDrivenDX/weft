@@ -11,6 +11,51 @@ mod raw_read_tests {
     fn compile(r: Value) -> Value {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }
+    fn term_request()->Value {
+        let search:Value=serde_json::from_str(include_str!("../../../tests/native-search/keyword-request.json")).unwrap();
+        let mut r=search["selection"].clone();r["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE MATCHES_ALL_TERMS(r.body,:terms)");r["parameters"]=json!([{ "name":"terms","carrier":"string","nullable":false }]);r
+    }
+    fn change_term_model(r:&mut Value,change:impl FnOnce(&mut Value)) {
+        let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();change(&mut doc);let raw=doc.to_string();r["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));r["binding"]["modelJson"]=json!(raw);
+    }
+    #[test]
+    fn raw_read_terms_keep_original_index_analyzer_and_native_obligations() {
+        for (function,operator) in [("MATCHES_ALL_TERMS","<@"),("MATCHES_ANY_TERM","&&")] {
+            for language in ["english","simple"] {
+                let mut r=term_request();r["sql"]=json!(format!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE {function}(r.body,:terms)"));
+                if language=="simple" {change_term_model(&mut r,|doc|doc["modules"][0]["extensions"]["umf.access"]["search"][0]["keyword"]["analyzer"]=json!({"language":"simple","stemming":false}));}
+                let out=compile(r.clone());assert_eq!(out["status"],"compiled","{out}");assert!(out["sql"].as_str().unwrap().contains(operator));assert!(out["sql"].as_str().unwrap().contains("pg_catalog.tsvector_to_array(pg_catalog.to_tsvector("));assert!(!out["sql"].as_str().unwrap().contains("to_tsquery("));assert_eq!(out["parameterOrder"],json!(["terms"]));
+                let obligation=&out["obligations"]["termFilter"];assert_eq!(obligation["version"],"umf.raw-term-filter/0.1");assert_eq!(obligation["nativeCatalogBeforeAfter"],true);assert_eq!(obligation["indexes"].as_array().unwrap().len(),1);
+                let index=&obligation["indexes"][0];assert_eq!(index["configuration"],format!("pg_catalog.{language}"));assert_eq!(index["index"]["id"],"text");assert_eq!(index["nativeBinding"]["native"],"doc_text");assert_eq!(index["source"]["documentSha256"],r["binding"]["modelSha256"]);assert_eq!(index["nativeAdmission"]["parameters"].as_array().unwrap().len(),5);assert!(index["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_ts_config_map"));
+            }
+        }
+        let mut r=term_request();r["keyset"]=json!(true);r["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE MATCHES_ANY_TERM(r.body,:terms) ORDER BY r.id");assert_eq!(compile(r)["status"],"compiled");
+    }
+    #[test]
+    fn raw_read_terms_refuse_missing_ambiguous_or_unsupported_selected_meaning() {
+        for mode in 0..10 {
+            let mut r=term_request();
+            change_term_model(&mut r,|doc|{
+                let payload=&mut doc["modules"][0]["extensions"]["umf.access"];
+                match mode {
+                    0=>payload["search"]=json!([]),
+                    1=>payload["search"][0]["keyword"]["analyzer"]=json!("implementation-defined"),
+                    2=>payload["search"][0]["keyword"]["analyzer"]=json!({"language":"english","stemming":false}),
+                    3=>payload["search"][0]["keyword"]["syntax"]=json!("operators"),
+                    4=>payload["search"][0]["unknownSelectedMeaning"]=json!(true),
+                    5=>payload["search"][0]["keyword"]["source"]=json!([]),
+                    6=>payload["searchBindings"][0]["freshness"]=json!("asynchronous"),
+                    7=>payload["searchBindings"][0]["target"]["platform"]=json!("lakebase"),
+                    8=>{let duplicate=payload["search"][0].clone();payload["search"].as_array_mut().unwrap().push(duplicate);},
+                    _=>payload["search"][0]["keyword"]["analyzer"]["unknown"]=json!(true),
+                }
+            });
+            let out=compile(r);assert_eq!(out["status"],"blocked","{mode}: {out}");assert!(out.get("sql").is_none());
+        }
+        for predicate in ["MATCHES_ALL_TERMS(r.id,:terms)","MATCHES_ALL_TERMS(r.body,1)","MATCHES_ANY_TERM(r.body,NULL)","MATCHES_ALL_TERMS(r.body)","evil.MATCHES_ALL_TERMS(r.body,:terms)"] {
+            let mut r=term_request();r["sql"]=json!(format!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE {predicate}"));assert_eq!(compile(r)["status"],"blocked","{predicate}");
+        }
+    }
     #[test]
     fn raw_read_numeric_buckets_keep_exact_group_identity_and_ties() {
         let mut r=request();r["sql"]=json!("SELECT BUCKET_WIDTH(o.amount, 0.25) AS bucket, SUM(o.id) AS total, AVG_SCALE(o.amount,2) AS average FROM \"commerce\".\"Order\" AS o GROUP BY BUCKET_WIDTH(o.amount, 0.25) ORDER BY average DESC");r["parameters"]=json!([]);

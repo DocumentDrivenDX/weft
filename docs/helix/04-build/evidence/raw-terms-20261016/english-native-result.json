@@ -1,0 +1,216 @@
+{
+  "checks": [
+    {
+      "kind": "sync",
+      "mode": "all",
+      "terms": "run cat",
+      "ids": [
+        "01"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "any",
+      "terms": "run cat",
+      "ids": [
+        "01",
+        "02",
+        "03",
+        "06"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "all",
+      "terms": "cat cat",
+      "ids": [
+        "01",
+        "03",
+        "06"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "any",
+      "terms": "CAT",
+      "ids": [
+        "01",
+        "03",
+        "06"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "all",
+      "terms": "",
+      "ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "08"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "any",
+      "terms": "",
+      "ids": []
+    },
+    {
+      "kind": "sync",
+      "mode": "all",
+      "terms": "the",
+      "ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "08"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "any",
+      "terms": "the",
+      "ids": []
+    },
+    {
+      "kind": "sync",
+      "mode": "any",
+      "terms": "caf\u00e9",
+      "ids": [
+        "06"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "any",
+      "terms": "cafe\u0301",
+      "ids": [
+        "08"
+      ]
+    },
+    {
+      "kind": "sync",
+      "mode": "all",
+      "terms": "cats | dog",
+      "ids": []
+    },
+    {
+      "kind": "wrong-native-analyzer",
+      "refused": true
+    },
+    {
+      "kind": "native-analyzer-changed-after-admission",
+      "withheld": true
+    },
+    {
+      "kind": "async",
+      "mode": "all",
+      "terms": "run cat",
+      "ids": [
+        "01"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "any",
+      "terms": "run cat",
+      "ids": [
+        "01",
+        "02",
+        "03",
+        "06"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "all",
+      "terms": "cat cat",
+      "ids": [
+        "01",
+        "03",
+        "06"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "any",
+      "terms": "CAT",
+      "ids": [
+        "01",
+        "03",
+        "06"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "all",
+      "terms": "",
+      "ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "08"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "any",
+      "terms": "",
+      "ids": []
+    },
+    {
+      "kind": "async",
+      "mode": "all",
+      "terms": "the",
+      "ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "08"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "any",
+      "terms": "the",
+      "ids": []
+    },
+    {
+      "kind": "async",
+      "mode": "any",
+      "terms": "caf\u00e9",
+      "ids": [
+        "06"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "any",
+      "terms": "cafe\u0301",
+      "ids": [
+        "08"
+      ]
+    },
+    {
+      "kind": "async",
+      "mode": "all",
+      "terms": "cats | dog",
+      "ids": []
+    }
+  ],
+  "serverStopped": true,
+  "temporal": "HELD"
+}

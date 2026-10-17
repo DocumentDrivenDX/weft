@@ -1846,7 +1846,8 @@
             "fn:index",
             "fn:binding",
             "fn:record",
-            "fn:admit_json"
+            "fn:admit_json",
+            "fn:admit_terms"
           ],
           "pathReferences": []
         },

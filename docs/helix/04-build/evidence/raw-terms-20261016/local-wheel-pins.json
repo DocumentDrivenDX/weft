@@ -1,0 +1,8 @@
+{
+  "wheel": "/private/tmp/weft-terms-local/wheels/weft_sql-0.4.42.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+  "sha256": "b2dabbfa966d718a6449c4d00edc8da0e18e8a319a86101d685c4a8b64628b8a",
+  "nativeSha256": "d5a5cc70723c92668a15e373bc6dfaf6f1128d4c90629c6683d5df50427b2f88",
+  "version": "0.4.42-dev.0",
+  "fixtures": 4,
+  "temporalQualification": "held"
+}
