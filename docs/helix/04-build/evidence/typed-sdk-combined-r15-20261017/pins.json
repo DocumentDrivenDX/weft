@@ -1,0 +1,182 @@
+{
+  "sourceCommit": "3f640567bc34b0ca57d871729b485c685f54dc6c",
+  "wheel": "/private/tmp/weft-combined-sdk-local-r15/wheels/weft_sql-0.4.42.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "e744819a3f0b0fc3d528ffbc36f5421dcfb28b4bbc8eb0256268506afa1a7811",
+  "payloads": {
+    "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "weft/weft.abi3.so": "91fa5bd7cacd2634cc559c04e23a27cd4cfdfd7ce126760d2189edcd4b88de78"
+  },
+  "controls": [
+    {
+      "name": "full-projection",
+      "status": "pass"
+    },
+    {
+      "name": "full-projection-stream",
+      "status": "pass"
+    },
+    {
+      "name": "schema-conflict",
+      "status": "pass"
+    },
+    {
+      "name": "full-projection-search-path",
+      "status": "pass"
+    },
+    {
+      "name": "stream-nonkeyset-refused",
+      "status": "pass"
+    },
+    {
+      "name": "unity-ann-request",
+      "status": "pass"
+    },
+    {
+      "name": "unity-hybrid-request",
+      "status": "pass"
+    },
+    {
+      "name": "unity-shaped-request",
+      "status": "pass"
+    },
+    {
+      "name": "related-forward",
+      "status": "pass"
+    },
+    {
+      "name": "related-inverse",
+      "status": "pass"
+    },
+    {
+      "name": "spark-page",
+      "status": "pass"
+    },
+    {
+      "name": "spark-stream",
+      "status": "pass"
+    },
+    {
+      "name": "managed-action",
+      "status": "pass"
+    },
+    {
+      "name": "managed-bulk",
+      "status": "pass"
+    },
+    {
+      "name": "related-wildcards",
+      "status": "pass"
+    },
+    {
+      "name": "negative-literal",
+      "status": "pass"
+    },
+    {
+      "name": "literal-null-membership",
+      "status": "pass"
+    },
+    {
+      "name": "empty-membership",
+      "status": "pass"
+    },
+    {
+      "name": "has-literal-key",
+      "status": "pass"
+    },
+    {
+      "name": "bound-list",
+      "status": "pass"
+    },
+    {
+      "name": "related-keys",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-related-keys",
+      "status": "pass"
+    },
+    {
+      "name": "spark-string-list",
+      "status": "pass"
+    },
+    {
+      "name": "spark-integer-list",
+      "status": "pass"
+    },
+    {
+      "name": "spark-decimal-list",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-required-nulls",
+      "status": "pass"
+    },
+    {
+      "name": "retained-graph-export-closure",
+      "status": "pass"
+    },
+    {
+      "name": "truss-related-key-metadata",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-related-key-page",
+      "status": "pass"
+    },
+    {
+      "name": "spark-hll-global",
+      "status": "pass"
+    },
+    {
+      "name": "spark-hll-grouped",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-engine-related",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-engine-related-page",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-related-native-continuation",
+      "status": "pass"
+    },
+    {
+      "name": "truss-engine-related",
+      "status": "pass"
+    },
+    {
+      "name": "truss-engine-related-page",
+      "status": "pass"
+    },
+    {
+      "name": "truss-related-original-cursor",
+      "status": "pass"
+    },
+    {
+      "name": "related-id-refusal",
+      "status": "pass"
+    },
+    {
+      "name": "related-direction-refusal",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-fields38",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-fields38-checked",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-fields38-rebind-refusal",
+      "status": "pass"
+    }
+  ],
+  "controlCount": 42,
+  "temporalQualification": "held",
+  "managedNativeQualification": false
+}
