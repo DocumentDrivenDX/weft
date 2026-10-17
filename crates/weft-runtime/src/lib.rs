@@ -877,3 +877,6 @@ mod current_presence_graph_requirements_bridge_tests {
 
 #[cfg(feature="raw-postgresql-reads")]
 pub mod engine_export;
+
+#[cfg(feature="raw-postgresql-reads")]
+pub fn compile_unity_search_json(request:&str)->String{weft_databricks::unity_search::compile_json(request)}

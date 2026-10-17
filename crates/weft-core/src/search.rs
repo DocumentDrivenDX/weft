@@ -101,8 +101,9 @@ fn locate<'a>(doc: &'a Value, r: &Value) -> Result<&'a Value, &'static str> {
         })
         .ok_or("search reference absent")
 }
-pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> { admit_profile(raw,false) }
-fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> {
+pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> { admit_profile(raw,false,None) }
+pub fn admit_unity_json(raw:&str,target:&Value)->Result<AdmittedSearch,&'static str>{admit_profile(raw,false,Some(target))}
+fn admit_profile(raw: &str, terms:bool, unity:Option<&Value>) -> Result<AdmittedSearch, &'static str> {
     let r: SearchRequest =
         serde_json::from_value(checked_json(raw).map_err(|_| "bounded search JSON required")?)
             .map_err(|_| "exact search request required")?;
@@ -156,7 +157,7 @@ fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> 
         .as_str()
         .is_none_or(|s| s.is_empty() || s.len() > 256)
         || !matches!(index["kind"].as_str(), Some("keyword" | "vector"))
-        || index["exactness"] != "exact"
+        || index["exactness"] != if unity.is_some(){"approximate"}else{"exact"}
     {
         return Err("SEARCH_UNSUPPORTED: initial exact native profile required");
     }
@@ -195,6 +196,7 @@ fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> 
     let platform = match r.selection.target.as_str() {
         "postgresql18" => "postgresql",
         "lakebase18" => "lakebase",
+        "unity-catalog-current" if unity.is_some()=>"unity-catalog",
         _ => return Err("SEARCH_UNSUPPORTED: native target not qualified"),
     };
     let bindings = payload["searchBindings"]
@@ -204,7 +206,7 @@ fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> 
         .iter()
         .filter(|b| {
             b["index"] == index["id"]
-                && b["target"] == json!({"platform":platform,"majorVersion":"18"})
+                && b["target"] == unity.cloned().unwrap_or_else(||json!({"platform":platform,"majorVersion":"18"}))
         })
         .collect::<Vec<_>>();
     if found.len() != 1 {
@@ -223,7 +225,7 @@ fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> 
         ],
         &[],
     )?;
-    if binding["freshness"] != "transactional"
+    if binding["freshness"] != if unity.is_some(){"asynchronous"}else{"transactional"}
         || binding["native"].as_str().is_none_or(str::is_empty)
         || binding["maxK"]
             .as_u64()
@@ -255,6 +257,7 @@ fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> 
         {
             return Err("SEARCH_UNSUPPORTED: PostgreSQL keyword ranking requires implementation-defined plain semantics");
         }
+        if unity.is_some() && keyword["analyzer"] != "implementation-defined" {return Err("UC native analyzer must be explicitly implementation-defined")};
         if keyword["analyzer"] != "implementation-defined" {
             exact(&keyword["analyzer"], &["language", "stemming"], &[])?;
             if keyword["analyzer"] != json!({"language":"english","stemming":true})
@@ -331,7 +334,8 @@ fn admit_profile(raw: &str, terms:bool) -> Result<AdmittedSearch, &'static str> 
             || native.field != vector["field"]
             || native.dimensions == 0
             || native.dimensions > 16000
-            || !matches!(native.extension_version.as_str(), "0.8.6" | "0.8.7")
+            || (unity.is_none() && !matches!(native.extension_version.as_str(), "0.8.6" | "0.8.7"))
+            || (unity.is_some() && (vector["metric"]!="l2" || vector["computedBy"]!="host"))
         {
             return Err("SEARCH_UNSUPPORTED: exact pinned pgvector0.8.6 or 0.8.7 shape required");
         }
@@ -397,5 +401,5 @@ pub fn admit_terms(read:&raw_read::AdmittedRead,table:&[String],column:&str)->Re
     if index["keyword"]["analyzer"]=="implementation-defined" {return Err("TERM_ANALYZER: explicit supported analyzer required")};
     let source=json!({"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":request.binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
     let probe=json!({"version":"weft.search/0.1","source":source,"selection":request,"queryParameter":"__umf_term_query","topK":1,"projection":[{"field":field_ref,"name":"term_field"}],"vectorBinding":null,"allowPartial":false});
-    admit_profile(&probe.to_string(),true)
+    admit_profile(&probe.to_string(),true,None)
 }

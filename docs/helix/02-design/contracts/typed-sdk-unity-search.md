@@ -1,0 +1,114 @@
+---
+ddx:
+  id: weft.typed-sdk-unity-search
+  type: contract
+  activity: design
+  status: draft
+  authoring:
+    home: repo
+---
+
+# Source-bound Unity Catalog candidate search
+
+**Contract ID:** weft.typed-sdk-unity-search. **Type:** compiler/host boundary.
+**Version:** `weft.unity-search/0.1`. **Status:** implementation candidate; native qualification pending.
+
+## Purpose
+
+Lower the original CONTRACT-074 non-temporal asynchronous candidate search and
+bounded current-row hydration into a distinct owned program. This does not
+reinterpret the PostgreSQL search program or Spark publication snapshots.
+Compilation grants no native permission.
+
+## Scope and Boundaries
+
+The initial managed profile is a host-computed, authored approximate L2 vector
+index bound to a unique original `unity-catalog` target, with asynchronous
+freshness. An optional original keyword leg selects native HYBRID; standalone
+keyword, BM25, RRF, target embedding services, unknown analyzers and arbitrary
+metric substitution refuse. Keyword ranking/analyzer must be explicitly
+implementation-defined with plain query syntax. Native HYBRID searches the full
+indexed STRING inventory, so the authored keyword sources and admitted native
+inventory must agree exactly. Native readiness and behavior require separate
+managed evidence on the pinned target.
+
+## Normative Surface
+
+`compile_unity_search_json` is shared by the runtime, Python and WASM. Its closed
+request retains original source document identity/hash/module/pointer, the
+original raw-read selection and bound parameter declarations, projection, vector
+parameter, topK, partial opt-in, managed target identity, catalog/schema/table UUID,
+endpoint/index identity and native vector field/dimensions. Optional paired
+keyword source/text parameter retain their own complete original source pins. HYBRID requires the exact explicit fusion object `{kind:"target-defined"}` and topK at most200; ANN refuses fusion.
+The exact candidate fixture is retained under `tests/native-search/`.
+
+The compiler independently admits the complete original UMF model and selected
+index declarations and unique native bindings. It refuses unsupported selected
+meaning rather than dropping it. Scalar String/Boolean current projections and
+a required single String selected Key are the initial hydration subset; numeric
+and vector hydration projections remain refused pending their native carrier
+qualification. Search input cannot aggregate, reorder, truncate or add unknown
+query modifiers. Every predicate Field must occur in each selected index's
+original `filterable` inventory.
+
+The compiled program has version `weft.unity-search/0.1`, profile
+`unity-catalog-current/0.1`, and a canonical structural digest owned by
+`weft-databricks-search`. It retains the complete request and original metadata.
+`query` contains an original REST method/path/body and explicit parameter-source
+bindings. `hydration.statement` contains exact named native SQL and parameter
+sources; candidate Key components use `{candidateKey:0}`. Hosts bind and execute
+these statements unchanged and never invent SQL, predicates or fusion.
+
+Each native candidate causes at most one bounded single-key read, conjoining the
+complete original predicate with exact selected-Key equality and retaining the
+original bound filter values. Native candidate order remains authoritative;
+missing/now-nonmatching candidates increment stale and are not refilled. Duplicate
+current Key rows, native denial, transport errors and malformed native responses
+are errors, never stale hits. Reads return at most two rows so duplicate Key
+violations can be detected before publishing a row.
+
+## Host Obligations
+
+- Require partial opt-in and report approximate/partial/asynchronous semantics.
+- Validate the exact current native principal, table UUID, schema/carriers,
+  endpoint/index type and readiness, selected Key, vector column/dimensions and
+  complete STRING inventory before every database operation. Never query an
+  unrelated existing business index to establish a fixture.
+- Bind query vector/text as native values, validate vector finiteness/shape and
+  original embedder identity, and use one timeout budget across all operations.
+- Hydrate no more than topK candidates under current admission, withhold malformed
+  or duplicate rows, preserve native ordinals, propagate native errors, and do not
+  refill dropped candidates.
+- Label native scores `implementation-defined`; do not invent an L2 distance
+  formula or claim exact rank/score correspondence without separate evidence.
+
+## Precedence and Compatibility
+
+CONTRACT-074 governs authored semantics, current filtered hydration and result
+reporting. Core source admission owns original model meaning; this backend owns
+native statements; the host owns live native custody and execution. Existing
+PostgreSQL exact search, raw Spark fixed snapshots and prior wheel APIs retain
+their own profiles. SDK temporal qualification remains **HELD**.
+
+## Error Semantics
+
+Closed JSON, original-source, target/binding, budget, carrier, projection and
+filterability mismatches return blocked diagnostics and no executable program.
+Unknown managed behavior remains unqualified. A successful compile is not native
+admission or a managed-service qualification claim.
+
+## Validation Checklist
+
+- [ ] Real owned DIRECT_ACCESS ANN/HYBRID fixtures and managed native admission.
+- [ ] Stale deletion, changed tenant/category, no refill and native denial/errors.
+- [ ] Wrong UUID/principal/index/vector/string inventory and source corruption refusal.
+- [ ] Exact installed wheel and Chromium/WASM program parity.
+
+## Prior Art
+
+The [Databricks query-index API](https://docs.databricks.com/api/vector-search/v1/query-vector-index)
+defines ANN/HYBRID requests, direct-access vector binding, result manifests and
+ordered result arrays. Its `query_columns` override is beta; this profile retains
+the full native STRING inventory instead. [Databricks vector-search documentation](https://docs.databricks.com/aws/en/vector-search/vector-search)
+describes native HNSW/L2; normalization-dependent cosine equivalence is not a
+generic cosine implementation claim.

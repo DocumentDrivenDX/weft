@@ -20,6 +20,8 @@ cases.push({name:'delta-action',method:'compile_native_action_json',request:JSON
 const deltaBulk=structuredClone(bulk);deltaBulk.action=deltaAction;deltaBulk.selection.target='spark-delta4';
 cases.push({name:'delta-bulk',method:'compile_native_bulk_json',request:JSON.stringify(deltaBulk)});
 for(const name of ['keyword','vector'])cases.push({name,method:'compile_search_json',request:await Bun.file('tests/native-search/'+name+'-request.json').text()});
+for(const kind of ['ann','hybrid'])cases.push({name:'unity-'+kind,method:'compile_unity_search_json',request:await Bun.file('tests/native-search/unity-'+kind+'-request.json').text()});
+const unityRefused=await Bun.file('tests/native-search/unity-ann-request.json').json();unityRefused.allowPartial=false;cases.push({name:'unity-partial-refusal',method:'compile_unity_search_json',request:JSON.stringify(unityRefused),expected:'blocked'});
 const vector086=await Bun.file('tests/native-search/vector-request.json').json();vector086.vectorBinding.extensionVersion='0.8.6';cases.push({name:'vector-0.8.6',method:'compile_search_json',request:JSON.stringify(vector086)});
 const vectorUnknown=structuredClone(vector086);vectorUnknown.vectorBinding.extensionVersion='unknown';cases.push({name:'vector-version-refusal',method:'compile_search_json',request:JSON.stringify(vectorUnknown),expected:'blocked'});
 const spark={version:'weft.raw-read/0.1',target:'spark-delta4',sql:'SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC',binding:{...action.binding,schema:'sdk_spark'},parameters:[],rowCap:10,keyset:false,snapshots:{orders:7}};cases.push({name:'spark',method:'compile_raw_read_json',request:JSON.stringify(spark)});

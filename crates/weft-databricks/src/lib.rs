@@ -47,3 +47,5 @@ pub mod raw_bulk;
 
 /// Separate authored-Key page language candidates; no historical profile relabeling.
 pub mod authored_pages;
+
+pub mod unity_search;

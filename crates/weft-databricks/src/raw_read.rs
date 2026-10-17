@@ -191,13 +191,14 @@ impl Lower<'_> {
         }
     }
 }
-fn lower(a: &AdmittedRead) -> Result<J> { lower_inner(a,false) }
-pub(crate) fn lower_transaction(a:&AdmittedRead)->Result<J>{ lower_inner(a,true) }
-fn lower_inner(a: &AdmittedRead, transaction:bool) -> Result<J> {
+fn lower(a: &AdmittedRead) -> Result<J> { lower_inner(a,false,None) }
+pub(crate) fn lower_transaction(a:&AdmittedRead)->Result<J>{ lower_inner(a,true,None) }
+pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog))}
+fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>) -> Result<J> {
     let r = a.request();
     let q = a.query();
     if r.version != "weft.raw-read/0.1"
-        || r.target != "spark-delta4"
+        || r.target != if current_catalog.is_some(){"unity-catalog-current"}else{"spark-delta4"}
         || (!transaction && r.binding.schema.is_none())
         || r.keyset
     {
@@ -285,7 +286,10 @@ fn lower_inner(a: &AdmittedRead, transaction:bool) -> Result<J> {
     {
         return Err("numeric raw Spark binding requires separately qualified shape profile");
     };
-    let (version,native)=if transaction {
+    let (version,native)=if let Some(catalog)=current_catalog {
+        if r.snapshots.is_some(){return Err("current managed selection cannot carry historical snapshots")}
+        (None,format!("{}.{}.{}",ident(catalog)?,ident(r.binding.schema.as_ref().unwrap())?,ident(&table.native)?))
+    }else if transaction {
         if r.snapshots.is_some(){return Err("transaction selection must use its original native transaction snapshot")}
         (None,"`__umf_delta_stage`".to_string())
     }else{
@@ -400,6 +404,10 @@ fn lower_inner(a: &AdmittedRead, transaction:bool) -> Result<J> {
         .join(" OR ");
     let check=format!("SELECT COUNT(*) AS violations FROM (SELECT {} FROM {native} GROUP BY {} HAVING COUNT(*) <> 1 OR {nulls}) AS invalid_keys",keys.join(", "),keys.join(", "));
     let mut out = json!({"version":"weft.raw-read/0.1","status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"binding":r.binding,"sourceSql":r.sql,"nativeChecks":[{"sql":check,"expected":0}],"snapshotTables":version.map(|v|vec![json!({"table":table.native,"version":v})]).unwrap_or_default(),"lockSql":[],"cursorParameters":[],"cursorOutputs":[],"cursorOrdering":[],"referencedTables":[{"logical":table.logical,"native":table.native,"columns":table.columns}],"obligations":{"transaction":"snapshot-read","principal":"administrative-single-tenant","ansiEnabled":true,"sparkVersion":"4.0.1","deltaVersion":"4.0.0","binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"uuid-and-version"}});
+    if current_catalog.is_some(){
+        out["version"]=json!("weft.unity-current-selection/0.1");
+        out["obligations"]=json!({"transaction":"current-read","principal":"native-managed-current-principal","ansiEnabled":true,"binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"native-current-uuid","nativeAdmissionEachOperation":true,"temporalQualification":"held"});
+    }
     if transaction {out["version"]=json!("weft.delta-selection/0.1");out["obligations"]["transaction"]=json!("original-Delta4-optimistic-Serializable-whole-table");out["obligations"]["tableIdentity"]=json!("original-native-transaction-snapshot-view");}
     out["structuralDigest"] = json!(weft_core::json::sha256(out.to_string().as_bytes()));
     Ok(out)

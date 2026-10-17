@@ -298,7 +298,8 @@
             "mod:local_spark4",
             "mod:raw_action",
             "mod:raw_bulk",
-            "mod:authored_pages"
+            "mod:authored_pages",
+            "mod:unity_search"
           ],
           "pathReferences": []
         },
@@ -394,6 +395,13 @@
         },
         {
           "path": "crates/weft-databricks/src/raw_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_search.rs",
           "publicDeclarations": [
             "fn:compile_json"
           ],
@@ -1847,6 +1855,7 @@
             "fn:binding",
             "fn:record",
             "fn:admit_json",
+            "fn:admit_unity_json",
             "fn:admit_terms"
           ],
           "pathReferences": []
@@ -3921,7 +3930,8 @@
             "fn:graph_requirements_json",
             "fn:lower_postgresql_current_presence_candidate_json",
             "fn:check_postgresql_current_presence_candidate_json",
-            "mod:engine_export"
+            "mod:engine_export",
+            "fn:compile_unity_search_json"
           ],
           "pathReferences": []
         },
@@ -4163,7 +4173,8 @@
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",
-            "fn:compile_engine_export_json"
+            "fn:compile_engine_export_json",
+            "fn:compile_unity_search_json"
           ],
           "pathReferences": []
         }
