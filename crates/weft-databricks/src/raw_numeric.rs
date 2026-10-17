@@ -6,7 +6,7 @@ use weft_core::raw_read::{Carrier, Request};
 pub(crate) fn parameters(request: &Request) -> Option<Value> {
     if request.binding.native_columns.is_none() { return None }
     let parameters: Vec<_> = request.parameters.iter()
-        .filter(|p| matches!(p.carrier, Carrier::Integer | Carrier::Decimal))
+        .filter(|p| p.container.is_none() && matches!(p.carrier, Carrier::Integer | Carrier::Decimal))
         .map(|p| json!({"name":p.name,"carrier":p.carrier,"nullable":p.nullable})).collect();
     if parameters.is_empty() { return None }
     Some(json!({"version":"weft.spark-exact-numeric-text/0.1",
@@ -26,6 +26,20 @@ pub(crate) fn comparison(left: &str, op: &str, right: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn bounded_list_program_retains_original_parameter_and_s8_json_transport(){
+        let mut r:Value=serde_json::from_str(include_str!("../../../tests/spark-pages/read-request.json")).unwrap();
+        r["keyset"]=json!(false);r["snapshots"]=json!({"orders":1});r["parameters"]=json!([{"name":"values","carrier":"string","nullable":false,"container":"list","elementNullable":true,"maxItems":1000}]);
+        for keyset in [false,true]{r["keyset"]=json!(keyset);for op in ["IN","NOT IN"]{
+            r["sql"]=json!(format!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE o.status {op} (:values) ORDER BY o.id LIMIT 10"));
+            let p:Value=serde_json::from_str(&crate::raw_read::compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");
+            assert_eq!(p["parameters"],r["parameters"]);assert_eq!(p["parameterOrder"][0],"values");let sql=p["sql"].as_str().unwrap();
+            for term in ["from_json(:p1,'ARRAY<STRING>',map('mode','FAILFAST'))","size(__umf_list.items)=0 THEN FALSE","__umf_list.lhs IS NULL THEN CAST(NULL AS BOOLEAN)","__umf_item IS NOT NULL","COLLATE UTF8_BINARY"]{assert!(sql.contains(term),"{term}: {sql}")}
+            assert_eq!(sql.matches(":p1").count(),1);assert_eq!(p["obligations"]["listPredicateParameters"]["maximumEncodedBytes"],1000000);
+        }}
+        r["keyset"]=json!(false);
+        for predicate in ["o.status=:values","o.status IN(:values,'x')","o.status IN(:missing)"]{r["sql"]=json!(format!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE {predicate} LIMIT 10"));let p:Value=serde_json::from_str(&crate::raw_read::compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"blocked","{predicate}: {p}");}
+    }
     #[test]
     fn literal_membership_uses_s8_and_empty_resolves_original_field(){
         let mut r:Value=serde_json::from_str(include_str!("../../../tests/spark-pages/read-request.json")).unwrap();r["keyset"]=json!(false);r["snapshots"]=json!({"orders":1});r["parameters"]=json!([]);

@@ -15,7 +15,8 @@ ddx:
 
 # Raw SDK membership, navigation and bounded related Keys
 
-This is a PostgreSQL18/Lakebase18 compiler candidate. It does not qualify a
+This covers PostgreSQL18/Lakebase18 collection and relationship candidates and a
+separate Spark4.0.1/Delta4.0.0 list-transport candidate. It does not qualify a
 native deployment, change engine graph authority, or release temporal support.
 The source model, binding, original requests, output metadata and all admission
 programs remain covered by the original program digest.
@@ -26,8 +27,21 @@ An original raw Parameter can declare `container:"list"`, `elementNullable`,
 `maxItems` from1 through1000 and `nullable:false`. Its existing scalar `carrier`
 is the element carrier. Scalar parameters omit all three list facets. The host
 must validate and own the complete bounded list before binding it; no truncation
-is permitted. The initial list profile refuses other targets and every use except
+is permitted. The PostgreSQL list profile refuses other targets and every use except
 the sole operand of `IN (:parameter)` or `NOT IN (:parameter)`.
+
+A separate Spark4.0.1/Delta4.0.0 source candidate admits the same logical list
+descriptor for the sole membership operand. Its original
+`listPredicateParameters` obligation selects `weft.spark-list-json/0.1` physical
+transport: a JSON array whose String and Boolean members retain those types,
+Integer and Decimal members are finite plain base-ten strings, and null members
+remain JSON null. The list is bounded by its original maxItems, 10,000 bytes per
+element and 1,000,000 encoded bytes; the host refuses excess rather than truncates.
+The original SQL parses with FAILFAST and implements the same S8 CASE/EXISTS
+semantics. Numeric comparisons use the exact text comparator and require original
+native ColumnSet custody. Scalar numeric transport excludes list parameters.
+This additive profile requires its own immutable-wheel and native qualification;
+the preceding PostgreSQL and Spark scalar evidence does not qualify it.
 
 S8 membership is false for an empty list, unknown for a null left operand and a
 nonempty list, true if any nonnull element equals the left operand, and false

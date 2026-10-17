@@ -5,6 +5,10 @@ use sqlparser::ast::*;
 use std::collections::{BTreeMap,BTreeSet};
 use weft_core::raw_read::{AdmittedRead, Carrier, Request, Table};
 type Result<T> = std::result::Result<T, &'static str>;
+pub(crate) fn list_parameters(request:&Request)->Option<J>{
+    let parameters:Vec<_>=request.parameters.iter().filter(|p|p.container.is_some()).map(|p|json!({"name":p.name,"carrier":p.carrier,"nullable":false,"elementNullable":p.element_nullable,"maxItems":p.max_items})).collect();
+    if parameters.is_empty(){None}else{Some(json!({"version":"weft.spark-list-json/0.1","parameters":parameters,"maximumElementBytes":10000,"maximumEncodedBytes":1000000,"format":"typed-json-array"}))}
+}
 pub(crate) fn ident(s: &str) -> Result<String> {
     if s.is_empty() || s.len() > 255 || s.contains('\0') {
         return Err("bounded native identifier required");
@@ -51,6 +55,7 @@ impl Lower<'_> {
                         .iter()
                         .find(|p| p.name == key)
                         .ok_or("parameter absent")?;
+                    if param.container.is_some(){return Err("list parameter is only a complete IN/NOT IN membership operand")}
                     self.used.insert(key.into());
                     self.slots.push(key.into());
                     Ok((
@@ -178,6 +183,22 @@ impl Lower<'_> {
                     return Err("membership limit");
                 };
                 let a = self.scalar(expr)?;
+                if let [Expr::Value(value)] = list.as_slice() {
+                    if let Value::Placeholder(placeholder) = &value.value {
+                        let key=placeholder.strip_prefix(':').ok_or("named list parameter required")?;
+                        let parameter=self.request.parameters.iter().find(|p|p.name==key).ok_or("list parameter absent")?;
+                        if parameter.container.is_some() {
+                            if self.request.target!="spark-delta4"||parameter.carrier!=a.1{return Err("list membership carrier or target differs")}
+                            if matches!(a.1,Carrier::Integer|Carrier::Decimal)&&!self.exact_numeric(&a.1){return Err("exact numeric list requires original native ColumnSet custody")}
+                            self.used.insert(key.to_owned());self.slots.push(key.to_owned());
+                            let native_type=if parameter.carrier==Carrier::Boolean{"ARRAY<BOOLEAN>"}else{"ARRAY<STRING>"};
+                            let items=format!("from_json(:p{},'{native_type}',map('mode','FAILFAST'))",self.slots.len());
+                            let comparison=if self.exact_numeric(&a.1){crate::raw_numeric::comparison("__umf_list.lhs","=","__umf_item")}else if a.1==Carrier::String{"((__umf_list.lhs COLLATE UTF8_BINARY) = (__umf_item COLLATE UTF8_BINARY))".to_owned()}else{"(__umf_list.lhs = __umf_item)".to_owned()};
+                            let membership=format!("element_at(transform(array(named_struct('lhs',{},'items',{items})),__umf_list -> CASE WHEN size(__umf_list.items)=0 THEN FALSE WHEN __umf_list.lhs IS NULL THEN CAST(NULL AS BOOLEAN) ELSE exists(__umf_list.items,__umf_item -> __umf_item IS NOT NULL AND {comparison}) END),1)",a.0);
+                            return Ok(if *negated{format!("NOT ({membership})")}else{membership});
+                        }
+                    }
+                }
                 if list.is_empty() {
                     return Ok(if *negated { "TRUE" } else { "FALSE" }.into());
                 };
@@ -454,6 +475,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
         out["obligations"]=json!({"transaction":"current-read","principal":"native-managed-current-principal","ansiEnabled":true,"binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"native-current-uuid","nativeAdmissionEachOperation":true,"temporalQualification":"held"});
     }
     if let Some(parameters)=crate::raw_numeric::parameters(r){out["obligations"]["numericPredicateParameters"]=parameters;}
+    if let Some(parameters)=list_parameters(r){out["obligations"]["listPredicateParameters"]=parameters;}
     if transaction {out["version"]=json!("weft.delta-selection/0.1");out["obligations"]["transaction"]=json!("original-Delta4-optimistic-Serializable-whole-table");out["obligations"]["tableIdentity"]=json!("original-native-transaction-snapshot-view");}
     out["structuralDigest"] = json!(weft_core::json::sha256(out.to_string().as_bytes()));
     Ok(out)

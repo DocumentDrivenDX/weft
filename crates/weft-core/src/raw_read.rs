@@ -303,7 +303,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     }
     for parameter in &request.parameters {
         if parameter.container.is_some() {
-            if !matches!(request.target.as_str(),"postgresql18"|"lakebase18") || parameter.nullable || parameter.element_nullable.is_none() || !parameter.max_items.is_some_and(|n|n>0&&n<=1000){return Err("list parameter requires exact bounded nonnullable PostgreSQL membership profile")}
+            if !matches!(request.target.as_str(),"postgresql18"|"lakebase18"|"spark-delta4") || parameter.nullable || parameter.element_nullable.is_none() || !parameter.max_items.is_some_and(|n|n>0&&n<=1000){return Err("list parameter requires an exact bounded nonnullable membership profile")}
         } else if parameter.element_nullable.is_some()||parameter.max_items.is_some(){return Err("scalar parameter cannot carry list facets")}
     }
     let model = prepare_model(&request.binding)?;
