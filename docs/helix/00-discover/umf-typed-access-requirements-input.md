@@ -254,7 +254,7 @@ compare_op  = "=" | "<>" | "<" | "<=" | ">" | ">=" ;
 order       = "ORDER", "BY", order_item, { ",", order_item } ;
 order_item  = ( column | aggregate | bucket ), [ "ASC" | "DESC" ], [ "NULLS", ( "FIRST" | "LAST" ) ] ;
 aggregate   = ( "SUM" | "MIN" | "MAX" ), "(", column, ")"
-            | "AVG", "(", column, ",", "SCALE", positive_integer_literal, ")"
+            | "AVG_SCALE", "(", column, ",", nonnegative_integer_literal, ")"
             | "COUNT", "(", ( "*" | "DISTINCT", column ), ")"
             | "APPROX_COUNT_DISTINCT", "(", column, ")" ;
 bucket      = "BUCKET_WIDTH", "(", column, ",", value, ")"
@@ -265,6 +265,12 @@ group_item  = column | bucket ;
    GROUP BY takes group_item, { ",", group_item }. *)
 update_set  = field, "=", ( value | "NULL" ) ;
 ```
+
+The additive raw-table DSL compiler spells explicit-scale half-even AVG as
+`AVG_SCALE(column, scale_literal)` with a bounded literal scale in 0..1000.
+This routine grammar resolution retains S11 and CONTRACT-071 `avg_(c, scale=n)`;
+ordinary reviewed SQL `AVG(column)` keeps PostgreSQL semantics and does not
+qualify DSL AVG. Native qualification remains separate from source admission.
 
 Keyset continuation stays outside the grammar (S7): page profiles take the
 continuation tuple as API arguments or typed parameters.

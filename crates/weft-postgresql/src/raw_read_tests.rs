@@ -12,6 +12,29 @@ mod raw_read_tests {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }
     #[test]
+    fn raw_read_numeric_buckets_keep_exact_group_identity_and_ties() {
+        let mut r=request();r["sql"]=json!("SELECT BUCKET_WIDTH(o.amount, 0.25) AS bucket, SUM(o.id) AS total, AVG_SCALE(o.amount,2) AS average FROM \"commerce\".\"Order\" AS o GROUP BY BUCKET_WIDTH(o.amount, 0.25) ORDER BY average DESC");r["parameters"]=json!([]);
+        let out=compile(r);assert_eq!(out["status"],"compiled","{out}");assert_eq!(out["outputs"][0]["carrier"],"decimal");assert_eq!(out["outputs"][1]["carrier"],"integer");let sql=out["sql"].as_str().unwrap();assert!(sql.contains("pg_catalog.sum(\"o\".\"id\"::pg_catalog.numeric)"));assert!(sql.contains("DESC NULLS LAST,"));assert!(sql.ends_with("ASC NULLS LAST LIMIT 10"));
+        for query in [
+            "SELECT o.amount AS raw, COUNT(*) AS n FROM \"commerce\".\"Order\" AS o GROUP BY BUCKET_WIDTH(o.amount, 1)",
+            "SELECT BUCKET_WIDTH(o.amount,1) AS bucket, COUNT(*) AS n FROM \"commerce\".\"Order\" AS o GROUP BY BUCKET_WIDTH(o.amount, 1) HAVING o.amount > 0.0",
+            "SELECT BUCKET_WIDTH(o.amount,1) AS bucket, COUNT(*) AS n FROM \"commerce\".\"Order\" AS o GROUP BY BUCKET_WIDTH(o.amount, 1) ORDER BY o.amount",
+            "SELECT BUCKET_WIDTH(o.amount,2) AS bucket, COUNT(*) AS n FROM \"commerce\".\"Order\" AS o GROUP BY BUCKET_WIDTH(o.amount, 1)",
+        ] {let mut r=request();r["sql"]=json!(query);r["parameters"]=json!([]);assert_eq!(compile(r)["status"],"blocked","{query}");}
+        for width in ["0","-1","NULL",":width","'1'","1e999","1.0.0"] {let mut r=request();r["sql"]=json!(format!("SELECT BUCKET_WIDTH(o.amount,{width}) AS bucket FROM \"commerce\".\"Order\" AS o"));r["parameters"]=json!([]);let out=compile(r);assert_eq!(out["status"],"blocked","{width}: {out}");assert!(out.get("sql").is_none());}
+    }
+    #[test]
+    fn raw_read_explicit_scale_average_and_exact_distinct_count() {
+        for scale in [0,2,38,1000] {
+            let mut r=request();r["sql"]=json!(format!("SELECT AVG_SCALE(o.amount, {scale}) AS average, COUNT(DISTINCT o.status) AS unique_status FROM \"commerce\".\"Order\" AS o"));r["parameters"]=json!([]);
+            let out=compile(r);assert_eq!(out["status"],"compiled","{out}");let sql=out["sql"].as_str().unwrap();assert!(sql.contains("pg_catalog.div("));assert!(sql.contains("pg_catalog.mod("));assert!(!sql.contains("pg_catalog.avg("));assert!(sql.contains("count(DISTINCT \"o\".\"status\" COLLATE pg_catalog.\"C\")"));assert_eq!(out["outputs"][0]["carrier"],"decimal");assert_eq!(out["outputs"][0]["nullable"],true);assert_eq!(out["outputs"][1]["carrier"],"integer");assert_eq!(out["outputs"][1]["nullable"],false);
+        }
+        let mut r=request();r["sql"]=json!("SELECT AVG(o.amount) AS native_average FROM \"commerce\".\"Order\" AS o");r["parameters"]=json!([]);let out=compile(r);assert_eq!(out["status"],"compiled");assert!(out["sql"].as_str().unwrap().contains("pg_catalog.avg("));
+        for expression in ["AVG_SCALE(o.status,2)","AVG_SCALE(o.amount)","AVG_SCALE(o.amount,-1)","AVG_SCALE(o.amount,1001)","AVG_SCALE(o.amount,2.0)","AVG_SCALE(o.amount,:scale)","AVG_SCALE(DISTINCT o.amount,2)","AVG_SCALE(o.amount,2,3)","COUNT(DISTINCT *)","SUM(DISTINCT o.amount)"] {
+            let mut r=request();r["sql"]=json!(format!("SELECT {expression} AS result FROM \"commerce\".\"Order\" AS o"));r["parameters"]=json!([]);let out=compile(r);assert_eq!(out["status"],"blocked","{expression}: {out}");assert!(out.get("sql").is_none());
+        }
+    }
+    #[test]
     fn raw_read_prefix_is_binary_not_a_pattern() {
         for target in ["postgresql18", "lakebase18"] {
             for prefix in ["", "50%_", "a\\", "é", "é", "𝄞", "O'Reilly"] {
@@ -69,7 +92,7 @@ mod raw_read_tests {
             }
             for (predicate, emitted) in [
                 (format!("o.amount {op} NULL"), if op == "IS DISTINCT FROM" { "\"o\".\"amount\" IS NOT NULL" } else { "\"o\".\"amount\" IS NULL" }),
-                (format!("(NULL) {op} o.status"), if op == "IS DISTINCT FROM" { "\"o\".\"status\" IS NOT NULL" } else { "\"o\".\"status\" IS NULL" }),
+                (format!("(NULL) {op} o.status"), if op == "IS DISTINCT FROM" { "\"o\".\"status\" COLLATE pg_catalog.\"C\" IS NOT NULL" } else { "\"o\".\"status\" COLLATE pg_catalog.\"C\" IS NULL" }),
                 (format!("NULL {op} (NULL)"), if op == "IS DISTINCT FROM" { "WHERE FALSE" } else { "WHERE TRUE" }),
             ] {
                 let mut r = request();

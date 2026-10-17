@@ -40,7 +40,7 @@ struct Lower<'a> {
     scans: BTreeMap<String, (&'a Table, bool)>,
     slots: Vec<String>,
     used: BTreeSet<String>,
-    group_fields: Option<BTreeSet<(String, String)>>,
+    group_values: Option<BTreeSet<String>>,
 }
 fn ident(s: &str) -> Result<String> {
     if s.is_empty() || s.len() > 63 || s.contains('\0') {
@@ -122,7 +122,7 @@ impl<'a> Lower<'a> {
             .find(|c| c.logical == f)
             .ok_or("unknown column")?;
         Ok(Scalar {
-            sql: format!("{}.{}", ident(&a)?, ident(&c.native)?),
+            sql: if c.carrier==Carrier::String {format!("{}.{} COLLATE pg_catalog.\"C\"", ident(&a)?,ident(&c.native)?)} else {format!("{}.{}", ident(&a)?, ident(&c.native)?)},
             carrier: c.carrier.clone(),
             nullable: *left || c.nullable,
             aggregate: false,
@@ -169,8 +169,7 @@ impl<'a> Lower<'a> {
         let Expr::Function(f) = e else {
             return Err("unsupported scalar expression; use a bound parameter");
         };
-        if !aggregates
-            || f.uses_odbc_syntax
+        if f.uses_odbc_syntax
             || !matches!(f.parameters, FunctionArguments::None)
             || !f.within_group.is_empty()
             || f.filter.is_some()
@@ -184,20 +183,65 @@ impl<'a> Lower<'a> {
             return Err("qualified/custom functions are not admitted");
         }
         let op = fname[0].as_str();
-        if !["count", "sum", "avg", "min", "max"].contains(&op) {
+        if op=="bucket_width" {
+            let FunctionArguments::List(args)=&f.args else {return Err("bucket arguments")};
+            if args.duplicate_treatment.is_some() || !args.clauses.is_empty() || args.args.len()!=2 {return Err("bucket requires a field and positive numeric literal width")};
+            let (FunctionArg::Unnamed(FunctionArgExpr::Expr(field)),FunctionArg::Unnamed(FunctionArgExpr::Expr(width)))=(&args.args[0],&args.args[1]) else {return Err("bucket requires a field and positive numeric literal width")};
+            let Expr::Value(width_value)=width else {return Err("bucket width must be a positive numeric literal")};
+            let Value::Number(token,false)=&width_value.value else {return Err("bucket width must be a positive numeric literal")};
+            if token.is_empty() || token.bytes().filter(|c|*c==b'.').count()>1 || !token.bytes().all(|c|c.is_ascii_digit()||c==b'.') || !token.bytes().any(|c|matches!(c,b'1'..=b'9')) {return Err("bucket width must be a positive finite numeric literal")};
+            let c=self.column(field)?;let width=self.value(width,false)?;
+            if !matches!(c.carrier,Carrier::Integer|Carrier::Decimal) {return Err("numeric bucket field required")};
+            let value=format!("{}::pg_catalog.numeric",c.sql);
+            let quotient=format!("pg_catalog.div({value}, {})",width.sql);
+            let remainder=format!("pg_catalog.mod({value}, {})",width.sql);
+            let sql=format!("(({quotient} - CASE WHEN {value}<0 AND {remainder}<>0 THEN 1 ELSE 0 END) * {})",width.sql);
+            return Ok(Scalar{sql,carrier:if c.carrier==Carrier::Integer&&width.carrier==Carrier::Integer {Carrier::Integer} else {Carrier::Decimal},nullable:c.nullable,aggregate:false,fields:c.fields});
+        }
+        if !aggregates || !["count", "sum", "avg", "avg_scale", "min", "max"].contains(&op) {
             return Err("function outside read-only aggregate profile");
         }
         let FunctionArguments::List(args) = &f.args else {
             return Err("aggregate arguments");
         };
-        if args.duplicate_treatment.is_some() || !args.clauses.is_empty() || args.args.len() != 1 {
+        if op == "avg_scale" {
+            if args.duplicate_treatment.is_some() || !args.clauses.is_empty() || args.args.len()!=2 {
+                return Err("AVG_SCALE requires a field and literal result scale");
+            }
+            let (FunctionArg::Unnamed(FunctionArgExpr::Expr(field)), FunctionArg::Unnamed(FunctionArgExpr::Expr(Expr::Value(scale)))) = (&args.args[0],&args.args[1]) else {
+                return Err("AVG_SCALE requires a field and literal result scale");
+            };
+            let Value::Number(token,false)=&scale.value else {return Err("AVG_SCALE scale must be an integer literal")};
+            if token.is_empty() || !token.bytes().all(|c|c.is_ascii_digit()) {return Err("AVG_SCALE scale must be an integer literal")};
+            let scale:u16=token.parse().map_err(|_|"AVG_SCALE scale budget")?;
+            if scale>1000 {return Err("AVG_SCALE scale budget")};
+            let c=self.column(field)?;
+            if !matches!(c.carrier,Carrier::Integer|Carrier::Decimal) {return Err("numeric aggregate input required")};
+            let power=format!("1{}", "0".repeat(usize::from(scale)));
+            let factor=if scale==0 {"1".into()} else {format!("0.{}1", "0".repeat(usize::from(scale)-1))};
+            let count=format!("pg_catalog.count({})::pg_catalog.numeric",c.sql);
+            let numerator=format!("(pg_catalog.sum({}::pg_catalog.numeric) * {power}::pg_catalog.numeric)",c.sql);
+            let quotient=format!("pg_catalog.div({numerator}, {count})");
+            let remainder=format!("pg_catalog.abs(pg_catalog.mod({numerator}, {count}))");
+            // Integer quotient and exact remainder select the nearest integer;
+            // exact half ties choose its even neighbor for either sign. Decimal
+            // multiplication restores the scale without rounded division.
+            let sql=format!("CASE WHEN {count}=0 THEN NULL::pg_catalog.numeric ELSE pg_catalog.round(({quotient} + CASE WHEN (2*{remainder})>{count} OR ((2*{remainder})={count} AND pg_catalog.mod(pg_catalog.abs({quotient}),2)=1) THEN pg_catalog.sign({numerator}) ELSE 0 END) * {factor}::pg_catalog.numeric, {scale}) END");
+            return Ok(Scalar{sql,carrier:Carrier::Decimal,nullable:true,aggregate:true,fields:c.fields});
+        }
+        let distinct=match args.duplicate_treatment {
+            None=>false,
+            Some(DuplicateTreatment::Distinct) if op=="count"=>true,
+            _=>return Err("aggregate modifiers"),
+        };
+        if !args.clauses.is_empty() || args.args.len() != 1 {
             return Err("aggregate modifiers");
         }
         let FunctionArg::Unnamed(arg) = &args.args[0] else {
             return Err("named aggregate argument");
         };
         let (sql, carrier, fields) = match arg {
-            FunctionArgExpr::Wildcard if op == "count" => {
+            FunctionArgExpr::Wildcard if op == "count" && !distinct => {
                 ("*".into(), Carrier::Integer, BTreeSet::new())
             }
             FunctionArgExpr::Expr(e) => {
@@ -212,17 +256,19 @@ impl<'a> Lower<'a> {
                 }
                 let carrier = if op == "count" {
                     Carrier::Integer
-                } else if op == "avg" || op == "sum" && c.carrier == Carrier::Integer {
+                } else if op == "avg" {
                     Carrier::Decimal
                 } else {
-                    c.carrier
+                    c.carrier.clone()
                 };
                 (c.sql, carrier, c.fields)
             }
             _ => return Err("aggregate input"),
         };
-        let rendered = if op == "sum" && carrier == Carrier::Decimal {
-            format!("pg_catalog.{op}({sql})::pg_catalog.numeric")
+        let rendered = if distinct {
+            format!("pg_catalog.count(DISTINCT {sql})")
+        } else if op == "sum" {
+            format!("pg_catalog.sum({sql}::pg_catalog.numeric)")
         } else {
             format!("pg_catalog.{op}({sql})")
         };
@@ -238,10 +284,8 @@ impl<'a> Lower<'a> {
         let c = self.value(e, aggregates)?;
         if aggregates
             && !c.aggregate
-            && self
-                .group_fields
-                .as_ref()
-                .is_some_and(|g| !c.fields.is_subset(g))
+            && !c.fields.is_empty()
+            && self.group_values.as_ref().is_some_and(|g| !g.contains(&c.sql))
         {
             return Err("ungrouped HAVING column");
         };
@@ -521,7 +565,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         scans: BTreeMap::new(),
         slots: vec![],
         used: BTreeSet::new(),
-        group_fields: None,
+        group_values: None,
     };
     let (_, mut from) = l.table(&s.from[0].relation, false)?;
     for j in &s.from[0].joins {
@@ -566,10 +610,11 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         return Err("group modifiers");
     }
     let mut groups = vec![];
-    let mut group_fields = BTreeSet::new();
+    let mut group_values = BTreeSet::new();
     for e in group {
-        let c = l.column(e)?;
-        group_fields.extend(c.fields);
+        let c = l.value(e,false)?;
+        if c.fields.is_empty() || c.aggregate {return Err("group key must be a field or numeric bucket")};
+        group_values.insert(c.sql.clone());
         groups.push(c.sql)
     }
     let mut outputs = vec![];
@@ -603,7 +648,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     if aggregate
         && scalars
             .iter()
-            .any(|c| !c.aggregate && !c.fields.is_subset(&group_fields))
+            .any(|c| !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql))
     {
         return Err("ungrouped projected column");
     }
@@ -717,13 +762,15 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     if !groups.is_empty() {
         sql += &format!(" GROUP BY {}", groups.join(", "))
     }
-    l.group_fields = Some(group_fields.clone());
+    l.group_values = Some(group_values.clone());
     if let Some(e) = &s.having {
         if !aggregate {
             return Err("HAVING requires aggregates");
         };
         sql += &format!(" HAVING {}", l.predicate(e, true)?)
     }
+    let mut rendered_order=vec![];
+    let mut ordered_values=BTreeSet::new();
     if let Some(order) = &q.order_by {
         if order.interpolate.is_some() {
             return Err("ordering interpolation");
@@ -731,16 +778,19 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         let OrderByKind::Expressions(items) = &order.kind else {
             return Err("ORDER BY ALL");
         };
-        let mut rendered = vec![];
         for item in items {
             if item.with_fill.is_some() {
                 return Err("ordering fill");
             };
-            let c = l.value(&item.expr, true)?;
-            if aggregate && !c.aggregate && !c.fields.is_subset(&group_fields) {
+            let c=if let Expr::Identifier(id)=&item.expr {
+                let position=outputs.iter().position(|o|o.name==name(id)).ok_or("ordering output alias absent")?;
+                scalars[position].clone()
+            } else {l.value(&item.expr,true)?};
+            if aggregate && !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql) {
                 return Err("ungrouped ordering");
             }
-            rendered.push(format!(
+            ordered_values.insert(c.sql.clone());
+            rendered_order.push(format!(
                 "{} {} NULLS {}",
                 c.sql,
                 match item.options.sort {
@@ -755,8 +805,11 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
                 }
             ));
         }
-        sql += &format!(" ORDER BY {}", rendered.join(", "));
     }
+    if aggregate {
+        for group in &groups {if ordered_values.insert(group.clone()) {rendered_order.push(format!("{group} ASC NULLS LAST"))}}
+    }
+    if !rendered_order.is_empty() {sql += &format!(" ORDER BY {}",rendered_order.join(", "))}
     let limit = match &q.limit_clause {
         None => r.row_cap,
         Some(LimitClause::LimitOffset {
