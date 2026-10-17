@@ -117,6 +117,7 @@ fn lower_mode(a:&AdmittedRead,snapshot:bool)->Result<Value>{
   referenced.push(json!({"logical":table.logical,"native":table.native,"columns":columns}));
  }
  let mut out=json!({"version":"weft.raw-read/0.1","status":"compiled","target":r.target,"sql":sql,"sourceSql":r.sql,"binding":r.binding,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"nativeChecks":native_checks,"snapshotTables":snapshot_tables,"lockSql":[],"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced,"obligations":{"transaction":if snapshot{"snapshot-read"}else{"live-read"},"snapshot":snapshot,"principal":"administrative-single-tenant","ansiEnabled":true,"sparkVersion":"4.0.1","deltaVersion":"4.0.0","binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-page-deadline","tableIdentity":if snapshot{"uuid-and-version"}else{"uuid"}}});
+ if let Some(parameters)=crate::raw_numeric::parameters(r){out["obligations"]["numericPredicateParameters"]=parameters;}
  if !snapshot&&r.snapshots.is_some(){out["snapshotProgram"]=lower_mode(a,true)?;}
  if r.stream_page_size{out["obligations"]["streamPageSize"]=json!({"parameter":"__umf_page_size","minimum":1,"maximum":limit});}
  out["structuralDigest"]=json!(weft_core::json::sha256(weft_core::mutation::canonical(&out).as_bytes()));Ok(out)

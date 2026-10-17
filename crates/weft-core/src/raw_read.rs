@@ -62,11 +62,20 @@ pub struct Binding {
     pub native_columns: Option<Json>,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all="lowercase")]
+pub enum ParameterContainer { List }
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Parameter {
     pub name: String,
     pub carrier: Carrier,
     pub nullable: bool,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub container: Option<ParameterContainer>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub element_nullable: Option<bool>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub max_items: Option<u16>,
 }
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
@@ -202,6 +211,12 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             return Err("relationship identity absent/ambiguous in UMF");
         };
         let d = declared[0];
+        if d.as_object().is_none_or(|m|m.keys().any(|k|!matches!(k.as_str(),"id"|"name"|"title"|"description"|"source"|"target"|"sourceMultiplicity"|"targetMultiplicity"|"targetLifecycle"|"directed"|"inverse"|"associationRecord"|"extensions")))
+            || !matches!(d["targetLifecycle"].as_str(),Some("owned"|"independent"))
+            || d["source"].as_array().is_none_or(|items|items.iter().any(|r|r.as_object().is_none_or(|m|m.keys().any(|k|!matches!(k.as_str(),"module"|"element")))))
+            || d["target"].as_array().is_none_or(|items|items.iter().any(|r|r.as_object().is_none_or(|m|m.keys().any(|k|!matches!(k.as_str(),"module"|"element"|"key")))))
+            || ["sourceMultiplicity","targetMultiplicity"].iter().any(|key|d[*key].as_object().is_none_or(|m|m.keys().any(|k|!matches!(k.as_str(),"min"|"max"))))
+        {return Err("selected original raw relationship contains unsupported meaning")}
         let target_key=target.value["keys"].as_array().and_then(|keys|keys.iter().find(|k|k["id"]==d["target"][0]["key"])).ok_or("relationship target Key absent")?;
         let target_fields=target_key["fields"].as_array().ok_or("relationship target Key fields absent")?.iter().map(|reference| {
             let module=modules.iter().find(|m|m["id"]==reference["module"]).ok_or("relationship target Field module absent")?;
@@ -217,7 +232,7 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             if source_column.carrier!=target_column.carrier{return Err("relationship native logical carrier mismatch")}
         }
         if rel.pairs.iter().map(|p|p[1].clone()).collect::<Vec<_>>()!=target_fields
-            || d["extensions"].as_object().is_some_and(|m| !m.is_empty())
+            || d.get("extensions").is_some_and(|e|e.as_object().is_none_or(|m|!m.is_empty()))
             || d["directed"] != true
             || d["targetMultiplicity"]["max"] != 1
             || !rel.to_one
@@ -285,6 +300,11 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
         || request.binding.tables.len() > 256
     {
         return Err("unsupported raw-read version or input budget");
+    }
+    for parameter in &request.parameters {
+        if parameter.container.is_some() {
+            if !matches!(request.target.as_str(),"postgresql18"|"lakebase18") || parameter.nullable || parameter.element_nullable.is_none() || !parameter.max_items.is_some_and(|n|n>0&&n<=1000){return Err("list parameter requires exact bounded nonnullable PostgreSQL membership profile")}
+        } else if parameter.element_nullable.is_some()||parameter.max_items.is_some(){return Err("scalar parameter cannot carry list facets")}
     }
     let model = prepare_model(&request.binding)?;
     let mut statements =

@@ -155,7 +155,7 @@ fn compile(raw:&str)->Result<Value>{
  let mut hydration:raw_read::Request=serde_json::from_value(serde_json::to_value(&r.selection).unwrap()).unwrap();
  hydration.sql=format!("SELECT {} FROM {logical} AS {} WHERE {predicate}{}.{} = :__umf_candidate_key",format!("{}.{} AS \"__umf_key_0\"",ident(alias)?,ident(&key.logical)?),ident(alias)?,ident(alias)?,ident(&key.logical)?);
  if hydration.parameters.iter().any(|p|p.name=="__umf_candidate_key"){return Err("reserved candidate parameter collision")}
- hydration.parameters.push(raw_read::Parameter{name:"__umf_candidate_key".into(),carrier:raw_read::Carrier::String,nullable:false});hydration.row_cap=2;
+ hydration.parameters.push(raw_read::Parameter{name:"__umf_candidate_key".into(),carrier:raw_read::Carrier::String,nullable:false,container:None,element_nullable:None,max_items:None});hydration.row_cap=2;
  let h=raw_read::admit_json(&serde_json::to_string(&hydration).unwrap())?;
  let lowered=crate::raw_read::lower_current_projected(&h,&m.catalog,&native_projection)?;
  let bindings=lowered["parameterOrder"].as_array().unwrap().iter().enumerate().map(|(i,p)|{

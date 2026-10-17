@@ -22,6 +22,8 @@ impl PgCarrier for Carrier {
     }
 }
 
+#[path="raw_read_relationships.rs"]
+mod native_relationships;
 type Result<T> = std::result::Result<T, &'static str>;
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -44,11 +46,14 @@ struct Lower<'a> {
     admitted: &'a AdmittedRead,
     term_indexes: BTreeMap<String,Json>,
     used_columns: std::cell::RefCell<BTreeSet<(String,String)>>,
+    semantic_columns: std::cell::RefCell<BTreeSet<(String,String)>>,
     used_functions: std::cell::RefCell<BTreeSet<String>>,
     used_operators: std::cell::RefCell<BTreeSet<String>>,
     relationship_keys: BTreeMap<String,Json>,
+    relationship_admissions: BTreeMap<String,Json>,
     request: &'a Request,
     scans: BTreeMap<String, (&'a Table, bool)>,
+    internal_scans: BTreeSet<String>,
     slots: Vec<String>,
     used: BTreeSet<String>,
     group_values: Option<BTreeSet<String>>,
@@ -98,6 +103,7 @@ fn term_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,col
     let names=parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>();
     Ok(json!({"source":index.request().source,"index":index.index(),"nativeBinding":index.binding(),"logicalTable":table.logical,"nativeTable":table.native,"nativeColumn":column.native,"configuration":configuration,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"dbapiParameterOrder":names,"parameters":parameters}}))
 }
+pub(crate) fn relationship_metadata(admitted:&AdmittedRead,relationship:&weft_core::raw_read::Relationship)->Result<Json>{native_relationships::admission(admitted,relationship)}
 pub(crate) fn relationship_key_metadata(table:&Table,logical:&[String],schema:&Option<String>)->Result<Json>{
     let native=logical.iter().map(|field|table.columns.iter().find(|c|c.logical==*field).map(|c|c.native.clone()).ok_or("relationship Key field lacks scalar binding")).collect::<Result<Vec<_>>>()?;
     if native.is_empty()||native.len()>16{return Err("relationship Key bound")}
@@ -160,6 +166,7 @@ impl<'a> Lower<'a> {
         }
         let a = name(&parts[0]);
         let f = name(&parts[1]);
+        if self.internal_scans.contains(&a){return Err("internal relationship alias is not an authored column")}
         let (t, left) = self.scans.get(&a).ok_or("unknown alias")?;
         let c = t
             .columns
@@ -182,6 +189,14 @@ impl<'a> Lower<'a> {
         if matches!(e, Expr::CompoundIdentifier(_)) {
             return self.column(e);
         }
+        if let Expr::UnaryOp { op, expr } = e {
+            if matches!(op, UnaryOperator::Minus | UnaryOperator::Plus) {
+                let Expr::Value(v) = expr.as_ref() else { return Err("numeric sign requires an original numeric literal") };
+                let Value::Number(token, false) = &v.value else { return Err("numeric sign requires an original numeric literal") };
+                let sign = if matches!(op, UnaryOperator::Minus) { "-" } else { "+" };
+                return Ok(Scalar { sql: format!("({sign}{token})::pg_catalog.numeric"), carrier: if token.bytes().all(|c| c.is_ascii_digit()) { Carrier::Integer } else { Carrier::Decimal }, nullable: false, aggregate: false, fields: BTreeSet::new() });
+            }
+        }
         if let Expr::Value(v) = e {
             if let Value::Placeholder(p) = &v.value {
                 let pname = p.strip_prefix(':').ok_or("only named bound parameters")?;
@@ -191,6 +206,7 @@ impl<'a> Lower<'a> {
                     .iter()
                     .find(|x| x.name == pname)
                     .ok_or("undeclared parameter")?;
+                if parameter.container.is_some(){return Err("list parameter is only a complete IN/NOT IN membership operand")}
                 self.used.insert(pname.to_owned());
                 self.slots.push(pname.to_owned());
                 return Ok(Scalar {
@@ -376,6 +392,14 @@ impl<'a> Lower<'a> {
             }
             Expr::Function(f) => {
                 let function=object(&f.name)?;
+                if function==["in_empty"] {
+                    if f.uses_odbc_syntax||!matches!(f.parameters,FunctionArguments::None)||!f.within_group.is_empty()||f.filter.is_some()||f.null_treatment.is_some()||f.over.is_some(){return Err("IN_EMPTY modifiers refused")}
+                    let FunctionArguments::List(args)=&f.args else{return Err("IN_EMPTY field argument required")};if args.duplicate_treatment.is_some()||!args.clauses.is_empty()||args.args.len()!=1{return Err("IN_EMPTY requires exactly one Field")}
+                    let FunctionArg::Unnamed(FunctionArgExpr::Expr(field))=&args.args[0] else{return Err("IN_EMPTY Field required")};if !matches!(field,Expr::CompoundIdentifier(_)){return Err("IN_EMPTY requires original aliased Field")}
+                    let before=self.used_columns.borrow().clone();let value=self.predicate_value(field,aggregates)?;self.semantic_columns.borrow_mut().extend(value.fields);*self.used_columns.borrow_mut()=before;
+                    return Ok("FALSE".into())
+                }
+                if function==["has_related"]||function==["has_inverse_related"] {if aggregates{return Err("HAS_RELATED is a WHERE predicate")};return native_relationships::has(self,f)}
                 let is_term=function==["matches_all_terms"] || function==["matches_any_term"];
                 if (function != ["starts_with"] && !is_term)
                     || f.uses_odbc_syntax
@@ -463,7 +487,35 @@ impl<'a> Lower<'a> {
                 Ok(format!("{} {} {}", l.sql, op, r.sql))
             }
             Expr::Between{expr,negated,low,high}=>{let value=self.predicate_value(expr,aggregates)?;let low=self.predicate_value(low,aggregates)?;let high=self.predicate_value(high,aggregates)?;if value.carrier!=low.carrier||value.carrier!=high.carrier{return Err("BETWEEN carrier mismatch")};Ok(format!("{} {}BETWEEN {} AND {}",value.sql,if *negated{"NOT "}else{""},low.sql,high.sql))},
-            Expr::InList{expr,list,negated}=>{let value=self.predicate_value(expr,aggregates)?;if list.len()>1000{return Err("IN list budget")};if list.is_empty(){return Ok(if *negated{"TRUE"}else{"FALSE"}.into())};let items=list.iter().map(|expr|{let item=self.predicate_value(expr,aggregates)?;if item.carrier!=value.carrier{return Err("IN carrier mismatch")};Ok(item.sql)}).collect::<Result<Vec<_>>>()?;Ok(format!("{} {}IN ({})",value.sql,if *negated{"NOT "}else{""},items.join(", ")))},
+            Expr::InList{expr,list,negated}=>{
+                let value=self.predicate_value(expr,aggregates)?;
+                if list.len()>1000{return Err("IN list budget")}
+                if list.is_empty(){return Ok(if *negated{"TRUE"}else{"FALSE"}.into())}
+                let membership=if let [Expr::Value(v)]=list.as_slice(){
+                    if let Value::Placeholder(p)=&v.value {
+                        let pname=p.strip_prefix(':').ok_or("only named list parameter")?;
+                        let parameter=self.request.parameters.iter().find(|x|x.name==pname).ok_or("undeclared list parameter")?;
+                        if parameter.container.is_some(){
+                            if parameter.carrier!=value.carrier{return Err("list element carrier mismatch")}
+                            self.used.insert(pname.to_owned());self.slots.push(pname.to_owned());
+                            let array=format!("${}::pg_catalog.{}[]",self.slots.len(),parameter.carrier.sql());
+                            let mut alias="__umf_membership".to_owned();while self.scans.contains_key(&alias){alias.push('_')}
+                            let item=format!("{}.\"value\"",ident(&alias)?);
+                            let compare=if value.carrier==Carrier::String{format!("{} COLLATE pg_catalog.\"C\" = {item} COLLATE pg_catalog.\"C\"",value.sql)}else{format!("{} = {item}",value.sql)};
+                            Some(format!("CASE WHEN pg_catalog.cardinality({array})=0 THEN FALSE WHEN {} IS NULL THEN NULL ELSE EXISTS(SELECT 1 FROM pg_catalog.unnest({array}) AS {}(\"value\") WHERE {item} IS NOT NULL AND {compare}) END",value.sql,ident(&alias)?))
+                        }else{None}
+                    }else{None}
+                }else{None};
+                let membership=if let Some(sql)=membership{sql}else{
+                    let items=list.iter().map(|expr|{
+                        if matches!(expr,Expr::Value(v) if matches!(v.value,Value::Null)){return Ok("FALSE".to_owned())}
+                        let item=self.predicate_value(expr,aggregates)?;if item.carrier!=value.carrier{return Err("IN carrier mismatch")}
+                        Ok(format!("({} IS NOT NULL AND {} = {})",item.sql,value.sql,item.sql))
+                    }).collect::<Result<Vec<_>>>()?;
+                    format!("CASE WHEN {} IS NULL THEN NULL ELSE ({}) END",value.sql,items.join(" OR "))
+                };
+                Ok(if *negated{format!("NOT ({membership})")}else{format!("({membership})")})
+            },
             Expr::IsNull(e) => Ok(format!(
                 "{} IS NULL",
                 self.predicate_value(e, aggregates)?.sql
@@ -645,11 +697,14 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
         admitted,
         term_indexes: BTreeMap::new(),
         used_columns: Default::default(),
+        semantic_columns: Default::default(),
         used_functions: Default::default(),
         used_operators: Default::default(),
         relationship_keys: Default::default(),
+        relationship_admissions: Default::default(),
         request: r,
         scans: BTreeMap::new(),
+        internal_scans: BTreeSet::new(),
         slots: prefix.to_vec(),
         used: BTreeSet::new(),
         group_values: None,
@@ -682,6 +737,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
             .collect::<Vec<_>>();
         if matches.len()!=1{return Err("join is not a unique original declared to-one relationship")}
         let rel=matches[0];
+        let fk=relationship_metadata(admitted,rel)?;l.relationship_admissions.insert(weft_core::mutation::canonical(&json!([fk["module"],fk["id"]])),fk);
         if rel.id.is_empty() {
             return Err("relationship does not cover declared target unique key");
         }
@@ -719,6 +775,8 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
         group_values.insert(c.sql.clone());
         groups.push(c.sql)
     }
+    for item in &s.projection {if let SelectItem::ExprWithAlias{expr,..}|SelectItem::UnnamedExpr(expr)=item {native_relationships::prepare(&mut l,expr)?}}
+    if let Some(expr)=&s.selection {native_relationships::prepare(&mut l,expr)?}
     let mut native_columns=BTreeMap::new();
     if r.binding.native_columns.is_some(){
         for (alias,(table,_)) in &l.scans {
@@ -745,7 +803,11 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
         if !output_names.insert(alias.clone()) {
             return Err("duplicate output name");
         }
+        if let Expr::Function(f)=expr {if matches!(f.name.to_string().to_ascii_lowercase().as_str(),"related_keys"|"inverse_related_keys") {
+            let(sql,decoder)=native_relationships::keys(&mut l,f)?;projection.push(format!("{sql} AS {}",ident(&alias)?));let mut metadata=serde_json::Map::new();metadata.insert("decoder".into(),decoder);outputs.push(Output{name:alias,carrier:json!("related-keys"),nullable:false,metadata});scalars.push(None);continue;
+        }}
         if let Expr::CompoundIdentifier(parts)=expr {if parts.len()==2 {
+            if l.internal_scans.contains(&name(&parts[0])){return Err("internal relationship projection alias is not authored")}
             if let Some(c)=native_columns.get(&(name(&parts[0]),name(&parts[1]))) {
                 if matches!(c.metadata["carrier"].as_str(),Some("binary"|"vector")) {
                     l.used_columns.borrow_mut().insert((name(&parts[0]),name(&parts[1])));
@@ -804,6 +866,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
             name: "__umf_has_after".into(),
             carrier: Carrier::Boolean,
             nullable: false,
+            container:None,element_nullable:None,max_items:None,
         });
         for (i, item) in items.iter().enumerate() {
             let c = l.column(&item.expr)?;
@@ -825,6 +888,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
                 name: pname,
                 carrier: c.carrier.clone(),
                 nullable: true,
+                container:None,element_nullable:None,max_items:None,
             });
             let outname = format!("__umf_order_{i}");
             if output_names.contains(&outname) {
@@ -956,7 +1020,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
         if !bounded||!r.keyset{return Err("stream page size requires bounded keyset profile")}
         let reserved="__umf_page_size".to_string();
         if l.slots.contains(&reserved)||cursor_parameters.iter().any(|p|p.name==reserved){return Err("reserved stream page size collision")}
-        l.slots.push(reserved.clone());cursor_parameters.push(Parameter{name:reserved,carrier:Carrier::Integer,nullable:false});
+        l.slots.push(reserved.clone());cursor_parameters.push(Parameter{name:reserved,carrier:Carrier::Integer,nullable:false,container:None,element_nullable:None,max_items:None});
         sql+=&format!(" LIMIT ${}::pg_catalog.int8",l.slots.len());
     } else if bounded||preserve_source_limit&&q.limit_clause.is_some() {sql += &format!(" LIMIT {}", limit);}
     if !allow_unused&&l.used.len() != r.parameters.len() {
@@ -968,10 +1032,20 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
         for ((alias,_),column) in &native_columns {let table=l.scans[alias].0;
             if seen.insert((table.native.clone(),column.native.clone())) {admissions.push(json!({"nativeAdmission":native_projection::admission(column,table,&r.binding.schema)}));}
         }
+        let mut tables=BTreeSet::new();
+        for ((alias,_),_)in &native_columns {let table=l.scans[alias].0;if tables.insert(table.native.clone()){
+            let names=native_columns.iter().filter(|((other,_),_)|l.scans[other].0.native==table.native).map(|(_,c)|c.native.clone()).collect::<Vec<_>>();
+            admissions.push(json!({"nativeAdmission":native_projection::table_admission(table,&r.binding.schema,&names)}));
+        }}
         obligations["nativeProjection"]=json!({"version":"umf.native-columns/0.1","nativeCatalogBeforeAfter":true,"columns":admissions});
     }
     if r.stream_page_size {obligations["streamPageSize"]=json!({"parameter":"__umf_page_size","minimum":1,"maximum":limit});}
     if let Some(mode)=&r.binding.schema_binding { obligations["schemaBinding"]=serde_json::to_value(mode).map_err(|_|"schema binding serialization")?; }
+    if !l.relationship_admissions.is_empty(){
+        let snapshot=l.relationship_admissions.values().any(|r|r["completeNativeSnapshotRequired"]==true);
+        obligations["nativeRelationships"]=json!({"version":"umf.native-relationships/0.1","nativeCatalogBeforeAfter":true,"relationships":l.relationship_admissions.values().collect::<Vec<_>>()});
+        if snapshot{obligations["readIsolation"]=json!("repeatable-read")}
+    }
     if !l.relationship_keys.is_empty(){obligations["nativeRelationshipKeys"]=json!({"version":"umf.native-relationship-keys/0.1","nativeCatalogBeforeAfter":true,"keys":l.relationship_keys.values().collect::<Vec<_>>()});}
     if !l.term_indexes.is_empty() {
         obligations["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":l.term_indexes.values().collect::<Vec<_>>()});
@@ -997,7 +1071,8 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
     let mut selected_columns:BTreeMap<String,BTreeSet<String>>=BTreeMap::new();
     for(alias,logical)in l.used_columns.borrow().iter(){let table=l.scans[alias].0;let native=table.columns.iter().find(|c|c.logical==*logical).map(|c|c.native.clone()).or_else(||native_columns.get(&(alias.clone(),logical.clone())).map(|c|c.native.clone())).ok_or("used native column missing original mapping")?;selected_columns.entry(table.native.clone()).or_default().insert(native);}
     for(table,_)in l.scans.values(){selected_columns.entry(table.native.clone()).or_default();}
-    let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"tablePrivilegeRequired":true,"columnPrivilegesSufficient":false,"reason":"LOCK TABLE ACCESS SHARE"})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
+    let semantic_fields=l.semantic_columns.borrow().iter().map(|(alias,field)|json!({"logicalTable":l.scans[alias].0.logical,"field":field,"use":"constant-folded-original-membership"})).collect::<Vec<_>>();
+    let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"semanticFields":semantic_fields,"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"tablePrivilegeRequired":true,"columnPrivilegesSufficient":false,"reason":"LOCK TABLE ACCESS SHARE"})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
     let mut result = json!({"version":if bounded{"weft.raw-read/0.1"}else{"weft.search-input/0.1"},"status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced_tables});
     result["privilegeInventory"]=privilege_inventory;
     let digest = weft_core::json::sha256(result.to_string().as_bytes());

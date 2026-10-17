@@ -38,7 +38,10 @@ impl Lower<'_> {
     pub(crate) fn scalar(&mut self, e: &Expr) -> Result<(String, Carrier, bool)> {
         match e {
             Expr::Nested(e) => self.scalar(e),
-            Expr::CompoundIdentifier(_) => {let column=self.column(e)?;if self.request.binding.native_columns.is_some()&&matches!(column.1,Carrier::Integer|Carrier::Decimal){return Err("numeric Spark predicates require separate exact parameter-domain qualification")};Ok(column)},
+            Expr::CompoundIdentifier(_) => {
+                let (sql,carrier,nullable)=self.column(e)?;
+                Ok((if self.exact_numeric(&carrier){format!("CAST({sql} AS STRING)")}else{sql},carrier,nullable))
+            },
             Expr::Value(v) => match &v.value {
                 Value::Placeholder(p) => {
                     let key = p.strip_prefix(':').ok_or("named parameter required")?;
@@ -79,7 +82,7 @@ impl Lower<'_> {
                         return Err("exact numeric literal required");
                     };
                     Ok((
-                        s.clone(),
+                        if self.request.binding.native_columns.is_some(){format!("'{s}'")}else{s.clone()},
                         if s.contains('.') {
                             Carrier::Decimal
                         } else {
@@ -90,8 +93,21 @@ impl Lower<'_> {
                 }
                 _ => Err("literal carrier unsupported"),
             },
+            Expr::UnaryOp {op:UnaryOperator::Minus,expr} if self.request.binding.native_columns.is_some()=>{
+                let Expr::Value(v)=expr.as_ref() else{return Err("numeric unary operation requires literal")};
+                let Value::Number(s,false)=&v.value else{return Err("numeric unary operation requires literal")};
+                if s.is_empty()||!s.bytes().all(|b|b.is_ascii_digit()||b==b'.'){return Err("plain numeric literal required")}
+                Ok((format!("'-{s}'"),if s.contains('.') {Carrier::Decimal}else{Carrier::Integer},false))
+            },
             _ => Err("scalar operation unsupported"),
         }
+    }
+    fn exact_numeric(&self, carrier:&Carrier)->bool {
+        self.request.binding.native_columns.is_some()&&matches!(carrier,Carrier::Integer|Carrier::Decimal)
+    }
+    fn comparison(&self,a:&(String,Carrier,bool),op:&str,b:&(String,Carrier,bool))->String {
+        if self.exact_numeric(&a.1){crate::raw_numeric::comparison(&a.0,op,&b.0)}
+        else{format!("({} {op} {})",a.0,b.0)}
     }
     pub(crate) fn predicate(&mut self, e: &Expr) -> Result<String> {
         match e {
@@ -121,7 +137,7 @@ impl Lower<'_> {
                 if a.1 != b.1 {
                     return Err("comparison carrier differs");
                 };
-                Ok(format!("({} {op} {})", a.0, b.0))
+                Ok(self.comparison(&a,&op.to_string(),&b))
             }
             Expr::IsNull(e) => Ok(format!("({} IS NULL)", self.scalar(e)?.0)),
             Expr::IsNotNull(e) => Ok(format!("({} IS NOT NULL)", self.scalar(e)?.0)),
@@ -141,6 +157,10 @@ impl Lower<'_> {
                 if a.1 != b.1 || a.1 != c.1 {
                     return Err("range carrier differs");
                 };
+                if self.exact_numeric(&a.1){
+                    let range=format!("({} AND {})",self.comparison(&a,">=",&b),self.comparison(&a,"<=",&c));
+                    return Ok(if *negated{format!("NOT ({range})")}else{range})
+                }
                 Ok(format!(
                     "({} {}BETWEEN {} AND {})",
                     a.0,
@@ -157,24 +177,29 @@ impl Lower<'_> {
                 if list.len() > 1000 {
                     return Err("membership limit");
                 };
+                let a = self.scalar(expr)?;
                 if list.is_empty() {
                     return Ok(if *negated { "TRUE" } else { "FALSE" }.into());
                 };
-                let a = self.scalar(expr)?;
                 let mut values = vec![];
                 for e in list {
+                    if matches!(e,Expr::Value(value) if matches!(value.value,Value::Null)){continue}
                     let b = self.scalar(e)?;
                     if a.1 != b.1 {
                         return Err("membership carrier differs");
                     };
-                    values.push(b.0)
+                    values.push(format!("({} IS NOT NULL AND {})",b.0,self.comparison(&a,"=",&b)))
                 }
-                Ok(format!(
-                    "({} {}IN ({}))",
-                    a.0,
-                    if *negated { "NOT " } else { "" },
-                    values.join(", ")
-                ))
+                let membership=format!("(CASE WHEN {} IS NULL THEN CAST(NULL AS BOOLEAN) ELSE (FALSE{}) END)",a.0,values.iter().map(|value|format!(" OR {value}")).collect::<String>());
+                Ok(if *negated{format!("NOT ({membership})")}else{membership})
+            }
+            Expr::Function(f) if f.name.0.len()==1&&matches!(&f.name.0[0],ObjectNamePart::Identifier(i) if name(i)=="in_empty")=>{
+                if f.uses_odbc_syntax||!matches!(f.parameters,FunctionArguments::None)||!f.within_group.is_empty()||f.filter.is_some()||f.null_treatment.is_some()||f.over.is_some(){return Err("IN_EMPTY modifiers refused")}
+                let FunctionArguments::List(args)=&f.args else{return Err("IN_EMPTY field argument required")};
+                if args.duplicate_treatment.is_some()||!args.clauses.is_empty()||args.args.len()!=1{return Err("IN_EMPTY requires exactly one Field")}
+                let FunctionArg::Unnamed(FunctionArgExpr::Expr(field))=&args.args[0] else{return Err("IN_EMPTY Field required")};
+                self.column(field)?;
+                Ok("FALSE".into())
             }
             _ => Err("predicate outside raw Spark profile"),
         }
@@ -428,6 +453,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
         out["version"]=json!("weft.unity-current-selection/0.1");
         out["obligations"]=json!({"transaction":"current-read","principal":"native-managed-current-principal","ansiEnabled":true,"binaryStringCollation":true,"escapedStringLiterals":false,"rowCap":limit,"timeout":"one-call-deadline","tableIdentity":"native-current-uuid","nativeAdmissionEachOperation":true,"temporalQualification":"held"});
     }
+    if let Some(parameters)=crate::raw_numeric::parameters(r){out["obligations"]["numericPredicateParameters"]=parameters;}
     if transaction {out["version"]=json!("weft.delta-selection/0.1");out["obligations"]["transaction"]=json!("original-Delta4-optimistic-Serializable-whole-table");out["obligations"]["tableIdentity"]=json!("original-native-transaction-snapshot-view");}
     out["structuralDigest"] = json!(weft_core::json::sha256(out.to_string().as_bytes()));
     Ok(out)

@@ -9,6 +9,62 @@ mod raw_read_tests {
         .unwrap()
     }
     #[test]
+    fn signed_numeric_literals_preserve_carrier_and_refuse_signed_expressions() {
+        let mut r=request();r["parameters"]=json!([]);
+        for predicate in ["o.customer_id = -1", "o.customer_id IN (-1,+2,NULL)", "o.amount = -1.0", "HAS_RELATED(o.customer,KEY(-1))"] {
+            r["sql"]=json!(format!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE {predicate} LIMIT 10"));
+            let p=compile(r.clone());assert_eq!(p["status"],"compiled","{predicate}: {p}");
+            assert!(p["sql"].as_str().unwrap().contains("(-1"));
+        }
+        for predicate in ["o.customer_id = -o.customer_id", "o.customer_id = -'1'", "o.customer_id = -1.0"] {
+            r["sql"]=json!(format!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE {predicate} LIMIT 10"));
+            assert_eq!(compile(r.clone())["status"],"blocked","{predicate}");
+        }
+    }
+    #[test]
+    fn explicit_inverse_self_relationship_retains_canonical_identity_and_default_key(){
+        let mut r=request();let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();let module=&mut doc["modules"][0];
+        let mut parent=module["elements"].as_array().unwrap().iter().find(|f|f["id"]=="Customer_id").unwrap().clone();parent["id"]=json!("Customer_parent_id");parent["name"]=json!("parent_id");parent["nullability"]=json!("absent-allowed");module["elements"].as_array_mut().unwrap().push(parent);
+        let mut code=module["elements"].as_array().unwrap().iter().find(|f|f["id"]=="Customer_name").unwrap().clone();code["id"]=json!("Customer_code");code["name"]=json!("code");code["nullability"]=json!("required");module["elements"].as_array_mut().unwrap().push(code);
+        let record=module["elements"].as_array_mut().unwrap().iter_mut().find(|f|f["id"]=="Customer").unwrap();record["members"].as_array_mut().unwrap().extend([json!({"module":"commerce","element":"Customer_parent_id"}),json!({"module":"commerce","element":"Customer_code"})]);record["keys"].as_array_mut().unwrap().push(json!({"id":"Customer_code_key","name":"Customer code key","fields":[{"module":"commerce","element":"Customer_code"}]}));
+        let mut relation=module["relationships"][0].clone();relation["id"]=json!("self-parent");relation["name"]=json!("parent");relation["source"][0]["element"]=json!("Customer");module["relationships"].as_array_mut().unwrap().push(relation);
+        let raw=doc.to_string();r["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));r["binding"]["modelJson"]=json!(raw);
+        let table=r["binding"]["tables"].as_array_mut().unwrap().iter_mut().find(|t|t["logical"]==json!(["commerce","Customer"])).unwrap();table["key"]=json!(["code"]);table["columns"].as_array_mut().unwrap().extend([json!({"logical":"parent_id","native":"parent_id","carrier":"integer","nullable":true}),json!({"logical":"code","native":"code","carrier":"string","nullable":false})]);
+        r["binding"]["relationships"].as_array_mut().unwrap().push(json!({"module":"commerce","id":"self-parent","source":["commerce","Customer"],"target":["commerce","Customer"],"pairs":[["parent_id","id"]],"toOne":true}));r["parameters"]=json!([{"name":"id","carrier":"integer","nullable":false}]);
+        r["sql"]=json!("SELECT c.id AS id, RELATED_KEYS(c.parent,2) AS parent, INVERSE_RELATED_KEYS(c.parent,2,'commerce','self-parent') AS children FROM commerce.\"Customer\" c WHERE HAS_INVERSE_RELATED(c.parent,KEY(:id),'commerce','self-parent') LIMIT 10");let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["outputs"][2]["decoder"]["key"]["key"],"Customer_key");assert_eq!(p["outputs"][2]["decoder"]["relationship"]["direction"],"inverse");let sql=p["sql"].as_str().unwrap();assert!(sql.contains("\"c\".\"parent_id\" = \"__umf_relationship\".\"id\""),"{sql}");assert!(sql.contains("\"c\".\"id\" = \"__umf_relationship\".\"parent_id\""),"{sql}");
+        for expression in ["HAS_INVERSE_RELATED(c.parent,KEY(:id))","HAS_INVERSE_RELATED(c.parent,KEY(:id),'commerce','wrong')","HAS_INVERSE_RELATED(c.parent,KEY(:id),'wrong','self-parent')"]{r["sql"]=json!(format!("SELECT c.id AS id FROM commerce.\"Customer\" c WHERE {expression} LIMIT 10"));assert_eq!(compile(r.clone())["status"],"blocked");}
+    }
+    #[test]
+    fn selected_original_relationship_unknown_meaning_is_not_erased(){
+        let r=request();for (key,value)in [("opaque",json!({"unrecognized":true})),("targetLifecycle",json!("unknown")),("extensions",json!({"unknown":{"x":1}})),("extensions",json!("malformed"))]{let mut bad=r.clone();let mut doc:Value=serde_json::from_str(bad["binding"]["modelJson"].as_str().unwrap()).unwrap();doc["modules"][0]["relationships"][0][key]=value;let raw=doc.to_string();bad["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));bad["binding"]["modelJson"]=json!(raw);assert_eq!(compile(bad)["status"],"blocked", "{key}");}
+    }
+    #[test]
+    fn empty_membership_preserves_semantic_field_without_fictitious_sql_column_use(){
+        let mut r=request();r["parameters"]=json!([]);r["sql"]=json!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE NOT IN_EMPTY(o.status) LIMIT 10");let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");assert!(p["sql"].as_str().unwrap().contains("NOT (FALSE)"));assert_eq!(p["privilegeInventory"]["tables"][0]["columns"],json!(["id"]));assert_eq!(p["privilegeInventory"]["semanticFields"][0]["field"],"status");
+        for expr in ["IN_EMPTY()","IN_EMPTY(o.status,o.id)","IN_EMPTY(wrong.status)","IN_EMPTY(o.missing)","IN_EMPTY(NULL)","IN_EMPTY(o.id+1)","IN_EMPTY(DISTINCT o.status)"]{r["sql"]=json!(format!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE {expr} LIMIT 10"));assert_eq!(compile(r.clone())["status"],"blocked","{expr}");}
+    }
+    #[test]
+    fn native_fk_admission_requires_enforced_immediate_pairs_and_degree_snapshot(){
+        let mut r=request();r["parameters"]=json!([]);r["sql"]=json!("SELECT o.id AS id FROM commerce.\"Order\" o INNER JOIN commerce.\"Customer\" c ON o.customer_id=c.id LIMIT 10");let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");let fk=&p["obligations"]["nativeRelationships"]["relationships"][0];assert_eq!(fk["nativePairs"],json!([["customer_id","id"]]));assert_eq!(fk["completeNativeSnapshotRequired"],false);let sql=fk["nativeAdmission"]["sql"].as_str().unwrap();for fragment in ["c.convalidated AND c.conenforced","NOT c.condeferrable","NOT c.conperiod","c.conpfeqop","tr.tgenabled IN ('O','A')","session_replication_role"]{assert!(sql.contains(fragment),"{fragment}: {sql}")}
+        let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();doc["modules"][0]["relationships"][0]["sourceMultiplicity"]["min"]=json!(1);let raw=doc.to_string();r["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));r["binding"]["modelJson"]=json!(raw);let p=compile(r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["obligations"]["readIsolation"],"repeatable-read");let sql=p["obligations"]["nativeRelationships"]["relationships"][0]["nativeAdmission"]["dbapiSql"].as_str().unwrap();for fragment in ["NOT pg_catalog.row_security_active(s.oid)","NOT pg_catalog.row_security_active(t.oid)","transaction_isolation","count(DISTINCT ROW(","transaction_read_only"]{assert!(sql.contains(fragment),"{fragment}: {sql}")}
+    }
+    #[test]
+    fn relationship_exists_and_bounded_keys_keep_original_endpoint_key(){
+        let mut r=request();r["parameters"]=json!([{"name":"customer","carrier":"integer","nullable":false}]);r["sql"]=json!("SELECT o.id AS id, RELATED_KEYS(o.customer,2) AS customer_keys FROM commerce.\"Order\" o WHERE HAS_RELATED(o.customer,KEY(:customer)) LIMIT 10");
+        let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["outputs"][1]["carrier"],"related-keys");assert_eq!(p["outputs"][1]["decoder"]["key"]["key"],"Customer_key");assert_eq!(p["outputs"][1]["decoder"]["bound"],2);let sql=p["sql"].as_str().unwrap();assert!(sql.contains("EXISTS(SELECT 1 FROM"));assert!(sql.contains("LIMIT 3"));assert!(sql.contains("pg_catalog.count(*)>2"));assert_eq!(p["lockSql"].as_array().unwrap().len(),2);
+        for q in ["SELECT RELATED_KEYS(o.customer,0) AS keys FROM commerce.\"Order\" o LIMIT 10","SELECT RELATED_KEYS(o.customer,1001) AS keys FROM commerce.\"Order\" o LIMIT 10","SELECT o.id AS id FROM commerce.\"Order\" o WHERE HAS_RELATED(o.customer,KEY()) LIMIT 10","SELECT \"__umf_relationship\".id AS id, RELATED_KEYS(o.customer,2) AS keys FROM commerce.\"Order\" o LIMIT 10"]{let mut bad=r.clone();bad["parameters"]=json!([]);bad["sql"]=json!(q);assert_eq!(compile(bad)["status"],"blocked");}
+        let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();doc["modules"][0]["relationships"][0]["inverse"]=json!("orders");let raw=doc.to_string();r["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));r["binding"]["modelJson"]=json!(raw);r["parameters"]=json!([]);r["sql"]=json!("SELECT c.id AS id, RELATED_KEYS(c.orders,1) AS orders FROM commerce.\"Customer\" c LIMIT 10");let p=compile(r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["outputs"][1]["decoder"]["key"]["key"],"Order_key");assert_eq!(p["outputs"][1]["decoder"]["relationship"]["direction"],"inverse");
+    }
+    #[test]
+    fn list_membership_retains_bounded_container_and_s8_null_semantics(){
+        let mut r=request();r["parameters"]=json!([{"name":"ids","carrier":"integer","nullable":false,"container":"list","elementNullable":true,"maxItems":1000}]);
+        for op in ["IN","NOT IN"]{r["sql"]=json!(format!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE o.id {op} (:ids) LIMIT 10"));let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["parameters"],r["parameters"]);let sql=p["sql"].as_str().unwrap();assert!(sql.contains("pg_catalog.cardinality($1::pg_catalog.numeric[])=0 THEN FALSE"),"{sql}");assert!(sql.contains("IS NOT NULL AND"));assert_eq!(p["parameterOrder"],json!(["ids"]));}
+        for sql in ["SELECT :ids AS ids FROM commerce.\"Order\" o LIMIT 10","SELECT o.id AS id FROM commerce.\"Order\" o WHERE o.id IN (:ids,1) LIMIT 10"]{r["sql"]=json!(sql);assert_eq!(compile(r.clone())["status"],"blocked");}
+        r["sql"]=json!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE o.id IN (:ids) LIMIT 10");for (key,value) in [("nullable",json!(true)),("maxItems",json!(0)),("maxItems",json!(1001)),("container",json!("set"))]{let mut bad=r.clone();bad["parameters"][0][key]=value;assert_eq!(compile(bad)["status"],"blocked");}
+        let mut bad=r.clone();bad["parameters"][0].as_object_mut().unwrap().remove("elementNullable");assert_eq!(compile(bad)["status"],"blocked");
+        r["parameters"]=json!([]);r["sql"]=json!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE o.id IN (NULL,1) LIMIT 10");let p=compile(r);assert_eq!(p["status"],"compiled","{p}");assert!(p["sql"].as_str().unwrap().contains("ELSE (FALSE OR"));
+    }
+    #[test]
     fn inner_join_refines_only_its_source_ancestor_chain(){
         let mut r=request();let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();
         let mut rel=doc["modules"][0]["relationships"][0].clone();rel["id"]=json!("customer-self");rel["name"]=json!("customer-self");rel["source"][0]["element"]=json!("Customer");doc["modules"][0]["relationships"].as_array_mut().unwrap().push(rel);
@@ -32,7 +88,12 @@ mod raw_read_tests {
         let r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request.json")).unwrap();
         let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
         assert_eq!(p["outputs"][2]["carrier"],"vector");assert_eq!(p["outputs"][5]["decoder"]["profile"],"pg-bytea/0.1");
-        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),6);
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),7);
+        let inventory=&p["obligations"]["nativeProjection"]["columns"][6]["nativeAdmission"];
+        assert!(inventory["sql"].as_str().unwrap().contains("a.attnum>0 AND NOT a.attisdropped"));
+        assert!(inventory["sql"].as_str().unwrap().contains("a.attname COLLATE pg_catalog.\"C\""));
+        let names:Vec<String>=serde_json::from_str(inventory["parameters"][2]["source"]["literal"]["string"].as_str().unwrap()).unwrap();
+        assert_eq!(names,vec!["amount","body","count","embedding","id","payload"]);
         for sql in ["SELECT r.embedding AS embedding FROM search.\"Doc\" r ORDER BY embedding LIMIT 10","SELECT COUNT(r.embedding) AS n FROM search.\"Doc\" r LIMIT 10"] {let mut bad=r.clone();bad["sql"]=json!(sql);assert_eq!(compile(bad)["status"],"blocked");}
         let mut bad=r.clone();bad["binding"]["nativeColumns"]["vectorExtension"]["version"]=json!("0.8.8");assert_eq!(compile(bad)["status"],"blocked");
         for (field,ty) in [("payload","text"),("embedding","array<double>"),("count","numeric(20,0)"),("amount","numeric(38,9)")] {

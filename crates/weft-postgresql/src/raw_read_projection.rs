@@ -23,7 +23,7 @@ pub(crate) fn columns(a:&AdmittedRead,table:&Table)->Result<BTreeMap<String,Proj
  let mut physical=std::collections::BTreeSet::new();for (native,_,_)in facts.values(){if !physical.insert(native){return Err("duplicate native physical column")}}
  let mut result=BTreeMap::new();
  for member in record.value["members"].as_array().ok_or("Record members absent")? {
-  let Some((native,ty,_))=facts.get(&custody::field_key(member)) else {continue};
+  let Some((native,ty,_))=facts.get(&custody::field_key(member)) else {return Err("complete original Record native ColumnSet inventory required")};
   let owner=doc["modules"].as_array().unwrap().iter().find(|m|m["id"]==member["module"]).ok_or("Field module absent")?;
   let field=owner["elements"].as_array().unwrap().iter().find(|f|f["id"]==member["element"]).ok_or("Field absent")?;
   let logical=field["name"].as_str().ok_or("Field name absent")?;
@@ -62,4 +62,14 @@ pub(crate) fn admission(c:&ProjectionColumn,table:&Table,schema:&Option<String>)
  let typecheck=if vector {format!("ty.typname='vector' AND tn.nspname={} AND a.atttypmod={} AND ('vector('||a.atttypmod::pg_catalog.text||')')={} AND EXISTS(SELECT 1 FROM pg_catalog.pg_extension AS e WHERE e.extname='vector' AND e.extnamespace=tn.oid AND e.extversion={})",slot(5),c.metadata["dimensions"],slot(4),slot(6))}else{format!("tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE {} WHEN 'bool' THEN 'boolean' ELSE {} END",slot(4),slot(4))};
  format!("SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull={} AND {generation} AND {typecheck}) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname={} AND t.relname={} AND a.attname={}",if c.metadata["nullable"]==false{"TRUE"}else{"FALSE"},slot(1),slot(2),slot(3))};
  json!({"dbapiSql":render(true),"sql":render(false),"parameters":parameters,"dbapiParameterOrder":parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>()})
+}
+
+pub(crate) fn table_admission(table:&Table,schema:&Option<String>,columns:&[String])->Json{
+ let literal=|v:&str|json!({"source":{"literal":{"string":v}},"carrier":"string"});
+ let mut names=columns.to_vec();names.sort();names.dedup();
+ let mut parameters=vec![match schema{Some(s)=>literal(s),None=>json!({"source":{"appSchema":true},"carrier":"string"})},literal(&table.native),literal(&serde_json::to_string(&names).unwrap())];
+ for(i,p)in parameters.iter_mut().enumerate(){p["name"]=json!(format!("__umf_inventory_{}",i+1));}
+ let render=|dbapi:bool|{let slot=|n:usize|if dbapi{format!("%(__umf_inventory_{n})s::pg_catalog.text")}else{format!("${n}::pg_catalog.text")};
+  format!("SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname={} AND c.relname={} AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text({}::pg_catalog.json)))",slot(1),slot(2),slot(3))};
+ json!({"sql":render(false),"dbapiSql":render(true),"parameters":parameters,"dbapiParameterOrder":["__umf_inventory_1","__umf_inventory_2","__umf_inventory_3"]})
 }

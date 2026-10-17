@@ -7,6 +7,27 @@ type Result<T>=std::result::Result<T,&'static str>;
 #[serde(deny_unknown_fields,rename_all="camelCase")]
 struct Request { version:String, compiler:String, request:Value }
 fn encode(v:&Value)->String{weft_core::mutation::canonical(v)}
+fn related_output(column:&Value,artifact:&Value)->Result<Value>{
+ if artifact["backend"]["backendId"]!="ashlar.databricks" || column["nullable"]!=false {return Err("original Ashlar required related output required")}
+ let representation=&column["representation"];
+ let bound=representation["bound"].as_u64().filter(|n|(1..=1000).contains(n)).ok_or("bounded original related output required")?;
+ if representation["kind"]!="relatedKeys" {return Err("bounded original related representation required")}
+ let key=&representation["key"];let fields=key["fields"].as_array().ok_or("original related Key Fields required")?;let types=key["types"].as_array().ok_or("original related Key types required")?;
+ if fields.is_empty()||fields.len()!=types.len()||types.iter().any(|t|t["family"]!="string"||t["nullable"]!=false||t["facets"].as_object().is_none_or(|f|!f.is_empty())){return Err("original required facetless String related Key profile required")}
+ let expressions=artifact["logicalPlan"]["outputs"].as_array().ok_or("original application output inventory required")?;
+ let selected=expressions.iter().filter(|output|output["name"]==column["outputName"]).collect::<Vec<_>>();
+ if selected.len()!=1{return Err("unique original related expression required")}
+ let expression=&selected[0]["expression"];let relationship=&expression["relationship"];
+ if expression["op"]!="relatedKeys"||expression["bound"]!=bound||relationship["identity"]!=representation["relationship"]||relationship["targetKey"]!=*key{return Err("original related expression/representation correspondence differs")}
+ let inverse=relationship["inverse"].as_bool().ok_or("original relationship direction required")?;let target=&relationship["to"];
+ if ["documentId","revision","module","element"].iter().any(|name|target[*name].as_str().is_none_or(str::is_empty)){return Err("original related target Record required")}
+ let pins=artifact["modelPins"].as_array().ok_or("original related model pins required")?;
+ if !pins.iter().any(|pin|pin["documentId"]==target["documentId"]&&pin["revision"]==target["revision"]){return Err("original related target outside model pins")}
+ let mut components=vec![];
+ for field in fields{if field["documentId"]!=target["documentId"]||field["revision"]!=target["revision"]||field["module"].as_str().is_none_or(str::is_empty)||field["element"].as_str().is_none_or(str::is_empty){return Err("original related Key Field pin differs")};components.push(json!({"field":{"module":field["module"],"element":field["element"]},"carrier":"string","nullable":false}));}
+ let id=key["id"].as_str().filter(|id|!id.is_empty()).ok_or("original authored Key id required")?;
+ Ok(json!({"name":column["outputName"],"carrier":"related-keys","nullable":false,"decoder":{"profile":"ashlar-related-keys-string/0.1","bound":bound,"relationship":{"module":relationship["identity"]["module"],"id":relationship["identity"]["relationship"],"direction":if inverse{"inverse"}else{"forward"}},"key":{"module":target["module"],"record":target["element"],"key":id,"components":components},"target":target,"representation":representation,"modelPins":pins}}))
+}
 fn compile_original(method:&str,request:&Value)->Result<Value>{
  let raw=match method{
   "truss-runtime"=>weft_postgresql::truss_runtime::compile_json(&encode(request)),
@@ -36,7 +57,7 @@ fn compile_original(method:&str,request:&Value)->Result<Value>{
  let parameters=request["parameters"].as_object().ok_or("complete declared parameter object required")?;
  for parameter in parameters.values(){let p=parameter.as_object().ok_or("original scalar parameter required")?;if p.len()!=2||!p.contains_key("family")||!p.contains_key("value")||!matches!(p["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal"))||!p["value"].is_string(){return Err("closed non-temporal scalar parameter required")}}
  let columns=artifact["columns"].as_array().ok_or("complete engine output inventory required")?;let mut outputs=vec![];
- for column in columns{let representation=&column["representation"];let logical=match representation["kind"].as_str(){Some("scalar")=>&representation["logicalType"],Some("value")=>{let descriptor=artifact["logicalPlan"]["typeGraph"].as_array().ok_or("original output type graph required")?.iter().find(|d|d["identity"]==representation["descriptor"]).ok_or("original output descriptor absent")?;if descriptor["kind"]!="scalar" || !matches!(descriptor["type"]["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal")){return Err("engine output carrier profile unsupported")};outputs.push(json!({"name":column["outputName"],"carrier":descriptor["type"]["family"],"nullable":descriptor["type"]["nullable"]==true||descriptor["availability"]=="absent-allowed"}));continue;},_=>return Err("engine output representation unsupported")};
+ for column in columns{let representation=&column["representation"];if representation["kind"]=="relatedKeys"{outputs.push(related_output(column,&artifact)?);continue;}let logical=match representation["kind"].as_str(){Some("scalar")=>&representation["logicalType"],Some("value")=>{let descriptor=artifact["logicalPlan"]["typeGraph"].as_array().ok_or("original output type graph required")?.iter().find(|d|d["identity"]==representation["descriptor"]).ok_or("original output descriptor absent")?;if descriptor["kind"]!="scalar" || !matches!(descriptor["type"]["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal")){return Err("engine output carrier profile unsupported")};outputs.push(json!({"name":column["outputName"],"carrier":descriptor["type"]["family"],"nullable":descriptor["type"]["nullable"]==true||descriptor["availability"]=="absent-allowed"}));continue;},_=>return Err("engine output representation unsupported")};
   if !matches!(logical["family"].as_str(),Some("string"|"boolean"|"integer"|"decimal")){return Err("engine output carrier profile unsupported")};outputs.push(json!({"name":column["outputName"],"carrier":logical["family"],"nullable":logical["nullable"]}));
  }
  let mut out=json!({"version":"weft.engine-read/0.1","status":"compiled","compiler":method,"request":request,"artifact":artifact,"outputs":outputs});
@@ -136,4 +157,44 @@ pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->Strin
  #[test]fn blocked_page_composition_keeps_its_frame_and_original_diagnostics(){let mut r=request();r["sql"]=json!("SELECT unknown FROM absent");let value:Value=serde_json::from_str(&compile_page_json(&json!({"version":"weft.engine-page/0.1","compiler":"truss-runtime","request":r,"pageSize":1}).to_string())).unwrap();assert_eq!(value["version"],"weft.engine-page/0.1");assert_eq!(value["status"],"blocked");assert!(value["original"].is_object());assert!(value.get("artifact").is_none());}
  #[test]fn oversized_page_inputs_refuse_before_parsing(){let large=" ".repeat(4_194_305);let after=" ".repeat(1_048_577);for result in [compile_page_json(&large),check_page_json(&large,"{}","null"),check_page_json("{}",&large,"null"),check_page_json("{}","{}",&after)]{let value:Value=serde_json::from_str(&result).unwrap();assert_eq!(value["status"],"blocked");assert!(value["artifact"].is_null());}}
  #[test]fn page_tampering_and_context_drift_refuse(){let r=request();let p=program(&r);assert_eq!(p["status"],"compiled","{p}");for mode in 0..6{let mut p=p.clone();let mut current=r.clone();match mode{0=>p["pageSize"]=json!(3),1=>p["page"]["keyOutputs"]=json!([0]),2=>p["artifact"]["sql"]=json!("SELECT 1"),3=>current["sql"]=json!("SELECT 1"),4=>current["parameters"]["status"]["family"]=json!("integer"),_=>p["after"]=json!(["o-1"])}let checked:Value=serde_json::from_str(&check_page_json(&p.to_string(),&current.to_string(),"null")).unwrap();assert_eq!(checked["status"],"blocked","{checked}");}for after in ["[]","[1]","{}","[\"a\",\"b\"]"]{let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),after)).unwrap();assert_eq!(a["status"],"blocked","{a}");}}
+}
+
+#[cfg(test)]
+mod related_output_tests {
+ use super::*;
+ fn original()->Value {
+  let request:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-ashlar-related-request.json")).unwrap();
+  let out:Value=serde_json::from_str(&compile_json(&json!({"version":"weft.engine-read/0.1","compiler":"ashlar-spark4","request":request}).to_string())).unwrap();
+  assert_eq!(out["status"],"compiled","{out}");out
+ }
+ #[test]fn ashlar_related_original_preserves_native_representation_and_source_custody(){
+  let p=original();let output=&p["outputs"][1];let native=&p["artifact"]["columns"][1];
+  assert_eq!(output["carrier"],"related-keys");assert_eq!(output["decoder"]["profile"],"ashlar-related-keys-string/0.1");
+  assert_eq!(output["decoder"]["representation"],native["representation"]);
+  assert_eq!(output["decoder"]["modelPins"],p["artifact"]["modelPins"]);
+  assert_eq!(output["decoder"]["relationship"]["direction"],"forward");
+  assert_eq!(output["decoder"]["bound"],2);
+  assert_eq!(output["decoder"]["key"]["record"],"customer");
+  assert_eq!(output["decoder"]["key"]["components"].as_array().unwrap().len(),1);
+  let checked:Value=serde_json::from_str(&check_json(&p.to_string(),&p["request"].to_string())).unwrap();assert_eq!(checked,p);
+ }
+ #[test]fn ashlar_related_metadata_faults_refuse_instead_of_guessing(){
+  let p=original();let original_column=&p["artifact"]["columns"][1];
+  for mode in 0..10 {let mut a=p["artifact"].clone();let mut c=original_column.clone();
+   match mode {
+    0=>c["representation"]["kind"]=json!("completeRelatedKeys"),
+    1=>c["representation"]["bound"]=json!(0),
+    2=>c["representation"]["key"]["types"][0]["family"]=json!("integer"),
+    3=>c["nullable"]=json!(true),
+    4=>a["logicalPlan"]["outputs"][1]["expression"]["relationship"]["inverse"]=Value::Null,
+    5=>a["logicalPlan"]["outputs"][1]["expression"]["relationship"]["to"]["documentId"]=json!("foreign"),
+    6=>a["modelPins"]=json!([]),
+    7=>c["representation"]["key"]["fields"][0]["revision"]=json!("foreign"),
+    8=>a["backend"]["backendId"]=json!("other"),
+    _=>a["logicalPlan"]["outputs"][1]["expression"]["relationship"]["targetKey"]["id"]=json!("different")
+   };assert!(related_output(&c,&a).is_err(),"mode {mode}");
+  }
+  let mut forged=p.clone();forged["outputs"][1]["decoder"]["bound"]=json!(1);
+  let checked:Value=serde_json::from_str(&check_json(&forged.to_string(),&p["request"].to_string())).unwrap();assert_eq!(checked["status"],"blocked");
+ }
 }

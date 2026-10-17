@@ -396,6 +396,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/raw_numeric.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/raw_pages.rs",
           "publicDeclarations": [],
           "pathReferences": []
@@ -1842,10 +1847,14 @@
             "field:model_sha256",
             "field:model_json",
             "field:native_columns",
+            "enum:ParameterContainer",
             "struct:Parameter",
             "field:name",
             "field:carrier",
             "field:nullable",
+            "field:container",
+            "field:element_nullable",
+            "field:max_items",
             "struct:Request",
             "field:version",
             "field:target",
@@ -3186,11 +3195,17 @@
             "fn:compile_json"
           ],
           "pathReferences": [
-            "crates/weft-postgresql/src/raw_read_projection.rs"
+            "crates/weft-postgresql/src/raw_read_projection.rs",
+            "crates/weft-postgresql/src/raw_read_relationships.rs"
           ]
         },
         {
           "path": "crates/weft-postgresql/src/raw_read_projection.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read_relationships.rs",
           "publicDeclarations": [],
           "pathReferences": []
         },
