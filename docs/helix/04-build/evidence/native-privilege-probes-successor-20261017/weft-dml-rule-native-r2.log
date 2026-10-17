@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-dml-rule-prototype.py", line 15, in <module>
+    run('init',[pg/'initdb','-D',out/'data','-A','trust','-U','prototype_admin','--no-sync'])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/weft-dml-rule-prototype.py", line 10, in run
+    if p.returncode:raise RuntimeError(label)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: init

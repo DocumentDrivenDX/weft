@@ -1,0 +1,23 @@
+{
+  "scope": "source-only explicit local direct required Field projection profile; exact UInt64/Decimal38 descriptors; no native execution, complete Record/Key or authority claim",
+  "backendVersion": "0.1.0-local-spark4-fields-candidate",
+  "targetProfile": "spark4.0.1-delta4.0.0-fields-candidate",
+  "interfaceVersion": "weft-compile/0.2.0",
+  "forbidden": [
+    "parameters",
+    "filters",
+    "joins",
+    "grouping",
+    "aggregates",
+    "paging",
+    "Key operations",
+    "compound or optional outputs",
+    "numeric ordering",
+    "navigation"
+  ],
+  "oldProfileAndParameterDecimalPrecisionMaximum": 28,
+  "passedTests": 2,
+  "skips": 0,
+  "nativeExecuted": false,
+  "temporal": "HELD"
+}

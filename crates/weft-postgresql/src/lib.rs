@@ -1,6 +1,8 @@
+mod native_catalog_fence;
 pub mod current_scalar;
 pub mod truss_mutation;
 pub mod raw_read;
+pub mod native_privilege_probes;
 pub mod mutation;
 pub mod truss_runtime;
 mod storage_composition;
@@ -321,3 +323,5 @@ pub mod search;
 
 #[cfg(feature="current-presence-candidate")]
 pub mod current_presence;
+
+pub mod related_read;

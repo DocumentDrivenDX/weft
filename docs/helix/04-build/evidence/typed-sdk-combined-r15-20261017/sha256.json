@@ -1,0 +1,14 @@
+{
+  "README.md": "ab81f6684f91eb52405f86a5511ad3eb8767046934f23de628d5a2726e821019",
+  "browser-r1-localhost-refusal.log.gz": "10659937b82cf86cdad49dbc4a57a0fd470a91b99559d1b62d8ebed9dc93c5c0",
+  "browser-r2.log.gz": "f6935745a20becfe6ec2a9e8af4f45c220e457fc4aca932bf2ee417af0914311",
+  "browser-result.json": "70b6d167b556cbf5279f1659e9abab7b50c87efe664beb0e0420a51d4a58a494",
+  "browser.ts": "26d5f881d36f1950d4ec864a2eedf1da63041329043a60658260fe75d710149d",
+  "native-build.log.gz": "363c0cf6b7ebbc1b124604f2debd68883c662252d562b6bc4b4d9240ed0713ce",
+  "pins.json": "b54fa0a320e29adb72fd96423d40ff195ee8bb0d31730ab61d268577d6111e48",
+  "smoke.py": "c9ea945ce7ca6034d7b8a22304519f55675fb52ea4b939751adb1aa38a6dc69d",
+  "source-checks.json": "293b2d908a4ab26517a939eea0644d402588060fda51c3a4328e808f3d176c1e",
+  "source-proof.json.gz": "e6b59277077f6e13888b70ea5678fd7dc1da45882fd80dddf5e71887b765768b",
+  "wasm-a309-red.log.gz": "81149fc4472fe497fbae7eb63c5fd92c0e81f6bdd89f9a475df61f98024559ff",
+  "wasm-build.log.gz": "ac20335faa1239feea69f962b693f02fccf9c3e96a440bd4742a304cbed230dc"
+}

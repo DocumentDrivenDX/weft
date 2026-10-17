@@ -1,0 +1,1076 @@
+{
+  "approximate": false,
+  "binding": {
+    "modelJson": "{\"umf\":\"0.8.0\",\"id\":\"typed-search-e2e\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"search\",\"namespace\":\"search\",\"elements\":[{\"id\":\"id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"body\",\"name\":\"body\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"embedding\",\"name\":\"embedding\",\"kind\":\"field\",\"cardinality\":\"array\",\"nullability\":\"required\",\"extensions\":{},\"itemType\":{\"module\":\"search\",\"element\":\"component\"},\"facets\":{\"collectionSize\":{\"min\":3,\"max\":3}}},{\"id\":\"component\",\"name\":\"component\",\"kind\":\"field\",\"scalarType\":\"float\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Doc\",\"name\":\"Doc\",\"kind\":\"record\",\"members\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"},{\"module\":\"search\",\"element\":\"embedding\"}],\"keys\":[{\"id\":\"doc-key\",\"fields\":[{\"module\":\"search\",\"element\":\"id\"}],\"primary\":true,\"name\":\"Document identity\"}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"selectedKey\":{\"module\":\"search\",\"element\":\"Doc\",\"key\":\"doc-key\"},\"fields\":[{\"field\":{\"module\":\"search\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"body\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"component\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}]}],\"columns\":[{\"binding\":{\"sourceId\":\"uc-search-binding\",\"module\":\"search\"},\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"columns\":[{\"field\":{\"module\":\"search\",\"element\":\"id\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"default\"}},{\"field\":{\"module\":\"search\",\"element\":\"body\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"default\"}},{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"type\":\"vector(3)\",\"notNull\":true,\"generation\":null,\"collation\":null}]}],\"search\":[{\"id\":\"text\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"keyword\",\"exactness\":\"exact\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"keyword\":{\"source\":[{\"module\":\"search\",\"element\":\"body\"}],\"ranking\":{\"family\":\"implementation-defined\"},\"analyzer\":{\"language\":\"english\",\"stemming\":true},\"syntax\":\"plain\"}},{\"id\":\"semantic\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"vector\",\"exactness\":\"exact\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"vector\":{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"source\":{\"module\":\"search\",\"element\":\"body\"},\"model\":{\"id\":\"fixture-embedder\",\"version\":\"1\"},\"dimensions\":3,\"metric\":\"cosine\",\"computedBy\":\"host\"}}],\"searchBindings\":[{\"index\":\"text\",\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"native\":\"doc_text\",\"freshness\":\"transactional\",\"maxK\":100,\"filtering\":\"complete\"},{\"index\":\"semantic\",\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"native\":\"doc_semantic\",\"freshness\":\"transactional\",\"maxK\":100,\"filtering\":\"complete\"}]}}}]}",
+    "modelSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+    "nativeColumns": {
+      "sets": [
+        {
+          "binding": {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"uc-search-binding\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}},\"modules\":[],\"extensions\":{\"umf.binding\":{\"profile\":\"umf-binding-2\",\"logical\":{\"documentId\":\"typed-search-e2e\",\"coreVersion\":\"0.8.0\"},\"target\":{\"system\":\"postgresql\",\"version\":\"18\",\"subset\":\"typed-access-columns/0.1\"},\"elements\":[{\"module\":\"search\",\"element\":\"Doc\",\"table\":\"docs\"}],\"fields\":[{\"module\":\"search\",\"element\":\"id\",\"storage\":\"column\",\"column\":\"id\"},{\"module\":\"search\",\"element\":\"body\",\"storage\":\"column\",\"column\":\"body\"},{\"module\":\"search\",\"element\":\"embedding\",\"storage\":\"column\",\"column\":\"embedding\"}],\"relationships\":[],\"indexes\":[]}}}",
+            "documentSha256": "92da5a3caf71fba889ca9feebfdf0c8a31c8c5dd5b4884e1b20055c2ae1e2e47",
+            "sourceId": "uc-search-binding"
+          },
+          "columnSet": {
+            "coreVersion": "0.8.0",
+            "documentId": "typed-search-e2e",
+            "documentSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+            "module": "search",
+            "pointer": "/modules/0/extensions/umf.access/columns/0"
+          }
+        }
+      ],
+      "target": {
+        "majorVersion": "18",
+        "platform": "postgresql"
+      },
+      "vectorExtension": {
+        "schema": "public",
+        "version": "0.8.6"
+      }
+    },
+    "relationships": [],
+    "schema": "search_app",
+    "tables": [
+      {
+        "columns": [
+          {
+            "carrier": "string",
+            "logical": "id",
+            "native": "id",
+            "nullable": false
+          },
+          {
+            "carrier": "string",
+            "logical": "body",
+            "native": "body",
+            "nullable": false
+          }
+        ],
+        "key": [
+          "id"
+        ],
+        "logical": [
+          "search",
+          "Doc"
+        ],
+        "native": "docs"
+      }
+    ],
+    "version": "umf.raw-read-binding/0.1"
+  },
+  "index": {
+    "exactness": "exact",
+    "filterable": [
+      {
+        "element": "id",
+        "module": "search"
+      },
+      {
+        "element": "body",
+        "module": "search"
+      }
+    ],
+    "id": "text",
+    "keyword": {
+      "analyzer": {
+        "language": "english",
+        "stemming": true
+      },
+      "ranking": {
+        "family": "implementation-defined"
+      },
+      "source": [
+        {
+          "element": "body",
+          "module": "search"
+        }
+      ],
+      "syntax": "plain"
+    },
+    "kind": "keyword",
+    "record": {
+      "element": "Doc",
+      "module": "search"
+    }
+  },
+  "keyOutputs": [
+    {
+      "carrier": "string",
+      "field": {
+        "element": "id",
+        "module": "search"
+      },
+      "name": "__umf_key_0",
+      "nullable": false
+    }
+  ],
+  "mechanism": {
+    "configuration": "pg_catalog.english",
+    "kind": "postgresql-fts",
+    "ranking": "ts_rank_cd",
+    "syntax": "plain"
+  },
+  "nativeAdmission": {
+    "parameters": [
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "search_app"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "doc_text"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "docs"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "english"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "body"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": ""
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "to_tsvector(%L::regconfig, COALESCE(%I, %L::text))"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "embedding"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "public"
+          }
+        }
+      },
+      {
+        "carrier": "string",
+        "source": {
+          "literal": {
+            "string": "0.8.7"
+          }
+        }
+      }
+    ],
+    "sql": "SELECT (i.indisvalid AND i.indisready AND i.indislive AND i.indnkeyatts=1 AND i.indnatts=1 AND i.indpred IS NULL AND ((am.amname='gin' AND opc.opcname='tsvector_ops' AND opns.nspname='pg_catalog' AND i.indkey[0]=0 AND i.indexprs IS NOT NULL AND pg_catalog.pg_get_indexdef(i.indexrelid,1,true)=pg_catalog.format($7::pg_catalog.text, $4::pg_catalog.text, $5::pg_catalog.text, $6::pg_catalog.text)) AND EXISTS(SELECT 1 FROM pg_catalog.pg_attribute AS a JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace JOIN pg_catalog.pg_depend AS dep ON dep.classid='pg_catalog.pg_type'::pg_catalog.regclass AND dep.objid=ty.oid AND dep.refclassid='pg_catalog.pg_extension'::pg_catalog.regclass AND dep.deptype='e' JOIN pg_catalog.pg_extension AS ext ON ext.oid=dep.refobjid WHERE a.attrelid=t.oid AND a.attname=$8::pg_catalog.text AND NOT a.attisdropped AND ty.typname='vector' AND tn.nspname=$9::pg_catalog.text AND a.atttypmod=3 AND ext.extname='vector' AND ext.extversion=$10::pg_catalog.text))) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname=$1::pg_catalog.text AND ns.nspname=$1::pg_catalog.text AND idx.relname=$2::pg_catalog.text AND t.relname=$3::pg_catalog.text"
+  },
+  "nativeIndex": {
+    "filtering": "complete",
+    "freshness": "transactional",
+    "index": "text",
+    "maxK": 100,
+    "native": "doc_text",
+    "target": {
+      "majorVersion": "18",
+      "platform": "postgresql"
+    }
+  },
+  "obligations": {
+    "exactTieBreak": "complete-selected-Key-ascending",
+    "filtering": "before-ranking-complete-matching-set",
+    "nativeIndexCorrespondence": "host-observed-original-index-and-column-types",
+    "nativeProjection": {
+      "columns": [
+        {
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_native_1",
+              "__umf_native_2",
+              "__umf_native_3",
+              "__umf_native_4",
+              "__umf_native_5",
+              "__umf_native_6"
+            ],
+            "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_native_1",
+                "source": {
+                  "literal": {
+                    "string": "search_app"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_2",
+                "source": {
+                  "literal": {
+                    "string": "docs"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_3",
+                "source": {
+                  "literal": {
+                    "string": "body"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_4",
+                "source": {
+                  "literal": {
+                    "string": "text"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_5",
+                "source": {
+                  "literal": {
+                    "string": "pg_catalog"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_6",
+                "source": {
+                  "literal": {
+                    "string": "default"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE $4::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE $4::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=$5::pg_catalog.text AND co.collname=$6::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+          }
+        },
+        {
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_native_1",
+              "__umf_native_2",
+              "__umf_native_3",
+              "__umf_native_4",
+              "__umf_native_5",
+              "__umf_native_6"
+            ],
+            "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND ty.typname='vector' AND tn.nspname=%(__umf_native_5)s::pg_catalog.text AND a.atttypmod=3 AND ('vector('||a.atttypmod::pg_catalog.text||')')=%(__umf_native_4)s::pg_catalog.text AND EXISTS(SELECT 1 FROM pg_catalog.pg_extension AS e WHERE e.extname='vector' AND e.extnamespace=tn.oid AND e.extversion=%(__umf_native_6)s::pg_catalog.text) AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_native_1",
+                "source": {
+                  "literal": {
+                    "string": "search_app"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_2",
+                "source": {
+                  "literal": {
+                    "string": "docs"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_3",
+                "source": {
+                  "literal": {
+                    "string": "embedding"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_4",
+                "source": {
+                  "literal": {
+                    "string": "vector(3)"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_5",
+                "source": {
+                  "literal": {
+                    "string": "public"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_6",
+                "source": {
+                  "literal": {
+                    "string": "0.8.6"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND ty.typname='vector' AND tn.nspname=$5::pg_catalog.text AND a.atttypmod=3 AND ('vector('||a.atttypmod::pg_catalog.text||')')=$4::pg_catalog.text AND EXISTS(SELECT 1 FROM pg_catalog.pg_extension AS e WHERE e.extname='vector' AND e.extnamespace=tn.oid AND e.extversion=$6::pg_catalog.text) AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+          }
+        },
+        {
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_native_1",
+              "__umf_native_2",
+              "__umf_native_3",
+              "__umf_native_4",
+              "__umf_native_5",
+              "__umf_native_6"
+            ],
+            "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_native_1",
+                "source": {
+                  "literal": {
+                    "string": "search_app"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_2",
+                "source": {
+                  "literal": {
+                    "string": "docs"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_3",
+                "source": {
+                  "literal": {
+                    "string": "id"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_4",
+                "source": {
+                  "literal": {
+                    "string": "text"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_5",
+                "source": {
+                  "literal": {
+                    "string": "pg_catalog"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_native_6",
+                "source": {
+                  "literal": {
+                    "string": "default"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE $4::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE $4::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=$5::pg_catalog.text AND co.collname=$6::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+          }
+        },
+        {
+          "nativeAdmission": {
+            "dbapiParameterOrder": [
+              "__umf_inventory_1",
+              "__umf_inventory_2",
+              "__umf_inventory_3"
+            ],
+            "dbapiSql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+            "parameters": [
+              {
+                "carrier": "string",
+                "name": "__umf_inventory_1",
+                "source": {
+                  "literal": {
+                    "string": "search_app"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_inventory_2",
+                "source": {
+                  "literal": {
+                    "string": "docs"
+                  }
+                }
+              },
+              {
+                "carrier": "string",
+                "name": "__umf_inventory_3",
+                "source": {
+                  "literal": {
+                    "string": "[\"body\",\"embedding\",\"id\"]"
+                  }
+                }
+              }
+            ],
+            "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=$1::pg_catalog.text AND c.relname=$2::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text($3::pg_catalog.text::pg_catalog.json)))"
+          }
+        }
+      ],
+      "nativeCatalogBeforeAfter": true,
+      "verificationProfile": "source-exact/0.1",
+      "version": "umf.native-columns/0.1"
+    },
+    "noEmbeddingService": true,
+    "sameStatementAuthorization": true,
+    "timeout": "one-call-deadline",
+    "transaction": "repeatable-read-read-only"
+  },
+  "outputs": [
+    {
+      "carrier": "string",
+      "decoder": null,
+      "field": {
+        "element": "id",
+        "module": "search"
+      },
+      "name": "id",
+      "nullable": false
+    },
+    {
+      "carrier": "string",
+      "decoder": null,
+      "field": {
+        "element": "body",
+        "module": "search"
+      },
+      "name": "body",
+      "nullable": false
+    },
+    {
+      "carrier": "vector",
+      "decoder": {
+        "dimensions": 3,
+        "profile": "pgvector-text-float32/0.8.7"
+      },
+      "field": {
+        "element": "embedding",
+        "module": "search"
+      },
+      "name": "embedding",
+      "nullable": false
+    }
+  ],
+  "partial": false,
+  "preflights": [],
+  "profile": "umf.access.search/0.1",
+  "queryParameter": "__umf_search_query",
+  "request": {
+    "allowPartial": false,
+    "projection": [
+      {
+        "field": {
+          "element": "id",
+          "module": "search"
+        },
+        "name": "id"
+      },
+      {
+        "field": {
+          "element": "body",
+          "module": "search"
+        },
+        "name": "body"
+      },
+      {
+        "field": {
+          "element": "embedding",
+          "module": "search"
+        },
+        "name": "embedding"
+      }
+    ],
+    "queryParameter": "__umf_search_query",
+    "selection": {
+      "binding": {
+        "modelJson": "{\"umf\":\"0.8.0\",\"id\":\"typed-search-e2e\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"search\",\"namespace\":\"search\",\"elements\":[{\"id\":\"id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"body\",\"name\":\"body\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"embedding\",\"name\":\"embedding\",\"kind\":\"field\",\"cardinality\":\"array\",\"nullability\":\"required\",\"extensions\":{},\"itemType\":{\"module\":\"search\",\"element\":\"component\"},\"facets\":{\"collectionSize\":{\"min\":3,\"max\":3}}},{\"id\":\"component\",\"name\":\"component\",\"kind\":\"field\",\"scalarType\":\"float\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Doc\",\"name\":\"Doc\",\"kind\":\"record\",\"members\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"},{\"module\":\"search\",\"element\":\"embedding\"}],\"keys\":[{\"id\":\"doc-key\",\"fields\":[{\"module\":\"search\",\"element\":\"id\"}],\"primary\":true,\"name\":\"Document identity\"}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"selectedKey\":{\"module\":\"search\",\"element\":\"Doc\",\"key\":\"doc-key\"},\"fields\":[{\"field\":{\"module\":\"search\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"body\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"component\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}]}],\"columns\":[{\"binding\":{\"sourceId\":\"uc-search-binding\",\"module\":\"search\"},\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"columns\":[{\"field\":{\"module\":\"search\",\"element\":\"id\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"default\"}},{\"field\":{\"module\":\"search\",\"element\":\"body\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"default\"}},{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"type\":\"vector(3)\",\"notNull\":true,\"generation\":null,\"collation\":null}]}],\"search\":[{\"id\":\"text\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"keyword\",\"exactness\":\"exact\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"keyword\":{\"source\":[{\"module\":\"search\",\"element\":\"body\"}],\"ranking\":{\"family\":\"implementation-defined\"},\"analyzer\":{\"language\":\"english\",\"stemming\":true},\"syntax\":\"plain\"}},{\"id\":\"semantic\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"vector\",\"exactness\":\"exact\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"vector\":{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"source\":{\"module\":\"search\",\"element\":\"body\"},\"model\":{\"id\":\"fixture-embedder\",\"version\":\"1\"},\"dimensions\":3,\"metric\":\"cosine\",\"computedBy\":\"host\"}}],\"searchBindings\":[{\"index\":\"text\",\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"native\":\"doc_text\",\"freshness\":\"transactional\",\"maxK\":100,\"filtering\":\"complete\"},{\"index\":\"semantic\",\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"native\":\"doc_semantic\",\"freshness\":\"transactional\",\"maxK\":100,\"filtering\":\"complete\"}]}}}]}",
+        "modelSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+        "nativeColumns": {
+          "sets": [
+            {
+              "binding": {
+                "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"uc-search-binding\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}},\"modules\":[],\"extensions\":{\"umf.binding\":{\"profile\":\"umf-binding-2\",\"logical\":{\"documentId\":\"typed-search-e2e\",\"coreVersion\":\"0.8.0\"},\"target\":{\"system\":\"postgresql\",\"version\":\"18\",\"subset\":\"typed-access-columns/0.1\"},\"elements\":[{\"module\":\"search\",\"element\":\"Doc\",\"table\":\"docs\"}],\"fields\":[{\"module\":\"search\",\"element\":\"id\",\"storage\":\"column\",\"column\":\"id\"},{\"module\":\"search\",\"element\":\"body\",\"storage\":\"column\",\"column\":\"body\"},{\"module\":\"search\",\"element\":\"embedding\",\"storage\":\"column\",\"column\":\"embedding\"}],\"relationships\":[],\"indexes\":[]}}}",
+                "documentSha256": "92da5a3caf71fba889ca9feebfdf0c8a31c8c5dd5b4884e1b20055c2ae1e2e47",
+                "sourceId": "uc-search-binding"
+              },
+              "columnSet": {
+                "coreVersion": "0.8.0",
+                "documentId": "typed-search-e2e",
+                "documentSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+                "module": "search",
+                "pointer": "/modules/0/extensions/umf.access/columns/0"
+              }
+            }
+          ],
+          "target": {
+            "majorVersion": "18",
+            "platform": "postgresql"
+          },
+          "vectorExtension": {
+            "schema": "public",
+            "version": "0.8.6"
+          }
+        },
+        "relationships": [],
+        "schema": "search_app",
+        "tables": [
+          {
+            "columns": [
+              {
+                "carrier": "string",
+                "logical": "id",
+                "native": "id",
+                "nullable": false
+              },
+              {
+                "carrier": "string",
+                "logical": "body",
+                "native": "body",
+                "nullable": false
+              }
+            ],
+            "key": [
+              "id"
+            ],
+            "logical": [
+              "search",
+              "Doc"
+            ],
+            "native": "docs"
+          }
+        ],
+        "version": "umf.raw-read-binding/0.1"
+      },
+      "keyset": false,
+      "parameters": [],
+      "rowCap": 1000,
+      "sql": "SELECT \"r\".\"id\" AS \"id\" FROM \"search\".\"Doc\" AS \"r\"",
+      "target": "postgresql18",
+      "verificationProfile": "source-exact/0.1",
+      "version": "weft.raw-read/0.1"
+    },
+    "source": {
+      "coreVersion": "0.8.0",
+      "documentId": "typed-search-e2e",
+      "documentSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+      "module": "search",
+      "pointer": "/modules/0/extensions/umf.access/search/0"
+    },
+    "topK": 3,
+    "vectorBinding": {
+      "dimensions": 3,
+      "extensionSchema": "public",
+      "extensionVersion": "0.8.7",
+      "field": {
+        "element": "embedding",
+        "module": "search"
+      },
+      "native": "embedding"
+    },
+    "version": "weft.search/0.1"
+  },
+  "scoreKind": "implementation-defined",
+  "selectionTemplate": {
+    "binding": {
+      "modelJson": "{\"umf\":\"0.8.0\",\"id\":\"typed-search-e2e\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"search\",\"namespace\":\"search\",\"elements\":[{\"id\":\"id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"body\",\"name\":\"body\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"embedding\",\"name\":\"embedding\",\"kind\":\"field\",\"cardinality\":\"array\",\"nullability\":\"required\",\"extensions\":{},\"itemType\":{\"module\":\"search\",\"element\":\"component\"},\"facets\":{\"collectionSize\":{\"min\":3,\"max\":3}}},{\"id\":\"component\",\"name\":\"component\",\"kind\":\"field\",\"scalarType\":\"float\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Doc\",\"name\":\"Doc\",\"kind\":\"record\",\"members\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"},{\"module\":\"search\",\"element\":\"embedding\"}],\"keys\":[{\"id\":\"doc-key\",\"fields\":[{\"module\":\"search\",\"element\":\"id\"}],\"primary\":true,\"name\":\"Document identity\"}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"selectedKey\":{\"module\":\"search\",\"element\":\"Doc\",\"key\":\"doc-key\"},\"fields\":[{\"field\":{\"module\":\"search\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"body\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"search\",\"element\":\"component\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}]}],\"columns\":[{\"binding\":{\"sourceId\":\"uc-search-binding\",\"module\":\"search\"},\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"columns\":[{\"field\":{\"module\":\"search\",\"element\":\"id\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"default\"}},{\"field\":{\"module\":\"search\",\"element\":\"body\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"default\"}},{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"type\":\"vector(3)\",\"notNull\":true,\"generation\":null,\"collation\":null}]}],\"search\":[{\"id\":\"text\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"keyword\",\"exactness\":\"exact\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"keyword\":{\"source\":[{\"module\":\"search\",\"element\":\"body\"}],\"ranking\":{\"family\":\"implementation-defined\"},\"analyzer\":{\"language\":\"english\",\"stemming\":true},\"syntax\":\"plain\"}},{\"id\":\"semantic\",\"record\":{\"module\":\"search\",\"element\":\"Doc\"},\"kind\":\"vector\",\"exactness\":\"exact\",\"filterable\":[{\"module\":\"search\",\"element\":\"id\"},{\"module\":\"search\",\"element\":\"body\"}],\"vector\":{\"field\":{\"module\":\"search\",\"element\":\"embedding\"},\"source\":{\"module\":\"search\",\"element\":\"body\"},\"model\":{\"id\":\"fixture-embedder\",\"version\":\"1\"},\"dimensions\":3,\"metric\":\"cosine\",\"computedBy\":\"host\"}}],\"searchBindings\":[{\"index\":\"text\",\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"native\":\"doc_text\",\"freshness\":\"transactional\",\"maxK\":100,\"filtering\":\"complete\"},{\"index\":\"semantic\",\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"native\":\"doc_semantic\",\"freshness\":\"transactional\",\"maxK\":100,\"filtering\":\"complete\"}]}}}]}",
+      "modelSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+      "nativeColumns": {
+        "sets": [
+          {
+            "binding": {
+              "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"uc-search-binding\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}},\"modules\":[],\"extensions\":{\"umf.binding\":{\"profile\":\"umf-binding-2\",\"logical\":{\"documentId\":\"typed-search-e2e\",\"coreVersion\":\"0.8.0\"},\"target\":{\"system\":\"postgresql\",\"version\":\"18\",\"subset\":\"typed-access-columns/0.1\"},\"elements\":[{\"module\":\"search\",\"element\":\"Doc\",\"table\":\"docs\"}],\"fields\":[{\"module\":\"search\",\"element\":\"id\",\"storage\":\"column\",\"column\":\"id\"},{\"module\":\"search\",\"element\":\"body\",\"storage\":\"column\",\"column\":\"body\"},{\"module\":\"search\",\"element\":\"embedding\",\"storage\":\"column\",\"column\":\"embedding\"}],\"relationships\":[],\"indexes\":[]}}}",
+              "documentSha256": "92da5a3caf71fba889ca9feebfdf0c8a31c8c5dd5b4884e1b20055c2ae1e2e47",
+              "sourceId": "uc-search-binding"
+            },
+            "columnSet": {
+              "coreVersion": "0.8.0",
+              "documentId": "typed-search-e2e",
+              "documentSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+              "module": "search",
+              "pointer": "/modules/0/extensions/umf.access/columns/0"
+            }
+          }
+        ],
+        "target": {
+          "majorVersion": "18",
+          "platform": "postgresql"
+        },
+        "vectorExtension": {
+          "schema": "public",
+          "version": "0.8.6"
+        }
+      },
+      "relationships": [],
+      "schema": "search_app",
+      "tables": [
+        {
+          "columns": [
+            {
+              "carrier": "string",
+              "logical": "id",
+              "native": "id",
+              "nullable": false
+            },
+            {
+              "carrier": "string",
+              "logical": "body",
+              "native": "body",
+              "nullable": false
+            }
+          ],
+          "key": [
+            "id"
+          ],
+          "logical": [
+            "search",
+            "Doc"
+          ],
+          "native": "docs"
+        }
+      ],
+      "version": "umf.raw-read-binding/0.1"
+    },
+    "cursorOrdering": [],
+    "cursorOutputs": [],
+    "cursorParameters": [],
+    "lockSql": [
+      "LOCK TABLE \"search_app\".\"docs\" IN ACCESS SHARE MODE"
+    ],
+    "obligations": {
+      "baseTablesOnly": true,
+      "nativeProjection": {
+        "columns": [
+          {
+            "nativeAdmission": {
+              "dbapiParameterOrder": [
+                "__umf_native_1",
+                "__umf_native_2",
+                "__umf_native_3",
+                "__umf_native_4",
+                "__umf_native_5",
+                "__umf_native_6"
+              ],
+              "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+              "parameters": [
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_1",
+                  "source": {
+                    "literal": {
+                      "string": "search_app"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_2",
+                  "source": {
+                    "literal": {
+                      "string": "docs"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_3",
+                  "source": {
+                    "literal": {
+                      "string": "body"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_4",
+                  "source": {
+                    "literal": {
+                      "string": "text"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_5",
+                  "source": {
+                    "literal": {
+                      "string": "pg_catalog"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_6",
+                  "source": {
+                    "literal": {
+                      "string": "default"
+                    }
+                  }
+                }
+              ],
+              "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE $4::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE $4::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=$5::pg_catalog.text AND co.collname=$6::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+            }
+          },
+          {
+            "nativeAdmission": {
+              "dbapiParameterOrder": [
+                "__umf_native_1",
+                "__umf_native_2",
+                "__umf_native_3",
+                "__umf_native_4",
+                "__umf_native_5",
+                "__umf_native_6"
+              ],
+              "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND ty.typname='vector' AND tn.nspname=%(__umf_native_5)s::pg_catalog.text AND a.atttypmod=3 AND ('vector('||a.atttypmod::pg_catalog.text||')')=%(__umf_native_4)s::pg_catalog.text AND EXISTS(SELECT 1 FROM pg_catalog.pg_extension AS e WHERE e.extname='vector' AND e.extnamespace=tn.oid AND e.extversion=%(__umf_native_6)s::pg_catalog.text) AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+              "parameters": [
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_1",
+                  "source": {
+                    "literal": {
+                      "string": "search_app"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_2",
+                  "source": {
+                    "literal": {
+                      "string": "docs"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_3",
+                  "source": {
+                    "literal": {
+                      "string": "embedding"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_4",
+                  "source": {
+                    "literal": {
+                      "string": "vector(3)"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_5",
+                  "source": {
+                    "literal": {
+                      "string": "public"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_6",
+                  "source": {
+                    "literal": {
+                      "string": "0.8.6"
+                    }
+                  }
+                }
+              ],
+              "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND ty.typname='vector' AND tn.nspname=$5::pg_catalog.text AND a.atttypmod=3 AND ('vector('||a.atttypmod::pg_catalog.text||')')=$4::pg_catalog.text AND EXISTS(SELECT 1 FROM pg_catalog.pg_extension AS e WHERE e.extname='vector' AND e.extnamespace=tn.oid AND e.extversion=$6::pg_catalog.text) AND a.attcollation=0) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+            }
+          },
+          {
+            "nativeAdmission": {
+              "dbapiParameterOrder": [
+                "__umf_native_1",
+                "__umf_native_2",
+                "__umf_native_3",
+                "__umf_native_4",
+                "__umf_native_5",
+                "__umf_native_6"
+              ],
+              "dbapiSql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE %(__umf_native_4)s::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE %(__umf_native_4)s::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=%(__umf_native_5)s::pg_catalog.text AND co.collname=%(__umf_native_6)s::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=%(__umf_native_1)s::pg_catalog.text AND t.relname=%(__umf_native_2)s::pg_catalog.text AND a.attname=%(__umf_native_3)s::pg_catalog.text",
+              "parameters": [
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_1",
+                  "source": {
+                    "literal": {
+                      "string": "search_app"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_2",
+                  "source": {
+                    "literal": {
+                      "string": "docs"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_3",
+                  "source": {
+                    "literal": {
+                      "string": "id"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_4",
+                  "source": {
+                    "literal": {
+                      "string": "text"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_5",
+                  "source": {
+                    "literal": {
+                      "string": "pg_catalog"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_native_6",
+                  "source": {
+                    "literal": {
+                      "string": "default"
+                    }
+                  }
+                }
+              ],
+              "sql": "SELECT (NOT a.attisdropped AND a.attnum>0 AND a.attnotnull=TRUE AND a.attidentity='' AND a.attgenerated='' AND NOT a.atthasdef AND tn.nspname='pg_catalog' AND pg_catalog.format_type(a.atttypid,a.atttypmod)=CASE $4::pg_catalog.text WHEN 'bool' THEN 'boolean' ELSE $4::pg_catalog.text END AND EXISTS(SELECT 1 FROM pg_catalog.pg_collation co JOIN pg_catalog.pg_namespace cn ON cn.oid=co.collnamespace WHERE co.oid=a.attcollation AND cn.nspname=$5::pg_catalog.text AND co.collname=$6::pg_catalog.text)) AS correspondence FROM pg_catalog.pg_class AS t JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid JOIN pg_catalog.pg_type AS ty ON ty.oid=a.atttypid JOIN pg_catalog.pg_namespace AS tn ON tn.oid=ty.typnamespace WHERE t.relkind='r' AND ns.nspname=$1::pg_catalog.text AND t.relname=$2::pg_catalog.text AND a.attname=$3::pg_catalog.text"
+            }
+          },
+          {
+            "nativeAdmission": {
+              "dbapiParameterOrder": [
+                "__umf_inventory_1",
+                "__umf_inventory_2",
+                "__umf_inventory_3"
+              ],
+              "dbapiSql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%(__umf_inventory_1)s::pg_catalog.text AND c.relname=%(__umf_inventory_2)s::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text(%(__umf_inventory_3)s::pg_catalog.text::pg_catalog.json)))",
+              "parameters": [
+                {
+                  "carrier": "string",
+                  "name": "__umf_inventory_1",
+                  "source": {
+                    "literal": {
+                      "string": "search_app"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_inventory_2",
+                  "source": {
+                    "literal": {
+                      "string": "docs"
+                    }
+                  }
+                },
+                {
+                  "carrier": "string",
+                  "name": "__umf_inventory_3",
+                  "source": {
+                    "literal": {
+                      "string": "[\"body\",\"embedding\",\"id\"]"
+                    }
+                  }
+                }
+              ],
+              "sql": "SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=$1::pg_catalog.text AND c.relname=$2::pg_catalog.text AND c.relkind='r' AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_inherits inh WHERE inh.inhparent=c.oid OR inh.inhrelid=c.oid) AND (SELECT pg_catalog.array_agg(a.attname::pg_catalog.text ORDER BY a.attname COLLATE pg_catalog.\"C\") FROM pg_catalog.pg_attribute a WHERE a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped)=ARRAY(SELECT pg_catalog.json_array_elements_text($3::pg_catalog.text::pg_catalog.json)))"
+            }
+          }
+        ],
+        "nativeCatalogBeforeAfter": true,
+        "verificationProfile": "source-exact/0.1",
+        "version": "umf.native-columns/0.1"
+      },
+      "noBypassRls": true,
+      "principal": "caller-connection-role",
+      "rls": "native-caller-role",
+      "rowCap": null,
+      "schema": "search_app",
+      "searchPath": [
+        "pg_catalog"
+      ],
+      "timeout": "per-call",
+      "transaction": "read-only"
+    },
+    "outputs": [
+      {
+        "carrier": "string",
+        "collation": {
+          "name": "default",
+          "schema": "pg_catalog"
+        },
+        "name": "id",
+        "nativeType": "text",
+        "nullable": false
+      }
+    ],
+    "parameterOrder": [],
+    "parameters": [],
+    "privilegeInventory": {
+      "complete": false,
+      "functions": [],
+      "indexObjects": [],
+      "operators": [],
+      "semanticFields": [],
+      "tables": [
+        {
+          "columnPrivilegesSufficient": false,
+          "columns": [
+            "id"
+          ],
+          "native": "docs",
+          "privilege": "SELECT",
+          "reason": "LOCK TABLE ACCESS SHARE",
+          "schema": "search_app",
+          "tablePrivilegeRequired": true
+        }
+      ],
+      "unresolved": [
+        "native-function-and-operator-overload-closure"
+      ],
+      "version": "weft.native-privileges/0.1"
+    },
+    "referencedTables": [
+      {
+        "columns": [
+          {
+            "carrier": "string",
+            "logical": "id",
+            "native": "id",
+            "nullable": false
+          },
+          {
+            "carrier": "string",
+            "logical": "body",
+            "native": "body",
+            "nullable": false
+          },
+          {
+            "carrier": "vector",
+            "collation": null,
+            "decoder": {
+              "dimensions": 3,
+              "profile": "pgvector-text-float32/0.8.6"
+            },
+            "dimensions": 3,
+            "extensionSchema": "public",
+            "extensionVersion": "0.8.6",
+            "logical": "embedding",
+            "native": "embedding",
+            "nativeType": "vector(3)",
+            "nullable": false
+          }
+        ],
+        "logical": [
+          "search",
+          "Doc"
+        ],
+        "native": "docs"
+      }
+    ],
+    "sourceSql": "SELECT \"r\".\"id\" AS \"id\" FROM \"search\".\"Doc\" AS \"r\"",
+    "sql": "SELECT \"r\".\"id\" COLLATE pg_catalog.\"C\" AS \"id\" FROM \"search_app\".\"docs\" AS \"r\"",
+    "status": "compiled",
+    "structuralDigest": "3e04edb183292bb466f8edcf52ee22c42b52ec26e7ab65ae581650c6fd10a83e",
+    "target": "postgresql18",
+    "version": "weft.search-input/0.1"
+  },
+  "source": {
+    "coreVersion": "0.8.0",
+    "documentId": "typed-search-e2e",
+    "documentSha256": "e6cb4532948dfbf61d7615e07eccca7852c85409fcc8865811c150298dfd021c",
+    "module": "search",
+    "pointer": "/modules/0/extensions/umf.access/search/0"
+  },
+  "statement": {
+    "parameters": [
+      {
+        "carrier": "string",
+        "source": {
+          "input": "__umf_search_query"
+        }
+      }
+    ],
+    "sql": "WITH __umf_match AS MATERIALIZED (SELECT \"r\".\"id\" COLLATE pg_catalog.\"C\" AS \"id\" FROM \"search_app\".\"docs\" AS \"r\"), __umf_candidates AS MATERIALIZED (SELECT t.\"id\" AS \"f0\", t.\"body\" AS \"f1\", t.\"embedding\" AS \"f2\" FROM \"search_app\".\"docs\" AS t JOIN __umf_match AS m ON t.\"id\" IS NOT DISTINCT FROM m.\"id\") SELECT c.\"f0\" AS \"id\", c.\"f1\" AS \"body\", c.\"f2\"::pg_catalog.text AS \"embedding\", c.\"f0\" AS \"__umf_key_0\", pg_catalog.ts_rank_cd(pg_catalog.to_tsvector('pg_catalog.english'::pg_catalog.regconfig, COALESCE(c.\"f1\", ''::pg_catalog.text)), pg_catalog.plainto_tsquery('pg_catalog.english'::pg_catalog.regconfig, $1::pg_catalog.text))::pg_catalog.float8 AS __umf_score FROM __umf_candidates AS c WHERE pg_catalog.to_tsvector('pg_catalog.english'::pg_catalog.regconfig, COALESCE(c.\"f1\", ''::pg_catalog.text)) @@ pg_catalog.plainto_tsquery('pg_catalog.english'::pg_catalog.regconfig, $1::pg_catalog.text) ORDER BY __umf_score DESC, c.\"f0\" COLLATE pg_catalog.\"C\" ASC LIMIT 3"
+  },
+  "status": "compiled",
+  "structuralDigest": {
+    "owner": "weft-postgresql-search",
+    "sha256": "8ae95d798bbe26927d1cb9a383031cc2c7599f4b1679572987f7c7c126486ef2",
+    "version": "0.1"
+  },
+  "target": "postgresql18",
+  "topK": 3,
+  "version": "weft.search/0.1"
+}

@@ -147,6 +147,15 @@ fn compile(raw: &str) -> Result<Json> {
                     filter_fields(e, out)?;
                 }
             }
+            Expr::Function(f) if f.name.0.len()==1 && matches!(&f.name.0[0],ObjectNamePart::Identifier(i) if matches!(name(i).as_str(), "starts_with"|"in_empty"|"matches_all_terms"|"matches_any_term")) => {
+                // The original raw owner has already admitted the complete function grammar.
+                // This pass only inventories every referenced Field for filterability.
+                let FunctionArguments::List(args)=&f.args else {return Err("search filter function arguments unavailable")};
+                for arg in &args.args {
+                    let FunctionArg::Unnamed(FunctionArgExpr::Expr(e))=arg else {return Err("search filter function operand unavailable")};
+                    filter_fields(e,out)?;
+                }
+            }
             Expr::Value(_) => {}
             _ => return Err("search filter expression unavailable"),
         };
@@ -171,8 +180,15 @@ fn compile(raw: &str) -> Result<Json> {
         Some(schema) => format!("{}.{}", ident(schema)?, ident(&table.native)?),
         None => ident(&table.native)?,
     };
+    let source_columns=if r.selection.verification_profile.as_deref()==Some("source-exact/0.1") {Some(crate::raw_read::native_projection::columns(admitted.selection(),table)?)}else{None};
+    if let (Some(columns),Some(vector))=(&source_columns,&r.vector_binding) {
+        let original=field(&doc,&vector.field)?;let logical=original["name"].as_str().ok_or("source-exact vector Field name absent")?;
+        let c=columns.get(logical).ok_or("source-exact vector Field column absent")?;
+        if c.metadata["carrier"]!="vector"||c.native!=vector.native||c.metadata["dimensions"]!=json!(vector.dimensions)||c.metadata["extensionSchema"]!=vector.extension_schema||c.metadata["extensionVersion"]!=vector.extension_version{return Err("source-exact vector binding differs from original native column facts")}
+    }
     let native_column = |reference: &Json| -> Result<(String, String, bool)> {
         let f = field(&doc, reference)?;
+        if let Some(columns)=&source_columns {let c=columns.get(f["name"].as_str().ok_or("source-exact projection Field name absent")?).ok_or("source-exact projection Field column absent")?;return Ok((ident(&c.native)?,c.metadata["carrier"].as_str().unwrap().to_string(),c.metadata["nullable"].as_bool().unwrap()));}
         if let Some(vector) = &r.vector_binding {
             if vector.field == *reference {
                 return Ok((
@@ -269,7 +285,9 @@ fn compile(raw: &str) -> Result<Json> {
                 .iter()
                 .find(|p| p.name == *name.as_str().unwrap())
                 .unwrap();
-            json!({"source":{"input":p.name},"carrier":p.carrier})
+            let mut slot=json!({"source":{"input":p.name},"carrier":p.carrier});
+            if let Some(container)=&p.container {slot["container"]=json!(container);slot["nullable"]=json!(p.nullable);slot["elementNullable"]=json!(p.element_nullable);slot["maxItems"]=json!(p.max_items);}else if p.nullable {slot["nullable"]=json!(true);}
+            slot
         })
         .collect::<Vec<_>>();
     parameters.push(json!({"source":{"input":r.query_parameter},"carrier":if index["kind"]=="vector"{"vector"}else{"string"}}));
@@ -353,7 +371,13 @@ fn compile(raw: &str) -> Result<Json> {
             },
             ident(&p.name)?
         ));
-        outputs.push(json!({"name":p.name,"field":p.field,"carrier":carrier,"nullable":nullable,"decoder":if carrier=="vector"{json!({"profile":format!("pgvector-text-float32/{}",r.vector_binding.as_ref().unwrap().extension_version),"dimensions":r.vector_binding.as_ref().unwrap().dimensions})}else{Json::Null}}));
+        let mut output=json!({"name":p.name,"field":p.field,"carrier":carrier,"nullable":nullable});
+        if let Some(columns)=&source_columns {
+            let original=field(&doc,&p.field)?;let c=&columns[original["name"].as_str().unwrap()];
+            for(key,value)in c.metadata.as_object().unwrap(){output[key]=value.clone();}
+            if output.get("decoder").is_none(){output["decoder"]=Json::Null;}
+        }else{output["decoder"]=if carrier=="vector"{json!({"profile":format!("pgvector-text-float32/{}",r.vector_binding.as_ref().unwrap().extension_version),"dimensions":r.vector_binding.as_ref().unwrap().dimensions})}else{Json::Null};}
+        outputs.push(output);
     }
     let mut key_outputs = vec![];
     for (i, key) in table.key.iter().enumerate() {
@@ -461,6 +485,13 @@ fn compile(raw: &str) -> Result<Json> {
     };
     let admission = json!({"sql":format!("SELECT ({common} AND ({extra})) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname={app} AND ns.nspname={app} AND idx.relname={native_index} AND t.relname={table_name}"),"parameters":admission_parameters});
     let mut result = json!({"version":"weft.search/0.1","status":"compiled","profile":"umf.access.search/0.1","request":r,"target":r.selection.target,"source":r.source,"binding":binding,"index":index,"nativeIndex":admitted.binding(),"mechanism":mechanism,"scoreKind":kind,"queryParameter":r.query_parameter,"topK":r.top_k,"approximate":false,"partial":admitted.binding()["filtering"]=="partial","nativeAdmission":admission,"preflights":preflights,"statement":{"sql":sql,"parameters":parameters},"outputs":outputs,"keyOutputs":key_outputs,"selectionTemplate":read,"obligations":{"transaction":"repeatable-read-read-only","sameStatementAuthorization":true,"nativeIndexCorrespondence":"host-observed-original-index-and-column-types","filtering":"before-ranking-complete-matching-set","exactTieBreak":"complete-selected-Key-ascending","timeout":"one-call-deadline","noEmbeddingService":true}});
+    if read["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1" {result["obligations"]["nativeProjection"]=read["obligations"]["nativeProjection"].clone();}
+    if let Some(term)=read["obligations"].get("termFilter") {result["obligations"]["termFilter"]=term.clone();}
+    if index["kind"]=="keyword" {
+        result["obligations"]["keywordConfiguration"]=json!({"version":"umf.keyword-configuration/0.1","nativeCatalogBeforeAfter":true,"configurations":[crate::raw_read::keyword_configuration_metadata(&serde_json::to_value(&r.source).unwrap(),index)?]});
+    }
+    crate::native_catalog_fence::attach(&r.selection.binding,&mut result["obligations"])?;
+    crate::native_catalog_fence::seal_version(&mut result)?;
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&result).as_bytes());
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-search","version":"0.1","sha256":digest});
@@ -486,8 +517,76 @@ mod tests {
         })
         .unwrap()
     }
-    fn output(r: Json) -> Json {
+    fn output(mut r: Json) -> Json {
+        r["selection"]["binding"]["nativeCatalogFence"]=json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    #[test]
+    fn actual_public_filter_declarations_keep_original_owner_admission(){
+        let fixture:Json=serde_json::from_str(include_str!("../../../tests/native-search/public-filter-requests-r25.json")).unwrap();
+        let cases=fixture["requests"].as_array().unwrap();assert_eq!(cases.len(),12);
+        let mut red=0;
+        for case in cases {
+            let raw=case["requestText"].as_str().unwrap();assert_eq!(weft_core::json::sha256(raw.as_bytes()),case["requestSha256"]);
+            let compiled=match case["compilerApi"].as_str().unwrap(){"compile_search_json"=>compile_json(raw),"compile_raw_read_json"=>crate::raw_read::compile_json(raw),_=>panic!("unknown captured owner API")};
+            let p:Json=serde_json::from_str(&compiled).unwrap();assert_eq!(p["status"],"compiled","{}: {p}",case["declaration"]);
+            assert!(p["obligations"].get("nativeCatalogFence").is_some());assert!(p["version"].as_str().unwrap().ends_with("/0.2"));
+            if case["baselineStatus"]=="blocked"{assert_eq!(case["declaration"],"any_terms");red+=1;}else{assert_eq!(weft_core::json::sha256(compiled.as_bytes()),case["baselineProgramSha256"],"unrelated actual program changed: {}",case["declaration"]);}
+        }
+        assert_eq!(red,1);
+    }
+    #[test]
+    fn ranked_and_filter_term_configuration_obligations_are_executable(){
+        let r:Json=serde_json::from_str(include_str!("../../../tests/native-search/source-exact-terms-keyword-request.json")).unwrap();
+        let p=output(r.clone());assert_eq!(p["status"],"compiled","{p}");
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/ranked-keyword.json"),p.to_string()).unwrap();}
+        let a=&p["obligations"]["keywordConfiguration"]["configurations"][0];
+        assert_eq!(a["source"],p["source"]);assert_eq!(a["index"],p["index"]);
+        assert!(a["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_ts_config_map"));
+        assert!(a["nativeAdmission"]["sql"].as_str().unwrap().contains("dictinitoption"));
+        let mut filtered=r.clone();filtered["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE MATCHES_ALL_TERMS(r.body,:terms)");
+        filtered["selection"]["parameters"]=json!([{"name":"terms","carrier":"string","nullable":false}]);
+        let q=output(filtered.clone());assert_eq!(q["status"],"compiled","{q}");
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-term-prefilter.json"),q.to_string()).unwrap();}
+        assert_eq!(q["obligations"]["termFilter"],q["selectionTemplate"]["obligations"]["termFilter"]);
+        assert!(q["obligations"]["termFilter"]["indexes"].as_array().unwrap().len()>0);
+        let mut listed=r.clone();listed["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE r.id IN (:ids)");
+        listed["selection"]["parameters"]=json!([{"name":"ids","carrier":"string","nullable":false,"container":"list","elementNullable":true,"maxItems":8}]);
+        let q=output(listed.clone());assert_eq!(q["status"],"compiled","{q}");
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-list.json"),q.to_string()).unwrap();}
+        let slot=&q["statement"]["parameters"][0];assert_eq!(slot["container"],"list");assert_eq!(slot["nullable"],false);assert_eq!(slot["elementNullable"],true);assert_eq!(slot["maxItems"],8);
+        listed["selection"]["parameters"][0]["maxItems"]=json!(1001);assert_eq!(output(listed)["status"],"blocked");
+        let mut nullable=r.clone();nullable["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE r.id=:nullable_id OR :nullable_id IS NULL");
+        nullable["selection"]["parameters"]=json!([{"name":"nullable_id","carrier":"string","nullable":true}]);
+        let q=output(nullable);assert_eq!(q["status"],"compiled","{q}");assert_eq!(q["statement"]["parameters"][0]["nullable"],true);
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-nullable-scalar.json"),q.to_string()).unwrap();}
+
+        filtered["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE UNSUPPORTED(r.body,:terms)");assert_eq!(output(filtered)["status"],"blocked");
+    }
+    #[test]
+    fn source_exact_search_preserves_executed_full_column_admissions(){
+        let request=include_str!("../../../tests/native-search/source-exact-keyword-request.json");
+        let p=output(serde_json::from_str(request).unwrap());assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["obligations"]["nativeProjection"],p["selectionTemplate"]["obligations"]["nativeProjection"]);
+        assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
+    }
+    #[test]
+    fn source_exact_full_record_and_vector_binding_pins_are_preserved(){
+        let r:Json=serde_json::from_str(include_str!("../../../tests/native-search/source-exact-full-record-request.json")).unwrap();
+        let p=output(r.clone());assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["outputs"].as_array().unwrap().len(),6);
+        for (name,carrier,native) in [("payload","binary","bytea"),("count","integer","bigint"),("amount","decimal","numeric(38,10)"),("embedding","vector","vector(3)")]{let c=p["outputs"].as_array().unwrap().iter().find(|c|c["name"]==name).unwrap();assert_eq!(c["carrier"],carrier);assert_eq!(c["nativeType"],native);}
+        assert_eq!(p["outputs"][5]["decoder"]["profile"],"pg-bytea/0.1");
+        for (key,value)in [("extensionVersion",json!("0.8.6")),("extensionSchema",json!("wrong_schema")),("native",json!("wrong_column")),("dimensions",json!(4))]{let mut bad=r.clone();bad["vectorBinding"][key]=value;assert_eq!(output(bad)["status"],"blocked", "{key}");}
+        let mut projected=r.clone();projected["vectorBinding"]=Json::Null;let q=output(projected);assert_eq!(q["status"],"compiled","{q}");assert_eq!(q["outputs"][2]["decoder"],p["outputs"][2]["decoder"]);
+        // Original current RowView can narrow an absent-allowed Core Field only
+        // with every authored native ColumnSet providing the corresponding NOTNULL.
+        let mut narrowed=r.clone();let mut doc:Json=serde_json::from_str(narrowed["selection"]["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="embedding").unwrap()["nullability"]=json!("absent-allowed");
+        let raw=doc.to_string();let sha=weft_core::json::sha256(raw.as_bytes());narrowed["selection"]["binding"]["modelJson"]=json!(raw);narrowed["selection"]["binding"]["modelSha256"]=json!(sha);narrowed["source"]["documentSha256"]=json!(sha);narrowed["selection"]["binding"]["nativeColumns"]["sets"][0]["columnSet"]["documentSha256"]=json!(sha);
+        let q=output(narrowed);assert_eq!(q["status"],"compiled","{q}");assert_eq!(q["outputs"][2]["nullable"],false);
+
     }
     #[test]
     fn exact_search_owns_filter_snapshot_and_native_admission() {

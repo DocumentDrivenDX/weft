@@ -1,0 +1,1075 @@
+{
+  "action": {
+    "atomicity": "single-store",
+    "attribution": {
+      "subject": "person-required"
+    },
+    "authorization": {
+      "kind": "roles",
+      "profile": {
+        "id": "umf.actions.roles",
+        "version": "1"
+      },
+      "roles": [
+        "approver"
+      ]
+    },
+    "binding": {
+      "effects": [
+        {
+          "entity": {
+            "parameter": "order"
+          },
+          "id": "approve-status",
+          "kind": "set",
+          "values": [
+            {
+              "field": {
+                "element": "status",
+                "module": "sales"
+              },
+              "value": {
+                "literal": {
+                  "string": "approved"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "kind": "recipe",
+      "profile": {
+        "id": "graph-write",
+        "version": "1"
+      }
+    },
+    "description": "Set an order status to approved.",
+    "failures": [],
+    "id": "approve",
+    "idempotency": "caller-key-optional",
+    "name": "Approve",
+    "outputs": [],
+    "parameters": [
+      {
+        "id": "order",
+        "kind": "entity",
+        "required": true,
+        "target": {
+          "element": "order",
+          "key": "pk",
+          "module": "sales"
+        }
+      }
+    ],
+    "postconditions": [],
+    "preconditions": [],
+    "reads": [],
+    "result": {
+      "identities": "created-and-changed",
+      "receipt": "read-at-least",
+      "version": "store-opaque"
+    },
+    "writes": [
+      {
+        "create": false,
+        "delete": false,
+        "fields": [
+          {
+            "element": "status",
+            "module": "sales"
+          }
+        ],
+        "id": "order-write",
+        "maxEntities": 1,
+        "record": {
+          "element": "order",
+          "module": "sales"
+        },
+        "relationships": [],
+        "selector": {
+          "expression": "{\"entity\":\"order\"}",
+          "language": "umf.actions.keys",
+          "references": [
+            {
+              "parameter": "order"
+            }
+          ],
+          "version": "1"
+        }
+      }
+    ]
+  },
+  "admission": {
+    "parameters": [
+      {
+        "carrier": "string",
+        "source": {
+          "nativeRole": "native_approver"
+        }
+      }
+    ],
+    "sql": "SELECT (pg_catalog.pg_has_role(session_user, ($1::pg_catalog.text COLLATE pg_catalog.\"C\"), 'MEMBER')) AS allowed, session_user::pg_catalog.text AS authenticated, current_user::pg_catalog.text AS effective, pg_catalog.pg_current_xact_id()::pg_catalog.text AS xid"
+  },
+  "binding": {
+    "modelJson": "{\"umf\":\"0.8.0\",\"id\":\"typed-native-actions-e2e\",\"vocabularies\":{\"umf.actions\":{\"version\":\"0.1.0\"},\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"name\":\"id\"},{\"id\":\"status\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"name\":\"status\"},{\"id\":\"order\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"id\"},{\"module\":\"sales\",\"element\":\"status\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"sales\",\"element\":\"id\"}]}],\"extensions\":{},\"name\":\"order\"}],\"extensions\":{\"umf.actions\":{\"actions\":[{\"id\":\"approve\",\"name\":\"Approve\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"guarded\",\"name\":\"Guarded\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[{\"id\":\"NOT_DRAFT\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"op\\\":\\\"eq\\\",\\\"args\\\":[{\\\"state\\\":\\\"pre\\\",\\\"frame\\\":\\\"order-read\\\",\\\"field\\\":{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"status\\\"}},{\\\"literal\\\":{\\\"string\\\":\\\"draft\\\"}}]}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"NOT_DRAFT\",\"message\":\"NOT_DRAFT\"}}],\"postconditions\":[],\"failures\":[{\"code\":\"NOT_DRAFT\",\"message\":\"NOT_DRAFT\",\"retryable\":false}],\"reads\":[{\"id\":\"order-read\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"postFail\",\"name\":\"Post fail\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[{\"id\":\"POST_REFUSED\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"literal\\\":{\\\"boolean\\\":false}}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"POST_REFUSED\",\"message\":\"POST_REFUSED\"}}],\"failures\":[{\"code\":\"POST_REFUSED\",\"message\":\"POST_REFUSED\",\"retryable\":false}],\"reads\":[{\"id\":\"order-read\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"createOrder\",\"name\":\"Create order\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"id\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"id\"},\"required\":true},{\"id\":\"status\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"create-order\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"key\\\":\\\"pk\\\",\\\"components\\\":[{\\\"input\\\":\\\"id\\\"}]}\",\"references\":[{\"parameter\":\"id\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"id\"},{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":true,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"create-order\",\"kind\":\"create\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"key\":\"pk\",\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"id\"},\"value\":{\"parameter\":\"id\"}},{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"parameter\":\"status\"}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}},{\"id\":\"firstFalse\",\"name\":\"First false\",\"description\":\"Set an order status to approved.\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"required\":true}],\"outputs\":[],\"preconditions\":[{\"id\":\"FIRST\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"literal\\\":{\\\"boolean\\\":false}}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"FIRST\",\"message\":\"FIRST\"}},{\"id\":\"LATER_ERROR\",\"rule\":{\"language\":\"umf.actions.rules\",\"version\":\"1\",\"expression\":\"{\\\"op\\\":\\\"eq\\\",\\\"args\\\":[{\\\"state\\\":\\\"pre\\\",\\\"frame\\\":\\\"gone-read\\\",\\\"field\\\":{\\\"module\\\":\\\"sales\\\",\\\"element\\\":\\\"status\\\"}},{\\\"literal\\\":{\\\"string\\\":\\\"draft\\\"}}]}\",\"references\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"}}]},\"failure\":{\"code\":\"LATER_ERROR\",\"message\":\"LATER_ERROR\"}}],\"postconditions\":[],\"failures\":[{\"code\":\"FIRST\",\"message\":\"FIRST\",\"retryable\":false},{\"code\":\"LATER_ERROR\",\"message\":\"LATER_ERROR\",\"retryable\":false}],\"reads\":[{\"id\":\"gone-read\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"key\\\":\\\"pk\\\",\\\"components\\\":[{\\\"literal\\\":{\\\"string\\\":\\\"gone\\\"}}]}\",\"references\":[]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"writes\":[{\"id\":\"order-write\",\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"order\\\"}\",\"references\":[{\"parameter\":\"order\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"status\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"approve-status\",\"kind\":\"set\",\"entity\":{\"parameter\":\"order\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"value\":{\"literal\":{\"string\":\"approved\"}}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"approver\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]},\"umf.access\":{\"views\":[{\"record\":{\"module\":\"sales\",\"element\":\"order\"},\"selectedKey\":{\"module\":\"sales\",\"element\":\"order\",\"key\":\"pk\"},\"fields\":[{\"field\":{\"module\":\"sales\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"sales\",\"element\":\"status\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}]}],\"columns\":[],\"search\":[],\"searchBindings\":[]}}}]}",
+    "modelSha256": "eee5746541513eaa135ff58d4b2d5da5e0746e3792df5f65e467bf0515990aff",
+    "relationships": [],
+    "schema": null,
+    "tables": [
+      {
+        "columns": [
+          {
+            "carrier": "string",
+            "logical": "id",
+            "native": "id",
+            "nullable": false
+          },
+          {
+            "carrier": "string",
+            "logical": "status",
+            "native": "status",
+            "nullable": false
+          }
+        ],
+        "key": [
+          "id"
+        ],
+        "logical": [
+          "sales",
+          "order"
+        ],
+        "native": "orders"
+      }
+    ],
+    "version": "umf.raw-read-binding/0.1"
+  },
+  "effects": [
+    {
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "guard": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "literal": {
+                "string": "approved"
+              }
+            }
+          },
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "SELECT (\"status\" IS DISTINCT FROM ($1::pg_catalog.text COLLATE pg_catalog.\"C\")) AS changed FROM \"orders\" WHERE \"id\" IS NOT DISTINCT FROM ($2::pg_catalog.text COLLATE pg_catalog.\"C\") FOR UPDATE"
+      },
+      "id": "approve-status",
+      "image": "effect:0",
+      "kind": "set",
+      "statement": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "literal": {
+                "string": "approved"
+              }
+            }
+          },
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "UPDATE \"orders\" SET \"status\" = ($1::pg_catalog.text COLLATE pg_catalog.\"C\") WHERE \"id\" IS NOT DISTINCT FROM ($2::pg_catalog.text COLLATE pg_catalog.\"C\") RETURNING \"id\""
+      },
+      "values": [
+        [
+          {
+            "carrier": "string",
+            "declaration": {
+              "cardinality": "one",
+              "extensions": {},
+              "id": "status",
+              "kind": "field",
+              "name": "status",
+              "nullability": "required",
+              "scalarType": "string"
+            },
+            "logical": "status",
+            "nullable": false,
+            "reference": {
+              "element": "status",
+              "module": "sales"
+            },
+            "table": [
+              "sales",
+              "order"
+            ]
+          },
+          {
+            "literal": {
+              "string": "approved"
+            }
+          }
+        ]
+      ]
+    }
+  ],
+  "entities": {
+    "[\"parameter\",\"order\"]": {
+      "components": [
+        {
+          "component": 0,
+          "entity": "order"
+        }
+      ],
+      "key": {
+        "fields": [
+          {
+            "carrier": "string",
+            "declaration": {
+              "cardinality": "one",
+              "extensions": {},
+              "id": "id",
+              "kind": "field",
+              "name": "id",
+              "nullability": "required",
+              "scalarType": "string"
+            },
+            "logical": "id",
+            "nullable": false,
+            "reference": {
+              "element": "id",
+              "module": "sales"
+            },
+            "table": [
+              "sales",
+              "order"
+            ]
+          }
+        ],
+        "reference": {
+          "element": "order",
+          "key": "pk",
+          "module": "sales"
+        },
+        "table": [
+          "sales",
+          "order"
+        ]
+      },
+      "requiredExisting": true
+    }
+  },
+  "fields": {
+    "[\"sales\",\"status\"]": {
+      "carrier": "string",
+      "declaration": {
+        "cardinality": "one",
+        "extensions": {},
+        "id": "status",
+        "kind": "field",
+        "name": "status",
+        "nullability": "required",
+        "scalarType": "string"
+      },
+      "logical": "status",
+      "nullable": false,
+      "reference": {
+        "element": "status",
+        "module": "sales"
+      },
+      "table": [
+        "sales",
+        "order"
+      ]
+    }
+  },
+  "frames": {
+    "order-write": {
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "fields": [
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "status",
+            "kind": "field",
+            "name": "status",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "status",
+          "nullable": false,
+          "reference": {
+            "element": "status",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        }
+      ],
+      "source": {
+        "create": false,
+        "delete": false,
+        "fields": [
+          {
+            "element": "status",
+            "module": "sales"
+          }
+        ],
+        "id": "order-write",
+        "maxEntities": 1,
+        "record": {
+          "element": "order",
+          "module": "sales"
+        },
+        "relationships": [],
+        "selector": {
+          "expression": "{\"entity\":\"order\"}",
+          "language": "umf.actions.keys",
+          "references": [
+            {
+              "parameter": "order"
+            }
+          ],
+          "version": "1"
+        }
+      }
+    }
+  },
+  "lockSql": [
+    "LOCK TABLE \"orders\" IN ROW EXCLUSIVE MODE"
+  ],
+  "obligations": {
+    "dependencyProfile": "scalar-base-tables-no-user-triggers-rules-routines-fk-generated-defaults-or-checks",
+    "nativeAdmission": "original-host-qualified-unchanged-closure-fence",
+    "noRetry": true,
+    "principal": "qualified-human-session",
+    "receipt": "original-writer-incarnation-and-xid8",
+    "sessionRole": "unchanged",
+    "transaction": "serializable",
+    "validate": "same-checks-always-rollback"
+  },
+  "postImages": [
+    {
+      "columns": [
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "id",
+            "kind": "field",
+            "name": "id",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "id",
+          "nullable": false,
+          "reference": {
+            "element": "id",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "status",
+            "kind": "field",
+            "name": "status",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "status",
+          "nullable": false,
+          "reference": {
+            "element": "status",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        }
+      ],
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "name": "effect:0",
+      "statement": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "SELECT \"id\" AS \"f0\", \"status\" AS \"f1\" FROM \"orders\" WHERE \"id\" IS NOT DISTINCT FROM ($1::pg_catalog.text COLLATE pg_catalog.\"C\")"
+      }
+    },
+    {
+      "columns": [
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "id",
+            "kind": "field",
+            "name": "id",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "id",
+          "nullable": false,
+          "reference": {
+            "element": "id",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        }
+      ],
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "name": "entity:[\"parameter\",\"order\"]",
+      "statement": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "SELECT \"id\" AS \"f0\" FROM \"orders\" WHERE \"id\" IS NOT DISTINCT FROM ($1::pg_catalog.text COLLATE pg_catalog.\"C\")"
+      }
+    },
+    {
+      "columns": [
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "id",
+            "kind": "field",
+            "name": "id",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "id",
+          "nullable": false,
+          "reference": {
+            "element": "id",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "status",
+            "kind": "field",
+            "name": "status",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "status",
+          "nullable": false,
+          "reference": {
+            "element": "status",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        }
+      ],
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "name": "frame:order-write",
+      "statement": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "SELECT \"id\" AS \"f0\", \"status\" AS \"f1\" FROM \"orders\" WHERE \"id\" IS NOT DISTINCT FROM ($1::pg_catalog.text COLLATE pg_catalog.\"C\")"
+      }
+    }
+  ],
+  "postconditions": [],
+  "preImages": [
+    {
+      "columns": [
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "id",
+            "kind": "field",
+            "name": "id",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "id",
+          "nullable": false,
+          "reference": {
+            "element": "id",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "status",
+            "kind": "field",
+            "name": "status",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "status",
+          "nullable": false,
+          "reference": {
+            "element": "status",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        }
+      ],
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "name": "effect:0",
+      "statement": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "SELECT \"id\" AS \"f0\", \"status\" AS \"f1\" FROM \"orders\" WHERE \"id\" IS NOT DISTINCT FROM ($1::pg_catalog.text COLLATE pg_catalog.\"C\") FOR UPDATE"
+      }
+    },
+    {
+      "columns": [
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "id",
+            "kind": "field",
+            "name": "id",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "id",
+          "nullable": false,
+          "reference": {
+            "element": "id",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        }
+      ],
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "name": "entity:[\"parameter\",\"order\"]",
+      "statement": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "SELECT \"id\" AS \"f0\" FROM \"orders\" WHERE \"id\" IS NOT DISTINCT FROM ($1::pg_catalog.text COLLATE pg_catalog.\"C\") FOR UPDATE"
+      }
+    },
+    {
+      "columns": [
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "id",
+            "kind": "field",
+            "name": "id",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "id",
+          "nullable": false,
+          "reference": {
+            "element": "id",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        {
+          "carrier": "string",
+          "declaration": {
+            "cardinality": "one",
+            "extensions": {},
+            "id": "status",
+            "kind": "field",
+            "name": "status",
+            "nullability": "required",
+            "scalarType": "string"
+          },
+          "logical": "status",
+          "nullable": false,
+          "reference": {
+            "element": "status",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        }
+      ],
+      "entity": {
+        "components": [
+          {
+            "component": 0,
+            "entity": "order"
+          }
+        ],
+        "key": {
+          "fields": [
+            {
+              "carrier": "string",
+              "declaration": {
+                "cardinality": "one",
+                "extensions": {},
+                "id": "id",
+                "kind": "field",
+                "name": "id",
+                "nullability": "required",
+                "scalarType": "string"
+              },
+              "logical": "id",
+              "nullable": false,
+              "reference": {
+                "element": "id",
+                "module": "sales"
+              },
+              "table": [
+                "sales",
+                "order"
+              ]
+            }
+          ],
+          "reference": {
+            "element": "order",
+            "key": "pk",
+            "module": "sales"
+          },
+          "table": [
+            "sales",
+            "order"
+          ]
+        },
+        "requiredExisting": true
+      },
+      "name": "frame:order-write",
+      "statement": {
+        "parameters": [
+          {
+            "carrier": "string",
+            "source": {
+              "component": 0,
+              "entity": "order"
+            }
+          }
+        ],
+        "sql": "SELECT \"id\" AS \"f0\", \"status\" AS \"f1\" FROM \"orders\" WHERE \"id\" IS NOT DISTINCT FROM ($1::pg_catalog.text COLLATE pg_catalog.\"C\") FOR UPDATE"
+      }
+    }
+  ],
+  "preconditions": [],
+  "profile": "umf.actions.native-sql/0.1",
+  "security": {
+    "ontology": {
+      "mediaType": "application/json",
+      "sha256": "38aab153d74e078f8297b793fe93506a06e7eaa81db063509bd66a8b8e40d2c9",
+      "utf8": "{\"version\":\"0.1.0\",\"documentId\":\"typed-native-ontology\",\"revision\":\"ontology-1\",\"documents\":[{\"documentId\":\"typed-native-actions-e2e\",\"revision\":\"eee5746541513eaa135ff58d4b2d5da5e0746e3792df5f65e467bf0515990aff\"}],\"subject\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"order\"},\"entities\":[{\"type\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"order\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"id\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"typed-native-actions-e2e\",\"moduleId\":\"sales\",\"elementId\":\"status\"},\"protection\":\"unprotected\"}]}],\"associations\":[],\"context\":[],\"actions\":[\"approve\",\"guarded\",\"postFail\",\"createOrder\",\"firstFalse\"]}"
+    },
+    "policy": {
+      "mediaType": "application/json",
+      "sha256": "156be023fd23ed8e6ed96778aee1fd85db40be8fb2fec4e8e375c9bf1350492f",
+      "utf8": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"typed-native-public-fields\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"typed-native-ontology\",\"revision\":\"ontology-1\"},\"rules\":[]}"
+    }
+  },
+  "source": {
+    "action": "approve",
+    "actionPointer": "/modules/0/extensions/umf.actions/actions/0",
+    "coreVersion": "0.8.0",
+    "documentId": "typed-native-actions-e2e",
+    "documentSha256": "eee5746541513eaa135ff58d4b2d5da5e0746e3792df5f65e467bf0515990aff",
+    "invocation": {
+      "id": "umf.actions.tx",
+      "version": "1"
+    },
+    "module": "sales"
+  },
+  "status": "compiled",
+  "structuralDigest": {
+    "owner": "weft-postgresql-native-action",
+    "sha256": "4739f9e6f867514aa1247d55689daa60c4d669e1c890a552ea82594acde8e0c3",
+    "version": "0.1"
+  },
+  "target": "postgresql18",
+  "version": "weft.native-action/0.1"
+}

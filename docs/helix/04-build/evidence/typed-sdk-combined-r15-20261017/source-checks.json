@@ -1,0 +1,50 @@
+[
+  {
+    "name": "runtime",
+    "exitCode": 0,
+    "seconds": 23.956,
+    "log": "/private/tmp/weft-r15-source-runtime.log"
+  },
+  {
+    "name": "databricks",
+    "exitCode": 0,
+    "seconds": 13.694,
+    "log": "/private/tmp/weft-r15-source-databricks.log"
+  },
+  {
+    "name": "pg-raw",
+    "exitCode": 0,
+    "seconds": 10.64,
+    "log": "/private/tmp/weft-r15-source-pg-raw.log"
+  },
+  {
+    "name": "pg-related",
+    "exitCode": 0,
+    "seconds": 0.351,
+    "log": "/private/tmp/weft-r15-source-pg-related.log"
+  },
+  {
+    "name": "pg-truss",
+    "exitCode": 0,
+    "seconds": 0.406,
+    "log": "/private/tmp/weft-r15-source-pg-truss.log"
+  },
+  {
+    "name": "default-runtime",
+    "exitCode": 0,
+    "seconds": 6.633,
+    "log": "/private/tmp/weft-r15-source-default-runtime.log"
+  },
+  {
+    "name": "boundaries",
+    "exitCode": 0,
+    "seconds": 0.309,
+    "log": "/private/tmp/weft-r15-source-boundaries.log"
+  },
+  {
+    "name": "boundary-tests",
+    "exitCode": 0,
+    "seconds": 0.217,
+    "log": "/private/tmp/weft-r15-source-boundary-tests.log"
+  }
+]

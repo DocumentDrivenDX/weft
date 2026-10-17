@@ -1,0 +1,14 @@
+{
+  "bulkSourceTests": 2,
+  "privilegeSourceTests": 9,
+  "skips": 0,
+  "dmlPrototypeNativeChecks": 8,
+  "postgresqlVersion": "18.6",
+  "dmlPrototypeServerStopped": true,
+  "nativePrivilegeComplete": false,
+  "nativeAuthority": false,
+  "publicPublication": false,
+  "temporal": "HELD",
+  "oldScalarBulkDigest": "f34aa692fefcf4b225e3e793c56fc9f4e4bf9b62220d6b2ff40bd365a6caa5f1",
+  "r16WheelUnchanged": true
+}

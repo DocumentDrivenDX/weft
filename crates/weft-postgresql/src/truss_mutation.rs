@@ -147,6 +147,8 @@ impl CurrentTrussMutationBackend {
             relationships: vec![],
         };
         let plan = app::Plan {
+        read_order:None,
+        navigation:None,
             ir_version: "weft-ir/0.2.0".into(),
             module_pins: self.catalog.pins(),
             read_profile: None,

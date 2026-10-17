@@ -1,0 +1,53 @@
+{
+  "status": "private source controls only; installed/native/browser successor qualification pending",
+  "baseline": "28bd2dd9fb7625f23980ef3289c55f47c10daa1f",
+  "export": {
+    "acceptedPairs": [
+      [
+        "truss-runtime",
+        "weft.engine-page/0.1"
+      ],
+      [
+        "truss-runtime-binary",
+        "weft.engine-page/0.2"
+      ]
+    ],
+    "nativeCursorABI": "unchanged original Truss cursor/0.1",
+    "checks": [
+      "original page recompile/check",
+      "selectedKey echo",
+      "full native columns/model/parameter/binding/plan/key/visible correspondence",
+      "composite continuation then first-page-only export refusal",
+      "forged compiler/version/key/after refusal"
+    ],
+    "unsupported": [
+      "Ashlar native export",
+      "binary Related navigation",
+      "binary Key cursor",
+      "arbitrary Truss page order"
+    ]
+  },
+  "producer": {
+    "build": "sha256:16e0c555f31ef913c7c44e71a1b9520e7574b5dbca843d0fbbf760e882aef93a",
+    "oldPinsRetained": true,
+    "staleEa828Registered": false,
+    "sourceInventoryBeforeEqualsAfter": true,
+    "checks": [
+      "genuine standard/local registration and compile",
+      "changed target accepted at registration but refused at original compile boundary",
+      "stale/unknown producer",
+      "action pin",
+      "model/modelPin/action request custody"
+    ],
+    "independentUMFControls": "parent reports original actions-plan test19/110 assertions; native execution separate"
+  },
+  "counts": {
+    "candidateRuntime": 40,
+    "commonRuntime": 26,
+    "currentProducer": 2
+  },
+  "historicalFailures": [
+    "registration-only changed-target negative expected wrong stage; corrected to actual compile boundary",
+    "composite binary after test originally wrong arity; corrected to full original composite Key"
+  ]
+}

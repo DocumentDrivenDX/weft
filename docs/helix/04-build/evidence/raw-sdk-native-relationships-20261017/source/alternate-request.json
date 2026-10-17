@@ -1,0 +1,107 @@
+{
+  "version": "weft.raw-read/0.1",
+  "target": "postgresql18",
+  "sql": "SELECT o.id AS id, c.id AS customer FROM commerce.\"Order\" o INNER JOIN commerce.\"Customer\" c ON o.customer_code=c.code ORDER BY o.id LIMIT 10",
+  "binding": {
+    "version": "umf.raw-read-binding/0.1",
+    "modelSha256": "ff09363ca0fb2796cf27c0f6b3e13b8914e1eb09d9da61734e988b78bece2748",
+    "schema": "weft_r13_fixture",
+    "tables": [
+      {
+        "logical": [
+          "commerce",
+          "Order"
+        ],
+        "native": "orders",
+        "key": [
+          "id"
+        ],
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "integer",
+            "nullable": false
+          },
+          {
+            "logical": "customer_id",
+            "native": "customer_id",
+            "carrier": "integer",
+            "nullable": true
+          },
+          {
+            "logical": "status",
+            "native": "status",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "amount",
+            "native": "amount",
+            "carrier": "decimal",
+            "nullable": false
+          },
+          {
+            "logical": "customer_code",
+            "native": "customer_code",
+            "carrier": "string",
+            "nullable": false
+          }
+        ]
+      },
+      {
+        "logical": [
+          "commerce",
+          "Customer"
+        ],
+        "native": "customers",
+        "key": [
+          "id"
+        ],
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "integer",
+            "nullable": false
+          },
+          {
+            "logical": "name",
+            "native": "name",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "code",
+            "native": "code",
+            "carrier": "string",
+            "nullable": false
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "id": "customer",
+        "source": [
+          "commerce",
+          "Order"
+        ],
+        "target": [
+          "commerce",
+          "Customer"
+        ],
+        "pairs": [
+          [
+            "customer_code",
+            "code"
+          ]
+        ],
+        "toOne": true
+      }
+    ],
+    "modelJson": "{\"id\":\"praxis-read-test\",\"modules\":[{\"elements\":[{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}},\"id\":\"Order_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}},\"id\":\"Order_customer_id\",\"kind\":\"field\",\"name\":\"customer_id\",\"nullability\":\"absent-allowed\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_status\",\"kind\":\"field\",\"name\":\"status\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":6},\"id\":\"Order_amount\",\"kind\":\"field\",\"name\":\"amount\",\"nullability\":\"required\",\"scalarType\":\"decimal\"},{\"extensions\":{},\"id\":\"Order\",\"keys\":[{\"fields\":[{\"element\":\"Order_id\",\"module\":\"commerce\"}],\"id\":\"Order_key\",\"name\":\"Order key\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"Order_id\",\"module\":\"commerce\"},{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},{\"element\":\"Order_status\",\"module\":\"commerce\"},{\"element\":\"Order_amount\",\"module\":\"commerce\"},{\"module\":\"commerce\",\"element\":\"Order_customer_code\"}],\"name\":\"Order\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}},\"id\":\"Customer_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Customer_name\",\"kind\":\"field\",\"name\":\"name\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"extensions\":{},\"id\":\"Customer\",\"keys\":[{\"fields\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"}],\"id\":\"Customer_key\",\"name\":\"Customer key\",\"primary\":true},{\"id\":\"Customer_code_key\",\"name\":\"customer code\",\"fields\":[{\"module\":\"commerce\",\"element\":\"Customer_code\"}]}],\"kind\":\"record\",\"members\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"},{\"element\":\"Customer_name\",\"module\":\"commerce\"},{\"module\":\"commerce\",\"element\":\"Customer_code\"}],\"name\":\"Customer\"},{\"id\":\"Order_customer_code\",\"name\":\"customer_code\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer_code\",\"name\":\"code\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}}],\"extensions\":{},\"id\":\"commerce\",\"namespace\":\"commerce\",\"relationships\":[{\"directed\":true,\"id\":\"customer\",\"name\":\"customer\",\"source\":[{\"element\":\"Order\",\"module\":\"commerce\"}],\"sourceMultiplicity\":{\"max\":\"*\",\"min\":0},\"target\":[{\"element\":\"Customer\",\"key\":\"Customer_code_key\",\"module\":\"commerce\"}],\"targetLifecycle\":\"independent\",\"targetMultiplicity\":{\"max\":1,\"min\":1}}]}],\"umf\":\"0.8.0\",\"vocabularies\":{}}"
+  },
+  "parameters": [],
+  "rowCap": 10
+}

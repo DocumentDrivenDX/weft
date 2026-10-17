@@ -1,0 +1,147 @@
+{
+  "version": "weft.raw-read/0.1",
+  "target": "spark-delta4",
+  "sql": "SELECT o.id AS id, c.name AS customer, o.tiny AS tiny, o.small AS small, o.count AS count, o.big AS big, o.amount AS amount, o.payload AS payload, o.embedding AS embedding FROM \"commerce\".\"Order\" AS o LEFT JOIN \"commerce\".\"Customer\" AS c ON o.customer_id = c.id ORDER BY c.name ASC NULLS LAST, o.id DESC NULLS FIRST LIMIT 50",
+  "binding": {
+    "version": "umf.raw-read-binding/0.1",
+    "modelSha256": "3321ea5375791bfa3cd062cdf4cfb30d37626a1d54444ac3cefc3498678f699b",
+    "modelJson": "{\"id\":\"spark-pages-authored\",\"modules\":[{\"elements\":[{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_customer_id\",\"kind\":\"field\",\"name\":\"customer_id\",\"nullability\":\"absent-allowed\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_status\",\"kind\":\"field\",\"name\":\"status\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"extensions\":{},\"id\":\"Order\",\"keys\":[{\"fields\":[{\"element\":\"Order_id\",\"module\":\"commerce\"}],\"id\":\"Order_key\",\"name\":\"Order key\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"Order_id\",\"module\":\"commerce\"},{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},{\"element\":\"Order_status\",\"module\":\"commerce\"},{\"element\":\"tiny\",\"module\":\"commerce\"},{\"element\":\"small\",\"module\":\"commerce\"},{\"element\":\"count\",\"module\":\"commerce\"},{\"element\":\"big\",\"module\":\"commerce\"},{\"element\":\"amount\",\"module\":\"commerce\"},{\"element\":\"payload\",\"module\":\"commerce\"},{\"element\":\"embedding\",\"module\":\"commerce\"}],\"name\":\"Order\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Customer_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Customer_name\",\"kind\":\"field\",\"name\":\"name\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"extensions\":{},\"id\":\"Customer\",\"keys\":[{\"fields\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"}],\"id\":\"Customer_key\",\"name\":\"Customer key\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"},{\"element\":\"Customer_name\",\"module\":\"commerce\"}],\"name\":\"Customer\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":8,\"signed\":true}},\"id\":\"tiny\",\"kind\":\"field\",\"name\":\"tiny\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":16,\"signed\":true}},\"id\":\"small\",\"kind\":\"field\",\"name\":\"small\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}},\"id\":\"count\",\"kind\":\"field\",\"name\":\"count\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}},\"id\":\"big\",\"kind\":\"field\",\"name\":\"big\",\"nullability\":\"required\",\"scalarType\":\"integer\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":38,\"scale\":9},\"id\":\"amount\",\"kind\":\"field\",\"name\":\"amount\",\"nullability\":\"required\",\"scalarType\":\"decimal\"},{\"cardinality\":\"one\",\"extensions\":{},\"facets\":{},\"id\":\"payload\",\"kind\":\"field\",\"name\":\"payload\",\"nullability\":\"required\",\"scalarType\":\"binary\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"component\",\"kind\":\"field\",\"name\":\"component\",\"nullability\":\"required\",\"scalarType\":\"float\"},{\"cardinality\":\"array\",\"extensions\":{},\"facets\":{\"collectionSize\":{\"max\":3,\"min\":3}},\"id\":\"embedding\",\"itemType\":{\"element\":\"component\",\"module\":\"commerce\"},\"kind\":\"field\",\"name\":\"embedding\",\"nullability\":\"required\"}],\"extensions\":{\"umf.access\":{\"columns\":[{\"binding\":{\"module\":\"commerce\",\"sourceId\":\"physical\"},\"columns\":[{\"field\":{\"element\":\"Order_id\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"},{\"field\":{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":false,\"type\":\"STRING\"},{\"field\":{\"element\":\"Order_status\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"},{\"field\":{\"element\":\"Customer_id\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"},{\"field\":{\"element\":\"Customer_name\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"},{\"field\":{\"element\":\"tiny\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"TINYINT\"},{\"field\":{\"element\":\"small\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"SMALLINT\"},{\"field\":{\"element\":\"count\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"INT\"},{\"field\":{\"element\":\"big\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"BIGINT\"},{\"field\":{\"element\":\"amount\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"DECIMAL(38,9)\"},{\"field\":{\"element\":\"payload\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"BINARY\"},{\"field\":{\"element\":\"embedding\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"ARRAY<FLOAT>\"}],\"target\":{\"majorVersion\":\"spark4-delta4\",\"platform\":\"spark-delta\"}}],\"search\":[{\"exactness\":\"approximate\",\"filterable\":[],\"id\":\"semantic\",\"kind\":\"vector\",\"record\":{\"element\":\"Order\",\"module\":\"commerce\"},\"vector\":{\"computedBy\":\"host\",\"dimensions\":3,\"field\":{\"element\":\"embedding\",\"module\":\"commerce\"},\"metric\":\"l2\",\"model\":{\"id\":\"spark-fixture\",\"version\":\"1\"},\"source\":{\"element\":\"Order_status\",\"module\":\"commerce\"}}}],\"searchBindings\":[],\"views\":[{\"fields\":[{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Order_id\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":false,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":true,\"null\":true},\"field\":{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":true}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Order_status\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"tiny\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"small\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"count\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"big\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"amount\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"payload\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"embedding\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"component\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":false,\"row\":{\"missing\":false,\"null\":false}}],\"record\":{\"element\":\"Order\",\"module\":\"commerce\"},\"selectedKey\":{\"element\":\"Order\",\"key\":\"Order_key\",\"module\":\"commerce\"}},{\"fields\":[{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Customer_id\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":false,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Customer_name\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}}],\"record\":{\"element\":\"Customer\",\"module\":\"commerce\"},\"selectedKey\":{\"element\":\"Customer\",\"key\":\"Customer_key\",\"module\":\"commerce\"}}]}},\"id\":\"commerce\",\"namespace\":\"commerce\",\"relationships\":[{\"directed\":true,\"id\":\"customer\",\"name\":\"customer\",\"source\":[{\"element\":\"Order\",\"module\":\"commerce\"}],\"sourceMultiplicity\":{\"max\":\"*\",\"min\":0},\"target\":[{\"element\":\"Customer\",\"key\":\"Customer_key\",\"module\":\"commerce\"}],\"targetLifecycle\":\"independent\",\"targetMultiplicity\":{\"max\":1,\"min\":0}}]}],\"umf\":\"0.8.0\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}}}",
+    "schema": "sdk_spark_pages",
+    "tables": [
+      {
+        "logical": [
+          "commerce",
+          "Order"
+        ],
+        "native": "orders",
+        "key": [
+          "id"
+        ],
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "customer_id",
+            "native": "customer_id",
+            "carrier": "string",
+            "nullable": true
+          },
+          {
+            "logical": "status",
+            "native": "status",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "tiny",
+            "native": "tiny",
+            "carrier": "integer",
+            "nullable": false
+          },
+          {
+            "logical": "small",
+            "native": "small",
+            "carrier": "integer",
+            "nullable": false
+          },
+          {
+            "logical": "count",
+            "native": "count",
+            "carrier": "integer",
+            "nullable": false
+          },
+          {
+            "logical": "big",
+            "native": "big",
+            "carrier": "integer",
+            "nullable": false
+          },
+          {
+            "logical": "amount",
+            "native": "amount",
+            "carrier": "decimal",
+            "nullable": false
+          }
+        ]
+      },
+      {
+        "logical": [
+          "commerce",
+          "Customer"
+        ],
+        "native": "customers",
+        "key": [
+          "id"
+        ],
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "name",
+            "native": "name",
+            "carrier": "string",
+            "nullable": false
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "id": "customer",
+        "source": [
+          "commerce",
+          "Order"
+        ],
+        "target": [
+          "commerce",
+          "Customer"
+        ],
+        "pairs": [
+          [
+            "customer_id",
+            "id"
+          ]
+        ],
+        "toOne": true
+      }
+    ],
+    "nativeColumns": {
+      "target": {
+        "platform": "spark-delta",
+        "majorVersion": "spark4-delta4"
+      },
+      "sets": [
+        {
+          "columnSet": {
+            "documentId": "spark-pages-authored",
+            "coreVersion": "0.8.0",
+            "documentSha256": "3321ea5375791bfa3cd062cdf4cfb30d37626a1d54444ac3cefc3498678f699b",
+            "module": "commerce",
+            "pointer": "/modules/0/extensions/umf.access/columns/0"
+          },
+          "binding": {
+            "sourceId": "physical",
+            "documentJson": "{\"extensions\":{\"umf.binding\":{\"elements\":[{\"element\":\"Order\",\"module\":\"commerce\",\"table\":\"orders\"},{\"element\":\"Customer\",\"module\":\"commerce\",\"table\":\"customers\"}],\"fields\":[{\"column\":\"id\",\"element\":\"Order_id\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"customer_id\",\"element\":\"Order_customer_id\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"status\",\"element\":\"Order_status\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"id\",\"element\":\"Customer_id\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"name\",\"element\":\"Customer_name\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"tiny\",\"element\":\"tiny\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"small\",\"element\":\"small\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"count\",\"element\":\"count\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"big\",\"element\":\"big\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"amount\",\"element\":\"amount\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"payload\",\"element\":\"payload\",\"module\":\"commerce\",\"storage\":\"column\"},{\"column\":\"embedding\",\"element\":\"embedding\",\"module\":\"commerce\",\"storage\":\"column\"}],\"indexes\":[],\"logical\":{\"coreVersion\":\"0.8.0\",\"documentId\":\"spark-pages-authored\"},\"profile\":\"umf-binding-2\",\"relationships\":[],\"target\":{\"subset\":\"typed-access-columns/0.1\",\"system\":\"spark-delta\",\"version\":\"spark4-delta4\"}}},\"id\":\"spark-pages-physical\",\"modules\":[],\"umf\":\"0.8.0\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}}}",
+            "documentSha256": "6663ac6d0426c3f86298c6145ff6345b1c00f466e4e9ca8c2afcc7f6c68230ae"
+          }
+        }
+      ]
+    }
+  },
+  "parameters": [],
+  "rowCap": 50,
+  "keyset": true,
+  "snapshots": {
+    "orders": 1,
+    "customers": 2
+  },
+  "streamPageSize": true
+}

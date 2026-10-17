@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "a6ca6fe63c94c8a0d65dd6e661d99b28381520ef",
+  "wheel": "/private/tmp/weft-combined-sdk-local-r20/wheels/weft_sql-0.4.42.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "e6eed3fbf345d33425db93f2e00b988ff318b6be78ae1aa0a8889d16a8dae932",
+  "payloads": {
+    "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "weft/weft.abi3.so": "7659496db357aff6744d9d414076b100f2e72c5cda2084f6b1825ba8363254dd"
+  }
+}

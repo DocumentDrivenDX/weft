@@ -101,13 +101,15 @@ fn locate<'a>(doc: &'a Value, r: &Value) -> Result<&'a Value, &'static str> {
         })
         .ok_or("search reference absent")
 }
-pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
+pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> { admit_profile(raw,false,None) }
+pub fn admit_unity_json(raw:&str,target:&Value)->Result<AdmittedSearch,&'static str>{admit_profile(raw,false,Some(target))}
+fn admit_profile(raw: &str, terms:bool, unity:Option<&Value>) -> Result<AdmittedSearch, &'static str> {
     let r: SearchRequest =
         serde_json::from_value(checked_json(raw).map_err(|_| "bounded search JSON required")?)
             .map_err(|_| "exact search request required")?;
     if r.version != "weft.search/0.1"
         || !(1..=1000).contains(&r.top_k)
-        || r.selection.keyset
+        || (r.selection.keyset && !terms)
         || r.query_parameter.is_empty()
         || r.query_parameter.len() > 64
         || r.selection
@@ -155,7 +157,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
         .as_str()
         .is_none_or(|s| s.is_empty() || s.len() > 256)
         || !matches!(index["kind"].as_str(), Some("keyword" | "vector"))
-        || index["exactness"] != "exact"
+        || index["exactness"] != if unity.is_some(){"approximate"}else{"exact"}
     {
         return Err("SEARCH_UNSUPPORTED: initial exact native profile required");
     }
@@ -194,6 +196,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
     let platform = match r.selection.target.as_str() {
         "postgresql18" => "postgresql",
         "lakebase18" => "lakebase",
+        "unity-catalog-current" if unity.is_some()=>"unity-catalog",
         _ => return Err("SEARCH_UNSUPPORTED: native target not qualified"),
     };
     let bindings = payload["searchBindings"]
@@ -203,7 +206,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
         .iter()
         .filter(|b| {
             b["index"] == index["id"]
-                && b["target"] == json!({"platform":platform,"majorVersion":"18"})
+                && b["target"] == unity.cloned().unwrap_or_else(||json!({"platform":platform,"majorVersion":"18"}))
         })
         .collect::<Vec<_>>();
     if found.len() != 1 {
@@ -222,7 +225,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
         ],
         &[],
     )?;
-    if binding["freshness"] != "transactional"
+    if binding["freshness"] != if unity.is_some(){"asynchronous"}else{"transactional"}
         || binding["native"].as_str().is_none_or(str::is_empty)
         || binding["maxK"]
             .as_u64()
@@ -254,6 +257,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
         {
             return Err("SEARCH_UNSUPPORTED: PostgreSQL keyword ranking requires implementation-defined plain semantics");
         }
+        if unity.is_some() && keyword["analyzer"] != "implementation-defined" {return Err("UC native analyzer must be explicitly implementation-defined")};
         if keyword["analyzer"] != "implementation-defined" {
             exact(&keyword["analyzer"], &["language", "stemming"], &[])?;
             if keyword["analyzer"] != json!({"language":"english","stemming":true})
@@ -330,7 +334,8 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
             || native.field != vector["field"]
             || native.dimensions == 0
             || native.dimensions > 16000
-            || !matches!(native.extension_version.as_str(), "0.8.6" | "0.8.7")
+            || (unity.is_none() && !matches!(native.extension_version.as_str(), "0.8.6" | "0.8.7"))
+            || (unity.is_some() && (vector["metric"]!="l2" || vector["computedBy"]!="host"))
         {
             return Err("SEARCH_UNSUPPORTED: exact pinned pgvector0.8.6 or 0.8.7 shape required");
         }
@@ -355,4 +360,72 @@ pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> {
         request: r,
         selection,
     })
+}
+
+/// Resolve one explicitly authored single-field keyword index for an unranked
+/// raw predicate. This returns metadata only; native correspondence stays a host
+/// obligation, and ordinary ranked search keeps its original admission profile.
+pub fn admit_terms(read:&raw_read::AdmittedRead,table:&[String],column:&str)->Result<AdmittedSearch,&'static str> {
+    if table.len()!=2 {return Err("TERM_INDEX: logical owner required")};
+    let request=read.request();
+    let doc=checked_json(&request.binding.model_json).map_err(|_|"TERM_INDEX: original source refused")?;
+    let modules=doc["modules"].as_array().ok_or("TERM_INDEX: original modules required")?;
+    let mut owners=vec![];
+    for module in modules {
+        if module["namespace"]!=table[0] {continue};
+        for record in module["elements"].as_array().ok_or("TERM_INDEX: element inventory required")? {
+            if record["kind"]=="record" && record["name"]==table[1] {owners.push((module,record));}
+        }
+    }
+    if owners.len()!=1 {return Err("TERM_INDEX: unique original Record required")};
+    let (module,record)=owners[0];
+    let record_ref=json!({"module":module["id"],"element":record["id"]});
+    let mut fields=vec![];
+    for reference in record["members"].as_array().ok_or("TERM_INDEX: original members required")? {
+        let field=locate(&doc,reference)?;
+        if field["name"]==column {fields.push(reference.clone());}
+    }
+    if fields.len()!=1 {return Err("TERM_INDEX: unique original Field required")};
+    let field_ref=&fields[0];
+    let mut found=vec![];
+    for (mi,module) in modules.iter().enumerate() {
+        let Some(indices)=module["extensions"]["umf.access"]["search"].as_array() else {continue};
+        for (ii,index) in indices.iter().enumerate() {
+            if index["kind"]=="keyword" && index["record"]==record_ref && index["keyword"]["source"]==json!([field_ref]) {
+                found.push((mi,ii,module,index));
+            }
+        }
+    }
+    if found.len()!=1 {return Err("TERM_INDEX: one declared single-field keyword index required")};
+    let (mi,ii,module,index)=found[0];
+    if index["keyword"]["analyzer"]=="implementation-defined" {return Err("TERM_ANALYZER: explicit supported analyzer required")};
+    let source=json!({"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":request.binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
+    let probe=json!({"version":"weft.search/0.1","source":source,"selection":request,"queryParameter":"__umf_term_query","topK":1,"projection":[{"field":field_ref,"name":"term_field"}],"vectorBinding":null,"allowPartial":false});
+    admit_profile(&probe.to_string(),true,None)
+}
+
+/// Admit each explicitly authored keyword index of a mutation's original Record.
+/// The constructed logical Key scan is metadata context only and is never executed.
+pub fn admit_keyword_effects(binding:&raw_read::Binding,target:&str,table:&[String])->Result<Vec<AdmittedSearch>,&'static str>{
+    raw_read::validate_catalog_fence(binding,target)?;
+    let record=raw_read::binding_record(binding,table)?;
+    let record_ref=json!({"module":record.identity.module,"element":record.identity.element});
+    let original=checked_json(&binding.model_json).map_err(|_|"keyword effects original source refused")?;
+    let native=binding.tables.iter().find(|t|t.logical==table).ok_or("keyword effects table unbound")?;
+    let quote=|name:&str|format!("\"{}\"",name.replace('"',"\"\""));
+    let columns=native.key.iter().map(|k|format!("r.{} AS {}",quote(k),quote(k))).collect::<Vec<_>>().join(", ");
+    let logical=table.iter().map(|n|quote(n)).collect::<Vec<_>>().join(".");
+    let selection=json!({"version":"weft.raw-read/0.1","target":target,"sql":format!("SELECT {columns} FROM {logical} AS r"),"binding":binding,"parameters":[],"rowCap":1});
+    let mut out=vec![];
+    for (mi,module) in original["modules"].as_array().ok_or("keyword effects modules absent")?.iter().enumerate(){
+        let Some(indexes)=module["extensions"]["umf.access"]["search"].as_array() else{continue};
+        for (ii,index) in indexes.iter().enumerate(){
+            if index["kind"]!="keyword"||index["record"]!=record_ref{continue}
+            let first=index["keyword"]["source"].as_array().and_then(|a|a.first()).ok_or("keyword effects source fields absent")?;
+            let source=json!({"documentId":original["id"],"coreVersion":"0.8.0","documentSha256":binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
+            let request=json!({"version":"weft.search/0.1","source":source,"selection":selection,"queryParameter":"__umf_effect_query","topK":1,"projection":[{"field":first,"name":"effect_field"}],"vectorBinding":null,"allowPartial":true});
+            out.push(admit_profile(&request.to_string(),false,None)?);
+        }
+    }
+    Ok(out)
 }

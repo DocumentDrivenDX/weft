@@ -1,0 +1,19 @@
+{
+  "scope": "historical golden failure reproduced; identical common features raw-postgresql-reads,ashlar-databricks-candidate; new SDK candidate feature omitted because absent from frozen R22",
+  "actualEqual": true,
+  "expectedEqual": true,
+  "reports": [
+    {
+      "path": "/private/tmp/weft-r22-historical-golden-baseline.log",
+      "logSha256": "4b2637feb482bd363103c5cb6a967fef4a771613b508c9fc5c6bc526fcb7664c",
+      "actualSha256": "6c60e310a1b9fdd129ad8c9eb00fc571a27fea371e37c4e2a02ea2085f97ea76",
+      "expectedSha256": "71ab7938eac473ff5c4c2394aa7eb7cc4d6df4cee8175d7658cbb1ba058cada2"
+    },
+    {
+      "path": "/private/tmp/weft-successor-historical-golden-common.log",
+      "logSha256": "e7d327606965f53f82feef205e077e8d73a8827fdf6f4dbb830d63dac3a84f0c",
+      "actualSha256": "6c60e310a1b9fdd129ad8c9eb00fc571a27fea371e37c4e2a02ea2085f97ea76",
+      "expectedSha256": "71ab7938eac473ff5c4c2394aa7eb7cc4d6df4cee8175d7658cbb1ba058cada2"
+    }
+  ]
+}

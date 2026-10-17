@@ -87,6 +87,13 @@ pub fn compile_raw_read_json(request:&js_sys::JsString)->Result<String,wasm_bind
 
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_native_privilege_probes_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_native_privilege_probes_json(&original))}
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn check_native_privilege_probes_json(program:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(program,4_194_304)?;Ok(weft_runtime::check_native_privilege_probes_json(&original))}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_native_action_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> { let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_native_action_json(&original)) }
 
 #[cfg(feature="raw-postgresql-reads")]
@@ -153,6 +160,12 @@ impl CurrentQueryPreparation {
 pub fn compile_engine_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::engine_read::compile_json(&original))}
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_engine_related_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::engine_related_read::compile_json(&strict_text(request,4_194_304)?))}
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_engine_related_page_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::engine_related_read::compile_page_json(&strict_text(request,4_194_304)?))}
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
 pub fn check_engine_read_json(program:&js_sys::JsString,current_request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let program=strict_text(program,4_194_304)?;let request=strict_text(current_request,4_194_304)?;Ok(weft_runtime::engine_read::check_json(&program,&request))}
 
 #[cfg(feature="raw-postgresql-reads")]
@@ -165,3 +178,18 @@ pub fn check_engine_page_json(program:&js_sys::JsString,current_request:&js_sys:
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_engine_export_json(program:&js_sys::JsString,current_request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::engine_export::compile_json(&strict_text(program,4_194_304)?,&strict_text(current_request,4_194_304)?))}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_unity_search_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_unity_search_json(&original))}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_managed_action_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_managed_action_json(&original))}
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_managed_bulk_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_managed_bulk_json(&original))}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_related_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_related_read_json(&original))}

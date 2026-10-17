@@ -1,0 +1,94 @@
+{
+  "version": "weft.raw-read/0.1",
+  "target": "spark-delta4",
+  "sql": "SELECT o.id AS id, c.name AS customer FROM \"commerce\".\"Order\" AS o LEFT JOIN \"commerce\".\"Customer\" AS c ON o.customer_id = c.id ORDER BY c.name ASC NULLS LAST, o.id DESC NULLS FIRST LIMIT 50",
+  "binding": {
+    "version": "umf.raw-read-binding/0.1",
+    "modelSha256": "f064cd98314c96a6ab8cefed718f7512124e7d6c4433bdb3a64617f0eb4c7340",
+    "modelJson": "{\"id\":\"spark-pages-authored\",\"modules\":[{\"elements\":[{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_customer_id\",\"kind\":\"field\",\"name\":\"customer_id\",\"nullability\":\"absent-allowed\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Order_status\",\"kind\":\"field\",\"name\":\"status\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"extensions\":{},\"id\":\"Order\",\"keys\":[{\"fields\":[{\"element\":\"Order_id\",\"module\":\"commerce\"}],\"id\":\"Order_key\",\"name\":\"Order key\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"Order_id\",\"module\":\"commerce\"},{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},{\"element\":\"Order_status\",\"module\":\"commerce\"}],\"name\":\"Order\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Customer_id\",\"kind\":\"field\",\"name\":\"id\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"Customer_name\",\"kind\":\"field\",\"name\":\"name\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"extensions\":{},\"id\":\"Customer\",\"keys\":[{\"fields\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"}],\"id\":\"Customer_key\",\"name\":\"Customer key\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"Customer_id\",\"module\":\"commerce\"},{\"element\":\"Customer_name\",\"module\":\"commerce\"}],\"name\":\"Customer\"}],\"extensions\":{\"umf.access\":{\"columns\":[{\"binding\":{\"module\":\"commerce\",\"sourceId\":\"physical\"},\"columns\":[{\"field\":{\"element\":\"Order_id\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"},{\"field\":{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":false,\"type\":\"STRING\"},{\"field\":{\"element\":\"Order_status\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"},{\"field\":{\"element\":\"Customer_id\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"},{\"field\":{\"element\":\"Customer_name\",\"module\":\"commerce\"},\"generation\":null,\"notNull\":true,\"type\":\"STRING\"}],\"target\":{\"majorVersion\":\"spark4-delta4\",\"platform\":\"spark-delta\"}}],\"search\":[],\"searchBindings\":[],\"views\":[{\"fields\":[{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Order_id\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":false,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":true,\"null\":true},\"field\":{\"element\":\"Order_customer_id\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":true}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Order_status\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}}],\"record\":{\"element\":\"Order\",\"module\":\"commerce\"},\"selectedKey\":{\"element\":\"Order\",\"key\":\"Order_key\",\"module\":\"commerce\"}},{\"fields\":[{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Customer_id\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":false,\"row\":{\"missing\":false,\"null\":false}},{\"create\":{\"missing\":false,\"null\":false},\"field\":{\"element\":\"Customer_name\",\"module\":\"commerce\"},\"generated\":false,\"mutable\":true,\"row\":{\"missing\":false,\"null\":false}}],\"record\":{\"element\":\"Customer\",\"module\":\"commerce\"},\"selectedKey\":{\"element\":\"Customer\",\"key\":\"Customer_key\",\"module\":\"commerce\"}}]}},\"id\":\"commerce\",\"namespace\":\"commerce\",\"relationships\":[{\"directed\":true,\"id\":\"customer\",\"name\":\"customer\",\"source\":[{\"element\":\"Order\",\"module\":\"commerce\"}],\"sourceMultiplicity\":{\"max\":\"*\",\"min\":0},\"target\":[{\"element\":\"Customer\",\"key\":\"Customer_key\",\"module\":\"commerce\"}],\"targetLifecycle\":\"independent\",\"targetMultiplicity\":{\"max\":1,\"min\":0}}]}],\"umf\":\"0.8.0\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}}}",
+    "schema": "sdk_spark_pages",
+    "tables": [
+      {
+        "logical": [
+          "commerce",
+          "Order"
+        ],
+        "native": "orders",
+        "key": [
+          "id"
+        ],
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "customer_id",
+            "native": "customer_id",
+            "carrier": "string",
+            "nullable": true
+          },
+          {
+            "logical": "status",
+            "native": "status",
+            "carrier": "string",
+            "nullable": false
+          }
+        ]
+      },
+      {
+        "logical": [
+          "commerce",
+          "Customer"
+        ],
+        "native": "customers",
+        "key": [
+          "id"
+        ],
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "name",
+            "native": "name",
+            "carrier": "string",
+            "nullable": false
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "id": "customer",
+        "source": [
+          "commerce",
+          "Order"
+        ],
+        "target": [
+          "commerce",
+          "Customer"
+        ],
+        "pairs": [
+          [
+            "customer_id",
+            "id"
+          ]
+        ],
+        "toOne": true
+      }
+    ]
+  },
+  "parameters": [],
+  "rowCap": 50,
+  "keyset": true,
+  "snapshots": {
+    "orders": 1,
+    "customers": 2
+  }
+}

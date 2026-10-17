@@ -62,6 +62,9 @@ impl Traversals {
                 refs.push((scan, relationship));
             }
         }
+        if let Some(navigation) = &plan.navigation {
+            refs.push((&plan.source.occurrence, navigation.relationship()));
+        }
         Self::collect_reads(lower, refs)
     }
     pub(super) fn collect_reads<'r>(lower: &mut Lower<'_>, refs: impl IntoIterator<Item = (&'r String, &'r RelationshipRead)>) -> Result<Self> {
@@ -231,6 +234,10 @@ impl Traversals {
     pub(super) fn raw<'a>(&'a self, r: &RelationshipRead) -> Result<RawAccess<'a>> {
         let (access, endpoint, from_id, to_id) = self.endpoint(r)?;
         Ok(RawAccess { edge: &access.edge, endpoint, from_id, to_id })
+    }
+    pub(super) fn source_selection(&self, scan: &str, relation: &RelationshipRead, selected: &str) -> Result<String> {
+        let (access, _, from_id, to_id) = self.endpoint(relation)?;
+        Ok(format!("EXISTS (SELECT 1 FROM {} AS __weft_navigation_edge JOIN {} AS __weft_navigation_selected ON __weft_navigation_edge.{from_id} = __weft_navigation_selected.__id WHERE __weft_navigation_edge.{to_id} = {}.__id)", binding::quote(&access.edge), binding::quote(selected), binding::quote(scan)))
     }
     pub(super) fn exists(
         &self,

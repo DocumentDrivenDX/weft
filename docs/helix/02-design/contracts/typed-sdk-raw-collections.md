@@ -1,0 +1,204 @@
+---
+ddx:
+  id: weft.typed-sdk-raw-collections
+  type: contract
+  activity: design
+  status: draft
+  links:
+    - id: CONTRACT-004
+      kind: informed_by
+    - id: weft.typed-sdk-raw-terms
+      kind: informed_by
+  authoring:
+    home: repo
+---
+
+# Raw SDK membership, navigation and bounded related Keys
+
+This covers PostgreSQL18/Lakebase18 collection and relationship candidates and a
+separate Spark4.0.1/Delta4.0.0 list-transport candidate. It does not qualify a
+native deployment, change engine graph authority, or release temporal support.
+The source model, binding, original requests, output metadata and all admission
+programs remain covered by the original program digest.
+
+## List membership
+
+An original raw Parameter can declare `container:"list"`, `elementNullable`,
+`maxItems` from1 through1000 and `nullable:false`. Its existing scalar `carrier`
+is the element carrier. Scalar parameters omit all three list facets. The host
+must validate and own the complete bounded list before binding it; no truncation
+is permitted. The PostgreSQL list profile refuses other targets and every use except
+the sole operand of `IN (:parameter)` or `NOT IN (:parameter)`.
+
+A separate Spark4.0.1/Delta4.0.0 source candidate admits the same logical list
+descriptor for the sole membership operand. Its original
+`listPredicateParameters` obligation selects `weft.spark-list-json/0.1` physical
+transport: a JSON array whose String and Boolean members retain those types,
+Integer and Decimal members are finite plain base-ten strings, and null members
+remain JSON null. The list is bounded by its original maxItems, 10,000 bytes per
+element and 1,000,000 encoded bytes; the host refuses excess rather than truncates.
+The original SQL parses with FAILFAST and implements the same S8 CASE/EXISTS
+semantics. Numeric comparisons use the exact text comparator and require original
+native ColumnSet custody. Scalar numeric transport excludes list parameters.
+This additive profile requires its own immutable-wheel and native qualification;
+the preceding PostgreSQL and Spark scalar evidence does not qualify it.
+
+The original application compiler retains explicit NULLS FIRST/LAST in its
+parsed ordering inventory. Its historical scalar grammar may normalize that
+placement to existing native ASC ordering only after resolving an original
+required, nonnullable scalar Field outside grouped/aggregate context. Its joins
+are INNER only and do not introduce SQL NULL. Nullable, absent-allowed, LEFT or
+aggregate cases remain refused by this narrow profile. Original source SQL is
+retained; this is an owner proof of redundant placement, not host text removal.
+
+S8 membership is false for an empty list, unknown for a null left operand and a
+nonempty list, true if any nonnull element equals the left operand, and false
+otherwise. Null elements do not turn an unmatched nonnull value into unknown.
+NOT IN applies S2 Boolean negation. The compiler emits this CASE/EXISTS program;
+native SQL's nullable IN-list behavior is not substituted. Integer and Decimal
+values remain exact numeric parameters and string equality uses binary C
+collation. Literal lists follow the same null rule. Empty literal membership is spelled
+`IN_EMPTY(field)` (or its Boolean negation); the owner resolves and type-checks
+the original field before emitting FALSE. Its retained semanticFields inventory
+is distinct from actual SQL-used columns after constant folding. The native
+PostgreSQL parser dialect is not widened to accept IN().
+
+## Original relationship operations
+
+`HAS_RELATED(alias.name,KEY(...))` is an existential predicate.
+`RELATED_KEYS(alias.name,n)` is a bounded projection for1 through1000 Keys.
+The explicit inverse forms are
+`HAS_INVERSE_RELATED(field,KEY(...),moduleLiteral,idLiteral)` and
+`INVERSE_RELATED_KEYS(field,n,moduleLiteral,idLiteral)`. They retain canonical
+identity and direction even for self relations or multiple incoming names.
+The name resolves uniquely against the original authored relationship and its
+owner endpoint, or its authored inverse name. The initial raw storage profile is
+a declared directed monomorphic to-one FK mapping, with an inverse set view.
+Association/independent edge storage is not inferred from property equality.
+Forward tuples use the exact authored relationship target Key. Inverse tuples
+use the sole primary Key, otherwise the sole authored Key; ambiguity refuses.
+The selected paging Key never replaces the relationship Key.
+
+The related Keys cell is JSON text with `{items:[keyTuples],truncated:boolean}`.
+Its local output carrier is `related-keys`; decoder profile is
+`pg-related-keys-json/0.1`, retaining bound, original relationship
+module/id/direction, original Key identity and ordered Field/component carriers.
+Numeric components are exact strings and Boolean components are JSON booleans.
+Key components are nonnull. The compiler orders by the complete Key and retains
+at most n+1 observations to establish exact truncation. It does not deduplicate
+occurrences. Hosts strictly decode the original descriptor into typed Keys and
+RelatedKeys/WithKeys wrappers before releasing results.
+
+Filtered `weft.related-read/0.1` navigation retains the whole original source
+and target request and relation module/id/direction. Its source entity set has
+no implicit row cap; authored ORDER/LIMIT remain in the original subquery.
+Canonical root `alias.*` expands inside the owner AST using the original ordered
+Record members. Bare, foreign and modified wildcards refuse. Source aggregate
+and grouped identities remain unqualified. Target selection/paging keeps its
+separate selected Key, and all source admission/isolation obligations propagate.
+
+## Native integrity and shape obligations
+
+`nativeRelationships` version `umf.native-relationships/0.1` contains original
+pre/post Boolean nativeAdmission statements and source/target physical ordered
+pair metadata. The FK must be validated, enforced, nondeferrable, non-temporal,
+with compatible null matching, native equality operators and active original
+enforcement triggers. Parent/child inheritance topology refuses; relkind alone
+does not prove that a table scan is a single admitted physical relation. Required forward participation requires NOT NULL source
+components. Inverse maximum1 requires an actual immediate native unique index
+over source FK components; nullable absent tuples remain permitted.
+Referenced and inverse unique indexes must retain the admitted built-in
+pg_catalog B-tree opclass for each scalar physical type. Index and attribute
+collations must match and be deterministic (or the type must be noncollatable).
+The same correspondence governs alternate relationship Keys independently of
+the selected paging Key. A nondeterministic casefold index/FK cannot establish
+the binary equality used by the original relationship query.
+
+Other finite/minimum inverse degrees require the original distinct-source-Key
+neighbor count, including zero-neighbor target rows. This candidate admits that
+proof only with actual native row_security_active false for both tables, native
+read-only repeatable-read/serializable transaction state, and the original
+`readIsolation:"repeatable-read"` obligation. A caller completeness label is not
+proof. An active-RLS completeness profile remains separately unqualified.
+
+The source-bound nativeProjection admission also verifies the exact complete
+physical column-name inventory, including Binary/Vector fields, in addition to
+per-column types/facets/nullability/generation. Added or missing native columns
+must refuse even for an empty table. Hosts execute all original pre/post programs
+unchanged and withhold buffered rows on any failed or changed obligation.
+
+## Spark approximate distinct candidate
+
+The original Spark4 snapshot read compiler accepts the closed logical function
+`APPROX_COUNT_DISTINCT(qualifiedField)` with one unmodified scalar Field. It emits
+native `approx_count_distinct(field, 0.05)` after the original filter, retaining
+original grouping, output ordering and post-aggregate LIMIT. It does not cap the
+input relation. Nonaggregate projected Fields must occur in the original GROUP
+BY. Numeric operands require the original native ColumnSet/binding custody;
+Binary, Vector, expression operands, DISTINCT modifiers, window/filter clauses
+and caller-selected precision refuse in this initial profile.
+
+The Integer/non-null output carries `approximate:true` and an `approximation`
+descriptor naming HyperLogLog++, Apache Spark4.0.1, and an error object
+`{kind:"relative-standard-deviation",value:"0.05",hardBound:false}`. This names
+the native documented relative standard deviation; it does not promise a
+maximum absolute or relative error for each answer. Native nulls are ignored
+and empty/all-null input returns zero. The authoritative native algorithm and
+parameter definition are documented in the
+[Spark4.0.1 SQL reference](https://spark.apache.org/docs/4.0.1/api/sql/index.html#approx_count_distinct).
+Source controls do not establish native qualification. PostgreSQL, UC current,
+managed mutations and registered engines do not acquire this capability by
+sharing the logical function spelling.
+
+## Registered-engine navigation candidate
+
+The separate original engine navigation entrypoint admits the source and target
+against the same original model, binding and parameter context. Core re-resolves
+the original source SQL, resolves the canonical relationship module/id and
+explicit direction, and requires the directed endpoints to match the actual
+source and target Records. Grouped or aggregate source queries cannot establish
+source entity identity. Navigation nesting refuses in this initial packet.
+
+The application plan carries a compiler-created `navigation` extension only in
+`weft-ir/engine-navigation/0.1`; ordinary plans omit the property and preserve
+historical bytes. Its version is `weft.engine-navigation/0.1`, its source is the
+complete original source Plan, and its relationship is the canonical original
+RelationshipRead. Native backends must independently admit source dependencies,
+not merely the target projection. The required capability is
+`relationship.sourceSelection`.
+
+The backend owns correlated membership over original object IDs and edge
+relations. The source filter, joins, explicit order and explicit LIMIT execute
+before target membership; an absent source LIMIT must not acquire a default
+row cap. Original source projection never substitutes an authored Key for native
+object identity. EXISTS deduplicates target occurrences while preserving the
+target query's own selected Key, aggregation, ordering and delivery semantics.
+Original source obligations propagate. No runtime or SDK may parse or rewrite
+native SQL to compose this operation. Source implementation and compiler tests
+remain unqualified until actual original-engine E2Es pass on one frozen cohort.
+
+The related page packet is `weft.engine-related-page/0.1`, with the same
+compiler/source/target/relationship fields plus `pageSize` (1..999). Its result
+retains the ordinary `weft.engine-page/0.1` frame, exact complete `relatedRequest`,
+hidden original authored-Key outputs and original native continuation. Shared
+parameters are partitioned by original Core AST uses with an exact complete
+union; source-only, target-only and shared parameters remain bound. Surplus,
+missing and case-colliding declarations refuse. Native publication obligations
+are deduplicated only when their entire original values agree; differing
+same-ID source/target obligations refuse.
+
+The existing original Truss export composition retains the complete related page
+and changes only outer delivery to its distinct ABI1.1 cursor profile. The source
+selection, explicit source LIMIT, original source/target binding and hidden Key
+inventory must remain equal. Caller page ordering in this increment is the
+complete required original primary Key ASC (explicit NULLS is redundant only
+after the same non-null proof); other declared ordering and alternate selected
+Key cursor profiles are not qualified by that normalization.
+
+## Qualification
+
+Compiler source tests and installed-wheel controls are precursor evidence only.
+Real native missing/wrong FK, added-column, degree/RLS/isolation, list null/empty,
+alternate-Key, exact numeric, default wildcard, pagination and truncation controls
+must qualify one immutable source/wheel/runtime cohort before release claims.
+Temporal qualification remains held.

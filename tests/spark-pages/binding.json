@@ -1,0 +1,70 @@
+{
+  "umf": "0.8.0",
+  "id": "spark-pages-physical",
+  "vocabularies": {
+    "umf.binding": {
+      "version": "0.2.0"
+    }
+  },
+  "modules": [],
+  "extensions": {
+    "umf.binding": {
+      "profile": "umf-binding-2",
+      "logical": {
+        "documentId": "spark-pages-authored",
+        "coreVersion": "0.8.0"
+      },
+      "target": {
+        "system": "spark-delta",
+        "version": "spark4-delta4",
+        "subset": "typed-access-columns/0.1"
+      },
+      "elements": [
+        {
+          "module": "commerce",
+          "element": "Order",
+          "table": "orders"
+        },
+        {
+          "module": "commerce",
+          "element": "Customer",
+          "table": "customers"
+        }
+      ],
+      "fields": [
+        {
+          "element": "Order_id",
+          "module": "commerce",
+          "storage": "column",
+          "column": "id"
+        },
+        {
+          "element": "Order_customer_id",
+          "module": "commerce",
+          "storage": "column",
+          "column": "customer_id"
+        },
+        {
+          "element": "Order_status",
+          "module": "commerce",
+          "storage": "column",
+          "column": "status"
+        },
+        {
+          "element": "Customer_id",
+          "module": "commerce",
+          "storage": "column",
+          "column": "id"
+        },
+        {
+          "element": "Customer_name",
+          "module": "commerce",
+          "storage": "column",
+          "column": "name"
+        }
+      ],
+      "relationships": [],
+      "indexes": []
+    }
+  }
+}

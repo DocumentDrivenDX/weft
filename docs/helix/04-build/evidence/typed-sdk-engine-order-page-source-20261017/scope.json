@@ -1,0 +1,24 @@
+{
+  "status": "source-only-candidate",
+  "feature": "engine-ordered-page-candidate",
+  "defaultEnabled": false,
+  "sourceTestsPassed": 3,
+  "sourceTestsSkipped": 0,
+  "defaultCoreCheck": "passed",
+  "moduleBoundariesPackages": 11,
+  "nativeProfilesAdded": [],
+  "runtimeApisAdded": [],
+  "nativeQualification": false,
+  "temporalQualification": "HELD",
+  "failedAttemptsRetained": [
+    "r1-invalid-authored-Key-fixture",
+    "r2-serde-unit-state-extra-fields"
+  ],
+  "scope": [
+    "canonical selected authored Key",
+    "mixed direction/null placement source AST",
+    "full state/value sort tuple and closed cursor domain",
+    "lexicographic branch inventory",
+    "historical source plans unchanged"
+  ]
+}

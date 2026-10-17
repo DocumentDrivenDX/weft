@@ -1,0 +1,13 @@
+{
+  "owner": "UMF",
+  "scope": "Exact original identity-generator checked current standard and local preparations; all prior pins retained; execution authority separately admitted.",
+  "producer": {
+    "build": "sha256:16e0c555f31ef913c7c44e71a1b9520e7574b5dbca843d0fbbf760e882aef93a",
+    "id": "umf.actions.plan-model",
+    "version": "1"
+  },
+  "registrations": {
+    "standard": "4e92c4bdb64d447a193dee33bd6849f53e12669f5f306a43a81af228cc42ff59",
+    "local": "06c580e8fd28aaa18a82ab6f876f683ab499eb31eca0ecdd7768259a48673b41"
+  }
+}

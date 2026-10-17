@@ -87,8 +87,8 @@ fn valid_languages(profiles: &[LanguageProfile], interface: &str) -> bool {
         && profiles.iter().all(|p| {
             matches!(
                 profile_key(p),
-                ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0")
-            ) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
+                ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0") | ("weft-sql/0.2.0", "weft-ir/engine-navigation/0.1")
+            ) || (interface == "weft-backend/0.2.8" && matches!(profile_key(p),("weft-sql/0.2.0","weft-ir/engine-ordered-page/0.1")|("weft-sql/0.2.0","weft-ir/engine-navigation/0.2")|("weft-sql/0.2.0","weft-ir/engine-ordered-read/0.1"))) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
                 || (interface == "weft-backend/0.2.7" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.7"))
                 || (interface == "weft-backend/0.2.6" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.6"))
                 || (interface == "weft-backend/0.2.5" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.5"))
@@ -147,7 +147,7 @@ pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     Ok(manifest)
 }
 pub fn validate_manifest(m: &Manifest) -> Result<()> {
-    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4" | "weft-backend/0.2.5" | "weft-backend/0.2.6" | "weft-backend/0.2.7") || !valid_languages(&m.language_profiles, &m.interface_version) {
+    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4" | "weft-backend/0.2.5" | "weft-backend/0.2.6" | "weft-backend/0.2.7" | "weft-backend/0.2.8") || !valid_languages(&m.language_profiles, &m.interface_version) {
         return Err(failure(
             "WFT-BACKEND-VERSION",
             "Unsupported backend interface or language/IR pair",
@@ -256,9 +256,13 @@ pub enum Plan<'a> {
     V01(&'a crate::ir::LogicalPlan),
     V02(&'a crate::application_ir::Plan),
     V03(&'a crate::arithmetic_plan::Plan),
+    #[cfg(feature="engine-ordered-page-candidate")]
+    Ordered(&'a crate::application_ordered_page::OrderedPage),
 }
 impl Plan<'_> {
     pub fn language(&self) -> LanguageProfile {
+        #[cfg(feature="engine-ordered-page-candidate")]
+        if let Self::Ordered(p)=self {return LanguageProfile{dialect_profile:"weft-sql/0.2.0".into(),ir_version:p.version().into()};}
         if let Self::V02(p) = self {
             return LanguageProfile { dialect_profile: "weft-sql/0.2.0".into(), ir_version: p.ir_version.clone() };
         }
@@ -266,6 +270,8 @@ impl Plan<'_> {
             Self::V01(_) => "0.1.0",
             Self::V02(_) => "0.2.0",
             Self::V03(_) => "0.3.0",
+            #[cfg(feature="engine-ordered-page-candidate")]
+            Self::Ordered(_)=>unreachable!(),
         };
         LanguageProfile {
             dialect_profile: format!("weft-sql/{suffix}"),
@@ -277,6 +283,8 @@ impl Plan<'_> {
             Self::V01(p) => &p.required_capabilities,
             Self::V02(p) => &p.required_capabilities,
             Self::V03(p) => &p.required_capabilities,
+            #[cfg(feature="engine-ordered-page-candidate")]
+            Self::Ordered(p)=>&p.base().required_capabilities,
         }
     }
     pub fn pins(&self) -> &[crate::ir::ModelPin] {
@@ -284,6 +292,8 @@ impl Plan<'_> {
             Self::V01(p) => &p.module_pins,
             Self::V02(p) => &p.module_pins,
             Self::V03(p) => &p.module_pins,
+            #[cfg(feature="engine-ordered-page-candidate")]
+            Self::Ordered(p)=>&p.base().module_pins,
         }
     }
 }
@@ -480,11 +490,13 @@ impl<B: Backend> Registered for Adapter<B> {
         }
         let language = plan.language();
         let actual_ir = match plan {
-            Plan::V01(p) => &p.ir_version,
-            Plan::V02(p) => &p.ir_version,
-            Plan::V03(p) => &p.ir_version,
+            Plan::V01(p) => p.ir_version.clone(),
+            Plan::V02(p) => p.ir_version.clone(),
+            Plan::V03(p) => p.ir_version.clone(),
+            #[cfg(feature="engine-ordered-page-candidate")]
+            Plan::Ordered(p)=>p.version().into(),
         };
-        if actual_ir != &language.ir_version || !unique_strings(plan.capabilities()) {
+        if actual_ir != language.ir_version || !unique_strings(plan.capabilities()) {
             return Err(failure(
                 "WFT-BACKEND-VERSION",
                 "Typed plan version or operation identities are invalid",
@@ -791,6 +803,8 @@ impl Registry {
         })?
     }
 }
+/// Exact original application selection, including admitted source navigation.
+pub fn selection(plan: Plan<'_>)->Selection{selected(plan)}
 fn selected(plan: Plan<'_>) -> Selection {
     use crate::{
         application_ir::{Expression as AE, Predicate as AP, Value as AV},
@@ -879,6 +893,8 @@ fn selected(plan: Plan<'_>) -> Selection {
     }
     let mut s = Selection::default();
     match plan {
+        #[cfg(feature="engine-ordered-page-candidate")]
+        Plan::Ordered(p)=>{let mut base=selected(Plan::V02(p.base()));base.fields.extend(p.sort_slots().iter().map(|s|s.identity().clone()));return base;},
         Plan::V01(p) => node(&p.root, &mut s),
         Plan::V03(p) => {
             fn arithmetic(e:&crate::arithmetic_resolve::Expression,s:&mut Selection) {
@@ -920,6 +936,9 @@ fn selected(plan: Plan<'_>) -> Selection {
             s.types.extend(p.type_graph.iter().map(|d|d.identity.clone()));
         }
         Plan::V02(p) => {
+            if let Some(navigation)=&p.navigation{
+                let source=selected(Plan::V02(navigation.source()));s.records.extend(source.records);s.fields.extend(source.fields);s.types.extend(source.types);s.relationships.extend(source.relationships);rel(navigation.relationship(),&mut s);
+            }
             s.records.push(p.source.record.clone());
             for j in &p.joins {
                 s.records.push(j.right.record.clone());

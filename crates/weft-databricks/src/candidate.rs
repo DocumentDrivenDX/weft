@@ -6,6 +6,7 @@ pub(crate) mod compound;
 mod relationships;
 pub(crate) mod path_lowering;
 mod related_keys;
+mod navigation;
 use crate::binding::{self, Binding, Home, RecordKind};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
@@ -44,16 +45,17 @@ impl Backend for Candidate {
     type Mapping = Binding;
     type TargetPlan = TargetPlan;
     fn describe(&self) -> Result<Manifest> {
-        let languages = ["0.1.0", "0.2.0"]
+        let mut languages = ["0.1.0", "0.2.0"]
             .into_iter()
             .map(|v| LanguageProfile {
                 dialect_profile: format!("weft-sql/{v}"),
                 ir_version: format!("weft-ir/{v}"),
             })
             .collect::<Vec<_>>();
+        languages.push(LanguageProfile { dialect_profile: "weft-sql/0.2.0".into(), ir_version: "weft-ir/engine-navigation/0.1".into() });
         Ok(Manifest{backend_id:"ashlar.databricks".into(),backend_version:"0.1.0-candidate".into(),interface_version:"weft-backend/0.2.0".into(),language_profiles:languages.clone(),binding_profile:binding::PROFILE.into(),
             target_profiles:vec![TargetProfile{id:"dbsql-candidate".into(),engine:"databricks-sql".into(),engine_version:"unqualified-warehouse-release".into(),session_settings:json!({"comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error","variantCarrier":"fixed-base-ten-exact-only"}),storage_layout_revision:"ashlar-delta/0.3".into(),publication_revision:"ashlar-resolver/0.1-candidate".into()}],
-            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","value.sequence","value.map","value.structured","relationship.exists","relationship.boundedKeys","relationship.inverse","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id.starts_with("relationship.") {json!({"subset":"authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"})} else if id == "value.presence" { json!({"subset":"optional scalar or compound envelopes; absent or exact value; explicit native null refuses"}) } else if ["value.sequence","value.map","value.structured"].contains(&id) { json!({"subset":"explicit candidate compound encoding; exact recursive values; depth below 128 and at most 100000 nodes per value or refusal"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","value.sequence","value.map","value.structured","relationship.sourceSelection","relationship.exists","relationship.boundedKeys","relationship.inverse","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id.starts_with("relationship.") {json!({"subset":"authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"})} else if id == "value.presence" { json!({"subset":"optional scalar or compound envelopes; absent or exact value; explicit native null refuses"}) } else if ["value.sequence","value.map","value.structured"].contains(&id) { json!({"subset":"explicit candidate compound encoding; exact recursive values; depth below 128 and at most 100000 nodes per value or refusal"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
         validate_mapping(c, false)
@@ -225,6 +227,7 @@ fn collect(
 }
 struct Lower<'a> {
     mathematical_profile: bool,
+    scalar_presence_profile: bool,
     binding: &'a Binding,
     scans: BTreeMap<String, Identity>,
     fields: BTreeMap<(String, String), (Identity, LogicalType)>,
@@ -246,6 +249,7 @@ impl<'a> Lower<'a> {
         Self {
             binding,
             mathematical_profile: false,
+            scalar_presence_profile: false,
             scans: BTreeMap::new(),
             fields: BTreeMap::new(),
             expressions: BTreeMap::new(),
@@ -372,7 +376,7 @@ impl<'a> Lower<'a> {
                         let present = format!("{variant} IS NOT NULL");
                         if native_null {
                             if crate::mathematical_integer::unbounded(&ty) {return Err(fail("WFT-CAPABILITY","Optional unbounded Integer requires separate public token/null profile"));}
-                            self.checks.push(json!({"representabilityOnly":true,"field":identity,"record":id,"propertyId":property_id,"encoding":binding::NATIVE_NULL_ENCODING,"sql":format!("SELECT CAST({} AS STRING) AS violations FROM {table} r WHERE {owner} AND ({variant} IS NULL)",count_sql()),"failureCode":"WFT-CAPABILITY"}));
+                            if !self.scalar_presence_profile || !optional {self.checks.push(json!({"representabilityOnly":true,"field":identity,"record":id,"propertyId":property_id,"encoding":binding::NATIVE_NULL_ENCODING,"sql":format!("SELECT CAST({} AS STRING) AS violations FROM {table} r WHERE {owner} AND ({variant} IS NULL)",count_sql()),"failureCode":"WFT-CAPABILITY"}));}
                         }
                         let valid=if native_null {format!("schema_of_variant(parse_json(r.props_json)) RLIKE '^OBJECT' AND (({variant} IS NULL) OR is_variant_null({variant}) OR ({valid}))")}else{valid};
                         let valid = if optional {
@@ -583,7 +587,7 @@ fn numeric_guard(value: &str, ty: &LogicalType) -> String {
 
 // All historical registrations retain the single-revision admission boundary.
 pub(crate) fn validate_mapping(c: &Context<'_>, allow_compatible: bool) -> Result<Validated<Binding>> {
-        let binding = if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
+        let binding = if c.target.id==crate::local_spark4_sdk::PROFILE {binding::admit_sdk(c.catalog,c.binding_value)?}else if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
         if !allow_compatible && binding.records.iter().any(|r| !r.compatible_schema_revisions.is_empty()) {
             return Err(fail("WFT-BINDING", "Compatible physical revisions require the separate candidate registration"));
         }
@@ -622,3 +626,6 @@ pub(crate) fn validate_mapping(c: &Context<'_>, allow_compatible: bool) -> Resul
             coverage: c.selection.clone(),
         })
 }
+
+#[cfg(feature="sdk-ordered-page-candidate")]
+pub(crate) fn lower_sdk_ordered(c:&Context<'_>,binding:&Binding,page:&weft_core::application_ordered_page::OrderedPage)->Result<TargetPlan>{application::lower_ordered(c,binding,page)}

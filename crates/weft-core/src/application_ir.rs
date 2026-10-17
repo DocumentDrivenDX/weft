@@ -148,6 +148,11 @@ pub struct Output {
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Plan {
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub read_order:Option<ReadOrder>,
+    /// Original compiler-owned source entity selection. Ordinary plans omit it.
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub navigation: Option<Box<Navigation>>,
     pub ir_version: String,
     pub module_pins: Vec<ModelPin>,
     pub read_profile: Option<ReadProfile>,
@@ -162,4 +167,59 @@ pub struct Plan {
     pub outputs: Vec<Output>,
     pub order: Vec<Field>,
     pub limit: Option<u16>,
+}
+
+#[derive(Debug,Clone,Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct ReadOrder { selected_key:crate::application_model::AuthoredKey, sort_slots:Vec<ReadSortSlot> }
+impl ReadOrder {
+ pub fn selected_key(&self)->&crate::application_model::AuthoredKey{&self.selected_key}
+ pub fn sort_slots(&self)->&[ReadSortSlot]{&self.sort_slots}
+ pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}
+}
+/// Original read ordering; unlike page slots these carry no hidden output ordinals.
+#[derive(Debug,Clone,Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct ReadSortSlot {
+    identity:Identity, logical_type:LogicalType, descending:bool, nulls_first:bool,
+    nullable:bool, missing:bool,
+}
+impl ReadSortSlot {
+    pub fn identity(&self)->&Identity{&self.identity}
+    pub fn logical_type(&self)->&LogicalType{&self.logical_type}
+    pub fn descending(&self)->bool{self.descending}
+    pub fn nulls_first(&self)->bool{self.nulls_first}
+    pub fn nullable(&self)->bool{self.nullable}
+    pub fn missing(&self)->bool{self.missing}
+    #[cfg(feature="engine-ordered-page-candidate")]
+    pub(crate) fn from_page(slot:&crate::application_ordered_page::SortSlot)->Self{
+        Self{identity:slot.identity().clone(),logical_type:slot.logical_type().clone(),descending:slot.descending(),nulls_first:slot.nulls_first(),nullable:slot.nullable(),missing:slot.missing()}
+    }
+}
+/// Prepared by Core from original source SQL and canonical relationship identity.
+/// Private members prevent a host from fabricating an admitted source selection.
+#[derive(Debug,Clone,Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct Navigation {
+    version:String,
+    source:Box<Plan>,
+    relationship:RelationshipRead,
+    #[cfg(feature="engine-ordered-page-candidate")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    source_order:Option<Vec<ReadSortSlot>>,
+    #[cfg(feature="engine-ordered-page-candidate")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    source_selected_key:Option<crate::application_ordered_page::SelectedKey>,
+}
+impl Navigation {
+    pub fn source(&self)->&Plan{&self.source}
+    pub(crate) fn source_mut(&mut self)->&mut Plan{&mut self.source}
+    pub fn relationship(&self)->&RelationshipRead{&self.relationship}
+    #[cfg(feature="engine-ordered-page-candidate")]
+    pub fn source_order(&self)->Option<&[ReadSortSlot]>{self.source_order.as_deref()}
+    #[cfg(feature="engine-ordered-page-candidate")]
+    pub fn source_selected_key(&self)->Option<&crate::application_ordered_page::SelectedKey>{self.source_selected_key.as_ref()}
+    #[cfg(feature="engine-ordered-page-candidate")]
+    pub(crate) fn with_source_order(mut self,selected:crate::application_ordered_page::SelectedKey,order:Vec<ReadSortSlot>)->Self{self.version="weft.engine-navigation/0.2".into();self.source_order=Some(order);self.source_selected_key=Some(selected);self}
+    pub(crate) fn new(source:Plan,relationship:RelationshipRead)->Self{Self{version:"weft.engine-navigation/0.1".into(),source:Box::new(source),relationship,#[cfg(feature="engine-ordered-page-candidate")]source_order:None,#[cfg(feature="engine-ordered-page-candidate")]source_selected_key:None}}
 }

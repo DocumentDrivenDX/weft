@@ -1,0 +1,27 @@
+{
+  "status": "source-only-candidate",
+  "testsPassed": 5,
+  "testsSkipped": 0,
+  "pythonRawFeatureCheck": "passed",
+  "defaultRuntimeCheck": "passed",
+  "modulePackages": 11,
+  "complete": false,
+  "nativeAuthority": false,
+  "temporal": "HELD",
+  "roles": [
+    "business-read",
+    "table-lock",
+    "projection-admission",
+    "key-integrity-admission",
+    "relationship-integrity-admission",
+    "term-index-admission"
+  ],
+  "unhandled": [
+    "search",
+    "action",
+    "bulk",
+    "engine",
+    "runtime-control"
+  ],
+  "nativeProofPending": true
+}

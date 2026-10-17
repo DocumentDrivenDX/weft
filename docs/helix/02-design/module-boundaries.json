@@ -148,7 +148,9 @@
         {
           "path": "crates/weft-databricks/src/candidate/application.rs",
           "publicDeclarations": [],
-          "pathReferences": []
+          "pathReferences": [
+            "crates/weft-databricks/src/candidate/ordered_page.rs"
+          ]
         },
         {
           "path": "crates/weft-databricks/src/candidate/arithmetic.rs",
@@ -161,6 +163,19 @@
             "field:value",
             "field:join",
             "field:check"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/candidate/navigation.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/candidate/ordered_page.rs",
+          "publicDeclarations": [
+            "field:order",
+            "field:after"
           ],
           "pathReferences": []
         },
@@ -296,9 +311,13 @@
             "mod:current_scalar",
             "mod:raw_read",
             "mod:local_spark4",
+            "mod:local_spark4_fields",
             "mod:raw_action",
             "mod:raw_bulk",
-            "mod:authored_pages"
+            "mod:authored_pages",
+            "mod:unity_search",
+            "mod:local_spark4_sdk",
+            "mod:local_spark4_sdk_pages"
           ],
           "pathReferences": []
         },
@@ -308,6 +327,32 @@
             "const:VERSION",
             "const:PROFILE",
             "struct:LocalSpark4"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4_fields.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:LocalSpark4Fields"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4_sdk.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:LocalSpark4Sdk"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark4_sdk_pages.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "struct:LocalSpark4SdkPages"
           ],
           "pathReferences": []
         },
@@ -381,19 +426,56 @@
         {
           "path": "crates/weft-databricks/src/raw_action.rs",
           "publicDeclarations": [
-            "fn:compile_json"
+            "fn:compile_json",
+            "fn:compile_managed_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_aggregates.rs",
+          "publicDeclarations": [
+            "field:sql",
+            "field:outputs",
+            "field:groups",
+            "field:order"
           ],
           "pathReferences": []
         },
         {
           "path": "crates/weft-databricks/src/raw_bulk.rs",
           "publicDeclarations": [
+            "fn:compile_json",
+            "fn:compile_managed_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_numeric.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_pages.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/raw_read.rs",
+          "publicDeclarations": [
             "fn:compile_json"
           ],
           "pathReferences": []
         },
         {
-          "path": "crates/weft-databricks/src/raw_read.rs",
+          "path": "crates/weft-databricks/src/spark_shapes.rs",
+          "publicDeclarations": [
+            "field:native",
+            "field:metadata"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_search.rs",
           "publicDeclarations": [
             "fn:compile_json"
           ],
@@ -556,6 +638,8 @@
             "field:name",
             "field:expression",
             "struct:Plan",
+            "field:read_order",
+            "field:navigation",
             "field:ir_version",
             "field:module_pins",
             "field:read_profile",
@@ -569,7 +653,22 @@
             "field:aggregate",
             "field:outputs",
             "field:order",
-            "field:limit"
+            "field:limit",
+            "struct:ReadOrder",
+            "fn:selected_key",
+            "fn:sort_slots",
+            "struct:ReadSortSlot",
+            "fn:identity",
+            "fn:logical_type",
+            "fn:descending",
+            "fn:nulls_first",
+            "fn:nullable",
+            "fn:missing",
+            "struct:Navigation",
+            "fn:source",
+            "fn:relationship",
+            "fn:source_order",
+            "fn:source_selected_key"
           ],
           "pathReferences": []
         },
@@ -627,7 +726,60 @@
             "field:target_multiplicity",
             "field:target_lifecycle",
             "fn:relationship_read",
+            "fn:relationship_read_identity",
             "fn:scalar_descriptor_by_identity"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_navigation.rs",
+          "publicDeclarations": [
+            "struct:Input",
+            "field:source_sql",
+            "field:relationship_module",
+            "field:relationship_id",
+            "field:inverse",
+            "field:source",
+            "field:source_exact",
+            "field:target",
+            "field:target_exact"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_ordered_page.rs",
+          "publicDeclarations": [
+            "struct:SelectedKey",
+            "field:module",
+            "field:record",
+            "field:key",
+            "enum:CursorValue",
+            "struct:Cursor",
+            "field:key",
+            "field:sort_values",
+            "struct:SortSlot",
+            "fn:identity",
+            "fn:logical_type",
+            "fn:descending",
+            "fn:nulls_first",
+            "fn:nullable",
+            "fn:missing",
+            "fn:hidden_outputs",
+            "struct:AfterBranch",
+            "fn:equal_slots",
+            "fn:strict_slot",
+            "struct:OrderedPage",
+            "fn:version",
+            "fn:source_sql",
+            "fn:base",
+            "fn:selected_key",
+            "fn:sort_slots",
+            "fn:key_slots",
+            "fn:page_size",
+            "fn:after",
+            "fn:after_branches",
+            "fn:null_rank",
+            "fn:prepare"
           ],
           "pathReferences": []
         },
@@ -695,6 +847,7 @@
             "field:joins",
             "field:groups",
             "field:order",
+            "field:order_nulls",
             "field:limit",
             "fn:parse"
           ],
@@ -953,7 +1106,8 @@
             "struct:Registry",
             "fn:register",
             "fn:manifest",
-            "fn:compile"
+            "fn:compile",
+            "fn:selection"
           ],
           "pathReferences": []
         },
@@ -1126,6 +1280,36 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/column_custody.rs",
+          "publicDeclarations": [
+            "type:Columns",
+            "struct:BindingDocument",
+            "field:source_id",
+            "field:document_json",
+            "field:document_sha256",
+            "struct:NativeColumns",
+            "field:column_set",
+            "field:binding",
+            "struct:NativeColumnsEnvelope",
+            "field:target",
+            "field:sets",
+            "field:vector_extension",
+            "struct:VectorExtension",
+            "field:schema",
+            "field:version",
+            "fn:field_key",
+            "fn:native_type",
+            "fn:original_column_set",
+            "fn:admit_columns",
+            "fn:admit_columns_with_collation",
+            "fn:row_null",
+            "fn:collation",
+            "fn:generation",
+            "fn:vector_declaration"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/compile.rs",
           "publicDeclarations": [
             "const:MAX_REQUEST_BYTES",
@@ -1148,6 +1332,12 @@
             "fn:compile_decimal12_typed_page_json_with_exact_numbers_factory",
             "fn:compile_identity_names_json_with_exact_numbers_factory",
             "fn:compile_cursor_json_with_exact_numbers_factory",
+            "fn:compile_navigation_json_with_factory",
+            "fn:compile_field_projection_json",
+            "fn:compile_sdk_presence_json",
+            "fn:compile_sdk_ordered_json",
+            "fn:compile_sdk_navigation_json",
+            "fn:compile_sdk_read_json",
             "mod:v04",
             "mod:v041",
             "mod:v042"
@@ -1430,7 +1620,9 @@
             "mod:security_candidate_incidence",
             "mod:security_association_ref",
             "mod:security_source",
+            "mod:application_ordered_page",
             "mod:application_ir",
+            "mod:application_navigation",
             "mod:application_model",
             "mod:application_resolve",
             "mod:application_syntax",
@@ -1453,6 +1645,7 @@
             "mod:security_aggregate_results",
             "mod:security_operand_values",
             "mod:current_query_refinement",
+            "mod:column_custody",
             "mod:raw_read",
             "mod:raw_action",
             "mod:raw_bulk",
@@ -1473,6 +1666,7 @@
             "field:pin",
             "field:value",
             "field:document",
+            "fn:sdk_scalar_presence",
             "fn:inputs",
             "fn:prepare_exact_numbers",
             "fn:prepare",
@@ -1687,6 +1881,7 @@
             "field:ontology",
             "struct:ActionRequest",
             "field:version",
+            "field:verification_profile",
             "field:target",
             "field:binding",
             "field:source",
@@ -1775,21 +1970,36 @@
             "field:key",
             "struct:Relationship",
             "field:id",
+            "field:module",
             "field:source",
             "field:target",
             "field:pairs",
             "field:to_one",
+            "enum:SchemaBinding",
+            "struct:NativeCatalogFence",
+            "field:version",
+            "field:schema",
+            "field:view",
+            "field:owner",
+            "field:owner_profile",
             "struct:Binding",
             "field:version",
             "field:schema",
+            "field:schema_binding",
             "field:tables",
             "field:relationships",
             "field:model_sha256",
             "field:model_json",
+            "field:native_columns",
+            "field:native_catalog_fence",
+            "enum:ParameterContainer",
             "struct:Parameter",
             "field:name",
             "field:carrier",
             "field:nullable",
+            "field:container",
+            "field:element_nullable",
+            "field:max_items",
             "struct:Request",
             "field:version",
             "field:target",
@@ -1797,11 +2007,18 @@
             "field:binding",
             "field:parameters",
             "field:row_cap",
+            "field:verification_profile",
             "field:snapshots",
             "field:keyset",
+            "field:stream_page_size",
+            "field:snapshot",
+            "fn:binding_record",
             "struct:AdmittedRead",
             "fn:request",
             "fn:query",
+            "fn:original_document",
+            "fn:original_record",
+            "fn:original_field_ref",
             "fn:admit_json"
           ],
           "pathReferences": []
@@ -1846,7 +2063,10 @@
             "fn:index",
             "fn:binding",
             "fn:record",
-            "fn:admit_json"
+            "fn:admit_json",
+            "fn:admit_unity_json",
+            "fn:admit_terms",
+            "fn:admit_keyword_effects"
           ],
           "pathReferences": []
         },
@@ -2807,6 +3027,7 @@
             "mod:current_scalar",
             "mod:truss_mutation",
             "mod:raw_read",
+            "mod:native_privilege_probes",
             "mod:mutation",
             "mod:truss_runtime",
             "mod:pg18",
@@ -2866,7 +3087,8 @@
             "mod:raw_action",
             "mod:raw_bulk",
             "mod:search",
-            "mod:current_presence"
+            "mod:current_presence",
+            "mod:related_read"
           ],
           "pathReferences": []
         },
@@ -2882,6 +3104,11 @@
             "struct:OriginalMutationBackend",
             "fn:new"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/native_catalog_fence.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
@@ -2904,6 +3131,14 @@
             "fn:sum_sql",
             "fn:require_type",
             "fn:require"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/native_privilege_probes.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
           ],
           "pathReferences": []
         },
@@ -3121,6 +3356,19 @@
           "publicDeclarations": [
             "fn:compile_json"
           ],
+          "pathReferences": [
+            "crates/weft-postgresql/src/raw_read_projection.rs",
+            "crates/weft-postgresql/src/raw_read_relationships.rs"
+          ]
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read_projection.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read_relationships.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
@@ -3208,6 +3456,13 @@
             "field:structural_check_sql",
             "fn:scan_source",
             "fn:render_expression"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/related_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -3657,7 +3912,8 @@
             "struct:TargetPlan",
             "fn:compile_json",
             "fn:compile_page_json",
-            "fn:compile_cursor_json"
+            "fn:compile_cursor_json",
+            "fn:compile_navigation_json"
           ],
           "pathReferences": []
         },
@@ -3833,12 +4089,28 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-runtime/src/engine_ordered_page.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/engine_read.rs",
           "publicDeclarations": [
             "fn:compile_json",
             "fn:check_json",
             "fn:compile_page_json",
             "fn:check_page_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-runtime/src/engine_related_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:compile_page_json"
           ],
           "pathReferences": []
         },
@@ -3908,10 +4180,13 @@
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend",
             "fn:compile_raw_read_json",
+            "fn:compile_native_privilege_probes_json",
+            "fn:check_native_privilege_probes_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
             "mod:engine_read",
+            "mod:engine_related_read",
             "struct:CurrentPresencePreparation",
             "fn:json",
             "fn:is_from",
@@ -3920,7 +4195,12 @@
             "fn:graph_requirements_json",
             "fn:lower_postgresql_current_presence_candidate_json",
             "fn:check_postgresql_current_presence_candidate_json",
-            "mod:engine_export"
+            "mod:engine_export",
+            "fn:compile_unity_search_json",
+            "fn:compile_managed_action_json",
+            "fn:compile_managed_bulk_json",
+            "fn:compile_related_read_json",
+            "mod:engine_ordered_page"
           ],
           "pathReferences": []
         },
@@ -4066,14 +4346,21 @@
           "path": "crates/weft-python/src/lib.rs",
           "publicDeclarations": [
             "fn:compile_raw_read_json",
+            "fn:compile_native_privilege_probes_json",
+            "fn:check_native_privilege_probes_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
             "fn:compile_engine_read_json",
+            "fn:compile_engine_related_read_json",
+            "fn:compile_engine_related_page_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",
-            "fn:compile_engine_export_json"
+            "fn:compile_engine_export_json",
+            "fn:compile_managed_action_json",
+            "fn:compile_managed_bulk_json",
+            "fn:compile_related_read_json"
           ],
           "pathReferences": []
         }
@@ -4141,6 +4428,8 @@
             "fn:lower_selection_json",
             "fn:compile_json",
             "fn:compile_raw_read_json",
+            "fn:compile_native_privilege_probes_json",
+            "fn:check_native_privilege_probes_json",
             "fn:compile_native_action_json",
             "fn:compile_native_bulk_json",
             "fn:compile_search_json",
@@ -4159,10 +4448,16 @@
             "fn:designation_json",
             "fn:native_request_json",
             "fn:compile_engine_read_json",
+            "fn:compile_engine_related_read_json",
+            "fn:compile_engine_related_page_json",
             "fn:check_engine_read_json",
             "fn:compile_engine_page_json",
             "fn:check_engine_page_json",
-            "fn:compile_engine_export_json"
+            "fn:compile_engine_export_json",
+            "fn:compile_unity_search_json",
+            "fn:compile_managed_action_json",
+            "fn:compile_managed_bulk_json",
+            "fn:compile_related_read_json"
           ],
           "pathReferences": []
         }

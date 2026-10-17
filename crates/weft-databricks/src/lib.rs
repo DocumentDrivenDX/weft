@@ -38,8 +38,11 @@ pub mod compatible_profile;
 pub mod current_scalar;
 
 pub mod raw_read;
+mod raw_numeric;
+mod raw_aggregates;
 
 pub mod local_spark4;
+pub mod local_spark4_fields;
 
 pub mod raw_action;
 
@@ -47,3 +50,13 @@ pub mod raw_bulk;
 
 /// Separate authored-Key page language candidates; no historical profile relabeling.
 pub mod authored_pages;
+
+pub mod unity_search;
+
+mod raw_pages;
+mod spark_shapes;
+
+pub mod local_spark4_sdk;
+
+#[cfg(feature="sdk-ordered-page-candidate")]
+pub mod local_spark4_sdk_pages;

@@ -1,0 +1,65 @@
+{
+  "status": "SOURCE-CANDIDATE; native/WASM/installed successor qualification pending",
+  "baseR22": "5605d358650468d651f69ff29c40e986a0359a5b",
+  "feature": "ashlar-sdk-ordered-page-candidate",
+  "profiles": [
+    "ashlar-spark4-sdk",
+    "ashlar-spark4-sdk-pages",
+    "truss-runtime-binary"
+  ],
+  "tests": {
+    "candidateRuntime": 39,
+    "candidateRuntimeSkipped": 0,
+    "commonFeaturesRuntime": 26,
+    "moduleBoundariesPackages": 11
+  },
+  "meaning": [
+    "original Core08 scalar presence keeps missing and null distinct",
+    "S5 missing/null one nullish sort class, S6 selected authored Key ASC suffix, full typed cursor and exact native comparisons",
+    "Related source/target Key custody separate; source wildcard and explicit direction/nulls/LIMIT preserved; no default source cap",
+    "Truss binary direct Fields only; original native Truss wire/state domain separate from Ashlar envelope; selectedKey explicit native-primary correspondence on pages",
+    "temporal and LEFT/interface0.3 remain refused in new scalar profile; old native profiles remain unchanged",
+    "new scalar presence profile requires original Core0.8.0 pins; actual0.7 document/pin refusal retained",
+    "new ordered ordinary READ JOIN refuses without unique result tuple Key proof; ordered/limited joined Related source refuses; unbounded/unordered joined source retains original identity-only EXISTS semantics"
+  ],
+  "historicalBaseline": "Frozen R22 reproduces B006 stale golden; complete actual responses identical under common features. Historical receipt/logs retained; current-release source-produced expected artifact added with provenance.",
+  "unqualified": [
+    "new profile native execution",
+    "real async cancellation",
+    "new-profile smaller-page stream and async continuation",
+    "Truss alternate/mixed ordering",
+    "temporal",
+    "ordered joined result/source native profile requires separate owner uniqueness/identity proof"
+  ],
+  "evidence": [
+    {
+      "path": "parse-rust-value-baseline.py",
+      "sha256": "647e93c73d4e1acaf0ac66d448190524abcd75cdd15d866e9cdf8cd5ee5b7480"
+    },
+    {
+      "path": "weft-successor-historical-golden-common.log",
+      "sha256": "e7d327606965f53f82feef205e077e8d73a8827fdf6f4dbb830d63dac3a84f0c"
+    },
+    {
+      "path": "weft-historical-golden-comparison.json",
+      "sha256": "bee31fa2153e6601f802eafb2e8b5721775de0a9af90c385eb2f0d3485df7f2a"
+    },
+    {
+      "path": "weft-sdk-engine-source-r15.log",
+      "sha256": "db0996db584c7e8567f93e0665adfd8166f4b65c8183cfc4d3fc26a8d4f2dd2d"
+    },
+    {
+      "path": "weft-r22-historical-golden-baseline.log",
+      "sha256": "4b2637feb482bd363103c5cb6a967fef4a771613b508c9fc5c6bc526fcb7664c"
+    },
+    {
+      "path": "weft-engine02-boundaries-r2.log",
+      "sha256": "2324cad42d9cac1d2ed361b7dcc01839095a6789d067da1b7bbea18d0e738662"
+    },
+    {
+      "path": "weft-engine02-feature-boundary-r1.log",
+      "sha256": "2e2beb7983df48ca20d6222c2f09a7c09b576ca2d44c4f6648dfa62d7c53365d"
+    }
+  ],
+  "bindingFeatureForwarding": "explicit same candidate feature forwarded by Python and WASM crates; default features unchanged"
+}

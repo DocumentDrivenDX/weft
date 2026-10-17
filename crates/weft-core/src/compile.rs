@@ -146,6 +146,13 @@ impl Compiler {
         self.compile_json_internal(raw,Some(factory),None,true,Some((batch_size,None,true,true)),true,true)
     }
 
+    /// Compose source entity selection through an original canonical relationship.
+    /// Source and target share this request's admitted Catalog, binding and parameters.
+    pub fn compile_navigation_json_with_factory(&self,raw:&str,navigation:&crate::application_navigation::Input,factory:&mut RegistryFactory<'_>,exact_numbers:bool,identity_names:bool,page:Option<(u16,Option<Vec<String>>,bool)>)->String{
+        let cursor=page.as_ref().is_some_and(|(_,_,cursor)|*cursor);
+        let decimal12=crate::json::checked_json(raw).is_ok_and(|r|matches!(r["interfaceVersion"].as_str(),Some("weft-compile/0.2.6"|"weft-compile/0.2.7")));
+        self.compile_json_navigation_internal(raw,Some(factory),None,exact_numbers,page.map(|(size,after,_)|(size,after,true,decimal12)),identity_names,cursor,Some(navigation),false,false,None,None,None)
+    }
     fn compile_json_internal(
         &self,
         raw: &str,
@@ -156,6 +163,47 @@ impl Compiler {
         identity_name_fallback: bool,
         cursor_delivery: bool,
     ) -> String {
+        self.compile_json_navigation_internal(raw,factory,security_factory,exact_numbers,page,identity_name_fallback,cursor_delivery,None,false,false,None,None,None)
+    }
+    /// Trusted original direct-Field profile; parameters and ordinary profiles stay closed.
+    pub fn compile_field_projection_json(&self,raw:&str)->String {
+        self.compile_json_navigation_internal(raw,None,None,false,None,false,false,None,true,false,None,None,None)
+    }
+    /// Trusted additive scalar-presence profile. Original source bytes stay intact.
+    pub fn compile_sdk_presence_json(&self,raw:&str)->String {
+        self.compile_json_navigation_internal(raw,None,None,false,None,false,false,None,false,true,None,None,None)
+    }
+    #[cfg(feature="engine-ordered-page-candidate")]
+    pub fn compile_sdk_ordered_json(&self,raw:&str,selected:&crate::application_ordered_page::SelectedKey,page_size:u16,after:Option<crate::application_ordered_page::Cursor>,navigation:Option<&crate::application_navigation::Input>,source_selected_key:Option<&crate::application_ordered_page::SelectedKey>)->String {
+        let page=json!({"selectedKey":selected,"pageSize":page_size,"after":after});
+        self.compile_json_navigation_internal(raw,None,None,false,None,false,false,navigation,false,true,Some(&page),source_selected_key.map(|s|json!(s)).as_ref(),None)
+    }
+    #[cfg(feature="engine-ordered-page-candidate")]
+    pub fn compile_sdk_navigation_json(&self,raw:&str,navigation:&crate::application_navigation::Input,source_selected_key:&crate::application_ordered_page::SelectedKey)->String {
+        self.compile_json_navigation_internal(raw,None,None,false,None,false,false,Some(navigation),false,true,None,Some(&json!(source_selected_key)),None)
+    }
+    #[cfg(feature="engine-ordered-page-candidate")]
+    pub fn compile_sdk_read_json(&self,raw:&str,order_key:Option<&crate::application_ordered_page::SelectedKey>,navigation:Option<&crate::application_navigation::Input>,source_key:Option<&crate::application_ordered_page::SelectedKey>)->String{
+      self.compile_json_navigation_internal(raw,None,None,false,None,false,false,navigation,false,true,None,source_key.map(|s|json!(s)).as_ref(),order_key.map(|s|json!(s)).as_ref())
+    }
+    fn compile_json_navigation_internal(
+        &self,
+        raw: &str,
+        factory: Option<&mut RegistryFactory<'_>>,
+        security_factory: Option<&mut crate::security_backend::SecurityRegistryFactory<'_>>,
+        exact_numbers: bool,
+        page: Option<(u16, Option<Vec<String>>, bool, bool)>,
+        identity_name_fallback: bool,
+        cursor_delivery: bool,
+        navigation:Option<&crate::application_navigation::Input>,
+        field_projection_decimal38:bool,
+        sdk_scalar_presence:bool,
+        ordered_page:Option<&Value>,
+        sdk_source_key:Option<&Value>,
+        sdk_order_key:Option<&Value>,
+    ) -> String {
+        #[cfg(not(feature="engine-ordered-page-candidate"))]
+        if ordered_page.is_some()||sdk_order_key.is_some(){return json!({"status":"blocked","diagnostics":[{"code":"WFT-ORDERED-PAGE","message":"Original ordered page feature not selected"}]}).to_string();}
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
             if let Some((size, after, _, _)) = page.as_ref() {
@@ -241,8 +289,9 @@ impl Compiler {
             if page.is_some() && !matches!(version.as_str(),"weft-compile/0.2.2"|"weft-compile/0.2.3"|"weft-compile/0.2.4"|"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7") {
                 return Err(Diagnostic::new("WFT-VERSION", "input", "SQL page composition requires compile/0.2.2"));
             }
-            let req: Request = serde_json::from_value(input)
+            let mut req: Request = serde_json::from_value(input)
                 .map_err(|_| Diagnostic::new("WFT-INPUT", "input", "Malformed request members"))?;
+            if navigation.is_some()&&!matches!(req.interface_version.as_str(),"weft-compile/0.2.0"|"weft-compile/0.2.1"|"weft-compile/0.2.2"|"weft-compile/0.2.3"|"weft-compile/0.2.4"|"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7"){return Err(Diagnostic::new("WFT-ENGINE-NAVIGATION","input","Original application source/target compile profile required"));}
             let timestamp_equality=matches!(req.interface_version.as_str(),"weft-compile/0.2.6"|"weft-compile/0.2.7") && req.timestamp_comparison_profile.as_deref()==Some(crate::exact_instant::PROFILE);
             if req.sql.len() > 65536 {
                 return Err(Diagnostic::new("WFT-LIMIT", "input", "SQL exceeds 64 KiB"));
@@ -264,6 +313,25 @@ impl Compiler {
             }
             crate::json::checked_json(&req.target.binding_json)
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
+            if field_projection_decimal38 {
+                let query=crate::application_syntax::parse(&req.sql)?;
+                if req.interface_version!="weft-compile/0.2.0" || req.dialect!="weft-sql/0.2.0"
+                    || req.target.backend_id!="ashlar.databricks" || req.target.backend_version!="0.1.0-local-spark4-fields-candidate"
+                    || req.target.target_profile!="spark4.0.1-delta4.0.0-fields-candidate"
+                    || exact_numbers || navigation.is_some() || page.is_some() || cursor_delivery
+                    || security_factory.is_some() || req.security.is_some() || req.read_profile.is_some()
+                    || req.timestamp_comparison_profile.is_some() || req.exact_parameters.is_some()
+                    || req.parameters.as_ref().is_some_and(|p|!p.is_empty())
+                    || !query.predicates.is_empty() || !query.joins.is_empty() || !query.groups.is_empty()
+                    || query.limit.is_none() || query.order.len()!=1
+                    || query.outputs.is_empty() || query.outputs.iter().any(|p|!matches!(p.output,crate::application_syntax::Output::Field(_))) {
+                    return Err(Diagnostic::new("WFT-FIELD-PROFILE","input","Direct required Field-only profile refuses broader semantics"));
+                }
+            }
+            if sdk_source_key.is_some() != (sdk_scalar_presence && navigation.is_some()){return Err(Diagnostic::new("WFT-ENGINE-NAVIGATION","input","Original SDK source selected Key custody required"));}
+            if sdk_scalar_presence && (req.modules.is_empty()||req.modules.iter().any(|m|m.pin.umf_version!="0.8.0")||req.interface_version!="weft-compile/0.2.0" || req.dialect!="weft-sql/0.2.0" || req.target.backend_id!="ashlar.databricks" || !matches!(req.target.backend_version.as_str(),"0.1.0-local-spark4-sdk-candidate"|"0.1.0-local-spark4-sdk-pages-candidate") || req.target.target_profile!="spark4.0.1-delta4.0.0-sdk-candidate" || (ordered_page.is_some() && req.target.backend_version!="0.1.0-local-spark4-sdk-pages-candidate") || page.is_some() || cursor_delivery || field_projection_decimal38 || req.security.is_some() || req.exact_parameters.is_some()) {
+                return Err(Diagnostic::new("WFT-SDK-PRESENCE","input","Explicit non-temporal SDK presence profile required"));
+            }
             let mut catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
                 crate::model::Catalog::prepare_security(req.modules)?
             } else if exact_numbers {
@@ -272,6 +340,8 @@ impl Compiler {
                 crate::model::Catalog::prepare(req.modules)?
             };
             catalog.identity_name_fallback = identity_name_fallback;
+            catalog.field_projection_decimal38=field_projection_decimal38;
+            catalog.sdk_scalar_presence=sdk_scalar_presence;
             catalog.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6" | "weft-compile/0.2.7");
             catalog.exact_dates = req.interface_version=="weft-compile/0.2.7";
             if let Some(source)=req.security.as_ref() {
@@ -319,7 +389,39 @@ impl Compiler {
                     req.target, req.options.allow_candidate, factory,
                 )
             } else {
+                #[cfg(feature="engine-ordered-page-candidate")]
+                let mut query=if ordered_page.is_some()||sdk_scalar_presence{crate::application_syntax::parse_security(&req.sql)?.0}else{crate::application_syntax::parse(&req.sql)?};
+                #[cfg(not(feature="engine-ordered-page-candidate"))]
                 let query = crate::application_syntax::parse(&req.sql)?;
+                #[cfg(feature="engine-ordered-page-candidate")]
+                if sdk_scalar_presence && ordered_page.is_none() && ((!query.order.is_empty()) != sdk_order_key.is_some()) {return Err(Diagnostic::new("WFT-ORDERED-READ","input","Original ordered read requires orderKey exactly when ORDER BY is authored"));}
+                let mut navigation_parameters=req.parameters.clone().unwrap_or_default();let mut navigation_exact=req.exact_parameters.clone().unwrap_or_default();
+                if let Some(input)=navigation{
+                    let source=if sdk_scalar_presence{crate::application_syntax::parse_security(&input.source_sql)?.0}else{crate::application_syntax::parse(&input.source_sql)?};
+                    let partition=crate::application_navigation::partition(&source,&query,navigation_parameters,navigation_exact)?;
+                    navigation_parameters=partition.source;navigation_exact=partition.source_exact;req.parameters=Some(partition.target);req.exact_parameters=Some(partition.target_exact);
+                }
+
+                #[cfg(feature="engine-ordered-page-candidate")]
+                if let Some(input)=ordered_page {
+                    use crate::application_ordered_page::{SelectedKey,Cursor};
+                    let selected:SelectedKey=serde_json::from_value(input["selectedKey"].clone()).map_err(|_|Diagnostic::new("WFT-ORDERED-PAGE","input","Closed original selected Key required"))?;
+                    let size=input["pageSize"].as_u64().and_then(|v|u16::try_from(v).ok()).ok_or_else(||Diagnostic::new("WFT-ORDERED-PAGE","input","Bounded original page size required"))?;
+                    let after:Option<Cursor>=serde_json::from_value(input["after"].clone()).map_err(|_|Diagnostic::new("WFT-ORDERED-PAGE","input","Closed full typed cursor required"))?;
+                    let mut ordered=crate::application_ordered_page::prepare(&catalog,&req.sql,req.parameters.clone().unwrap_or_default(),&selected,size,after)?;
+                    if let Some(input)=navigation {
+                        let selected:crate::application_ordered_page::SelectedKey=serde_json::from_value(sdk_source_key.ok_or_else(||Diagnostic::new("WFT-ENGINE-NAVIGATION","input","Original source selected Key required"))?.clone()).map_err(|_|Diagnostic::new("WFT-ENGINE-NAVIGATION","input","Closed source Key identity required"))?;
+                        let prepared=crate::application_navigation::prepare_sdk(&catalog,input,navigation_parameters,&selected,ordered.base())?;
+                        let base=ordered.base_mut();for cap in &prepared.source().required_capabilities{if !base.required_capabilities.contains(cap){base.required_capabilities.push(cap.clone());}}
+                        base.required_capabilities.push("relationship.sourceSelection".into());base.required_capabilities.sort();base.required_capabilities.dedup();base.navigation=Some(Box::new(prepared));
+                    }
+                    let artifact=self.emit(&req.interface_version,&req.dialect,&catalog,Plan::Ordered(&ordered),req.target,req.options.allow_candidate,factory)?;
+                    let slots=ordered.sort_slots().iter().map(|s|{let(v,state)=s.hidden_outputs();json!({"field":s.identity(),"carrier":s.logical_type().family,"facets":s.logical_type().facets,"direction":if s.descending(){"desc"}else{"asc"},"nulls":if s.nulls_first(){"first"}else{"last"},"nullable":s.nullable(),"missing":s.missing(),"valueOutput":v,"stateOutput":state})}).collect::<Vec<_>>();
+                    return Ok(json!({"interfaceVersion":"weft-sql-page/0.3","status":"compiled","artifact":artifact,"page":{"version":"weft.engine-cursor/0.2","pageSize":size,"visibleOutputs":ordered.base().outputs.len(),"selectedKey":selected,"key":ordered.selected_key(),"sortSlots":slots,"keySlots":ordered.key_slots(),"keyOutputs":ordered.key_slots().iter().map(|i|ordered.sort_slots()[*i].hidden_outputs().0).collect::<Vec<_>>()}}));
+                }
+                #[cfg(feature="engine-ordered-page-candidate")]
+                if sdk_order_key.is_some(){query.order.clear();query.order_nulls.clear();}
+                let sdk_read_parameters=req.parameters.clone().unwrap_or_default();
                 let page_plan = if let Some((size, after, typed, decimal12)) = page {
                     if decimal12 && !matches!(req.interface_version.as_str(),"weft-compile/0.2.6"|"weft-compile/0.2.7") { return Err(Diagnostic::new("WFT-PROFILE","input","Decimal12 page requires explicit compile0.2.6 context")); }
                     if req.read_profile.is_some() || req.security.is_some() {
@@ -331,6 +433,12 @@ impl Compiler {
                     Some(page) => page.plan.clone(),
                     None => if matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7") {crate::application_resolve::resolve_with_exact(&catalog,query,req.parameters.unwrap_or_default(),req.exact_parameters.unwrap_or_default(),req.read_profile,timestamp_equality)?} else {crate::application_resolve::resolve(&catalog, query, req.parameters.unwrap_or_default(), req.read_profile)?},
                 };
+                #[cfg(feature="engine-ordered-page-candidate")]
+                if let Some(key)=sdk_order_key {
+                 if !sdk_scalar_presence||ordered_page.is_some(){return Err(Diagnostic::new("WFT-ORDERED-READ","input","Explicit SDK ordered-read profile required"));}
+                 let key=serde_json::from_value(key.clone()).map_err(|_|Diagnostic::new("WFT-ORDERED-READ","input","Closed original order Key required"))?;
+                 plan=crate::application_ordered_page::prepare_read(&catalog,&req.sql,sdk_read_parameters,&key)?;
+                }
                 if cursor_delivery {
                     if req.interface_version != "weft-compile/0.2.7" || page_plan.is_none() {
                         return Err(Diagnostic::new("WFT-PROFILE","input","Cursor delivery requires an explicit authored-Key compile0.2.7 plan"));
@@ -339,26 +447,17 @@ impl Compiler {
                     // bounded fetches performed by its separately admitted host.
                     plan.limit = None;
                 }
-                if catalog.exact_dates {
-                    plan.ir_version="weft-ir/0.2.7".into();
-                    if !Plan027::is_valid(&serde_json::to_value(&plan).expect("typed canonical date plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates canonical date semantics"));}
-                } else if timestamp_equality {
-                    plan.ir_version="weft-ir/0.2.6".into();
-                    if !Plan026::is_valid(&serde_json::to_value(&plan).expect("typed exact instant plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates exact instant semantics"));}
-                } else if req.interface_version=="weft-compile/0.2.5" {
-                    plan.ir_version="weft-ir/0.2.5".into();
-                    if !Plan025::is_valid(&serde_json::to_value(&plan).expect("typed exact equality plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates exact equality semantics"));}
-                } else if req.interface_version == "weft-compile/0.2.4" {
-                    plan.ir_version="weft-ir/0.2.4".into();
-                    if !Plan024::is_valid(&serde_json::to_value(&plan).expect("typed import entity plan")) { return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates import entity semantics")); }
-                } else if req.interface_version == "weft-compile/0.2.3" {
-                    plan.ir_version="weft-ir/0.2.3".into();
-                    if !Plan023::is_valid(&serde_json::to_value(&plan).expect("typed entity plan")) { return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates timestamp entity semantics")); }
-                } else if req.interface_version == "weft-compile/0.2.2" {
-                    plan.ir_version = "weft-ir/0.2.2".into();
-                    let value = serde_json::to_value(&plan).map_err(|_| Diagnostic::new("WFT-IR", "resolve", "Invalid resolved entity plan"))?;
-                    if !Plan022::is_valid(&value) { return Err(Diagnostic::new("WFT-IR", "resolve", "Resolved plan violates versioned entity semantics")); }
-                } else if catalog.exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
+                validate_application_plan(&catalog,&mut plan,&req.interface_version,timestamp_equality)?;
+                if let Some(input)=navigation{
+                    #[cfg(feature="engine-ordered-page-candidate")]
+                    let mut prepared=if sdk_scalar_presence{let selected:crate::application_ordered_page::SelectedKey=serde_json::from_value(sdk_source_key.unwrap().clone()).map_err(|_|Diagnostic::new("WFT-ENGINE-NAVIGATION","input","Closed original source Key required"))?;crate::application_navigation::prepare_sdk(&catalog,input,navigation_parameters,&selected,&plan)?}else{crate::application_navigation::prepare(&catalog,input,navigation_parameters,navigation_exact,timestamp_equality,matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7"),&plan)?};
+                    #[cfg(not(feature="engine-ordered-page-candidate"))]
+                    let mut prepared=crate::application_navigation::prepare(&catalog,input,navigation_parameters,navigation_exact,timestamp_equality,matches!(req.interface_version.as_str(),"weft-compile/0.2.5"|"weft-compile/0.2.6"|"weft-compile/0.2.7"),&plan)?;
+                    validate_application_plan(&catalog,prepared.source_mut(),&req.interface_version,timestamp_equality)?;
+                    for cap in &prepared.source().required_capabilities{if !plan.required_capabilities.contains(cap){plan.required_capabilities.push(cap.clone());}}
+                    plan.required_capabilities.push("relationship.sourceSelection".into());plan.required_capabilities.sort();plan.required_capabilities.dedup();
+                    plan.ir_version=if sdk_scalar_presence{"weft-ir/engine-navigation/0.2"}else{"weft-ir/engine-navigation/0.1"}.into();plan.navigation=Some(Box::new(prepared));
+                }
                 let artifact = self.emit(
                     &req.interface_version, &req.dialect, &catalog, Plan::V02(&plan),
                     req.target, req.options.allow_candidate, factory,
@@ -446,12 +545,16 @@ impl Compiler {
             Plan::V01(p) => serde_json::to_value(p),
             Plan::V02(p) => serde_json::to_value(p),
             Plan::V03(p) => serde_json::to_value(p),
+            #[cfg(feature="engine-ordered-page-candidate")]
+            Plan::Ordered(p)=>serde_json::to_value(p),
         }
         .expect("typed plan");
         let columns = if version == "weft-compile/0.1.0" {
             let crate::ir::Node::Project { outputs, .. } = &match plan {
                 Plan::V01(p) => p,
                 Plan::V02(_) | Plan::V03(_) => unreachable!(),
+                #[cfg(feature="engine-ordered-page-candidate")]
+                Plan::Ordered(_)=>unreachable!(),
             }
             .root
             else {
@@ -496,3 +599,28 @@ pub mod v041;
 
 #[path = "compile042.rs"]
 pub mod v042;
+
+fn validate_application_plan(catalog:&crate::model::Catalog,plan:&mut crate::application_ir::Plan,interface_version:&str,timestamp_equality:bool)->Result<()>{
+                if catalog.exact_dates {
+                    plan.ir_version="weft-ir/0.2.7".into();
+                    if !Plan027::is_valid(&serde_json::to_value(&*plan).expect("typed canonical date plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates canonical date semantics"));}
+                } else if timestamp_equality {
+                    plan.ir_version="weft-ir/0.2.6".into();
+                    if !Plan026::is_valid(&serde_json::to_value(&*plan).expect("typed exact instant plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates exact instant semantics"));}
+                } else if interface_version=="weft-compile/0.2.5" {
+                    plan.ir_version="weft-ir/0.2.5".into();
+                    if !Plan025::is_valid(&serde_json::to_value(&*plan).expect("typed exact equality plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates exact equality semantics"));}
+                } else if interface_version == "weft-compile/0.2.4" {
+                    plan.ir_version="weft-ir/0.2.4".into();
+                    if !Plan024::is_valid(&serde_json::to_value(&*plan).expect("typed import entity plan")) { return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates import entity semantics")); }
+                } else if interface_version == "weft-compile/0.2.3" {
+                    plan.ir_version="weft-ir/0.2.3".into();
+                    if !Plan023::is_valid(&serde_json::to_value(&*plan).expect("typed entity plan")) { return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates timestamp entity semantics")); }
+                } else if interface_version == "weft-compile/0.2.2" {
+                    plan.ir_version = "weft-ir/0.2.2".into();
+                    let value = serde_json::to_value(&*plan).map_err(|_| Diagnostic::new("WFT-IR", "resolve", "Invalid resolved entity plan"))?;
+                    if !Plan022::is_valid(&value) { return Err(Diagnostic::new("WFT-IR", "resolve", "Resolved plan violates versioned entity semantics")); }
+                } else if catalog.exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
+
+    Ok(())
+}

@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "version",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/postgres",
+        "--version"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/initdb",
+        "-D",
+        "/private/tmp/weft-pg-native-index-degree-r13-native-r1/data",
+        "-A",
+        "trust",
+        "-U",
+        "sdk_admin",
+        "--no-sync",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/weft-pg-native-index-degree-r13-native-r1/data",
+        "-l",
+        "/private/tmp/weft-pg-native-index-degree-r13-native-r1/server.log",
+        "-o",
+        "-F -k /private/tmp/weft-pg-native-index-degree-r13-native-r1/socket -c listen_addresses='' -p 55507",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "campaign",
+      "command": [
+        "/private/tmp/weft-combined-sdk-local-r13/env/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/weft-pg-native-index-degree-r13-native-r1/source/native_controls.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "stop",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/weft-pg-native-index-degree-r13-native-r1/data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "serverStopped": true,
+  "postmasterAlive": false,
+  "sourceSha256": {
+    "actual-weft_r13_binary_7e9d5ccd-program.json": "470a390111202821854ff36410685b61dcd87081776385532241eea547b9a8c0",
+    "inverse-unique-request.json": "ef4f961a7b99cdcae569b6036c58b1077962e0cfa25cf49dcad953e5d1be8911",
+    "actual-weft_r13_custom_source_7e7282ce-program.json": "fc8122a4989c799fe6d9168336ac2685d86b2f8a3e4f11a59622d8dec563f358",
+    "degree-program.json": "b0e3af8061bd616755b7459ef80212d7e2dc76554ce4b62d73d85c62b4f1cafe",
+    "alternate-request.json": "00bf13e7a68a8bb24c8eb1854a4af231174fcd6b886966bca00f2608185d28aa",
+    "actual-weft_r13_degree_bd1d1a2d-program.json": "336a9acc865d4986704413682776b4ee5899679027184636531e57dffd4df8cb",
+    "actual-weft_r13_custom_target_d9691539-program.json": "b2ebfb89d2e012998162ed48b5a4af7c024efc737ecfa6a863b738c0a65a6cb6",
+    "inverse-unique-program.json": "00d3d99e688abdf87d94657dbc500fe50c5b7eda1c801ff818b8a7e501542cc8",
+    "degree-request.json": "cc990833130418b4f3113060c36101d44bb6f0a848b55cc54cae85e39a9143cd",
+    "alternate-program.json": "4aa7602540461f3475b41f8ba17879235e06d38939a38e566f542c328e4805bd",
+    "native_controls.py": "8e67d45b9c9d29cdee71cc6501f81cf452f5335de19a8bbbe66f05168c312631",
+    "README.md": "9e5c596ce01451ee1668267b8ffb47b2a815281f908a7fd1c5dc76fa533d0966",
+    "actual-weft_r13_casefold_98d33b7d-program.json": "f40a8d3cda5d575220d547a8a37c1141baf1b39eed542a2b9ede3491a98c8533",
+    "native-result.json": "72ca6c70943c36e4cc99304245a1d23d4c409147a8d33d817c43a6c9c6b5ed21"
+  },
+  "temporal": "HELD",
+  "scope": "original owner admissions and native query; not SDK E2E"
+}

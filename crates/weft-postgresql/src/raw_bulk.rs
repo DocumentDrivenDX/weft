@@ -1,5 +1,5 @@
 //! Bounded native set-based UPDATE program, separate from manifest mutation.
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 use sqlparser::ast::*;
 use weft_core::{raw_action::ActionField, raw_bulk, raw_read::Carrier};
 type Result<T> = std::result::Result<T, &'static str>;
@@ -192,7 +192,18 @@ fn compile(raw: &str) -> Result<Value> {
         .map(|(col, alias)| format!("{col} IS NOT DISTINCT FROM __umf_keys.{alias}"))
         .collect::<Vec<_>>()
         .join(" AND ");
-    let sql=format!("UPDATE {native_table} SET {} WHERE EXISTS (SELECT 1 FROM ROWS FROM ({}) AS __umf_keys({}) WHERE {predicate}) AND ({}) RETURNING {}",assignments.join(", "),arrays.iter().map(|a|format!("pg_catalog.unnest({a})")).collect::<Vec<_>>().join(", "),aliases.join(", "),changed.join(" OR "),keys.join(", "));
+    let sql = format!(
+        "UPDATE {native_table} SET {} WHERE EXISTS (SELECT 1 FROM ROWS FROM ({}) AS __umf_keys({}) WHERE {predicate}) AND ({}) RETURNING {}",
+        assignments.join(", "),
+        arrays
+            .iter()
+            .map(|a| format!("pg_catalog.unnest({a})"))
+            .collect::<Vec<_>>()
+            .join(", "),
+        aliases.join(", "),
+        changed.join(" OR "),
+        keys.join(", ")
+    );
     let slots = read["parameterOrder"]
         .as_array()
         .unwrap()
@@ -204,13 +215,44 @@ fn compile(raw: &str) -> Result<Value> {
                 .iter()
                 .find(|p| p.name == *name.as_str().unwrap())
                 .unwrap();
-            json!({"source":{"bulkInput":p.name},"carrier":p.carrier})
+            let mut slot = json!({"source":{"bulkInput":p.name},"carrier":p.carrier});
+            if p.container.is_some() {
+                slot["nullable"] = json!(p.nullable);
+                slot["container"] = serde_json::to_value(&p.container).unwrap();
+                slot["elementNullable"] = json!(p.element_nullable);
+                slot["maxItems"] = json!(p.max_items);
+            }
+            slot
         })
         .collect::<Vec<_>>();
     let selection = json!({"sql":read["sql"],"parameters":slots});
     let mut locked = selection.clone();
     locked["sql"] = json!(format!("{} FOR UPDATE", read["sql"].as_str().unwrap()));
     let mut program = json!({"version":"weft.native-bulk/0.1","profile":"umf.actions.native-bulk/0.1","status":"compiled","target":r.action.target,"source":r.action.source,"binding":r.action.binding,"security":r.action.security,"action":action.action(),"maxItems":r.max_items,"parameters":r.parameters,"actionInputs":r.action_inputs,"selectionFields":fields,"entity":effect.entity,"values":effect.values,"preview":selection,"selection":locked,"update":{"sql":sql,"parameters":parameters},"admission":template["admission"],"lockSql":template["lockSql"],"obligations":template["obligations"],"actionTemplate":template,"readTemplate":read});
+    let read_exact=read["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1";
+    let action_exact=template["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1";
+    if read_exact!=action_exact{return Err("bulk action/selection source verification profiles differ")}
+    if read_exact {
+        // The bulk host owns the same original search-path context as action SQL;
+        // no read-host appSchema parameter is invented or bound by the SDK.
+        let selected=admitted.selection();let table=selected.request().binding.tables.iter().find(|t|t.logical==effect.entity.key.table).ok_or("bulk original selection table absent")?;
+        let columns=crate::raw_read::native_projection::columns(selected,table)?;
+        let mut selected_admissions=columns.values().map(|c|json!({"nativeAdmission":crate::raw_read::native_projection::action_admission(c,table,&r.selection.binding.schema)})).collect::<Vec<_>>();
+        selected_admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.selection.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
+        let mut packet=template["obligations"]["nativeProjection"].clone();let values=packet["columns"].as_array_mut().unwrap();for value in selected_admissions {if !values.contains(&value){values.push(value);}}program["obligations"]["nativeProjection"]=packet;
+    }
+    if let Some(term)=read["obligations"].get("termFilter") {
+        let table=r.selection.binding.tables.iter().find(|t|t.logical==effect.entity.key.table).ok_or("bulk term source table absent")?;
+        let mut indexes=vec![];
+        for original in term["indexes"].as_array().ok_or("bulk original term inventory absent")? {
+            let column=table.columns.iter().find(|c|original["nativeColumn"]==c.native).ok_or("bulk original term column absent")?;
+            indexes.push(crate::raw_read::action_term_index_metadata(admitted.selection(),table,column)?);
+        }
+        let mut composed=term.clone();composed["indexes"]=json!(indexes);
+        program["obligations"]["termFilter"]=composed;
+    }
+    crate::native_catalog_fence::attach(&r.action.binding,&mut program["obligations"])?;
+    crate::native_catalog_fence::seal_version(&mut program)?;
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes());
     program["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-bulk","version":"0.1","sha256":digest});
@@ -234,6 +276,35 @@ mod tests {
         serde_json::from_str(&compile_json(&request.to_string())).unwrap()
     }
     #[test]
+    fn term_selection_admissions_survive_mutation_composition(){
+        let r:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-bulk-request.json")).unwrap();
+        for neutral in [false,true] {
+            let mut r=r.clone();for c in ["action","selection"]{r[c]["binding"]["nativeCatalogFence"]=json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});}if neutral {r["selection"]["binding"].as_object_mut().unwrap().remove("schema");r["action"]["binding"].as_object_mut().unwrap().remove("schema");}
+            let p=result(&r);assert_eq!(p["status"],"compiled","{p}");
+            if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/bulk-{}.json",if neutral{"neutral"}else{"qualified"}),p.to_string()).unwrap();}
+            if !neutral {let old:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-read-r20.json")).unwrap();assert_eq!(p["readTemplate"]["sql"],old["sql"]);assert_eq!(p["readTemplate"]["outputs"],old["outputs"]);assert_eq!(p["readTemplate"]["obligations"]["termFilter"],old["obligations"]["termFilter"],"existing raw analyzer SQL remains unchanged; fence/version are new");}
+            let top=&p["obligations"]["termFilter"];let original=&p["readTemplate"]["obligations"]["termFilter"];
+            assert_eq!(top["version"],original["version"]);assert_eq!(top["nativeCatalogBeforeAfter"],true);
+            assert_eq!(top["indexes"].as_array().unwrap().len(),1);
+            let mut a=top["indexes"][0].clone();let mut b=original["indexes"][0].clone();a.as_object_mut().unwrap().remove("nativeAdmission");b.as_object_mut().unwrap().remove("nativeAdmission");assert_eq!(a,b);
+            let admission=&top["indexes"][0]["nativeAdmission"];
+            assert!(admission["sql"].as_str().unwrap().contains("pg_ts_config_map"));
+            assert!(admission["parameters"].as_array().unwrap().iter().all(|p|p["source"].get("literal").is_some()));
+            if neutral {assert!(admission["sql"].as_str().unwrap().contains("to_regclass(pg_catalog.quote_ident("));}
+        }
+    }
+    #[test]
+    fn source_exact_bulk_unions_both_original_admission_packets(){
+        let mut r=request();let action:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-action-request.json")).unwrap();
+        r["action"]=action.clone();r["selection"]["binding"]=action["binding"].clone();r["selection"]["verificationProfile"]=json!("source-exact/0.1");
+        let p:Value=serde_json::from_str(&compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
+        assert_eq!(p["obligations"]["nativeProjection"],p["actionTemplate"]["obligations"]["nativeProjection"]);
+        for c in p["obligations"]["nativeProjection"]["columns"].as_array().unwrap(){assert!(c["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_catalog.to_regclass(pg_catalog.quote_ident("));assert!(c["nativeAdmission"]["parameters"].as_array().unwrap().iter().all(|p|p["source"].get("literal").is_some()));}
+        r["action"].as_object_mut().unwrap().remove("verificationProfile");assert_eq!(serde_json::from_str::<Value>(&compile_json(&r.to_string())).unwrap()["status"],"blocked");
+    }
+    #[test]
     fn bounded_set_program_retains_original_sources() {
         let request = request();
         let out = result(&request);
@@ -243,18 +314,24 @@ mod tests {
         assert_eq!(out["binding"], request["action"]["binding"]);
         assert_eq!(out["security"], request["action"]["security"]);
         assert_eq!(out["maxItems"], 3);
-        assert!(out["selection"]["sql"]
-            .as_str()
-            .unwrap()
-            .ends_with("LIMIT 4 FOR UPDATE"));
-        assert!(!out["preview"]["sql"]
-            .as_str()
-            .unwrap()
-            .contains("FOR UPDATE"));
-        assert!(out["update"]["sql"]
-            .as_str()
-            .unwrap()
-            .starts_with("UPDATE "));
+        assert!(
+            out["selection"]["sql"]
+                .as_str()
+                .unwrap()
+                .ends_with("LIMIT 4 FOR UPDATE")
+        );
+        assert!(
+            !out["preview"]["sql"]
+                .as_str()
+                .unwrap()
+                .contains("FOR UPDATE")
+        );
+        assert!(
+            out["update"]["sql"]
+                .as_str()
+                .unwrap()
+                .starts_with("UPDATE ")
+        );
         assert!(out["update"]["sql"].as_str().unwrap().contains("ROWS FROM"));
         assert!(out.get("manifest").is_none());
         assert_eq!(
@@ -266,10 +343,123 @@ mod tests {
     fn sentinel_order_and_source_boundaries_refuse() {
         for change in 0..5 {
             let mut r = request();
-            match change{0=>r["maxItems"]=json!(0),1=>r["selection"]["rowCap"]=json!(3),2=>r["selection"]["sql"]=json!("SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.status ASC"),3=>r["selection"]["sql"]=json!("SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC LIMIT 1"),_=>r["action"]["source"]["documentSha256"]=json!("wrong")};
+            match change {
+                0 => r["maxItems"] = json!(0),
+                1 => r["selection"]["rowCap"] = json!(3),
+                2 => {
+                    r["selection"]["sql"] = json!(
+                        "SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.status ASC"
+                    )
+                }
+                3 => {
+                    r["selection"]["sql"] = json!(
+                        "SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC LIMIT 1"
+                    )
+                }
+                _ => r["action"]["source"]["documentSha256"] = json!("wrong"),
+            };
             let out = result(&r);
             assert_eq!(out["status"], "blocked", "{out}");
             assert!(out.get("update").is_none());
+        }
+    }
+}
+
+#[cfg(test)]
+mod list_parameter_tests {
+    use super::*;
+    fn request() -> Value {
+        let action: Value = serde_json::from_str(include_str!(
+            "../../../tests/native-actions/action-request.json"
+        ))
+        .unwrap();
+        json!({"version":"weft.native-bulk/0.1","selection":{"version":"weft.raw-read/0.1","target":"postgresql18","sql":"SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC","binding":action["binding"],"parameters":[],"rowCap":4},"action":action,"maxItems":3,"actionInputs":{},"parameters":[]})
+    }
+    fn compile(r: &Value) -> Value {
+        serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    fn list_request() -> Value {
+        let mut r = request();
+        let p = json!({"name":"statuses","carrier":"string","nullable":false,"container":"list","elementNullable":true,"maxItems":8});
+        r["parameters"] = json!([p]);
+        r["selection"]["parameters"] = r["parameters"].clone();
+        r["selection"]["sql"] = json!(
+            "SELECT o.id AS id,o.status AS status FROM sales.order AS o WHERE o.status IN (:statuses) ORDER BY o.id ASC"
+        );
+        r
+    }
+    #[test]
+    fn selection_list_metadata_is_original_and_old_scalar_artifact_is_identical() {
+        let scalar = compile(&request());
+        assert_eq!(scalar["status"], "compiled", "{scalar}");
+        assert_eq!(
+            scalar["structuralDigest"]["sha256"],
+            "f34aa692fefcf4b225e3e793c56fc9f4e4bf9b62220d6b2ff40bd365a6caa5f1"
+        );
+        let r = list_request();
+        let p = compile(&r);
+        assert_eq!(p["status"], "compiled", "{p}");
+        let slot = &p["selection"]["parameters"][0];
+        assert_eq!(slot["source"], json!({"bulkInput":"statuses"}));
+        assert_eq!(slot["container"], "list");
+        assert_eq!(slot["nullable"], false);
+        assert_eq!(slot["elementNullable"], true);
+        assert_eq!(slot["maxItems"], 8);
+        assert!(
+            p["selection"]["sql"]
+                .as_str()
+                .unwrap()
+                .contains("::pg_catalog.text[]")
+        );
+        assert_eq!(p["parameters"], r["parameters"]);
+        for (field, value) in [
+            ("container", Value::Null),
+            ("elementNullable", json!(false)),
+            ("maxItems", json!(7)),
+            ("nullable", json!(true)),
+        ] {
+            let mut invalid = r.clone();
+            invalid["parameters"][0][field] = value;
+            assert_eq!(compile(&invalid)["status"], "blocked", "{field}");
+        }
+    }
+    #[test]
+    fn action_value_parameters_remain_scalar_even_when_selection_lists_are_supported() {
+        let mut r = request();
+        let mut doc: Value =
+            serde_json::from_str(r["action"]["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        let action = &mut doc["modules"][0]["extensions"]["umf.actions"]["actions"][0];
+        action["parameters"].as_array_mut().unwrap().push(json!({"id":"next","kind":"value","field":{"module":"sales","element":"status"},"required":true}));
+        action["binding"]["effects"][0]["values"][0]["value"] = json!({"parameter":"next"});
+        let raw = doc.to_string();
+        let hash = weft_core::json::sha256(raw.as_bytes());
+        r["action"]["binding"]["modelJson"] = json!(raw);
+        r["action"]["binding"]["modelSha256"] = json!(hash);
+        r["action"]["source"]["documentSha256"] = json!(hash);
+        let mut ontology: Value = serde_json::from_str(
+            r["action"]["security"]["ontology"]["utf8"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        ontology["documents"][0]["revision"] = json!(hash);
+        let ontology = ontology.to_string();
+        r["action"]["security"]["ontology"]["sha256"] =
+            json!(weft_core::json::sha256(ontology.as_bytes()));
+        r["action"]["security"]["ontology"]["utf8"] = json!(ontology);
+        r["selection"]["binding"] = r["action"]["binding"].clone();
+        r["actionInputs"] = json!({"next":"new_status"});
+        r["parameters"] = json!([{"name":"new_status","carrier":"string","nullable":false}]);
+        let p = compile(&r);
+        assert_eq!(p["status"], "compiled", "{p}");
+        for (field, value) in [
+            ("container", json!("list")),
+            ("elementNullable", json!(true)),
+            ("maxItems", json!(8)),
+        ] {
+            let mut invalid = r.clone();
+            invalid["parameters"][0][field] = value;
+            assert_eq!(compile(&invalid)["status"], "blocked", "{field}");
         }
     }
 }

@@ -5,6 +5,9 @@ use serde_json::{json, Value as Json};
 use sqlparser::ast::*;
 use std::collections::{BTreeMap, BTreeSet};
 use weft_core::raw_read::{AdmittedRead, Carrier, Parameter, Request, Table};
+#[path="raw_read_projection.rs"]
+pub(crate) mod native_projection;
+
 trait PgCarrier {
     fn sql(&self) -> &str;
 }
@@ -19,13 +22,17 @@ impl PgCarrier for Carrier {
     }
 }
 
+#[path="raw_read_relationships.rs"]
+mod native_relationships;
 type Result<T> = std::result::Result<T, &'static str>;
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct Output {
     name: String,
-    carrier: Carrier,
+    carrier: Json,
     nullable: bool,
+    #[serde(flatten)]
+    metadata: serde_json::Map<String,Json>,
 }
 #[derive(Clone)]
 struct Scalar {
@@ -36,11 +43,20 @@ struct Scalar {
     fields: BTreeSet<(String, String)>,
 }
 struct Lower<'a> {
+    admitted: &'a AdmittedRead,
+    term_indexes: BTreeMap<String,Json>,
+    used_columns: std::cell::RefCell<BTreeSet<(String,String)>>,
+    semantic_columns: std::cell::RefCell<BTreeSet<(String,String)>>,
+    used_functions: std::cell::RefCell<BTreeSet<String>>,
+    used_operators: std::cell::RefCell<BTreeSet<String>>,
+    relationship_keys: BTreeMap<String,Json>,
+    relationship_admissions: BTreeMap<String,Json>,
     request: &'a Request,
     scans: BTreeMap<String, (&'a Table, bool)>,
+    internal_scans: BTreeSet<String>,
     slots: Vec<String>,
     used: BTreeSet<String>,
-    group_fields: Option<BTreeSet<(String, String)>>,
+    group_values: Option<BTreeSet<String>>,
 }
 fn ident(s: &str) -> Result<String> {
     if s.is_empty() || s.len() > 63 || s.contains('\0') {
@@ -62,6 +78,98 @@ fn object(n: &ObjectName) -> Result<Vec<String>> {
             _ => Err("dynamic object name"),
         })
         .collect()
+}
+fn term_configuration_guard(language:&str,language_sql:&str)->Result<String>{
+    if !matches!(language,"simple"|"english"){return Err("term analyzer unsupported")}
+    let aliases=["asciiword","word","numword","email","url","host","sfloat","version","hword_numpart","hword_part","hword_asciipart","numhword","asciihword","hword","url_path","file","float","int","uint"];
+    let mut expected=aliases.iter().map(|alias|{
+        let stem=language=="english"&&matches!(*alias,"asciiword"|"word"|"hword_part"|"hword_asciipart"|"asciihword"|"hword");
+        json!([alias,1,"pg_catalog",if stem{"english_stem"}else{"simple"},"pg_catalog",if stem{"snowball"}else{"simple"},if stem{json!("language = 'english', stopwords = 'english'")}else{Json::Null}])
+    }).collect::<Vec<_>>();
+    expected.sort_by(|a,b|a[0].as_str().unwrap().cmp(b[0].as_str().unwrap()));
+    let expected=Json::Array(expected).to_string().replace('\'',"''");
+    let language=language_sql;
+    Ok(format!("EXISTS(SELECT 1 FROM pg_catalog.pg_ts_config AS cfg JOIN pg_catalog.pg_namespace AS cn ON cn.oid=cfg.cfgnamespace JOIN pg_catalog.pg_ts_parser AS parser ON parser.oid=cfg.cfgparser JOIN pg_catalog.pg_namespace AS pn ON pn.oid=parser.prsnamespace WHERE cn.nspname='pg_catalog' AND cfg.cfgname={language} AND pn.nspname='pg_catalog' AND parser.prsname='default' AND (SELECT pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(tt.alias,m.mapseqno,dn.nspname,d.dictname,tn.nspname,template.tmplname,d.dictinitoption) ORDER BY tt.alias COLLATE pg_catalog.\"C\",m.mapseqno) FROM pg_catalog.pg_ts_config_map AS m JOIN pg_catalog.ts_token_type(parser.oid) AS tt ON tt.tokid=m.maptokentype JOIN pg_catalog.pg_ts_dict AS d ON d.oid=m.mapdict JOIN pg_catalog.pg_namespace AS dn ON dn.oid=d.dictnamespace JOIN pg_catalog.pg_ts_template AS template ON template.oid=d.dicttemplate JOIN pg_catalog.pg_namespace AS tn ON tn.oid=template.tmplnamespace WHERE m.mapcfg=cfg.oid)='{expected}'::pg_catalog.jsonb)"))
+}
+pub(crate) fn keyword_configuration_metadata(source:&Json,index:&Json)->Result<Json>{
+    let language=index["keyword"]["analyzer"]["language"].as_str().ok_or("keyword analyzer language absent")?;
+    let render=|dbapi:bool|->Result<String>{Ok(format!("SELECT ({}) AS correspondence",term_configuration_guard(language,if dbapi{"%(__umf_keyword_configuration_1)s::pg_catalog.text"}else{"$1::pg_catalog.text"})?))};
+    Ok(json!({"source":source,"index":index,"configuration":format!("pg_catalog.{language}"),"nativeAdmission":{"sql":render(false)?,"dbapiSql":render(true)?,"parameters":[{"name":"__umf_keyword_configuration_1","carrier":"string","source":{"literal":{"string":language}}}],"dbapiParameterOrder":["__umf_keyword_configuration_1"]}}))
+}
+fn term_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,column:&weft_core::raw_read::Column,schema:&Option<String>,configuration:&str)->Result<Json> {
+    term_index_metadata_source(index,table,column,schema,configuration,false)
+}
+pub(crate) fn action_term_index_metadata(read:&AdmittedRead,table:&Table,column:&weft_core::raw_read::Column)->Result<Json>{
+    let index=weft_core::search::admit_terms(read,&table.logical,&column.logical)?;
+    let language=index.index()["keyword"]["analyzer"]["language"].as_str().ok_or("term analyzer language absent")?;
+    term_index_metadata_source(&index,table,column,&read.request().binding.schema,&format!("pg_catalog.{language}"),true)
+}
+fn term_index_metadata_source(index:&weft_core::search::AdmittedSearch,table:&Table,column:&weft_core::raw_read::Column,schema:&Option<String>,configuration:&str,action:bool)->Result<Json>{
+    let language=configuration.strip_prefix("pg_catalog.").ok_or("term configuration namespace")?;
+    if !matches!(language,"simple"|"english") {return Err("term analyzer unsupported")};
+    let language_source=language;let neutral=action&&schema.is_none();
+    let render=|dbapi:bool| {
+        let slot=|n:u8|if neutral&&n==1{unreachable!("schema slot omitted for original mutation relation")}else if dbapi{format!("%(__umf_term_{n})s::pg_catalog.text")}else{format!("${}::pg_catalog.text",if neutral{n-1}else{n})};
+        let index=slot(2);let table=slot(3);let language=slot(4);let column=slot(5);
+        let config=term_configuration_guard(language_source,&language).expect("closed admitted term analyzer");
+        let scope=if neutral{format!("t.oid=pg_catalog.to_regclass(pg_catalog.quote_ident({table})) AND ins.nspname=ns.nspname")}else{let app=slot(1);format!("ins.nspname={app} AND ns.nspname={app}")};
+        let pattern=if dbapi{"to_tsvector(%%L::regconfig, COALESCE(%%I, %%L::text))"}else{"to_tsvector(%L::regconfig, COALESCE(%I, %L::text))"};
+        format!("SELECT (i.indisvalid AND i.indisready AND i.indislive AND i.indnkeyatts=1 AND i.indnatts=1 AND i.indpred IS NULL AND am.amname='gin' AND opc.opcname='tsvector_ops' AND opns.nspname='pg_catalog' AND i.indkey[0]=0 AND i.indexprs IS NOT NULL AND pg_catalog.pg_get_indexdef(i.indexrelid,1,true)=pg_catalog.format('{pattern}',{language},{column},''::pg_catalog.text) AND {config}) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE {scope} AND idx.relname={index} AND t.relname={table}")
+    };
+    let literal=|text:&str|json!({"source":{"literal":{"string":text}},"carrier":"string"});
+    let schema_parameter=match schema {Some(s)=>literal(s),None=>json!({"source":{"appSchema":true},"carrier":"string"})};
+    let mut parameters=vec![schema_parameter,literal(index.binding()["native"].as_str().ok_or("term native index required")?),literal(&table.native),literal(language),literal(&column.native)];
+    for (i,p) in parameters.iter_mut().enumerate(){p["name"]=json!(format!("__umf_term_{}",i+1));}
+    if neutral{parameters.remove(0);}
+    let names=parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>();
+    Ok(json!({"source":index.request().source,"index":index.index(),"nativeBinding":index.binding(),"logicalTable":table.logical,"nativeTable":table.native,"nativeColumn":column.native,"configuration":configuration,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"dbapiParameterOrder":names,"parameters":parameters}}))
+}
+pub(crate) fn action_keyword_index_metadata(index:&weft_core::search::AdmittedSearch,table:&Table,schema:&Option<String>)->Result<Json>{
+ let fields=index.index()["keyword"]["source"].as_array().ok_or("keyword effects fields absent")?;
+ let mut columns=vec![];
+ for field in fields {
+  let column=table.columns.iter().find(|c|index.selection().original_field_ref(&table.logical,&c.logical).is_ok_and(|r|r==*field)).ok_or("keyword effects original scalar Field unbound")?;
+  if !matches!(column.carrier,Carrier::String){return Err("keyword effects String Field required")}
+  columns.push(column);
+ }
+ if columns.is_empty(){return Err("keyword mutation effects source Field required")}
+ let language=index.index()["keyword"]["analyzer"]["language"].as_str().ok_or("keyword effects analyzer absent")?;
+ let mut value=term_index_metadata_source(index,table,columns[0],schema,&format!("pg_catalog.{language}"),true)?;
+ if columns.len()>1 {
+  let mut parameters=value["nativeAdmission"]["parameters"].as_array().unwrap().clone();
+  let mut pieces=vec!["COALESCE(%I, %L::text)".to_owned();columns.len()];
+  let text=pieces.drain(..).reduce(|a,b|format!("(({a} || ' '::text) || {b})")).unwrap();
+  let mut column_slots=vec![5usize];
+  for (i,c) in columns.iter().skip(1).enumerate(){let n=6+i;column_slots.push(n);parameters.push(json!({"name":format!("__umf_term_{n}"),"carrier":"string","source":{"literal":{"string":c.native}}}));}
+  let format_slot=6+columns.len()-1;
+  parameters.push(json!({"name":format!("__umf_term_{format_slot}"),"carrier":"string","source":{"literal":{"string":format!("to_tsvector(%L::regconfig, {text})")}}}));
+  for dbapi in [false,true] {
+   let neutral=schema.is_none();let slot=|n:usize|if dbapi{format!("%(__umf_term_{n})s::pg_catalog.text")}else{format!("${}::pg_catalog.text",if neutral{n-1}else{n})};
+   let pattern=if dbapi{"to_tsvector(%%L::regconfig, COALESCE(%%I, %%L::text))"}else{"to_tsvector(%L::regconfig, COALESCE(%I, %L::text))"};
+   let old=format!("pg_catalog.format('{pattern}',{},{},''::pg_catalog.text)",slot(4),slot(5));
+   let args=std::iter::once(slot(4)).chain(column_slots.iter().flat_map(|n|[slot(*n),"''::pg_catalog.text".to_owned()])).collect::<Vec<_>>().join(", ");
+   let new=format!("pg_catalog.format({}, {args})",slot(format_slot));
+   let key=if dbapi{"dbapiSql"}else{"sql"};let sql=value["nativeAdmission"][key].as_str().unwrap();
+   if !sql.contains(&old){return Err("keyword mutation original expression shape differs")}
+   value["nativeAdmission"][key]=json!(sql.replace(&old,&new));
+  }
+  value["nativeAdmission"]["dbapiParameterOrder"]=json!(parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>());
+  value["nativeAdmission"]["parameters"]=json!(parameters);
+ }
+ value.as_object_mut().unwrap().remove("nativeColumn");
+ value["nativeColumns"]=json!(columns.iter().map(|c|&c.native).collect::<Vec<_>>());
+ Ok(value)
+}
+pub(crate) fn relationship_metadata(admitted:&AdmittedRead,relationship:&weft_core::raw_read::Relationship)->Result<Json>{native_relationships::admission(admitted,relationship)}
+pub(crate) fn relationship_key_metadata(table:&Table,logical:&[String],schema:&Option<String>)->Result<Json>{
+    let native=logical.iter().map(|field|table.columns.iter().find(|c|c.logical==*field).map(|c|c.native.clone()).ok_or("relationship Key field lacks scalar binding")).collect::<Result<Vec<_>>>()?;
+    if native.is_empty()||native.len()>16{return Err("relationship Key bound")}
+    let literal=|value:&str|json!({"source":{"literal":{"string":value}},"carrier":"string"});
+    let mut parameters=vec![match schema{Some(value)=>literal(value),None=>json!({"source":{"appSchema":true},"carrier":"string"})},literal(&table.native),literal(&serde_json::to_string(&native).unwrap())];
+    for(i,p)in parameters.iter_mut().enumerate(){p["name"]=json!(format!("__umf_relkey_{}",i+1));}
+    let render=|dbapi:bool|{let slot=|n:usize|if dbapi{format!("%(__umf_relkey_{n})s::pg_catalog.text")}else{format!("${n}::pg_catalog.text")};let index_profile=native_relationships::index_profile("i","t",true);
+        format!("SELECT EXISTS(SELECT 1 FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace WHERE ns.nspname={} AND t.relname={} AND t.relkind='r' AND i.indisunique AND i.indisvalid AND i.indisready AND i.indislive AND i.indimmediate AND i.indpred IS NULL AND i.indexprs IS NULL AND i.indnkeyatts={} AND {index_profile} AND (SELECT pg_catalog.jsonb_agg(a.attname ORDER BY k.ordinality) FROM pg_catalog.unnest(i.indkey::pg_catalog.int2[]) WITH ORDINALITY AS k(attnum,ordinality) JOIN pg_catalog.pg_attribute AS a ON a.attrelid=t.oid AND a.attnum=k.attnum WHERE k.ordinality<=i.indnkeyatts AND a.attnotnull AND NOT a.attisdropped AND i.indcollation[(k.ordinality-1)::pg_catalog.int4]=a.attcollation AND (a.attcollation=0 OR EXISTS(SELECT 1 FROM pg_catalog.pg_collation co WHERE co.oid=a.attcollation AND co.collisdeterministic)))={}::pg_catalog.jsonb) AS correspondence",slot(1),slot(2),native.len(),slot(3))};
+    Ok(json!({"logicalTable":table.logical,"logicalFields":logical,"nativeFields":native,"nativeAdmission":{"sql":render(false),"dbapiSql":render(true),"parameters":parameters,"dbapiParameterOrder":parameters.iter().map(|p|p["name"].clone()).collect::<Vec<_>>()}}))
 }
 impl<'a> Lower<'a> {
     fn table(&mut self, f: &TableFactor, left: bool) -> Result<(String, String)> {
@@ -115,14 +223,16 @@ impl<'a> Lower<'a> {
         }
         let a = name(&parts[0]);
         let f = name(&parts[1]);
+        if self.internal_scans.contains(&a){return Err("internal relationship alias is not an authored column")}
         let (t, left) = self.scans.get(&a).ok_or("unknown alias")?;
         let c = t
             .columns
             .iter()
             .find(|c| c.logical == f)
             .ok_or("unknown column")?;
+        self.used_columns.borrow_mut().insert((a.clone(),f.clone()));
         Ok(Scalar {
-            sql: format!("{}.{}", ident(&a)?, ident(&c.native)?),
+            sql: if c.carrier==Carrier::String {format!("{}.{} COLLATE pg_catalog.\"C\"", ident(&a)?,ident(&c.native)?)} else {format!("{}.{}", ident(&a)?, ident(&c.native)?)},
             carrier: c.carrier.clone(),
             nullable: *left || c.nullable,
             aggregate: false,
@@ -136,6 +246,14 @@ impl<'a> Lower<'a> {
         if matches!(e, Expr::CompoundIdentifier(_)) {
             return self.column(e);
         }
+        if let Expr::UnaryOp { op, expr } = e {
+            if matches!(op, UnaryOperator::Minus | UnaryOperator::Plus) {
+                let Expr::Value(v) = expr.as_ref() else { return Err("numeric sign requires an original numeric literal") };
+                let Value::Number(token, false) = &v.value else { return Err("numeric sign requires an original numeric literal") };
+                let sign = if matches!(op, UnaryOperator::Minus) { "-" } else { "+" };
+                return Ok(Scalar { sql: format!("({sign}{token})::pg_catalog.numeric"), carrier: if token.bytes().all(|c| c.is_ascii_digit()) { Carrier::Integer } else { Carrier::Decimal }, nullable: false, aggregate: false, fields: BTreeSet::new() });
+            }
+        }
         if let Expr::Value(v) = e {
             if let Value::Placeholder(p) = &v.value {
                 let pname = p.strip_prefix(':').ok_or("only named bound parameters")?;
@@ -145,6 +263,7 @@ impl<'a> Lower<'a> {
                     .iter()
                     .find(|x| x.name == pname)
                     .ok_or("undeclared parameter")?;
+                if parameter.container.is_some(){return Err("list parameter is only a complete IN/NOT IN membership operand")}
                 self.used.insert(pname.to_owned());
                 self.slots.push(pname.to_owned());
                 return Ok(Scalar {
@@ -169,8 +288,7 @@ impl<'a> Lower<'a> {
         let Expr::Function(f) = e else {
             return Err("unsupported scalar expression; use a bound parameter");
         };
-        if !aggregates
-            || f.uses_odbc_syntax
+        if f.uses_odbc_syntax
             || !matches!(f.parameters, FunctionArguments::None)
             || !f.within_group.is_empty()
             || f.filter.is_some()
@@ -184,20 +302,69 @@ impl<'a> Lower<'a> {
             return Err("qualified/custom functions are not admitted");
         }
         let op = fname[0].as_str();
-        if !["count", "sum", "avg", "min", "max"].contains(&op) {
+        if op=="bucket_width" {
+            let FunctionArguments::List(args)=&f.args else {return Err("bucket arguments")};
+            if args.duplicate_treatment.is_some() || !args.clauses.is_empty() || args.args.len()!=2 {return Err("bucket requires a field and positive numeric literal width")};
+            let (FunctionArg::Unnamed(FunctionArgExpr::Expr(field)),FunctionArg::Unnamed(FunctionArgExpr::Expr(width)))=(&args.args[0],&args.args[1]) else {return Err("bucket requires a field and positive numeric literal width")};
+            let Expr::Value(width_value)=width else {return Err("bucket width must be a positive numeric literal")};
+            let Value::Number(token,false)=&width_value.value else {return Err("bucket width must be a positive numeric literal")};
+            if token.is_empty() || token.bytes().filter(|c|*c==b'.').count()>1 || !token.bytes().all(|c|c.is_ascii_digit()||c==b'.') || !token.bytes().any(|c|matches!(c,b'1'..=b'9')) {return Err("bucket width must be a positive finite numeric literal")};
+            let c=self.column(field)?;let width=self.value(width,false)?;
+            if !matches!(c.carrier,Carrier::Integer|Carrier::Decimal) {return Err("numeric bucket field required")};
+            let value=format!("{}::pg_catalog.numeric",c.sql);
+            self.used_functions.borrow_mut().extend(["pg_catalog.div","pg_catalog.mod"].map(str::to_string));
+            self.used_operators.borrow_mut().extend(["-","*","<","<>"].map(str::to_string));
+            let quotient=format!("pg_catalog.div({value}, {})",width.sql);
+            let remainder=format!("pg_catalog.mod({value}, {})",width.sql);
+            let sql=format!("(({quotient} - CASE WHEN {value}<0 AND {remainder}<>0 THEN 1 ELSE 0 END) * {})",width.sql);
+            return Ok(Scalar{sql,carrier:if c.carrier==Carrier::Integer&&width.carrier==Carrier::Integer {Carrier::Integer} else {Carrier::Decimal},nullable:c.nullable,aggregate:false,fields:c.fields});
+        }
+        if !aggregates || !["count", "sum", "avg", "avg_scale", "min", "max"].contains(&op) {
             return Err("function outside read-only aggregate profile");
         }
         let FunctionArguments::List(args) = &f.args else {
             return Err("aggregate arguments");
         };
-        if args.duplicate_treatment.is_some() || !args.clauses.is_empty() || args.args.len() != 1 {
+        if op == "avg_scale" {
+            if args.duplicate_treatment.is_some() || !args.clauses.is_empty() || args.args.len()!=2 {
+                return Err("AVG_SCALE requires a field and literal result scale");
+            }
+            let (FunctionArg::Unnamed(FunctionArgExpr::Expr(field)), FunctionArg::Unnamed(FunctionArgExpr::Expr(Expr::Value(scale)))) = (&args.args[0],&args.args[1]) else {
+                return Err("AVG_SCALE requires a field and literal result scale");
+            };
+            let Value::Number(token,false)=&scale.value else {return Err("AVG_SCALE scale must be an integer literal")};
+            if token.is_empty() || !token.bytes().all(|c|c.is_ascii_digit()) {return Err("AVG_SCALE scale must be an integer literal")};
+            let scale:u16=token.parse().map_err(|_|"AVG_SCALE scale budget")?;
+            if scale>1000 {return Err("AVG_SCALE scale budget")};
+            let c=self.column(field)?;
+            if !matches!(c.carrier,Carrier::Integer|Carrier::Decimal) {return Err("numeric aggregate input required")};
+            self.used_functions.borrow_mut().extend(["pg_catalog.count","pg_catalog.sum","pg_catalog.div","pg_catalog.mod","pg_catalog.abs","pg_catalog.round","pg_catalog.sign"].map(str::to_string));
+            self.used_operators.borrow_mut().extend(["+","*",">","="].map(str::to_string));
+            let power=format!("1{}", "0".repeat(usize::from(scale)));
+            let factor=if scale==0 {"1".into()} else {format!("0.{}1", "0".repeat(usize::from(scale)-1))};
+            let count=format!("pg_catalog.count({})::pg_catalog.numeric",c.sql);
+            let numerator=format!("(pg_catalog.sum({}::pg_catalog.numeric) * {power}::pg_catalog.numeric)",c.sql);
+            let quotient=format!("pg_catalog.div({numerator}, {count})");
+            let remainder=format!("pg_catalog.abs(pg_catalog.mod({numerator}, {count}))");
+            // Integer quotient and exact remainder select the nearest integer;
+            // exact half ties choose its even neighbor for either sign. Decimal
+            // multiplication restores the scale without rounded division.
+            let sql=format!("CASE WHEN {count}=0 THEN NULL::pg_catalog.numeric ELSE pg_catalog.round(({quotient} + CASE WHEN (2*{remainder})>{count} OR ((2*{remainder})={count} AND pg_catalog.mod(pg_catalog.abs({quotient}),2)=1) THEN pg_catalog.sign({numerator}) ELSE 0 END) * {factor}::pg_catalog.numeric, {scale}) END");
+            return Ok(Scalar{sql,carrier:Carrier::Decimal,nullable:true,aggregate:true,fields:c.fields});
+        }
+        let distinct=match args.duplicate_treatment {
+            None=>false,
+            Some(DuplicateTreatment::Distinct) if op=="count"=>true,
+            _=>return Err("aggregate modifiers"),
+        };
+        if !args.clauses.is_empty() || args.args.len() != 1 {
             return Err("aggregate modifiers");
         }
         let FunctionArg::Unnamed(arg) = &args.args[0] else {
             return Err("named aggregate argument");
         };
         let (sql, carrier, fields) = match arg {
-            FunctionArgExpr::Wildcard if op == "count" => {
+            FunctionArgExpr::Wildcard if op == "count" && !distinct => {
                 ("*".into(), Carrier::Integer, BTreeSet::new())
             }
             FunctionArgExpr::Expr(e) => {
@@ -212,17 +379,20 @@ impl<'a> Lower<'a> {
                 }
                 let carrier = if op == "count" {
                     Carrier::Integer
-                } else if op == "avg" || op == "sum" && c.carrier == Carrier::Integer {
+                } else if op == "avg" {
                     Carrier::Decimal
                 } else {
-                    c.carrier
+                    c.carrier.clone()
                 };
                 (c.sql, carrier, c.fields)
             }
             _ => return Err("aggregate input"),
         };
-        let rendered = if op == "sum" && carrier == Carrier::Decimal {
-            format!("pg_catalog.{op}({sql})::pg_catalog.numeric")
+        self.used_functions.borrow_mut().insert(format!("pg_catalog.{op}"));
+        let rendered = if distinct {
+            format!("pg_catalog.count(DISTINCT {sql})")
+        } else if op == "sum" {
+            format!("pg_catalog.sum({sql}::pg_catalog.numeric)")
         } else {
             format!("pg_catalog.{op}({sql})")
         };
@@ -238,16 +408,15 @@ impl<'a> Lower<'a> {
         let c = self.value(e, aggregates)?;
         if aggregates
             && !c.aggregate
-            && self
-                .group_fields
-                .as_ref()
-                .is_some_and(|g| !c.fields.is_subset(g))
+            && !c.fields.is_empty()
+            && self.group_values.as_ref().is_some_and(|g| !g.contains(&c.sql))
         {
             return Err("ungrouped HAVING column");
         };
         Ok(c)
     }
     fn predicate(&mut self, e: &Expr, aggregates: bool) -> Result<String> {
+        if let Expr::BinaryOp{op,..}=e {if !matches!(op,BinaryOperator::And|BinaryOperator::Or){self.used_operators.borrow_mut().insert(op.to_string());}}
         match e {
             Expr::Nested(e) => Ok(format!("({})", self.predicate(e, aggregates)?)),
             Expr::BinaryOp { left, op, right }
@@ -279,7 +448,17 @@ impl<'a> Lower<'a> {
                 Ok(format!("{} {} {}", l.sql, op, r.sql))
             }
             Expr::Function(f) => {
-                if object(&f.name)? != ["starts_with"]
+                let function=object(&f.name)?;
+                if function==["in_empty"] {
+                    if f.uses_odbc_syntax||!matches!(f.parameters,FunctionArguments::None)||!f.within_group.is_empty()||f.filter.is_some()||f.null_treatment.is_some()||f.over.is_some(){return Err("IN_EMPTY modifiers refused")}
+                    let FunctionArguments::List(args)=&f.args else{return Err("IN_EMPTY field argument required")};if args.duplicate_treatment.is_some()||!args.clauses.is_empty()||args.args.len()!=1{return Err("IN_EMPTY requires exactly one Field")}
+                    let FunctionArg::Unnamed(FunctionArgExpr::Expr(field))=&args.args[0] else{return Err("IN_EMPTY Field required")};if !matches!(field,Expr::CompoundIdentifier(_)){return Err("IN_EMPTY requires original aliased Field")}
+                    let before=self.used_columns.borrow().clone();let value=self.predicate_value(field,aggregates)?;self.semantic_columns.borrow_mut().extend(value.fields);*self.used_columns.borrow_mut()=before;
+                    return Ok("FALSE".into())
+                }
+                if function==["has_related"]||function==["has_inverse_related"] {if aggregates{return Err("HAS_RELATED is a WHERE predicate")};return native_relationships::has(self,f)}
+                let is_term=function==["matches_all_terms"] || function==["matches_any_term"];
+                if (function != ["starts_with"] && !is_term)
                     || f.uses_odbc_syntax
                     || !matches!(f.parameters, FunctionArguments::None)
                     || !f.within_group.is_empty()
@@ -305,13 +484,32 @@ impl<'a> Lower<'a> {
                 if !matches!(unnest(prefix), Expr::Value(v) if matches!(v.value, Value::SingleQuotedString(_) | Value::Placeholder(_))) {
                     return Err("prefix requires a literal or declared parameter");
                 }
+                let source_field=field;
                 let field = self.predicate_value(field, aggregates)?;
                 let prefix = self.predicate_value(prefix, aggregates)?;
                 if field.carrier != Carrier::String || prefix.carrier != Carrier::String {
                     return Err("prefix string carriers required");
                 }
+                if is_term {
+                    let Expr::CompoundIdentifier(parts)=unnest(source_field) else {return Err("term source field required")};
+                    let alias=name(&parts[0]);let logical=name(&parts[1]);
+                    let table=self.scans.get(&alias).ok_or("term source alias absent")?.0;
+                    let index=weft_core::search::admit_terms(self.admitted,&table.logical,&logical)?;
+                    let language=index.index()["keyword"]["analyzer"]["language"].as_str().ok_or("explicit term analyzer required")?;
+                    let configuration=match language {"english"=>"pg_catalog.english","simple"=>"pg_catalog.simple",_=>return Err("unsupported term analyzer")};
+                    let column=table.columns.iter().find(|c|c.logical==logical).ok_or("term native column absent")?;
+                    let identity=weft_core::mutation::canonical(&json!({"source":index.request().source,"table":table.logical,"field":logical}));
+                    let metadata=term_index_metadata(&index,table,column,&self.request.binding.schema,configuration)?;
+                    self.term_indexes.insert(identity,metadata);
+                    self.used_functions.borrow_mut().extend(["pg_catalog.tsvector_to_array","pg_catalog.to_tsvector"].map(str::to_string));
+                    self.used_operators.borrow_mut().insert(if function==["matches_all_terms"]{"<@"}else{"&&"}.into());
+                    let field_terms=format!("pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('{configuration}'::pg_catalog.regconfig, {}))",field.sql);
+                    let query_terms=format!("pg_catalog.tsvector_to_array(pg_catalog.to_tsvector('{configuration}'::pg_catalog.regconfig, {}))",prefix.sql);
+                    return Ok(if function==["matches_all_terms"] {format!("({query_terms} OPERATOR(pg_catalog.<@) {field_terms})")} else {format!("({query_terms} OPERATOR(pg_catalog.&&) {field_terms})")});
+                }
                 // PostgreSQL's strict prefix function compares the actual UTF-8
                 // text bytes. No pattern is formed and NULL remains UNKNOWN.
+                self.used_functions.borrow_mut().insert("pg_catalog.starts_with".into());
                 Ok(format!("pg_catalog.starts_with({} COLLATE pg_catalog.\"C\", {} COLLATE pg_catalog.\"C\")", field.sql, prefix.sql))
             }
             Expr::IsDistinctFrom(left, right) | Expr::IsNotDistinctFrom(left, right) => {
@@ -346,7 +544,35 @@ impl<'a> Lower<'a> {
                 Ok(format!("{} {} {}", l.sql, op, r.sql))
             }
             Expr::Between{expr,negated,low,high}=>{let value=self.predicate_value(expr,aggregates)?;let low=self.predicate_value(low,aggregates)?;let high=self.predicate_value(high,aggregates)?;if value.carrier!=low.carrier||value.carrier!=high.carrier{return Err("BETWEEN carrier mismatch")};Ok(format!("{} {}BETWEEN {} AND {}",value.sql,if *negated{"NOT "}else{""},low.sql,high.sql))},
-            Expr::InList{expr,list,negated}=>{let value=self.predicate_value(expr,aggregates)?;if list.len()>1000{return Err("IN list budget")};if list.is_empty(){return Ok(if *negated{"TRUE"}else{"FALSE"}.into())};let items=list.iter().map(|expr|{let item=self.predicate_value(expr,aggregates)?;if item.carrier!=value.carrier{return Err("IN carrier mismatch")};Ok(item.sql)}).collect::<Result<Vec<_>>>()?;Ok(format!("{} {}IN ({})",value.sql,if *negated{"NOT "}else{""},items.join(", ")))},
+            Expr::InList{expr,list,negated}=>{
+                let value=self.predicate_value(expr,aggregates)?;
+                if list.len()>1000{return Err("IN list budget")}
+                if list.is_empty(){return Ok(if *negated{"TRUE"}else{"FALSE"}.into())}
+                let membership=if let [Expr::Value(v)]=list.as_slice(){
+                    if let Value::Placeholder(p)=&v.value {
+                        let pname=p.strip_prefix(':').ok_or("only named list parameter")?;
+                        let parameter=self.request.parameters.iter().find(|x|x.name==pname).ok_or("undeclared list parameter")?;
+                        if parameter.container.is_some(){
+                            if parameter.carrier!=value.carrier{return Err("list element carrier mismatch")}
+                            self.used.insert(pname.to_owned());self.slots.push(pname.to_owned());
+                            let array=format!("${}::pg_catalog.{}[]",self.slots.len(),parameter.carrier.sql());
+                            let mut alias="__umf_membership".to_owned();while self.scans.contains_key(&alias){alias.push('_')}
+                            let item=format!("{}.\"value\"",ident(&alias)?);
+                            let compare=if value.carrier==Carrier::String{format!("{} COLLATE pg_catalog.\"C\" = {item} COLLATE pg_catalog.\"C\"",value.sql)}else{format!("{} = {item}",value.sql)};
+                            Some(format!("CASE WHEN pg_catalog.cardinality({array})=0 THEN FALSE WHEN {} IS NULL THEN NULL ELSE EXISTS(SELECT 1 FROM pg_catalog.unnest({array}) AS {}(\"value\") WHERE {item} IS NOT NULL AND {compare}) END",value.sql,ident(&alias)?))
+                        }else{None}
+                    }else{None}
+                }else{None};
+                let membership=if let Some(sql)=membership{sql}else{
+                    let items=list.iter().map(|expr|{
+                        if matches!(expr,Expr::Value(v) if matches!(v.value,Value::Null)){return Ok("FALSE".to_owned())}
+                        let item=self.predicate_value(expr,aggregates)?;if item.carrier!=value.carrier{return Err("IN carrier mismatch")}
+                        Ok(format!("({} IS NOT NULL AND {} = {})",item.sql,value.sql,item.sql))
+                    }).collect::<Result<Vec<_>>>()?;
+                    format!("CASE WHEN {} IS NULL THEN NULL ELSE ({}) END",value.sql,items.join(" OR "))
+                };
+                Ok(if *negated{format!("NOT ({membership})")}else{format!("({membership})")})
+            },
             Expr::IsNull(e) => Ok(format!(
                 "{} IS NULL",
                 self.predicate_value(e, aggregates)?.sql
@@ -402,6 +628,7 @@ impl<'a> Lower<'a> {
             } else {
                 return Err("join must reach new scan");
             };
+            if source.0==new_alias{return Err("join must connect an existing source scan")}
             if old.as_ref().is_some_and(|x| x != &source.0) {
                 return Err("join spans multiple sources");
             };
@@ -415,7 +642,9 @@ impl<'a> Lower<'a> {
 }
 pub(crate) fn lower(admitted: &AdmittedRead) -> Result<Json> { lower_profile(admitted,true) }
 pub(crate) fn lower_search_input(admitted:&AdmittedRead)->Result<Json>{lower_profile(admitted,false)}
-fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
+fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {lower_profile_inner(admitted,bounded,false,false,&[],None)}
+pub(crate) fn lower_related_fragment(admitted:&AdmittedRead,bounded:bool,prefix:&[String],predicate:Option<&str>)->Result<Json>{lower_profile_inner(admitted,bounded,true,true,prefix,predicate)}
+fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_limit:bool,allow_unused:bool,prefix:&[String],additional_predicate:Option<&str>) -> Result<Json> {
     let r = admitted.request();
     let q = admitted.query();
     if r.snapshots.is_some() || r.version != "weft.raw-read/0.1"
@@ -436,6 +665,11 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     }
     if let Some(schema) = &r.binding.schema {
         ident(schema)?;
+    }
+    match &r.binding.schema_binding {
+        Some(weft_core::raw_read::SchemaBinding::Qualified) if r.binding.schema.is_none()=>return Err("qualified schemaBinding requires explicit schema"),
+        Some(weft_core::raw_read::SchemaBinding::SearchPath) if r.binding.schema.is_some()=>return Err("search-path schemaBinding requires runtime app schema"),
+        _=>()
     }
     if r.sql.len() > 65536 || r.parameters.len() > 64 || r.binding.tables.len() > 256 {
         return Err("input limit");
@@ -517,14 +751,25 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         return Err("one root and at most three joins required");
     }
     let mut l = Lower {
+        admitted,
+        term_indexes: BTreeMap::new(),
+        used_columns: Default::default(),
+        semantic_columns: Default::default(),
+        used_functions: Default::default(),
+        used_operators: Default::default(),
+        relationship_keys: Default::default(),
+        relationship_admissions: Default::default(),
         request: r,
         scans: BTreeMap::new(),
-        slots: vec![],
+        internal_scans: BTreeSet::new(),
+        slots: prefix.to_vec(),
         used: BTreeSet::new(),
-        group_fields: None,
+        group_values: None,
     };
     let (_, mut from) = l.table(&s.from[0].relation, false)?;
+    let mut scan_parents:BTreeMap<String,String>=BTreeMap::new();
     for j in &s.from[0].joins {
+        if j.global{return Err("GLOBAL join modifier outside PostgreSQL profile")}
         let (left, on) = match &j.join_operator {
             JoinOperator::Inner(JoinConstraint::On(on))
             | JoinOperator::Join(JoinConstraint::On(on)) => (false, on),
@@ -536,28 +781,42 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         let (old, pairs) = l.join_pairs(on, &a)?;
         let source = l.scans[&old].0;
         let target = l.scans[&a].0;
-        let rel = r
+        let matches = r
             .binding
             .relationships
             .iter()
-            .find(|rel| {
+            .filter(|rel| {
                 rel.to_one
                     && rel.source == source.logical
                     && rel.target == target.logical
                     && rel.pairs.iter().cloned().collect::<BTreeSet<_>>() == pairs
             })
-            .ok_or("join is not a declared to-one relationship")?;
-        if rel.id.is_empty()
-            || rel.pairs.iter().map(|p| p[1].clone()).collect::<Vec<_>>() != target.key
-        {
+            .collect::<Vec<_>>();
+        if matches.len()!=1{return Err("join is not a unique original declared to-one relationship")}
+        let rel=matches[0];
+        let fk=relationship_metadata(admitted,rel)?;l.relationship_admissions.insert(weft_core::mutation::canonical(&json!([fk["module"],fk["id"]])),fk);
+        if rel.id.is_empty() {
             return Err("relationship does not cover declared target unique key");
         }
+        let relation_fields=rel.pairs.iter().map(|p|p[1].clone()).collect::<Vec<_>>();
+        if relation_fields!=target.key {l.relationship_keys.insert(weft_core::mutation::canonical(&json!([rel.module,rel.id,rel.target,relation_fields])),relationship_key_metadata(target,&relation_fields,&r.binding.schema)?);}
         from += &format!(
             " {} JOIN {} ON {}",
             if left { "LEFT" } else { "INNER" },
             sql,
             l.predicate(on, false)?
         );
+        // Equality to a required target Key rejects NULL source tuples. An
+        // INNER edge proves this source and its exact ancestor chain present;
+        // independent LEFT siblings and descendants remain nullable.
+        if !left {
+            let mut ancestor=Some(old.clone());
+            while let Some(alias)=ancestor {
+                l.scans.get_mut(&alias).ok_or("join ancestor scan absent")?.1=false;
+                ancestor=scan_parents.get(&alias).cloned();
+            }
+        }
+        scan_parents.insert(a,old);
     }
     let GroupByExpr::Expressions(group, modifiers) = &s.group_by else {
         return Err("grouping sets unsupported");
@@ -566,11 +825,22 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         return Err("group modifiers");
     }
     let mut groups = vec![];
-    let mut group_fields = BTreeSet::new();
+    let mut group_values = BTreeSet::new();
     for e in group {
-        let c = l.column(e)?;
-        group_fields.extend(c.fields);
+        let c = l.value(e,false)?;
+        if c.fields.is_empty() || c.aggregate {return Err("group key must be a field or numeric bucket")};
+        group_values.insert(c.sql.clone());
         groups.push(c.sql)
+    }
+    for item in &s.projection {if let SelectItem::ExprWithAlias{expr,..}|SelectItem::UnnamedExpr(expr)=item {native_relationships::prepare(&mut l,expr)?}}
+    if let Some(expr)=&s.selection {native_relationships::prepare(&mut l,expr)?}
+    let mut native_columns=BTreeMap::new();
+    if r.binding.native_columns.is_some(){
+        for (alias,(table,_)) in &l.scans {
+            for (logical,c) in native_projection::columns(admitted,table)? {
+                native_columns.insert((alias.clone(),logical),c);
+            }
+        }
     }
     let mut outputs = vec![];
     let mut projection = vec![];
@@ -590,20 +860,37 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         if !output_names.insert(alias.clone()) {
             return Err("duplicate output name");
         }
+        if let Expr::Function(f)=expr {if matches!(f.name.to_string().to_ascii_lowercase().as_str(),"related_keys"|"inverse_related_keys") {
+            let(sql,decoder)=native_relationships::keys(&mut l,f)?;projection.push(format!("{sql} AS {}",ident(&alias)?));let mut metadata=serde_json::Map::new();metadata.insert("decoder".into(),decoder);outputs.push(Output{name:alias,carrier:json!("related-keys"),nullable:false,metadata});scalars.push(None);continue;
+        }}
+        if let Expr::CompoundIdentifier(parts)=expr {if parts.len()==2 {
+            if l.internal_scans.contains(&name(&parts[0])){return Err("internal relationship projection alias is not authored")}
+            if let Some(c)=native_columns.get(&(name(&parts[0]),name(&parts[1]))) {
+                if matches!(c.metadata["carrier"].as_str(),Some("binary"|"vector")) {
+                    l.used_columns.borrow_mut().insert((name(&parts[0]),name(&parts[1])));
+                    projection.push(format!("{}.{} AS {}",ident(&name(&parts[0]))?,ident(&c.native)?,ident(&alias)?));
+                    let mut metadata=c.metadata.as_object().unwrap().clone();let carrier=metadata.remove("carrier").unwrap();let nullable=metadata.remove("nullable").unwrap().as_bool().unwrap()||l.scans[&name(&parts[0])].1;
+                    outputs.push(Output{name:alias,carrier,nullable,metadata});scalars.push(None);continue;
+                }
+            }
+        }}
         let c = l.value(expr, true)?;
         projection.push(format!("{} AS {}", c.sql, ident(&alias)?));
+        let mut metadata=serde_json::Map::new();
+        if let Expr::CompoundIdentifier(parts)=expr {if parts.len()==2 {if let Some(n)=native_columns.get(&(name(&parts[0]),name(&parts[1]))) {metadata=n.metadata.as_object().unwrap().clone();metadata.remove("carrier");metadata.remove("nullable");}}}
         outputs.push(Output {
             name: alias,
-            carrier: c.carrier.clone(),
+            carrier: serde_json::to_value(&c.carrier).unwrap(),
             nullable: c.nullable,
+            metadata,
         });
-        scalars.push(c);
+        scalars.push(Some(c));
     }
-    let aggregate = scalars.iter().any(|c| c.aggregate) || !groups.is_empty();
+    let aggregate = scalars.iter().flatten().any(|c| c.aggregate) || !groups.is_empty();
     if aggregate
         && scalars
             .iter()
-            .any(|c| !c.aggregate && !c.fields.is_subset(&group_fields))
+            .any(|c| c.as_ref().is_none_or(|c| !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql)))
     {
         return Err("ungrouped projected column");
     }
@@ -636,6 +923,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
             name: "__umf_has_after".into(),
             carrier: Carrier::Boolean,
             nullable: false,
+            container:None,element_nullable:None,max_items:None,
         });
         for (i, item) in items.iter().enumerate() {
             let c = l.column(&item.expr)?;
@@ -657,6 +945,7 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
                 name: pname,
                 carrier: c.carrier.clone(),
                 nullable: true,
+                container:None,element_nullable:None,max_items:None,
             });
             let outname = format!("__umf_order_{i}");
             if output_names.contains(&outname) {
@@ -664,8 +953,9 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
             }
             cursor_outputs.push(Output {
                 name: outname.clone(),
-                carrier: c.carrier.clone(),
+                carrier: serde_json::to_value(&c.carrier).unwrap(),
                 nullable: c.nullable,
+                metadata: Default::default(),
             });
             projection.push(format!("{} AS {}", c.sql, ident(&outname)?));
             let cmp = match item.options.sort {
@@ -701,12 +991,13 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     }
     let mut sql = format!("SELECT {} FROM {}", projection.join(", "), from);
     if let Some(e) = &s.selection {
-        sql += &format!(" WHERE {}", l.predicate(e, false)?)
+        let predicate=l.predicate(e,false)?;sql+=&if additional_predicate.is_some(){format!(" WHERE ({predicate})")}else{format!(" WHERE {predicate}")};
     }
+    if let Some(extra)=additional_predicate {sql+=&format!(" {} ({extra})",if s.selection.is_some(){"AND"}else{"WHERE"});}
     if let Some(after) = after_filter {
         sql += &format!(
             " {} {}",
-            if s.selection.is_some() {
+            if s.selection.is_some()||additional_predicate.is_some() {
                 "AND"
             } else {
                 "WHERE"
@@ -717,13 +1008,15 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
     if !groups.is_empty() {
         sql += &format!(" GROUP BY {}", groups.join(", "))
     }
-    l.group_fields = Some(group_fields.clone());
+    l.group_values = Some(group_values.clone());
     if let Some(e) = &s.having {
         if !aggregate {
             return Err("HAVING requires aggregates");
         };
         sql += &format!(" HAVING {}", l.predicate(e, true)?)
     }
+    let mut rendered_order=vec![];
+    let mut ordered_values=BTreeSet::new();
     if let Some(order) = &q.order_by {
         if order.interpolate.is_some() {
             return Err("ordering interpolation");
@@ -731,16 +1024,20 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         let OrderByKind::Expressions(items) = &order.kind else {
             return Err("ORDER BY ALL");
         };
-        let mut rendered = vec![];
         for item in items {
             if item.with_fill.is_some() {
                 return Err("ordering fill");
             };
-            let c = l.value(&item.expr, true)?;
-            if aggregate && !c.aggregate && !c.fields.is_subset(&group_fields) {
+            let c=if let Expr::Identifier(id)=&item.expr {
+                let position=outputs.iter().position(|o|o.name==name(id)).ok_or("ordering output alias absent")?;
+                scalars[position].clone().ok_or("native projection cannot be ordered")?
+            } else {l.value(&item.expr,true)?};
+            if c.aggregate&&!aggregate{return Err("aggregate ordering requires aggregate or grouped projection")}
+            if aggregate && !c.aggregate && !c.fields.is_empty() && !group_values.contains(&c.sql) {
                 return Err("ungrouped ordering");
             }
-            rendered.push(format!(
+            ordered_values.insert(c.sql.clone());
+            rendered_order.push(format!(
                 "{} {} NULLS {}",
                 c.sql,
                 match item.options.sort {
@@ -755,8 +1052,11 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
                 }
             ));
         }
-        sql += &format!(" ORDER BY {}", rendered.join(", "));
     }
+    if aggregate {
+        for group in &groups {if ordered_values.insert(group.clone()) {rendered_order.push(format!("{group} ASC NULLS LAST"))}}
+    }
+    if !rendered_order.is_empty() {sql += &format!(" ORDER BY {}",rendered_order.join(", "))}
     let limit = match &q.limit_clause {
         None => r.row_cap,
         Some(LimitClause::LimitOffset {
@@ -773,11 +1073,42 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         },
         _ => return Err("offset/limit outside profile"),
     };
-    if bounded {sql += &format!(" LIMIT {}", limit);}
-    if l.used.len() != r.parameters.len() {
+    if r.stream_page_size {
+        if !bounded||!r.keyset{return Err("stream page size requires bounded keyset profile")}
+        let reserved="__umf_page_size".to_string();
+        if l.slots.contains(&reserved)||cursor_parameters.iter().any(|p|p.name==reserved){return Err("reserved stream page size collision")}
+        l.slots.push(reserved.clone());cursor_parameters.push(Parameter{name:reserved,carrier:Carrier::Integer,nullable:false,container:None,element_nullable:None,max_items:None});
+        sql+=&format!(" LIMIT ${}::pg_catalog.int8",l.slots.len());
+    } else if bounded||preserve_source_limit&&q.limit_clause.is_some() {sql += &format!(" LIMIT {}", limit);}
+    if !allow_unused&&l.used.len() != r.parameters.len() {
         return Err("unused declared parameter");
     }
-    let obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":if bounded{json!(limit)}else{Json::Null},"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
+    let mut obligations = json!({"transaction":"read-only","principal":"caller-connection-role","schema":r.binding.schema,"searchPath":if r.binding.schema.is_none(){json!(["pg_catalog","$appSchema"])}else{json!(["pg_catalog"])},"timeout":"per-call","rowCap":if bounded{json!(limit)}else{Json::Null},"rls":"native-caller-role","noBypassRls":true,"baseTablesOnly":true});
+    if !native_columns.is_empty(){
+        let mut admissions=vec![];let mut seen=BTreeSet::new();
+        for ((alias,_),column) in &native_columns {let table=l.scans[alias].0;
+            if seen.insert((table.native.clone(),column.native.clone())) {admissions.push(json!({"nativeAdmission":native_projection::admission(column,table,&r.binding.schema)}));}
+        }
+        let mut tables=BTreeSet::new();
+        for ((alias,_),_)in &native_columns {let table=l.scans[alias].0;if tables.insert(table.native.clone()){
+            let names=native_columns.iter().filter(|((other,_),_)|l.scans[other].0.native==table.native).map(|(_,c)|c.native.clone()).collect::<Vec<_>>();
+            admissions.push(json!({"nativeAdmission":native_projection::table_admission(table,&r.binding.schema,&names)}));
+        }}
+        obligations["nativeProjection"]=json!({"version":"umf.native-columns/0.1","nativeCatalogBeforeAfter":true,"columns":admissions});
+        if let Some(profile)=&r.verification_profile {obligations["nativeProjection"]["verificationProfile"]=json!(profile);}
+    }
+    if r.stream_page_size {obligations["streamPageSize"]=json!({"parameter":"__umf_page_size","minimum":1,"maximum":limit});}
+    if let Some(mode)=&r.binding.schema_binding { obligations["schemaBinding"]=serde_json::to_value(mode).map_err(|_|"schema binding serialization")?; }
+    if !l.relationship_admissions.is_empty(){
+        let snapshot=l.relationship_admissions.values().any(|r|r["completeNativeSnapshotRequired"]==true);
+        obligations["nativeRelationships"]=json!({"version":"umf.native-relationships/0.1","nativeCatalogBeforeAfter":true,"relationships":l.relationship_admissions.values().collect::<Vec<_>>()});
+        if snapshot{obligations["readIsolation"]=json!("repeatable-read")}
+    }
+    if !l.relationship_keys.is_empty(){obligations["nativeRelationshipKeys"]=json!({"version":"umf.native-relationship-keys/0.1","nativeCatalogBeforeAfter":true,"keys":l.relationship_keys.values().collect::<Vec<_>>()});}
+    if !l.term_indexes.is_empty() {
+        obligations["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":l.term_indexes.values().collect::<Vec<_>>()});
+    }
+    crate::native_catalog_fence::attach(&r.binding,&mut obligations)?;
     let lock_sql: Vec<String> = l
         .scans
         .values()
@@ -791,8 +1122,19 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         .collect::<BTreeSet<_>>()
         .into_iter()
         .collect();
-    let referenced_tables: Vec<Json> = l.scans.values().map(|(table,_)| json!({"logical":table.logical,"native":table.native,"columns":table.columns})).collect();
+    let referenced_tables: Vec<Json> = l.scans.iter().map(|(alias,(table,_))| {
+        let mut columns=table.columns.iter().map(|c|serde_json::to_value(c).unwrap()).collect::<Vec<_>>();
+        for ((owner,logical),c) in &native_columns {if owner==alias&&!table.columns.iter().any(|x|x.logical==*logical) {let mut item=c.metadata.clone();item["logical"]=json!(logical);item["native"]=json!(c.native);columns.push(item);}}
+        json!({"logical":table.logical,"native":table.native,"columns":columns})
+    }).collect();
+    let mut selected_columns:BTreeMap<String,BTreeSet<String>>=BTreeMap::new();
+    for(alias,logical)in l.used_columns.borrow().iter(){let table=l.scans[alias].0;let native=table.columns.iter().find(|c|c.logical==*logical).map(|c|c.native.clone()).or_else(||native_columns.get(&(alias.clone(),logical.clone())).map(|c|c.native.clone())).ok_or("used native column missing original mapping")?;selected_columns.entry(table.native.clone()).or_default().insert(native);}
+    for(table,_)in l.scans.values(){selected_columns.entry(table.native.clone()).or_default();}
+    let semantic_fields=l.semantic_columns.borrow().iter().map(|(alias,field)|json!({"logicalTable":l.scans[alias].0.logical,"field":field,"use":"constant-folded-original-membership"})).collect::<Vec<_>>();
+    let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"semanticFields":semantic_fields,"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"tablePrivilegeRequired":true,"columnPrivilegesSufficient":false,"reason":"LOCK TABLE ACCESS SHARE"})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
     let mut result = json!({"version":if bounded{"weft.raw-read/0.1"}else{"weft.search-input/0.1"},"status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced_tables});
+    result["privilegeInventory"]=privilege_inventory;
+    crate::native_catalog_fence::seal_version(&mut result)?;
     let digest = weft_core::json::sha256(result.to_string().as_bytes());
     result["structuralDigest"] = json!(digest);
     Ok(result)
