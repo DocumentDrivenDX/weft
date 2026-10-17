@@ -436,6 +436,22 @@ fn compile(source: &str) -> Result<Value> {
         .map(|c| lower.condition(c))
         .collect::<Result<Vec<_>>>()?;
     let mut result = json!({"version":"weft.native-action/0.1","profile":"umf.actions.native-sql/0.1","status":"compiled","target":r.target,"source":r.source,"binding":r.binding,"security":r.security,"action":admitted.action(),"entities":admitted.entities(),"fields":admitted.fields(),"frames":admitted.frames(),"admission":admission,"lockSql":lock_sql,"preImages":pre_images,"postImages":post_images,"preconditions":preconditions,"postconditions":postconditions,"effects":effects,"obligations":{"transaction":"serializable","nativeAdmission":"original-host-qualified-unchanged-closure-fence","principal":"qualified-human-session","sessionRole":"unchanged","receipt":"original-writer-incarnation-and-xid8","noRetry":true,"validate":"same-checks-always-rollback","dependencyProfile":"scalar-base-tables-no-user-triggers-rules-routines-fk-generated-defaults-or-checks"}});
+    if r.verification_profile.as_deref()==Some("source-exact/0.1") {
+        let doc=weft_core::json::checked_json(&r.binding.model_json).map_err(|_|"original action model JSON refused")?;
+        let mut tables=std::collections::BTreeSet::new();
+        for entity in admitted.entities().values(){tables.insert(entity.key.table.clone());}
+        for field in admitted.fields().values(){tables.insert(field.table.clone());}
+        let mut admissions=vec![];
+        for logical in tables {
+            let table=r.binding.tables.iter().find(|t|t.logical==logical).ok_or("original action native table absent")?;
+            let record=weft_core::raw_read::binding_record(&r.binding,&logical)?;
+            let columns=crate::raw_read::native_projection::columns_for(&r.binding,&r.target,&doc,&record,table,true)?;
+            for column in columns.values(){admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_admission(column,table,&r.binding.schema)}));}
+            admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
+        }
+        if admissions.is_empty(){return Err("source-exact action requires touched native table inventory")}
+        result["obligations"]["nativeProjection"]=json!({"version":"umf.native-columns/0.1","verificationProfile":"source-exact/0.1","nativeCatalogBeforeAfter":true,"columns":admissions});
+    }
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&result).as_bytes());
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-action","version":"0.1","sha256":digest});
@@ -456,6 +472,23 @@ mod tests {
     }
     fn compile_value(value: &Value) -> Value {
         serde_json::from_str(&compile_json(&value.to_string())).unwrap()
+    }
+    #[test]
+    fn source_exact_action_retains_complete_original_native_facts(){
+        let r:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-action-request.json")).unwrap();
+        let p=compile_value(&r);assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),3);
+        assert!(p["obligations"]["nativeProjection"]["columns"][0]["nativeAdmission"]["sql"].as_str().unwrap().contains("co.oid=a.attcollation"));
+        for c in p["obligations"]["nativeProjection"]["columns"].as_array().unwrap(){assert!(c["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_catalog.to_regclass(pg_catalog.quote_ident("));assert!(c["nativeAdmission"]["parameters"].as_array().unwrap().iter().all(|p|p["source"].get("literal").is_some()));}
+        let mut qualified=r.clone();qualified["binding"]["schema"]=json!("owned_schema");
+        let q=compile_value(&qualified);assert_eq!(q["status"],"compiled","{q}");
+        for c in q["obligations"]["nativeProjection"]["columns"].as_array().unwrap(){assert!(!c["nativeAdmission"]["sql"].as_str().unwrap().contains("to_regclass"));assert!(c["nativeAdmission"]["parameters"].as_array().unwrap().iter().any(|p|p["source"]["literal"]["string"]=="owned_schema"));}
+        let mut b=r.clone();b["binding"].as_object_mut().unwrap().remove("nativeColumns");assert_eq!(compile_value(&b)["status"],"blocked");
+        let mut b=r.clone();b["verificationProfile"]=json!("source-exact/0.2");assert_eq!(compile_value(&b)["status"],"blocked");
+        let mut b=r.clone();b["binding"]["schemaBinding"]=json!("qualified");assert_eq!(compile_value(&b)["status"],"blocked");
+        let mut b=qualified.clone();b["binding"]["schemaBinding"]=json!("search-path");assert_eq!(compile_value(&b)["status"],"blocked");
+        assert!(compile_value(&request())["obligations"].get("nativeProjection").is_none());
     }
     #[test]
     fn original_source_pins_and_native_markers_are_deterministic() {

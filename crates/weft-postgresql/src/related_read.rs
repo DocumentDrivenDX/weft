@@ -47,6 +47,7 @@ fn lower(raw:&str)->Result<Json>{
  if request.source["binding"]!=request.target["binding"]||request.source["parameters"]!=request.target["parameters"]||request.source["target"]!=request.target["target"]{return Err("related requires identical original binding/target/parameter inventory")}
  if !matches!(request.source["target"].as_str(),Some("postgresql18"|"lakebase18")){return Err("related native target not qualified")}
  let source=weft_core::raw_read::admit_json(&request.source.to_string())?;let original_target=weft_core::raw_read::admit_json(&request.target.to_string())?;
+ if source.request().verification_profile!=original_target.request().verification_profile{return Err("related source verification profiles differ")}
  let(target_record,target_root_alias)=root(&original_target)?;let mut target_request=request.target.clone();target_request["sql"]=json!(expanded_source(&original_target,target_record,&target_root_alias)?.to_string());let target=weft_core::raw_read::admit_json(&target_request.to_string())?;
  if source.request().keyset||source.request().stream_page_size||source.request().snapshot||target.request().snapshot{return Err("related source cannot be a page or snapshot")}
  let (source_table,source_alias)=root(&source)?;let(target_table,target_alias)=root(&target)?;

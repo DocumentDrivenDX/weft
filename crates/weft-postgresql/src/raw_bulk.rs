@@ -229,6 +229,18 @@ fn compile(raw: &str) -> Result<Value> {
     let mut locked = selection.clone();
     locked["sql"] = json!(format!("{} FOR UPDATE", read["sql"].as_str().unwrap()));
     let mut program = json!({"version":"weft.native-bulk/0.1","profile":"umf.actions.native-bulk/0.1","status":"compiled","target":r.action.target,"source":r.action.source,"binding":r.action.binding,"security":r.action.security,"action":action.action(),"maxItems":r.max_items,"parameters":r.parameters,"actionInputs":r.action_inputs,"selectionFields":fields,"entity":effect.entity,"values":effect.values,"preview":selection,"selection":locked,"update":{"sql":sql,"parameters":parameters},"admission":template["admission"],"lockSql":template["lockSql"],"obligations":template["obligations"],"actionTemplate":template,"readTemplate":read});
+    let read_exact=read["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1";
+    let action_exact=template["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1";
+    if read_exact!=action_exact{return Err("bulk action/selection source verification profiles differ")}
+    if read_exact {
+        // The bulk host owns the same original search-path context as action SQL;
+        // no read-host appSchema parameter is invented or bound by the SDK.
+        let selected=admitted.selection();let table=selected.request().binding.tables.iter().find(|t|t.logical==effect.entity.key.table).ok_or("bulk original selection table absent")?;
+        let columns=crate::raw_read::native_projection::columns(selected,table)?;
+        let mut selected_admissions=columns.values().map(|c|json!({"nativeAdmission":crate::raw_read::native_projection::action_admission(c,table,&r.selection.binding.schema)})).collect::<Vec<_>>();
+        selected_admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.selection.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
+        let mut packet=template["obligations"]["nativeProjection"].clone();let values=packet["columns"].as_array_mut().unwrap();for value in selected_admissions {if !values.contains(&value){values.push(value);}}program["obligations"]["nativeProjection"]=packet;
+    }
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes());
     program["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-bulk","version":"0.1","sha256":digest});
@@ -250,6 +262,17 @@ mod tests {
     }
     fn result(request: &Value) -> Value {
         serde_json::from_str(&compile_json(&request.to_string())).unwrap()
+    }
+    #[test]
+    fn source_exact_bulk_unions_both_original_admission_packets(){
+        let mut r=request();let action:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-action-request.json")).unwrap();
+        r["action"]=action.clone();r["selection"]["binding"]=action["binding"].clone();r["selection"]["verificationProfile"]=json!("source-exact/0.1");
+        let p:Value=serde_json::from_str(&compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),3);
+        assert_eq!(p["obligations"]["nativeProjection"],p["actionTemplate"]["obligations"]["nativeProjection"]);
+        for c in p["obligations"]["nativeProjection"]["columns"].as_array().unwrap(){assert!(c["nativeAdmission"]["sql"].as_str().unwrap().contains("pg_catalog.to_regclass(pg_catalog.quote_ident("));assert!(c["nativeAdmission"]["parameters"].as_array().unwrap().iter().all(|p|p["source"].get("literal").is_some()));}
+        r["action"].as_object_mut().unwrap().remove("verificationProfile");assert_eq!(serde_json::from_str::<Value>(&compile_json(&r.to_string())).unwrap()["status"],"blocked");
     }
     #[test]
     fn bounded_set_program_retains_original_sources() {

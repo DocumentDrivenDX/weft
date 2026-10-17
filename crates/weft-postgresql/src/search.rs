@@ -461,6 +461,7 @@ fn compile(raw: &str) -> Result<Json> {
     };
     let admission = json!({"sql":format!("SELECT ({common} AND ({extra})) AS correspondence FROM pg_catalog.pg_index AS i JOIN pg_catalog.pg_class AS idx ON idx.oid=i.indexrelid JOIN pg_catalog.pg_namespace AS ins ON ins.oid=idx.relnamespace JOIN pg_catalog.pg_class AS t ON t.oid=i.indrelid JOIN pg_catalog.pg_namespace AS ns ON ns.oid=t.relnamespace JOIN pg_catalog.pg_am AS am ON am.oid=idx.relam JOIN pg_catalog.pg_opclass AS opc ON opc.oid=i.indclass[0] JOIN pg_catalog.pg_namespace AS opns ON opns.oid=opc.opcnamespace WHERE ins.nspname={app} AND ns.nspname={app} AND idx.relname={native_index} AND t.relname={table_name}"),"parameters":admission_parameters});
     let mut result = json!({"version":"weft.search/0.1","status":"compiled","profile":"umf.access.search/0.1","request":r,"target":r.selection.target,"source":r.source,"binding":binding,"index":index,"nativeIndex":admitted.binding(),"mechanism":mechanism,"scoreKind":kind,"queryParameter":r.query_parameter,"topK":r.top_k,"approximate":false,"partial":admitted.binding()["filtering"]=="partial","nativeAdmission":admission,"preflights":preflights,"statement":{"sql":sql,"parameters":parameters},"outputs":outputs,"keyOutputs":key_outputs,"selectionTemplate":read,"obligations":{"transaction":"repeatable-read-read-only","sameStatementAuthorization":true,"nativeIndexCorrespondence":"host-observed-original-index-and-column-types","filtering":"before-ranking-complete-matching-set","exactTieBreak":"complete-selected-Key-ascending","timeout":"one-call-deadline","noEmbeddingService":true}});
+    if read["obligations"]["nativeProjection"]["verificationProfile"]=="source-exact/0.1" {result["obligations"]["nativeProjection"]=read["obligations"]["nativeProjection"].clone();}
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&result).as_bytes());
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-search","version":"0.1","sha256":digest});
@@ -488,6 +489,14 @@ mod tests {
     }
     fn output(r: Json) -> Json {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    #[test]
+    fn source_exact_search_preserves_executed_full_column_admissions(){
+        let request=include_str!("../../../tests/native-search/source-exact-keyword-request.json");
+        let p:Json=serde_json::from_str(&compile_json(request)).unwrap();assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["obligations"]["nativeProjection"],p["selectionTemplate"]["obligations"]["nativeProjection"]);
+        assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
+        assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
     }
     #[test]
     fn exact_search_owns_filter_snapshot_and_native_admission() {

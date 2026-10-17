@@ -364,6 +364,15 @@ fn positional_statement(
         native_types,
     )
 }
+fn append_projection_statements(statements:&mut Vec<Value>,program:&Value,table:&str)->Result<()>{
+    if let Some(packet)=program["obligations"].get("nativeProjection") {
+        for (i,item) in array(packet,"columns")?.iter().enumerate(){
+            let a=&item["nativeAdmission"];
+            statements.push(statement(format!("/obligations/nativeProjection/columns/{i}/nativeAdmission/sql"),"projection-admission",a["sql"].as_str().ok_or("original native projection SQL absent")?,array(a,"parameters")?,array(a,"dbapiParameterOrder")?,table,1)?);
+        }
+    }
+    Ok(())
+}
 fn search_report(request: &Request, program: Value, table: &str) -> Result<Value> {
     let mut native_types = BTreeMap::new();
     let mut vector_type = None;
@@ -411,6 +420,7 @@ fn search_report(request: &Request, program: Value, table: &str) -> Result<Value
             vector_type.as_deref(),
         )?);
     }
+    append_projection_statements(&mut statements,&program,table)?;
     let mut locks = vec![];
     for (i, sql) in array(&program["selectionTemplate"], "lockSql")?
         .iter()
@@ -620,6 +630,7 @@ fn mutation_report(request: &Request, program: Value, table: &str) -> Result<Val
             )?);
         }
     }
+    append_projection_statements(&mut statements,&program,table)?;
     let mut locks = vec![];
     for (i, sql) in array(&program, "lockSql")?.iter().enumerate() {
         let sql = sql.as_str().ok_or("original mutation lock absent")?;
@@ -768,6 +779,19 @@ mod tests {
             serde_json::from_str(&crate::raw_read::compile_json(&request.to_string())).unwrap();
         assert_eq!(program["status"], "compiled", "{program}");
         json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_test"})
+    }
+    #[test]
+    fn source_exact_search_and_mutations_inventory_original_projection_sql(){
+        for (file,api) in [
+          (include_str!("../../../tests/native-search/source-exact-keyword-request.json"),crate::search::compile_json as fn(&str)->String),
+          (include_str!("../../../tests/native-actions/source-exact-action-request.json"),crate::raw_action::compile_json as fn(&str)->String),
+          (include_str!("../../../tests/native-actions/source-exact-bulk-request.json"),crate::raw_bulk::compile_json as fn(&str)->String),
+        ] {
+            let request:Value=serde_json::from_str(file).unwrap();let program:Value=serde_json::from_str(&api(file)).unwrap();assert_eq!(program["status"],"compiled","{program}");
+            let packet=json!({"version":"weft.native-privilege-probes/0.1","request":request,"program":program,"probeTable":"__weft_privilege_source_exact"});
+            let report=build(&packet.to_string()).unwrap();assert_eq!(report["complete"],false);
+            assert_eq!(report["statements"].as_array().unwrap().iter().filter(|v|v["role"]=="projection-admission").count(),program["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len());
+        }
     }
     #[test]
     fn exact_original_read_emits_nonexecuting_typed_var_probes_and_closed_check() {

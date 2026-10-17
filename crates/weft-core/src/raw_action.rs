@@ -41,6 +41,8 @@ pub struct SecuritySources {
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct ActionRequest {
     pub version: String,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub verification_profile: Option<String>,
     pub target: String,
     pub binding: Binding,
     pub source: ActionSource,
@@ -634,6 +636,10 @@ pub fn admit_json(raw: &str) -> ActionResult<AdmittedAction> {
     let parsed = checked_json(raw).map_err(|_| "bounded action request JSON refused")?;
     let request: ActionRequest =
         serde_json::from_value(parsed).map_err(|_| "exact native-action request required")?;
+    if let Some(profile)=&request.verification_profile {
+        if profile!="source-exact/0.1"||!matches!(request.target.as_str(),"postgresql18"|"lakebase18")||request.binding.native_columns.is_none(){return Err("source-exact action verification requires original PG native facts")}
+        match &request.binding.schema_binding {Some(crate::raw_read::SchemaBinding::Qualified) if request.binding.schema.is_none()=>return Err("source-exact qualified action requires explicit schema"),Some(crate::raw_read::SchemaBinding::SearchPath) if request.binding.schema.is_some()=>return Err("source-exact search-path action forbids schema override"),_=>{}}
+    }
     if request.version != "weft.native-action/0.1"
         || !matches!(request.target.as_str(), "postgresql18" | "lakebase18" | "spark-delta4" | "databricks-managed-delta")
         || request.session_principal != "human"

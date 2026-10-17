@@ -1,0 +1,70 @@
+{
+  "version": "weft.raw-read/0.1",
+  "target": "postgresql18",
+  "verificationProfile": "source-exact/0.1",
+  "binding": {
+    "version": "umf.raw-read-binding/0.1",
+    "schema": null,
+    "modelSha256": "21b0bd36d1d70410d4e5e221205cf5d941a0716a6955eabc29ad119fe87cbc6b",
+    "modelJson": "{\"umf\":\"0.8.0\",\"id\":\"source-exact-native-read\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"schema\",\"namespace\":\"schema\",\"elements\":[{\"id\":\"id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"status\",\"name\":\"status\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"amount\",\"name\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"Order\",\"name\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"schema\",\"element\":\"id\"},{\"module\":\"schema\",\"element\":\"status\"},{\"module\":\"schema\",\"element\":\"amount\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"pk\",\"primary\":true,\"fields\":[{\"module\":\"schema\",\"element\":\"id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"schema\",\"element\":\"Order\"},\"selectedKey\":{\"module\":\"schema\",\"element\":\"Order\",\"key\":\"pk\"},\"fields\":[{\"field\":{\"module\":\"schema\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"schema\",\"element\":\"status\"},\"row\":{\"missing\":false,\"null\":true},\"create\":{\"missing\":false,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"schema\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":true},\"create\":{\"missing\":false,\"null\":true},\"mutable\":true,\"generated\":false}]}],\"columns\":[{\"binding\":{\"sourceId\":\"native-schema-binding\",\"module\":\"schema\"},\"target\":{\"platform\":\"postgresql\",\"majorVersion\":\"18\"},\"columns\":[{\"field\":{\"module\":\"schema\",\"element\":\"id\"},\"type\":\"text\",\"notNull\":true,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"C\"}},{\"field\":{\"module\":\"schema\",\"element\":\"status\"},\"type\":\"text\",\"notNull\":false,\"generation\":null,\"collation\":{\"schema\":\"pg_catalog\",\"name\":\"C\"}},{\"field\":{\"module\":\"schema\",\"element\":\"amount\"},\"type\":\"numeric(12,2)\",\"notNull\":false,\"generation\":null,\"collation\":null}]}]}}}]}",
+    "tables": [
+      {
+        "logical": [
+          "schema",
+          "Order"
+        ],
+        "native": "orders",
+        "key": [
+          "id"
+        ],
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "status",
+            "native": "status",
+            "carrier": "string",
+            "nullable": true
+          },
+          {
+            "logical": "amount",
+            "native": "amount",
+            "carrier": "decimal",
+            "nullable": true
+          }
+        ]
+      }
+    ],
+    "relationships": [],
+    "nativeColumns": {
+      "target": {
+        "platform": "postgresql",
+        "majorVersion": "18"
+      },
+      "sets": [
+        {
+          "columnSet": {
+            "documentId": "source-exact-native-read",
+            "coreVersion": "0.8.0",
+            "documentSha256": "21b0bd36d1d70410d4e5e221205cf5d941a0716a6955eabc29ad119fe87cbc6b",
+            "module": "schema",
+            "pointer": "/modules/0/extensions/umf.access/columns/0"
+          },
+          "binding": {
+            "sourceId": "native-schema-binding",
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"native-schema-binding\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}},\"modules\":[],\"extensions\":{\"umf.binding\":{\"profile\":\"umf-binding-2\",\"logical\":{\"documentId\":\"source-exact-native-read\",\"coreVersion\":\"0.8.0\"},\"target\":{\"system\":\"postgresql\",\"version\":\"18\",\"subset\":\"typed-access-columns/0.1\"},\"elements\":[{\"module\":\"schema\",\"element\":\"Order\",\"table\":\"orders\"}],\"fields\":[{\"module\":\"schema\",\"element\":\"id\",\"storage\":\"column\",\"column\":\"id\"},{\"module\":\"schema\",\"element\":\"status\",\"storage\":\"column\",\"column\":\"status\"},{\"module\":\"schema\",\"element\":\"amount\",\"storage\":\"column\",\"column\":\"amount\"}],\"relationships\":[],\"indexes\":[]}}}",
+            "documentSha256": "63fef4be30a4f4539da798a919b68ac6882e6a494561d9e1e5bfdffe21e411da"
+          }
+        }
+      ]
+    }
+  },
+  "sql": "SELECT r.id AS id FROM \"schema\".\"Order\" AS r ORDER BY r.id ASC LIMIT 10",
+  "parameters": [],
+  "rowCap": 10,
+  "keyset": false
+}

@@ -6,7 +6,7 @@ use sqlparser::ast::*;
 use std::collections::{BTreeMap, BTreeSet};
 use weft_core::raw_read::{AdmittedRead, Carrier, Parameter, Request, Table};
 #[path="raw_read_projection.rs"]
-mod native_projection;
+pub(crate) mod native_projection;
 
 trait PgCarrier {
     fn sql(&self) -> &str;
@@ -1038,6 +1038,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
             admissions.push(json!({"nativeAdmission":native_projection::table_admission(table,&r.binding.schema,&names)}));
         }}
         obligations["nativeProjection"]=json!({"version":"umf.native-columns/0.1","nativeCatalogBeforeAfter":true,"columns":admissions});
+        if let Some(profile)=&r.verification_profile {obligations["nativeProjection"]["verificationProfile"]=json!(profile);}
     }
     if r.stream_page_size {obligations["streamPageSize"]=json!({"parameter":"__umf_page_size","minimum":1,"maximum":limit});}
     if let Some(mode)=&r.binding.schema_binding { obligations["schemaBinding"]=serde_json::to_value(mode).map_err(|_|"schema binding serialization")?; }

@@ -106,6 +106,31 @@ mod raw_read_tests {
         let mut bad=r.clone();bad["binding"]["nativeColumns"]["sets"][0]["binding"]["documentSha256"]=json!("0".repeat(64));assert_eq!(compile(bad)["status"],"blocked");
 
     }
+    #[test]
+    fn source_exact_verification_requires_complete_authored_collation_facts(){
+        let native:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-drift-request.json")).unwrap();
+        let np=compile(native);assert_eq!(np["status"],"compiled","{np}");assert_eq!(np["outputs"].as_array().unwrap().len(),1);assert_eq!(np["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
+
+        let r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-request.json")).unwrap();
+        let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
+        assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
+        let admissions=p["obligations"]["nativeProjection"]["columns"].as_array().unwrap();
+        assert_eq!(admissions.len(),7);
+        assert!(admissions.iter().any(|a|a["nativeAdmission"]["sql"].as_str().unwrap().contains("co.oid=a.attcollation")));
+        assert!(admissions.iter().any(|a|a["nativeAdmission"]["sql"].as_str().unwrap().contains("a.attcollation=0")));
+        assert!(admissions.iter().any(|a|a["nativeAdmission"]["parameters"].as_array().unwrap().iter().any(|p|p["source"]["literal"]["string"]=="default")));
+        for profile in ["source-exact/0.2",""]{let mut b=r.clone();b["verificationProfile"]=json!(profile);assert_eq!(compile(b)["status"],"blocked");}
+        let mut b=r.clone();b["binding"].as_object_mut().unwrap().remove("nativeColumns");assert_eq!(compile(b)["status"],"blocked");
+        for value in [None,Some(json!({"schema":"pg_catalog"})),Some(json!("default")),Some(json!(null)),Some(json!({"schema":"", "name":"default"})),Some(json!({"schema":"pg_catalog", "name":"a".repeat(64)})),Some(json!({"schema":"pg_catalog", "name":"é".repeat(32)}))]{
+            let mut b=r.clone();let mut d:Value=serde_json::from_str(b["binding"]["modelJson"].as_str().unwrap()).unwrap();
+            let c=&mut d["modules"][0]["extensions"]["umf.access"]["columns"][0]["columns"][0];
+            if let Some(v)=value{c["collation"]=v}else{c.as_object_mut().unwrap().remove("collation");}
+            let raw=d.to_string();let sha=weft_core::json::sha256(raw.as_bytes());b["binding"]["modelJson"]=json!(raw);b["binding"]["modelSha256"]=json!(sha);b["binding"]["nativeColumns"]["sets"][0]["columnSet"]["documentSha256"]=json!(sha);
+            assert_eq!(compile(b)["status"],"blocked");
+        }
+        let legacy:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request.json")).unwrap();
+        assert!(compile(legacy)["obligations"]["nativeProjection"].get("verificationProfile").is_none());
+    }
     fn compile(r: Value) -> Value {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }

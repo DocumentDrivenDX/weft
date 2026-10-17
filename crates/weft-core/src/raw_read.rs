@@ -87,6 +87,8 @@ pub struct Request {
     pub parameters: Vec<Parameter>,
     pub row_cap: u16,
     #[serde(default,skip_serializing_if="Option::is_none")]
+    pub verification_profile: Option<String>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
     pub snapshots: Option<BTreeMap<String,u64>>,
     #[serde(default)]
     pub keyset: bool,
@@ -98,6 +100,12 @@ pub struct Request {
 fn snapshot_false(value:&bool)->bool{!*value}
 pub(crate) fn validate_model(binding: &Binding) -> Result<()> {
     prepare_model(binding).map(|_| ())
+}
+
+/// Resolve a logical Record through the same original binding admission used by reads.
+/// This exposes source facts only and grants no native execution authority.
+pub fn binding_record(binding:&Binding,logical_table:&[String])->Result<crate::model::Record>{
+ prepare_model(binding)?.records.get(logical_table).cloned().ok_or("table outside admitted binding")
 }
 
 #[derive(Debug)]
@@ -293,6 +301,10 @@ impl AdmittedRead {
 pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     let v = crate::json::checked_json(raw).map_err(|_| "invalid or duplicate JSON")?;
     let request: Request = serde_json::from_value(v).map_err(|_| "invalid read request")?;
+    if let Some(profile)=&request.verification_profile {
+        if profile!="source-exact/0.1" || !matches!(request.target.as_str(),"postgresql18"|"lakebase18") {return Err("unsupported source verification profile")}
+        if request.binding.native_columns.is_none(){return Err("source-exact verification requires original native ColumnSet facts")}
+    }
     if request.snapshot && (!request.keyset || !matches!(request.target.as_str(), "spark-delta4" | "unity-catalog")){return Err("snapshot pages require an explicit Delta snapshot target")}
     if request.version != "weft.raw-read/0.1"
         || request.sql.len() > 65536

@@ -50,6 +50,13 @@ pub fn original_column_set<'a>(model_sha256:&str,doc:&'a Value,target:&Value,cus
  Ok(set)
 }
 pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
+ admit_columns_inner(model_sha256,doc,target,custody,table,record,false)
+}
+/// Admit explicitly authored collation facts for the source-exact PG profile.
+pub fn admit_columns_with_collation(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
+ admit_columns_inner(model_sha256,doc,target,custody,table,record,true)
+}
+fn admit_columns_inner(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value,with_collation:bool)->Result<Columns>{
  let set=original_column_set(model_sha256,doc,target,custody)?;let b=&custody.binding;
  if !exact_keys(set,&["binding","target","columns"],&[])||!exact_keys(&set["binding"],&["sourceId","module"],&[])||b.source_id.is_empty(){return Err("closed original ColumnSet required")}
  let binding=crate::json::checked_json(&b.document_json).map_err(|_|"original binding JSON refused")?;
@@ -62,7 +69,7 @@ pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeC
  let record_body=doc["modules"].as_array().unwrap().iter().find(|m|m["id"]==record["module"]).and_then(|m|m["elements"].as_array().unwrap().iter().find(|e|e["id"]==record["element"])).ok_or("original ColumnSet Record absent")?;
  let mut columns=std::collections::BTreeMap::new();let mut physical=std::collections::BTreeSet::new();
  for column in set["columns"].as_array().ok_or("ColumnSet columns absent")? {
-   if !exact_keys(column,&["field","type","notNull","generation"],&[])||!exact_keys(&column["field"],&["module","element"],&[]){return Err("closed original NativeColumn required")}
+   if !exact_keys(column,&["field","type","notNull","generation"],if with_collation {&["collation"]}else{&[]})||!exact_keys(&column["field"],&["module","element"],&[]){return Err("closed original NativeColumn required")}
    let field=&column["field"];if !record_body["members"].as_array().unwrap().contains(field){continue}
    let fields=payload["fields"].as_array().ok_or("binding field inventory absent")?.iter().filter(|v|v["module"]==field["module"]&&v["element"]==field["element"]).collect::<Vec<_>>();
    if fields.len()!=1||!exact_keys(fields[0],&["module","element","storage","column"],&[])||fields[0]["storage"]!="column"{return Err("original physical Field column absent/ambiguous")}
@@ -88,6 +95,16 @@ pub fn row_null(doc:&Value,record:&Value,reference:&Value,original_columns:&Colu
    if *not_null==nullable{return Err("original ColumnSet notNull contradicts row view")}
    for module in doc["modules"].as_array().unwrap(){for set in module["extensions"]["umf.access"]["columns"].as_array().into_iter().flatten(){for column in set["columns"].as_array().into_iter().flatten(){if column["field"]==*reference&&column["notNull"]!=!nullable{return Err("another authored ColumnSet contradicts original row view")}}}}
    Ok(nullable)
+}
+
+/// Required original qualified collation identity; no native default is inferred.
+pub fn collation(doc:&Value,custody:&NativeColumns,field:&Value)->Result<Value>{
+ let set=doc.pointer(&custody.column_set.pointer).ok_or("original ColumnSet pointer absent")?;
+ let values=set["columns"].as_array().ok_or("original ColumnSet columns absent")?.iter().filter(|c|c["field"]==*field).collect::<Vec<_>>();
+ if values.len()!=1{return Err("original collation Field absent/ambiguous")}
+ let value=values[0].get("collation").ok_or("source-exact original collation fact required")?;
+ if !value.is_null() && (!exact_keys(value,&["schema","name"],&[])||["schema","name"].iter().any(|key|value[*key].as_str().is_none_or(|v|v.is_empty()||v.len()>63||v.contains('\0')))){return Err("closed qualified original collation required")}
+ Ok(value.clone())
 }
 
 /// Source generation retained independently of target type admission.
