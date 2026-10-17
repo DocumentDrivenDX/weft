@@ -279,10 +279,10 @@ mod tests {
     fn term_selection_admissions_survive_mutation_composition(){
         let r:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-bulk-request.json")).unwrap();
         for neutral in [false,true] {
-            let mut r=r.clone();if neutral {r["selection"]["binding"].as_object_mut().unwrap().remove("schema");r["action"]["binding"].as_object_mut().unwrap().remove("schema");}
+            let mut r=r.clone();for c in ["action","selection"]{r[c]["binding"]["nativeCatalogFence"]=json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});}if neutral {r["selection"]["binding"].as_object_mut().unwrap().remove("schema");r["action"]["binding"].as_object_mut().unwrap().remove("schema");}
             let p=result(&r);assert_eq!(p["status"],"compiled","{p}");
             if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/bulk-{}.json",if neutral{"neutral"}else{"qualified"}),p.to_string()).unwrap();}
-            if !neutral {let old:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-read-r20.json")).unwrap();assert_eq!(p["readTemplate"],old,"standalone raw term contract remains unchanged");}
+            if !neutral {let old:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-read-r20.json")).unwrap();assert_eq!(p["readTemplate"]["sql"],old["sql"]);assert_eq!(p["readTemplate"]["outputs"],old["outputs"]);assert_eq!(p["readTemplate"]["obligations"]["termFilter"],old["obligations"]["termFilter"],"existing raw analyzer SQL remains unchanged; fence/version are new");}
             let top=&p["obligations"]["termFilter"];let original=&p["readTemplate"]["obligations"]["termFilter"];
             assert_eq!(top["version"],original["version"]);assert_eq!(top["nativeCatalogBeforeAfter"],true);
             assert_eq!(top["indexes"].as_array().unwrap().len(),1);

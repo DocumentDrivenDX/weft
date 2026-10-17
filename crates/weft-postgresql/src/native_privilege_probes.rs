@@ -652,6 +652,12 @@ fn finish_report(mut result: Value) -> Result<Value> {
         let probe=statement("/obligations/nativeCatalogFence/nativeAdmission/sql".into(),"catalog-fence-admission",a["sql"].as_str().ok_or("original fence admission SQL absent")?,array(a,"parameters")?,array(a,"dbapiParameterOrder")?,&ident(result["probeTable"].as_str().ok_or("probe table absent")?)?,1)?;
         result["statements"].as_array_mut().ok_or("original statements inventory absent")?.push(probe);
     }
+    if let Some(packet)=result["program"]["obligations"].get("mutationIndexEffects").cloned(){
+        for (i,value) in array(&packet,"lockSql")?.iter().enumerate(){
+            let sql=value.as_str().ok_or("original mutation early lock absent")?;
+            result["locks"].as_array_mut().ok_or("original locks inventory absent")?.push(json!({"path":format!("/obligations/mutationIndexEffects/lockSql/{i}"),"role":"mutation-before-snapshot-lock","sql":sql,"sqlSha256":sha(sql),"analysis":"native-lock-privilege","requiredMode":"SHARE ROW EXCLUSIVE","privilegeSufficiency":"unqualified","executeBusinessSql":false}));
+        }
+    }
     let hash = sha(&weft_core::mutation::canonical(&result));
     result["structuralDigest"] =
         json!({"owner":"weft-postgresql-native-privilege-probes","version":"0.1","sha256":hash});

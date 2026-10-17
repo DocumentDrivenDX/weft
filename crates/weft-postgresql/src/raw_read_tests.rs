@@ -137,7 +137,7 @@ mod raw_read_tests {
     }
     fn term_request()->Value {
         let search:Value=serde_json::from_str(include_str!("../../../tests/native-search/keyword-request.json")).unwrap();
-        let mut r=search["selection"].clone();r["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE MATCHES_ALL_TERMS(r.body,:terms)");r["parameters"]=json!([{ "name":"terms","carrier":"string","nullable":false }]);r
+        let mut r=search["selection"].clone();r["binding"]["nativeCatalogFence"]=json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});r["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE MATCHES_ALL_TERMS(r.body,:terms)");r["parameters"]=json!([{ "name":"terms","carrier":"string","nullable":false }]);r
     }
     fn change_term_model(r:&mut Value,change:impl FnOnce(&mut Value)) {
         let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();change(&mut doc);let raw=doc.to_string();r["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));r["binding"]["modelJson"]=json!(raw);

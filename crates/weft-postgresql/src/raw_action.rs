@@ -441,7 +441,7 @@ fn compile(source: &str) -> Result<Value> {
         let mut tables=std::collections::BTreeSet::new();
         for entity in admitted.entities().values(){tables.insert(entity.key.table.clone());}
         for field in admitted.fields().values(){tables.insert(field.table.clone());}
-        let mut admissions=vec![];let mut index_tables=vec![];let mut keyword_effects=vec![];
+        let mut admissions=vec![];let mut index_tables=vec![];let mut keyword_effects=vec![];let mut index_locks=vec![];let mut locked_physical=std::collections::BTreeSet::new();
         for logical in tables {
             let table=r.binding.tables.iter().find(|t|t.logical==logical).ok_or("original action native table absent")?;
             let record=weft_core::raw_read::binding_record(&r.binding,&logical)?;
@@ -467,13 +467,16 @@ fn compile(source: &str) -> Result<Value> {
                 native_keys.push(native_fields);
             }
             if native_keys.is_empty(){return Err("original mutation Record Keys required")}
+            let native_table=lower.table(&logical)?;
+            if !locked_physical.insert(native_table.clone()){return Err("source-exact mutation duplicate physical Record tables unsupported")}
+            index_locks.push(format!("LOCK TABLE {native_table} IN SHARE ROW EXCLUSIVE MODE NOWAIT"));
             let native_admission=crate::native_catalog_fence::mutation_index_admission(table,&r.binding.schema,&allowed,&native_keys);
             admissions.push(json!({"nativeAdmission":native_admission}));
             index_tables.push(json!({"logicalTable":logical,"nativeTable":table.native,"allowedIndexes":allowed,"originalKeys":native_keys,"nativeAdmission":native_admission}));
         }
         if admissions.is_empty(){return Err("source-exact action requires touched native table inventory")}
         result["obligations"]["nativeProjection"]=json!({"version":"umf.native-columns/0.1","verificationProfile":"source-exact/0.1","nativeCatalogBeforeAfter":true,"columns":admissions});
-        result["obligations"]["mutationIndexEffects"]=json!({"version":"umf.pg-index-effects/0.1","nativeCatalogBeforeAfter":true,"tables":index_tables});
+        result["obligations"]["mutationIndexEffects"]=json!({"version":"umf.pg-index-effects/0.1","nativeCatalogBeforeAfter":true,"lockPosition":"before-first-snapshot","lockSql":index_locks,"tables":index_tables});
         if !keyword_effects.is_empty(){result["obligations"]["textSearchEffects"]=json!({"version":"umf.pg-ts-effects/0.1","nativeCatalogBeforeAfter":true,"indexes":keyword_effects});}
     }
     crate::native_catalog_fence::attach(&r.binding,&mut result["obligations"])?;

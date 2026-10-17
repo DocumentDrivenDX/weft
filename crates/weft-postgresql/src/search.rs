@@ -517,7 +517,8 @@ mod tests {
         })
         .unwrap()
     }
-    fn output(r: Json) -> Json {
+    fn output(mut r: Json) -> Json {
+        r["selection"]["binding"]["nativeCatalogFence"]=json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }
     #[test]
@@ -551,7 +552,7 @@ mod tests {
     #[test]
     fn source_exact_search_preserves_executed_full_column_admissions(){
         let request=include_str!("../../../tests/native-search/source-exact-keyword-request.json");
-        let p:Json=serde_json::from_str(&compile_json(request)).unwrap();assert_eq!(p["status"],"compiled","{p}");
+        let p=output(serde_json::from_str(request).unwrap());assert_eq!(p["status"],"compiled","{p}");
         assert_eq!(p["obligations"]["nativeProjection"],p["selectionTemplate"]["obligations"]["nativeProjection"]);
         assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
         assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
