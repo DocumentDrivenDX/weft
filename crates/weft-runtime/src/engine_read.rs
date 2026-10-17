@@ -167,6 +167,12 @@ mod related_output_tests {
   let out:Value=serde_json::from_str(&compile_json(&json!({"version":"weft.engine-read/0.1","compiler":"ashlar-spark4","request":request}).to_string())).unwrap();
   assert_eq!(out["status"],"compiled","{out}");out
  }
+ #[test]fn original_required_scalar_null_placement_normalizes_only_after_owner_proof(){
+  let base=original();
+  for placement in ["FIRST","LAST"]{let mut request=base["request"].clone();request["sql"]=json!(format!("{} ASC NULLS {placement}",request["sql"].as_str().unwrap()));let p=compile_original("ashlar-spark4",&request).unwrap();assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["request"],request);assert_eq!(p["artifact"]["sql"],base["artifact"]["sql"]);}
+  for sql in ["SELECT r.id AS id,COUNT(*) AS total FROM sales.\"order\" r GROUP BY r.id ORDER BY r.id NULLS LAST","SELECT r.id AS id FROM sales.\"order\" r LEFT JOIN sales.customer c ON r.id=c.customerId ORDER BY r.id NULLS LAST","SELECT r.id AS id FROM sales.\"order\" r ORDER BY r.id NULLS UNKNOWN"]{let mut request=base["request"].clone();request["sql"]=json!(sql);let p=compile_original("ashlar-spark4",&request).unwrap();assert_ne!(p["status"],"compiled","{p}");}
+  let mut request=base["request"].clone();let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();let status=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|f|f["id"]=="status").unwrap();status["nullability"]=json!("absent-allowed");let source=doc.to_string();let hash=weft_core::json::sha256(source.as_bytes());request["modules"][0]["documentJson"]=json!(source);request["modules"][0]["pin"]["revision"]=json!(hash);request["modules"][0]["pin"]["sha256"]=json!(hash);request["sql"]=json!("SELECT r.status AS status FROM sales.\"order\" r ORDER BY r.status NULLS LAST");let p=compile_original("ashlar-spark4",&request).unwrap();assert_ne!(p["status"],"compiled","{p}");
+ }
  #[test]fn ashlar_related_original_preserves_native_representation_and_source_custody(){
   let p=original();let output=&p["outputs"][1];let native=&p["artifact"]["columns"][1];
   assert_eq!(output["carrier"],"related-keys");assert_eq!(output["decoder"]["profile"],"ashlar-related-keys-string/0.1");

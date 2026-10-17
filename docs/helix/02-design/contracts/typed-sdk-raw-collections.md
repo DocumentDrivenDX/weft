@@ -43,6 +43,14 @@ native ColumnSet custody. Scalar numeric transport excludes list parameters.
 This additive profile requires its own immutable-wheel and native qualification;
 the preceding PostgreSQL and Spark scalar evidence does not qualify it.
 
+The original application compiler retains explicit NULLS FIRST/LAST in its
+parsed ordering inventory. Its historical scalar grammar may normalize that
+placement to existing native ASC ordering only after resolving an original
+required, nonnullable scalar Field outside grouped/aggregate context. Its joins
+are INNER only and do not introduce SQL NULL. Nullable, absent-allowed, LEFT or
+aggregate cases remain refused by this narrow profile. Original source SQL is
+retained; this is an owner proof of redundant placement, not host text removal.
+
 S8 membership is false for an empty list, unknown for a null left operand and a
 nonempty list, true if any nonnull element equals the left operand, and false
 otherwise. Null elements do not turn an unmatched nonnull value into unknown.

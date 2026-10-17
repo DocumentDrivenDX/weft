@@ -44,6 +44,8 @@ pub struct Query {
     pub joins: Vec<(Source, Vec<Predicate>)>,
     pub groups: Vec<Column>,
     pub order: Vec<Column>,
+    /// Original explicit NULL placement; normalization requires a resolved proof.
+    pub order_nulls: Vec<Option<bool>>,
     pub limit: Option<u16>,
 }
 fn fail(p: &Parser, message: &str) -> Diagnostic {
@@ -260,6 +262,7 @@ fn parse_selected(sql: &str, descending: bool,extended:bool) -> Result<(Query, V
     };
     let mut order = Vec::new();
     let mut order_descending = Vec::new();
+    let mut order_nulls = Vec::new();
     if p.peek_word("order") {
         p.word("order")?;
         p.word("by")?;
@@ -270,6 +273,11 @@ fn parse_selected(sql: &str, descending: bool,extended:bool) -> Result<(Query, V
                 p.word("asc")?;
             }
             order_descending.push(desc);
+            order_nulls.push(if p.peek_word("nulls") {
+                p.word("nulls")?;
+                if p.peek_word("first") { p.word("first")?; Some(true) }
+                else { p.word("last")?; Some(false) }
+            } else { None });
             if !p.peek_symbol(',') {
                 break;
             }
@@ -290,6 +298,7 @@ fn parse_selected(sql: &str, descending: bool,extended:bool) -> Result<(Query, V
         joins,
         groups,
         order,
+        order_nulls,
         limit,
     }, order_descending))
 }
@@ -304,7 +313,9 @@ mod security_order_tests {
         assert_eq!(query.order.len(),2);
         assert_eq!(directions,vec![true,false]);
         assert_eq!(query.limit,Some(1));
-        for suffix in ["DESC DESC","DESC NULLS LAST","DESC; SELECT r.id FROM Resource r"] {
+        let (query,directions)=super::parse_security("SELECT r.id FROM Resource r ORDER BY r.id DESC NULLS LAST").unwrap();
+        assert_eq!(directions,vec![true]);assert_eq!(query.order_nulls,vec![Some(false)]);
+        for suffix in ["DESC DESC","DESC NULLS UNKNOWN","DESC; SELECT r.id FROM Resource r"] {
             assert!(super::parse_security(&format!("SELECT r.id FROM Resource r ORDER BY r.id {suffix}")).is_err());
         }
     }

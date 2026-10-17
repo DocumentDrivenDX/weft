@@ -354,6 +354,20 @@ fn resolve_inner(
         .iter()
         .map(|c| s.field(c))
         .collect::<Result<Vec<_>>>()?;
+    if q.order_nulls.len()!=order.len(){return Err(fail("WFT-PROFILE","Complete original NULL placement inventory required"));}
+    for ((column,field),nulls) in q.order.iter().zip(&order).zip(&q.order_nulls) {
+        // The historical application grammar has only INNER joins. Required,
+        // nonnullable original scalar Fields cannot acquire a NULL here; only
+        // that proven redundant placement may normalize to legacy ASC SQL.
+        if nulls.is_some(){
+            let (record,_)=s.record_for_column(column)?;
+            let (member,graph)=catalog.member_descriptor(record,&column.field)?;
+            let presence=graph.iter().find(|descriptor|descriptor.identity==member.identity).and_then(|descriptor|descriptor.availability.as_deref());
+            if aggregate||!groups.is_empty()||field.logical_type.nullable||presence!=Some("required"){
+                return Err(fail("WFT-PROFILE","Explicit NULL placement requires a required nonnullable scalar ordering Field outside aggregate context"));
+            }
+        }
+    }
     if aggregate && order.iter().any(|f| !groups.iter().any(|g| same(f, g))) {
         return Err(fail("WFT-GROUPING", "Ordering field is not grouped"));
     }
@@ -556,6 +570,7 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
             values: after.iter().zip(&key.types).map(|(value,t)| ast::Value::Literal(Literal { value: value.clone(), kind: match t.family { Family::String=>LiteralKind::String,Family::Boolean=>LiteralKind::Boolean,_=>LiteralKind::Number },
                 span: query.source.name.span.clone() })).collect() });
     }
+    query.order_nulls = vec![None;columns.len()];
     query.order = columns;
     query.limit = Some(page_size + 1);
     let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }),exact_parameters,binary_equality,timestamp_equality,false)?;
