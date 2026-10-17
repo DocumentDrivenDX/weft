@@ -8,6 +8,25 @@ mod raw_read_tests {
         ))
         .unwrap()
     }
+    #[test]
+    fn inner_join_refines_only_its_source_ancestor_chain(){
+        let mut r=request();let mut doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        let mut rel=doc["modules"][0]["relationships"][0].clone();rel["id"]=json!("customer-self");rel["name"]=json!("customer-self");rel["source"][0]["element"]=json!("Customer");doc["modules"][0]["relationships"].as_array_mut().unwrap().push(rel);
+        r["binding"]["relationships"].as_array_mut().unwrap().push(json!({"id":"customer-self","source":["commerce","Customer"],"target":["commerce","Customer"],"pairs":[["id","id"]],"toOne":true}));
+        let raw=doc.to_string();r["binding"]["modelSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));r["binding"]["modelJson"]=json!(raw);r["parameters"]=json!([]);
+        r["sql"]=json!("SELECT a.name AS a FROM commerce.\"Order\" o INNER JOIN commerce.\"Customer\" a ON a.id=a.id");
+        assert_eq!(compile(r.clone())["status"],"blocked");
+        for (projection,joins,nullable) in [
+          ("a.name AS a, b.name AS b", "INNER JOIN commerce.\"Customer\" b ON a.id=b.id",vec![false,false]),
+          ("a.name AS a, b.name AS b, c.name AS c", "LEFT JOIN commerce.\"Customer\" b ON a.id=b.id INNER JOIN commerce.\"Customer\" c ON b.id=c.id",vec![false,false,false]),
+          ("a.name AS a, sibling.name AS sibling, b.name AS b", "LEFT JOIN commerce.\"Customer\" sibling ON o.customer_id=sibling.id INNER JOIN commerce.\"Customer\" b ON a.id=b.id",vec![false,true,false]),
+          ("a.name AS a, child.name AS child, b.name AS b", "LEFT JOIN commerce.\"Customer\" child ON a.id=child.id INNER JOIN commerce.\"Customer\" b ON a.id=b.id",vec![false,true,false]),
+        ] {
+          r["sql"]=json!(format!("SELECT {projection} FROM commerce.\"Order\" o LEFT JOIN commerce.\"Customer\" a ON o.customer_id=a.id {joins}"));
+          let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
+          assert_eq!(p["outputs"].as_array().unwrap().iter().map(|v|v["nullable"].as_bool().unwrap()).collect::<Vec<_>>(),nullable,"{p}");
+        }
+    }
     fn compile(r: Value) -> Value {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
     }

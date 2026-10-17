@@ -490,6 +490,7 @@ impl<'a> Lower<'a> {
             } else {
                 return Err("join must reach new scan");
             };
+            if source.0==new_alias{return Err("join must connect an existing source scan")}
             if old.as_ref().is_some_and(|x| x != &source.0) {
                 return Err("join spans multiple sources");
             };
@@ -614,7 +615,9 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
         group_values: None,
     };
     let (_, mut from) = l.table(&s.from[0].relation, false)?;
+    let mut scan_parents:BTreeMap<String,String>=BTreeMap::new();
     for j in &s.from[0].joins {
+        if j.global{return Err("GLOBAL join modifier outside PostgreSQL profile")}
         let (left, on) = match &j.join_operator {
             JoinOperator::Inner(JoinConstraint::On(on))
             | JoinOperator::Join(JoinConstraint::On(on)) => (false, on),
@@ -648,6 +651,17 @@ fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {
             sql,
             l.predicate(on, false)?
         );
+        // Equality to a required target Key rejects NULL source tuples. An
+        // INNER edge proves this source and its exact ancestor chain present;
+        // independent LEFT siblings and descendants remain nullable.
+        if !left {
+            let mut ancestor=Some(old.clone());
+            while let Some(alias)=ancestor {
+                l.scans.get_mut(&alias).ok_or("join ancestor scan absent")?.1=false;
+                ancestor=scan_parents.get(&alias).cloned();
+            }
+        }
+        scan_parents.insert(a,old);
     }
     let GroupByExpr::Expressions(group, modifiers) = &s.group_by else {
         return Err("grouping sets unsupported");

@@ -40,17 +40,33 @@ original raw-read selection and bound parameter declarations, projection, vector
 parameter, topK, partial opt-in, managed target identity, catalog/schema/table UUID,
 endpoint/index identity and native vector field/dimensions. Optional paired
 keyword source/text parameter retain their own complete original source pins. HYBRID requires the exact explicit fusion object `{kind:"target-defined"}` and topK at most200; ANN refuses fusion.
-The exact candidate fixture is retained under `tests/native-search/`.
+`managed.nativeColumns` is required and retains the original ColumnSet Source
+pointer plus `binding:{sourceId,documentJson,documentSha256}`. `sourceId` is the
+selected input source alias, distinct from the binding document's internal ID.
+The compiler checks model identity/hash/module/pointer, the ColumnSet target and
+binding reference, `umf-binding-2` logical/target identity, the original Record's
+native table and each Field's storage-column mapping. ColumnSet native types and
+NOT NULL declarations must correspond exactly to the compiled current columns
+and original row views, including other authored ColumnSets in that core source.
+Missing source custody, wrong hashes/owners/types/nullability and ambiguous
+native mapping refuse before an executable program is emitted.
+
+The exact candidate fixtures and standalone original model/binding byte sources
+are retained under `tests/native-search/` (`unity-model.json`, `unity-binding.json`
+and the full numeric/Binary `unity-shaped-*` variants).
 
 The compiler independently admits the complete original UMF model and selected
 index declarations and unique native bindings. It refuses unsupported selected
 meaning rather than dropping it. Current projection descriptors cover String,
 Boolean, the selected indexed Vector, and explicitly shaped Integer, Decimal and
 Binary; a required single String selected Key remains mandatory. Projecting the
-Vector requires `managed.vectorBinding.nativeType` equal to `array<float>` or
-`array<double>`. Outputs retain `carrier:"vector"`, `dimensions`, `nullable` and
-`nativeType`; native double elements must still fit the exact float32 model
-carrier without rounding.
+Vector requires `managed.vectorBinding.nativeType` equal to `array<float>`. Outputs retain `carrier:"vector"`, `dimensions`, `nullable` and
+`nativeType`; native double arrays refuse under CONTRACT-070; values must fit the exact float32
+model carrier without rounding. Nullability derives from the unique original
+Record view `row.null` and must match each bound scalar column. Relational
+`row.missing` must be false; required Fields cannot admit null, and unspecified
+availability refuses. An absent-allowed Field may retain a NOT NULL row view,
+so core Field availability alone does not determine native nullability.
 
 Additional `managed.projectionBindings` are exact `{field,native,nativeType}`
 objects. Integer requires authored signed widths 8/16/32/64 matching
@@ -61,7 +77,10 @@ Decimal requires authored precision 1..38 and scale 0..precision matching exact
 as appropriate. Every numeric scalar binding requires a matching original shape.
 No generated SQL casts or rounding repair a mismatched physical representation.
 These are compiler candidate carriers; actual managed metadata and driver value
-qualification remain separate required gates.
+qualification remain separate required gates. Compiler source-custody controls do not replace the public SDK generator's full
+bundle checks: an absent-allowed NOT NULL view is qualified only when every
+authored binding ColumnSet carries the matching NOT NULL declaration. Raw table
+config alone does not establish that premise.
 
 Search input cannot aggregate, reorder, truncate or add unknown
 query modifiers. Every predicate Field must occur in each selected index's

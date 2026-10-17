@@ -265,7 +265,7 @@ fn lower_inner(a: &AdmittedRead, transaction:bool, current_catalog:Option<&str>,
     else {
         return Err("ordinary aliased table required");
     };
-    if !with_hints.is_empty() || !partitions.is_empty() || !index_hints.is_empty() {
+    if !alias.columns.is_empty() || !with_hints.is_empty() || !partitions.is_empty() || !index_hints.is_empty() {
         return Err("table modifiers unsupported");
     };
     let logical = object
