@@ -1,0 +1,2 @@
+error: the package 'weft-wasm' does not contain this feature: truss-postgresql-pg18
+help: packages with the missing feature: weft-runtime, weft-python

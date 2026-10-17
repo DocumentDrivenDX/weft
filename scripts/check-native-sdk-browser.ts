@@ -5,6 +5,14 @@ import {createHash} from 'node:crypto';
 const [wasmDirectory,python,output]=process.argv.slice(2);if(!wasmDirectory||!python||!output)throw Error('Required: WASM directory, installed Python, output JSON');
 const cases:{name:string;method:string;request:string;arguments?:string[];expected?:string}[]=[];
 const action=await Bun.file('tests/native-actions/action-request.json').json();
+for(const [name,predicate,parameters] of [
+ ['different','o.status IS DISTINCT FROM :status',[{name:'status',carrier:'string',nullable:true}]],
+ ['equal','o.status IS NOT DISTINCT FROM :status',[{name:'status',carrier:'string',nullable:true}]],
+ ['null-literal','o.status IS NOT DISTINCT FROM NULL',[]],
+ ['both-null','NULL IS NOT DISTINCT FROM NULL',[]],
+] as const){
+ cases.push({name:'raw-read-null-safe-'+name,method:'compile_raw_read_json',request:JSON.stringify({version:'weft.raw-read/0.1',target:'postgresql18',sql:'SELECT o.id AS id FROM sales.order AS o WHERE '+predicate+' ORDER BY o.id ASC LIMIT 10',binding:action.binding,parameters,rowCap:10,keyset:false})});
+}
 for(const name of ['approve','guarded','postFail','createOrder','firstFalse']){const r=structuredClone(action);r.source.action=name;const doc=JSON.parse(r.binding.modelJson);r.source.actionPointer='/modules/0/extensions/umf.actions/actions/'+doc.modules[0].extensions['umf.actions'].actions.findIndex((a:any)=>a.id===name);cases.push({name,method:'compile_native_action_json',request:JSON.stringify(r)});}
 const bulk={version:'weft.native-bulk/0.1',selection:{version:'weft.raw-read/0.1',target:'postgresql18',sql:'SELECT o.id AS id, o.status AS status FROM sales.order AS o ORDER BY o.id ASC',binding:action.binding,parameters:[],rowCap:4},action,maxItems:3,actionInputs:{},parameters:[]};cases.push({name:'bulk',method:'compile_native_bulk_json',request:JSON.stringify(bulk)});
 const deltaAction=structuredClone(action);deltaAction.target='spark-delta4';

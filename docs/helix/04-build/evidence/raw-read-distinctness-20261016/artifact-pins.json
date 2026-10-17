@@ -1,0 +1,15 @@
+{
+  "wheelSha256": "376c85600fd28704bcbbb99932385deece286a1a282572c9630034c0926982dd",
+  "installedPayloadHashes": {
+    "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "weft/weft.abi3.so": "5b6d4de4912caf5a0d8c63d0744ea47f2d51f46c473ca7af76199637830ad2cb"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/raw_read.rs": "95f744f5da27b9566d926892fb9716cd71809f1426761f5d932d781153e15099",
+    "crates/weft-postgresql/src/raw_read_tests.rs": "c9b567ac8da84b1b96cd4c41ac8841a02978b0378893f5dc3f48a3e2fd9c9e26",
+    "scripts/check-native-sdk-browser.ts": "55356b410a6bc3e2ce34f03749cbe77d1d13416a539ba9f5a9d86690ec967294"
+  },
+  "sdkWheelSha256": "44c44d61dcb8ce3144efcf900ec11206b79047c97c7a3ca8429dbd988fb1133e",
+  "native": "PostgreSQL18.6/psycopg3.3.6/Python3.11.17;22tests including generated nullable-parameter/literal joins under RLS and native Key controls",
+  "temporal": "HELD"
+}
