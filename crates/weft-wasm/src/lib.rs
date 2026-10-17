@@ -165,3 +165,11 @@ pub fn check_engine_page_json(program:&js_sys::JsString,current_request:&js_sys:
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_engine_export_json(program:&js_sys::JsString,current_request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::engine_export::compile_json(&strict_text(program,4_194_304)?,&strict_text(current_request,4_194_304)?))}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_managed_action_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_managed_action_json(&original))}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_managed_bulk_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_managed_bulk_json(&original))}

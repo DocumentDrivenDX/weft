@@ -877,3 +877,10 @@ mod current_presence_graph_requirements_bridge_tests {
 
 #[cfg(feature="raw-postgresql-reads")]
 pub mod engine_export;
+
+/// Explicit managed Delta compiler; never routes a managed request to local Spark/PostgreSQL.
+#[cfg(feature="managed-delta-mutation-candidate")]
+pub fn compile_managed_action_json(request:&str)->String{weft_databricks::raw_action::compile_managed_json(request)}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+pub fn compile_managed_bulk_json(request:&str)->String{weft_databricks::raw_bulk::compile_managed_json(request)}

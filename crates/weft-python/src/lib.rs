@@ -35,6 +35,10 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compile_raw_read_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_native_action_json, m)?)?;
+    #[cfg(feature="managed-delta-mutation-candidate")]
+    m.add_function(wrap_pyfunction!(compile_managed_action_json, m)?)?;
+    #[cfg(feature="managed-delta-mutation-candidate")]
+    m.add_function(wrap_pyfunction!(compile_managed_bulk_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_native_bulk_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
@@ -357,3 +361,11 @@ pub fn check_engine_page_json(program:&str,current_request:&str,after_json:&str)
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]
 pub fn compile_engine_export_json(program:&str,current_request:&str)->String{weft_runtime::engine_export::compile_json(program,current_request)}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[pyfunction]
+pub fn compile_managed_action_json(request:&str)->String{weft_runtime::compile_managed_action_json(request)}
+
+#[cfg(feature="managed-delta-mutation-candidate")]
+#[pyfunction]
+pub fn compile_managed_bulk_json(request:&str)->String{weft_runtime::compile_managed_bulk_json(request)}
