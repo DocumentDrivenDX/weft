@@ -286,7 +286,7 @@ fn compile(raw: &str) -> Result<Json> {
                 .find(|p| p.name == *name.as_str().unwrap())
                 .unwrap();
             let mut slot=json!({"source":{"input":p.name},"carrier":p.carrier});
-            if let Some(container)=&p.container {slot["container"]=json!(container);slot["nullable"]=json!(p.nullable);slot["elementNullable"]=json!(p.element_nullable);slot["maxItems"]=json!(p.max_items);}
+            if let Some(container)=&p.container {slot["container"]=json!(container);slot["nullable"]=json!(p.nullable);slot["elementNullable"]=json!(p.element_nullable);slot["maxItems"]=json!(p.max_items);}else if p.nullable {slot["nullable"]=json!(true);}
             slot
         })
         .collect::<Vec<_>>();
@@ -539,6 +539,11 @@ mod tests {
         if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-list.json"),q.to_string()).unwrap();}
         let slot=&q["statement"]["parameters"][0];assert_eq!(slot["container"],"list");assert_eq!(slot["nullable"],false);assert_eq!(slot["elementNullable"],true);assert_eq!(slot["maxItems"],8);
         listed["selection"]["parameters"][0]["maxItems"]=json!(1001);assert_eq!(output(listed)["status"],"blocked");
+        let mut nullable=r.clone();nullable["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE r.id=:nullable_id OR :nullable_id IS NULL");
+        nullable["selection"]["parameters"]=json!([{"name":"nullable_id","carrier":"string","nullable":true}]);
+        let q=output(nullable);assert_eq!(q["status"],"compiled","{q}");assert_eq!(q["statement"]["parameters"][0]["nullable"],true);
+        if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-nullable-scalar.json"),q.to_string()).unwrap();}
+
         filtered["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE UNSUPPORTED(r.body,:terms)");assert_eq!(output(filtered)["status"],"blocked");
     }
     #[test]

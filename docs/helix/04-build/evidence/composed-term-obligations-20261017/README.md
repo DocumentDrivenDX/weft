@@ -39,3 +39,12 @@ qualified/neutral bulk, ranked, term-prefilter and list search programs under
 outputs, not a fresh installed-wheel or native qualification.
 No new wheel, browser, native qualification or public publication is claimed.
 Temporal qualification remains HELD.
+
+The source-review followup clones the whole original bulk term packet before
+replacing its index admissions, retaining all semantic headers. Nullable scalar
+search slots now retain nullable:true when present while old nonnullable scalar
+bytes remain unchanged. R4 source controls pass three tests, including the
+nullable predicate, list probe/checker facets and unchanged R20 raw packet.
+Actual compiler-produced nullable and original privilege-probe packets were
+retained through the test-only output mechanism. Native/wheel/browser gates
+remain pending for this successor.

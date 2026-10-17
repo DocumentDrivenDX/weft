@@ -248,7 +248,8 @@ fn compile(raw: &str) -> Result<Value> {
             let column=table.columns.iter().find(|c|original["nativeColumn"]==c.native).ok_or("bulk original term column absent")?;
             indexes.push(crate::raw_read::action_term_index_metadata(admitted.selection(),table,column)?);
         }
-        program["obligations"]["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":indexes});
+        let mut composed=term.clone();composed["indexes"]=json!(indexes);
+        program["obligations"]["termFilter"]=composed;
     }
     let digest = weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes());
     program["structuralDigest"] =

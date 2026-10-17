@@ -1238,6 +1238,17 @@ mod composed_term_probe_tests {
             let path=if bulk{"/obligations/termFilter/indexes/0/nativeAdmission/sql"}else{"/obligations/keywordConfiguration/configurations/0/nativeAdmission/sql"};
             assert!(report["statements"].as_array().unwrap().iter().any(|s|s["path"]==path));
             assert_eq!(serde_json::from_str::<Value>(&check_json(&report.to_string())).unwrap(),report);
+            if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/{}-probes.json",if bulk{"bulk-qualified"}else{"ranked-keyword"}),report.to_string()).unwrap();}
+            if !bulk {
+                let mut listed=packet["request"].clone();listed["selection"]["sql"]=json!("SELECT r.id AS id FROM \"search\".\"Doc\" AS r WHERE r.id IN (:ids)");
+                listed["selection"]["parameters"]=json!([{"name":"ids","carrier":"string","nullable":false,"container":"list","elementNullable":true,"maxItems":8}]);
+                let p:Value=serde_json::from_str(&crate::search::compile_json(&listed.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");
+                let q=json!({"version":"weft.native-privilege-probes/0.1","request":listed,"program":p,"probeTable":"__weft_privilege_terms"});
+                let r:Value=serde_json::from_str(&compile_json(&q.to_string())).unwrap();assert_eq!(r["status"],"compiled","{r}");
+                assert_eq!(r["statements"][0]["parameters"][0]["container"],"list");assert_eq!(r["statements"][0]["parameters"][0]["maxItems"],8);
+                assert_eq!(serde_json::from_str::<Value>(&check_json(&r.to_string())).unwrap(),r);
+                if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/search-list-probes.json"),r.to_string()).unwrap();}
+            }
         }
     }
 }
