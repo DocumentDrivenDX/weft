@@ -124,7 +124,10 @@ mod tests {
   let p:Value=serde_json::from_str(&crate::raw_action::compile_json(&r.to_string())).unwrap();assert_eq!(p["status"],"compiled","{p}");
   assert_eq!(p["version"],"weft.native-action/0.2");
   let m=&p["obligations"]["mutationIndexEffects"];assert_eq!(m["lockPosition"],"before-first-snapshot");assert_eq!(m["lockSql"][0],"LOCK TABLE \"orders\" IN SHARE ROW EXCLUSIVE MODE NOWAIT");assert_eq!(m["version"],"umf.pg-index-effects/0.1");assert!(!m["tables"].as_array().unwrap().is_empty());
-  if let Ok(dir)=std::env::var("WEFT_FENCE_PACKET_DIR"){std::fs::create_dir_all(&dir).unwrap();std::fs::write(format!("{dir}/scalar-action.json"),p.to_string()).unwrap();}
+  let probes:Value=serde_json::from_str(&crate::native_privilege_probes::compile_json(&json!({"version":"weft.native-privilege-probes/0.1","request":r,"program":p,"probeTable":"__weft_privilege_scalar_action"}).to_string())).unwrap();assert_eq!(probes["status"],"compiled","{probes}");
+  assert!(probes["statements"].as_array().unwrap().iter().any(|s|s["path"]=="/obligations/mutationIndexEffects/tables/0/nativeAdmission/sql"));
+  assert!(probes["locks"].as_array().unwrap().iter().any(|s|s["path"]=="/obligations/mutationIndexEffects/lockSql/0"));
+  if let Ok(dir)=std::env::var("WEFT_FENCE_PACKET_DIR"){std::fs::create_dir_all(&dir).unwrap();std::fs::write(format!("{dir}/scalar-action.json"),p.to_string()).unwrap();std::fs::write(format!("{dir}/scalar-action-probes.json"),probes.to_string()).unwrap();}
   for t in m["tables"].as_array().unwrap(){assert!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().contains(&json!({"nativeAdmission":t["nativeAdmission"]})));let sql=t["nativeAdmission"]["sql"].as_str().unwrap();assert!(sql.contains("i.indpred IS NULL"));assert!(sql.contains("i.indexprs IS NULL"));assert!(sql.contains("opc.opcname NOT IN"));}
  }
  #[test]
@@ -144,7 +147,11 @@ mod tests {
   let p:Value=serde_json::from_str(&crate::raw_bulk::compile_json(&r.to_string())).unwrap();
   assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["version"],"weft.native-bulk/0.2");
   assert_eq!(p["obligations"]["nativeCatalogFence"]["origins"].as_array().unwrap().len(),1);
+  let probes:Value=serde_json::from_str(&crate::native_privilege_probes::compile_json(&json!({"version":"weft.native-privilege-probes/0.1","request":r,"program":p,"probeTable":"__weft_privilege_fenced_bulk"}).to_string())).unwrap();assert_eq!(probes["status"],"compiled","{probes}");
+  assert!(probes["statements"].as_array().unwrap().iter().any(|s|s["path"]=="/obligations/mutationIndexEffects/tables/0/nativeAdmission/sql"));
+  assert!(probes["locks"].as_array().unwrap().iter().any(|s|s["path"]=="/obligations/mutationIndexEffects/lockSql/0"));
   if let Ok(dir)=std::env::var("WEFT_FENCE_PACKET_DIR"){
+   std::fs::write(format!("{dir}/bulk-probes.json"),probes.to_string()).unwrap();
    std::fs::write(format!("{dir}/effect-action.json"),action.to_string()).unwrap();std::fs::write(format!("{dir}/bulk-request.json"),r.to_string()).unwrap();std::fs::write(format!("{dir}/bulk.json"),p.to_string()).unwrap();
   }
  }

@@ -365,7 +365,7 @@ fn positional_statement(
     )
 }
 fn append_projection_statements(statements:&mut Vec<Value>,program:&Value,table:&str)->Result<()>{
-    for (kind,entries,role) in [("nativeProjection","columns","projection-admission"),("termFilter","indexes","term-index-admission"),("keywordConfiguration","configurations","keyword-configuration-admission"),("textSearchEffects","indexes","text-search-effects-admission")] {
+    for (kind,entries,role) in [("nativeProjection","columns","projection-admission"),("termFilter","indexes","term-index-admission"),("keywordConfiguration","configurations","keyword-configuration-admission"),("textSearchEffects","indexes","text-search-effects-admission"),("mutationIndexEffects","tables","mutation-index-effects-admission")] {
         if let Some(packet)=program["obligations"].get(kind) {
             for (i,item) in array(packet,entries)?.iter().enumerate(){
                 let a=&item["nativeAdmission"];
