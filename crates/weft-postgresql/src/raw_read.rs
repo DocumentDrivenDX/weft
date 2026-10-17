@@ -278,6 +278,42 @@ impl<'a> Lower<'a> {
                 }
                 Ok(format!("{} {} {}", l.sql, op, r.sql))
             }
+            Expr::Function(f) => {
+                if object(&f.name)? != ["starts_with"]
+                    || f.uses_odbc_syntax
+                    || !matches!(f.parameters, FunctionArguments::None)
+                    || !f.within_group.is_empty()
+                    || f.filter.is_some()
+                    || f.null_treatment.is_some()
+                    || f.over.is_some()
+                {
+                    return Err("unsupported predicate function");
+                }
+                let FunctionArguments::List(args) = &f.args else {
+                    return Err("prefix arguments");
+                };
+                if args.duplicate_treatment.is_some() || !args.clauses.is_empty() || args.args.len() != 2 {
+                    return Err("prefix requires exactly two unmodified arguments");
+                }
+                let (FunctionArg::Unnamed(FunctionArgExpr::Expr(field)), FunctionArg::Unnamed(FunctionArgExpr::Expr(prefix))) = (&args.args[0], &args.args[1]) else {
+                    return Err("prefix requires a field and scalar value");
+                };
+                fn unnest(e: &Expr) -> &Expr { if let Expr::Nested(inner) = e { unnest(inner) } else { e } }
+                if !matches!(unnest(field), Expr::CompoundIdentifier(_)) {
+                    return Err("prefix requires an explicit field");
+                }
+                if !matches!(unnest(prefix), Expr::Value(v) if matches!(v.value, Value::SingleQuotedString(_) | Value::Placeholder(_))) {
+                    return Err("prefix requires a literal or declared parameter");
+                }
+                let field = self.predicate_value(field, aggregates)?;
+                let prefix = self.predicate_value(prefix, aggregates)?;
+                if field.carrier != Carrier::String || prefix.carrier != Carrier::String {
+                    return Err("prefix string carriers required");
+                }
+                // PostgreSQL's strict prefix function compares the actual UTF-8
+                // text bytes. No pattern is formed and NULL remains UNKNOWN.
+                Ok(format!("pg_catalog.starts_with({} COLLATE pg_catalog.\"C\", {} COLLATE pg_catalog.\"C\")", field.sql, prefix.sql))
+            }
             Expr::IsDistinctFrom(left, right) | Expr::IsNotDistinctFrom(left, right) => {
                 fn is_null(expr: &Expr) -> bool {
                     match expr {
