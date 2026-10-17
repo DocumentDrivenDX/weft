@@ -541,11 +541,12 @@ pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,paramete
     resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true,timestamp_equality,decimal12)
 }
 fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool,timestamp_equality:bool,decimal12:bool) -> Result<PagePlan> {
-    if !(1..=999).contains(&page_size) || !query.order.is_empty() || query.limit.is_some()
+    if query.order_nulls.len()!=query.order.len(){return Err(fail("WFT-PROFILE","Complete original page NULL placement inventory required"));}
+    if !(1..=999).contains(&page_size) || query.limit.is_some()
         || !query.joins.is_empty() || !query.groups.is_empty()
-        || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_) | ast::Output::Related { .. }))
+        || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_)))
     {
-        return Err(fail("WFT-PROFILE", "SQL page requires a single nonaggregated source without caller ORDER BY or LIMIT"));
+        return Err(fail("WFT-PROFILE", "SQL page requires a single nonaggregated source without caller LIMIT"));
     }
     let record = catalog.record(query.source.namespace.as_ref(), &query.source.name)?;
     let primary = record.value["keys"].as_array().ok_or_else(|| fail("WFT-PROFILE", "SQL page requires an authored primary key"))?
@@ -554,6 +555,16 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
     let key = catalog.authored_key(&record, primary[0]["id"].as_str().unwrap())?;
     if key.fields.is_empty() || key.types.iter().any(|t| t.nullable || match t.family { Family::String => t.facets != json!({}), Family::Boolean => !typed_keys || t.facets != json!({}), Family::Integer => !typed_keys || (t.facets != json!({}) && t.facets != json!({"integerWidth":{"bits":64,"signed":true}})), Family::Decimal => !typed_keys || (t.facets != json!({"precision":18,"scale":4}) && !(binary_equality && t.facets == json!({"precision":18,"scale":2})) && !(decimal12 && t.facets == json!({"precision":12,"scale":2}))) }) {
         return Err(fail("WFT-PROFILE", "SQL page requires complete required-string key components"));
+    }
+    if !query.order.is_empty(){
+        if query.order.len()!=key.fields.len()||query.order_nulls.len()!=query.order.len(){return Err(fail("WFT-PROFILE","Caller page ordering must be the complete original authored primary Key ASC"));}
+        for (column,identity) in query.order.iter().zip(&key.fields){
+            if !column.unqualified&&column.alias.value!=query.source.alias.value{return Err(fail("WFT-PROFILE","Caller page ordering owner differs"));}
+            let(member,graph)=catalog.member_descriptor(&record,&column.field)?;
+            if member.identity!=*identity||graph.iter().find(|d|d.identity==member.identity).and_then(|d|d.availability.as_deref())!=Some("required"){
+                return Err(fail("WFT-PROFILE","Caller page ordering must be the complete required original authored primary Key ASC"));
+            }
+        }
     }
     let mut columns = Vec::new();
     for (index, identity) in key.fields.iter().enumerate() {
@@ -573,7 +584,9 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
     query.order_nulls = vec![None;columns.len()];
     query.order = columns;
     query.limit = Some(page_size + 1);
-    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }),exact_parameters,binary_equality,timestamp_equality,false)?;
+    let related=query.outputs.iter().any(|o|matches!(o.output,ast::Output::Related{..}))||query.predicates.iter().any(|p|matches!(p,ast::Predicate::HasRelated{..}));
+    let subset=if related{ir::Subset::RelatedEntityPage}else{ir::Subset::EntityPage};
+    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset }),exact_parameters,binary_equality,timestamp_equality,false)?;
     plan.ir_version = if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else { "weft-ir/0.2.2" }.into();
     let visible_outputs = plan.outputs.len() - key.fields.len();
     let key_outputs = (visible_outputs..plan.outputs.len()).collect();

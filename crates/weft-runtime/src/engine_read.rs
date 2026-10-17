@@ -8,12 +8,14 @@ type Result<T>=std::result::Result<T,&'static str>;
 struct Request { version:String, compiler:String, request:Value }
 fn encode(v:&Value)->String{weft_core::mutation::canonical(v)}
 fn related_output(column:&Value,artifact:&Value)->Result<Value>{
- if artifact["backend"]["backendId"]!="ashlar.databricks" || column["nullable"]!=false {return Err("original Ashlar required related output required")}
+ let truss=artifact["backend"]["backendId"]=="truss.postgresql.runtime";
+ if (!truss&&artifact["backend"]["backendId"]!="ashlar.databricks") || column["nullable"]!=false {return Err("original admitted engine required related output required")}
  let representation=&column["representation"];
  let bound=representation["bound"].as_u64().filter(|n|(1..=1000).contains(n)).ok_or("bounded original related output required")?;
  if representation["kind"]!="relatedKeys" {return Err("bounded original related representation required")}
  let key=&representation["key"];let fields=key["fields"].as_array().ok_or("original related Key Fields required")?;let types=key["types"].as_array().ok_or("original related Key types required")?;
- if fields.is_empty()||fields.len()!=types.len()||types.iter().any(|t|t["family"]!="string"||t["nullable"]!=false||t["facets"].as_object().is_none_or(|f|!f.is_empty())){return Err("original required facetless String related Key profile required")}
+ let supported=|t:&Value|{if t["nullable"]!=false{return false}let facets=&t["facets"];match t["family"].as_str(){Some("string")=>facets==&json!({}),Some("boolean") if truss=>facets==&json!({}),Some("integer") if truss=>facets==&json!({})||facets==&json!({"integerWidth":{"bits":64,"signed":true}}),Some("decimal") if truss=>[json!({"precision":18,"scale":4}),json!({"precision":18,"scale":2}),json!({"precision":12,"scale":2})].contains(facets),_=>false}};
+ if fields.is_empty()||fields.len()!=types.len()||types.iter().any(|t|!supported(t)){return Err("original required related Key profile differs from engine decoder")}
  let expressions=artifact["logicalPlan"]["outputs"].as_array().ok_or("original application output inventory required")?;
  let selected=expressions.iter().filter(|output|output["name"]==column["outputName"]).collect::<Vec<_>>();
  if selected.len()!=1{return Err("unique original related expression required")}
@@ -24,9 +26,9 @@ fn related_output(column:&Value,artifact:&Value)->Result<Value>{
  let pins=artifact["modelPins"].as_array().ok_or("original related model pins required")?;
  if !pins.iter().any(|pin|pin["documentId"]==target["documentId"]&&pin["revision"]==target["revision"]){return Err("original related target outside model pins")}
  let mut components=vec![];
- for field in fields{if field["documentId"]!=target["documentId"]||field["revision"]!=target["revision"]||field["module"].as_str().is_none_or(str::is_empty)||field["element"].as_str().is_none_or(str::is_empty){return Err("original related Key Field pin differs")};components.push(json!({"field":{"module":field["module"],"element":field["element"]},"carrier":"string","nullable":false}));}
+ for (field,logical_type) in fields.iter().zip(types){if field["documentId"]!=target["documentId"]||field["revision"]!=target["revision"]||field["module"].as_str().is_none_or(str::is_empty)||field["element"].as_str().is_none_or(str::is_empty){return Err("original related Key Field pin differs")};components.push(json!({"field":{"module":field["module"],"element":field["element"]},"carrier":logical_type["family"],"nullable":false}));}
  let id=key["id"].as_str().filter(|id|!id.is_empty()).ok_or("original authored Key id required")?;
- Ok(json!({"name":column["outputName"],"carrier":"related-keys","nullable":false,"decoder":{"profile":"ashlar-related-keys-string/0.1","bound":bound,"relationship":{"module":relationship["identity"]["module"],"id":relationship["identity"]["relationship"],"direction":if inverse{"inverse"}else{"forward"}},"key":{"module":target["module"],"record":target["element"],"key":id,"components":components},"target":target,"representation":representation,"modelPins":pins}}))
+ Ok(json!({"name":column["outputName"],"carrier":"related-keys","nullable":false,"decoder":{"profile":if truss{"truss-related-keys/0.1"}else{"ashlar-related-keys-string/0.1"},"bound":bound,"relationship":{"module":relationship["identity"]["module"],"id":relationship["identity"]["relationship"],"direction":if inverse{"inverse"}else{"forward"}},"key":{"module":target["module"],"record":target["element"],"key":id,"components":components},"target":target,"representation":representation,"modelPins":pins}}))
 }
 fn compile_original(method:&str,request:&Value)->Result<Value>{
  let raw=match method{
@@ -152,6 +154,19 @@ pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->Strin
  use super::*;
  fn request()->Value{let mut r:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-request.json")).unwrap();r["sql"]=json!(r["sql"].as_str().unwrap().strip_suffix(" LIMIT 10").unwrap());r}
  fn program(r:&Value)->Value{serde_json::from_str(&compile_page_json(&json!({"version":"weft.engine-page/0.1","compiler":"truss-runtime","request":r,"pageSize":2}).to_string())).unwrap()}
+ #[test]fn complete_required_primary_key_asc_page_order_is_owner_proven_redundant(){
+  let original=request();let base=program(&original);assert_eq!(base["status"],"compiled","{base}");
+  for suffix in ["ORDER BY r.id","ORDER BY r.id ASC","ORDER BY r.id ASC NULLS LAST","ORDER BY r.id ASC NULLS FIRST"]{let mut r=original.clone();r["sql"]=json!(format!("{} {suffix}",original["sql"].as_str().unwrap()));let p=program(&r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["request"],r);assert_eq!(p["artifact"]["sql"],base["artifact"]["sql"]);}
+  for suffix in ["ORDER BY r.status","ORDER BY r.id,r.id","ORDER BY other.id","ORDER BY r.id DESC","ORDER BY r.id LIMIT 1"]{let mut r=original.clone();r["sql"]=json!(format!("{} {suffix}",original["sql"].as_str().unwrap()));let p=program(&r);assert_ne!(p["status"],"compiled","{suffix}: {p}");}
+ }
+ #[test]fn original_bounded_related_keys_page_preserves_entity_cursor_and_representation(){
+  let r:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-ashlar-related-page-request.json")).unwrap();
+  let p=compile_page_original("ashlar-spark4-pages",&r,2,None).unwrap();assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["request"],r);
+  assert_eq!(p["outputs"].as_array().unwrap().len(),2);assert_eq!(p["outputs"][1]["decoder"]["profile"],"ashlar-related-keys-string/0.1");assert_eq!(p["outputs"][1]["decoder"]["bound"],2);
+  assert_eq!(p["artifact"]["columns"].as_array().unwrap().len(),3);assert_eq!(p["page"]["keyOutputs"],json!([2]));assert_eq!(p["outputs"][1]["decoder"]["representation"],p["artifact"]["columns"][1]["representation"]);
+  let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"o-1\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");assert_eq!(a["after"],json!(["o-1"]));assert_eq!(a["outputs"],p["outputs"]);assert_ne!(a["artifact"]["sql"],p["artifact"]["sql"]);
+  let mut forged=p.clone();forged["outputs"][1]["decoder"]["bound"]=json!(3);let refused:Value=serde_json::from_str(&check_page_json(&forged.to_string(),&r.to_string(),"null")).unwrap();assert_eq!(refused["status"],"blocked");
+ }
  #[test]fn original_page_retains_hidden_key_and_native_continuation(){let r=request();let p=program(&r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["outputs"].as_array().unwrap().len(),2);assert_eq!(p["artifact"]["columns"].as_array().unwrap().len(),3);assert_eq!(p["page"]["keyOutputs"],json!([2]));let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"o-1\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");assert_eq!(a["after"],json!(["o-1"]));assert_ne!(a["artifact"]["sql"],p["artifact"]["sql"]);assert!(a["artifact"]["parameters"].as_array().unwrap().iter().any(|v|v["value"]=="o-1"));}
  #[test]fn original_ashlar_page_compilation_retains_snapshot_key_obligation(){for (method,version,raw) in [("ashlar-spark4-pages",weft_databricks::authored_pages::LOCAL_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json")),("ashlar-dbsql-20261016-pages",weft_databricks::authored_pages::MANAGED_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-dbsql-20261016-request.json"))]{let mut r:Value=serde_json::from_str(raw).unwrap();assert_ne!(compile_page_original(method,&r,2,None).unwrap()["status"],"compiled");r["interfaceVersion"]=json!("weft-compile/0.2.2");r["target"]["backendVersion"]=json!(version);let p=compile_page_original(method,&r,2,None).unwrap();assert_eq!(p["status"],"compiled","{p}");assert!(p["artifact"]["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="ashlar.candidate.keyIntegrity"));let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"bar\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");}}
  #[test]fn blocked_page_composition_keeps_its_frame_and_original_diagnostics(){let mut r=request();r["sql"]=json!("SELECT unknown FROM absent");let value:Value=serde_json::from_str(&compile_page_json(&json!({"version":"weft.engine-page/0.1","compiler":"truss-runtime","request":r,"pageSize":1}).to_string())).unwrap();assert_eq!(value["version"],"weft.engine-page/0.1");assert_eq!(value["status"],"blocked");assert!(value["original"].is_object());assert!(value.get("artifact").is_none());}
@@ -166,6 +181,19 @@ mod related_output_tests {
   let request:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-ashlar-related-request.json")).unwrap();
   let out:Value=serde_json::from_str(&compile_json(&json!({"version":"weft.engine-read/0.1","compiler":"ashlar-spark4","request":request}).to_string())).unwrap();
   assert_eq!(out["status"],"compiled","{out}");out
+ }
+ fn truss_related_request(family:&str,facets:Value)->Value {
+  // Derived compiler-only fixture; no accepted native publication is claimed.
+  let mut bundle:Value=serde_json::from_str(include_str!("../../../tests/truss-query-abi/fixtures/native-query-bundle.json")).unwrap();
+  let mut doc:Value=serde_json::from_str(bundle["modules"][0]["documentJson"].as_str().unwrap()).unwrap();let field=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="A-value").unwrap();field["scalarType"]=json!(family);field["facets"]=facets;
+  let source=doc.to_string();let sha=weft_core::json::sha256(source.as_bytes());bundle["modules"][0]["documentJson"]=json!(source);bundle["modules"][0]["pin"]["sha256"]=json!(sha);
+  let mut binding:Value=serde_json::from_str(bundle["bindingJson"].as_str().unwrap()).unwrap();binding["documents"][0]["sha256"]=json!(sha);let raw=binding.to_string();
+  json!({"interfaceVersion":"weft-compile/0.2.6","dialect":"weft-sql/0.2.0","timestampComparisonProfile":"umf-rfc3339-exact-instant/1.0.0","modules":bundle["modules"],"sql":"SELECT RELATED_KEYS(a.children,4) AS related FROM \"A\" a","parameters":{},"exactParameters":{},"options":{"allowCandidate":true},"target":{"backendId":"truss.postgresql.runtime","backendVersion":"0.4.39","targetProfile":"truss-runtime-pg18.6/0.5","bindingJson":raw,"bindingSha256":weft_core::json::sha256(raw.as_bytes())}})
+ }
+ #[test]fn original_truss_related_wrapper_retains_native_key_types_and_representation(){
+  for (family,facets) in [("string",json!({})),("boolean",json!({})),("integer",json!({})),("integer",json!({"integerWidth":{"bits":64,"signed":true}})),("decimal",json!({"precision":18,"scale":4})),("decimal",json!({"precision":18,"scale":2})),("decimal",json!({"precision":12,"scale":2}))]{let request=truss_related_request(family,facets);let p=compile_original("truss-runtime",&request).unwrap();assert_eq!(p["status"],"compiled","{p}");let d=&p["outputs"][0]["decoder"];assert_eq!(d["profile"],"truss-related-keys/0.1");assert_eq!(d["key"]["components"][0]["carrier"],family);assert_eq!(d["representation"],p["artifact"]["columns"][0]["representation"]);assert_eq!(d["modelPins"],p["artifact"]["modelPins"]);assert_eq!(p["request"],request);
+   for mode in 0..4{let mut artifact=p["artifact"].clone();match mode{0=>artifact["columns"][0]["representation"]["key"]["types"][0]["nullable"]=json!(true),1=>artifact["columns"][0]["representation"]["key"]["types"][0]["facets"]=json!({"precision":13,"scale":2}),2=>artifact["columns"][0]["representation"]["bound"]=json!(5),_=>artifact["backend"]["backendId"]=json!("other")};assert!(related_output(&artifact["columns"][0],&artifact).is_err(),"{mode}");}
+  }
  }
  #[test]fn original_required_scalar_null_placement_normalizes_only_after_owner_proof(){
   let base=original();
