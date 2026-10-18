@@ -330,7 +330,11 @@ impl Backend for Runtime {
         {
             return Err(fail("Exact runtime binding pin required"));
         }
-        let original_binding = weft_core::json::checked_json(&c.binding.json)
+        let original_binding = (if self.canonical_dates {
+            weft_core::json::checked_truss_runtime_catalog_json(&c.binding.json)
+        } else {
+            weft_core::json::checked_json(&c.binding.json)
+        })
             .map_err(|_| fail("Runtime binding JSON refused"))?;
         if original_binding.get("relationships").is_some() != self.relationships {
             return Err(fail("Exact versioned relationship binding shape required"));

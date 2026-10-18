@@ -537,7 +537,15 @@ impl<B: Backend> Registered for Adapter<B> {
         if crate::json::sha256(binding.json.as_bytes()) != binding.sha256 {
             return Err(failure("WFT-PIN", "Binding byte digest mismatch"));
         }
-        let value = checked_json(&binding.json).map_err(|_| {
+        let value = (if target.backend_id == "truss.postgresql.runtime"
+            && target.backend_version == "0.4.41"
+            && target.profile_id == "truss-runtime-pg18.6/0.5"
+            && actual_ir == "weft-ir/0.2.7"
+        {
+            crate::json::checked_truss_runtime_catalog_json(&binding.json)
+        } else {
+            checked_json(&binding.json)
+        }).map_err(|_| {
             failure(
                 "WFT-BINDING",
                 "Binding JSON is malformed or repeats members",

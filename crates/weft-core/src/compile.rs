@@ -311,7 +311,15 @@ impl Compiler {
                     "Binding byte digest mismatch",
                 ));
             }
-            crate::json::checked_json(&req.target.binding_json)
+            let truss_runtime_catalog = req.interface_version == "weft-compile/0.2.7"
+                && req.target.backend_id == "truss.postgresql.runtime"
+                && req.target.backend_version == "0.4.41"
+                && req.target.target_profile == "truss-runtime-pg18.6/0.5";
+            (if truss_runtime_catalog {
+                crate::json::checked_truss_runtime_catalog_json(&req.target.binding_json)
+            } else {
+                crate::json::checked_json(&req.target.binding_json)
+            })
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
             if field_projection_decimal38 {
                 let query=crate::application_syntax::parse(&req.sql)?;
@@ -334,6 +342,8 @@ impl Compiler {
             }
             let mut catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
                 crate::model::Catalog::prepare_security(req.modules)?
+            } else if truss_runtime_catalog {
+                crate::model::Catalog::prepare_truss_runtime(req.modules, exact_numbers)?
             } else if exact_numbers {
                 crate::model::Catalog::prepare_exact_numbers(req.modules)?
             } else {

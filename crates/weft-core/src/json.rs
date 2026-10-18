@@ -93,6 +93,41 @@ pub fn checked_json(raw: &str) -> RawResult<Value> {
     faithful_tree(raw)
 }
 
+/// The selected Truss runtime catalog has a four-MiB byte envelope. A thousand
+/// records with twelve fields exceeds the general 100,000-value limit even
+/// though both original model and binding fit that existing byte envelope.
+/// Keep generic transport admission unchanged; this reader grants no authority.
+pub fn checked_truss_runtime_catalog_json(raw: &str) -> RawResult<Value> {
+    if raw.len() > 4 * 1024 * 1024 {
+        return Err("WFT-LIMIT");
+    }
+    inspect_json(raw, 0, &mut 0, 128, 1_000_000)?;
+    faithful_tree(raw)
+}
+
+#[cfg(test)]
+mod truss_runtime_catalog_tests {
+    use super::*;
+
+    #[test]
+    fn larger_catalog_budget_does_not_change_generic_admission() {
+        let raw = format!("[{}]", vec!["0"; 100_000].join(","));
+        assert_eq!(checked_json(&raw), Err("WFT-LIMIT"));
+        assert_eq!(checked_truss_runtime_catalog_json(&raw).unwrap().as_array().unwrap().len(), 100_000);
+    }
+
+    #[test]
+    fn runtime_catalog_keeps_byte_depth_value_and_duplicate_limits() {
+        let at_limit = format!("[{}]", vec!["0"; 999_999].join(","));
+        assert!(checked_truss_runtime_catalog_json(&at_limit).is_ok());
+        let over_limit = format!("[{}]", vec!["0"; 1_000_000].join(","));
+        assert_eq!(checked_truss_runtime_catalog_json(&over_limit), Err("WFT-LIMIT"));
+        assert_eq!(checked_truss_runtime_catalog_json(&" ".repeat(4 * 1024 * 1024 + 1)), Err("WFT-LIMIT"));
+        assert_eq!(checked_truss_runtime_catalog_json(&format!("{}0{}", "[".repeat(129), "]".repeat(129))), Err("WFT-LIMIT"));
+        assert_eq!(checked_truss_runtime_catalog_json(r#"{"a":1,"\u0061":2}"#), Err("WFT-JSON-DUPLICATE"));
+    }
+}
+
 /// Bounded transport reader; root depth is one and each value counts once.
 /// Parsing is custody only and grants no result release authority.
 #[allow(dead_code)] // Pending runtime-cell consumer.
