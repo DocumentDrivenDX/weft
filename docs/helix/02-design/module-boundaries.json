@@ -1584,7 +1584,8 @@
           "path": "crates/weft-core/src/json.rs",
           "publicDeclarations": [
             "fn:sha256",
-            "fn:checked_json"
+            "fn:checked_json",
+            "fn:checked_truss_runtime_catalog_json"
           ],
           "pathReferences": []
         },
