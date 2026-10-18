@@ -27,7 +27,18 @@ def document(value,source):
 
 started=time.monotonic();result=compile_request(request);elapsed=time.monotonic()-started
 assert result['status']=='compiled',result
-assert hashlib.sha256(json.dumps(result,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()=='21be0763aefc88ae2d78b083baca275fb7e6a9e57ce712488eb884726d5583f5'
+# The presence/Graph release adds one explicitly qualified engine-navigation
+# language profile to each operation declaration. Assert that addition, then
+# compare every other result byte against the previously verified receipt.
+baseline=copy.deepcopy(result)
+operations=baseline['qualification']['operations']
+assert len(operations)==15
+for operation in operations:
+    profiles=operation['declaration']['languageProfiles']
+    added={'dialectProfile':'weft-sql/0.2.0','irVersion':'weft-ir/engine-navigation/0.1'}
+    assert profiles.count(added)==1,profiles
+    profiles.remove(added)
+assert hashlib.sha256(json.dumps(baseline,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()=='21be0763aefc88ae2d78b083baca275fb7e6a9e57ce712488eb884726d5583f5'
 assert result['bindingSha256']==request['target']['bindingSha256']
 assert result['modelPins']==[item['pin'] for item in request['modules']]
 assert any(p.get('value')==request['target']['bindingJson'] for p in result['parameters'])
