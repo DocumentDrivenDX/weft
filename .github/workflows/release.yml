@@ -148,6 +148,7 @@ jobs:
             dist/truss-decimal12-smoke-*.json
             dist/truss-native70-smoke-*.json
             dist/truss-date-smoke-*.json
+            dist/truss-catalog-capacity-*.json
             dist/sdk-compiler-smoke-*.json
           if-no-files-found: error
   publish:
@@ -230,7 +231,7 @@ jobs:
                       feature(dependency,child)
                   else:feature(crate,selected)
           for selected in features:feature('weft-python',selected)
-          if tuple(map(int,version.split('.'))) >= (0,4,42):
+          if tuple(map(int,version.split('.'))) >= (0,4,43):
               assert 'current-presence-graph-requirements-candidate' in features
               assert 'weft-core/current-presence-context-candidate' in closure
           databricks=[json.loads(p.read_text()) for p in sorted(root.glob('current-databricks-smoke-*.json'))]
