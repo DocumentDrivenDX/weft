@@ -121,6 +121,20 @@ is informational; blocking diagnostics are errors. Never leak credentials/data.
 Initial maxima: request 16 MiB UTF-8; source SQL 64 KiB; each owning model 4 MiB;
 32 owning documents; 256 selected modules total; 100,000 JSON values/document;
 JSON nesting 128; 4,096 SQL tokens; 16 joins; 256 outputs; 1,024 literal parameters.
+
+The Truss runtime registration `truss.postgresql.runtime` backend `0.4.41`,
+target `truss-runtime-pg18.6/0.5`, with compile/IR `0.2.7` admits up to
+1,000,000 JSON values per original owning model and runtime binding. Each remains
+bounded at 4 MiB UTF-8, nesting remains 128, and the total request remains 16 MiB.
+This scoped capacity correction ships in Python 0.4.42; other registrations,
+generic JSON custody and security compilation retain their existing bounds.
+A genuine 1,000-record/twelve-field catalog contains 179,012 model values and
+110,021 binding values within 2.53/2.03 MB. The larger value budget accommodates
+that ordinary schema without removing the byte, depth, duplicate-member or
+source-pin checks. It is a bounded parser allowance, not a process-memory or
+latency guarantee. Prepared catalogs index original module/element coordinates
+once in memory; original bytes, ordered definitions and semantic checks remain.
+
 All limits are checked before/while allocation; no partial artifact may escape.
 Host cancellation/deadline and total memory sandboxing are host responsibilities;
 limits do not claim that trusted plugin code is sandboxed.

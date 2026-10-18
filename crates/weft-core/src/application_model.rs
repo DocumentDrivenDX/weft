@@ -85,18 +85,7 @@ impl Catalog {
         let eid = reference["element"]
             .as_str()
             .ok_or_else(|| fail("Missing local element reference"))?;
-        let element = self.documents[record.document]["modules"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .find(|m| m["id"] == mid)
-            .and_then(|m| {
-                m["elements"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .find(|e| e["id"] == eid)
-            })
+        let element = self.local_element_by_ids(record.document, mid, eid)
             .ok_or_else(|| fail("Unresolved local type dependency"))?;
         let mut identity = record.identity.clone();
         identity.module = mid.into();

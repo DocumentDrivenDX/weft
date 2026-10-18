@@ -6,7 +6,9 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
-use std::collections::BTreeSet;
+use std::collections::{BTreeSet, HashMap};
+
+type ModuleElementIndex = HashMap<String, (usize, HashMap<String, usize>)>;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -39,6 +41,7 @@ pub struct Catalog {
     pub(crate) exact_dates: bool,
     pub(crate) bounded_current_strings: bool,
     pub(crate) documents: Vec<Value>,
+    element_locations: Vec<ModuleElementIndex>,
 }
 #[derive(Debug, Clone)]
 pub struct Record {
@@ -100,18 +103,23 @@ impl Catalog {
         let mut catalog=Self::prepare(inputs)?;catalog.exact_numbers=true;Ok(catalog)
     }
     pub fn prepare(inputs: Vec<ModuleInput>) -> Result<Self> {
-        Self::prepare_version(inputs, None)
+        Self::prepare_version(inputs, None, false)
+    }
+    pub(crate) fn prepare_truss_runtime(inputs: Vec<ModuleInput>, exact_numbers: bool) -> Result<Self> {
+        let mut catalog = Self::prepare_version(inputs, None, true)?;
+        catalog.exact_numbers = exact_numbers;
+        Ok(catalog)
     }
     /// Source custody only; security activation remains independently gated.
     pub fn prepare_security(inputs: Vec<ModuleInput>) -> Result<Self> {
-        Self::prepare_version(inputs, Some("0.8.0"))
+        Self::prepare_version(inputs, Some("0.8.0"), false)
     }
     pub(crate) fn prepare_security_bounded_strings(inputs: Vec<ModuleInput>) -> Result<Self> {
         let mut catalog = Self::prepare_security(inputs)?;
         catalog.bounded_current_strings = true;
         Ok(catalog)
     }
-    fn prepare_version(inputs: Vec<ModuleInput>, required_version: Option<&str>) -> Result<Self> {
+    fn prepare_version(inputs: Vec<ModuleInput>, required_version: Option<&str>, truss_runtime: bool) -> Result<Self> {
         if inputs.is_empty() || inputs.len() > 32 {
             return Err(fail(
                 "WFT-LIMIT",
@@ -128,7 +136,11 @@ impl Catalog {
             if input.pin.sha256 != sha256(input.document_json.as_bytes()) {
                 return Err(fail("WFT-PIN", "Owning document digest mismatch"));
             }
-            let doc = checked_json(&input.document_json)
+            let doc = (if truss_runtime {
+                crate::json::checked_truss_runtime_catalog_json(&input.document_json)
+            } else {
+                checked_json(&input.document_json)
+            })
                 .map_err(|c| fail(c, "Owning document JSON refused"))?;
             if doc["id"] != input.pin.document_id {
                 return Err(fail("WFT-PIN", "Owning document identity mismatch"));
@@ -181,7 +193,21 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
+        // Index coordinates only. Original immutable documents and their order
+        // remain authoritative; no Field meaning or authorization is cached.
+        let element_locations = documents.iter().map(|document| {
+            document["modules"].as_array().unwrap().iter().enumerate().map(|(mi, module)| {
+                let elements = module["elements"].as_array().unwrap().iter().enumerate()
+                    .map(|(ei, element)| (element["id"].as_str().unwrap().to_owned(), ei)).collect();
+                (module["id"].as_str().unwrap().to_owned(), (mi, elements))
+            }).collect()
+        }).collect();
+        Ok(Self { inputs, documents, element_locations, exact_numbers:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
+    }
+    pub(crate) fn local_element_by_ids(&self, document: usize, module: &str, element: &str) -> Option<&Value> {
+        let (module_index, elements) = self.element_locations.get(document)?.get(module)?;
+        let element_index = elements.get(element)?;
+        self.documents.get(document)?.get("modules")?.get(*module_index)?.get("elements")?.get(*element_index)
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()
@@ -195,22 +221,11 @@ impl Catalog {
             {
                 continue;
             }
-            for module in self.documents[document]["modules"].as_array().unwrap() {
-                if module["id"] != identity.module
-                    || !input.selected_module_ids.contains(&identity.module)
-                {
-                    continue;
-                }
-                for element in module["elements"].as_array().unwrap() {
-                    if element["id"] == identity.element && element["kind"] == "record" {
-                        selected08(&input.pin, element)?;
-                        found.push(Record {
-                            identity: identity.clone(),
-                            pin: input.pin.clone(),
-                            value: element.clone(),
-                            document,
-                        });
-                    }
+            if !input.selected_module_ids.contains(&identity.module) { continue; }
+            if let Some(element) = self.local_element_by_ids(document, &identity.module, &identity.element) {
+                if element["kind"] == "record" {
+                    selected08(&input.pin, element)?;
+                    found.push(Record { identity: identity.clone(), pin: input.pin.clone(), value: element.clone(), document });
                 }
             }
         }
@@ -281,9 +296,6 @@ impl Catalog {
         let members = record.value["members"]
             .as_array()
             .ok_or_else(|| fail("WFT-TYPE", "Selected record has no explicit members"))?;
-        let modules = self.documents[record.document]["modules"]
-            .as_array()
-            .unwrap();
         let mut refs = BTreeSet::new();
         let mut found = Vec::new();
         for reference in members {
@@ -292,15 +304,10 @@ impl Catalog {
             if !refs.insert((mid, eid)) {
                 return Err(fail("WFT-MODEL", "Duplicate record member reference"));
             }
-            let module = modules
-                .iter()
-                .find(|m| m["id"] == mid)
-                .ok_or_else(|| fail("WFT-MODEL", "Referenced local module missing"))?;
-            let element = module["elements"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|e| e["id"] == eid)
+            if !self.element_locations[record.document].contains_key(mid) {
+                return Err(fail("WFT-MODEL", "Referenced local module missing"));
+            }
+            let element = self.local_element_by_ids(record.document, mid, eid)
                 .ok_or_else(|| fail("WFT-MODEL", "Referenced local element missing"))?;
             if name.matches(self.query_name(element).unwrap_or("")) {
                 let mut identity = record.identity.clone();
