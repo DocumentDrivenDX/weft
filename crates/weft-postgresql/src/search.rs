@@ -210,6 +210,8 @@ fn compile(raw: &str) -> Result<Json> {
                 Carrier::Boolean => "boolean",
                 Carrier::Integer => "integer",
                 Carrier::Decimal => "decimal",
+                Carrier::Uuid => "uuid",
+                Carrier::Bits128 => "bits128",
             }
             .into(),
             c.nullable,

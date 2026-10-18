@@ -21,6 +21,8 @@ fn native(c: &Carrier) -> &'static str {
         Carrier::String => "text",
         Carrier::Integer | Carrier::Decimal => "numeric",
         Carrier::Boolean => "bool",
+        Carrier::Uuid => "uuid",
+        Carrier::Bits128 => "bytea",
     }
 }
 fn compile(raw: &str) -> Result<Value> {

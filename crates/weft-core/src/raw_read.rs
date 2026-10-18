@@ -16,6 +16,8 @@ pub enum Carrier {
     Decimal,
     String,
     Boolean,
+    Uuid,
+    Bits128,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
@@ -139,12 +141,13 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
         return Err("model source pin mismatch");
     }
     let modules = doc["modules"].as_array().ok_or("model modules")?;
+    let version = doc["umf"].as_str().ok_or("model UMF version")?;
     let input = crate::model::ModuleInput {
         document_json: binding.model_json.clone(),
         pin: crate::ir::ModelPin {
             document_id: doc["id"].as_str().ok_or("model ID")?.into(),
             revision: binding.model_sha256.clone(),
-            umf_version: "0.8.0".into(),
+            umf_version: version.into(),
             sha256: binding.model_sha256.clone(),
         },
         selected_module_ids: modules
@@ -152,8 +155,11 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             .map(|m| m["id"].as_str().unwrap_or("").to_owned())
             .collect(),
     };
-    let catalog = crate::model::Catalog::prepare_security(vec![input])
-        .map_err(|_| "UMF core 0.8 model refused")?;
+    let catalog = match version {
+        "0.8.0" => crate::model::Catalog::prepare_security(vec![input]),
+        "0.10.0" => crate::model::Catalog::prepare_security010(vec![input]),
+        _ => return Err("raw-read supports original UMF core 0.8.0 and 0.10.0 sources"),
+    }.map_err(|_| "UMF core envelope/profile refused")?;
     let n = |value: &str| crate::syntax::Name {
         value: value.into(),
         quoted: true,
@@ -191,12 +197,20 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
                 return Err("column absent/ambiguous in UMF");
             };
             let (field, member) = matches[0];
+            crate::model::selected010(&record.pin, field).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
             let family = match c.carrier {
                 Carrier::Integer => "integer",
                 Carrier::Decimal => "decimal",
                 Carrier::String => "string",
                 Carrier::Boolean => "boolean",
+                Carrier::Uuid => "uuid",
+                Carrier::Bits128 => "bits128",
             };
+            if matches!(c.carrier, Carrier::Uuid | Carrier::Bits128)
+                && (version != "0.10.0"
+                    || field.get("facets").is_some_and(|v|v != &json!({}))
+                    || field.get("semanticTypes").is_some())
+            { return Err("UMF 0.10 UUID/bits128 native refinements or semantic references are unsupported"); }
             if field["kind"] != "field"
                 || field["cardinality"] != "one"
                 || field["scalarType"] != family
@@ -320,6 +334,9 @@ impl AdmittedRead {
 pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     let v = crate::json::checked_json(raw).map_err(|_| "invalid or duplicate JSON")?;
     let request: Request = serde_json::from_value(v).map_err(|_| "invalid read request")?;
+    if request.binding.tables.iter().flat_map(|t|&t.columns).any(|c|matches!(c.carrier,Carrier::Uuid|Carrier::Bits128))
+        && !matches!(request.target.as_str(),"postgresql18"|"lakebase18")
+    { return Err("UMF 0.10 UUID/bits128 raw carriers are currently PostgreSQL-only"); }
     validate_catalog_fence(&request.binding,&request.target)?;
     if let Some(profile)=&request.verification_profile {
         if profile!="source-exact/0.1" || !matches!(request.target.as_str(),"postgresql18"|"lakebase18") {return Err("unsupported source verification profile")}
@@ -357,6 +374,47 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
 #[cfg(test)]
 mod source_identity_tests {
     use super::*;
+
+    #[test]
+    fn original_umf010_uuid_and_bits128_source_is_retained_and_pinned() {
+        let mut request: Json = serde_json::from_str(include_str!("../../../tests/raw-read/source-identity.json")).unwrap();
+        let mut doc: Json = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        doc["umf"] = json!("0.10.0");
+        let elements = doc["modules"][0]["elements"].as_array_mut().unwrap();
+        for field in elements {
+            match field["id"].as_str() {
+                Some("Order_id") => field["scalarType"] = json!("uuid"),
+                Some("Order_status") => field["scalarType"] = json!("bits128"),
+                _ => {}
+            }
+        }
+        let source = serde_json::to_string(&doc).unwrap();
+        let digest = crate::json::sha256(source.as_bytes());
+        request["binding"]["modelSha256"] = json!(digest);
+        request["binding"]["modelJson"] = json!(source);
+        request["binding"]["tables"].as_array_mut().unwrap().truncate(1);
+        request["binding"]["tables"][0]["columns"][0]["carrier"] = json!("uuid");
+        request["binding"]["tables"][0]["columns"][2]["carrier"] = json!("bits128");
+        request["binding"]["relationships"] = json!([]);
+        request["target"] = json!("postgresql18");
+        request["sql"] = json!("SELECT o.id AS id, o.status AS status FROM commerce.Order AS o WHERE o.id = :id AND o.status = :opaque");
+        request["parameters"] = json!([
+            {"name":"id","carrier":"uuid","nullable":false},
+            {"name":"opaque","carrier":"bits128","nullable":false}
+        ]);
+        request["keyset"] = json!(false);
+        request.as_object_mut().unwrap().remove("snapshots");
+
+        let admitted = admit_json(&request.to_string()).expect("UMF 0.10 exact UUID/128 source admitted");
+        assert_eq!(admitted.request().binding.model_sha256, digest);
+        assert_eq!(crate::json::sha256(admitted.request().binding.model_json.as_bytes()), digest);
+        assert_eq!(admitted.original_document(), &doc);
+        let table = vec!["commerce".into(), "Order".into()];
+        let record = admitted.original_record(&table).unwrap();
+        assert_eq!(record.pin.umf_version, "0.10.0");
+        assert_eq!(admitted.original_field_ref(&table, "id").unwrap(), json!({"module":"commerce","element":"Order_id"}));
+        assert_eq!(admitted.original_field_ref(&table, "status").unwrap(), json!({"module":"commerce","element":"Order_status"}));
+    }
 
     #[test]
     fn resolved_source_identity_is_not_logical_name_guessing() {

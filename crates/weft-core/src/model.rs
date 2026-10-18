@@ -77,6 +77,28 @@ pub(crate) fn selected08(pin: &ModelPin, element: &Value) -> Result<()> {
     }
     Ok(())
 }
+/// UMF 0.10 selected semantics are admitted only where this compiler can
+/// preserve their value domain. External semantic type references are retained
+/// in source but remain outside the raw scalar profile.
+pub(crate) fn selected010(pin: &ModelPin, element: &Value) -> Result<()> {
+    if pin.umf_version != "0.10.0" { return Ok(()); }
+    const KNOWN: &[&str] = &["id", "name", "title", "description", "kind", "scalarType",
+        "nullability", "cardinality", "itemType", "recordType", "facets", "members",
+        "keys", "references", "extensions", "semanticTypes"];
+    if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())))
+        || element.get("semanticTypes").is_some()
+        || element.get("extensions").is_some_and(|e|e.as_object().is_none_or(|m|!m.is_empty()))
+    { return Err(fail("WFT-TYPE", "Selected UMF 0.10 element has semantics outside the raw scalar profile")); }
+    if element["kind"] == "record" && element.get("references").and_then(Value::as_array).is_some_and(|r|!r.is_empty()) {
+        return Err(fail("WFT-TYPE", "Selected UMF 0.10 Record reference roles are unsupported"));
+    }
+    for member in element.get("members").and_then(Value::as_array).into_iter().flatten() {
+        if member.as_object().is_none_or(|m|m.keys().any(|k|!matches!(k.as_str(),"module"|"element"))) {
+            return Err(fail("WFT-TYPE", "Selected UMF 0.10 reference has unsupported qualifiers"));
+        }
+    }
+    Ok(())
+}
 pub(crate) fn reference08(pin: &ModelPin, reference: &Value, known: &[&str]) -> Result<()> {
     if pin.umf_version == "0.8.0" && reference.as_object().is_none_or(|m| m.keys().any(|k| !known.contains(&k.as_str()))) {
         return Err(fail("WFT-TYPE", "Selected core 0.8 reference contains unestablished qualifiers"));
@@ -87,6 +109,8 @@ pub(crate) fn reference08(pin: &ModelPin, reference: &Value, known: &[&str]) -> 
 struct Envelope;
 #[jsonschema::validator(path = "../../spec/upstream/umf-0.8.0.schema.json")]
 struct Envelope08;
+#[jsonschema::validator(path = "../../spec/upstream/umf-0.10.0.schema.json")]
+struct Envelope10;
 impl Catalog {
     /// Immutable evidence of the trusted SDK scalar presence preparation path.
     pub fn sdk_scalar_presence(&self)->bool {self.sdk_scalar_presence}
@@ -117,6 +141,9 @@ impl Catalog {
     /// Source custody only; security activation remains independently gated.
     pub fn prepare_security(inputs: Vec<ModuleInput>) -> Result<Self> {
         Self::prepare_version(inputs, Some("0.8.0"), false)
+    }
+    pub(crate) fn prepare_security010(inputs: Vec<ModuleInput>) -> Result<Self> {
+        Self::prepare_version(inputs, Some("0.10.0"), false)
     }
     pub(crate) fn prepare_security_bounded_strings(inputs: Vec<ModuleInput>) -> Result<Self> {
         let mut catalog = Self::prepare_security(inputs)?;
@@ -149,7 +176,7 @@ impl Catalog {
             if doc["id"] != input.pin.document_id {
                 return Err(fail("WFT-PIN", "Owning document identity mismatch"));
             }
-            if !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0")
+            if !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0" | "0.10.0")
                 || doc["umf"] != input.pin.umf_version
                 || required_version.is_some_and(|version| input.pin.umf_version != version)
             {
@@ -161,9 +188,11 @@ impl Catalog {
                     "Empty revision or repeated owning document",
                 ));
             }
-            if !(if input.pin.umf_version == "0.8.0" {
-                Envelope08::is_valid(&doc)
-            } else { Envelope::is_valid(&doc) }) {
+            if !(match input.pin.umf_version.as_str() {
+                "0.8.0" => Envelope08::is_valid(&doc),
+                "0.10.0" => Envelope10::is_valid(&doc),
+                _ => Envelope::is_valid(&doc),
+            }) {
                 return Err(fail(
                     "WFT-MODEL",
                     "Document violates the pinned UMF envelope",
@@ -258,6 +287,7 @@ impl Catalog {
                 for e in module["elements"].as_array().unwrap() {
                     if e["kind"] == "record" && name.matches(self.query_name(e).unwrap_or("")) {
                         selected08(&input.pin, e)?;
+                        selected010(&input.pin, e)?;
                         found.push(Record {
                             identity: Identity {
                                 document_id: input.pin.document_id.clone(),
@@ -337,6 +367,7 @@ impl Catalog {
             .at(&name.span)
         })?;
         selected08(&record.pin, field)?;
+        selected010(&record.pin, field)?;
         let ideal;
         let selected=if optional03 && field["nullability"]=="absent-allowed" {
             // Derive the ideal scalar domain, leaving original selected source bytes untouched.

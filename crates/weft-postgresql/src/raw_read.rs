@@ -18,6 +18,8 @@ impl PgCarrier for Carrier {
             Self::Decimal => "numeric",
             Self::String => "text",
             Self::Boolean => "bool",
+            Self::Uuid => "uuid",
+            Self::Bits128 => "bytea",
         }
     }
 }
