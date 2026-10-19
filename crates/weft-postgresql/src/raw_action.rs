@@ -21,6 +21,8 @@ fn native_type(c: &Carrier) -> &'static str {
         Carrier::Integer | Carrier::Decimal => "numeric",
         Carrier::Uuid => "uuid",
         Carrier::Bits128 => "bytea",
+        Carrier::Date => "date",
+        Carrier::Timestamp => "timestamptz",
     }
 }
 fn field_id(f: &ActionField) -> String {

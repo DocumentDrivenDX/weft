@@ -46,6 +46,25 @@ for path in [[],['body'],['body','values',0],['parameters',0]]:
     invalid=request('create');model=json.loads(source_text);selected=model['modules'][0]['extensions']['umf.tables']['commands'][5]
     for part in path:selected=selected[part]
     selected['future']=True;text=encode(model);invalid['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest());cases.append(('unknown-member-'+str(path),invalid,'blocked'))
+# Temporal declarations share native/CLI/WASM code and preserve exact source.
+temporal=request('create');model=json.loads(source_text)
+for name,carrier,native in [('day','date','date'),('at','timestamp','timestamptz')]:
+    ref={'module':'demo','element':name}
+    model['modules'][0]['elements'].append({'id':name,'kind':'field','scalarType':carrier,'cardinality':'one','nullability':'required','extensions':{}})
+    model['modules'][0]['elements'][2]['members'].append(ref)
+    model['modules'][0]['extensions']['umf.tables']['tables'][0]['columns'].append({'field':ref,'name':name,'nativeType':{'kind':native}})
+    temporal['binding']['tables'][0]['columns'].append({'logical':name,'native':name,'carrier':carrier,'nullable':False})
+    command=next(c for c in model['modules'][0]['extensions']['umf.tables']['commands'] if c['id']=='create')
+    command['parameters'].append({'id':name,'field':ref})
+    command['body']['values'].append({'field':ref,'value':{'kind':'parameter','parameter':name}})
+    command['body']['returning'].append(ref)
+text=encode(model);temporal['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
+temporal['call']['inputs'].update(day={'date':'2000-02-29'},at={'timestamp':'2026-01-01T00:30:00.123456000+01:00'})
+cases.append(('exact-native-temporal',temporal,'compiled'))
+for name,value in [('rounding',{'timestamp':'2026-01-01T00:00:00.1234567Z'}),('unknown-offset',{'timestamp':'2026-01-01T00:00:00-00:00'}),('UTC-overflow',{'timestamp':'9999-12-31T23:59:59-00:01'})]:
+    bad=copy.deepcopy(temporal);bad['call']['inputs']['at']=value;cases.append(('temporal-'+name,bad,'blocked'))
+for value in ['1900-02-29','infinity','0000-01-01']:
+    bad=copy.deepcopy(temporal);bad['call']['inputs']['day']={'date':value};cases.append(('date-'+value,bad,'blocked'))
 results=[]
 browser_cases=[]
 for name,value,status in cases:

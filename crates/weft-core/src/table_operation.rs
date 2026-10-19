@@ -7,6 +7,7 @@ use std::collections::{BTreeMap, BTreeSet};
 mod schema;
 mod validation;
 mod values;
+mod temporal;
 pub(crate) use schema::known_declaration;
 use validation::validate;
 use values::{domain, literal};
@@ -264,13 +265,13 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
             {
                 return Err("operation semantic type interpreter unavailable");
             }
-            if matches!(bound.carrier, Carrier::Uuid | Carrier::Bits128) {
+            if matches!(bound.carrier, Carrier::Uuid | Carrier::Bits128 | Carrier::Date | Carrier::Timestamp) {
                 if field["facets"].as_object().is_some_and(|v| !v.is_empty())
                     || field["allowedValues"]
                         .as_array()
                         .is_some_and(|v| !v.is_empty())
                 {
-                    return Err("operation 128-bit qualifiers unsupported");
+                    return Err("operation exact carrier qualifiers unsupported");
                 }
             } else {
                 crate::security_literals::validate_field(field)

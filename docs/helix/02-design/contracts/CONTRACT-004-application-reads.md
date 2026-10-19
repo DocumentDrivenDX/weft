@@ -369,3 +369,30 @@ counting; hosts return no invented empty business rows. Atomic batch execution
 also checks its cumulative serialized wire budget before commit. Durable outcome
 storage, authentication and recovery remain host/SDK obligations, not permissions
 conferred by this compiler program.
+
+### Declared PostgreSQL temporal operation candidate
+
+The unpublished declared-operation profile adds finite Gregorian `date` and
+instant `timestamp` carriers. These carriers require original current-core table
+lifecycle source and explicit `date` or `timestamptz` storage. Generic raw-read,
+action/bulk and search admission retain their prior temporal refusals. A local
+`timestamp` column cannot acquire an inferred timezone.
+
+Dates use exact ISO `YYYY-MM-DD` in years0001 through9999. Instants require an
+explicit `Z` or numeric offset, a valid Gregorian calendar/clock and at most128
+ASCII characters. Leap seconds, unknown `-00:00`, UTC overflow outside those
+years and sub-microsecond values requiring rounding refuse before emission.
+Extra fractional zeroes are representable. Normalization uses integer calendar
+and second arithmetic; it never calls a clock, timezone database or float API.
+Driver input is canonical UTC with six fractional digits. Complete authored
+source/request tokens remain intact. Unqualified temporal facets/enumerations
+remain refused.
+
+Bindings cast issued date/instant scalars to their explicit PostgreSQL types.
+Projection uses fixed numeric date formatting and explicit UTC conversion, with
+exact output carriers rather than driver-local datetime serialization. Comparison
+and ordering remain native date/instant operations. The ordinary frame/effect
+bounds, checked-source custody, caller identity and transaction/outcome obligations
+remain mandatory. UMF owns native finite-domain constraints, source-proved catalog
+witnesses, installation, generated methods and authenticated execution. This
+compiler extension grants no native authority and publishes no release by itself.

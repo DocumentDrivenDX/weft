@@ -36,6 +36,8 @@ impl Lower<'_> {
         let slot = format!("${}", index + 1);
         match field.carrier {
             Carrier::Bits128 => format!("pg_catalog.decode({slot}::pg_catalog.text,'hex')"),
+            Carrier::Date => format!("{slot}::pg_catalog.date"),
+            Carrier::Timestamp => format!("{slot}::pg_catalog.timestamptz"),
             Carrier::Uuid => format!("{slot}::pg_catalog.uuid"),
             Carrier::Boolean => format!("{slot}::pg_catalog.bool"),
             Carrier::Integer | Carrier::Decimal => format!("{slot}::pg_catalog.numeric"),
@@ -105,6 +107,8 @@ impl Lower<'_> {
         let field = self.operation.field(reference)?;
         let column = self.column(reference, true)?;
         let expression = match field.carrier {
+            Carrier::Date => format!("pg_catalog.to_char({column}::pg_catalog.timestamp, 'YYYY-MM-DD')"),
+            Carrier::Timestamp => format!("pg_catalog.to_char({column} AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"')"),
             Carrier::Boolean => column,
             Carrier::Bits128 => format!("pg_catalog.encode({column},'hex')"),
             _ => format!("({column})::pg_catalog.text"),

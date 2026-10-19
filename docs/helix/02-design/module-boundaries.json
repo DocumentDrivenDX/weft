@@ -2800,6 +2800,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/table_operation/temporal.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/table_operation/validation.rs",
           "publicDeclarations": [],
           "pathReferences": []

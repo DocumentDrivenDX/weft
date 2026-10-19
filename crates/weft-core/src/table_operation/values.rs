@@ -14,6 +14,14 @@ pub(super) fn literal(field: &OperationField, value: &Value) -> Result<()> {
     if value.to_string().len() > 1_048_576 {
         return Err("operation value capacity exceeded");
     }
+    if matches!(field.carrier, Carrier::Date | Carrier::Timestamp) {
+        if value.is_null() { return if field.nullable { Ok(()) } else { Err("required operation value is null") }; }
+        let key = if field.carrier == Carrier::Date { "date" } else { "timestamp" };
+        if value.as_object().is_none_or(|m| m.len() != 1) { return Err("exact temporal wrapper required"); }
+        let text = value[key].as_str().ok_or("temporal token absent")?;
+        if field.carrier == Carrier::Date { temporal::date(text)?; } else { temporal::instant(text)?; }
+        return Ok(());
+    }
     if matches!(field.carrier, Carrier::Uuid | Carrier::Bits128) {
         if value.is_null() {
             return if field.nullable {
@@ -116,6 +124,8 @@ pub(super) fn native_value(field: &OperationField, value: &Value) -> Result<Valu
         return Ok(Value::Null);
     }
     Ok(match field.carrier {
+        Carrier::Date => json!(temporal::date(value["date"].as_str().unwrap())?),
+        Carrier::Timestamp => json!(temporal::instant(value["timestamp"].as_str().unwrap())?),
         Carrier::String => value["string"].clone(),
         Carrier::Boolean => value["boolean"].clone(),
         Carrier::Uuid => json!(value["uuid"].as_str().unwrap().to_ascii_lowercase()),

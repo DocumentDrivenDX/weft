@@ -54,7 +54,7 @@ impl Check<'_> {
                 if ["lt", "le", "gt", "ge"].contains(&op)
                     && !matches!(
                         field.carrier,
-                        Carrier::Integer | Carrier::Decimal | Carrier::String
+                        Carrier::Integer | Carrier::Decimal | Carrier::String | Carrier::Date | Carrier::Timestamp
                     )
                 {
                     return Err("operation ordering carrier unsupported");
@@ -159,7 +159,7 @@ pub(super) fn validate(
                 if field.nullable
                     || !matches!(
                         field.carrier,
-                        Carrier::Integer | Carrier::Decimal | Carrier::String | Carrier::Uuid
+                        Carrier::Integer | Carrier::Decimal | Carrier::String | Carrier::Date | Carrier::Timestamp | Carrier::Uuid
                     )
                 {
                     return Err("operation cursor carrier/availability unsupported");

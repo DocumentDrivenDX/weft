@@ -21,6 +21,8 @@ impl PgCarrier for Carrier {
             Self::Boolean => "bool",
             Self::Uuid => "uuid",
             Self::Bits128 => "bytea",
+            Self::Date => "date",
+            Self::Timestamp => "timestamptz",
         }
     }
 }

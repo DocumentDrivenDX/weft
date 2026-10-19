@@ -238,6 +238,8 @@ pub(crate) fn admit(
                 Carrier::Boolean => "boolean",
                 Carrier::Uuid => "uuid",
                 Carrier::Bits128 => "bits128",
+                Carrier::Date => "date",
+                Carrier::Timestamp => "timestamp",
             };
             let compatible = matches!(
                 (family, column["nativeType"]["kind"].as_str()),
@@ -247,6 +249,8 @@ pub(crate) fn admit(
                     | ("boolean", Some("boolean"))
                     | ("uuid", Some("uuid"))
                     | ("bits128", Some("bytea"))
+                    | ("date", Some("date"))
+                    | ("timestamp", Some("timestamptz"))
             );
             if !compatible
                 || field["scalarType"] != family

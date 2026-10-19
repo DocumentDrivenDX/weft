@@ -213,6 +213,7 @@ fn compile(raw: &str) -> Result<Json> {
                 Carrier::Decimal => "decimal",
                 Carrier::Uuid => "uuid",
                 Carrier::Bits128 => "bits128",
+                Carrier::Date | Carrier::Timestamp => return Err("search temporal projection unsupported"),
             }
             .into(),
             c.nullable,

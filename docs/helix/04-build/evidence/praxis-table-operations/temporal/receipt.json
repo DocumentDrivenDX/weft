@@ -1,0 +1,67 @@
+{
+  "capturedAt": "2026-10-19T23:28:55.467021+00:00",
+  "scope": "unpublished declared-operation finite Gregorian date and exact microsecond UTC instant compiler; no native authority or release claim",
+  "parent": "4c7c2eb0382e8dd5a5fca91e65d7f39cdecfc49b",
+  "sourceFiles": {
+    "crates/weft-core/src/raw_read.rs": "380f4a75312cdf8d75059f2ed468f8db2b64195bbe02b9f630a87104ba77940b",
+    "crates/weft-core/src/table_lifecycle.rs": "b019147e6de591f455fc04f2d171912e48268c48a2bdc07b8979eb2a61622cd4",
+    "crates/weft-core/src/table_operation.rs": "d88394c49e58699d2e22ffbeb5e5bc902bfc6770516bf50ed1ace5c8d2f3c951",
+    "crates/weft-core/src/table_operation/temporal.rs": "376560035ad057931a616ab6c721d8a90c3eccc41eac0e7da68c0952aa26ca4b",
+    "crates/weft-core/src/table_operation/validation.rs": "51f8d7cc35f39d3441144118ace62d9aa6d017fc9c051776a331a99996121376",
+    "crates/weft-core/src/table_operation/values.rs": "a59f6b26f5e155bc981b283a75cf5c6c718a234002cb843d2cb1889fac5e6277",
+    "crates/weft-postgresql/src/raw_action.rs": "06bf933892208c316050aff1328c0573b281716d015db2d16b500c9e38ff7090",
+    "crates/weft-postgresql/src/raw_bulk.rs": "918eb8f50511484e46307400f9f0b366fe736aaa0d43a74cc06a43398d757e6c",
+    "crates/weft-postgresql/src/raw_read.rs": "be0251c100de790d0b59e2f21d25ad22485debfd679ed0a811a283fb16158e59",
+    "crates/weft-postgresql/src/search.rs": "48d8e89a2b6f399727511cd27eac901a855d3ce16df62df3ce65d3815a9183fc",
+    "crates/weft-postgresql/src/table_operation.rs": "f048e29db81123d5a67c4341a83ea2583be1f53bfa54593e92aa1b0b4aa22cff",
+    "crates/weft-postgresql/tests/table_operation.rs": "bf3181ae41d9f152975f44ac1af12e86ad575aaeed8b3fbd8b371b6095330f96",
+    "docs/helix/02-design/contracts/CONTRACT-004-application-reads.md": "223d16cf5cf35a43ad14cc73491bf95cbb650135eb8650576df8bd2ba2771a69",
+    "docs/helix/02-design/module-boundaries.json": "2e25a2cd7ead1882a813d6e55717ea73f6ebc411f080ec3447f41d1cd95c6c5d",
+    "docs/helix/04-build/evidence/praxis-table-operations/README.md": "9b027dafbdeb5eda26143b0e7d910929eb479b90b6e3c5e90983d71d4f3668c5",
+    "tests/raw-postgresql/table-operation-bindings.py": "b4f1df230e77b442ba01ef7f59d98222b508e5046fcd97d8a5ebc5ebf4eab35a"
+  },
+  "wheel": {
+    "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "33fad62998271dbe222dd0e5b96895970c3d1ac70d48919de712322ebf405e48",
+    "license": "MIT OR Apache-2.0"
+  },
+  "checks": {
+    "focusedOperationRustTests": 13,
+    "coreTemporalTests": 1,
+    "nativePythonCliComparisons": 34,
+    "nativeProgramSelfRehashRefusals": 10,
+    "actualChromiumWasmComparisons": 34,
+    "browserTamperRefusals": 1,
+    "browserUnicodeRefusals": 2,
+    "workspaceTests": 944,
+    "workspaceGroups": 80,
+    "workspaceIgnored": 0,
+    "workspaceAllTargetsCompilation": "pass",
+    "moduleBoundaryPackages": 11,
+    "moduleBoundaryTests": 16,
+    "moduleBoundaryAssertions": 30,
+    "governedSpecs": "pass"
+  },
+  "tools": {
+    "rust": "1.90.0",
+    "maturin": "1.9.6",
+    "wasmBindgen": "0.2.105",
+    "playwright": "1.62.1",
+    "chromium": "153.0.8010.12",
+    "python": "3.11.17",
+    "wasmFeature": "raw-postgresql-reads"
+  },
+  "limits": [
+    "Gregorian years0001-9999 after UTC normalization",
+    "explicit Z or numeric offset; unknown -00:00 refused",
+    "128ASCII-character instant capacity; leap seconds and submicrosecond rounding refused",
+    "no temporal facets or allowedValues",
+    "local timestamp columns and generic raw temporal APIs remain refused",
+    "host/source/identity/current installation and transaction/outcome obligations remain required"
+  ],
+  "remaining": [
+    "blocking domain enumerations/ranges and declared server-time expression assignments required by the selected consumer",
+    "seeds, broader evolution, runtime upgrades and private consumer acceptance",
+    "immutable full cohort publication"
+  ]
+}

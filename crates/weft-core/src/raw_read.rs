@@ -19,6 +19,8 @@ pub enum Carrier {
     Boolean,
     Uuid,
     Bits128,
+    Date,
+    Timestamp,
 }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
@@ -145,6 +147,9 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
     prepare_operation_model(binding,None)
 }
 pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>) -> Result<AdmittedModel> {
+    if binding.tables.iter().flat_map(|t| &t.columns).any(|c| matches!(c.carrier, Carrier::Date | Carrier::Timestamp))
+        && (operation.is_none() || binding.native_lifecycle.is_none())
+    { return Err("temporal carriers require declared native lifecycle operations"); }
     let doc = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
     if crate::json::sha256(binding.model_json.as_bytes()) != binding.model_sha256 {
         return Err("model source pin mismatch");
@@ -217,6 +222,8 @@ pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>)
                 Carrier::Boolean => "boolean",
                 Carrier::Uuid => "uuid",
                 Carrier::Bits128 => "bits128",
+                Carrier::Date => "date",
+                Carrier::Timestamp => "timestamp",
             };
             if matches!(c.carrier, Carrier::Uuid | Carrier::Bits128)
                 && (version != "0.10.0"

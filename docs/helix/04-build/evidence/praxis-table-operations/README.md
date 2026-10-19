@@ -115,3 +115,20 @@ the dedicated operation compiler only. Native admission, effect-only durable
 recovery and sync/async driver behavior have separate UMF SDK qualification.
 Generated lifecycle clients, remaining lifecycle/codec/consumer acceptance and
 publication still gate the complete Praxis release.
+
+## Finite temporal operation increment
+
+The [temporal evidence](temporal/receipt.json) extends the same dedicated
+compiler with exact finite dates and microsecond UTC instants. Temporal source
+selection requires explicit native lifecycle mappings; generic raw APIs remain
+closed to those carriers. Original lexemes are retained while driver values
+normalize without floats, locale, timezone databases or rounding. PostgreSQL
+projections use fixed numeric formatting and explicit UTC. Native Python/CLI and
+actual Chromium WASM share the Rust implementation and checked artifacts.
+
+The matching UMF component owns finite date/instant/numeric CHECK constraints,
+locale-independent expression-tree witnesses, generated Python carriers and
+native driver/pool execution. Its synthetic fixture covers source-declared
+current timestamps, predicates, alternate ambient timezone/date format, exact
+rows, replay/batch and both transaction owners. Neither component completes the
+remaining seeds/evolution, private Praxis/managed runtime or publication gates.

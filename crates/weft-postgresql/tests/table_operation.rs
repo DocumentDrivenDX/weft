@@ -454,3 +454,33 @@ fn mutation_frames_bound_returning_octets_and_effects_atomically() {
     }
     assert!(compile(request("read_many"))["result"]["nativeWriteFrameGuard"].is_null());
 }
+
+#[test]
+fn temporal_operations_are_exact_and_do_not_expand_raw_read_admission() {
+    let mut r=request("create");let mut source=source();
+    for (id,family,native) in [("day","date","date"),("at","timestamp","timestamptz")] {
+        let reference=json!({"module":"demo","element":id});
+        source["modules"][0]["elements"].as_array_mut().unwrap().push(json!({"id":id,"kind":"field","scalarType":family,"cardinality":"one","nullability":"required","extensions":{}}));
+        source["modules"][0]["elements"][2]["members"].as_array_mut().unwrap().push(reference.clone());
+        source["modules"][0]["extensions"]["umf.tables"]["tables"][0]["columns"].as_array_mut().unwrap().push(json!({"field":reference,"name":id,"nativeType":{"kind":native}}));
+        r["binding"]["tables"][0]["columns"].as_array_mut().unwrap().push(json!({"logical":id,"native":id,"carrier":family,"nullable":false}));
+        let op=source["modules"][0]["extensions"]["umf.tables"]["commands"].as_array_mut().unwrap().iter_mut().find(|v|v["id"]=="create").unwrap();
+        op["parameters"].as_array_mut().unwrap().push(json!({"id":id,"field":reference}));
+        op["body"]["values"].as_array_mut().unwrap().push(json!({"field":reference,"value":{"kind":"parameter","parameter":id}}));
+        op["body"]["returning"].as_array_mut().unwrap().push(reference);
+    }
+    repin(&mut r,source);
+    r["call"]["inputs"]["day"]=json!({"date":"2000-02-29"});
+    r["call"]["inputs"]["at"]=json!({"timestamp":"2026-01-01T00:30:00.123456000+01:00"});
+    let program=compile(r.clone());assert_eq!(program["status"],"compiled","{program}");
+    assert_eq!(program["nativeInputs"][0]["at"],"2025-12-31T23:30:00.123456Z");
+    assert_eq!(program["nativeInputs"][0]["day"],"2000-02-29");
+    assert!(program["sql"].as_str().unwrap().contains("AT TIME ZONE 'UTC'"));
+    for (field,value) in [("day",json!({"date":"1900-02-29"})),("day",json!({"date":"infinity"})),("at",json!({"timestamp":"2026-01-01T00:00:00.1234567Z"})),("at",json!({"timestamp":"2026-01-01T00:00:00-00:00"}))] {
+        let mut bad=r.clone();bad["call"]["inputs"][field]=value;assert_ne!(compile(bad)["status"],"compiled");
+    }
+    let raw=json!({"version":"weft.raw-read/0.1","target":"postgresql18","binding":r["binding"],"sql":"SELECT day FROM demo.Note","parameters":[],"maxRows":10,"keyset":false,"snapshot":false});
+    assert!(weft_core::raw_read::admit_json(&raw.to_string()).is_err());
+    let bound:weft_core::raw_read::Binding=serde_json::from_value(r["binding"].clone()).unwrap();
+    assert!(weft_core::raw_read::binding_record(&bound,&["demo".into(),"Note".into()]).is_err());
+}
