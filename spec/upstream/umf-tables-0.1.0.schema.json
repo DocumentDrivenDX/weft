@@ -1,0 +1,974 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:tables:0.1.0",
+  "title": "UMF native table lifecycle candidate0.1.0",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "postgresql18/0.1"
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/table"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "seedSets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/seedSet"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "commands": {
+      "type": "array",
+      "items": {},
+      "minItems": 0,
+      "maxItems": 256
+    }
+  },
+  "required": [
+    "profile",
+    "tables",
+    "seedSets",
+    "commands"
+  ],
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "element"
+      ]
+    },
+    "keyRef": {
+      "type": "object",
+      "properties": {
+        "record": {
+          "$ref": "#/$defs/ref"
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "record",
+        "key"
+      ]
+    },
+    "literal": {
+      "description": "UMF language literal",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "boolean"
+          ],
+          "properties": {
+            "boolean": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "integerToken"
+          ],
+          "properties": {
+            "integerToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "decimalToken"
+          ],
+          "properties": {
+            "decimalToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "string"
+          ],
+          "properties": {
+            "string": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "binaryHex"
+          ],
+          "properties": {
+            "binaryHex": {
+              "type": "string",
+              "pattern": "^([0-9a-fA-F]{2})*$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "floatToken"
+          ],
+          "properties": {
+            "floatToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "date"
+          ],
+          "properties": {
+            "date": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "time"
+          ],
+          "properties": {
+            "time": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "array"
+          ],
+          "properties": {
+            "array": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/literal"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "map"
+          ],
+          "properties": {
+            "map": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/literal"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "bits128Hex"
+          ],
+          "properties": {
+            "bits128Hex": {
+              "type": "string",
+              "minLength": 32,
+              "maxLength": 32,
+              "pattern": "^[0-9a-fA-F]{32}$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "uuid"
+          ],
+          "properties": {
+            "uuid": {
+              "type": "string",
+              "minLength": 36,
+              "maxLength": 36,
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "relationshipStep": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "direction": {
+          "enum": [
+            "forward",
+            "inverse"
+          ]
+        }
+      },
+      "required": [
+        "module",
+        "id",
+        "direction"
+      ]
+    },
+    "nativeType": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "boolean",
+                "text",
+                "int2",
+                "int4",
+                "int8",
+                "float4",
+                "float8",
+                "date",
+                "timestamp",
+                "timestamptz",
+                "uuid",
+                "bytea"
+              ]
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "varchar",
+                "char"
+              ]
+            },
+            "length": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10485760
+            }
+          },
+          "required": [
+            "kind",
+            "length"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "numeric"
+            },
+            "precision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "kind",
+            "precision",
+            "scale"
+          ]
+        }
+      ]
+    },
+    "default": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "literal"
+            },
+            "value": {
+              "$ref": "#/$defs/literal"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "currentTimestamp"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "randomUuid"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        }
+      ]
+    },
+    "generated": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "identity"
+        },
+        "generation": {
+          "enum": [
+            "always",
+            "byDefault"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "generation"
+      ]
+    },
+    "column": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/ref"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "nativeType": {
+          "$ref": "#/$defs/nativeType"
+        },
+        "default": {
+          "$ref": "#/$defs/default"
+        },
+        "generated": {
+          "$ref": "#/$defs/generated"
+        },
+        "immutable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "field",
+        "name",
+        "nativeType"
+      ]
+    },
+    "expression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "field"
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            }
+          },
+          "required": [
+            "op",
+            "field"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "literal"
+            },
+            "value": {
+              "$ref": "#/$defs/literal"
+            }
+          },
+          "required": [
+            "op",
+            "value"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "eq",
+                "ne",
+                "lt",
+                "le",
+                "gt",
+                "ge"
+              ]
+            },
+            "left": {
+              "$ref": "#/$defs/expression"
+            },
+            "right": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "and",
+                "or"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expression"
+              },
+              "minItems": 1,
+              "maxItems": 64
+            }
+          },
+          "required": [
+            "op",
+            "args"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "not",
+                "isNull"
+              ]
+            },
+            "arg": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "required": [
+            "op",
+            "arg"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "in"
+            },
+            "arg": {
+              "$ref": "#/$defs/expression"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/literal"
+              },
+              "minItems": 0,
+              "maxItems": 1000
+            }
+          },
+          "required": [
+            "op",
+            "arg",
+            "values"
+          ]
+        }
+      ]
+    },
+    "rowRule": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "deny",
+                "allow"
+              ]
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "owner",
+                "memberOf"
+              ]
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            }
+          },
+          "required": [
+            "kind",
+            "field"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "memberOfRole"
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "role"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "any",
+                "all"
+              ]
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/rowRule"
+              },
+              "minItems": 1,
+              "maxItems": 64
+            }
+          },
+          "required": [
+            "kind",
+            "rules"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "via"
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/relationshipStep"
+              },
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "rule": {
+              "$ref": "#/$defs/rowRule"
+            }
+          },
+          "required": [
+            "kind",
+            "path",
+            "rule"
+          ]
+        }
+      ]
+    },
+    "commandRules": {
+      "type": "object",
+      "properties": {
+        "select": {
+          "$ref": "#/$defs/rowRule"
+        },
+        "insert": {
+          "$ref": "#/$defs/rowRule"
+        },
+        "update": {
+          "$ref": "#/$defs/rowRule"
+        },
+        "delete": {
+          "$ref": "#/$defs/rowRule"
+        }
+      },
+      "required": [
+        "select",
+        "insert",
+        "update",
+        "delete"
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "const": "native-rls"
+        },
+        "person": {
+          "$ref": "#/$defs/commandRules"
+        },
+        "batch": {
+          "$ref": "#/$defs/commandRules"
+        }
+      },
+      "required": [
+        "mode",
+        "person",
+        "batch"
+      ]
+    },
+    "index": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        },
+        "unique": {
+          "type": "boolean"
+        },
+        "include": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "fields",
+        "unique",
+        "include"
+      ]
+    },
+    "check": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "expression": {
+          "$ref": "#/$defs/expression"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "expression"
+      ]
+    },
+    "relationshipRef": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "id"
+      ]
+    },
+    "foreignKey": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        },
+        "target": {
+          "$ref": "#/$defs/keyRef"
+        },
+        "onUpdate": {
+          "enum": [
+            "restrict",
+            "noAction",
+            "cascade",
+            "setNull"
+          ]
+        },
+        "onDelete": {
+          "enum": [
+            "restrict",
+            "noAction",
+            "cascade",
+            "setNull"
+          ]
+        },
+        "deferrable": {
+          "enum": [
+            false,
+            "immediate",
+            "deferred"
+          ]
+        },
+        "relationship": {
+          "$ref": "#/$defs/relationshipRef"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "fields",
+        "target",
+        "onUpdate",
+        "onDelete",
+        "deferrable"
+      ]
+    },
+    "table": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ref"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/column"
+          },
+          "minItems": 1,
+          "maxItems": 1600
+        },
+        "indexes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/index"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/check"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "foreignKeys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foreignKey"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "policy": {
+          "$ref": "#/$defs/policy"
+        }
+      },
+      "required": [
+        "id",
+        "record",
+        "name",
+        "columns",
+        "indexes",
+        "checks",
+        "foreignKeys",
+        "policy"
+      ]
+    },
+    "fieldValue": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/ref"
+        },
+        "value": {
+          "$ref": "#/$defs/literal"
+        }
+      },
+      "required": [
+        "field",
+        "value"
+      ]
+    },
+    "seedRow": {
+      "type": "object",
+      "properties": {
+        "table": {
+          "type": "string",
+          "minLength": 1
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fieldValue"
+          },
+          "minItems": 0,
+          "maxItems": 1600
+        }
+      },
+      "required": [
+        "table",
+        "values"
+      ]
+    },
+    "seedSet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/seedRow"
+          },
+          "minItems": 0,
+          "maxItems": 10000
+        },
+        "conflict": {
+          "enum": [
+            "error",
+            "ignore"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "rows",
+        "conflict"
+      ]
+    }
+  }
+}

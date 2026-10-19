@@ -1,0 +1,54 @@
+{
+  "version": "weft.raw-read/0.1",
+  "target": "postgresql18",
+  "sql": "SELECT n.\"id\" AS id,n.\"owner\" AS owner FROM demo.\"Note\" n WHERE n.\"owner\"=:person ORDER BY n.\"id\" ASC LIMIT 10",
+  "rowCap": 10,
+  "keyset": true,
+  "verificationProfile": "table-lifecycle/0.1",
+  "binding": {
+    "version": "umf.raw-read-binding/0.1",
+    "schema": "plugin_demo",
+    "tables": [
+      {
+        "logical": [
+          "demo",
+          "Note"
+        ],
+        "native": "notes",
+        "columns": [
+          {
+            "logical": "id",
+            "native": "id",
+            "carrier": "string",
+            "nullable": false
+          },
+          {
+            "logical": "owner",
+            "native": "owner",
+            "carrier": "string",
+            "nullable": false
+          }
+        ],
+        "key": [
+          "id"
+        ]
+      }
+    ],
+    "relationships": [],
+    "modelJson": "",
+    "modelSha256": "",
+    "nativeLifecycle": {
+      "version": "umf.table-lifecycle/0.1",
+      "module": "demo",
+      "configurationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "deploymentDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "parameters": [
+    {
+      "name": "person",
+      "carrier": "string",
+      "nullable": false
+    }
+  ]
+}

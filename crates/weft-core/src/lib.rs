@@ -194,6 +194,7 @@ pub mod current_query_refinement;
 pub mod column_custody;
 
 pub mod raw_read;
+pub mod table_lifecycle;
 
 pub mod raw_action;
 

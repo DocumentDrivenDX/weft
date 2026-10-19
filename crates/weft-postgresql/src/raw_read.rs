@@ -1113,6 +1113,10 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
         obligations["termFilter"]=json!({"version":"umf.raw-term-filter/0.1","nativeCatalogBeforeAfter":true,"indexes":l.term_indexes.values().collect::<Vec<_>>()});
     }
     crate::native_catalog_fence::attach(&r.binding,&mut obligations)?;
+    if let Some(lifecycle)=admitted.native_lifecycle(){
+        let selected=l.scans.values().map(|(t,_)|t.logical.clone()).collect();
+        obligations["tableLifecycle"]=lifecycle.obligation(&selected)?;
+    }
     let lock_sql: Vec<String> = l
         .scans
         .values()
@@ -1138,6 +1142,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
     let privilege_inventory=json!({"version":"weft.native-privileges/0.1","complete":false,"unresolved":["native-function-and-operator-overload-closure"],"semanticFields":semantic_fields,"functions":l.used_functions.borrow().iter().collect::<Vec<_>>(),"operators":l.used_operators.borrow().iter().collect::<Vec<_>>(),"tables":selected_columns.iter().map(|(table,columns)|json!({"schema":r.binding.schema,"native":table,"privilege":"SELECT","columns":columns,"tablePrivilegeRequired":true,"columnPrivilegesSufficient":false,"reason":"LOCK TABLE ACCESS SHARE"})).collect::<Vec<_>>(),"indexObjects":l.term_indexes.values().map(|i|json!({"native":i["nativeBinding"]["native"],"usage":"native-term-admission"})).collect::<Vec<_>>()});
     let mut result = json!({"version":if bounded{"weft.raw-read/0.1"}else{"weft.search-input/0.1"},"status":"compiled","target":r.target,"sql":sql,"parameters":r.parameters,"parameterOrder":l.slots,"outputs":outputs,"obligations":obligations,"binding":r.binding,"sourceSql":r.sql,"lockSql":lock_sql,"cursorParameters":cursor_parameters,"cursorOutputs":cursor_outputs,"cursorOrdering":cursor_ordering,"referencedTables":referenced_tables});
     result["privilegeInventory"]=privilege_inventory;
+    if admitted.native_lifecycle().is_some(){result["version"]=json!("weft.table-read/0.1");}
     // Related target fragments may contain source slots not merged until the
     // final composition. Only seal DBAPI transport once that inventory is final.
     if additional_predicate.is_none() { crate::dbapi::attach(&mut result)?; }
