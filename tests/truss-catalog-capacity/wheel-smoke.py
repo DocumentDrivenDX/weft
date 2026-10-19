@@ -1,9 +1,20 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Compile the exact 1,000-type owner-captured request; test closed capacity bounds."""
+"""Compile the current-format 1,000-type successor; test closed capacity bounds."""
 import copy,gzip,hashlib,json,time
 from pathlib import Path
 import weft
-request=json.loads(gzip.decompress(Path(__file__).with_name('genuine-thousand-type-request.json.gz').read_bytes()))
+fixture_path=Path(__file__).with_name('genuine-thousand-type-current010-request.json.gz')
+fixture_bytes=fixture_path.read_bytes()
+assert hashlib.sha256(fixture_bytes).hexdigest()=='07d2dcd76b9a7651cf9da405d97abcbc7ae26a022bd6fc21afa0e2300105605a'
+request=json.loads(gzip.decompress(fixture_bytes))
+assert request['modules'][0]['pin']['umfVersion']=='0.10.0'
+document_json=json.loads(request['modules'][0]['documentJson'])
+assert document_json['umf']=='0.10.0'
+native_binding=json.loads(request['target']['bindingJson'])
+assert len(native_binding['records'])==1000
+assert all(len(record['fields'])==12 for record in native_binding['records'])
+assert native_binding['documents'][0]['sha256']==request['modules'][0]['pin']['sha256']
+assert hashlib.sha256(request['target']['bindingJson'].encode()).hexdigest()==request['target']['bindingSha256']
 
 def compile_request(value):
     return json.loads(weft.compile_truss_runtime_json(json.dumps(value,separators=(',',':'))))
@@ -30,7 +41,7 @@ started=time.monotonic();result=compile_request(request);elapsed=time.monotonic(
 assert result['status']=='compiled',result
 # The presence/Graph release adds one explicitly qualified engine-navigation
 # language profile to each operation declaration. Assert that addition, then
-# compare every other result byte against the previously verified receipt.
+# compare every other result byte against the reviewed current-0.10 successor hash.
 baseline=copy.deepcopy(result)
 operations=baseline['qualification']['operations']
 assert len(operations)==15
@@ -39,7 +50,7 @@ for operation in operations:
     added={'dialectProfile':'weft-sql/0.2.0','irVersion':'weft-ir/engine-navigation/0.1'}
     assert profiles.count(added)==1,profiles
     profiles.remove(added)
-assert hashlib.sha256(json.dumps(baseline,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()=='21be0763aefc88ae2d78b083baca275fb7e6a9e57ce712488eb884726d5583f5'
+assert hashlib.sha256(json.dumps(baseline,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()=='166b8cb8ca0c697e97a16a85a4fe14897a1d29ca3e13cca8d0ee0e1fb1860bbb'
 assert result['bindingSha256']==request['target']['bindingSha256']
 assert result['modelPins']==[item['pin'] for item in request['modules']]
 assert any(p.get('value')==request['target']['bindingJson'] for p in result['parameters'])

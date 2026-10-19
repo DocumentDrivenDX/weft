@@ -25,3 +25,18 @@ coordinate index preserves original array order and source values; the complete
 exactly in the local comparison. Compiler-only timings were 2.317 seconds before
 indexing and 0.465 seconds afterward on macOS ARM64 with Rust 1.90.0 release mode.
 These single local observations are not latency guarantees.
+
+The release wheel smoke now uses `genuine-thousand-type-current010-request.json.gz`,
+a compiler-only successor derived from that capture. It keeps the same 1,000
+records, twelve fields per record, query, native catalog identity, limits, and
+control cases, while changing the authored document and source pin to UMF
+`0.10.0` and recomputing the document and native-binding hashes. The original
+capture remains unchanged as historical evidence; the successor is not a new
+Truss owner capture or a database-execution claim.
+The original compressed capture SHA-256 is
+`ae2bf6d0b8d8761e0306bc92a953bff76ccb4c30cfaad661481e1ef1d8bc1ddf`; the
+successor compressed fixture SHA-256 is
+`07d2dcd76b9a7651cf9da405d97abcbc7ae26a022bd6fc21afa0e2300105605a`. Its
+UMF document and binding SHA-256 values are respectively
+`4d2c26fbc5049aead803e9673150594759473455ea062d4ca9dc34bd4f21999a` and
+`29e5415d9f37b13ad9ef2cde50bddb3084375e1f5e401b7ce9557f68604c6702`.
