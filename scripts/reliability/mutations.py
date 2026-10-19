@@ -14,8 +14,8 @@ cases=[
  ('module-pin-guard','crates/weft-core/src/model.rs','if input.pin.sha256 != sha256(input.document_json.as_bytes()) {','if false && input.pin.sha256 != sha256(input.document_json.as_bytes()) {','qualification-properties','generated_unicode_retention_pins_and_selected_meaning'),
 ]
 signatures={
- 'duplicate-key-guard':['resources.rs:33:', 'on an `Ok` value: Object'],
- 'node-limit-guard':['resources.rs:16:', 'on an `Ok` value: Array'],
+ 'duplicate-key-guard':['resources.rs:', 'called `Result::unwrap_err()` on an `Ok` value: Object'],
+ 'node-limit-guard':['resources.rs:', 'called `Result::unwrap_err()` on an `Ok` value: Array'],
  'scan-type-filter':['owner type selection must survive lowering'],
  'projection-distinct':['projection must retain duplicate names'],
  'decimal-through-double':['10000000000000000','9999999999999999'],
