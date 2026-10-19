@@ -55,7 +55,7 @@ pub fn compile_json(program:&str,current_request:&str)->String {
 #[cfg(test)] mod tests {
     use super::*;
     fn request()->Value {
-        // Original accepted core0.8/native ABI1.1 capture; native execution is
+        // Current accepted core0.10/native ABI1.1 capture; native execution is
         // separately retained in Truss's stream evidence packet.
         serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-export-request.json")).unwrap()
     }

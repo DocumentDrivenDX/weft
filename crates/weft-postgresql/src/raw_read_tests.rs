@@ -9,6 +9,71 @@ mod raw_read_tests {
         ))
         .unwrap()
     }
+    fn raw010_name_fallback_request() -> (Value, Value) {
+        let mut request = request();
+        let mut document: Value = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        document["umf"] = json!("0.10.0");
+        let elements = document["modules"][0]["elements"].as_array_mut().unwrap();
+        let record = elements.iter_mut().find(|element| element["id"] == "Order").unwrap();
+        record.as_object_mut().unwrap().remove("name");
+        record["extensions"]["umf.ddd"] = json!({"kind":"entity","identity":{"fields":["id"]}});
+        record["extensions"]["hohfeld.view"] = json!({"label":"Orders","format":"table"});
+        let field = elements.iter_mut().find(|element| element["id"] == "Order_status").unwrap();
+        field.as_object_mut().unwrap().remove("name");
+        field["extensions"]["hohfeld.view"] = json!({"label":"Status","format":"badge","tones":{"active":"teal"}});
+        let status_column = request["binding"]["tables"][0]["columns"].as_array_mut().unwrap()
+            .iter_mut().find(|column| column["logical"] == "status").unwrap();
+        status_column["logical"] = json!("Order_status");
+        request["sql"] = json!("SELECT o.\"Order_status\" AS status, count(*) AS count FROM commerce.\"Order\" AS o GROUP BY o.\"Order_status\" LIMIT 10");
+        request["parameters"] = json!([]);
+        let source = serde_json::to_string(&document).unwrap();
+        request["binding"]["modelSha256"] = json!(weft_core::json::sha256(source.as_bytes()));
+        request["binding"]["modelJson"] = json!(source);
+        (request, document)
+    }
+
+    #[test]
+    fn current010_raw_read_uses_id_fallback_and_retains_known_extensions_opaquely() {
+        let (request, source) = raw010_name_fallback_request();
+        let result = compile(request.clone());
+        assert_eq!(result["status"], "compiled", "{result}");
+        assert!(result["sql"].as_str().unwrap().contains("\"o\".\"status\""));
+        let admitted = weft_core::raw_read::admit_json(&serde_json::to_string(&request).unwrap()).expect("raw-read retains current source");
+        assert_eq!(admitted.original_document(), &source);
+        let record = admitted.original_record(&vec!["commerce".to_owned(), "Order".to_owned()]).unwrap();
+        assert_eq!(record.value["extensions"]["umf.ddd"], source["modules"][0]["elements"].as_array().unwrap().iter().find(|e| e["id"] == "Order").unwrap()["extensions"]["umf.ddd"]);
+        assert_eq!(admitted.original_document()["modules"][0]["elements"].as_array().unwrap().iter().find(|e| e["id"] == "Order_status").unwrap()["extensions"]["hohfeld.view"], json!({"label":"Status","format":"badge","tones":{"active":"teal"}}));
+
+        let mut unknown = request.clone();
+        let mut document: Value = serde_json::from_str(unknown["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e| e["id"] == "Order_status").unwrap()["extensions"]["example.unknown"] = json!({"meaning":"unselected"});
+        let raw = serde_json::to_string(&document).unwrap();
+        unknown["binding"]["modelSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+        unknown["binding"]["modelJson"] = json!(raw);
+        assert_eq!(compile(unknown)["status"], "blocked", "unknown selected extensions still refuse");
+
+        let mut malformed = request.clone();
+        let mut document: Value = serde_json::from_str(malformed["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e| e["id"] == "Order_status").unwrap()["extensions"]["hohfeld.view"] = json!("badge");
+        let raw = serde_json::to_string(&document).unwrap();
+        malformed["binding"]["modelSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+        malformed["binding"]["modelJson"] = json!(raw);
+        assert_eq!(compile(malformed)["status"], "blocked", "known extension payload must remain an object");
+
+        let mut authored = request.clone();
+        let mut document: Value = serde_json::from_str(authored["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e| e["id"] == "Order_status").unwrap()["name"] = json!("AuthoredStatus");
+        let status_column = authored["binding"]["tables"][0]["columns"].as_array_mut().unwrap().iter_mut().find(|column| column["logical"] == "Order_status").unwrap();
+        status_column["logical"] = json!("AuthoredStatus");
+        authored["sql"] = json!("SELECT o.\"AuthoredStatus\" AS status, count(*) AS count FROM commerce.\"Order\" AS o GROUP BY o.\"AuthoredStatus\" LIMIT 10");
+        let raw = serde_json::to_string(&document).unwrap();
+        authored["binding"]["modelSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+        authored["binding"]["modelJson"] = json!(raw);
+        assert_eq!(compile(authored.clone())["status"], "compiled", "authored name takes precedence over ID fallback");
+        authored["binding"]["tables"][0]["columns"].as_array_mut().unwrap().iter_mut().find(|column| column["logical"] == "AuthoredStatus").unwrap()["logical"] = json!("Order_status");
+        assert_eq!(compile(authored)["status"], "blocked", "ID fallback is used only when authored name is absent");
+
+    }
     #[test]
     fn signed_numeric_literals_preserve_carrier_and_refuse_signed_expressions() {
         let mut r=request();r["parameters"]=json!([]);

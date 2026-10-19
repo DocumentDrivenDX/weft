@@ -40,6 +40,7 @@ pub struct Catalog {
     pub(crate) sdk_scalar_presence: bool,
     security_inputs: bool,
     pub(crate) identity_name_fallback: bool,
+    raw_read_opaque_extensions: bool,
     pub(crate) exact_scalars: bool,
     pub(crate) exact_dates: bool,
     pub(crate) bounded_current_strings: bool,
@@ -82,13 +83,34 @@ pub(crate) fn selected08(pin: &ModelPin, element: &Value) -> Result<()> {
 /// preserve their value domain. External semantic type references are retained
 /// in source but remain outside the raw scalar profile.
 pub(crate) fn selected010(pin: &ModelPin, element: &Value) -> Result<()> {
+    selected010_inner(pin, element, false)
+}
+/// Raw reads may inspect core identity/value fields while retaining known
+/// extension metadata without interpreting it. The original source and selected
+/// values remain intact.
+pub(crate) fn selected010_raw_read(pin: &ModelPin, element: &Value) -> Result<()> {
+    selected010_inner(pin, element, true)
+}
+fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool) -> Result<()> {
     if pin.umf_version != "0.10.0" { return Ok(()); }
     const KNOWN: &[&str] = &["id", "name", "title", "description", "kind", "scalarType",
         "nullability", "cardinality", "itemType", "recordType", "facets", "members",
         "keys", "references", "extensions", "semanticTypes"];
+    let extensions_supported = element.get("extensions").is_none_or(|value| {
+        value.as_object().is_some_and(|map| {
+            if !allow_raw_read_metadata { return map.is_empty(); }
+            map.iter().all(|(name, payload)| {
+                payload.is_object() && match name.as_str() {
+                    "umf.ddd" => element["kind"] == "record",
+                    "hohfeld.view" => matches!(element["kind"].as_str(), Some("record" | "field")),
+                    _ => false,
+                }
+            })
+        })
+    });
     if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())))
         || element.get("semanticTypes").is_some()
-        || element.get("extensions").is_some_and(|e|e.as_object().is_none_or(|m|!m.is_empty()))
+        || !extensions_supported
     { return Err(fail("WFT-TYPE", "Selected UMF 0.10 element has semantics outside the raw scalar profile")); }
     if element["kind"] == "record" && element.get("references").and_then(Value::as_array).is_some_and(|r|!r.is_empty()) {
         return Err(fail("WFT-TYPE", "Selected UMF 0.10 Record reference roles are unsupported"));
@@ -122,6 +144,11 @@ impl Catalog {
         })
     }
 
+    fn validate_selected010(&self, pin: &ModelPin, element: &Value) -> Result<()> {
+        if self.raw_read_opaque_extensions { selected010_raw_read(pin, element) }
+        else { selected010(pin, element) }
+    }
+
     /// Read-only original inputs. Clone and prepare a new Catalog to change them.
     pub fn inputs(&self) -> &[ModuleInput] {
         &self.inputs
@@ -137,6 +164,7 @@ impl Catalog {
     pub(crate) fn prepare_truss_runtime(inputs: Vec<ModuleInput>, exact_numbers: bool) -> Result<Self> {
         let mut catalog = Self::prepare_version(inputs, None, true)?;
         catalog.exact_numbers = exact_numbers;
+        catalog.raw_read_opaque_extensions = true;
         Ok(catalog)
     }
     /// Source custody only; security activation remains independently gated.
@@ -146,6 +174,12 @@ impl Catalog {
     }
     pub(crate) fn prepare_security010(inputs: Vec<ModuleInput>) -> Result<Self> {
         Self::prepare_version(inputs, Some("0.10.0"), false)
+    }
+    pub(crate) fn prepare_raw_read010(inputs: Vec<ModuleInput>) -> Result<Self> {
+        let mut catalog = Self::prepare_version(inputs, Some("0.10.0"), false)?;
+        catalog.identity_name_fallback = true;
+        catalog.raw_read_opaque_extensions = true;
+        Ok(catalog)
     }
     pub(crate) fn prepare_security_bounded_strings(inputs: Vec<ModuleInput>) -> Result<Self> {
         let mut catalog = Self::prepare_security(inputs)?;
@@ -237,7 +271,7 @@ impl Catalog {
                 (module["id"].as_str().unwrap().to_owned(), (mi, elements))
             }).collect()
         }).collect();
-        Ok(Self { inputs, documents, element_locations, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:matches!(required_version,Some("0.8.0"|"0.10.0")), identity_name_fallback:false })
+        Ok(Self { inputs, documents, element_locations, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:matches!(required_version,Some("0.8.0"|"0.10.0")), identity_name_fallback:false, raw_read_opaque_extensions:false })
     }
     pub(crate) fn local_element_by_ids(&self, document: usize, module: &str, element: &str) -> Option<&Value> {
         let (module_index, elements) = self.element_locations.get(document)?.get(module)?;
@@ -289,7 +323,7 @@ impl Catalog {
                 for e in module["elements"].as_array().unwrap() {
                     if e["kind"] == "record" && name.matches(self.query_name(e).unwrap_or("")) {
                         selected08(&input.pin, e)?;
-                        selected010(&input.pin, e)?;
+                        self.validate_selected010(&input.pin, e)?;
                         found.push(Record {
                             identity: Identity {
                                 document_id: input.pin.document_id.clone(),
@@ -369,7 +403,7 @@ impl Catalog {
             .at(&name.span)
         })?;
         selected08(&record.pin, field)?;
-        selected010(&record.pin, field)?;
+        self.validate_selected010(&record.pin, field)?;
         let ideal;
         let selected=if optional03 && field["nullability"]=="absent-allowed" {
             // Derive the ideal scalar domain, leaving original selected source bytes untouched.

@@ -158,7 +158,7 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
     };
     let catalog = match version {
         "0.8.0" => crate::model::Catalog::prepare_security(vec![input]),
-        "0.10.0" => crate::model::Catalog::prepare_security010(vec![input]),
+        "0.10.0" => crate::model::Catalog::prepare_raw_read010(vec![input]),
         _ => return Err("raw-read supports original UMF core 0.8.0 and 0.10.0 sources"),
     }.map_err(|_| "UMF core envelope/profile refused")?;
     let n = |value: &str| crate::syntax::Name {
@@ -190,7 +190,7 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
                 else {
                     return Err("missing member");
                 };
-                if field["name"] == c.logical {
+                if catalog.query_name(field).is_some_and(|name| name == c.logical) {
                     matches.push((field, member));
                 }
             }
@@ -198,7 +198,10 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
                 return Err("column absent/ambiguous in UMF");
             };
             let (field, member) = matches[0];
-            crate::model::selected010(&record.pin, field).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
+            crate::model::selected010_raw_read(&record.pin, field).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
+            if version != "0.10.0" && field.get("extensions").and_then(Json::as_object).is_some_and(|m| !m.is_empty()) {
+                return Err("column meaning outside scalar read profile");
+            }
             let family = match c.carrier {
                 Carrier::Integer => "integer",
                 Carrier::Decimal => "decimal",
@@ -215,9 +218,6 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             if field["kind"] != "field"
                 || field["cardinality"] != "one"
                 || field["scalarType"] != family
-                || field["extensions"]
-                    .as_object()
-                    .is_some_and(|m| !m.is_empty())
             {
                 return Err("column meaning outside scalar read profile");
             }
@@ -263,7 +263,7 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
         let target_fields=target_key["fields"].as_array().ok_or("relationship target Key fields absent")?.iter().map(|reference| {
             let module=modules.iter().find(|m|m["id"]==reference["module"]).ok_or("relationship target Field module absent")?;
             let field=module["elements"].as_array().unwrap().iter().find(|f|f["id"]==reference["element"]).ok_or("relationship target Field absent")?;
-            let logical=field["name"].as_str().ok_or("relationship target Field name absent")?;
+            let logical=catalog.query_name(field).ok_or("relationship target Field name absent")?;
             if !binding.tables.iter().find(|t|t.logical==rel.target).unwrap().columns.iter().any(|c|c.logical==logical){return Err("relationship target Key field unbound")}
             Ok(logical.to_string())
         }).collect::<Result<Vec<_>>>()?;
@@ -324,7 +324,10 @@ impl AdmittedRead {
                 .ok_or("missing member module")?;
             let field = module["elements"].as_array().ok_or("module elements")?.iter()
                 .find(|f| f["id"] == member["element"]).ok_or("missing member")?;
-            if field["kind"] == "field" && field["name"] == logical_column {
+            let query_name = field["name"].as_str().or_else(|| {
+                (self.model.document["umf"] == "0.10.0").then(|| field["id"].as_str()).flatten()
+            });
+            if field["kind"] == "field" && query_name == Some(logical_column) {
                 if found.is_some() { return Err("column absent/ambiguous in UMF"); }
                 found = Some(member.clone());
             }

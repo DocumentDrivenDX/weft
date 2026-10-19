@@ -1514,9 +1514,10 @@ mod canonical_date_runtime_tests {
     fn request(sql:&str)->serde_json::Value {
         let mut b:serde_json::Value=serde_json::from_str(include_str!("../../../tests/truss-query-abi/fixtures/native-query-bundle.json")).unwrap();
         let mut d:serde_json::Value=serde_json::from_str(b["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        d["umf"] = json!("0.10.0");
         d["modules"][0]["elements"][0]["members"].as_array_mut().unwrap().push(json!({"module":"m","element":"day"}));
         d["modules"][0]["elements"].as_array_mut().unwrap().push(json!({"id":"day","name":"day","kind":"field","scalarType":"date","nullability":"absent-allowed","cardinality":"one","extensions":{}}));
-        let source=d.to_string();let sha=weft_core::json::sha256(source.as_bytes());b["modules"][0]["documentJson"]=json!(source);b["modules"][0]["pin"]["sha256"]=json!(sha);
+        let source=d.to_string();let sha=weft_core::json::sha256(source.as_bytes());b["modules"][0]["documentJson"]=json!(source);b["modules"][0]["pin"]["sha256"]=json!(sha);b["modules"][0]["pin"]["umfVersion"]=json!("0.10.0");
         let mut binding:serde_json::Value=serde_json::from_str(b["bindingJson"].as_str().unwrap()).unwrap();binding["documents"][0]["sha256"]=json!(sha);
         binding["queryAbi"]=json!({"identity":"truss-postgresql-logical-query","version":"1.1","sha256":weft_core::json::sha256(include_bytes!("../../../tests/truss-date/query-abi1.1.json"))});
         binding["records"][0]["fields"].as_array_mut().unwrap().push(json!({"identity":{"module":"m","element":"day","documentId":"adoc","revision":"r1"},"propertyId":"5"}));
@@ -1554,5 +1555,42 @@ mod canonical_date_runtime_tests {
         assert_eq!(cursor["status"],"compiled","{cursor}");
         assert_eq!(cursor["artifact"]["logicalPlan"]["limit"],serde_json::Value::Null);
         assert_eq!(cursor["artifact"]["backend"]["backendVersion"],"0.4.42");
+    }
+
+    #[test]
+    fn truss_current010_compile_retains_known_metadata_opaquely() {
+        let mut request: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/engine-catalog/native-truss-export-request.json"
+        ))
+        .unwrap();
+        let original_document = request["modules"][0]["documentJson"]
+            .as_str()
+            .unwrap();
+        let mut document: serde_json::Value = serde_json::from_str(original_document).unwrap();
+        assert_eq!(document["umf"], "0.10.0");
+        let elements = document["modules"][0]["elements"].as_array_mut().unwrap();
+        let record = elements.iter_mut().find(|element| element["kind"] == "record").unwrap();
+        record["extensions"]["umf.ddd"] = json!({"kind":"entity","fields":{"purpose":"retained"}});
+        record["extensions"]["hohfeld.view"] = json!({"label":"Order","format":"badge"});
+        let field = elements.iter_mut().find(|element| element["kind"] == "field").unwrap();
+        field["extensions"]["hohfeld.view"] = json!({"label":"Status","format":"badge"});
+
+        let document_json = document.to_string();
+        let document_sha = weft_core::json::sha256(document_json.as_bytes());
+        request["modules"][0]["documentJson"] = json!(document_json);
+        request["modules"][0]["pin"]["sha256"] = json!(document_sha);
+        let binding_raw = request["target"]["bindingJson"].as_str().unwrap();
+        let mut binding: serde_json::Value = serde_json::from_str(binding_raw).unwrap();
+        binding["documents"][0]["sha256"] = json!(document_sha);
+        let binding_raw = binding.to_string();
+        request["target"]["bindingJson"] = json!(binding_raw);
+        request["target"]["bindingSha256"] =
+            json!(weft_core::json::sha256(binding_raw.as_bytes()));
+
+        let output: serde_json::Value =
+            serde_json::from_str(&compile_json(&request.to_string())).unwrap();
+        assert_eq!(output["status"], "compiled", "{output}");
+        assert_eq!(output["modelPins"][0]["umfVersion"], "0.10.0");
+        assert_eq!(output["modelPins"][0]["sha256"], request["modules"][0]["pin"]["sha256"]);
     }
 }

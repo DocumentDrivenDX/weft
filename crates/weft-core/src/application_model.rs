@@ -281,7 +281,7 @@ impl Catalog {
                             quoted: true,
                             span: Span { start: 0, end: 0 },
                         };
-                        if c.exact_scalars && (matches!(v["scalarType"].as_str(), Some("timestamp" | "binary")) || c.exact_dates && r.pin.umf_version=="0.8.0" && v["scalarType"]=="date") {
+                        if c.exact_scalars && (matches!(v["scalarType"].as_str(), Some("timestamp" | "binary")) || c.exact_dates && r.pin.umf_version=="0.10.0" && v["scalarType"]=="date") {
                             if !references.is_empty() || v.get("itemType").is_some() || v.get("recordType").is_some() {
                                 return Err(fail("Exact scalar cannot carry references or item meaning"));
                             }

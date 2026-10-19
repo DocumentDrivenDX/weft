@@ -101,16 +101,16 @@ pub(crate) fn wrap_artifact(method:&str,request:&Value,artifact:Value)->Result<V
  let logical=if artifact["logicalPlan"].get("base").is_some(){&artifact["logicalPlan"]["base"]}else{&artifact["logicalPlan"]};
  let visible=if artifact["logicalPlan"].get("base").is_some(){logical["outputs"].as_array().ok_or("original visible outputs required")?.len()}else{artifact["columns"].as_array().ok_or("original columns required")?.len()};
  let columns=artifact["columns"].as_array().ok_or("complete engine output inventory required")?;let mut outputs=vec![];
- if binary && request["modules"].as_array().is_none_or(|m|m.is_empty()||m.iter().any(|m|m["pin"]["umfVersion"]!="0.8.0")){return Err("explicit original Core08 binary/scalar state domain required")}
+ if binary && request["modules"].as_array().is_none_or(|m|m.is_empty()||m.iter().any(|m|m["pin"]["umfVersion"]!="0.10.0")){return Err("explicit current Core10 binary/scalar state domain required")}
  if binary && (request["interfaceVersion"]!="weft-compile/0.2.7" || artifact["backend"]["backendId"]!="truss.postgresql.runtime" || artifact["backend"]["backendVersion"]!="0.4.41" || artifact["backend"]["targetProfile"]!="truss-runtime-pg18.6/0.5") {return Err("original pinned Truss binary domain profile required")}
  for column in columns.iter().take(visible){
  if binary {let expressions=logical["outputs"].as_array().ok_or("original direct binary-profile expressions required")?;let selected=expressions.iter().filter(|o|o["name"]==column["outputName"]).collect::<Vec<_>>();if selected.len()!=1||selected[0]["expression"]["op"]!="field"||column["sourceIdentities"]!=json!([selected[0]["expression"]["identity"]]){return Err("binary-profile projection must retain original direct Field identity")}}
  let representation=&column["representation"];if representation["kind"]=="relatedKeys"{let mut output=related_output(column,&artifact)?;if sdk {output["missing"]=json!(false);}outputs.push(output);continue;}let logical=match representation["kind"].as_str(){Some("scalar")=>&representation["logicalType"],Some("value")=>{let descriptor=logical["typeGraph"].as_array().ok_or("original output type graph required")?.iter().find(|d|d["identity"]==representation["descriptor"]).ok_or("original output descriptor absent")?;if binary && descriptor["kind"]=="exactScalar" && descriptor["scalarType"]=="binary" {
  if representation!=&json!({"kind":"value","descriptor":descriptor["identity"],"nativeNull":true})||column["sourceIdentities"]!=json!([descriptor["identity"]])||column["nullable"]!=false{return Err("original direct binary source representation required")}
  let identity=&descriptor["identity"];let modules=request["modules"].as_array().ok_or("original binary source modules required")?;
- let source=modules.iter().find(|m|m["pin"]["documentId"]==identity["documentId"]&&m["pin"]["revision"]==identity["revision"]&&m["pin"]["umfVersion"]=="0.8.0").ok_or("binary Core08 state domain not established")?;
- let doc=weft_core::json::checked_json(source["documentJson"].as_str().ok_or("original Core08 binary source required")?).map_err(|_|"original binary source framing refused")?;
- if doc["umf"]!="0.8.0"{return Err("binary Core08 source domain required")}
+ let source=modules.iter().find(|m|m["pin"]["documentId"]==identity["documentId"]&&m["pin"]["revision"]==identity["revision"]&&m["pin"]["umfVersion"]=="0.10.0").ok_or("binary Core10 state domain not established")?;
+ let doc=weft_core::json::checked_json(source["documentJson"].as_str().ok_or("current Core10 binary source required")?).map_err(|_|"original binary source framing refused")?;
+ if doc["umf"]!="0.10.0"{return Err("binary Core10 source domain required")}
  let optional=match descriptor["availability"].as_str(){Some("required")=>false,Some("absent-allowed")=>true,_=>return Err("binary availability domain not established")};
  outputs.push(json!({"name":column["outputName"],"carrier":"binary","nullable":optional,"missing":optional,"source":identity,"representation":representation,"modelPins":artifact["modelPins"],"stateDomain":{"version":"umf.core08-binary/0.1","states":if optional{json!(["missing","null","value"])}else{json!(["value"])}},"decoder":{"profile":"truss-binary/0.1"}}));continue;
  }
@@ -167,7 +167,7 @@ pub fn check_json(program:&str,current_request:&str)->String{response((||{let pr
  #[test]fn native_core08_engine_requests_keep_original_profiles_and_sources(){
   for (method,raw) in [("truss-runtime",include_str!("../../../tests/engine-catalog/native-truss-request.json")),("ashlar-spark4",include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json")),("ashlar-dbsql-20261016",include_str!("../../../tests/engine-catalog/native-ashlar-dbsql-20261016-request.json"))]{
    let request:Value=serde_json::from_str(raw).unwrap();let out:Value=serde_json::from_str(&compile_json(&json!({"version":"weft.engine-read/0.1","compiler":method,"request":request}).to_string())).unwrap();
-   assert_eq!(out["status"],"compiled","{out}");assert_eq!(out["request"],request);assert_eq!(out["artifact"]["modelPins"][0]["umfVersion"],"0.8.0");
+   assert_eq!(out["status"],"compiled","{out}");assert_eq!(out["request"],request);assert_eq!(out["artifact"]["modelPins"][0]["umfVersion"],request["modules"][0]["pin"]["umfVersion"]);
    if method=="ashlar-spark4" {let obligation=out["artifact"]["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.nativeProfile").unwrap();assert_eq!(obligation["parameters"]["engineVersion"],"4.0.1");assert_eq!(obligation["parameters"]["deltaVersion"],"4.0.0");assert_eq!(out["artifact"]["backend"]["targetProfile"],"spark4.0.1-delta4.0.0-candidate");}
    let mut changed=request.clone();changed["modules"][0]["documentJson"]=json!(format!("{} ",request["modules"][0]["documentJson"].as_str().unwrap()));let checked:Value=serde_json::from_str(&check_json(&out.to_string(),&changed.to_string())).unwrap();assert_eq!(checked["status"],"blocked");
   }
@@ -408,7 +408,7 @@ mod sdk_presence_tests {
 #[cfg(all(test,feature="ashlar-sdk-ordered-page-candidate"))]mod binary_domain_tests{
  use super::*;
  fn request()->Value{serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-binary-request.json")).unwrap()}
- #[test]fn original_core08_binary_state_domain_is_distinct_from_ashlar_envelopes(){
+ #[test]fn current_core10_binary_state_domain_is_distinct_from_ashlar_envelopes(){
   let r=request();let out=compile_original("truss-runtime-binary",&r).unwrap();assert_eq!(out["status"],"compiled","{out}");assert_eq!(out["version"],"weft.engine-read/0.2");assert_eq!(out["outputs"][1]["carrier"],"binary");assert_eq!(out["outputs"][1]["stateDomain"]["states"],json!(["value"]));assert_eq!(out["outputs"][1]["nullable"],false);assert_eq!(out["outputs"][2]["stateDomain"]["states"],json!(["missing","null","value"]));assert_eq!(out["outputs"][2]["nullable"],true);assert_eq!(out["outputs"][2]["missing"],true);
   assert_eq!(bind(&out,&r).unwrap(),out);assert!(compile_original("truss-runtime",&r).is_err());
   let mut forged=out.clone();forged["outputs"][1]["stateDomain"]["states"]=json!(["null","value"]);forged.as_object_mut().unwrap().remove("structuralDigest");forged["structuralDigest"]=json!({"owner":"weft-runtime-engine-read","version":"0.2","sha256":weft_core::json::sha256(encode(&forged).as_bytes())});assert!(bind(&forged,&r).is_err());

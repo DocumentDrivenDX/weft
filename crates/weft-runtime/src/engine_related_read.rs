@@ -159,6 +159,41 @@ mod tests {
         let module = document["modules"][0]["id"].clone();
         json!({"version":"weft.engine-related-read/0.1","compiler":"truss-runtime","source":source,"target":target,"relationship":{"module":module,"id":"A-B","direction":"forward"}})
     }
+    fn promote_truss_packet_to_current010(packet: &mut Value) {
+        for side in ["source", "target"] {
+            let modules = packet[side]["modules"].as_array_mut().unwrap();
+            for module in modules {
+                let mut document: Value = serde_json::from_str(
+                    module["documentJson"].as_str().unwrap(),
+                )
+                .unwrap();
+                document["umf"] = json!("0.10.0");
+                let document_json = document.to_string();
+                let document_sha = weft_core::json::sha256(document_json.as_bytes());
+                module["documentJson"] = json!(document_json);
+                module["pin"]["umfVersion"] = json!("0.10.0");
+                module["pin"]["sha256"] = json!(document_sha);
+            }
+
+            let binding_raw = packet[side]["target"]["bindingJson"]
+                .as_str()
+                .unwrap();
+            let mut binding: Value = serde_json::from_str(binding_raw).unwrap();
+            for document in binding["documents"].as_array_mut().unwrap() {
+                let module = packet[side]["modules"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|module| module["pin"]["documentId"] == document["documentId"])
+                    .unwrap();
+                document["sha256"] = module["pin"]["sha256"].clone();
+            }
+            let binding_raw = binding.to_string();
+            packet[side]["target"]["bindingJson"] = json!(binding_raw);
+            packet[side]["target"]["bindingSha256"] =
+                json!(weft_core::json::sha256(binding_raw.as_bytes()));
+        }
+    }
     #[test]
     fn original_engine_source_selection_preserves_identity_limit_parameters_and_context() {
         for packet in [ashlar(), truss()] {
@@ -310,6 +345,7 @@ mod tests {
     fn original_related_export_changes_only_outer_delivery_bound() {
         // Derived compiler-only ABI1.1 fixture, never an accepted native binding.
         let mut packet = page_packet(truss());
+        promote_truss_packet_to_current010(&mut packet);
         let header: Value = serde_json::from_str(include_str!(
             "../../../tests/engine-catalog/native-truss-export-request.json"
         ))
