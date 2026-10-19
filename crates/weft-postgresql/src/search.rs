@@ -532,11 +532,24 @@ mod tests {
         for case in cases {
             let raw=case["requestText"].as_str().unwrap();assert_eq!(weft_core::json::sha256(raw.as_bytes()),case["requestSha256"]);
             let compiled=match case["compilerApi"].as_str().unwrap(){"compile_search_json"=>compile_json(raw),"compile_raw_read_json"=>crate::raw_read::compile_json(raw),_=>panic!("unknown captured owner API")};
-            let p:Json=serde_json::from_str(&compiled).unwrap();assert_eq!(p["status"],"compiled","{}: {p}",case["declaration"]);
+            let p:Json=serde_json::from_str(&compiled).unwrap();
+            if matches!(case["declaration"].as_str(),Some("raw_terms"|"raw_pages")){assert_eq!(p["status"],"blocked","historical exact-0.8 raw-read request must remain refused");continue}
+            assert_eq!(p["status"],"compiled","{}: {p}",case["declaration"]);
             assert!(p["obligations"].get("nativeCatalogFence").is_some());assert!(p["version"].as_str().unwrap().ends_with("/0.2"));
             if case["baselineStatus"]=="blocked"{assert_eq!(case["declaration"],"any_terms");red+=1;}else{assert_eq!(weft_core::json::sha256(compiled.as_bytes()),case["dbapiProgramSha256"],"DBAPI successor program changed: {}",case["declaration"]);}
         }
         assert_eq!(red,1);
+        let current_terms:Json=serde_json::from_str(include_str!("../../../tests/native-search/public-filter-raw-terms-current010.json")).unwrap();
+        let terms:Json=serde_json::from_str(&crate::raw_read::compile_json(&current_terms.to_string())).unwrap();
+        assert_eq!(terms["status"],"compiled","current UMF 0.10 raw-terms successor: {terms}");
+        assert!(terms["obligations"]["nativeCatalogFence"].is_object());
+        assert_eq!(terms["version"],"weft.raw-read/0.2");
+        assert_eq!(terms["obligations"]["termFilter"]["indexes"][0]["source"]["coreVersion"],"0.10.0");
+        let current_pages:Json=serde_json::from_str(include_str!("../../../tests/native-search/public-filter-raw-pages-current010.json")).unwrap();
+        let pages:Json=serde_json::from_str(&crate::raw_read::compile_json(&current_pages.to_string())).unwrap();
+        assert_eq!(pages["status"],"compiled","current UMF 0.10 raw-pages successor: {pages}");
+        assert!(pages["obligations"]["nativeCatalogFence"].is_object());
+        assert_eq!(pages["version"],"weft.raw-read/0.2");
     }
     #[test]
     fn ranked_and_filter_term_configuration_obligations_are_executable(){

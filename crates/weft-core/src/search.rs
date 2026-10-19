@@ -102,9 +102,9 @@ fn locate<'a>(doc: &'a Value, r: &Value) -> Result<&'a Value, &'static str> {
         })
         .ok_or("search reference absent")
 }
-pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> { admit_profile(raw,false,None) }
-pub fn admit_unity_json(raw:&str,target:&Value)->Result<AdmittedSearch,&'static str>{admit_profile(raw,false,Some(target))}
-fn admit_profile(raw: &str, terms:bool, unity:Option<&Value>) -> Result<AdmittedSearch, &'static str> {
+pub fn admit_json(raw: &str) -> Result<AdmittedSearch, &'static str> { admit_profile(raw,false,None,"0.8.0") }
+pub fn admit_unity_json(raw:&str,target:&Value)->Result<AdmittedSearch,&'static str>{admit_profile(raw,false,Some(target),"0.8.0")}
+fn admit_profile(raw: &str, terms:bool, unity:Option<&Value>,expected_core_version:&str) -> Result<AdmittedSearch, &'static str> {
     let r: SearchRequest =
         serde_json::from_value(checked_json(raw).map_err(|_| "bounded search JSON required")?)
             .map_err(|_| "exact search request required")?;
@@ -126,7 +126,8 @@ fn admit_profile(raw: &str, terms:bool, unity:Option<&Value>) -> Result<Admitted
     let doc = checked_json(&r.selection.binding.model_json)
         .map_err(|_| "original search source refused")?;
     if r.source.document_id != doc["id"]
-        || r.source.core_version != "0.8.0"
+        || doc["umf"] != expected_core_version
+        || r.source.core_version != expected_core_version
         || r.source.document_sha256 != r.selection.binding.model_sha256
         || r.source.document_sha256 != sha256(r.selection.binding.model_json.as_bytes())
         || doc["vocabularies"]["umf.access"]["version"] != "0.1.0"
@@ -400,9 +401,10 @@ pub fn admit_terms(read:&raw_read::AdmittedRead,table:&[String],column:&str)->Re
     if found.len()!=1 {return Err("TERM_INDEX: one declared single-field keyword index required")};
     let (mi,ii,module,index)=found[0];
     if index["keyword"]["analyzer"]=="implementation-defined" {return Err("TERM_ANALYZER: explicit supported analyzer required")};
-    let source=json!({"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":request.binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
+    let expected_core_version=read.original_document()["umf"].as_str().filter(|v|matches!(*v,"0.8.0"|"0.10.0")).ok_or("TERM_INDEX: admitted source core version unsupported")?;
+    let source=json!({"documentId":doc["id"],"coreVersion":expected_core_version,"documentSha256":request.binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
     let probe=json!({"version":"weft.search/0.1","source":source,"selection":request,"queryParameter":"__umf_term_query","topK":1,"projection":[{"field":field_ref,"name":"term_field"}],"vectorBinding":null,"allowPartial":false});
-    admit_profile(&probe.to_string(),true,None)
+    admit_profile(&probe.to_string(),true,None,expected_core_version)
 }
 
 /// Admit each explicitly authored keyword index of a mutation's original Record.
@@ -425,7 +427,7 @@ pub fn admit_keyword_effects(binding:&raw_read::Binding,target:&str,table:&[Stri
             let first=index["keyword"]["source"].as_array().and_then(|a|a.first()).ok_or("keyword effects source fields absent")?;
             let source=json!({"documentId":original["id"],"coreVersion":"0.8.0","documentSha256":binding.model_sha256,"module":module["id"],"pointer":format!("/modules/{mi}/extensions/umf.access/search/{ii}")});
             let request=json!({"version":"weft.search/0.1","source":source,"selection":selection,"queryParameter":"__umf_effect_query","topK":1,"projection":[{"field":first,"name":"effect_field"}],"vectorBinding":null,"allowPartial":true});
-            out.push(admit_profile(&request.to_string(),false,None)?);
+            out.push(admit_profile(&request.to_string(),false,None,"0.8.0")?);
         }
     }
     Ok(out)
