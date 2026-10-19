@@ -20,8 +20,8 @@ are in [the receipt](receipt.json). This is an unpublished source candidate.
 Four tokenizer controls pass literal/identifier/comment/dollar-quote preservation,
 repeated/out-of-order slots, Unicode/CRLF/tab spans, percent-only SQL and malformed
 slots/quotes. Four related-read regressions pass. The broader library replay
-passes182 tests with one decimal-domain test excluded: that test remains running
-in the original full run, so full-library completion is not claimed. The initial
+passes183 tests with no exclusions, including all434 precision/scale decimal
+fixtures (497.79 seconds for the full run). The initial
 run exposed a real related-slot composition defect, now fixed, and two historical
 hash assertions affected by the additive transport metadata. The raw-bulk golden
 is explicitly updated. The twelve-case public-filter fixture retains prior
@@ -37,3 +37,11 @@ Weft action qualification. DDL, policy/grant generation, digest migrations,
 complete table commands/replay, managed acceptance and immutable prereleases
 remain open under the full Praxis release goal. No native or language guarantee
 is inferred for targets outside this PostgreSQL18/Lakebase18 compilation subset.
+
+
+The exact-source Linux native job also passes187 assertions in
+[UMF run39258945575](https://github.com/DocumentDrivenDX/umf/actions/runs/39258945575).
+Its installed compiler wheel hash is retained in the receipt, separately from
+the local macOS wheel. Full hosted Weft conformance was dispatched as
+[run39259830007](https://github.com/DocumentDrivenDX/weft/actions/runs/39259830007);
+its completion remains a separate gate. No immutable prerelease is published.

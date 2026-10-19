@@ -217,11 +217,8 @@
   "compilerControls": {
     "tokenizerTests": 4,
     "relatedTests": 4,
-    "libraryTestsPassing": 182,
-    "libraryExcluded": [
-      "property_definition::tests::original_decimal_domains_compile_both_storage_homes"
-    ],
-    "exclusionReason": "original full-library run remains running in decimal-domain test; no completion claimed",
+    "libraryTestsPassing": 183,
+    "libraryExcluded": [],
     "censusComparison": {
       "cases": 12,
       "deltaOnly": [
@@ -231,6 +228,25 @@
         "outer structuralDigest.sha256"
       ],
       "priorBaselineHashFieldsPreserved": true
+    },
+    "initialFullRun": {
+      "passing": 180,
+      "failing": 3,
+      "reason": "related composition defect and two additive transport hash assertions; corrected before final replay"
+    },
+    "fullLibraryResult": {
+      "result": "passed",
+      "seconds": 497.79,
+      "logSha256": "db2a2e95b592b22df3deb78f765e86a13bcf16a718b4127f29d6863746685a21"
     }
+  },
+  "hostedNative": {
+    "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/39258945575",
+    "job": "native-sessions (source-dbapi)",
+    "sourceCommit": "e686c27e8c05a17cfbd3a21d14ff5b38c6629b7b",
+    "platform": "Linux x86_64",
+    "assertions": 187,
+    "result": "passed",
+    "wheelSha256": "22e2ac3f66ce1e8edf6baa033d5df14bdc79e5bb12d423229801f7d2dde20690"
   }
 }
