@@ -2986,6 +2986,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/dbapi.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/expression.rs",
           "publicDeclarations": [
             "fn:render"

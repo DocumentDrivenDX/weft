@@ -45,3 +45,11 @@ Its installed compiler wheel hash is retained in the receipt, separately from
 the local macOS wheel. Full hosted Weft conformance was dispatched as
 [run39259830007](https://github.com/DocumentDrivenDX/weft/actions/runs/39259830007);
 its completion remains a separate gate. No immutable prerelease is published.
+
+The first hosted conformance run failed before compiler tests because the new
+private `dbapi.rs` file was absent from the stricter Rust source/public-surface
+inventory. The actual diff is exactly one private file, no new public declaration
+or crate edge. Its ownership is now recorded explicitly in the PostgreSQL backend
+map. The complete `modules:check` command, including JavaScript/Rust inventories
+and all negative controls, passes locally; the checker itself is unchanged.
+This corrects an omitted ownership declaration, not a widened dependency rule.
