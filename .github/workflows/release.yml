@@ -206,7 +206,7 @@ jobs:
           assert len(smoke)==5 and {r['wheel'] for r in smoke}=={p.name for p in wheels}
           for report in smoke:
               assert report['sourceCommit']==commit and report['version']==version
-              assert len(report['checks'])==4 and report['nativeAdmission'] is False and report['securityReady'] is False
+              assert len(report['checks'])==6 and report['nativeAdmission'] is False and report['securityReady'] is False
               assert report['pinsBeforeAfter']['wheelSha256']==hashlib.sha256((root/report['wheel']).read_bytes()).hexdigest()
               assert report['checks']==smoke[0]['checks'] and report['checks'][-1]=={'id':'no-context-downgrade','refused':True}
               with zipfile.ZipFile(root/report['wheel']) as archive:

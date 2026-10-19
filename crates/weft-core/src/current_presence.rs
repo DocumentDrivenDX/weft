@@ -67,7 +67,7 @@ impl CurrentPresencePreparation<'_>{
 pub fn prepare(original:&ApplicationLineage)->Result<CurrentPresencePreparation<'_>>{
  if original.plan().ir_version!="weft-ir/application-lineage/0.4-candidate"
   || !original.plan().required_capabilities.iter().any(|c|c==CAPABILITY)
-  || original.catalog().pins().iter().any(|p|p.umf_version!="0.8.0"){return Err(fail())}
+  || original.catalog().pins().iter().any(|p|!matches!(p.umf_version.as_str(),"0.8.0"|"0.10.0")){return Err(fail())}
  let request=checked_json(original.source_request_json()).map_err(|_|fail())?;
  let sources:Vec<Source>=serde_json::from_value(request["opaqueSources"].clone()).map_err(|_|fail())?;
  let get=|role:&str|->Result<&Source>{

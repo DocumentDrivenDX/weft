@@ -1418,3 +1418,13 @@ Protection covers capture, predicate execution, result validation and actual syn
 Implement closed profile/correspondence schemas, source admission, actual relationship occurrence extraction, separate source/terminal action obligations, typed parameter/operand capture, existential PostgreSQL lowering and exact owner reconstruction. Preserve every historical registration refusal. Positive original fixture sources must declare and install the relationship and observation policy explicitly; synthetic mapping flags and flat joins cannot substitute.
 
 Native controls require genuine ordinary Bob/Alice/Outsider sessions, authorized/hidden terminals, duplicate edge occurrences, no edges, revoked source/terminal/observation authority, missing endpoint/key/fact, concurrent authority changes through publication, and altered source/result refusal. Exact expected source IDs and result bags are independently specified. Compiler tests must show old-version rejection, no accidental bag multiplication and no private witness reuse. RELATED_KEYS needs independent visible-bag ordering, multiplicity, lookahead and truncation proof; it gains no capability from passing HAS_RELATED. All original 132 acceptance cases remain required; component passes do not promote full B03.
+
+## Current core 0.10 integration — 2026-10-19
+
+Application lineage and the selected security source reader accept coherent
+UMF 0.10.0 documents using the pinned 0.10 schema and exact original source
+bytes. Earlier published compiler profiles retain their scope independently;
+Truss's new current-only release selects 0.10 exclusively. A request cannot mix
+0.8 and 0.10 source formats. Unknown semantic references and unsupported selected
+UUID/128-bit domains retain explicit refusals. This extends source admission,
+not host authorization or native execution authority.

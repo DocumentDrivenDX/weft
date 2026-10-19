@@ -141,7 +141,8 @@ impl Catalog {
     }
     /// Source custody only; security activation remains independently gated.
     pub fn prepare_security(inputs: Vec<ModuleInput>) -> Result<Self> {
-        Self::prepare_version(inputs, Some("0.8.0"), false)
+        let current = inputs.iter().all(|input| input.pin.umf_version == "0.10.0");
+        Self::prepare_version(inputs, Some(if current { "0.10.0" } else { "0.8.0" }), false)
     }
     pub(crate) fn prepare_security010(inputs: Vec<ModuleInput>) -> Result<Self> {
         Self::prepare_version(inputs, Some("0.10.0"), false)
@@ -236,7 +237,7 @@ impl Catalog {
                 (module["id"].as_str().unwrap().to_owned(), (mi, elements))
             }).collect()
         }).collect();
-        Ok(Self { inputs, documents, element_locations, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version==Some("0.8.0"), identity_name_fallback:false })
+        Ok(Self { inputs, documents, element_locations, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:matches!(required_version,Some("0.8.0"|"0.10.0")), identity_name_fallback:false })
     }
     pub(crate) fn local_element_by_ids(&self, document: usize, module: &str, element: &str) -> Option<&Value> {
         let (module_index, elements) = self.element_locations.get(document)?.get(module)?;

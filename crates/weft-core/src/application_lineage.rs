@@ -445,6 +445,27 @@ mod tests {
         }
     }
     #[test]
+    fn current_core010_lineage_preserves_exact_pins_and_refuses_external_semantics() {
+        let mut request=fixture();
+        for module in request["modules"].as_array_mut().unwrap() {
+            let mut document:Value=serde_json::from_str(module["documentJson"].as_str().unwrap()).unwrap();
+            document["umf"]=json!("0.10.0");
+            let source=document.to_string();
+            module["documentJson"]=json!(source);module["pin"]["umfVersion"]=json!("0.10.0");
+            module["pin"]["sha256"]=json!(sha256(source.as_bytes()));
+        }
+        let prepared=prepare(&request.to_string()).unwrap();
+        assert!(prepared.catalog().pins().iter().all(|pin|pin.umf_version=="0.10.0"));
+        assert_eq!(prepared.source_request_json(),request.to_string());
+        let module=&mut request["modules"][0];
+        let mut document:Value=serde_json::from_str(module["documentJson"].as_str().unwrap()).unwrap();
+        for element in document["modules"][0]["elements"].as_array_mut().unwrap() {
+            element["semanticTypes"]=json!([{"vocabulary":"outside","version":"1","term":"unknown"}]);
+        }
+        let source=document.to_string();module["documentJson"]=json!(source);module["pin"]["sha256"]=json!(sha256(source.as_bytes()));
+        assert!(prepare(&request.to_string()).is_err());
+    }
+    #[test]
     fn original_unnamed_current_model_is_not_silently_given_sql_names() {
         let current: Value = serde_json::from_str(include_str!(
             "../../../tests/application-lineage/fixtures/original-umf-obligations.json"

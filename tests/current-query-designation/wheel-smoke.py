@@ -49,6 +49,32 @@ request=json.loads((fixture/'live-original-integer-sum.request.json').read_text(
 assert packet['version']=='weft.current-query.native-input/0.2-candidate' and packet['capabilities']==['live-original-integer-sum'] and packet['routes'][0]['required']==['nullity']
 assert compiled['version']=='weft.postgresql.current-scalar/0.4-candidate' and compiled['publicCellSources'][0]['kind']=='sum' and compiled['resultColumns'][0]['encoding']=='native-numeric-integer-nullable-text'
 checks.append({'id':'explicit-abi4-original-sum','compiledSha256':digest(json.dumps(compiled,sort_keys=True).encode())})
+# Exercise current UMF source through the same public native child and lowerer.
+current=json.loads((fixture/'mixed-original-uses.request.json').read_text())
+for module in current['modules']:
+ document=json.loads(module['documentJson']);document['umf']='0.10.0'
+ module['documentJson']=json.dumps(document,separators=(',',':'))
+ module['pin']['umfVersion']='0.10.0';module['pin']['sha256']=digest(module['documentJson'].encode())
+for source in current['opaqueSources']:
+ if source['role']=='query-designation':
+  designation=json.loads(source['utf8']);designation['modelPins']=[module['pin'] for module in current['modules']]
+  source['utf8']=json.dumps(designation,separators=(',',':'));source['sha256']=digest(source['utf8'].encode())
+current_child,current_packet,current_declaration,current_compiled=produce(current,'0.2','lower_postgresql_current_rows_candidate_json')
+assert current_compiled['resultColumns'][0]['logicalType']['family']=='string'
+checks.append({'id':'core010-exact-source-current-query-and-abi2','compiledSha256':digest(json.dumps(current_compiled,sort_keys=True).encode())})
+presence=json.loads((root/'tests/current-query-presence/fixtures/unadmitted-context.request.json').read_text())
+for module in presence['modules']:
+ document=json.loads(module['documentJson']);document['umf']='0.10.0'
+ module['documentJson']=json.dumps(document,separators=(',',':'))
+ module['pin']['umfVersion']='0.10.0';module['pin']['sha256']=digest(module['documentJson'].encode())
+for source in presence['opaqueSources']:
+ if source['role']=='presence-designation':
+  designation=json.loads(source['utf8']);designation['modelPins']=[module['pin'] for module in presence['modules']]
+  source['utf8']=json.dumps(designation,separators=(',',':'));source['sha256']=digest(source['utf8'].encode())
+presence_raw=json.dumps(presence,separators=(',',':'));presence_parent=weft.prepare_application_lineage(presence_raw)
+presence_child=presence_parent.prepare_current_presence();graph=json.loads(presence_child.graph_requirements_json())
+assert graph['sourceRequestJson']==presence_raw and graph['sourceRequestSha256']==digest(presence_raw.encode())
+checks.append({'id':'core010-exact-source-presence-graph','graphSha256':digest(presence_child.graph_requirements_json().encode())})
 declaration['version']='weft.postgresql.current-values/0.2-candidate'
 try:child.lower_postgresql_current_rows_candidate_json(json.dumps(declaration))
 except ValueError as error:assert str(error).startswith('WFT-CURRENT-SCALAR-SQL:')
