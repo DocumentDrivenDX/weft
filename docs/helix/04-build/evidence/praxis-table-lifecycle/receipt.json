@@ -1,0 +1,67 @@
+{
+  "candidate": "weft-sql0.4.47 unpublished local candidate",
+  "base": "e2d83d8a",
+  "scope": "original core0.10.0/umf.tables0.1.0 conditional read custody; no data execution",
+  "nativeExecutionQualified": false,
+  "browserExecutionQualified": false,
+  "verification": {
+    "focusedIntegrationTests": {
+      "passed": 9,
+      "failed": 0
+    },
+    "postgresqlLibraryRegression": {
+      "passed": 184,
+      "failed": 0
+    },
+    "installedPythonCliParity": {
+      "passed": 10,
+      "failed": 0,
+      "receipt": "bindings.json"
+    },
+    "pythonRawReadFeatureCheck": "passed",
+    "wasm32RawReadFeatureCheck": "passed; compilation only",
+    "moduleBoundaries": {
+      "packages": 11,
+      "status": "passed"
+    },
+    "specs": {
+      "governedArtifacts": 89,
+      "schemas": 101,
+      "fixtureScenarios": 636,
+      "status": "passed"
+    },
+    "sourceLicenseAudit": {
+      "headers": 707,
+      "expression": "MIT OR Apache-2.0",
+      "status": "passed"
+    }
+  },
+  "toolchain": {
+    "rust": "1.90.0",
+    "python": "3.11.17",
+    "maturin": "1.9.6",
+    "platform": "macOS arm64",
+    "wheelProfile": "dev"
+  },
+  "localWheel": {
+    "filename": "weft_sql-0.4.47-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "afd4437c7a24c902fb88b2e879f5545bc1082bf88980d0971ae7427bca83325b",
+    "license": "MIT OR Apache-2.0",
+    "licenseFiles": [
+      "LICENSE.md",
+      "LICENSE-MIT",
+      "LICENSE-APACHE",
+      "THIRD-PARTY-LICENSES.txt"
+    ],
+    "published": false
+  },
+  "sourceFiles": {
+    "crates/weft-core/src/table_lifecycle.rs": "7fb0ebae6517ea3b605c547455e77b8f7514bfcf1c021ad37c414f83b0f95ec9",
+    "crates/weft-postgresql/tests/table_lifecycle.rs": "8f23377236abe03dde3777729947c44557c118550d77ae848014662c794e5a6f",
+    "tests/raw-postgresql/table-lifecycle-bindings-check.py": "d06c5a9b999b5d3952e668189996fefc08e7e80394612a7f9562b70671cfb969",
+    "tests/raw-postgresql/table-lifecycle-model.json": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+    "tests/raw-postgresql/table-lifecycle-read-template.json": "6600380b749e7c44d7694b184aecb242db3e5aba0c63c4ee6df281e183fa7ed9",
+    "tests/raw-postgresql/table-lifecycle-related-model.json": "837db75ee3fc0ebb7f30eea6f1fc0252dad1e11ad301645d3ff16f258310bc76",
+    "spec/upstream/umf-tables-0.1.0.schema.json": "5d9b04c587153ddfaaf709f5598d3974315e7efe158b20008ff8d9007836427c"
+  }
+}

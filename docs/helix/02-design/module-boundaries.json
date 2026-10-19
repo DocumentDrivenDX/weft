@@ -1648,6 +1648,7 @@
             "mod:current_query_refinement",
             "mod:column_custody",
             "mod:raw_read",
+            "mod:table_lifecycle",
             "mod:raw_action",
             "mod:raw_bulk",
             "mod:search"
@@ -1993,6 +1994,7 @@
             "field:model_json",
             "field:native_columns",
             "field:native_catalog_fence",
+            "field:native_lifecycle",
             "enum:ParameterContainer",
             "struct:Parameter",
             "field:name",
@@ -2015,6 +2017,7 @@
             "field:snapshot",
             "fn:binding_record",
             "struct:AdmittedRead",
+            "fn:native_lifecycle",
             "fn:request",
             "fn:query",
             "fn:original_document",
@@ -2740,6 +2743,19 @@
             "field:predicates",
             "field:groups",
             "fn:parse"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/table_lifecycle.rs",
+          "publicDeclarations": [
+            "struct:NativeLifecycle",
+            "field:version",
+            "field:module",
+            "field:configuration_digest",
+            "field:deployment_digest",
+            "struct:AdmittedLifecycle",
+            "fn:obligation"
           ],
           "pathReferences": []
         }

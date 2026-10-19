@@ -1,0 +1,539 @@
+{
+  "umf": "0.10.0",
+  "id": "synthetic-table-lifecycle",
+  "vocabularies": {
+    "umf.tables": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "demo",
+      "namespace": "demo",
+      "elements": [
+        {
+          "id": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "owner",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "Note",
+          "kind": "record",
+          "members": [
+            {
+              "module": "demo",
+              "element": "id"
+            },
+            {
+              "module": "demo",
+              "element": "owner"
+            },
+            {
+              "module": "demo",
+              "element": "noteParentId"
+            },
+            {
+              "module": "demo",
+              "element": "caption"
+            },
+            {
+              "module": "demo",
+              "element": "amount"
+            }
+          ],
+          "keys": [
+            {
+              "id": "primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "demo",
+                  "element": "id"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "parentId",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "parentOwner",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "noteParentId",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "caption",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "extensions": {}
+        },
+        {
+          "id": "amount",
+          "kind": "field",
+          "scalarType": "decimal",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {},
+          "facets": {
+            "precision": 10,
+            "scale": 2
+          }
+        },
+        {
+          "id": "Parent",
+          "kind": "record",
+          "members": [
+            {
+              "module": "demo",
+              "element": "parentId"
+            },
+            {
+              "module": "demo",
+              "element": "parentOwner"
+            }
+          ],
+          "keys": [
+            {
+              "id": "primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "demo",
+                  "element": "parentId"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "umf.tables": {
+          "profile": "postgresql18/0.1",
+          "tables": [
+            {
+              "id": "notes",
+              "record": {
+                "module": "demo",
+                "element": "Note"
+              },
+              "name": "notes",
+              "columns": [
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  "name": "id",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "name": "owner",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "noteParentId"
+                  },
+                  "name": "parent_id",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "caption"
+                  },
+                  "name": "caption",
+                  "nativeType": {
+                    "kind": "text"
+                  },
+                  "default": {
+                    "kind": "literal",
+                    "value": {
+                      "string": "O'Reilly\\n%; SELECT 1;--"
+                    }
+                  }
+                },
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "amount"
+                  },
+                  "name": "amount",
+                  "nativeType": {
+                    "kind": "numeric",
+                    "precision": 10,
+                    "scale": 2
+                  },
+                  "default": {
+                    "kind": "literal",
+                    "value": {
+                      "decimalToken": "12.30"
+                    }
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "id": "owner_lookup",
+                  "name": "owner_lookup",
+                  "fields": [
+                    {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  ],
+                  "include": [
+                    {
+                      "module": "demo",
+                      "element": "caption"
+                    }
+                  ],
+                  "unique": false
+                }
+              ],
+              "checks": [
+                {
+                  "id": "nonnegative",
+                  "name": "amount_nonnegative",
+                  "expression": {
+                    "op": "ge",
+                    "left": {
+                      "op": "field",
+                      "field": {
+                        "module": "demo",
+                        "element": "amount"
+                      }
+                    },
+                    "right": {
+                      "op": "literal",
+                      "value": {
+                        "decimalToken": "0.00"
+                      }
+                    }
+                  }
+                }
+              ],
+              "foreignKeys": [
+                {
+                  "id": "parent_fk",
+                  "name": "parent_fk",
+                  "fields": [
+                    {
+                      "module": "demo",
+                      "element": "noteParentId"
+                    }
+                  ],
+                  "target": {
+                    "record": {
+                      "module": "demo",
+                      "element": "Parent"
+                    },
+                    "key": "primary"
+                  },
+                  "onUpdate": "restrict",
+                  "onDelete": "restrict",
+                  "deferrable": false,
+                  "relationship": {
+                    "module": "demo",
+                    "id": "parent"
+                  }
+                }
+              ],
+              "policy": {
+                "mode": "native-rls",
+                "person": {
+                  "select": {
+                    "kind": "all",
+                    "rules": [
+                      {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "owner"
+                        }
+                      },
+                      {
+                        "kind": "via",
+                        "path": [
+                          {
+                            "module": "demo",
+                            "id": "parent",
+                            "direction": "forward"
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "parentOwner"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "insert": {
+                    "kind": "all",
+                    "rules": [
+                      {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "owner"
+                        }
+                      },
+                      {
+                        "kind": "via",
+                        "path": [
+                          {
+                            "module": "demo",
+                            "id": "parent",
+                            "direction": "forward"
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "parentOwner"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "update": {
+                    "kind": "all",
+                    "rules": [
+                      {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "owner"
+                        }
+                      },
+                      {
+                        "kind": "via",
+                        "path": [
+                          {
+                            "module": "demo",
+                            "id": "parent",
+                            "direction": "forward"
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "parentOwner"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "delete": {
+                    "kind": "all",
+                    "rules": [
+                      {
+                        "kind": "owner",
+                        "field": {
+                          "module": "demo",
+                          "element": "owner"
+                        }
+                      },
+                      {
+                        "kind": "via",
+                        "path": [
+                          {
+                            "module": "demo",
+                            "id": "parent",
+                            "direction": "forward"
+                          }
+                        ],
+                        "rule": {
+                          "kind": "owner",
+                          "field": {
+                            "module": "demo",
+                            "element": "parentOwner"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "batch": {
+                  "select": {
+                    "kind": "allow"
+                  },
+                  "insert": {
+                    "kind": "deny"
+                  },
+                  "update": {
+                    "kind": "deny"
+                  },
+                  "delete": {
+                    "kind": "deny"
+                  }
+                }
+              }
+            },
+            {
+              "id": "parents",
+              "record": {
+                "module": "demo",
+                "element": "Parent"
+              },
+              "name": "parents",
+              "columns": [
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "parentId"
+                  },
+                  "name": "id",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "parentOwner"
+                  },
+                  "name": "owner",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                }
+              ],
+              "indexes": [],
+              "checks": [],
+              "foreignKeys": [],
+              "policy": {
+                "mode": "native-rls",
+                "person": {
+                  "select": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "parentOwner"
+                    }
+                  },
+                  "insert": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "parentOwner"
+                    }
+                  },
+                  "update": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "parentOwner"
+                    }
+                  },
+                  "delete": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "parentOwner"
+                    }
+                  }
+                },
+                "batch": {
+                  "select": {
+                    "kind": "allow"
+                  },
+                  "insert": {
+                    "kind": "deny"
+                  },
+                  "update": {
+                    "kind": "deny"
+                  },
+                  "delete": {
+                    "kind": "deny"
+                  }
+                }
+              }
+            }
+          ],
+          "seedSets": [],
+          "commands": []
+        }
+      },
+      "relationships": [
+        {
+          "id": "parent",
+          "name": "parent",
+          "source": [
+            {
+              "module": "demo",
+              "element": "Note"
+            }
+          ],
+          "target": [
+            {
+              "module": "demo",
+              "element": "Parent",
+              "key": "primary"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        }
+      ]
+    }
+  ]
+}

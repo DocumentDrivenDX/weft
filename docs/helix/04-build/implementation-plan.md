@@ -2744,3 +2744,16 @@ named native decoder profile requires its own review/qualification rather than
 a global guard increase. Whole-source semantic/native admission is not inferred.
 Original132B-008 requirements, native graph/context/codec/current-authority and
 guarded end-to-end release remain required and open; this component promotes none.
+
+
+### Praxis declared-table read custody candidate — 2026-10-19
+
+The successor0.4.47 branch implements CONTRACT-004's conditional native table
+profile over original core0.10/umf.tables0.1.0 source, without changing existing
+raw-read program versions. Exact module/table/column/primary-Key/FK correspondence
+and explicit host obligations precede any future native execution. Current
+compiler evidence and limits are recorded in
+[evidence/praxis-table-lifecycle/README.md](evidence/praxis-table-lifecycle/README.md).
+This is an unpublished candidate. Typed operation declarations, additional native
+codecs, generated client admission, native data execution and full Praxis/release
+acceptance remain open. The independently coordinated0.4.46 cohort is not retagged.

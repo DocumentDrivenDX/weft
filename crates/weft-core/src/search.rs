@@ -123,6 +123,7 @@ fn admit_profile(raw: &str, terms:bool, unity:Option<&Value>,expected_core_versi
         return Err("search profile or budget refused");
     }
     let selection = raw_read::admit_json(&serde_json::to_string(&r.selection).unwrap())?;
+    if selection.native_lifecycle().is_some(){return Err("native table search profile is not yet admitted")}
     let doc = checked_json(&r.selection.binding.model_json)
         .map_err(|_| "original search source refused")?;
     if r.source.document_id != doc["id"]

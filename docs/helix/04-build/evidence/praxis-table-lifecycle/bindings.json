@@ -1,0 +1,56 @@
+{
+  "cases": [
+    {
+      "name": "keyset",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "lakebase-compilation-only",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "count",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "original-source-format",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "missing-nativeLifecycle",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "missing-verificationProfile",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "mapping",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "digest",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "context",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "uninterpreted-command",
+      "status": "blocked",
+      "nativePythonEqual": true
+    }
+  ],
+  "nativeExecutionQualified": false,
+  "browserExecutionQualified": false
+}

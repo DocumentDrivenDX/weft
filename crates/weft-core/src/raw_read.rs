@@ -75,6 +75,8 @@ pub struct Binding {
     pub native_columns: Option<Json>,
     #[serde(default,skip_serializing_if="Option::is_none")]
     pub native_catalog_fence: Option<NativeCatalogFence>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub native_lifecycle: Option<crate::table_lifecycle::NativeLifecycle>,
 }
 pub(crate) fn validate_catalog_fence(binding:&Binding,target:&str)->Result<()> {
     if let Some(fence)=&binding.native_catalog_fence {
@@ -121,7 +123,9 @@ pub struct Request {
 }
 fn snapshot_false(value:&bool)->bool{!*value}
 pub(crate) fn validate_model(binding: &Binding) -> Result<()> {
-    prepare_model(binding).map(|_| ())
+    let model=prepare_model(binding)?;
+    if model.lifecycle.is_some(){return Err("native table action profile is not yet admitted")}
+    Ok(())
 }
 
 /// Resolve a logical Record through the same original binding admission used by reads.
@@ -134,6 +138,7 @@ pub fn binding_record(binding:&Binding,logical_table:&[String])->Result<crate::m
 struct AdmittedModel {
     document: Json,
     records: BTreeMap<Vec<String>, crate::model::Record>,
+    lifecycle:Option<crate::table_lifecycle::AdmittedLifecycle>,
 }
 
 fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
@@ -289,7 +294,8 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             return Err("relationship endpoints/multiplicity differ from UMF");
         }
     }
-    Ok(AdmittedModel { document: doc, records })
+    let lifecycle=crate::table_lifecycle::admit(binding,&doc,&records)?;
+    Ok(AdmittedModel { document: doc, records, lifecycle })
 }
 
 #[derive(Debug)]
@@ -299,6 +305,7 @@ pub struct AdmittedRead {
     model: AdmittedModel,
 }
 impl AdmittedRead {
+    pub fn native_lifecycle(&self)->Option<&crate::table_lifecycle::AdmittedLifecycle>{self.model.lifecycle.as_ref()}
     pub fn request(&self) -> &Request {
         &self.request
     }
@@ -343,8 +350,8 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
     { return Err("UMF 0.10 UUID/bits128 raw carriers are currently PostgreSQL-only"); }
     validate_catalog_fence(&request.binding,&request.target)?;
     if let Some(profile)=&request.verification_profile {
-        if profile!="source-exact/0.1" || !matches!(request.target.as_str(),"postgresql18"|"lakebase18") {return Err("unsupported source verification profile")}
-        if request.binding.native_columns.is_none(){return Err("source-exact verification requires original native ColumnSet facts")}
+        if !matches!(profile.as_str(),"source-exact/0.1"|"table-lifecycle/0.1") || !matches!(request.target.as_str(),"postgresql18"|"lakebase18") {return Err("unsupported source verification profile")}
+        if profile=="source-exact/0.1"&&request.binding.native_columns.is_none(){return Err("source-exact verification requires original native ColumnSet facts")}
     }
     if request.snapshot && (!request.keyset || !matches!(request.target.as_str(), "spark-delta4" | "unity-catalog")){return Err("snapshot pages require an explicit Delta snapshot target")}
     if request.version != "weft.raw-read/0.1"
@@ -360,6 +367,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
         } else if parameter.element_nullable.is_some()||parameter.max_items.is_some(){return Err("scalar parameter cannot carry list facets")}
     }
     let model = prepare_model(&request.binding)?;
+    if model.lifecycle.is_some()!=(request.verification_profile.as_deref()==Some("table-lifecycle/0.1")){return Err("native table lifecycle requires its explicit verification profile")}
     let mut statements =
         Parser::parse_sql(&PostgreSqlDialect {}, &request.sql).map_err(|_| "SQL parse refused")?;
     if statements.len() != 1 {

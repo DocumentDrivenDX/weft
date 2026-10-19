@@ -1,0 +1,150 @@
+{
+  "umf": "0.10.0",
+  "id": "synthetic-table-lifecycle",
+  "vocabularies": {
+    "umf.tables": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "demo",
+      "namespace": "demo",
+      "elements": [
+        {
+          "id": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "owner",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "Note",
+          "kind": "record",
+          "members": [
+            {
+              "module": "demo",
+              "element": "id"
+            },
+            {
+              "module": "demo",
+              "element": "owner"
+            }
+          ],
+          "keys": [
+            {
+              "id": "primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "demo",
+                  "element": "id"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "umf.tables": {
+          "profile": "postgresql18/0.1",
+          "tables": [
+            {
+              "id": "notes",
+              "record": {
+                "module": "demo",
+                "element": "Note"
+              },
+              "name": "notes",
+              "columns": [
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  "name": "id",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "name": "owner",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                }
+              ],
+              "indexes": [],
+              "checks": [],
+              "foreignKeys": [],
+              "policy": {
+                "mode": "native-rls",
+                "person": {
+                  "select": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  },
+                  "insert": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  },
+                  "update": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  },
+                  "delete": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  }
+                },
+                "batch": {
+                  "select": {
+                    "kind": "allow"
+                  },
+                  "insert": {
+                    "kind": "deny"
+                  },
+                  "update": {
+                    "kind": "deny"
+                  },
+                  "delete": {
+                    "kind": "deny"
+                  }
+                }
+              }
+            }
+          ],
+          "seedSets": [],
+          "commands": []
+        }
+      }
+    }
+  ]
+}

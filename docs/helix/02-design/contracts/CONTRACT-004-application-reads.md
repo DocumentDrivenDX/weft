@@ -232,3 +232,42 @@ noncanonical operand, including `1900-02-29` or `2024-2-01`, MUST block with
 implicit date/string coercions are outside this extension and MUST NOT be inferred
 from equality support. Hosts MUST validate exact native date slots and retain
 original catalog, authority, buffered-source and final-handoff checks.
+
+
+## Declared native table custody candidate — 2026-10-19
+
+The explicit PostgreSQL18/Lakebase18 `table-lifecycle/0.1` verification
+profile accepts original core0.10 documents with selected module-scope
+`umf.tables`0.1.0 content. UMF CONTRACT-081 owns that extension's meaning;
+Weft retains original source bytes and verifies their SHA-256, full owning-module
+table/column mappings, primary Keys and declared relationship/FK correspondence.
+An explicit `binding.nativeLifecycle` contains version
+`umf.table-lifecycle/0.1`, the owning module and configuration/deployment digests.
+These digests are requested custody context, never proof of installed authority.
+The profile cannot mix legacy ColumnSet or catalog-fence admission.
+
+Selected table declarations require this profile. Unknown selected extensions,
+opaque nonempty command inventories, incomplete bindings and unsupported carrier
+meaning refuse. Unselected module content remains retained without forcing its
+interpretation. The current carrier subset is string, integer, decimal, boolean,
+UUID and bits128. Date/timestamp, table mutations, search and composed related-read
+admission remain unqualified; this profile must not silently route those paths
+through legacy admission.
+
+Compiled programs use the distinct `weft.table-read/0.1` version. Their
+`obligations.tableLifecycle` retains source/configuration/deployment custody,
+selected command policy pointers and required original UMF interpretation,
+approved forward ledger/source-derived native witness, shared generation lock,
+verified person/batch identity, current transitive roles, forced RLS and effective
+privilege closure. Cursor scope additionally requires ledger head, principal and
+role-scope digest. Every such program declares `nativeExecutionQualified:false`.
+No database is inspected or authorized by compilation. Hosts must refuse this
+program until their version-specific native admission and execution are qualified;
+legacy raw-read catalog versions do not authorize it. This candidate introduces
+no raw SQL execution endpoint and does not enable UMF's guarded client generator.
+
+The pinned original schema and provenance live in
+`spec/upstream/umf-tables-0.1.0.*`. Structural schema checks do not substitute for
+UMF's contextual source interpretation or native policy/constraint enforcement.
+Positive/refusal compiler evidence lives in
+[the candidate receipt](../../04-build/evidence/praxis-table-lifecycle/README.md).
