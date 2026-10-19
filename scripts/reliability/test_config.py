@@ -93,4 +93,14 @@ class ConfigurationTests(unittest.TestCase):
     original=(repository/file).read_text()
     self.assertEqual(original.count(before),1)
     self.assertNotEqual(apply_mutation(original,before,after),original)
+ def test_resource_signatures_require_named_assertion_and_native_value(self):
+  from reliability.mutations import signatures
+  for name,selected,assertion,value in [
+   ('duplicate-key-guard','generated_truncated_json_and_nested_duplicates','duplicate members must be rejected','Object'),
+   ('node-limit-guard','json_node_and_request_byte_limits','node ceiling must be enforced','Array'),
+  ]:
+   good=f'running 1 test\ntest {selected} ... FAILED\npanicked at tests/resources.rs:999:3:\n{assertion}: {value}\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out\n'
+   for text,expected in [(good,True),(good.replace(assertion,'unrelated assertion'),False),(good.replace(value,'Null'),False),(good.replace('resources.rs:','unrelated.rs:'),False)]:
+    result=run([sys.executable,'-c','import sys;sys.stdout.write('+repr(text)+');sys.exit(101)'],self.root,os.environ.copy(),2,tuple(signatures[name]+['test result: FAILED.','panicked at']),(selected,))
+    self.assertEqual(detected(result,name,selected),expected)
 if __name__=='__main__':unittest.main()

@@ -53,3 +53,14 @@ or crate edge. Its ownership is now recorded explicitly in the PostgreSQL backen
 map. The complete `modules:check` command, including JavaScript/Rust inventories
 and all negative controls, passes locally; the checker itself is unchanged.
 This corrects an omitted ownership declaration, not a widened dependency rule.
+
+The successor hosted run39263110193 passed those ownership gates, then refused
+the source-mutation gate because its resource panic signatures still named line
+numbers preceding the SPDX header. Resource assertions now carry explicit
+messages; detection requires the original test file, named assertion, native
+Object/Array value category and exactly one failing selected test. New negative
+controls reject another assertion, value or source file while tolerating line
+movement. Normal and optimized configuration suites each pass16 tests.
+[Actual optimized source replay](resource-mutations.json) passes all7 original
+mutants with clean baselines and retained original/mutant digests. It does not
+claim diagnostics-export or complete hosted conformance qualification.
