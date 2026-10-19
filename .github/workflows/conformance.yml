@@ -149,7 +149,10 @@ jobs:
             grep -F 'Choose either candidate or qualified registration for each backend' conflict.log
           done
       - name: Replay retained evidence and corruption controls
-        run: python tests/qualify-and-evolve/check-retained-evidence.py
+        run: |
+          python -m unittest discover -s tests/qualify-and-evolve -p test_licensed_source.py -v
+          python -m unittest discover -s tests/qualify-and-evolve -p test_retained_output.py -v
+          python tests/qualify-and-evolve/check-retained-evidence.py
       - name: Current input closure and stale controls
         run: |
           PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_custody.py -v

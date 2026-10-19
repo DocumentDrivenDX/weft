@@ -2,7 +2,7 @@
 """@covers US-008-AC4 Exercise actual host configuration and optimized failures."""
 import dataclasses,json,os,pathlib,subprocess,sys,tempfile,unittest
 from reliability.config import load_config,ConfigurationError
-from reliability.mutations import apply_mutation,detected,execute,MutationError,signatures
+from reliability.mutations import apply_mutation,detected,execute,MutationError
 from reliability.process import run,Result
 class ConfigurationTests(unittest.TestCase):
  def setUp(self):
@@ -79,24 +79,6 @@ class ConfigurationTests(unittest.TestCase):
   good='running 1 test\ntest selected ... FAILED\npanicked at owner type selection must survive lowering\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out\n'
   for text,exit_code,expected in [(good,101,True),(good.replace('running 1 test','running 0 tests'),101,False),(good.replace('owner type selection must survive lowering','different signature'),101,False),(good,1,False),('error: compilation failed',101,False)]:
    result=run([sys.executable,'-c','import sys;sys.stdout.write('+repr(text)+');sys.exit('+str(exit_code)+')'],self.root,os.environ.copy(),2,needles,(selected,));self.assertEqual(detected(result,name,selected),expected)
- def test_real_resource_mutation_signatures_ignore_line_numbers_but_keep_assertion_and_test(self):
-  for name,selected,line,value in [
-   ('duplicate-key-guard','generated_truncated_json_and_nested_duplicates',34,'Object {"outer": Array []}'),
-   ('node-limit-guard','json_node_and_request_byte_limits',17,'Array []')]:
-   needles=tuple(signatures[name]+['test result: FAILED.','panicked at'])
-   good=(f'running 1 test\ntest {selected} ... FAILED\n'
-         f'panicked at crates/weft-core/../../tests/qualify-and-evolve/resources.rs:{line}:39:\n'
-         f'called `Result::unwrap_err()` on an `Ok` value: {value}\n'
-         'test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out\n')
-   cases=[(good,101,selected,True),
-          (good.replace(f'resources.rs:{line}:39:', 'resources.rs:99:39:'),101,selected,True),
-          (good.replace(f'test {selected} ... FAILED', 'test different_test ... FAILED'),101,selected,False),
-          (good.replace('unwrap_err()` on an `Ok` value:', 'assertion failed:'),101,selected,False),
-          ('error: compilation failed',101,selected,False)]
-   for output,exit_code,filter_name,expected in cases:
-    with self.subTest(mutation=name,output=output[:80]):
-     result=run([sys.executable,'-c','import sys;sys.stdout.write('+repr(output)+');sys.exit('+str(exit_code)+')'],self.root,os.environ.copy(),2,needles,(filter_name,))
-     self.assertEqual(detected(result,name,selected),expected)
  def test_large_raw_output_drains_without_capture(self):
   result=run([sys.executable,'-c','import sys;sys.stdout.write("private-sentinel"*1000000)'],self.root,os.environ.copy(),5)
   self.assertEqual(result.exit_code,0);self.assertGreater(result.bytes_read,10000000);self.assertNotIn('private-sentinel',repr(result))
@@ -111,4 +93,14 @@ class ConfigurationTests(unittest.TestCase):
     original=(repository/file).read_text()
     self.assertEqual(original.count(before),1)
     self.assertNotEqual(apply_mutation(original,before,after),original)
+ def test_resource_signatures_require_named_assertion_and_native_value(self):
+  from reliability.mutations import signatures
+  for name,selected,assertion,value in [
+   ('duplicate-key-guard','generated_truncated_json_and_nested_duplicates','duplicate members must be rejected','Object'),
+   ('node-limit-guard','json_node_and_request_byte_limits','node ceiling must be enforced','Array'),
+  ]:
+   good=f'running 1 test\ntest {selected} ... FAILED\npanicked at tests/resources.rs:999:3:\n{assertion}: {value}\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out\n'
+   for text,expected in [(good,True),(good.replace(assertion,'unrelated assertion'),False),(good.replace(value,'Null'),False),(good.replace('resources.rs:','unrelated.rs:'),False)]:
+    result=run([sys.executable,'-c','import sys;sys.stdout.write('+repr(text)+');sys.exit(101)'],self.root,os.environ.copy(),2,tuple(signatures[name]+['test result: FAILED.','panicked at']),(selected,))
+    self.assertEqual(detected(result,name,selected),expected)
 if __name__=='__main__':unittest.main()

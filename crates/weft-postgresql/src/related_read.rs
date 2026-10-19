@@ -99,6 +99,7 @@ fn lower(raw:&str)->Result<Json>{
  }
  for key in ["tables","functions","operators","indexObjects","semanticFields"]{merge_array(&mut result,&source_program,&format!("/privilegeInventory/{key}"));}
  result["relatedRequest"]=original;result["rootLogicalTable"]=json!(target_table.logical);result["relatedSourceSql"]=json!(source_program["sql"]);result["sourceSql"]=request.target["sql"].clone();
+ crate::dbapi::attach(&mut result)?;
  crate::native_catalog_fence::attach(&target.request().binding,&mut result["obligations"])?;crate::native_catalog_fence::seal_version(&mut result)?;
  result.as_object_mut().unwrap().remove("structuralDigest");result["structuralDigest"]=json!(weft_core::json::sha256(result.to_string().as_bytes()));Ok(result)
 }
@@ -114,7 +115,7 @@ pub fn compile_json(raw:&str)->String{lower(raw).unwrap_or_else(|reason|json!({"
  #[test]fn source_limit_direction_and_original_global_parameters_are_retained(){
   let mut r=request();let p=compile(&r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["relatedRequest"],r);assert_eq!(p["sourceSql"],r["target"]["sql"]);assert!(!p["relatedSourceSql"].as_str().unwrap().contains("LIMIT"));assert!(p["sql"].as_str().unwrap().contains("EXISTS(SELECT 1 FROM"));
   r["source"]["sql"]=json!("SELECT o.id AS id FROM commerce.\"Order\" o WHERE o.status=:status ORDER BY o.id DESC LIMIT 2");r["target"]["sql"]=json!("SELECT c.id AS id FROM commerce.\"Customer\" c WHERE c.id>:id ORDER BY c.id LIMIT 10");let params=json!([{"name":"status","carrier":"string","nullable":false},{"name":"id","carrier":"integer","nullable":false}]);r["source"]["parameters"]=params.clone();r["target"]["parameters"]=params;
-  let p=compile(&r);assert_eq!(p["status"],"compiled","{p}");assert!(p["relatedSourceSql"].as_str().unwrap().ends_with("LIMIT 2"));assert_eq!(p["parameterOrder"],json!(["id","status"]));assert!(p["sql"].as_str().unwrap().contains("$2::pg_catalog.text"));
+  let p=compile(&r);assert_eq!(p["status"],"compiled","{p}");assert!(p["relatedSourceSql"].as_str().unwrap().ends_with("LIMIT 2"));assert_eq!(p["parameterOrder"],json!(["id","status"]));assert_eq!(p["dbapiParameterOrder"],json!(["id","status"]));assert_eq!(p["dbapiSql"].as_str().unwrap().matches("%s").count(),2);assert!(p["sql"].as_str().unwrap().contains("$2::pg_catalog.text"));
   let source=r["source"].clone();r["source"]=r["target"].clone();r["target"]=source;r["relationship"]["direction"]=json!("inverse");let p=compile(&r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["rootLogicalTable"],json!(["commerce","Order"]));
  }
  #[test]fn original_root_record_wildcard_is_expanded_by_owner_without_source_cap(){

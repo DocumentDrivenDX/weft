@@ -392,12 +392,12 @@ mod list_parameter_tests {
         r
     }
     #[test]
-    fn selection_list_metadata_is_original_and_old_scalar_artifact_is_identical() {
+    fn selection_list_metadata_and_dbapi_transport_are_original() {
         let scalar = compile(&request());
         assert_eq!(scalar["status"], "compiled", "{scalar}");
         assert_eq!(
             scalar["structuralDigest"]["sha256"],
-            "f34aa692fefcf4b225e3e793c56fc9f4e4bf9b62220d6b2ff40bd365a6caa5f1"
+            "96464cf62dc5c5995eac318bb3cc6b7ca84118a6367a13268fb5faa083c362a5"
         );
         let r = list_request();
         let p = compile(&r);

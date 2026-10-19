@@ -1,15 +1,17 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reaudit retained engine-registration equivalence and refusal controls.
 @covers US-006-AC1 @covers US-006-AC3
 """
 import copy,gzip,hashlib,json,os
 from pathlib import Path
 from importlib.util import spec_from_file_location,module_from_spec
+from licensed_source import source_custody
 ROOT=Path(__file__).resolve().parents[2]
 BASE=Path(os.environ.get('WEFT_REGISTRATION_EVIDENCE',str(ROOT/'docs/helix/04-build/evidence/B-007-native-registration-join')))
 spec=spec_from_file_location('registration_join',Path(__file__).with_name('join-native-registrations.py'));join=module_from_spec(spec);spec.loader.exec_module(join)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 summary=json.loads((BASE/'summary.json').read_text());assert summary['status']=='passed' and summary['cases']==1025
-assert summary['harnessSha256']==sha(Path(__file__).with_name('join-native-registrations.py'))
+custody=source_custody(Path(__file__).with_name('join-native-registrations.py'),summary['harnessSha256'])
 for name,digest in summary['inputHashes'].items():assert sha(ROOT/name)==digest,name
 assert summary['artifactSha256']==sha(BASE/'joined-artifacts.jsonl.gz')
 assert summary['manifestSha256']==sha(BASE/'manifests.json')
@@ -51,4 +53,4 @@ mutate('native host obligation',lambda x:x.__setitem__('obligations',[o for o in
 mutate('silent support promotion',lambda x:x['qualification'].__setitem__('status','supported'))
 mutate('engine settings',lambda x:x['targetContext']['sessionSettings'].__setitem__('comparison','locale-default'))
 mutate('profile drift',lambda x:x['backend'].__setitem__('targetProfile','newer'))
-print(json.dumps(dict(status='passed',cases=1025,compiled=compiled,blocked=blocked,corruptionsRejected=len(controls),controls=controls,scope='Retained engine-registration artifact/pin equivalence; controls corrupt checked semantics rather than a file hash. No new native SQL executions or support promotion.')))
+print(json.dumps(dict(status='passed',cases=1025,compiled=compiled,blocked=blocked,corruptionsRejected=len(controls),controls=controls,sourceCustody=custody,scope='Retained engine-registration artifact/pin equivalence; exact historical harness body with explicitly recorded license annotation. No new native SQL executions or support promotion.')))

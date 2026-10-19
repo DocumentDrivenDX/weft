@@ -5,12 +5,13 @@
 import ast,copy,gzip,hashlib,json
 from pathlib import Path
 from evidence_audit import strict
+from licensed_source import source_custody
 ROOT=Path(__file__).resolve().parents[2];BASE=ROOT/'docs/helix/04-build/evidence/B-007-current-initial-hosts'
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 custody=strict((BASE/'custody.json').read_text())
 for name,digest in custody['inputHashes'].items():assert sha(BASE/name)==digest,name
 summary=strict((BASE/'cli-summary.json').read_text());assert summary['status']=='passed' and summary['cases']==591
-assert summary['harnessSha256']==sha(Path(__file__).with_name('prepare-current-host-corpus.py'))
+source_receipt=source_custody(Path(__file__).with_name('prepare-current-host-corpus.py'),summary['harnessSha256'])
 for name,digest in summary['sourceNativeArtifactHashes'].items():assert sha(ROOT/name)==digest,name
 cases=strict(gzip.decompress((BASE/'cases.json.gz').read_bytes()).decode());reports=strict(gzip.decompress((BASE/'cli-reports.json.gz').read_bytes()).decode())
 requests={c['id']:c['request'] for c in cases};responses={r['id']:r['raw'] for r in reports}
@@ -58,4 +59,4 @@ for host in ['python','browser']:
   raw=json.dumps(requests[id],ensure_ascii=False,**({'separators':(',',':')} if host=='browser' else {}))
   assert row['requestSha256']==hashlib.sha256(raw.encode()).hexdigest(),id
   joined+=1
-print(json.dumps(dict(status='passed',cases=591,hostArtifactJoins=joined,ashlarCases=515,trussCases=76,scope='Fresh native Python and actual Chromium byte parity for 591 original native-tested requests, including the UInt64 compile refusal. Exact artifact equivalence after the specified obsolete Spark-field removal. No separate host database executions, supported registration promotion or platform-wide distribution claim.')))
+print(json.dumps(dict(status='passed',sourceCustody=source_receipt,cases=591,hostArtifactJoins=joined,ashlarCases=515,trussCases=76,scope='Fresh native Python and actual Chromium byte parity for 591 original native-tested requests, including the UInt64 compile refusal. Exact artifact equivalence after the specified obsolete Spark-field removal. No separate host database executions, supported registration promotion or platform-wide distribution claim.')))

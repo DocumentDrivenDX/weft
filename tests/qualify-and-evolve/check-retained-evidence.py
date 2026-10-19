@@ -2,7 +2,8 @@
 """Replay B-007 saved-evidence controls; never advertises full release qualification.
 @covers US-006-AC1 @covers US-006-AC2
 """
-import gzip,hashlib,json,pathlib,re,subprocess,sys
+import gzip,hashlib,json,os,pathlib,re,subprocess,sys,tempfile
+from licensed_source import source_custody
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 HERE=pathlib.Path(__file__).resolve().parent
 components=[
@@ -52,44 +53,47 @@ components=[
  ('reconcile-ashlar-relationships.py','status','cases',52),
 ]
 results=[]
-for name,status,count,expected in components:
- run=subprocess.run([sys.executable,str(HERE/name)],cwd=ROOT,capture_output=True,text=True)
- assert run.returncode==0,(name,run.stdout,run.stderr)
- report=json.loads(run.stdout)
- assert report[status]=='passed' and report[count]==expected,(name,report)
- if name=='reconcile-ashlar-warehouse-counts.py':
-  assert report['logicalMetadataCases']==32
- if name=='reconcile-ashlar-warehouse-application.py':
-  assert report['independentRowComparisons']==112 and report['sameStatementWarehouseCases']==96 and report['separateEmptyQueryProbes']==16
- if name=='reconcile-ashlar-warehouse-compounds.py':
-  assert report['independentDecodedComparisons']==48 and report['sameStatementWarehouseCases']==24 and report['separateEmptyPageProbes']==24
- if name=='reconcile-ashlar-warehouse-relationships.py':
-  assert report['positive']==28 and report['refusals']==24 and report['uniqueNativeGuards']==272 and report['sameStatementWarehouseResults']==296 and report['separateEmptyQueryProbes']==4
- if name=='reconcile-ashlar-warehouse-scalars.py':
-  assert report['positive']==2 and report['refusals']==8 and report['integrityStatements']==40 and report['sameStatementWarehouseResults']==41 and report['separateEmptyQueryProbes']==1
- if name=='reconcile-unsigned-all-widths.py':
-  assert report['nativeReceipts']==190 and report['sameStatementEngineResults']==63 and report['successfulReceipts']==189 and report['expectedFailedReceipts']==1
- if name=='reconcile-signed-boundaries.py':
-  assert report['nativeReceipts']==194 and report['successfulReceipts']==192 and report['expectedFailedReceipts']==2 and report['sameStatementWarehouseCases']==64
- if name=='audit-current-hosts.py':
-  assert report['cases']==591 and report['ashlarCases']==515 and report['trussCases']==76
- if name=='reconcile-ashlar-warehouse-values.py':
-  assert report['positive']==56 and report['refusals']==77 and report['independentDecodedComparisons']==56 and report['integrityStatements']==288 and report['sameStatementWarehouseResults']==343 and report['separateEmptyQueryProbes']==1
- if name=='audit-truss-support-reports.py':
-  assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
- if name=='audit-ashlar-support-reports.py':
-  assert report['scopesAudited']==7 and report['successfulNativeStatements']==21 and report['expectedNativeFailures']==1
- if name=='audit-native-profile-scopes.py':
-  assert report['distinctArtifactScopes']==21 and report['orderedComparisons']==65
- results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})
+with tempfile.TemporaryDirectory(prefix='weft-retained-replay-') as replay_root:
+ for name,status,count,expected in components:
+  run=subprocess.run([sys.executable,str(HERE/name)],cwd=ROOT,capture_output=True,text=True,env=dict(os.environ,WEFT_REPLAY_OUTPUT_ROOT=replay_root))
+  assert run.returncode==0,(name,run.stdout,run.stderr)
+  report=json.loads(run.stdout)
+  assert report[status]=='passed' and report[count]==expected,(name,report)
+  if name=='reconcile-ashlar-warehouse-counts.py':
+   assert report['logicalMetadataCases']==32
+  if name=='reconcile-ashlar-warehouse-application.py':
+   assert report['independentRowComparisons']==112 and report['sameStatementWarehouseCases']==96 and report['separateEmptyQueryProbes']==16
+  if name=='reconcile-ashlar-warehouse-compounds.py':
+   assert report['independentDecodedComparisons']==48 and report['sameStatementWarehouseCases']==24 and report['separateEmptyPageProbes']==24
+  if name=='reconcile-ashlar-warehouse-relationships.py':
+   assert report['positive']==28 and report['refusals']==24 and report['uniqueNativeGuards']==272 and report['sameStatementWarehouseResults']==296 and report['separateEmptyQueryProbes']==4
+  if name=='reconcile-ashlar-warehouse-scalars.py':
+   assert report['positive']==2 and report['refusals']==8 and report['integrityStatements']==40 and report['sameStatementWarehouseResults']==41 and report['separateEmptyQueryProbes']==1
+  if name=='reconcile-unsigned-all-widths.py':
+   assert report['nativeReceipts']==190 and report['sameStatementEngineResults']==63 and report['successfulReceipts']==189 and report['expectedFailedReceipts']==1
+  if name=='reconcile-signed-boundaries.py':
+   assert report['nativeReceipts']==194 and report['successfulReceipts']==192 and report['expectedFailedReceipts']==2 and report['sameStatementWarehouseCases']==64
+  if name=='audit-current-hosts.py':
+   assert report['cases']==591 and report['ashlarCases']==515 and report['trussCases']==76
+  if name=='reconcile-ashlar-warehouse-values.py':
+   assert report['positive']==56 and report['refusals']==77 and report['independentDecodedComparisons']==56 and report['integrityStatements']==288 and report['sameStatementWarehouseResults']==343 and report['separateEmptyQueryProbes']==1
+  if name=='audit-truss-support-reports.py':
+   assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
+  if name=='audit-ashlar-support-reports.py':
+   assert report['scopesAudited']==7 and report['successfulNativeStatements']==21 and report['expectedNativeFailures']==1
+  if name=='audit-native-profile-scopes.py':
+   assert report['distinctArtifactScopes']==21 and report['orderedComparisons']==65
+  results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})
 references={}
+source_annotations={}
 for name in ['B-007-acceptance-matrix.json','B-007-support-inventory.json']:
  value=json.loads((ROOT/'docs/helix/04-build/evidence'/name).read_text())
  def visit(v):
   if isinstance(v,dict):
    if set(v)=={'path','sha256'}:
     p=ROOT/v['path'];assert p.is_relative_to(ROOT) and p.exists()
-    assert hashlib.sha256(p.read_bytes()).hexdigest()==v['sha256'],v['path']
+    receipt=source_custody(p,v['sha256'])
+    if receipt['adjustment']!='none':source_annotations[v['path']]=receipt
     references[v['path']]=v['sha256']
    for child in v.values():visit(child)
   elif isinstance(v,list):
@@ -138,7 +142,8 @@ assert {r['id'] for r in review['criteria']}=={r['id'] for r in matrix['criteria
 for row in review['criteria']:
  assert row['assessment']=='passed' and row['reason']
  for reference in row['evidence']:
-  assert hashlib.sha256((ROOT/reference['path']).read_bytes()).hexdigest()==reference['sha256'],reference['path']
+  receipt=source_custody(ROOT/reference['path'],reference['sha256'])
+  if receipt['adjustment']!='none':source_annotations[reference['path']]=receipt
 results.append({'component':'final-workspace-and-criterion-records','result':{'status':'passed','candidateTests':241,'qualifiedTests':242,'criteria':30,'sourceHashesVerified':len(json.loads(source_bytes))},'historicalSourceCustody':historical_custody,'scope':'Saved logs and immutable historical Git object custody only; current files and fresh CI are qualified separately at the final pushed head.'})
-report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'scope':'Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
-print(json.dumps({'status':'passed','components':len(results),'verifiedEvidenceReferences':len(references),'releaseQualified':False}))
+report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'sourceAnnotations':source_annotations,'scope':'Retained receipt reconciliation and synthetic verifier controls only. Exact historical source bodies may carry one explicitly recorded leading SPDX comment; other changes refuse. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
+print(json.dumps({'status':'passed','components':len(results),'verifiedEvidenceReferences':len(references),'sourceAnnotations':source_annotations,'releaseQualified':False}))

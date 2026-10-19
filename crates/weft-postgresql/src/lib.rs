@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 mod native_catalog_fence;
+mod dbapi;
 pub mod current_scalar;
 pub mod truss_mutation;
 pub mod raw_read;

@@ -202,3 +202,27 @@ Real native missing/wrong FK, added-column, degree/RLS/isolation, list null/empt
 alternate-Key, exact numeric, default wildcard, pagination and truncation controls
 must qualify one immutable source/wheel/runtime cohort before release claims.
 Temporal qualification remains held.
+
+## DBAPI parameter transport candidate — Praxis P1
+
+PostgreSQL18/Lakebase18 raw-read artifacts add `dbapiSql` and
+`dbapiParameterOrder`, covered by the same structural digest as `sql` and
+`parameterOrder`. They express the same compiled statement using positional
+`%s` DBAPI parameters, for Psycopg2/Psycopg3 and SQLAlchemy driver execution.
+Hosts MUST pass a parameter tuple, including an empty tuple for a parameter-free
+statement. Literal percent characters are doubled in `dbapiSql`; only actual
+compiler `$n` placeholder tokens become `%s`. Literals, quoted identifiers,
+comments and dollar-quoted text retain their original SQL bytes apart from the
+DBAPI percent escaping. Values never enter emitted SQL. Each occurrence maps
+back to its original `parameterOrder` slot, including repeated/out-of-order slots.
+Malformed or missing placeholder slots block compilation. Derived related reads
+MUST regenerate this transport from the final composed SQL and parameter order
+before sealing the final digest; fragment transport cannot be reused as final.
+
+This is compiler-owned parameter transport, not a general SQL translation API or
+host-side parser. The pinned Rust PostgreSQL tokenizer identifies placeholder
+spans; the original emitted bytes remain authoritative. Source semantics,
+authorization, native catalog/privilege checks and connection/transaction
+ownership remain unchanged obligations. No action, deployment, driver or managed
+platform qualification follows from this transport alone. Native acceptance must
+compare both transports with adversarial literal/identifier/percent values.

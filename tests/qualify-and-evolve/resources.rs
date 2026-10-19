@@ -14,7 +14,7 @@ fn json_node_and_request_byte_limits(){
  let at=format!("[{}]",vec!["0";99_999].join(","));
  assert!(checked_json(&at).is_ok()); // Root plus children = exactly 100000 nodes.
  let over=format!("[{}]",vec!["0";100_000].join(","));
- assert_eq!(checked_json(&over).unwrap_err(),"WFT-LIMIT");refused(&over,"WFT-LIMIT");
+ assert_eq!(checked_json(&over).expect_err("node ceiling must be enforced"),"WFT-LIMIT");refused(&over,"WFT-LIMIT");
  let huge=" ".repeat(16*1024*1024+1);refused(&huge,"WFT-LIMIT");
  let nested=format!("{}0{}","[".repeat(200),"]".repeat(200));
  assert!(checked_json(&nested).is_err());
@@ -31,7 +31,7 @@ fn generated_truncated_json_and_nested_duplicates(){
   let raw=format!("{{\"case-{case}\": [{state},");
   assert_eq!(checked_json(&raw).unwrap_err(),"WFT-INPUT");refused(&raw,"WFT-INPUT");
   let duplicate=format!("{{\"outer\":[{{\"k-{state}\":1,\"k-{state}\":2}}]}}");
-  assert_eq!(checked_json(&duplicate).unwrap_err(),"WFT-JSON-DUPLICATE");refused(&duplicate,"WFT-JSON-DUPLICATE");
+  assert_eq!(checked_json(&duplicate).expect_err("duplicate members must be rejected"),"WFT-JSON-DUPLICATE");refused(&duplicate,"WFT-JSON-DUPLICATE");
  }
  println!("RESOURCE_REPORT generator=weft-json-xorshift/0.1.0 seed=95955044271877 generatedCases=2000 atomicAssertions=4000");
 }

@@ -1,8 +1,10 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent all-decimal-domain native receipt reconciliation.
 @covers US-004-AC1 @covers US-004-AC3
 """
 import gzip,hashlib,json,os
 from pathlib import Path
+from retained_output import replay_output
 from evidence_audit import strict
 ROOT=Path(__file__).resolve().parents[2]
 BASE=Path(os.environ.get('WEFT_DECIMAL_RECONCILE_INPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-decimal-domains-native')))
@@ -94,5 +96,5 @@ for start in range(0,434,8):
     assert actual=={q['id']:q['expected'] for q in batch}
 assert used==set(index)
 report=dict(status='passed',cases=434,nativeAssertions=1302,nativeReceipts=58,warehouseIdentity=warehouse,sourceSha256=sha(Path(__file__)),inputHashes={n:sha(BASE/n) for n in ['custody.json','summary.json','compile-artifacts.jsonl.gz','statements.jsonl.gz']},scope='All decimal precision 1..28 and valid scales; exact emitted SQL/params/pins, duplicate extrema and least-positive coefficient, five invalid values per domain, and same-statement warehouse build. Separate read-only ANSI observation. Synthetic owners, no production custody/support promotion.')
-OUT=Path(os.environ.get('WEFT_DECIMAL_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation')));OUT.mkdir(parents=True,exist_ok=True)
+OUT=replay_output(Path(os.environ.get('WEFT_DECIMAL_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation'))));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))

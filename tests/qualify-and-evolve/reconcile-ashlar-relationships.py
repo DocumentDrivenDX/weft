@@ -1,6 +1,8 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-007-AC4: saved native relationship receipts and exact bags."""
 import json,hashlib,re
 from pathlib import Path
+from retained_output import replay_output
 from collections import Counter
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-006-relationship-native'
@@ -64,6 +66,6 @@ for identifier,artifact in a.items():
  records.append({'id':identifier,'outcome':o['outcome'],'guardReceipts':o['guardReceipts'],'guardStatementIds':[[r['response']['statement_id'] for r in groups[label]] for label in o['guardReceipts']]})
 assert positive==s['positive']==28 and refused==s['refusals']==24
 assert len(used_guards)==s['uniqueNativeGuards']==272
-OUT=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-relationship-reconciliation';OUT.mkdir(exist_ok=True)
+OUT=replay_output(ROOT/'docs/helix/04-build/evidence/B-007-ashlar-relationship-reconciliation');OUT.mkdir(exist_ok=True)
 report={'status':'passed','cases':52,'positive':positive,'refusals':refused,'uniqueNativeGuards':len(used_guards),'reconcilerSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'sources':[{'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in [BASE/'summary.json',BASE/'compile-artifacts.jsonl',BASE/'statements.jsonl',ROOT/'tests/ashlar-databricks/relationship-native.py']],'scope':'Saved native receipt reconciliation with exact duplicate-preserving expected bags and guard-linked refusal. Not fresh execution or production qualification.','casesReconciled':records}
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:report[k] for k in ['status','cases','positive','refusals','uniqueNativeGuards']}))

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Join engine-pinned registrations to retained native-tested compiler artifacts.
 @covers US-002-AC2 @covers US-006-AC1 @covers US-006-AC3
 Does not promote candidate support or execute SQL.

@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "components": 45,
+  "verifiedEvidenceReferences": 136,
+  "sourceAnnotations": {
+    "crates/weft-postgresql/src/qualified_profile.rs": {
+      "currentSha256": "a007259ed9f4cd3c4748d1a4c6573cc1f237ed74239e629c8d5a121ea2faa291",
+      "historicalSha256": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "crates/weft-databricks/src/qualified_profile.rs": {
+      "currentSha256": "367d9b9e13a716cf568e49da1f1bb6829c53331fb89037632f55e2f126828c3e",
+      "historicalSha256": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "crates/weft-postgresql/src/native_profile.rs": {
+      "currentSha256": "1afaee48c80ca9c86b290eece48db9db87f3ffd028b10f47baf3ab57425e2533",
+      "historicalSha256": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "crates/weft-databricks/src/native_profile.rs": {
+      "currentSha256": "c9c88e22a106821a710399b07bc7073ba2ef370ca9d8eae89a06982887dbdce9",
+      "historicalSha256": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a",
+      "adjustment": "one-leading-SPDX-annotation"
+    }
+  },
+  "releaseQualified": false,
+  "baseCommit": "85dfc5ecae813088a0228242db813ab9197d393f",
+  "failedHostedPrecursor": "https://github.com/DocumentDrivenDX/weft/actions/runs/39266505188",
+  "scope": "Retained evidence replay and exact source custody; no new native SQL execution or compiler support promotion",
+  "archivedInputsChanged": [],
+  "harnessCustody": {
+    "join-native-registrations.py": {
+      "currentSha256": "74ca57a1cc5dd9f545acf50ef4129bf6a6e21824a61b9be339936427be73ee43",
+      "historicalSha256": "8a6b82fe820bd5f53fed99da193ef0f38eb94047585a6c263b839b0cc20e390e",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "prepare-current-host-corpus.py": {
+      "currentSha256": "5245e6fb939032312488d9301e0f2f1afb66cef8bac921610137d55f0322052e",
+      "historicalSha256": "bb65bc927bb9b047cd7addd856b8b0e1f798136fe44704f21b6afd53b410a9bd",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-native/warehouse_capture.py": {
+      "currentSha256": "99d1eadd77ee2a4c1f0077a74a9fa94e5c328690195c817ff166a67eea137d27",
+      "historicalSha256": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/warehouse_capture.py": {
+      "currentSha256": "99d1eadd77ee2a4c1f0077a74a9fa94e5c328690195c817ff166a67eea137d27",
+      "historicalSha256": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-scalar-native/warehouse_capture.py": {
+      "currentSha256": "99d1eadd77ee2a4c1f0077a74a9fa94e5c328690195c817ff166a67eea137d27",
+      "historicalSha256": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-relationship-native/warehouse_capture.py": {
+      "currentSha256": "99d1eadd77ee2a4c1f0077a74a9fa94e5c328690195c817ff166a67eea137d27",
+      "historicalSha256": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native/warehouse_capture.py": {
+      "currentSha256": "99d1eadd77ee2a4c1f0077a74a9fa94e5c328690195c817ff166a67eea137d27",
+      "historicalSha256": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+      "adjustment": "one-leading-SPDX-annotation"
+    },
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-compound-native/warehouse_capture.py": {
+      "currentSha256": "99d1eadd77ee2a4c1f0077a74a9fa94e5c328690195c817ff166a67eea137d27",
+      "historicalSha256": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+      "adjustment": "one-leading-SPDX-annotation"
+    }
+  },
+  "negativeControls": {
+    "sourceChanges": "body edit, unrelated comment, repeated SPDX and artifact prefix refuse",
+    "replayOutputs": "archive outputs redirected; external control outputs retained; relative destination refused"
+  },
+  "sourceHashes": {
+    ".github/workflows/conformance.yml": "edeea4dc067efd88ea414e0e8079bbb632b03ee7978ac77596055d0dd417336e",
+    "tests/qualify-and-evolve/audit-current-hosts.py": "1e191848c39b518a6b40bd902fe3317558184b11552d8e0208e53b6f196f787f",
+    "tests/qualify-and-evolve/audit-native-registration-join.py": "8a7965d6ed2e5c54d05fc9f903882b876c46d69c20f2492051e3d952600d67bd",
+    "tests/qualify-and-evolve/check-retained-evidence.py": "3d12782743d03ef87f6339def70895d9cac6d18b18e82d44dd9d9a715899f725",
+    "tests/qualify-and-evolve/reconcile-ashlar-application.py": "ab6dd2f18bb96d379ca27340173f9e6f569400cdf54e0638d8ef6164c86bff77",
+    "tests/qualify-and-evolve/reconcile-ashlar-compound-pages.py": "3a33f4a0fc194dd5049189e0443aa3abc1b00834238c3f4ca6626e1811515235",
+    "tests/qualify-and-evolve/reconcile-ashlar-relationships.py": "283da94b76c570c193ef113984f486e1cded2d4d4c444700f0277499200a826e",
+    "tests/qualify-and-evolve/reconcile-ashlar-warehouse-application.py": "be4998ab5e424d9f1fa70235e27936968c631f5507229930b98783881eda0fbe",
+    "tests/qualify-and-evolve/reconcile-ashlar-warehouse-compounds.py": "5cde7e02467b807f6be581ebcaa4a22461a7e130c6b3ec041feccbf15daf369a",
+    "tests/qualify-and-evolve/reconcile-ashlar-warehouse-relationships.py": "d20901d570717d8ad318572a209110288e3ddefdd6dd61ff560917547324f66d",
+    "tests/qualify-and-evolve/reconcile-controls.py": "0ec07d24ec62b231c5f3992ea792d8c3d96de635748c87941a05550437fb6ec2",
+    "tests/qualify-and-evolve/reconcile-decimal-domains.py": "9001f4345863489a6690396d94a4c0e911d7d79066050c327976852c50ed76aa",
+    "tests/qualify-and-evolve/reconcile-signed-boundaries.py": "2afe5321b6c8243ea8e4e16076c19b3196c72709135ef5a24ef0c87187bf859e",
+    "tests/qualify-and-evolve/reconcile-unsigned-boundaries.py": "b97f72aed5f411d06d33de3216ecc1d5dd094629f19ffa8ac73cfeaf0b4db9f9",
+    "tests/qualify-and-evolve/unsigned-reconcile-controls.py": "fa04058ad25ced98650d4111063334403882fe729b18469100a61bca397bd821",
+    "tests/qualify-and-evolve/licensed_source.py": "b24a55074732280c4c9e0fc9b9c296c85dcbbbec475c97910f01176d246b1857",
+    "tests/qualify-and-evolve/retained_output.py": "93a396106bb6fe172137da3e53470a5788fa21a1ca22908a19393d4ecaf4f413",
+    "tests/qualify-and-evolve/test_licensed_source.py": "2813517f7bd52ef2faeaaafe893bff6b679c2036012bc67e283d75b0c24a9eab",
+    "tests/qualify-and-evolve/test_retained_output.py": "264e678495962755a719d9be0c1125f086b1b2c7ad5cf0cfe41cbf15db9d641a"
+  }
+}

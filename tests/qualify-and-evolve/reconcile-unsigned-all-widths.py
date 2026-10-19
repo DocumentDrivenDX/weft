@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Replay all native unsigned widths; no database execution or profile promotion."""
 import json,os,pathlib,runpy
 ROOT=pathlib.Path(__file__).resolve().parents[2]

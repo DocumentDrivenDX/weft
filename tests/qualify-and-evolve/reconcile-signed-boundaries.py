@@ -1,8 +1,10 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent signed-width native receipt reconciliation; no support promotion.
 @covers US-004-AC1 @covers US-004-AC3
 """
 import hashlib,json,os
 from pathlib import Path
+from retained_output import replay_output
 ROOT=Path(__file__).resolve().parents[2]
 BASE=Path(os.environ.get('WEFT_SIGNED_RECONCILE_INPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-signed-all-widths-native')))
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -61,5 +63,5 @@ for artifact,bits in zip(artifacts,range(1,65),strict=True):
   check('64-carrier-overflow-above',checks[0]['sql'],[2**63],None)
 assert used==set(index)
 report=dict(status='passed',cases=64,nativeReceipts=194,successfulReceipts=192,expectedFailedReceipts=2,sameStatementWarehouseCases=64,warehouseIdentity=warehouse,sourceSha256=sha(Path(__file__)),inputHashes={n:sha(BASE/n) for n in ['custody.json','summary.json','compile-artifacts.jsonl','statements.jsonl']},scope='Exact signed widths 1..64, repeated signed boundary bags, range/null guards and both carrier overflow refusals. Original emitted SQL, parameters, module/binding pins and warehouse capture reconciled. Synthetic owner substitutions; no publication custody or supported registration claim.')
-OUT=Path(os.environ.get('WEFT_SIGNED_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation')));OUT.mkdir(parents=True,exist_ok=True)
+OUT=replay_output(Path(os.environ.get('WEFT_SIGNED_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation'))));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))
