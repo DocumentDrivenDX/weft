@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent all-decimal-domain native receipt reconciliation.
 @covers US-004-AC1 @covers US-004-AC3
 """

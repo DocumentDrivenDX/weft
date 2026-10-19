@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """Audit same-statement engine identity plus independent unsigned expectations."""
 import os,runpy
 from pathlib import Path

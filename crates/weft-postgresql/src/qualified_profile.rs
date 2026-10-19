@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Evidence-qualified compiler registration for explicit native fixture/layout domains.
 //! Supported semantics remain conditional on host integrity/publication obligations.
 use crate::{candidate::Candidate, native_profile::NativeReview};

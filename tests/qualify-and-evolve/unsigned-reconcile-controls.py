@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC1: reject corruption in saved unsigned boundary evidence."""
 import copy,hashlib,json,os,pathlib,subprocess,sys,tempfile
 ROOT=pathlib.Path(__file__).resolve().parents[2]

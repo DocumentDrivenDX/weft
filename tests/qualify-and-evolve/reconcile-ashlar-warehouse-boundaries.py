@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """Replay exact unsigned results with same-statement Databricks SQL identity."""
 import os,runpy
 from pathlib import Path

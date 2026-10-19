@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reconcile saved unsigned receipts against emitted SQL and integer expectations.
 @covers US-004-AC1 @covers US-004-AC3
 No new native execution or table/publication qualification.

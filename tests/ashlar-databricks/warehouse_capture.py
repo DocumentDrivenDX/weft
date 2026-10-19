@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """Test-only SELECT projection annotation; leaves query clauses and ordering intact."""
 PROJECTION=" to_json(current_version(), map('ignoreNullFields','false')) AS __weft_warehouse, "
 def capture(sql):

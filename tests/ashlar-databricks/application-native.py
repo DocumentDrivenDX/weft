@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent entity/count/keyset oracles over pinned native typed-home fixtures.
 @covers US-004-AC1 @covers US-004-AC2 @covers US-004-AC3 (candidate component)
 """

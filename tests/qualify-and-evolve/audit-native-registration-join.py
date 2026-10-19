@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reaudit retained engine-registration equivalence and refusal controls.
 @covers US-006-AC1 @covers US-006-AC3
 """
