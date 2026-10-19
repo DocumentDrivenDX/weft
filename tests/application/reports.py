@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Collect native frontend reports for independent validation and browser parity."""
 import json,subprocess
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author a complete entity with independently admitted Boolean/structured roots."""
 import base64,copy,hashlib,json
 from pathlib import Path

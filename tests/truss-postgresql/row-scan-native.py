@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute captured owner-wide row-home structural count queries; component only."""
 import csv, hashlib, io, json, subprocess, sys
 from pathlib import Path

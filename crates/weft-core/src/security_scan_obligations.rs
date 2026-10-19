@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Conservative per-scan fact obligations for physical mapping qualification.
 //! These immutable inventories do not authenticate facts or authorize execution.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding},security_ontology::{SecurityOntologyClosure,SecurityRef},security_query_uses::SecurityResolvedQuery};

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent bag/Decimal interpreter plus authored result expectations.
 
 No parser/model resolver/emitter code is reused. The plan is the subject under

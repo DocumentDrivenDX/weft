@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT OR Apache-2.0
 set -eu
 cd "$(dirname "$0")/.."
 # Includes all original/application frontend checks and real-browser runs.

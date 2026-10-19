@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Genuine compiler source/use/designation correspondence with original UMF routes.
  * @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
  * Diagnostic interoperability only; no selected branch, SQL or native permission.

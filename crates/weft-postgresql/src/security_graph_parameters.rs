@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Compiler-owned graph ordinal/source correspondence, not native authority.
 use serde_json::Value;
 use weft_core::{

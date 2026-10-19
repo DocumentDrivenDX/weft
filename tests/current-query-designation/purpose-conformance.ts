@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Independent original UMF purpose checker vs Weft's bounded operation-role subset.
  * @covers US-009-AC1 @covers US-009-AC2
  */

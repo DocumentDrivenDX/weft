@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-owned Backend03 metadata; no executable, index or native qualification.
 fn main() {
     let mut registry = weft_core::backend03::Registry::default();

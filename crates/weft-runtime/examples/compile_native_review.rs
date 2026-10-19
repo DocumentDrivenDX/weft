@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Host-owned JSON-lines harness for exact engine-profile qualification.
 //! Build with both initial adapter features; this does not change public composition.
 use std::io::{self, BufRead};

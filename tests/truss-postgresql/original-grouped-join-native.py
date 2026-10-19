@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original binding grouped equality join through actual Python and PostgreSQL.
 @covers US-003-AC1: independent grouped sums preserve join bag multiplicity.
 @covers US-003-AC2: authored keys/fields and repeated source type filtering.

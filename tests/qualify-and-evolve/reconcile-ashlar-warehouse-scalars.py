@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent exact scalar SUM bags and native integrity-refusal custody.
 @covers US-004-AC1 @covers US-004-AC2 @covers US-004-AC3
 """

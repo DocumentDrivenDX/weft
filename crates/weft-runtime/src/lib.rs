@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Pure build-time composition. Hosts explicitly select trusted adapter versions.
 /// Original ontology Subject/Record/Key source selection only; no authority.
 pub fn inspect_security_mapping_subject_key_json(request: &str, selection: &str) -> String {

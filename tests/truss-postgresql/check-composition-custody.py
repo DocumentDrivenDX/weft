@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent byte-custody check of conformance embedding composition captures."""
 import base64, hashlib, json
 from pathlib import Path

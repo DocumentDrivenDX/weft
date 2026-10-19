@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 #[cfg(feature="current-presence-graph-requirements-candidate")]
 pub mod current_presence_graph_requirements;
 #[cfg(feature="current-presence-model-requirements-candidate")]

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Semantic controls for exact registered Truss numeric-domain receipts.
 @covers US-006-AC1 @covers US-006-AC3
 """

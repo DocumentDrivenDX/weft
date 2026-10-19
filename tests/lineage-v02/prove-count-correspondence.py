@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Bounded conditional count correspondence; no Rust/SQL/native refinement theorem."""
 import importlib.metadata,json
 import z3

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh source-bound candidate/standard wheel and Chromium WASM cohort.
 No database is executed and no host permission is inferred.
 """

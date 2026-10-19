@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Synthetic negative controls exercise admission only, not wheel behavior."""
 import copy,pathlib,runpy
 m=runpy.run_path(str(pathlib.Path(__file__).with_name('verify-sdk-smoke.py')))

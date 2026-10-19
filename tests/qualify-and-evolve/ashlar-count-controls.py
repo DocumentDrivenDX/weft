@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reject native COUNT receipt corruption without executing SQL."""
 import hashlib,json,os,subprocess,sys,tempfile
 from pathlib import Path

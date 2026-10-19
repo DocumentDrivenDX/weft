@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit ordered LEFT stages; original source domains and old profiles stay unchanged.
 use crate::{arithmetic::Arithmetic,binding::Binding,candidate::TargetPlan};
 use serde_json::json;

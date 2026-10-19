@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Corrupt saved native rows and pins; the scope audit must refuse each."""
 import copy,gzip,hashlib,json,os,subprocess,sys,tempfile
 from pathlib import Path

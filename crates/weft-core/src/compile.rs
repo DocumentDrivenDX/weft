@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Public, pure compile transport. Hosts own backend registration and execution.
 /// Maximum UTF-8 request bytes admitted by the compiler and CLI.
 pub const MAX_REQUEST_BYTES: usize = 16 * 1024 * 1024;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit 0.2 application-read syntax. Model validation is a separate phase.
 use crate::{
     error::{Diagnostic, Result},

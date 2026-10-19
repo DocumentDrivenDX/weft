@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Assert authored public outcomes and independently execute fixture SQL."""
 import json,sqlite3,subprocess,os,hashlib
 from pathlib import Path

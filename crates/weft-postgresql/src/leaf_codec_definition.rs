@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original JSONB leaf-codec selection. Static admission is not native qualification.
 use base64::{engine::general_purpose::STANDARD, Engine};
 use serde_json::Value;

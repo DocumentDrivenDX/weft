@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit Backend03 candidate. Compiler fixtures do not qualify native execution.
 use crate::binding::{self, Binding, RecordKind};
 use serde_json::json;

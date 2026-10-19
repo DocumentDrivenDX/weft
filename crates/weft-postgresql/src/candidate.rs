@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 mod application;
 mod relationships;
 // Candidate registered Truss adapter. Qualification remains explicit and host-owned.

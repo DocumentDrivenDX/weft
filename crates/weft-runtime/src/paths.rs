@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit 0.4 composition; hosts still own execution and publication custody.
 use weft_core::{
     backend03::{Plan04View, Registry},

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Audit actual qualified wheel/native payload, ABI record and WASM/glue custody.
 @covers US-005-AC1 @covers US-005-AC2 @covers US-005-AC4
 """

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Identity-based application descriptors; native encodings remain backend obligations.
 use crate::{
     error::{Diagnostic, Result},

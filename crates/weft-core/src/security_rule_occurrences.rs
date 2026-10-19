@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Typed rule occurrence custody. No backend profile issuance or native admission.
 use std::collections::BTreeMap;
 use crate::{error::{Diagnostic,Result},security_ir::{Rule,Expression,Term,Disposition},security_ontology::SecurityRef,security_obligation_sources::{OwnerSourceDemands,OwnerEventKind}};

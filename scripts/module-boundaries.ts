@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readFile, readdir, realpath} from 'node:fs/promises';
 import {resolve, dirname} from 'node:path';
 export function edgeIdentity(d:any, root:string) {

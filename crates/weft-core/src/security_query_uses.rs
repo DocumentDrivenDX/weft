@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Extract actual field/operator uses from the owner-resolved SQL tree.
 //! This is compiler lineage, not physical lowering or native authorization.
 use crate::{error::{Diagnostic,Result},model::{Catalog,ModuleInput},ir::Identity,application_ir as app,security_ir::{SecurityLogicalPlan,QueryOperator},security_ontology::{SecurityRef,SecurityOntologyClosure}};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit direct required primitive Field profile. No parameter/Key semantics.
 use crate::{candidate::Candidate,local_spark4::LocalSpark4};
 use weft_core::{backend::*,error::{Diagnostic,Result}};

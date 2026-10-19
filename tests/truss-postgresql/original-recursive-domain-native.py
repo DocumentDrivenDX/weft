@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import csv,hashlib,io,json,subprocess,sys
 prefix=sys.argv[1] if len(sys.argv)>1 else "public"
 from pathlib import Path

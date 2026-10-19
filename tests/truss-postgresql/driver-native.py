@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host-owned psycopg protocol proof; compiler owns no connection or execution.
 Requires the separately owned localhost test database and fresh full corpus.
 """

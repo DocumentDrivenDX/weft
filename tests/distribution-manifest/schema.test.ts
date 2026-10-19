@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Structural metadata only; actual artifact/index admission is a separate boundary. */
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020.js';

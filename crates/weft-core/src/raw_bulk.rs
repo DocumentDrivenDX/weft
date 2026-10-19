@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Distinct native atomic-bulk admission; never a Truss manifest or tx/1 plan.
 use crate::{
     json::checked_json,

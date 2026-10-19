@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Basic native Python transport check; does not qualify a database runtime."""
 import json
 import subprocess

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author additive 0.4.1 expectations; never execute or normalize a producer."""
 import argparse,copy,gzip,hashlib,json,re
 from pathlib import Path

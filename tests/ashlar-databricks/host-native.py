@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual read-only host orchestration on immutable native fixture publications.
 @covers US-004-AC4. Injected policy/custody faults, no production resolver claim.
 """

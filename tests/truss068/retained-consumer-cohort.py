@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual installed-wheel versus retained original Truss consumer gate.
 No monkeypatch/imported consumer registry, policy decision or native admission.
 """

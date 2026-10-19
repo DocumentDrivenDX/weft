@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-004-AC1 @covers US-004-AC3
 Read-only emitted-SQL owner substitutions for every UMF decimal domain.
 No table writes, publication custody, host policy or support promotion.

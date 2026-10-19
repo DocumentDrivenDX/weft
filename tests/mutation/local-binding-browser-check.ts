@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createRequire} from 'node:module';
 import {join} from 'node:path';
 const {chromium}=createRequire(Bun.argv[2])('playwright'),wasm=Bun.argv[3],truss=Bun.argv[4];

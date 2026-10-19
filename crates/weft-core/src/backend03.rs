@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit backend interface 0.3 for owned 0.4 plans; no Backend02 widening.
 #[path = "backend03_emission.rs"]
 mod emission;

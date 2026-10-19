@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Authored directed edges; physical IDs never become logical keys.
 use super::*;
 use weft_core::{application_ir as app, application_model::RelationshipRead, ir::Span};

@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # Saved native-tested artifact parity; database execution is a separate harness.
 set -eu
 cd "$(dirname "$0")/.."

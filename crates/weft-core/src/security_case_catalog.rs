@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Pinned original required-case custody, not execution or profile authentication.
 use std::collections::{BTreeMap,BTreeSet};
 use serde_json::Value;

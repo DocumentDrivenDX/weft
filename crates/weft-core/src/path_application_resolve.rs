@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private full-query 0.4 resolution through the shared scalar/relational driver.
 //! Path aliases are separate typed occurrences, never synthetic Records or Fields.
 use crate::{

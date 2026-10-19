@@ -13,5 +13,6 @@
     "playwright": "1.62.1",
     "typescript": "5.9.3",
     "yaml": "2.8.1"
-  }
+  },
+  "license": "MIT OR Apache-2.0"
 }

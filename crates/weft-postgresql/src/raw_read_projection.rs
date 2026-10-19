@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-bound direct projection facts. No operand Carrier or SQL casts added.
 use serde_json::{json,Value as Json};
 use std::collections::BTreeMap;

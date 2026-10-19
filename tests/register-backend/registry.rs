@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Backend registration refuses ambiguous or unqualified declarations before code is selected.
 // @covers US-002-AC2 @covers US-002-AC3 @covers US-002-AC4
 use serde_json::{json, Value};

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native vectors for the scalar carrier used by row projection."""
 import csv,hashlib,io,json,subprocess,sys
 from pathlib import Path

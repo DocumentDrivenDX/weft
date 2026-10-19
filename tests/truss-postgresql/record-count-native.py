@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Captured property-independent owner count SQL over minimal native tables."""
 import csv, hashlib, io, json, subprocess, sys
 from pathlib import Path

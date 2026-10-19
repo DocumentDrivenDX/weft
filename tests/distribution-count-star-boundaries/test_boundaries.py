@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inert independent controls; never invoke the compiler."""
 import importlib.util,json,unittest
 from pathlib import Path

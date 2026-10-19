@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Immutable, type-admitted security logical IR. No fact trust, authorization or physical lowering.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_source::SecuritySourcePacket,security_policy_types::SecurityPolicyTypes,security_ontology::{SecurityRef,SecurityOntologyClosure,locate,domain}};
 use serde_json::Value;

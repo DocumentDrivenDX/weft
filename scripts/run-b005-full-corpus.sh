@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # Run after fresh native application reports and run-b005-embeddings.sh.
 set -eu
 cd "$(dirname "$0")/.."

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual candidate CLI refusal and fresh-binding controls, without native claims."""
 import argparse
 import copy

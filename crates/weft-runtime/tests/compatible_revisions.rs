@@ -1,4 +1,5 @@
 #![cfg(feature = "ashlar-databricks-compatible-revisions-candidate")]
+// SPDX-License-Identifier: MIT OR Apache-2.0
 #[path = "../../../tests/ashlar-databricks/common.rs"]
 mod common;
 use serde_json::{json,Value};

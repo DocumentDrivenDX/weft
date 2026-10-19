@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Descriptor-guided complete row trees, preserving native identity and order.
 use crate::{access::ScalarAccess, qualified, CatalogDomain, Identifier, Parameters};
 use serde_json::json;

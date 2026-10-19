@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Real Chromium and actual WASM object/lower/check parity. No database admission.
  * @covers US-009-AC3 @covers US-009-AC4
  */

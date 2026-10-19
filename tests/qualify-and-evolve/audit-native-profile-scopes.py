@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inspect actual retained native artifacts without promoting support status."""
 import ast,gzip,hashlib,json,os
 from collections import Counter

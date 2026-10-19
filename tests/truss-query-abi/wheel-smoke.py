@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact installed Weft wheel compiler checks; no database admission claim."""
 from copy import deepcopy
 from hashlib import sha256

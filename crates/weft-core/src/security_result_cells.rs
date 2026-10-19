@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Pure cell correspondence, not policy selection or release authorization.
 use crate::{error::{Diagnostic,Result},json::{checked_json_bounded,sha256},security_backend::SecurityBackendContext,security_lowering::{SecurityResultContract,SecurityResultOutcome,SecurityResultDomain,SecurityTransform},security_ontology::{SecurityRef,locate}};
 use serde_json::Value;

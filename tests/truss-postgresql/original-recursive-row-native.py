@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import csv,hashlib,io,json,subprocess
 from pathlib import Path
 emissions=json.loads(Path('tests/truss-postgresql/fixtures/row-tree-custody-emission.json').read_text())

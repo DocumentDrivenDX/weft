@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Independently authored deployment qualification duties. Not semantic applicability,
 //! authenticated profile selection, execution evidence or physical admission.
 use std::collections::{BTreeMap,BTreeSet};

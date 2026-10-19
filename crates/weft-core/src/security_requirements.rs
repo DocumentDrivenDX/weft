@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Owner-issued immutable requirements. Declaration correspondence is not authority.
 use crate::{application_ir, error::{Diagnostic, Result}, security_ir::{Rule, SecurityLogicalPlan}, security_query_profile::SecurityProfiledQuery, security_query_uses::QueryUse, security_scan_obligations::{ActionObligations, ScanObligations}};
 use std::collections::BTreeSet;

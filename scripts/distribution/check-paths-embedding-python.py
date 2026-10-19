@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual installed native extension transport parity; no engine execution.
 
 Inputs are explicit owned regular files. The enclosing bounded launcher owns

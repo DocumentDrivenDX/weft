@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Additive engine0.2 custody. Native SQL belongs only to the original backend.
 use serde::Deserialize;
 use serde_json::{json,Value};

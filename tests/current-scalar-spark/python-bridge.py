@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual local-development Spark CQP descriptors; no engine or authority admission."""
 import argparse
 import copy

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original relational operand domain/presence correspondence. Not source, truth or authority admission.
 use crate::{
     error::{Diagnostic, Result},

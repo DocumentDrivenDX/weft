@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compile the exact 1,000-type owner-captured request; test closed capacity bounds."""
 import copy,gzip,hashlib,json,time
 from pathlib import Path

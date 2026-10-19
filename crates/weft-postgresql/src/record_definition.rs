@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original Record source admission, independent of selected property accesses.
 use crate::{
     binding::Admission,

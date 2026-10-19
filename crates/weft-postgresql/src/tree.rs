@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Structural observation for complete-value-tree access, before data publication.
 use crate::{qualified, Identifier};
 pub fn integrity(namespace: &Identifier, state: &str, root: &str) -> String {

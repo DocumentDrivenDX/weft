@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded scalar expression syntax for the explicit 0.3 profile.
 //! This module is not yet connected to public compile transport.
 use crate::{

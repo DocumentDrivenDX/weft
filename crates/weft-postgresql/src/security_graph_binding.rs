@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit reified graph correspondence. Source checks are not native authority.
 use std::collections::BTreeMap;
 use serde::{Serialize,Deserialize};

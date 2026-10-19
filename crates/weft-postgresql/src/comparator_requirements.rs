@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Operation requirements retain authored property ownership, independent of location.
 use crate::native_comparator_definition::{Definition, Operation};
 use std::collections::{BTreeMap, BTreeSet};

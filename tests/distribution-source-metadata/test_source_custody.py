@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Adversarial controls for the actual public-source metadata boundary."""
 import gzip
 import hashlib

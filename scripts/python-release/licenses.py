@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Collect native dependency license notices from locked Cargo metadata."""
 import json, sys
 from pathlib import Path

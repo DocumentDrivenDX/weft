@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independently authored native location witnesses; no full compiler claim."""
 import subprocess,json,csv,io
 from pathlib import Path

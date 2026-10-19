@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inspect local test wheels and browser manifest; never authorizes distribution."""
 import base64,csv,hashlib,io,json,pathlib,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[2]

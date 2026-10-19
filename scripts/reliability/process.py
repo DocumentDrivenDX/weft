@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Unix host process boundary: bounded raw-stream scanning, no raw output sinks."""
 from __future__ import annotations
 import dataclasses, os, pathlib, re, selectors, signal, subprocess, time

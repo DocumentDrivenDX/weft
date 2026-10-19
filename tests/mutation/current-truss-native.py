@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original Python compiler -> current native selection -> public Truss update.
 
 Disposable original-owner installation only. Administrative raw selection is an

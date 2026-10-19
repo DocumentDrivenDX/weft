@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Full scoped input closure; retained history never becomes current authority."""
 import hashlib,json,pathlib,subprocess,re,tomllib
 ROOTS=('.',)

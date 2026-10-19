@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit qualification harness; neither models nor bindings select code.
 use std::io::{self, BufRead};
 use weft_core::{

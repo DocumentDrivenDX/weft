@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Spark-owned original ColumnSet projection facts. This grants no UC profile.
 use serde_json::{json, Value};
 use std::collections::BTreeMap;

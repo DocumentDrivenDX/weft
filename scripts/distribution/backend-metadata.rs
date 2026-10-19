@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Distribution producer probe; source metadata is not executable self-description.
 fn main() {
     let mut registry = weft_core::backend::Registry::default();

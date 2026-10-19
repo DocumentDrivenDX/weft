@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Borrowed selected Key semantics. No native key enforcement or authority.
 use super::{fail, Budget};
 use crate::{error::Result, security_ontology::SecurityRef};

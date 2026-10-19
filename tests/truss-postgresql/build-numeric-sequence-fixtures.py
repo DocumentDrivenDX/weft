@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author recursive signed64/decimal(28,2) fixtures from original sequence definitions.
 Original model/codec bytes are reauthored and pinned before compiler admission.
 """

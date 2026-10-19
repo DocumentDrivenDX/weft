@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Additive original ordered/presence page profile. No legacy enrollment.
 use crate::{candidate::Candidate,local_spark4_sdk::LocalSpark4Sdk};
 use weft_core::{backend::*,error::{Diagnostic,Result}};

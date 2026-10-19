@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Candidate scalar access templates for JSONB and typed row storage.
 //! Returned integrity predicates are prerequisites, never query filters.
 use crate::{qualified, CatalogDomain, Identifier, Parameters};

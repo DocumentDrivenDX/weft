@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/security-guarded-candidate-v0.1-candidate.schema.json")]
 struct CandidateSchema;
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/security-guarded-result-output-v0.1-candidate.schema.json")]

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-bound scalar graph-write admission. No native SQL or execution authority.
 use crate::{
     ir::ModelPin,

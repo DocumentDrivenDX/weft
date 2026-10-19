@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native complete entity proof for multiple recursive roots.
 @covers US-003-AC1: declared order and exact signed/decimal recursive/scalar values.
 @covers US-003-AC3: each root's corruption blocks even a one-row page.

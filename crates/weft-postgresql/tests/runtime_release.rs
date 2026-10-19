@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Compiler-only compatibility: hosts still authenticate the original binding.
 use serde_json::{json, Value};
 use weft_core::json::sha256;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::{json, Value};
 use weft_core::{
     ir::{ModelPin, Span},

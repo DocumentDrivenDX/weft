@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Semantic corruption controls for retained native conjunction evidence.
 @covers US-006-AC1 @covers US-006-AC3
 """

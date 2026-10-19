@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Separate aggregate result candidate. Pure correspondence, not aggregate computation or authority.
 use crate::{
     application_ir::{Expression, Output},

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original producer/context-bound result-cell correspondence; no release permit.
 use std::io::{Read,Write};
 use serde::Deserialize;

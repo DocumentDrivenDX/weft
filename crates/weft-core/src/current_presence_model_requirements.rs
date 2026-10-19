@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original model requirements for native correspondence; never native admission.
 use crate::{current_presence::CurrentPresencePreparation,error::{Diagnostic,Result},ir::Identity,json::{checked_json,sha256},security_ontology::{authored_key_fields,SecurityRef}};
 use serde_json::{json,Value};

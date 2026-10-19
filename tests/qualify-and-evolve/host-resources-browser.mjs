@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-006-AC4: exact raw refusal parity in real Chromium.
 import {readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';

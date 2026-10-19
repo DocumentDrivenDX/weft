@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Deterministic application fixtures; expected decisions are authored here, never compiled."""
 import json,hashlib
 from pathlib import Path

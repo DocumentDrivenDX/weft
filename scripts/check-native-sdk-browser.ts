@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Same original native programs through installed Python and actual Chromium WASM. */
 import {chromium} from 'playwright';
 import {resolve} from 'node:path';

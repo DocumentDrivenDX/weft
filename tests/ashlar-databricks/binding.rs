@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-004-AC2 @covers US-004-AC4 (binding component, not native acceptance)
 use serde_json::{json, Value};
 use weft_core::{

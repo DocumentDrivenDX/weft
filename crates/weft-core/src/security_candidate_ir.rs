@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Separate draft typed IR. Not an admitted 0.1 plan or native execution permit.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_source::SecurityCandidateSourcePacket,security_candidate_policy_types::SecurityCandidatePolicyTypes,security_candidate_ontology::SecurityCandidateOntologyClosure,security_ontology::{SecurityRef,locate,domain},security_association_ref::SecurityAssociationRef,security_ir::{Term,Binding,Effect,Disposition}};
 use serde_json::Value;

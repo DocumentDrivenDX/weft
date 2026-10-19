@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact private scalar custody columns, independently authored native vectors."""
 import csv, hashlib, io, json, subprocess, sys
 from pathlib import Path

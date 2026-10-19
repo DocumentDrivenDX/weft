@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Experimental inspection transport. No backend factory or data execution.
 use std::io::{Read,Write};
 use serde::Deserialize;

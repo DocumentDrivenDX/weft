@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real Cargo dependency checker and Rust visibility controls, without installs."""
 import json,os,subprocess,tempfile,unittest
 from pathlib import Path

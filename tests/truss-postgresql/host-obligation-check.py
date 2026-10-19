@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent host orchestration checks; no database or production-host claim.
 @covers US-003-AC4: pins/visibility/authority and preparation gate publication.
 """

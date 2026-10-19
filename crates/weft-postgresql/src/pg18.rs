@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Production transport for host-selected original storage definitions on PG18.
 //! Compilation establishes static admissions, never database or authorization facts.
 use weft_core::{

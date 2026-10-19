@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit SDK scalar presence transport. Legacy profiles keep their bytes.
 use crate::{candidate::Candidate, local_spark4::LocalSpark4};
 use weft_core::{backend::*, error::{Diagnostic, Result}};

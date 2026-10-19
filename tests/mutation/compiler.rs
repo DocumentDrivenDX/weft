@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-010-AC1: first owner-backed portable UPDATE proof.
 use serde_json::Value;
 use weft_core::mutation::{MutationRegistry,ActionRegistration};

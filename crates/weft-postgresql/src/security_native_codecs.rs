@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! PostgreSQL18.6 UTF8/raw-cast value correspondence. Never authenticates a native session or source.
 use crate::{
     security_graph_binding::GraphSource,

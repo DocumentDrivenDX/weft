@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent physical-slot oracle for Rust-captured row payload predicates."""
 import csv, hashlib, io, json, subprocess, sys
 from pathlib import Path

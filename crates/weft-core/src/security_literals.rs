@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact scalar literal/refinement checks for the shared security subset. No native authorization.
 use crate::error::{Diagnostic,Result};
 use num_bigint::{BigInt,Sign};

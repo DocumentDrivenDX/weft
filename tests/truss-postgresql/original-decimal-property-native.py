@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute original decimal SUM in native row/props homes and every prerequisite.
 @covers US-003-AC1: exact independently calculated decimal results.
 @covers US-003-AC3: precision/scale/codec/absence integrity refusal.

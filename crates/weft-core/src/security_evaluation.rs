@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded logical evaluation of explicit simulated facts. No native admission or credentials.
 use crate::{error::{Diagnostic,Result},json::checked_json,model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding,QueryOperator},security_composition::{Truth,Composition,Decision,not,and,or,compose_with_budget},security_ontology::{SecurityOntologyClosure,SecurityRef,locate},security_literals::ScalarLiteral,security_budget::PayloadBudget};
 use serde::Deserialize;

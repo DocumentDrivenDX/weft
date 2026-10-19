@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import csv, hashlib, io, json, subprocess, sys
 from pathlib import Path
 capture, receipt = map(Path, sys.argv[1:3])

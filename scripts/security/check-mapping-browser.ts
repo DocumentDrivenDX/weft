@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Actual browser WASM/CLI correspondence; no native execution admission.
  * @covers US-009-AC1
  * @covers US-009-AC2

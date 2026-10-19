@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original ColumnSet/binding custody shared by explicit target profiles.
 //! Core admits the UMF model first. These facts grant no native permission or
 //! cross-profile qualification; each caller owns physical type and runtime gates.

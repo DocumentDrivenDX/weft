@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original scalar domain binding and typed selection AST construction; no backend IO.
 use crate::{
     model::{Catalog, Record},

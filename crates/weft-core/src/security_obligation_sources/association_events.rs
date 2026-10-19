@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original association declaration custody; no physical join or authority inference.
 use super::{fail, Budget};
 use crate::{error::Result, security_ontology::SecurityRef,

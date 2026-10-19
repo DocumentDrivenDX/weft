@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent COUNT oracles plus native query/model/warehouse custody, no execution."""
 import hashlib,importlib.util,json,os
 from pathlib import Path

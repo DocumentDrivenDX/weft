@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Policy-independent original application AST lineage. Opaque sources confer no authority.
 use crate::{
     application_ir::ReadProfile,

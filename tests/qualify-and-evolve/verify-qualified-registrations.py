@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Default-supported registration preservation across all native-qualified inputs.
 @covers US-002-AC2 @covers US-006-AC1 @covers US-006-AC3
 Pure compiler checks; existing independently reconciled native executions supply semantics.

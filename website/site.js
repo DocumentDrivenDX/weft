@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 const panel = document.querySelector('#mapping');
 const mappings = {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Conditional owner/template expansion. No authenticated profile or native admission.
 use std::collections::{BTreeMap,BTreeSet};
 use crate::{backend::ObligationOwner,error::{Diagnostic,Result},security_obligation_sources::{OwnerSourceDemands,OwnerEventKind},security_obligation_matching::{RequiredPremise,InstancePremise,DemandInstance,Contract,Atom,Subject},security_rule_occurrences::{RulePath,RulePayload},security_ir::{Effect,Expression,Term,Disposition},security_semantic_coverage::CoverageScope};

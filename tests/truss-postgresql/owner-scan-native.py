@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute captured Rust admitted-owner source assembly; component evidence only."""
 import csv, hashlib, io, json, subprocess, sys
 from collections import Counter

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Replay B-007 saved-evidence controls; never advertises full release qualification.
 @covers US-006-AC1 @covers US-006-AC2
 """

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original admitted relationship subqueries and independent target prerequisites.
 use crate::{
     native_comparator_definition::{Definition, Operation},

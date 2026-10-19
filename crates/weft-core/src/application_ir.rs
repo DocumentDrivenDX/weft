@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Relational stages execute in field order: scans/joins, filters, aggregate,
 //! projection, ordering and limit. Arrays are bags except explicit order stages.
 use crate::{

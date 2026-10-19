@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Owned declarations returned by trusted security backends. Not admitted artifacts.
 use serde::Serialize;
 use serde_json::Value;

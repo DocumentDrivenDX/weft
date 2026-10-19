@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Replay independent before-witness expectations against repaired source-only compiler."""
 import copy,hashlib,json,os,pathlib,subprocess
 root=pathlib.Path(__file__).resolve().parent

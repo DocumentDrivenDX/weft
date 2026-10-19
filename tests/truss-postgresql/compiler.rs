@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-003-AC1 @covers US-003-AC2 @covers US-003-AC3 @covers US-003-AC4
 // These are candidate component cases; native execution/production scope is separate.
 use serde_json::{json, Value};

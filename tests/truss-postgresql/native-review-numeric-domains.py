@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exhaustive scalar numeric domains through the exact Truss NativeReview registration.
 @covers US-003-AC1 @covers US-003-AC3 @covers US-006-AC1
 Temporary tables, one PostgreSQL repeatable-read transaction, rollback only.

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual qualified native Python ABI parity, no subprocess or JS sidecar.
 @covers US-005-AC1 @covers US-005-AC3
 """

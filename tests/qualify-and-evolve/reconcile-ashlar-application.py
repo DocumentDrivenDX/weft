@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-007-AC1 @covers US-007-AC2 @covers US-007-AC3
 Saved native receipt custody reconciliation, not a new execution or result oracle.
 """

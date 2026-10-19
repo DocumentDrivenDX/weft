@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Typed internal 0.3 relational plan; not yet admitted by public transport.
 pub(crate) use crate::application_ir::{Field, ReadProfile, Scan};
 use crate::{

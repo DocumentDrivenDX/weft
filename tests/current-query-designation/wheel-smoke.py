@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Gate exact standard wheels on real current-query producers/conditional ABI2/3/4.
 No database connection, native registration, permission or security qualification.
 @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3

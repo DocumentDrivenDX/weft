@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original source-bound mapping preparation, never native compilation or permission.
 use crate::{application_ir::ReadProfile, application_resolve::Parameters,
     error::{Diagnostic, Result}, json::checked_json, model::{Catalog, ModuleInput},

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Public API corpus: preserve frontend cases; author backend availability and transport outcomes."""
 import copy,json,hashlib
 from pathlib import Path

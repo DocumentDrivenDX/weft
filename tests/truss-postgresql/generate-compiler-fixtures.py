@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Preserve independent corpus queries/results while changing only physical homes."""
 import json,base64,hashlib,copy
 from pathlib import Path

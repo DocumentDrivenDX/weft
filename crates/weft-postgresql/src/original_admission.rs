@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Pure original-byte admission batch for trusted embedding composition.
 use crate::{
     binding::Admission,

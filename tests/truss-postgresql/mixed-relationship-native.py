@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original relationship reads with independently selected endpoint homes."""
 import csv, hashlib, io, json, subprocess
 from pathlib import Path

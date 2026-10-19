@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact wheel canonical-date compilation; native execution remains Truss-owned."""
 import argparse,hashlib,importlib,json,pathlib,subprocess,tomllib,zipfile
 import weft

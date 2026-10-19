@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit finite native representation; original mathematical domains remain unchanged.
 use crate::{
     binding::Binding,

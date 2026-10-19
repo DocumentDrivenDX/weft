@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Test-only generated SQL witness. Not a Truss mapping or execution API.
 use serde_json::json;
 use weft_core::ir::{Family, LogicalType};

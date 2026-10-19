@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Compiler-only participation degree checks; no native engine qualification.
 #[path="../../../tests/ashlar-databricks/common.rs"]
 mod common;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read-only bounded run inspection; stdout is one validated JSON page."""
 import argparse,json,pathlib,sys
 if __package__ in (None,''):sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1]))

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original-topology JSONB storage observation. Logical decoding is separate.
 use crate::{
     property_definition::{PropertyAdmission, PropsLocation},

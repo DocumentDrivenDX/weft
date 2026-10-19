@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original association correspondence data; no native or semantic admission.
 use crate::{current_presence::CurrentPresencePreparation,current_presence_model_requirements::{self,CurrentPresenceModelRequirements},error::{Diagnostic,Result},ir::Identity,json::{checked_json,checked_json_bounded,sha256},model::Catalog,security_association_ref::SecurityAssociationRef,security_budget::PayloadBudget,security_ontology::{authored_key_fields,SecurityRef}};
 use serde::{Serialize,Serializer};

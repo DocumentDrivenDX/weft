@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Public source-backend metadata probe; never executable or index admission."""
 import argparse
 import gzip

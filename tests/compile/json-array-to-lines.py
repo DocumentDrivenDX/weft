@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Convert an authored JSON case array to JSON Lines without changing records.
 Use before browser-check for corpora exceeding JavaScript's single-string limit.
 """

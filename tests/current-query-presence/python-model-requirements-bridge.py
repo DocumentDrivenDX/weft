@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual native Python requirements bridge; original data fixtures, no SQL/admission."""
 import copy
 import gc

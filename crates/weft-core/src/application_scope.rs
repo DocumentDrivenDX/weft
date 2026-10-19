@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Shared semantic scope for versioned application resolvers.
 use crate::{
     application_ir as ir,

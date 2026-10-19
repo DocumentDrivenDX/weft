@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! One-shot, explicitly feature-selected 0.4 compiler transport.
 //! This executable does not execute emitted SQL or discharge host obligations.
 use std::io::{self, Read, Write};

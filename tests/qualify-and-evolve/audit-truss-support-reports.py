@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Audit real retained native data with independent expectations per exact scope."""
 import contextlib,hashlib,io,json,os,runpy,tempfile
 from decimal import Decimal

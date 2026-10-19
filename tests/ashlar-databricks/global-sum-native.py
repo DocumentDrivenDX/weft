@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native global SUM oracle over the retained scalar fixtures.
 
 @covers US-004-AC1 @covers US-004-AC3 (candidate component)

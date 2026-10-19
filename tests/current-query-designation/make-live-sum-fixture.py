@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author Weft's independent opt-in profile over the pinned original SUM source.
 No action, route or capability is imported from owner intent/expected metadata.
 """

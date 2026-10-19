@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Audit actual warehouse-linked results; internal claims do not promote candidates.
 @covers US-006-AC1 @covers US-004-AC1 @covers US-004-AC3
 """

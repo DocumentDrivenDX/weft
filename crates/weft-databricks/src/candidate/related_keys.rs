@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Required-root one-hop collection, using the independently guarded wide prefix.
 use super::*;
 use weft_core::application_model::RelationshipRead;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual retained Weft producer inputs for the original read-projection bridge.
 No UMF response, read decision, native admission or result is fabricated here.
 """

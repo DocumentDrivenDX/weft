@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original-profile SELECT assembly; native operator meaning stays backend-owned.
 use crate::{
     registered_access::{Access, Prepared},

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Native test transport with explicit candidate registration; not host execution.
 use std::io::{self, Read};
 fn main() {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original authored FK relationship operations; no engine graph substitution.
 use super::*;
 pub(super) fn index_profile(index:&str,table:&str,nonnull:bool)->String{

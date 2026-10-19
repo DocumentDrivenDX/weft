@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native typed recursive Boolean sequence proof with independent exact values.
 @covers US-003-AC1: false/true/false sequence retains Boolean values/order/bag.
 @covers US-003-AC3: complete-tree corrupt payload or presence blocks query.

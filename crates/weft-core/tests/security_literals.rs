@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::json;
 use weft_core::security_literals::{check_literal,validate_field};
 fn field(kind:&str)->serde_json::Value{json!({"id":"f","kind":"field","scalarType":kind,"cardinality":"one","nullability":"required"})}

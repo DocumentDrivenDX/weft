@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import { test, expect } from 'bun:test';
 import { readFileSync, readdirSync } from 'node:fs';
 import YAML from 'yaml';

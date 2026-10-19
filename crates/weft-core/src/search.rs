@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact source-bound search admission. Backend mechanics stay out of core.
 use crate::{
     json::{checked_json, sha256},

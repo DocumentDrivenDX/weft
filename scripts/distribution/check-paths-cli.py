@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit same-binary corpus producer; never index, native or host authority.
 
 Expected case bytes and capability/refusal mapping are independently reviewed

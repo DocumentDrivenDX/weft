@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real native report joins must reject altered host receipts."""
 import copy,json,os,subprocess,sys,tempfile
 from pathlib import Path

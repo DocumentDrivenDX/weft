@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original imported native Python/CLI correspondence; no SQL effects or issuer.
 @covers US-009-AC1
 @covers US-009-AC2

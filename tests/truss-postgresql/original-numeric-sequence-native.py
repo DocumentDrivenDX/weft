@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native typed recursive numeric sequence proof with independent exact values.
 @covers US-003-AC1: signed extrema and decimal fractions retains exact numeric strings/order/bag.
 @covers US-003-AC3: complete-tree corrupt payload or presence blocks query.

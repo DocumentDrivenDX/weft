@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Relational source staging over backend-owned scan and expression meanings.
 use crate::Parameters;
 use weft_core::{

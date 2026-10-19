@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Enforce actual Cargo workspace dependency direction; no source regex proof.
 
 Rust compilation owns symbol visibility; within-crate responsibility and external

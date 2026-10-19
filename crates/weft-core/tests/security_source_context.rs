@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::{json, Value};
 use weft_core::{json::sha256, security_mapping_transport::with_security_mapping_context};
 const REQUEST: &str =

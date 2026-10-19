@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit observed managed build candidate; never replaces historical qualification.
 use crate::candidate::Candidate;
 use serde_json::json;

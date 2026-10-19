@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {PGlite} from '@electric-sql/pglite';
 import {prepareDocument,registerCatalog} from 'truss-browser-catalog';
 (globalThis as any).runBinding=async(fixture:any,layout:string,scalars:string)=>{

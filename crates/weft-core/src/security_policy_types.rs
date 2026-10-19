@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Declared policy term types/scope. Exact literal/facet value validity and lowering remain separate.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_source::SecuritySourcePacket,security_ontology::{SecurityOntologyClosure,SecurityRef,domain,locate}};
 use serde_json::Value;

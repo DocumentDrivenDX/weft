@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit cursor delivery. Original page custody is retained in full;
 //! native snapshot, current authorization, fetching and cleanup belong to Truss.
 use serde_json::{json,Value};

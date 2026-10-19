@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact expression domains. Field admission remains owned by the model resolver.
 use crate::{
     application_ir::Field,

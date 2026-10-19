@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Trusted registration of original UMF/storage definitions through Backend.
 use crate::{registered_access::Access, Parameters};
 use std::collections::BTreeMap;

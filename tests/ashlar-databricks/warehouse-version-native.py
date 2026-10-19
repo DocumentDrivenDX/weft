@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read-only warehouse identity probe, distinct from Spark version().
 Official semantics: https://docs.databricks.com/aws/en/sql/language-manual/functions/current_version
 No corpus execution, production qualification, or provisioning.

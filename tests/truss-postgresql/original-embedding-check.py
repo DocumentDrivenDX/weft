@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Conformance-only original composition through the actual native Python ABI."""
 import hashlib, json, os, subprocess
 from pathlib import Path

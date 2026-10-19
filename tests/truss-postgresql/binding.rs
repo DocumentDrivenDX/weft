@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::{json, Value};
 use weft_postgresql::binding::{Admission, PropertyHome};
 const PROFILE: &str = "candidate-test-binding/0.1.0";

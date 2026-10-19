@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded physical declaration shape only; not SQL meaning or execution admission.
 use std::collections::BTreeSet;
 use crate::{error::{Diagnostic,Result},security_backend::SecurityBackendContext,security_lowering::{SecurityPhysicalPlan,SecurityOperation},security_result_check::Budget};

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC1: independently authored relational bag expectations.
 Frontend only. No SQL-engine execution or public embedding claim.
 """

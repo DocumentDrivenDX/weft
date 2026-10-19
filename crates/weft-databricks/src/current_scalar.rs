@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Same-original conditional Databricks scalar SQL. Native hosts own authority.
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};

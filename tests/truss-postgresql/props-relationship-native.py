@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original relationship reads over props homes and all emitted prerequisites."""
 import csv, hashlib, io, json, subprocess
 from pathlib import Path

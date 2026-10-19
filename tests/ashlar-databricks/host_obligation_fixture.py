@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Test-only buffered host executor; callbacks supply independently trusted custody.
 No production resolver, policy service, database connection or implicit fallback.
 """

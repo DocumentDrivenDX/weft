@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent finite SQL ordering/limit oracle for CONTRACT-010 design.
 Enumerated permitted full row orders versus the proposed key-class predicate.
 No Rust implementation, native result, current cut or authority is verified.

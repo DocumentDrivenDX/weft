@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native PREPARE witness for generated primitives, with independent expectations.
 
 This harness uses trusted fixture values and SQL-literal escaping solely to invoke

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Synthetic release-validator counterexamples, not five-platform execution."""
 import copy,importlib.util,pathlib
 path=pathlib.Path(__file__).with_name('verify-refinement-smoke.py');spec=importlib.util.spec_from_file_location('gate',path);gate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate)

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Two-hop SQL assembly from original typed views. No native execution lives here.
 use super::arithmetic as scalar;
 use super::*;

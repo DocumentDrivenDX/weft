@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import Ajv2020 from 'ajv/dist/2020.js';
 const ajv=new Ajv2020({strict:false,allErrors:true});
 const dir='docs/helix/02-design/contracts/';

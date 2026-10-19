@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Audit retained default-supported registration receipts without rebuilding hosts.
 @covers US-006-AC1 @covers US-006-AC3
 """

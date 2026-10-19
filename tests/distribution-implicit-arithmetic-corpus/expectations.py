@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent source-label/typed-operand checks; does not parse SQL or execute it."""
 import json
 NEWCAP='project.implicitArithmeticLabels'

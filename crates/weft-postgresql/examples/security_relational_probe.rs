@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded pure compiler diagnostic for controlled SQL probes. Not guarded dispatch.
 use std::io::{Read,Write};
 use serde_json::json;

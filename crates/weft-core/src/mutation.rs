@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Portable SQL UPDATE compiler. Host-installed owner preparation is not execution authority.
 use crate::mutation_selection::Resolver;
 use crate::mutation_syntax::{self};

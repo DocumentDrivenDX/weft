@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Lossless JSON token custody only; actual public UMF owns scalar validity. */
 import {resolve,join} from 'node:path';import {pathToFileURL} from 'node:url';
 const [repoArg,inputArg,outputArg]=process.argv.slice(2);if(!repoArg||!inputArg||!outputArg)throw Error('Explicit UMF source, request and fresh receipt required');

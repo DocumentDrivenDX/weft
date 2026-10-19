@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify native harness annotation targets the outer SELECT, not nested/quoted text."""
 import importlib.util,json
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original source-Plan identity selection; never parse a previously emitted SQL string.
 use super::*;
 use weft_core::application_ir as app;

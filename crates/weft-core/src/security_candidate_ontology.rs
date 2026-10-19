@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Draft 0.2 selected ontology closure; no policy/IR or native authorization.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_source::SecurityCandidateSourcePacket,security_ontology::{SecurityRef,TypeBinding,close_entities,locate,domain},security_association_ref::SecurityAssociationRef};
 use serde_json::Value;

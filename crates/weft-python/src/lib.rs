@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use pyo3::prelude::*;
 /// Original ontology Subject/Record/Key source selection only; no authority.
 #[pyfunction]

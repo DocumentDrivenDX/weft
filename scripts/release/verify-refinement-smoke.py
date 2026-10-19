@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed source/artifact correspondence gate; no native security admission."""
 PAIRS = [('postgresql','rows'),('postgresql','contributors'),('postgresql','sum'),('databricks','contributors'),('databricks','sum')]
 REFUSALS = ['foreign-source','wrong-public','duplicate-key','missing-input','unknown-frame']

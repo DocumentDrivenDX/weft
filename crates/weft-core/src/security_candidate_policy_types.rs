@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Draft selected policy term checking, separately typed from admitted 0.1 plans.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_source::SecurityCandidateSourcePacket,security_candidate_ontology::SecurityCandidateOntologyClosure,security_association_ref::SecurityAssociationRef,security_ontology::{SecurityRef,domain,locate}};
 use serde_json::Value;

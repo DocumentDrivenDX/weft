@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Authored transport fixture; no native model/profile admission."""
 import json,hashlib,sys
 from pathlib import Path

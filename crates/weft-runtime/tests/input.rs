@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! @covers US-008-AC2 Exercise the actual CLI transport, not only its reader.
 use std::io::Write;
 use std::process::{Command, Stdio};

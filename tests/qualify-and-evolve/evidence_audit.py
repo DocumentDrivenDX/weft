@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Local native-backend support audit; never trusts a green summary alone.
 This host-side verifier reads pinned test reports. It is not compiler IO.
 """

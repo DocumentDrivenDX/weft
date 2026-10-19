@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact installed-wheel SDK compiler custody; no native authority is granted."""
 import argparse,copy,hashlib,importlib,json,pathlib,subprocess,sys,tempfile,tomllib,zipfile
 import weft

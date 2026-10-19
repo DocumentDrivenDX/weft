@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Recursive JSONB codec over a finite identity graph; schemas are not expanded.
 use crate::Parameters;
 use serde_json::json;

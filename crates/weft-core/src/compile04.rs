@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit 0.4 transport. The existing Compiler and Backend02 factory stay intact.
 use super::{public_diagnostic, CompositionInput, Request};
 use crate::{

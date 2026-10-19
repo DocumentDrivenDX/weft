@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Current Truss tagged-value selection. Pure compiler; host owns cuts and execution.
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};

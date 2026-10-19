@@ -72,3 +72,8 @@ runtime0.31; backend0.4.2 retains the group capability for Truss runtime0.30.
 Backend0.4.1 retains its ungrouped0.30
 semantics; backend0.4.0 remains the0.29 realization. Binding/target identifiers
 stay0.4, and legacy backend selections retain their original native profiles.
+
+## License
+
+First-party software is dual-licensed under MIT OR Apache-2.0, at your option.
+See [LICENSE.md](LICENSE.md). Third-party materials retain their original notices.

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read-only native prerequisite probes; these do not exercise the compiler.
 
 Use the existing aidev-cus SDK profile/warehouse. Never provision compute,

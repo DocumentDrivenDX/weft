@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Captured original-property/native-home custody query on synthetic storage."""
 import csv,hashlib,io,json,subprocess,sys
 from pathlib import Path

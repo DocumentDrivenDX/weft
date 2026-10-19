@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Versioned byte equality; projection-only temporal semantics are unchanged.
 use crate::{application_ir as ir,application_model::{ExactScalarType,Shape},application_scope::Scope,application_syntax as ast,error::{Diagnostic,Result},syntax::{Column,LiteralKind}};
 fn fail(code:&str,message:&str)->Diagnostic {Diagnostic::new(code,"resolve",message)}

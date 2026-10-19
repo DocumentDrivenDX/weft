@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /// Original ontology Subject/Record/Key source selection only; no authority.
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn inspect_security_mapping_subject_key_json(request: js_sys::JsString, selection: js_sys::JsString) -> String {

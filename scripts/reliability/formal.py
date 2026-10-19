@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Finite authored rules vs bounded implementation-fold SMT; no native authority."""
 import hashlib,itertools,json,pathlib,importlib.metadata
 import z3

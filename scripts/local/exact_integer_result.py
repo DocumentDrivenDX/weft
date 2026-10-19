@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host result check for the explicit experimental mathematical integer profile.
 
 Caller admits the original compiler artifact and all source obligations first.

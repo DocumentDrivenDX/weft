@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify same-repository tag wheel provenance before reusing existing artifacts."""
 import json,os,re,subprocess,sys
 TARGETS={'ubuntu-24.04, x86_64-unknown-linux-gnu, 2014','ubuntu-24.04-arm, aarch64-unknown-linux-gnu, 2014','macos-14, aarch64-apple-darwin, auto','macos-15-intel, x86_64-apple-darwin, auto','windows-2022, x86_64-pc-windows-msvc, auto'}

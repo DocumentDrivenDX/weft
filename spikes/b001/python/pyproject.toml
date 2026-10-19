@@ -2,6 +2,8 @@
 requires = ["maturin==1.9.6"]
 build-backend = "maturin"
 [project]
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"]
 name = "weft-spike"
 version = "0.1.0"
 requires-python = ">=3.9"

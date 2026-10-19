@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Compiler-owned asynchronous UC candidate search and current single-key hydration.
 use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Truss NX compact mathematical witness after separately admitted source/native parsing.
 //! No token grammar, facets, native representability or operation capability is granted.
 use weft_core::error::{Diagnostic, Result};

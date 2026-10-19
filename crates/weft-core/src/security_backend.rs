@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit trusted security registration, distinct from ordinary SQL emitters.
 use crate::{backend::{Capability, LanguageProfile, Manifest, TargetProfile}, error::{Diagnostic, Result}, json::checked_json, model::Catalog, security_ir::SecurityLogicalPlan, security_query_profile::SecurityProfiledQuery, security_query_uses::SecurityResolvedQuery};
 use serde::Deserialize;

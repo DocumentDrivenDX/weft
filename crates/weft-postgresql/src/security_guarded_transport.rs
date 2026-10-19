@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original guarded graph handoff and result correspondence. No native admission or release permit.
 use crate::{
     security_graph_binding::GraphSource,

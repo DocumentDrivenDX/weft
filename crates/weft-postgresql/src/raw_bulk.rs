@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded native set-based UPDATE program, separate from manifest mutation.
 use serde_json::{Value, json};
 use sqlparser::ast::*;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original source/AST correspondence; never native admission or execution."""
 import copy, hashlib, json, os, pathlib, subprocess
 root=pathlib.Path(__file__).resolve().parent

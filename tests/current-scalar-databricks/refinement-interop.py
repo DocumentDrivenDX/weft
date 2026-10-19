@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual candidate CQP checker over retained managed results. Offline, no authority."""
 import argparse,ast,copy,hashlib,importlib,json,pathlib,zipfile
 import weft

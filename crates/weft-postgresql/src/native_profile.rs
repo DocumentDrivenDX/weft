@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit engine-pinned registration for native qualification review.
 //! This registration remains candidate until its versioned support audit passes.
 //! Native correctness never establishes production authorization or stored-data custody.

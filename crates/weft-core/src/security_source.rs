@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded source shape/pin admission only. Not full ontology/domain interpretation or authorization.
 use crate::{error::{Diagnostic,Result},json::{checked_json,sha256},model::Catalog};
 use serde_json::Value;

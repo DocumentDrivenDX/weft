@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native conjunction truth tables on both engine-pinned registrations.
 @covers US-003-AC1 @covers US-004-AC1 @covers US-006-AC1
 Owned PostgreSQL temporary fixtures and read-only Ashlar owner substitutions.

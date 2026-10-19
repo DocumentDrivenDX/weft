@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original-admission PostgreSQL selection lowering; no connection, guard or authorization issuer.
 use crate::native_comparator_definition::{Operation, Strategy};
 use crate::{

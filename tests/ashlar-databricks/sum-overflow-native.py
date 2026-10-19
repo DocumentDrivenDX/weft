@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native emitted-aggregate-pattern boundaries, not source-corpus acceptance.
 
 @covers US-004-AC3 (exact overflow/empty boundary prerequisite)

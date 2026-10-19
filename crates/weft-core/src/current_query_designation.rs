@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Weft-owned action designation over original typed queries. Never a permission.
 use crate::{application_lineage::ApplicationLineage,error::{Diagnostic,Result},ir::{Identity,ModelPin},json::{checked_json,sha256},model::Catalog,security_ir::QueryOperator,security_ontology::SecurityRef};
 use serde::{Deserialize,Serialize};

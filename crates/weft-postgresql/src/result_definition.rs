@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Result metadata bridge from admitted original descriptors to Weft's existing ABI.
 use crate::property_definition::PropertyAdmission;
 use weft_core::{

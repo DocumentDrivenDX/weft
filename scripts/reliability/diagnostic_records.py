@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read-only bounded diagnostic records; standard-library dependencies only."""
 from __future__ import annotations
 import base64,hashlib,hmac,json,os,pathlib,re,stat,time

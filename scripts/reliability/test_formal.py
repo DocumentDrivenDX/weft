@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-008-AC6 Bounded formal gate and fail-closed controls."""
 import pathlib,types,unittest,sys
 from unittest.mock import patch

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed Truss .39 Decimal12/name-or-ID smoke gate; no native storage acceptance."""
 EXPECTED = ([{'id':'projection','status':'compiled'}]
  +[{'id':'exact-parameter-'+str(i),'status':'compiled'}for i in range(6)]

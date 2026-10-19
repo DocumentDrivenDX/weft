@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Finite inert producer boundary controls; no compiler or engine execution."""
 import gzip
 import os

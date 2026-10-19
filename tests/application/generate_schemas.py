@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Serialize the governed draft 0.2 structural schemas reproducibly."""
 import json
 from pathlib import Path

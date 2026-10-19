@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded original-topology reconstruction from admitted native tree custody.
 use crate::{
     row_custody::{TreeIndex, TreeRow},

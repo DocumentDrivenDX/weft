@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent coefficient arithmetic and exact native-registration receipt audit.
 @covers US-003-AC1 @covers US-003-AC3 @covers US-006-AC1
 """

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private CONTRACT-005 syntax fragments, intentionally unwired from query entrypoints.
 //! Parsing does not admit model semantics, relational composition or a backend.
 use crate::{

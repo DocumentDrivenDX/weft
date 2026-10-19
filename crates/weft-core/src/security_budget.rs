@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Shared logical payload accounting for security simulation/composition.
 use crate::{
     error::{Diagnostic, Result},

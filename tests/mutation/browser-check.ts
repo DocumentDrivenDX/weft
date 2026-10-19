@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 const root=new URL('../../',import.meta.url).pathname;
 const playwright=process.env.WEFT_PLAYWRIGHT_MODULE??'playwright';

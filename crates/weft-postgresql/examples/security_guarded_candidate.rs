@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original guarded candidate correspondence, not execution/release permission.
 use std::io::{Read, Write};
 use weft_core::error::{Diagnostic, Result};

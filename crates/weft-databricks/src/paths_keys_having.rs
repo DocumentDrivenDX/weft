@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit 0.4.1 grouped row-count HAVING realization; old PathsKeys stays strict.
 use crate::{binding::Binding, paths::PathTargetPlan, paths_keys::PathsKeys};
 use weft_core::{

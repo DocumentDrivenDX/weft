@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Trusted selection registration/dispatch. Declarations never attest native execution.
 use crate::mutation::{fail, validate_ref, Artifact, MResult, MutationDiagnostic};
 use serde::Serialize;

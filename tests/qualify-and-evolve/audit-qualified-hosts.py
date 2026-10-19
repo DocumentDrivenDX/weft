@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Join final actual Python/Chromium qualified receipts to native-tested artifacts.
 @covers US-005-AC1 @covers US-005-AC2 @covers US-005-AC3 @covers US-005-AC4
 """

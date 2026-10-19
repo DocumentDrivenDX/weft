@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original per-scan query-use authorization/disclosure guards. Not relational lowering or native admission.
 use crate::security_graph_binding::GraphSource;
 use serde_json::Value;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-007-AC3: empty global/grouped COUNT on actual candidate snapshots."""
 import hashlib,json,os,subprocess
 from pathlib import Path

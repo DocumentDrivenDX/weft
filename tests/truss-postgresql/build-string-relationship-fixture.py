@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author string/uint64 composite keys; SQL/results are authored separately."""
 import base64,copy,hashlib,json
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual inert harness I/O controls; no compiler/embedding qualification."""
 import importlib.util
 import os

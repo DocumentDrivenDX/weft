@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Test-only query annotation; keeps raw native receipts unchanged."""
 import json
 from warehouse_capture import capture

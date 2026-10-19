@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compile actual old APIs with old/new types; no SQL or native execution."""
 import argparse,json,pathlib,subprocess,os,shutil
 p=argparse.ArgumentParser();p.add_argument('--cargo',required=True);p.add_argument('--output',type=pathlib.Path,required=True);a=p.parse_args();root=pathlib.Path(__file__).resolve().parents[2];a.output.mkdir(exist_ok=False)

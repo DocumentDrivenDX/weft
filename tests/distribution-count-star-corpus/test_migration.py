@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Focused migration controls; no compiler/runtime qualification."""
 import importlib.util,json,unittest
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Separate original relational query/policy/Subject parameter channels. No native binding authority.
 use crate::{
     security_graph_binding::{GraphBinding, GraphSource},

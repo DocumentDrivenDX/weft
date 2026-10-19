@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private semantic declaration matching. No binding, native or dispatch admission.
 use crate::{backend::Status,error::{Diagnostic,Result},security_backend::{SecurityBackendContext,SecurityManifest},security_ir::{Expression,Term},security_ontology::SecurityRef};
 use serde_json::Value;

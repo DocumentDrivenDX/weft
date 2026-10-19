@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Local Delta4 whole-candidate action SQL. The engine owns one optimistic
 //! transaction containing data, original verification markers and request token.
 use serde_json::{json,Value};

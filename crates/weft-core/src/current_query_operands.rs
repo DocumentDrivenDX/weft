@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original per-operation operands for subsequent effective-domain checking.
 //! No route selection, type rewriting, SQL or native permission is performed.
 use crate::{

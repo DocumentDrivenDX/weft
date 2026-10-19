@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Read-only public views; construction remains in the private 0.4 frontend.
 use crate::{
     application_ir::{Field, Scan, Value},

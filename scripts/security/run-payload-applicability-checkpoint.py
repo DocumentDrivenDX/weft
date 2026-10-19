@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Freeze declared repository inputs before the complete Rust workspace test run."""
 import datetime,hashlib,json,os,re,subprocess,sys
 from pathlib import Path

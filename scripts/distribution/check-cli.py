@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Qualify actual CLI transport against the retained 463-case public corpus.
 
 This is compiler/transport evidence, not native execution or release authority.

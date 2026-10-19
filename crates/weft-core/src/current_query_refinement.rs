@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded relational comparison over an actual CQP and declared captured cells.
 //! This low-level backend building block returns no permit or protocol receipt.
 //! The selected backend must invoke its actual lowerer before using these inputs;

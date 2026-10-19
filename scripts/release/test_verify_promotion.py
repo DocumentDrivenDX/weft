@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import copy,importlib.util,unittest
 from pathlib import Path
 spec=importlib.util.spec_from_file_location('promotion',Path(__file__).with_name('verify-promotion.py'));m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)

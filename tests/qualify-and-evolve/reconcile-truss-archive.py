@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC1 @covers US-006-AC2
 Verify retained fresh PostgreSQL application archive and matching embedding counts.
 """

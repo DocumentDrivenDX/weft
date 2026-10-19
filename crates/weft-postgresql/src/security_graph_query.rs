@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Compiler-owned direct projection from the original resolved query and graph source.
 use serde_json::{Value,json};
 use weft_core::{error::{Diagnostic,Result},security_backend::SecurityBackendContext,security_lowering::SecurityResultContract,security_ontology::{SecurityRef,SecurityOntologyClosure}};

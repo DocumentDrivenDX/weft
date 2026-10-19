@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact same-table keyword/pgvector top-k lowering. No embedding service or I/O.
 use serde_json::{json, Value as Json};
 use sqlparser::ast::*;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-008-AC7 Actual helper isolation and receipt corruption refusals."""
 import copy,hashlib,json,os,pathlib,subprocess,sys,tempfile,unittest,zipfile
 from unittest.mock import patch

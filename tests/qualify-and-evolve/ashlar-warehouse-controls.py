@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reuse engine/result corruption controls against warehouse identity receipts."""
 import os,runpy
 from pathlib import Path

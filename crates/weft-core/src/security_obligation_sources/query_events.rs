@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Borrowed original query semantics; not template applicability or authority.
 use super::{fail, Budget};
 use crate::{application_ir::Plan, error::Result, security_ontology::SecurityRef,

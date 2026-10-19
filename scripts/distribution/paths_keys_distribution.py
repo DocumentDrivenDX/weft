@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fixed PathsKeys3a proof/assembly profile; no execution or index authority.
 
 Compiler source3a, qualified producer H and retained historical530 evidence have

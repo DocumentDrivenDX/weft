@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit 0.4.2 source-expression labels; existing profiles stay strict.
 use crate::{
     binding::Binding, paths::PathTargetPlan, paths_keys::PathsKeys,

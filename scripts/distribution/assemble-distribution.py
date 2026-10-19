@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Assemble one inert, offline-verifiable CLI candidate; never admit an index.
 
 Only retained source/corpus receipts are consumed. No compiler, native engine,

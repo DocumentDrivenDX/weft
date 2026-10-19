@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Bounded actual CLI corpus/witness evidence; no release index or native engine."""
 import argparse,gzip,hashlib,importlib.util,json,sys,types,zlib
 from pathlib import Path

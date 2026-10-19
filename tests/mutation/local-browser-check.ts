@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Basic actual WASM local UPDATE compilation; no provider or execution claim. */
 import {createRequire} from 'node:module';
 import {join} from 'node:path';

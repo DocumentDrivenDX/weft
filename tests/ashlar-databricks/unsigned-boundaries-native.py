@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-004-AC1 @covers US-004-AC3
 Read-only synthetic owner substitutions; not publication/storage qualification.
 """

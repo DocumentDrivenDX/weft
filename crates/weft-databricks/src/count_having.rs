@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit Optional String COUNT DISTINCT / HAVING target; source domains and old profile are unchanged.
 use crate::{arithmetic::Arithmetic,binding::Binding,candidate::TargetPlan};
 use serde_json::json;

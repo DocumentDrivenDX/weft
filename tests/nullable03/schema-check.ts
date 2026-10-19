@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import Ajv2020 from 'ajv/dist/2020.js';
 import {readdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';

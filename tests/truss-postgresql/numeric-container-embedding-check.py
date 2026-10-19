@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify explicit conformance configuration through the actual Python ABI.
 @covers US-003-AC1: exact complete signed/decimal native map/structured compile artifacts.
 @covers US-003-AC3: malformed/version/candidate/pin refusals preserve no SQL.

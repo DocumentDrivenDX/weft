@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual PathsKeys release transport corpus; no native SQL qualification.
 
 This finite corpus retains all historical profile requests and exact responses,

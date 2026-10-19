@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Closed five-wheel SDK compiler publication gate; reports confer no authority."""
 EXPECTED=[dict(id=name,status=status) for name,status in [('read','compiled'),('read-check','compiled'),('page','compiled'),('page-check','compiled'),('export','compiled'),('read-context-drift','blocked'),('page-context-drift','blocked'),('export-context-drift','blocked'),('export-program-drift','blocked'),('distinct','compiled'),('distinct-null','compiled'),('not-distinct','compiled'),('not-distinct-null','compiled'),('distinct-carrier-mismatch','blocked')]]
 EXPECTED += [dict(id=compiler+'-'+suffix,status='compiled') for compiler in ('ashlar-spark4','ashlar-dbsql-20261016') for suffix in ('read','read-check','page','page-check')]

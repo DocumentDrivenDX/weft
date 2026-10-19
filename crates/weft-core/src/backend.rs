@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Trusted, explicitly registered backend declarations. No content-driven loading.
 use crate::{
     error::{Diagnostic, Result},

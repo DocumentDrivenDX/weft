@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Test-only host executor for the pinned original entity obligation subset.
 Callbacks belong to the host: they provide transaction-affine reads and SQL.
 This fixture proves orchestration, not callback trust or production enforcement.

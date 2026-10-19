@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-008-AC5 Real SDK/receiver, privacy, loss and snapshot controls."""
 import subprocess,base64,contextlib,dataclasses,http.server,io,json,os,pathlib,sys,tempfile,threading,time,unittest,uuid
 from unittest.mock import patch

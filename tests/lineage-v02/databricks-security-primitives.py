@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Disposable UC/Delta platform primitives, never compiled Weft/native acceptance.
 @covers US-009-AC2 @covers US-009-AC3
 Uses one actual authenticated caller. A second identity and native issuer are separate.

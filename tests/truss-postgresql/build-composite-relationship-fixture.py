@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author independent composite key models and exact original composition inputs."""
 import base64, copy, hashlib, json
 from pathlib import Path

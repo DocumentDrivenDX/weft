@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit native text-search deployment fence. Metadata never grants authority.
 use serde_json::{json,Value};
 use std::collections::BTreeMap;

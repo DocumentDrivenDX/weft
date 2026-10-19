@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Authored forward/inverse relationships over pinned canonical and serving edges.
 @covers US-004-AC1 @covers US-004-AC2 @covers US-004-AC3 (candidate component)
 """

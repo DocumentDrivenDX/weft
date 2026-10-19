@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original filtered entity-set navigation; no runtime query construction.
 use serde::Deserialize;
 use serde_json::{json,Value as Json};

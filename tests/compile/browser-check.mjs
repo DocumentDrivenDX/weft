@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import { createReadStream } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { readFile, writeFile, stat } from 'node:fs/promises';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute captured scalar projection and complete-owner physical payload check."""
 import csv, hashlib, io, json, subprocess, sys
 from collections import Counter

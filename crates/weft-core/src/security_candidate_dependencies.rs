@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Draft action dependencies only; no authenticated inventory or execution permit.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_candidate_ir::{SecurityCandidateLogicalPlan,CandidateExpression,CandidateTerm,CandidateWitness,CandidateEndpointCarrier,CandidateSide},security_candidate_ontology::SecurityCandidateOntologyClosure,security_association_ref::{SecurityAssociationRef,SecurityRelationshipRef},security_ontology::SecurityRef,security_ir::{Term,Binding}};
 use std::collections::{BTreeMap,BTreeSet};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Data-only original storage admission; executable procedures are host-selected Rust.
 use crate::{
     leaf_codec_definition::{self, OriginalArtifact},

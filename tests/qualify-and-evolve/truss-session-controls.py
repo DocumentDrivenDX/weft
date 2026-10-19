@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Negative controls for saved session provenance, without engine execution."""
 import copy,gzip,hashlib,importlib.util,json
 from pathlib import Path

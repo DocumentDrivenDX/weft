@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Native location witness; not a registered Truss compiler profile.
 use serde_json::json;
 use weft_core::ir::{Family, LogicalType};

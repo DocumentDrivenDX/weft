@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute complete original-registry numeric row SUM/page and every prerequisite."""
 import csv, hashlib, io, json, subprocess
 from pathlib import Path

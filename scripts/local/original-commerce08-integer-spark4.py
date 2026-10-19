@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original commerce0.8 unchanged compiler SQL, independent local Spark4 profile.
 No production publication/profile admission; no Databricks calls.
 """

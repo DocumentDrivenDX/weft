@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute captured V02 filtered field projection and all physical preflight checks."""
 import csv, hashlib, io, json, subprocess, sys
 from collections import Counter

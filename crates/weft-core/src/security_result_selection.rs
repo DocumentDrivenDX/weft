@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Conditional supplied-truth disposition checks. Never authenticates truth or releases data.
 //! Original values and absence require the separate supplied-fact correspondence check.
 use crate::{application_ir::Expression,error::{Diagnostic,Result},security_backend::{SecurityBackendContext,SecuritySimulatedRowTruths},security_composition::{compose_with_budget,Decision},security_ir::Disposition,security_ontology::{SecurityRef,locate},security_lowering::{SecurityResultContract,SecurityResultOutcome,SecurityTransform}};

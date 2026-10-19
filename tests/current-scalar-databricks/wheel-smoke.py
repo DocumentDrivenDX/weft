@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact standard-wheel Databricks API checks; no native security qualification."""
 import argparse,contextlib,hashlib,io,json,pathlib,runpy,subprocess,sys,zipfile
 import weft

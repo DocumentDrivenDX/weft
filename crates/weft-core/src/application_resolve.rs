@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use crate::{
     application_ir as ir,
     application_model::{Descriptor, Shape},

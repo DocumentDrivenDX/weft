@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Explicit original graph lexical carriers, validated by actual public UMF. */
 import {resolve,join} from 'node:path';
 import {pathToFileURL} from 'node:url';

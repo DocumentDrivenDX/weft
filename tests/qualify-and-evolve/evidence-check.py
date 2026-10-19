@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent support-claim audit controls. @covers US-006-AC1 @covers US-006-AC2."""
 import copy,hashlib,json,tempfile
 from pathlib import Path

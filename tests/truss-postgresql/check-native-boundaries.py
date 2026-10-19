@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Check independent PostgreSQL observations; stdin is psql's single JSON row."""
 import json,sys
 from decimal import Decimal,localcontext

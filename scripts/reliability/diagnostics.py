@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host diagnostics: safe logger → real SDK → local capture / OTLP HTTP JSON."""
 from __future__ import annotations
 import fcntl, socket, http.client, urllib.parse, io, base64, contextlib, importlib.metadata, sys, dataclasses, hashlib, hmac, json, logging, os, pathlib, queue, re, shutil, stat, threading, time, urllib.request, uuid

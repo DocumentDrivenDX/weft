@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """False authored uniqueness assertions must refuse before a native page query.
 @covers US-004-AC2 @covers US-004-AC4 (candidate native integrity, not live policy)
 """

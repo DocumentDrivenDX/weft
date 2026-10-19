@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Candidate owner-artifact integrity admission. This is not production qualification.
 use base64::{engine::general_purpose::STANDARD, Engine};
 use serde_json::Value;

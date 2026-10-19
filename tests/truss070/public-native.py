@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Public original named model acceptance/create/read query on frozen native70.
 The explicit compiler/backend SDK adapter is a test prototype, not a released Truss.
 No protected policy, ownership or aggregate security qualification.

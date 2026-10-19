@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Shared expression traversal. Registered backends own every native meaning.
 use crate::Parameters;
 use weft_core::{error::Result, ir::Expression};

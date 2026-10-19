@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh fixed 5dd CLI boundaries only; no corpus, installation or index authority.
 
 Each completed raw observation is retained before its expected outcome is checked.

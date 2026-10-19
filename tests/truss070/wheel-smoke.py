@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact wheel compiler checks against genuine native70 owner inputs; no native action admission."""
 import argparse,hashlib,importlib,json,pathlib,tomllib,zipfile
 import weft

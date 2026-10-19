@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original Truss presence-definition interpretation; not execution authority.
 use base64::{engine::general_purpose::STANDARD, Engine};
 use serde_json::Value;

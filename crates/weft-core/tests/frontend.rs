@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::Value;
 use weft_core::frontend_json;
 // @covers US-001-AC1 @covers US-001-AC2 @covers US-001-AC3 @covers US-001-AC4

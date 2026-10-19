@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit per-Field native-null request opt-in; original SQL/modules stay exact."""
 import argparse,hashlib,json,subprocess
 from pathlib import Path

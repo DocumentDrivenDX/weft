@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Finite fake proof controls; never manufacture a qualified compiler receipt."""
 import copy
 import gzip

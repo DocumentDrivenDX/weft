@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute emitted scalar SQL against independently authored native Delta rows.
 
 @covers US-004-AC1 @covers US-004-AC2 @covers US-004-AC3 (candidate component)

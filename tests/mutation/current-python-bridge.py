@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original Python registration/lowering controls; source-only, no native authority."""
 import argparse,json,hashlib,copy
 from pathlib import Path

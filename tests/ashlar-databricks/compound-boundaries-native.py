@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read-only generated codec controls; synthetic owner relation, no publication claim."""
 import copy,hashlib,json,os,re,subprocess
 from pathlib import Path

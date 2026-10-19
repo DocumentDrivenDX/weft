@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Smoke the installed wheel against original native65/native66 bindings."""
 import hashlib
 import json

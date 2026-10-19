@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute original signed SUM in native row/props homes and every prerequisite.
 @covers US-003-AC1: exact independently calculated signed results.
 @covers US-003-AC3: width/fraction/codec/absence integrity refusal.

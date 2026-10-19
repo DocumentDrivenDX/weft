@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Closed Spark HLL++ projection ownership; no deterministic error bound claim.
 use super::raw_read::{ident, name, Lower};
 use serde_json::{json, Value};

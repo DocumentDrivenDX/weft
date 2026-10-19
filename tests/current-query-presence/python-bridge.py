@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Real native Python classes over actual supplied UMF packets; no database."""
 import sys,json,hashlib,gc,copy,pickle
 from pathlib import Path

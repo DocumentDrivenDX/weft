@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Killable host-only OTLP HTTP JSON transport; no raw exception/output channel."""
 import http.client,json,sys,urllib.parse
 

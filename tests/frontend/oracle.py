@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent small bag/Decimal interpreter. Does not emit SQL or call Rust semantics."""
 from collections import Counter
 from decimal import Decimal, localcontext

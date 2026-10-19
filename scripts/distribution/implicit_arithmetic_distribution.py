@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Additive 0.4.2 candidate assembly; this owner grants no index authority.
 
 Historical assemblers and realization artifacts remain separate. Input evidence

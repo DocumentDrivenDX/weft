@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent signed-width native receipt reconciliation; no support promotion.
 @covers US-004-AC1 @covers US-004-AC3
 """

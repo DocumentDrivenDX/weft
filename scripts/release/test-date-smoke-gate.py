@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Small publication-gate controls; synthetic reports are not wheel evidence."""
 import copy,pathlib,runpy
 module=runpy.run_path(str(pathlib.Path(__file__).with_name('verify-date-smoke.py')))

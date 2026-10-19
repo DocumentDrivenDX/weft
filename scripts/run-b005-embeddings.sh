@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # Requires fresh target/b005/application-native-reports.json from application-native.py.
 set -eu
 cd "$(dirname "$0")/.."

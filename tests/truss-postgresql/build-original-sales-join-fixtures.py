@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author original sales-query bindings for every selected row/props home cut.
 No emitted SQL or compiler result is used to author schema/binding inputs.
 """

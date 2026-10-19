@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Public original Backend emission and every host SQL prerequisite."""
 import csv,hashlib,io,json,subprocess
 from pathlib import Path

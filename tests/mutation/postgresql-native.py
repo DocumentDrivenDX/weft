@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent PostgreSQL17.11 witness for generated selection/preflight only.
 No accepted catalog, original authority, seal, immutable-ID premise or bulk effects.
 """

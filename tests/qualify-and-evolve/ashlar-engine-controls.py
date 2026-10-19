@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reject corrupted engine/result receipts without submitting native statements."""
 import hashlib,json,os,subprocess,sys,tempfile
 from pathlib import Path

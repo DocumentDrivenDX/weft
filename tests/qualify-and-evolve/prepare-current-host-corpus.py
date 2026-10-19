@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh CLI comparison with retained native corpora; no engine execution.
 @covers US-005-AC1 @covers US-005-AC2 @covers US-005-AC3
 """

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original admitted finite relationship cardinality in each direction."""
 import csv,hashlib,io,json,subprocess
 from pathlib import Path

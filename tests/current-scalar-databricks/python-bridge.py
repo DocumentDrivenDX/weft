@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual Python native descriptor and old/new ABI separation controls.
 @covers US-009-AC1 @covers US-009-AC2
 """

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private PostgreSQL declaration correspondence. No SQL, native admission or release.
 use crate::{
     error::{Diagnostic, Result},

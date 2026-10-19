@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use super::*;
 use crate::{application_lineage, current_query_designation, current_query_operands};
 use serde_json::Value;

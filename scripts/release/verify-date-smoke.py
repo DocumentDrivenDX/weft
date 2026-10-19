@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Require the seven date compiler checks from each exact release wheel."""
 EXPECTED=[dict(id=name,status=status) for name,status in [('literal','compiled'),('typed-parameter','compiled'),('field-join','compiled'),('invalid-date','blocked'),('old-envelope','blocked'),('old-backend','blocked'),('old-abi','blocked')]]
 ABI=dict(identity='truss-postgresql-logical-query',version='1.1',sha256='9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f')

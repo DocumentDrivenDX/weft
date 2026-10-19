@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit required-root String-key profile. Candidate metadata is not native evidence.
 use crate::{
     binding::Binding,

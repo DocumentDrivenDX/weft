@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use weft_core::application_syntax::{parse, Output, Predicate, Value};
 #[test]
 fn application_constructs_preserve_structure() {

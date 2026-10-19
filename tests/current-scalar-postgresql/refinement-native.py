@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh native SQL/checker correspondence with synthetic stage premises.
 No caller/source authorization, native admission or guarded release claim.
 """

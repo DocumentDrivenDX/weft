@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Pure direct-field declaration correspondence. Never authorizes result selection.
 use crate::{application_ir::Expression, error::{Diagnostic,Result}, security_backend::SecurityBackendContext, security_ir::{Disposition,Effect}, security_literals::{normalized_literal,ScalarLiteral}, security_lowering::{SecurityIdentity,SecurityResultContract,SecurityResultDomain,SecurityResultOutcome,SecurityTransform}, security_ontology::{SecurityOntologyClosure,SecurityRef,locate,domain}};
 use serde_json::Value;

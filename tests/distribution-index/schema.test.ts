@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Closed metadata shape does not make any index or realization trusted. */
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020.js';

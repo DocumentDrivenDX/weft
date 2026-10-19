@@ -11,9 +11,13 @@
   },
   "description": "Browser transport for the pure Weft WASM compiler; unpublished foundation",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE.md",
+    "LICENSE-MIT",
+    "LICENSE-APACHE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
-  }
+  },
+  "license": "MIT OR Apache-2.0"
 }

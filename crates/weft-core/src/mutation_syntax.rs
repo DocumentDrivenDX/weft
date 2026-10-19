@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded UPDATE syntax, separate from existing read interfaces.
 use super::mutation::{fail, MResult};
 use crate::{ir::Span, syntax::Name};

@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT OR Apache-2.0
 set -eu
 cd "$(dirname "$0")/.."
 # Preserve the original 0.1 gate, including its oracle, schema and browser run.

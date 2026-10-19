@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Admission of private native scalar observations, before semantic decoding.
 use weft_core::{
     error::{Diagnostic, Result},

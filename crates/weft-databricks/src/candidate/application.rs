@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Application stages reuse the same exact scalar access and native slots.
 use super::*;
 use weft_core::{application_ir as app, application_model::Shape, ir::Span};

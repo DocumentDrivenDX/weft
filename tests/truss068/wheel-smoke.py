@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact native68 owner binding compilation, not native execution/authority."""
 import hashlib,json,pathlib,weft
 root=pathlib.Path(__file__).parent

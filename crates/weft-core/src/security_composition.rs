@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Pure composition of caller-supplied rule truths against an admitted plan.
 //! This never authenticates facts or authorizes native effects/publication.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_ir::{SecurityLogicalPlan,Effect,Disposition},security_ontology::{SecurityRef,SecurityOntologyClosure,locate},security_literals::ScalarLiteral,security_budget::PayloadBudget};

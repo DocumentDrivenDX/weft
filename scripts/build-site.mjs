@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {mkdir,copyFile,rm} from 'node:fs/promises';
 await rm('dist/site',{recursive:true,force:true});
 await mkdir('dist/site/brand',{recursive:true});

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual native candidate ABI vectors for Chromium parity; no database admission.
 @covers US-009-AC3 @covers US-009-AC4
 """

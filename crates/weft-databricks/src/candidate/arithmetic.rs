@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact coefficients avoid fractional native arithmetic and its implicit rounding.
 use super::*;
 use weft_core::{

@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT OR Apache-2.0
 set -eu
 cd "$(dirname "$0")/.."
 spike_python=${WEFT_PYTHON:-python3}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Conditional tagged projection over a held native TEXT-cell materialization.
 use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private original draft IR inspection; no execution or authority.
 use std::io::{self,Read};
 use serde::Deserialize;

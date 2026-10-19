@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC1: reject corrupted saved-native receipt inputs."""
 import copy,json,os,pathlib,subprocess,tempfile,sys
 ROOT=pathlib.Path(__file__).resolve().parents[2]

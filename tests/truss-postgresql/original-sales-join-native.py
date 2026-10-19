@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native proof of the original sales join across all selected property homes.
 @covers US-003-AC1: independent decimal sums and grouped join multiplicity.
 @covers US-003-AC2: exact four-field mapping/type filters and storage IDs.

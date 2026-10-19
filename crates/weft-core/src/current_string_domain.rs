@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact bounded Unicode scalar domains for the explicitly selected new candidate.
 //! Pure type/value checks confer no permission or native correspondence.
 use crate::{error::{Diagnostic, Result}, ir::{Family, LogicalType}};

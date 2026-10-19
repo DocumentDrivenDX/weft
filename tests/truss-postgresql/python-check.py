@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual native wheel parity with all subprocess entry points disabled."""
 import json,os,subprocess,hashlib,sys
 from pathlib import Path

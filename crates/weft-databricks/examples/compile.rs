@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Host CLI for component/native fixtures; the compiler library has no IO.
 use std::io::{self, Read};
 fn main() {

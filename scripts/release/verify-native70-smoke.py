@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Require genuine native70 compiler evidence from each exact release wheel."""
 EXPECTED=[{'id':k,'status':v} for k,v in [('projection','compiled'),('count','compiled'),('page','compiled'),('old-backend','blocked'),('wrong-runtime-digest','blocked')]]
 def validate(reports, baseline, commit, version):

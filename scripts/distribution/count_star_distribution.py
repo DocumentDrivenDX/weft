@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit 5dd/0.4.1 candidate assembly; no execution or index authority.
 
 The fixed compiler source, later qualification producer and assembly producer

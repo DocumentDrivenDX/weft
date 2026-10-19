@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh compiler comparison against all current-build native artifact corpora.
 Only the obsolete Spark observation may disappear; SQL and semantic metadata must match.
 @covers US-004-AC1 @covers US-004-AC3 @covers US-004-AC4

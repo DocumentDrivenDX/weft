@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-008-AC4 Exercise actual host configuration and optimized failures."""
 import dataclasses,json,os,pathlib,subprocess,sys,tempfile,unittest
 from reliability.config import load_config,ConfigurationError

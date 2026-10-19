@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Experimental raw PostgreSQL 18 reads. No connection or execution authority.
 //! WR-B7 / WR-A14: one schema, declared to-one joins, closed read-only SQL AST.
 use serde::Serialize;

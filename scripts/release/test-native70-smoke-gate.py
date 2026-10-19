@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Synthetic publication-gate refusal controls, not platform/native executions."""
 import copy,importlib.util,pathlib
 p=pathlib.Path(__file__).with_name('verify-native70-smoke.py');s=importlib.util.spec_from_file_location('gate',p);g=importlib.util.module_from_spec(s);s.loader.exec_module(g)

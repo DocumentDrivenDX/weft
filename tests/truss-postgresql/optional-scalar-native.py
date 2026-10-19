@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original optional scalar and complete entity native evidence.
 @covers US-003-AC1: independent exact scalar/presence outputs for this subset.
 @covers US-003-AC2: original member order and logical/native identifiers.

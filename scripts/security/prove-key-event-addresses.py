@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Conditional selected-Key/member-address laws; not Rust/native refinement."""
 from pathlib import Path
 import hashlib

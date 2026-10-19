@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /// Trusted compiler procedures selected by the embedding host, never model code.
 #[derive(Debug, Clone, Copy)]
 pub struct Procedures {

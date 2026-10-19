@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Finalize draft public response schemas around the versioned registered boundary."""
 import copy,json
 from pathlib import Path

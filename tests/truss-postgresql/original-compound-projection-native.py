@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import csv,hashlib,io,json,subprocess
 from pathlib import Path
 quote=lambda s:"'"+s.replace("'","''")+"'"

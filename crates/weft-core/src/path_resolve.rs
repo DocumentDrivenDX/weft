@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Path-only resolution through the original Catalog. No query or backend admission.
 use crate::{
     error::{Diagnostic, Result},

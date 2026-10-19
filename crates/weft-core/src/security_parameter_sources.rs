@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original owner parameter provenance. Inventories are declarations, never credentials.
 use crate::{
     application_ir::{ExactValue, Predicate, Value as QueryValue},

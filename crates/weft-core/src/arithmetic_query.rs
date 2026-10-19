@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Additive 0.3 query syntax foundation; public compile transport remains unchanged.
 use crate::arithmetic_syntax::{self, Budget, Expression, Kind};
 use crate::{

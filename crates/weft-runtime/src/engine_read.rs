@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Engine catalog custody. Engines retain native admission and execution.
 //! This module never lowers SQL or interprets engine storage or authority.
 use serde::Deserialize;

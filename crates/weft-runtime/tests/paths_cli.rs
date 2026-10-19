@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Produced compiler executable checks only; no SQL engine or host execution.
 #![cfg(feature = "ashlar-databricks-paths")]
 use serde_json::{json, Value};

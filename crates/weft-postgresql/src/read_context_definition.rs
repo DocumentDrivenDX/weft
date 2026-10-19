@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Static original read-context requirements. Never a live authority or handle.
 use base64::{engine::general_purpose::STANDARD, Engine};
 use serde_json::Value;

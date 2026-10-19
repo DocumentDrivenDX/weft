@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Selected native comparator meaning and explicit operation admission.
 use crate::leaf_codec_definition::OriginalArtifact;
 use base64::{engine::general_purpose::STANDARD, Engine};

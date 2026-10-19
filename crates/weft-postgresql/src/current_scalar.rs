@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Conditional current-source scalar SQL. Declarations are not native admission.
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author independent third-backend cases; no compiler output is used."""
 import copy,hashlib,json
 from pathlib import Path

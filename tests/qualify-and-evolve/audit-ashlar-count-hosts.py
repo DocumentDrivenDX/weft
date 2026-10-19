@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Join actual host compiler receipts to native COUNT artifacts; no execution."""
 import hashlib,json
 from pathlib import Path

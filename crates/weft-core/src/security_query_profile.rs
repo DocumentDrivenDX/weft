@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-bound compiler query-use profile. No native credential or qualification.
 use crate::{error::{Diagnostic,Result},json::{checked_json,sha256},model::Catalog,ir::ModelPin,security_ir::{SecurityLogicalPlan,QueryOperator},security_ontology::{SecurityOntologyClosure,SecurityRef},security_composition::Composition};
 use serde::{Deserialize,Serialize};

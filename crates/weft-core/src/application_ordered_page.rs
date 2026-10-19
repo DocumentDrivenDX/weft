@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-only candidate. This prepares original ordering IR; no backend is enabled.
 use crate::{
     application_ir::Plan,

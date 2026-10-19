@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Raw Spark/Delta lowering from the same core-admitted read AST.
 //! Administrative local profile; no Unity Catalog service qualification.
 use serde_json::{json, Value as J};

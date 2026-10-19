@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Bounded read-only native token-fidelity probe; no Delta or external endpoint."""
 import argparse,json
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reconcile exact native conjunction statements against independent truth tables.
 @covers US-006-AC1 @covers US-003-AC1 @covers US-004-AC1
 """

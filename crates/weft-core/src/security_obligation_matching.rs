@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Conditional private correspondence. Required premise must be independently issued.
 //! No native evidence, profile authentication, Permit, dispatch or release admission.
 use std::collections::{BTreeMap,BTreeSet};

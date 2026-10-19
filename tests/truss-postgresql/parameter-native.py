@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native equality oracle for every resolved parameter boundary.
 One stored value equals the authored boundary; SQL must return it exactly. Logical
 business keys deliberately differ from storage IDs. No emitted expression or

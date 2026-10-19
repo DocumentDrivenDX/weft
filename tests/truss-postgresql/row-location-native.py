@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute Rust-captured physical row predicates on synthetic corruption fixtures."""
 import csv, hashlib, io, json, subprocess, sys
 from pathlib import Path

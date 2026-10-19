@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact wheel compiler checks with derived domains and genuine owner inputs; no native storage admission."""
 import argparse,hashlib,importlib,json,pathlib,tomllib,zipfile
 import weft

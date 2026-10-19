@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Test-only original owner oracle; no runtime sidecar.
 if(!Bun.argv[2])throw Error('UMF source root required');
 const owner=await import(Bun.argv[2]+'/src/index.ts');

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native directed-edge access primitive, prior to full relationship lowering."""
 import csv,hashlib,io,json,subprocess
 from pathlib import Path

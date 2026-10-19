@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Freeze an explicitly selected owner proposal closure; never fetch resources."""
 import json,hashlib
 from pathlib import Path

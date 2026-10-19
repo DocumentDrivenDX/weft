@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Compiler fixtures only: no native query, schema observation or host discharge.
 use serde_json::{json, Value};
 use weft_core::{backend03::Registry, compile::v04::Compiler, json::sha256};

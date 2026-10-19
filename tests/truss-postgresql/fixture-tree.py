@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent typed fixture writer; not a Truss producer qualification."""
 import json
 from decimal import Decimal

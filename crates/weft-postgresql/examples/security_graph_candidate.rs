@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-only reified graph compiler handoff; no native execution permission.
 use std::io::{Read,Write};
 use serde_json::json;

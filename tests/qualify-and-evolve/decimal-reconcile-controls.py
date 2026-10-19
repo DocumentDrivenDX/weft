@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Semantic receipt-corruption controls after valid custody rehashing.
 @covers US-006-AC1 @covers US-004-AC3
 """

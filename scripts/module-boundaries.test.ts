@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {checkGraph,checkSurface,edgeIdentity,javascriptDependencies,checkJavascriptDependencies} from './module-boundaries';
 const metadata={workspace_members:['a','b'],packages:[{id:'a',name:'a',dependencies:[{name:'b',kind:null,optional:true}]},{id:'b',name:'b',dependencies:[]}]};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Public UMF source/presence evidence; this is a Bun-only harness, not a validator.
 import {createHash} from 'node:crypto';
 import {readFileSync,writeFileSync} from 'node:fs';

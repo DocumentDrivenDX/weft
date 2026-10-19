@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Consumer binding of UMF CONTRACT-065; generic timestamp and Key stay unchanged.
 use crate::error::{Diagnostic, Result};
 pub(crate) const PROFILE: &str = "umf-rfc3339-exact-instant/1.0.0";

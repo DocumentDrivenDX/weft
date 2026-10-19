@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Rust extension proof; independent owner golden and exact predicate oracle."""
 import copy, hashlib, json, pathlib, sys
 import weft

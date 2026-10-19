@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Inert assembly for the separately qualified Paths530 realization.
 
 Original native c6 evidence is not transferred. This producer never executes a

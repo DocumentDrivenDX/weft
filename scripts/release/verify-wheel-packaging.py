@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact installed ABI3 wheel RECORD, metadata and bundled notices."""
 import argparse,base64,csv,hashlib,importlib.metadata,io,json,sys,zipfile
 from pathlib import Path

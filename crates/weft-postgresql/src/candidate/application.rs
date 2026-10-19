@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Application relational stages over the same candidate storage access.
 use super::*;
 use weft_core::{

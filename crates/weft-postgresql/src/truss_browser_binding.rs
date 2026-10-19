@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Browser-local catalog correspondence, never native binding or execution authority.
 use serde::Deserialize;
 use std::collections::BTreeSet;

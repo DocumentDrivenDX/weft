@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original raw-read privilege analysis probes. No SQL is executed here.
 use serde::Deserialize;
 use serde_json::{Value, json};

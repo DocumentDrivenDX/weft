@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual same-original Python/Rust -> managed SQL, using synthetic stage premises.
 No policy/native caller/source admission or Ashlar security claim.
 @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3

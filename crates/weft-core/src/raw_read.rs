@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Owned, pinned frontend admission for the experimental raw-read profile.
 //! Backends borrow this artifact; JSON, UMF identity and SQL parsing stay in core.
 use serde::{Deserialize, Serialize};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Full internal 0.3 query resolution, reusing the original model semantic scope.
 use crate::{
     application_resolve::{Parameter, Parameters},

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Original inverse relationship subqueries plus every emitted prerequisite."""
 import csv,hashlib,io,json,subprocess
 from pathlib import Path

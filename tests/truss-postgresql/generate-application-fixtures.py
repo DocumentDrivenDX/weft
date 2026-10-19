@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reuse authored application models; candidate mappings do not qualify codecs."""
 import copy
 import hashlib

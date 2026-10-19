@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned host-only Cargo entrypoint; raw streams never become diagnostics."""
 import subprocess,json,pathlib,sys
 if __package__ in (None,''):

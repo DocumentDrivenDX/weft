@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reconcile saved same-transaction session observations; no native execution.
 @covers US-006-AC1 @covers US-006-AC2
 """

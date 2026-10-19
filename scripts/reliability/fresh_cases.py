@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh public security refusals across CLI/native ABI; no native activation."""
 import copy,hashlib,json,os,pathlib,subprocess
 ROOT=pathlib.Path(__file__).resolve().parents[2]

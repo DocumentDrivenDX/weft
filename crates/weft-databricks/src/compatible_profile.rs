@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Host-admitted compatible physical revisions; no native qualification claimed.
 use crate::{binding::Binding, candidate::{Candidate, validate_mapping}};
 use serde_json::json;

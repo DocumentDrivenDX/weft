@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: MIT OR Apache-2.0
 -- Independent PostgreSQL meaning probes; deliberately no application objects.
 -- Run with psql -X -A -t. Output exactly one JSON text row.
 WITH numbers(v) AS (

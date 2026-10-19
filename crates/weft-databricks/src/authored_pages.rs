@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Separate candidate language registrations for original authored-Key pages.
 //! Historical engine profiles remain unchanged; native publication and complete
 //! key-integrity handling are still mandatory before any result is released.

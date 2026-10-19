@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual psycopg execution of original entities with host publication gates.
 @covers US-003-AC4: native prepared transport and guarded publication.
 Synthetic owned fixtures; not production authorization or Truss qualification.

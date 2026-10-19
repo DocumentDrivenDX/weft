@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Separate guarded relational declaration and original value/result correspondence. No native permit.
 use crate::{
     security_graph_binding::GraphSource,

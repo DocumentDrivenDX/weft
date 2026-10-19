@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded transport of a logical mapping input; never executes native SQL.
 use std::io::{self, Read, Write};
 const LIMIT:usize=weft_core::security_mapping_transport::MAX_REQUEST_BYTES;

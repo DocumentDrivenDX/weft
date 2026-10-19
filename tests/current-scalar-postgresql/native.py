@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual same-object compiler -> PG18 SQL refinement over declared private values.
 Not current native admission, UMF decision correctness, caller isolation or release.
 @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Selected graph incidence values; normalization is not fact authority.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_candidate_ir::{SecurityCandidateLogicalPlan,CandidateSide},security_candidate_ontology::SecurityCandidateOntologyClosure,security_association_ref::{SecurityAssociationRef,SecurityRelationshipRef},security_ontology::{SecurityRef,locate,domain},security_literals::{ScalarLiteral,normalized_literal}};
 use serde_json::Value;

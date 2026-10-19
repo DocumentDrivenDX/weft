@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use std::io::{self, Read};
 fn main() {
     let mut request = String::new();

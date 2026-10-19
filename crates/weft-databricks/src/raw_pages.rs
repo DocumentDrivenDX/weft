@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit administrative Spark keyset pages; native snapshot SQL is owner-emitted.
 //! Current UC and mutation transaction lowerers do not route through this profile.
 use crate::raw_read::{ident,name,Lower};

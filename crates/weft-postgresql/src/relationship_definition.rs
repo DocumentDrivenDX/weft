@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original relationship/key custody and trusted directed edge access.
 use crate::{
     binding::Admission, leaf_codec_definition::OriginalArtifact,

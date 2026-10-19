@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Context-admitted physical access planning; codec/result and relational emission follow.
 use crate::{
     comparator_requirements::{admit_context, registration_key},

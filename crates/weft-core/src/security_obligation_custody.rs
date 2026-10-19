@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original declaration custody only. Parameter interpretation and admission are separate.
 use crate::{
     backend::{Obligation, Status},

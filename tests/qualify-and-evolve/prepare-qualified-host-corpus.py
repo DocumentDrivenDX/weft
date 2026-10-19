@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reconcile fresh public runtime artifacts to qualified native-registration receipts.
 @covers US-005-AC1 @covers US-005-AC2 @covers US-005-AC3
 """

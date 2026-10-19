@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Tiny fake producer ports exercise new mode; no compiler/native qualification."""
 from dataclasses import replace
 import json

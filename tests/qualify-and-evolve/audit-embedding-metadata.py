@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-005-AC3: explicit exact-value metadata in executed Ashlar host reports."""
 import hashlib,json,os,pathlib
 ROOT=pathlib.Path(__file__).resolve().parents[2]

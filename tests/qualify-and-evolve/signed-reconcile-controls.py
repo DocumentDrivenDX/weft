@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Reject semantically corrupted signed native receipts after custody is rehashed."""
 import copy,hashlib,json,os,subprocess,sys,tempfile
 from pathlib import Path

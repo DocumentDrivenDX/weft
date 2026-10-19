@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exercise the actual workflow snippets across the packaging-version boundary."""
 import hashlib
 import json

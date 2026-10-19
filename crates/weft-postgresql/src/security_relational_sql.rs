@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original relational graph SQL candidate. Requires guarded native operand validation and admission.
 use crate::{
     security_graph_binding::{GraphBinding, GraphSource},

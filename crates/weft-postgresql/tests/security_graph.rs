@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::{Value,json};
 use weft_core::{model::{Catalog,ModuleInput},ir::ModelPin,json::sha256,security_source::SecuritySourcePacket,security_ir::SecurityLogicalPlan};
 use weft_postgresql::{security_graph_binding::{GraphSource,GraphBinding},security_predicate_spike::render_graph};

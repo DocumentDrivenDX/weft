@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent host phase/refusal assertions; @covers US-004-AC4."""
 import copy,json
 from pathlib import Path

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-006-AC4
 // Public boundary refusals and exact JSON node-count boundaries.
 use serde_json::{json,Value};

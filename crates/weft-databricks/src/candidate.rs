@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Candidate registered SQL lowering. Native execution/custody stays in hosts.
 mod application;
 mod arithmetic;

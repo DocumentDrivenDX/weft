@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Experimental string-cell inspection. No data connection or result release.
 use std::io::{Read,Write};
 use serde::Deserialize;

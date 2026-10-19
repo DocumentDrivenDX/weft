@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host-only, typed fail-closed configuration. No compiler imports."""
 from __future__ import annotations
 import argparse, dataclasses, hashlib, json, math, os, pathlib, stat, subprocess, urllib.parse, re

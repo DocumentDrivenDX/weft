@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: MIT OR Apache-2.0
 -- Physical extraction primitive probe; not an adopted codec/profile qualification.
 PREPARE leaf_storage(text) AS
 SELECT label,

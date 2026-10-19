@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native exact integer operand boundary proof; not full storage/domain admission.
 Uses captured renderer SQL and independently calculated mathematical bounds.
 """

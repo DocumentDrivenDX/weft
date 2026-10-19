@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-006-AC2 @covers US-006-AC3 @covers US-006-AC4
 // Deterministic frontend properties; no native backend/embedding qualification.
 use proptest::prelude::*;

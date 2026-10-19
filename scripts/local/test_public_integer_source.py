@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual public UMF receipts, original lexical token and corruption controls."""
 import json,os,subprocess,tempfile,unittest,hashlib
 from pathlib import Path

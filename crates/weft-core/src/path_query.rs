@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private 0.4 query syntax; no public dialect or semantic admission is added here.
 //! Legacy query segments share their lexer, expression budget and source spans.
 use crate::{

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Graph requirements bridge custody and feature isolation; no admission."""
 import copy
 import gc

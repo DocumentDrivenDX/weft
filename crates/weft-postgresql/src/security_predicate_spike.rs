@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Diagnostic native predicate lowering from the original admitted IR.
 //! Not a registered security backend, result contract, or execution permit.
 use std::collections::BTreeMap;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Authored candidate admission inputs, not accepted deployment evidence."""
 import json,base64,hashlib
 from pathlib import Path

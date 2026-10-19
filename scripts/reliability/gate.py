@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Scoped formal gate with actual Rust correspondence; no native authority."""
 import dataclasses,hashlib,json,os,pathlib,sys
 if __package__ in (None,''):sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1]))

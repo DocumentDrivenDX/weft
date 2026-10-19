@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Candidate structured scalar-member codec; source/native authority is explicit.
 use crate::{access::ScalarAccess, qualified, CatalogDomain, Identifier, Parameters};
 use serde_json::json;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import Ajv2020 from 'ajv/dist/2020.js';
 // Envelope controls only. Model, query, target and capability admission are separate.
 const ajv = new Ajv2020({strict:false, allErrors:true});

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import copy,unittest
 from exact_integer_result import decode_rows
 def artifact(nullable=False):return {'status':'compiled','backend':{'backendId':'ashlar.databricks.mathematical-integer','targetProfile':'dbsql-mathematical-integer-candidate','backendVersion':'0.1.0-candidate'},'columns':[{'position':1,'outputName':'n','nullable':nullable,'representation':{'kind':'scalar','carrier':'text','decoder':'exact-integer','logicalType':{'family':'integer','facets':{},'nullable':nullable}}}]}

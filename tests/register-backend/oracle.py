@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Host-only SQLite execution of emitted fixture SQL, with independently authored rows.
 
 SQLite is an independent execution witness for this simple text/projection subset;

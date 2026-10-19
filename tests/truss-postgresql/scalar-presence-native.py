@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent nullable/required presence matrix for captured scalar envelopes."""
 import csv,hashlib,io,json,subprocess,sys
 from pathlib import Path

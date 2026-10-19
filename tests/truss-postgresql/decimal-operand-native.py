@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native exact decimal operand transport, independent mathematical bounds.
 This does not qualify new property storage codecs or production profiles.
 """

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-008-AC1 @covers US-008-AC7 Full input/history stale controls."""
 import hashlib,json,pathlib,shutil,tempfile,unittest,os,subprocess
 from unittest.mock import patch

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC2 @covers US-006-AC4 @covers US-008-AC4
 Temporary fail-closed source mutants; active source is never edited.
 """

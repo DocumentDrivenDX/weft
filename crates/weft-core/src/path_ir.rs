@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Owned 0.4 path plan foundation. Typed consistency is not model or native admission.
 use crate::{
     application_ir::{Field, Scan},

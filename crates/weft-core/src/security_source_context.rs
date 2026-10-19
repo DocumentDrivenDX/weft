@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Immutable original source capsule, separate from query lineage and native authority.
 use crate::{
     error::{Diagnostic, Result},

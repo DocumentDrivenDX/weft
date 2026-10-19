@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Compose original value and home admissions. Operation/native qualification follows.
 use crate::{
     binding::Admission, leaf_codec_definition, presence_definition, value_definition::Graph,

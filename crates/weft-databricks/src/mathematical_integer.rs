@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit finite exact representation of mathematical source integers.
 //! Does not narrow the original logical domain or establish source validity.
 use crate::{binding::Binding,candidate::{Candidate,TargetPlan}};

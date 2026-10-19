@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC4: raw resource refusals through CLI and native Python."""
 import copy,hashlib,json,os,pathlib,subprocess,sys
 import sys

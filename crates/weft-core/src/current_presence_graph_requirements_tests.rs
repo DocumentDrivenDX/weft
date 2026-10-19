@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use super::*;
 use serde_json::json;
 fn fixture()->Value{crate::current_presence::tests::fixture()}

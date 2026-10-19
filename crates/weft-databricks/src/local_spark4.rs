@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Explicit independent Spark4/Delta4 local development registration.
 //! This registration remains candidate until its versioned support audit passes.
 //! Native correctness never establishes production authorization or stored-data custody.

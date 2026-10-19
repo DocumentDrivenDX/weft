@@ -1,4 +1,5 @@
 #![cfg(feature = "ashlar-databricks-paths-keys")]
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::{json, Value};
 fn request(sql: &str) -> Value {
     let mut r: Value = serde_json::from_str(include_str!(

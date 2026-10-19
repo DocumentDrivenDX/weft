@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-010-AC6 original mapping composition; native effect/authority proof is separate.
 use base64::{engine::general_purpose::STANDARD, Engine};
 use serde_json::{json, Value};

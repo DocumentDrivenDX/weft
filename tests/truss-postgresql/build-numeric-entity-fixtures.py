@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author complete entities with two independent native signed/decimal roots."""
 import base64,copy,hashlib,json
 from pathlib import Path

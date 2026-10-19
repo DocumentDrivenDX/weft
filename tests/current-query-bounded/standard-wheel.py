@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual feature-disabled wheel closure, not native database qualification."""
 import argparse,hashlib,importlib,json,pathlib,zipfile
 import weft

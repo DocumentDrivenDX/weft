@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Whole conditional artifacts match already-managed-tested DBX corpus; no DB IO."""
 import argparse,ast,hashlib,json,pathlib,sys,weft
 p=argparse.ArgumentParser();p.add_argument('--receipt',type=pathlib.Path,required=True);a=p.parse_args();root=pathlib.Path(__file__).resolve().parents[1]

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent optional-value native corpus on pinned owner projection layout.
 @covers US-004-AC1 @covers US-004-AC2 @covers US-004-AC3 (candidate component)
 """

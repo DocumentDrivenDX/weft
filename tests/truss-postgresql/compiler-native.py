@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Execute actual candidate compiler SQL against independent two-home fixtures."""
 import json,subprocess,csv,io
 from pathlib import Path

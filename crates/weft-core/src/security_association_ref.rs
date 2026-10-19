@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Qualified association namespaces for the graph source/IR migration.
 //! Reference parsing only: no ontology closure, fact authority or admitted plan.
 use crate::{error::{Diagnostic,Result},security_ontology::SecurityRef};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Test-only third-backend probe; no public compile envelope or production registration.
 #[path = "../../fixture.rs"]
 mod fixture;

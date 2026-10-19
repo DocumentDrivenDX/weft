@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fresh pinned CLI/native-wheel/Chromium qualification with input reconciliation."""
 import argparse,gzip,hashlib,json,os,pathlib,sys,zipfile
 if __package__ in (None,''):sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1]))

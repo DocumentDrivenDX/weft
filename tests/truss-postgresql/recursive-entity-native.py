@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Complete original scalar/recursive entities with independent native expectations.
 @covers US-003-AC1: declared member order and exact recursive/scalar values.
 @covers US-003-AC2: original property homes and discriminated owner scans.

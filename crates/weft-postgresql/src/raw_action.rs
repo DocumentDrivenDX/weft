@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! PostgreSQL18 statement programs for admitted scalar graph-write actions.
 //! No connection, authentication issuer, retry or runtime execution lives here.
 use serde_json::{json, Value};

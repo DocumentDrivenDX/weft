@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original native accepted model/binding; compiler checks are not native admission.
 use serde_json::{json,Value};
 fn request(sql:&str)->Value {

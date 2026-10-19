@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Metadata correspondence only. Native query meaning requires backend conformance.
 use super::*;
 use crate::ir::{Family, Identity};

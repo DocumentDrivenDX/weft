@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify saved read-only warehouse setting receipts, not corpus qualification."""
 import hashlib,json
 from pathlib import Path

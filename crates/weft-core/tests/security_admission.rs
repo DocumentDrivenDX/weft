@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use serde_json::{json,Value};
 use weft_core::{compile::Compiler,json::sha256};
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-response-v0.5.schema.json")]

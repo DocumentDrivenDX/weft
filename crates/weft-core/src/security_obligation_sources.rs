@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Owner-derived declaration lineage only. No native evidence or enforcement admission.
 mod association_events;
 pub(crate) use association_events::Payload as AssociationPayload;

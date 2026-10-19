@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact finite base-ten predicate ordering, without Spark numeric coercion.
 //! Inputs are owner-admitted plain text or native bounded Integer/Decimal casts.
 use serde_json::{json, Value};

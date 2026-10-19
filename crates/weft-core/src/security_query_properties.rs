@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original AST property requirements, separate from storage/disclosure/native authority.
 use crate::{
     error::{Diagnostic, Result},

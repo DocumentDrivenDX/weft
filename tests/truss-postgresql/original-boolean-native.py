@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent Boolean original property native checks.
 @covers US-003-AC1: Boolean order/filter exactness across native/props storage.
 @covers US-003-AC3: invalid carriers, absent required state and duplicates refuse.

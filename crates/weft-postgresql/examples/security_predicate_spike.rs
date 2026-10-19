@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Separate diagnostic transport; ordinary security compilation remains refused.
 use std::io::{Read, Write};
 use weft_core::error::{Diagnostic, Result};

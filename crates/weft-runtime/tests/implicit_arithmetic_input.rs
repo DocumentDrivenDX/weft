@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Actual explicit042 CLI transport; compiler/engine qualification is separate.
 #![cfg(feature = "ashlar-databricks-implicit-arithmetic")]
 use std::process::{Command, Stdio};

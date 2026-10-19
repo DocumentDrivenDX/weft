@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded Delta4 set-based whole-candidate plan, never a Truss manifest.
 use serde_json::{json, Value};
 use sqlparser::ast::*;

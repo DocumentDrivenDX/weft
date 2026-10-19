@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Direct typed payload dispatch for template0.2. No facet-value qualification,
 //! physical capability selection, authenticated profile or native authorization.
 use crate::{error::{Diagnostic,Result},security_obligation_sources::{OwnerSourceDemands,FieldChannel,KeyPayload,QueryPayload,FieldUse},security_requirements::SecurityOperatorMode,security_ir::QueryOperator};

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Public original composite-key SQL against independent exact tuple expectations.
 
 @covers US-003-AC1: exact native rows/types/multiplicity for the selected subset.

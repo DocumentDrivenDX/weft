@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-011-AC3 @covers US-011-AC4 @covers US-011-AC5
 // Independent test consumers, not Truss/Ashlar or native qualification.
 use serde_json::{json, Value};

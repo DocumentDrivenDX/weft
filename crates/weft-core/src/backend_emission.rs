@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Validate backend metadata against the resolved logical outputs.
 use crate::{
     backend::{Column, Emission, Plan, Representation, ScalarCarrier, ScalarDecoder, Selection},

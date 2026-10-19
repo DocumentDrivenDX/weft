@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual typed contributor-bag SQL refinement, not native policy admission.
 @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
 """

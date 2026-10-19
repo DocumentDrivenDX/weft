@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Python ABI parity against saved Databricks-tested compiler artifacts.
 
 This checks embedding parity; independent result oracles live in native harnesses.

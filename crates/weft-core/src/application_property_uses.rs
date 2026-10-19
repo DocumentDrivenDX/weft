@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Shared traversal of the actual resolved application AST. No policy interpretation.
 use crate::{
     application_ir as app,

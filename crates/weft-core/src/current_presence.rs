@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Separately typed, source-bound presence preparation. Never native permission.
 use crate::{application_lineage::ApplicationLineage,current_query_designation::{BindingScope,SourceIdentity},error::{Diagnostic,Result},ir::ModelPin,json::{checked_json,sha256},security_ontology::SecurityRef};
 use serde::{Deserialize,Serialize};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 use std::io::{self, Read, Write};
 
 const MAX_REQUEST_BYTES: usize = weft_core::compile::MAX_REQUEST_BYTES;

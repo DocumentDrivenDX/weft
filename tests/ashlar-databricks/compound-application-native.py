@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Whole entities and keyset pages with compounds and native typed ID homes.
 @covers US-004-AC1 @covers US-004-AC2 @covers US-004-AC3 (candidate component).
 Read-only existing pinned compound fixture; independent authored results.

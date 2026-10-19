@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original AST read intents, independent of policy/action/disposition interpretation.
 use crate::{
     application_ir as app,

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Pure original operand correspondence. No database, source/actor authority or release.
 use std::io::{Read,Write};use serde_json::json;use weft_core::error::{Diagnostic,Result};
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-OPERAND-INPUT","input","Bounded original operand input required")}

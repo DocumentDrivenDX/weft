@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author independent original Boolean property/comparator cuts from signed scaffolding."""
 import base64,copy,hashlib,json
 from pathlib import Path

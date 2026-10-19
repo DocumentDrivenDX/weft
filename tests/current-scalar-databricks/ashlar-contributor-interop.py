@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual public Weft producer + retained managed wire rows + original Ashlar decoder.
 Offline correspondence; neither source/authority admission nor a fresh native run.
 """

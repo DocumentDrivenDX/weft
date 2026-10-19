@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Candidate collection access. Complete-tree authority remains a host obligation.
 use crate::{access::ScalarAccess, qualified, CatalogDomain, Identifier, Parameters};
 use serde_json::json;

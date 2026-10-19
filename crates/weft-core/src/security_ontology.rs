@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact ontology reference/key/classification closure. Does not authorize native execution.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_source::SecuritySourcePacket};
 use serde_json::{json,Value};

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Preserve original field identity across supplied modules in one UMF document.
 @covers US-004-AC1 @covers US-004-AC2 (candidate component)
 """

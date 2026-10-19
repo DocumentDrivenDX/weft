@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify decimal conformance configuration through the actual Python ABI.
 @covers US-003-AC1: exact complete decimal SUM artifacts for every admitted precision/scale and both homes.
 @covers US-003-AC3: malformed/version/candidate/pin refusals preserve no SQL.

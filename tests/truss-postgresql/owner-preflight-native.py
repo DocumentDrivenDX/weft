@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Captured owner-wide structural checks, independent of result join membership."""
 import csv, hashlib, io, json, subprocess, sys
 from collections import Counter

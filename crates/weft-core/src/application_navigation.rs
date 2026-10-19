@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Original source entity-set navigation; native object/edge SQL belongs to backends.
 use crate::{
     application_ir::{Navigation, Plan},

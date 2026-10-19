@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual psycopg sales-query transport and publication proof.
 @covers US-003-AC1: independently authored exact grouped decimal results.
 @covers US-003-AC4: explicit text parameter/result OIDs and prepublication refusal.

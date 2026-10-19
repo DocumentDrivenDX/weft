@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Transport wrapper only; all JSON, model, language and backend semantics stay in Rust. */
 export interface WasmCompiler {
   compile_json(request: string): string;

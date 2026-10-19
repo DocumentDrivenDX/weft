@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC3: inspect actual preparation reports, not transport equality."""
 import collections,hashlib,json,os,pathlib
 ROOT=pathlib.Path(__file__).resolve().parents[2]

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Author an optional Unicode scalar and complete ordered entity projection."""
 import base64,copy,hashlib,json
 from pathlib import Path

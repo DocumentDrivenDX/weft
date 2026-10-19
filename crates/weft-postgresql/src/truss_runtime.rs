@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Fixed Truss runtime mapping over its independently authorized scalar source.
 //! The host constructs this binding from accepted bytes and actual catalog IDs.
 use crate::{Identifier, Parameters};

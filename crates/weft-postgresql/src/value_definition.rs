@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Structural original value graph admission. Codec/source qualification follows.
 use base64::{engine::general_purpose::STANDARD, Engine};
 use serde_json::Value;

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Run all authored application decisions through the actual candidate compiler.
 Frontend refusals keep their authored diagnostics; backend refusals of resolved
 inputs are reported as unresolved coverage, never relabeled successes.

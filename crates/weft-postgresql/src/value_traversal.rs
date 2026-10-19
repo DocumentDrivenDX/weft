@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Bounded traversal of runtime JSONB values under original finite UMF topology.
 //! Leaf and member presence procedures remain explicitly selected callbacks.
 use crate::value_definition::{Layout, LayoutShape, MemberSlot};

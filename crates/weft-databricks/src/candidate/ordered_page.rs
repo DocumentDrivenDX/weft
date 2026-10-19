@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! Native Spark lowering of original Core ordering slots, never emitted-SQL surgery.
 use super::*;
 use weft_core::application_ordered_page::{CursorValue,OrderedPage};

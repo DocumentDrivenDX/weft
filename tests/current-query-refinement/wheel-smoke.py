@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact-wheel conditional checker surface. Declared fixture values, no native admission."""
 import argparse,copy,hashlib,importlib,json,pathlib,subprocess,zipfile
 import weft

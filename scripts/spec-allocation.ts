@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-008-AC6 Allocation validity never claims executed acceptance. */
 export type Artifact = { meta: { id: string; type: string }; body: string };
 export type Allocation = { story: string; criteria: { id: string; plannedTest: string; assertion: string; state: string }[] }[];

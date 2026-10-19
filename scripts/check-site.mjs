@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import assert from 'node:assert/strict';
 import {tmpdir} from 'node:os';

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,hashlib,subprocess,tempfile,os,time,argparse
 from pathlib import Path
 parser=argparse.ArgumentParser(description='Controlled SQL semantics only, no native security admission');parser.add_argument('--compiler',type=Path,required=True);parser.add_argument('--operand-inspector',type=Path,required=True);parser.add_argument('--guarded-producer',type=Path,required=True);parser.add_argument('--result-inspector',type=Path,required=True);parser.add_argument('--postgres-bin',type=Path,required=True);parser.add_argument('--truss-scalar-sql',type=Path,required=True);parser.add_argument('--evidence-dir',type=Path,required=True);args=parser.parse_args();root=Path(__file__).resolve().parents[1];f=root/'docs/helix/03-test/fixtures/security-graph-source';binary=args.compiler.resolve();pg=args.postgres_bin.resolve();ev=args.evidence_dir.resolve();ev.mkdir(parents=True,exist_ok=True)

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import Ajv2020 from 'ajv/dist/2020.js';
 const schema=await Bun.file('docs/helix/02-design/contracts/logical-plan.schema.json').json();
 const validate=new Ajv2020({strict:false,allErrors:true}).compile(schema);

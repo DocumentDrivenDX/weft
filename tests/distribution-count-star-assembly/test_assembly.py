@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Small profile selection, error lifecycle and retained-byte proof controls."""
 import copy,gzip,importlib.util,json,sys,tempfile,unittest
 from pathlib import Path

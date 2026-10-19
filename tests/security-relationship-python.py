@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Python/Rust relationship transport parity; no native authority claim."""
 import copy, hashlib, json, os, pathlib, subprocess
 import weft

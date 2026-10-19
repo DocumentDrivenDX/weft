@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Actual current owner fixture/source and AST correspondence, without authority."""
 import copy, hashlib, json, os, pathlib, subprocess
 root=pathlib.Path(__file__).resolve().parent

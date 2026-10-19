@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native relationship bags/refusals and current warehouse custody.
 @covers US-004-AC1 @covers US-004-AC2 @covers US-004-AC3 @covers US-007-AC4
 """

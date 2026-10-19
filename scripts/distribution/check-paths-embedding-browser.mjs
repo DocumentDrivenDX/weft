@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Actual initialized browser WASM transport parity; no engine execution.
  * The enclosing bounded launcher owns deadlines, environment and artifact custody.
  * lstat/readFile is cooperative regular-file custody, not adversarial no-follow fencing.
