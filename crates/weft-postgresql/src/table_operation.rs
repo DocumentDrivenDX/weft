@@ -150,6 +150,7 @@ fn compile(raw: &str) -> Result<Value> {
         projections.push("1 AS umf_affected".into());
     }
     let mut cursor = Value::Null;
+    let mut frame_order = vec![];
     let sql = if read {
         let result = body["result"].as_str().unwrap();
         let mut predicate = lower.predicate(&body["where"])?;
@@ -199,6 +200,23 @@ fn compile(raw: &str) -> Result<Value> {
                     ))
                 })
                 .collect::<Result<Vec<_>>>()?;
+            for (index, ordering) in body["orderBy"].as_array().unwrap().iter().enumerate() {
+                let label = format!("umf_sort_{index}");
+                projections.push(format!(
+                    "{} AS {}",
+                    lower.column(&ordering["field"], true)?,
+                    q(&label)?
+                ));
+                frame_order.push(format!(
+                    "r.{} {}",
+                    q(&label)?,
+                    if ordering["direction"] == "asc" {
+                        "ASC"
+                    } else {
+                        "DESC"
+                    }
+                ));
+            }
             format!(
                 "SELECT {} FROM {relation} AS t WHERE {predicate}{} LIMIT {}",
                 projections.join(", "),
@@ -283,7 +301,26 @@ fn compile(raw: &str) -> Result<Value> {
     // raises a runtime SQL error on excess effects, so PG rolls back the entire
     // statement rather than clipping a write or returning an unbounded frame.
     let sql = if read {
-        sql
+        let visible = outputs
+            .iter()
+            .map(|o| {
+                Ok(format!(
+                    "r.{}",
+                    q(o["name"].as_str().ok_or("read output identity absent")?)?
+                ))
+            })
+            .collect::<Result<Vec<_>>>()?;
+        // octet_length measures uncompressed data even when PostgreSQL keeps a
+        // small TOAST pointer/compressed datum; pg_column_size is insufficient.
+        let sizes = visible
+            .iter()
+            .map(|name| {
+                format!(
+                    "COALESCE(pg_catalog.octet_length({name}::pg_catalog.text)::pg_catalog.int8,0)"
+                )
+            })
+            .collect::<Vec<_>>();
+        format!("WITH umf_read AS MATERIALIZED ({sql}), umf_frame AS MATERIALIZED (SELECT CASE WHEN COALESCE(pg_catalog.sum({}),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_read AS r) SELECT {} FROM umf_frame AS b CROSS JOIN umf_read AS r WHERE b.ok=1{}",sizes.join(" + "),visible.join(", "),if frame_order.is_empty(){String::new()}else{format!(" ORDER BY {}",frame_order.join(", "))})
     } else {
         format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) <= {} THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_effects) SELECT e.* FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok = 1",operation.max_rows())
     };
@@ -294,7 +331,7 @@ fn compile(raw: &str) -> Result<Value> {
   "nativeInputs":operation.native_inputs()?,"nativeAfter":operation.native_after()?,
   "declarationDigest":weft_core::json::sha256(weft_core::mutation::canonical(operation.declaration()).as_bytes()),
   "sql":sql,"transport":{"profile":"dbapi-percent/0.1","bindEmptyParameterTuple":true},"parameterOrder":lower.slots.iter().map(|s|s["id"].clone()).collect::<Vec<_>>(),"parameterSources":lower.slots,"outputs":outputs,
-  "result":{"kind":if read{body["result"].clone()}else{json!("mutation")},"maxRows":operation.max_rows(),"declaredMaxRows":body["maxRows"],"countScope":"direct-target-rows","referentialActions":"source-declared-native-FK-actions-not-counted-by-this-bound","affectedMarker":if read{Value::Null}else{json!("umf_affected")},"nativeBoundGuard":if read{Value::Null}else{json!({"profile":"pg18-effect-count/0.1","sqlstate":"22012","excessEffects":"statement-error-and-transaction-rollback","writeLimitClipping":false})},"lookahead":read&&body["result"]!="count","cursor":cursor},
+  "result":{"kind":if read{body["result"].clone()}else{json!("mutation")},"maxRows":operation.max_rows(),"declaredMaxRows":body["maxRows"],"countScope":"direct-target-rows","referentialActions":"source-declared-native-FK-actions-not-counted-by-this-bound","affectedMarker":if read{Value::Null}else{json!("umf_affected")},"nativeReadGuard":if read{json!({"profile":"pg18-read-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":true,"partialFrames":false})}else{Value::Null},"nativeBoundGuard":if read{Value::Null}else{json!({"profile":"pg18-effect-count/0.1","sqlstate":"22012","excessEffects":"statement-error-and-transaction-rollback","writeLimitClipping":false})},"lookahead":read&&body["result"]!="count","cursor":cursor},
   "obligations":{"tableLifecycle":operation.obligations(),"nativeExecutionQualified":false,
    "nativeFunctionAndOperatorClosure":"required-before-execution","consistency":operation.declaration()["consistency"],
    "transaction":{"batch":batch,"atomic":"entire-invocation","commitResponsibility":"host-caller-contract","onBoundExceeded":"rollback-entire-operation-or-batch","writeLimitClipping":false},

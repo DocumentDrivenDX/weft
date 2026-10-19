@@ -346,3 +346,15 @@ zero, without passing floats or unbounded numeric lexemes to PostgreSQL. Origina
 tokens remain in the retained request/source. Driver binding expansion is bounded
 to8MiB; emitted programs remain bounded to32MiB and the ordinary closed JSON
 reader's depth/node limits. Drivers bind these issued scalars, not reparsed tokens.
+
+Read results carry `nativeReadGuard:{profile:"pg18-read-frame/0.1",
+maxNativeBytes:8388608,sqlstate:"22012",includesLookahead:true,partialFrames:false}`.
+The backend materializes the bounded read and measures uncompressed visible
+value octets with `octet_length`, including lookahead, before returning a frame.
+An oversized frame raises SQLSTATE22012; a TOAST pointer or compressed datum
+size cannot substitute for logical octets. The outer projection retains exactly
+the declared output aliases. Hidden native sort projections preserve original
+ordering, including fields omitted from the result, without sorting scalar text
+coercions or exposing the hidden values. Count participates in the same guard.
+The SDK additionally checks cardinality, exact carriers and serialized wire size;
+this compiler guard alone grants no execution or principal authority.

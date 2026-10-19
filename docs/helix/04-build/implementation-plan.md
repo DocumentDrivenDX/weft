@@ -2794,3 +2794,17 @@ disabled after module loading. The [browser receipt](evidence/praxis-table-opera
 pins WASM/JS bytes, and the candidate CI now reproduces the browser comparison.
 This supersedes the earlier compilation-only browser status for this compiler
 subset, without granting native execution authority or closing Praxis release.
+
+### Bounded native read frames — 2026-10-19
+
+The dedicated operation backend now issues `pg18-read-frame/0.1`: materialized
+bounded reads check uncompressed visible value octets, including lookahead,
+against8MiB before returning a frame. The outer result retains authored native
+ordering through hidden sort projections and returns only public aliases.
+The [successor evidence](evidence/praxis-table-operations/read-frames/receipt.json)
+records21 focused tests,27 CLI/Python and actual Chromium comparisons,10
+self-rehashed controls,50 PG18.6 assertions, workspace/all-target/module/spec
+checks and dual-license audits. The UMF reader owns source-approved live
+admission, transaction/session/cursor behavior and final wire bounds. Durable
+writes, generated lifecycle methods and all remaining full Praxis release gates
+remain open; the reserved0.4.48 cohort is still unpublished.

@@ -76,3 +76,25 @@ Python parity script for its exact request/native-result corpus, build
 matching CLI. Run `table-operation-browser.mjs` with corpus, binding-directory
 and report paths. `WEFT_PLAYWRIGHT_MODULE` selects the installed pinned module.
 The CI workflow records these concrete commands and retains the browser report.
+
+## Read-frame guard successor — 2026-10-19
+
+The [read-frame receipt](read-frames/receipt.json) pins the successor source,
+local wheel, focused/native/browser checks and licensing. The backend now
+materializes the bounded read, checks uncompressed visible octets including
+lookahead against8MiB and raises SQLSTATE22012 on excess. Hidden native sort
+projections preserve order when those Fields are omitted from the public result;
+scalar text coercion never substitutes for native ordering. The new result
+profile is `pg18-read-frame/0.1`. Output cardinality/exact carriers and final JSON
+wire size remain separate SDK responsibilities.
+
+Twenty-one focused Rust tests,27 installed CLI/Python comparisons,10 altered
+program controls,50 PostgreSQL18.6 assertions and actual Chromium153 parity for
+all27 cases pass. Browser checks also refuse one tampered program and two invalid
+Unicode transports. Workspace/all-target,11-package module ownership, governed
+specification and MIT OR Apache-2.0 wheel audits pass. These reports supersede
+the earlier compiler bytes only for this dedicated operation compiler increment;
+legacy184-test evidence remains predecessor evidence. UMF independently verifies
+its per-call native reader, scoped cursors and compressed-frame refusal. No
+compiler result authenticates a principal or admits durable writes, and no0.4.48
+release has been published.

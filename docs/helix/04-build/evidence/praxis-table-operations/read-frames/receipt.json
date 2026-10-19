@@ -1,0 +1,44 @@
+{
+  "capturedAt": "2026-10-19T21:33:48.807000+00:00",
+  "scope": "unpublished 0.4.48 pg18-read-frame/0.1 compiler guard; no native authority or full Praxis release",
+  "sourceParent": "4e0abd77ae5d030c4b4ff0038396fb37036c4717",
+  "sourceFiles": {
+    "crates/weft-postgresql/src/table_operation.rs": "26e7aa8e95b082165a23c6f589341f2c2489e4d9a61f285460e8f2d0c6c46286",
+    "crates/weft-postgresql/tests/table_operation.rs": "b113d2efbf783ca5a519afc0e58d6d56d19569ddb70e806f084740bac17379db",
+    "tests/raw-postgresql/table-operation-bindings.py": "3417d2201998c7135dc2a3543240ac01ae0cd48b7efa206d6a14a35a0454ec85",
+    "tests/raw-postgresql/table-operation-browser.mjs": "743ff751adbf306ad02eaa26b9310170d4fcc9e12a9f30135910772a882be7ff",
+    "tests/raw-postgresql/table-operation-native.py": "f1b2c7df5acbcdf1986c61dea53064bc765e53d0da2f5a92429a1fa18b3effa0",
+    "tests/raw-postgresql/table-operation-model.json": "8c515220a071fd5797d4e711ebb3a9b4c24a4804c86c31378b06bf4b293d0a2e"
+  },
+  "wheel": {
+    "file": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "664a4c543293db60faa74aa0227c5f7fe6c72cfd450f9d7e3e22977d15beed34"
+  },
+  "tools": {
+    "rust": "1.90.0",
+    "maturin": "1.9.6",
+    "wasmBindgen": "0.2.105",
+    "playwright": "1.62.1",
+    "chromium": "153.0.8010.12",
+    "python": "3.11.17",
+    "postgresql": "18.6"
+  },
+  "checks": {
+    "focusedRustTests": 21,
+    "installedPythonCliComparisons": 27,
+    "selfRehashedControls": 10,
+    "nativeCompilerAssertions": 50,
+    "actualBrowserComparisons": 27,
+    "browserTamperControls": 1,
+    "browserUnicodeControls": 2,
+    "workspaceAllTargets": "pass",
+    "moduleBoundaries": "11 packages",
+    "governedSpecs": "pass",
+    "dualLicense": "MIT OR Apache-2.0"
+  },
+  "limits": [
+    "No0.4.48 tag or published wheel",
+    "Native admission is SDK/host-owned",
+    "Durable write outcomes, generated lifecycle module methods, remaining codecs/evolution/seeds and full private Praxis/Lakebase acceptance still gate release"
+  ]
+}

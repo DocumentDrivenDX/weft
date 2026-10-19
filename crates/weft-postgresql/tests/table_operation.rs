@@ -132,7 +132,7 @@ fn module_operation_mapping_inputs_and_replay_are_source_checked() {
 #[test]
 fn keyset_continuation_uses_exact_original_key_tuple_and_lookahead() {
     let first = compile(request("read_page"));
-    assert!(first["sql"].as_str().unwrap().ends_with("LIMIT 101"));
+    assert!(first["sql"].as_str().unwrap().contains("LIMIT 101)"));
     let mut r = request("read_page");
     r["call"]["after"] = json!([{"string":"n1"}]);
     let next = compile(r);
@@ -303,7 +303,7 @@ fn exact_integer_decimal_and_noncanonical_json_integer_bounds_never_round_or_pan
     r["binding"]["modelSha256"] = json!(weft_core::json::sha256(d.as_bytes()));
     let p = compile(r);
     assert_eq!(p["status"], "compiled", "{p}");
-    assert!(p["sql"].as_str().unwrap().ends_with("LIMIT 101"));
+    assert!(p["sql"].as_str().unwrap().contains("LIMIT 101)"));
     assert_eq!(p["result"]["maxRows"].as_u64(), Some(100));
     assert_eq!(p["declaration"]["body"]["maxRows"].as_u64(), Some(100));
     assert!(p["binding"]["modelJson"].as_str().unwrap().contains("1e2"));
@@ -371,7 +371,7 @@ fn requested_read_size_can_only_lower_a_declared_many_or_page_bound() {
         assert_eq!(p["status"], "compiled", "{p}");
         assert_eq!(p["result"]["maxRows"], 2);
         assert_eq!(p["result"]["declaredMaxRows"], 100);
-        assert!(p["sql"].as_str().unwrap().ends_with("LIMIT 3"));
+        assert!(p["sql"].as_str().unwrap().contains("LIMIT 3)"));
     }
     for (id, size) in [
         ("read_page", 0),
@@ -386,4 +386,42 @@ fn requested_read_size_can_only_lower_a_declared_many_or_page_bound() {
         r["call"]["size"] = json!(size);
         assert_eq!(compile(r)["status"], "blocked", "{id}/{size}");
     }
+}
+
+#[test]
+fn read_frames_bound_uncompressed_bytes_and_preserve_unprojected_order() {
+    for id in [
+        "read_many",
+        "read_one",
+        "read_optional",
+        "read_page",
+        "read_count",
+    ] {
+        let p = compile(request(id));
+        assert_eq!(p["status"], "compiled", "{p}");
+        assert_eq!(
+            p["result"]["nativeReadGuard"],
+            json!({
+                "profile":"pg18-read-frame/0.1", "maxNativeBytes":8388608,
+                "sqlstate":"22012", "includesLookahead":true, "partialFrames":false
+            })
+        );
+        let sql = p["sql"].as_str().unwrap();
+        assert!(sql.starts_with("WITH umf_read AS MATERIALIZED ("));
+        assert!(sql.contains("pg_catalog.octet_length("));
+        assert!(!sql.contains("pg_column_size"));
+        assert!(sql.contains("pg_catalog.count(*) - pg_catalog.count(*)"));
+    }
+    let mut r = request("read_many");
+    let mut model = source();
+    model["modules"][0]["extensions"]["umf.tables"]["commands"][0]["body"]["fields"] =
+        json!([{"module":"demo","element":"owner"}]);
+    repin(&mut r, model);
+    let p = compile(r);
+    assert_eq!(p["status"], "compiled", "{p}");
+    assert_eq!(p["outputs"].as_array().unwrap().len(), 1);
+    let sql = p["sql"].as_str().unwrap();
+    assert!(sql.contains("t.\"id\" AS \"umf_sort_0\""));
+    assert!(sql.ends_with("ORDER BY r.\"umf_sort_0\" ASC"));
+    assert!(compile(request("create"))["result"]["nativeReadGuard"].is_null());
 }

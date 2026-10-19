@@ -1,0 +1,373 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+    Checking weft-spike-core v0.1.0 (/private/tmp/umf-praxis-weft/spikes/b001/core)
+    Checking weft-core v0.1.0 (/private/tmp/umf-praxis-weft/crates/weft-core)
+   Compiling pyo3-build-config v0.27.1
+    Checking weft-spike-wasm v0.1.0 (/private/tmp/umf-praxis-weft/spikes/b001/wasm)
+   Compiling pyo3-ffi v0.27.1
+   Compiling pyo3-macros-backend v0.27.1
+   Compiling pyo3 v0.27.1
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:12:24
+   |
+12 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:4:25
+  |
+4 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+7 |     exact,
+  |     ^^^^^
+8 |     ir::{Family, Identity, LogicalType},
+9 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+   Compiling pyo3-macros v0.27.1
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `sdk_read_parameters`
+   --> crates/weft-core/src/compile.rs:435:21
+    |
+435 |                 let sdk_read_parameters=req.parameters.clone().unwrap_or_default();
+    |                     ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:838:8
+    |
+838 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:62:15
+   |
+62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/application_ir.rs:179:16
+    |
+176 | impl ReadOrder {
+    | -------------- associated function in this implementation
+...
+179 |  pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}
+    |                ^^^
+
+warning: associated function `prepare_security010` is never used
+   --> crates/weft-core/src/model.rs:175:19
+    |
+137 | impl Catalog {
+    | ------------ associated function in this implementation
+...
+175 |     pub(crate) fn prepare_security010(inputs: Vec<ModuleInput>) -> Result<Self> {
+    |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:246:19
+    |
+209 | impl Parser {
+    | ----------- method in this implementation
+...
+246 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 55 | impl PathRead {
+    | ------------- methods in this implementation
+...
+120 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:241:12
+    |
+240 | impl Plan {
+    | --------- associated function in this implementation
+241 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:24:9
+   |
+22 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+23 |         alias: Name,
+24 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:9:103
+  |
+9 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 13 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+    Checking weft-postgresql v0.1.0 (/private/tmp/umf-praxis-weft/crates/weft-postgresql)
+    Checking weft-runtime v0.1.0 (/private/tmp/umf-praxis-weft/crates/weft-runtime)
+    Checking weft-databricks v0.1.0 (/private/tmp/umf-praxis-weft/crates/weft-databricks)
+    Checking weft-backend-probe v0.0.0 (/private/tmp/umf-praxis-weft/tests/register-backend/probe)
+    Checking weft-frontend-probe v0.0.0 (/private/tmp/umf-praxis-weft/tests/frontend/wasm-probe)
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:62:15
+   |
+62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: method `terminal_key` is never used
+   --> crates/weft-core/src/path_ir.rs:123:12
+    |
+ 55 | impl PathRead {
+    | ------------- method in this implementation
+...
+123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+    Checking weft-spike-python v0.1.0 (/private/tmp/umf-praxis-weft/spikes/b001/python)
+warning: variants `MissingColumns`, `UnknownSource`, `WrongNullable`, `Upgrade`, and `Panics` are never constructed
+  --> tests/register-backend/probe/src/../../fixture.rs:13:5
+   |
+10 | pub(crate) enum Behavior {
+   |                 -------- variants in this enum
+...
+13 |     MissingColumns,
+   |     ^^^^^^^^^^^^^^
+...
+18 |     UnknownSource,
+   |     ^^^^^^^^^^^^^
+19 |     WrongNullable,
+   |     ^^^^^^^^^^^^^
+...
+22 |     Upgrade,
+   |     ^^^^^^^
+23 |     Panics,
+   |     ^^^^^^
+   |
+   = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `modules` is never used
+   --> tests/register-backend/probe/src/../../fixture.rs:293:15
+    |
+293 | pub(crate) fn modules() -> Vec<weft_core::model::ModuleInput> {
+    |               ^^^^^^^
+
+warning: unused variable: `ordered`
+   --> crates/weft-databricks/src/candidate/application.rs:201:5
+    |
+201 |     ordered:Option<&OrderedPage>,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_ordered`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:55:9
+   |
+55 |     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+   |         ----^^^^^^^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:80:9
+   |
+80 |     let mut order = source
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/weft-databricks/src/candidate/navigation.rs:143:9
+    |
+143 |     let mut obligations=admitted.obligations;
+    |         ----^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: function `lower_current` is never used
+   --> crates/weft-databricks/src/raw_read.rs:232:15
+    |
+232 | pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false,false)}
+    |               ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-backend-probe` (lib) generated 2 warnings
+warning: `weft-databricks` (lib) generated 5 warnings (run `cargo fix --lib -p weft-databricks` to apply 3 suggestions)
+warning: `weft-core` (lib test) generated 7 warnings (4 duplicates) (run `cargo fix --lib -p weft-core --tests` to apply 1 suggestion)
+warning: constant `SALES_SQL` is never used
+ --> crates/weft-databricks/tests/../../../tests/ashlar-databricks/common.rs:4:11
+  |
+4 | pub const SALES_SQL: &str = "SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name";
+  |           ^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+warning: function `compound_request` is never used
+  --> crates/weft-databricks/tests/../../../tests/ashlar-databricks/common.rs:52:8
+   |
+52 | pub fn compound_request(shape: &str, optional: bool) -> Value {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: variant `Upgrade` is never constructed
+  --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:22:5
+   |
+10 | pub(crate) enum Behavior {
+   |                 -------- variant in this enum
+...
+22 |     Upgrade,
+   |     ^^^^^^^
+   |
+   = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `target` is never used
+   --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:298:15
+    |
+298 | pub(crate) fn target(candidate: bool) -> Target {
+    |               ^^^^^^
+
+    Checking weft-python v0.4.48 (/private/tmp/umf-praxis-weft/crates/weft-python)
+warning: `weft-databricks` (test "relationship_degree") generated 2 warnings
+    Checking weft-wasm v0.1.0 (/private/tmp/umf-praxis-weft/crates/weft-wasm)
+warning: `weft-core` (test "compile-envelope") generated 2 warnings
+warning: `weft-backend-probe` (lib test) generated 2 warnings (2 duplicates)
+warning: `weft-databricks` (test "paths") generated 2 warnings (2 duplicates)
+warning: function `holes` is never used
+  --> crates/weft-postgresql/src/native_privilege_probes.rs:36:4
+   |
+36 | fn holes(sql: &str) -> Result<Vec<Hole>> {
+   |    ^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-databricks` (lib test) generated 5 warnings (5 duplicates)
+warning: `weft-postgresql` (lib) generated 1 warning
+warning: unused variable: `t`
+   --> crates/weft-postgresql/tests/security_guarded_transport.rs:234:7
+    |
+234 |  let (t,source)=match &output.output().expression{Expression::Count{logical_type}=>(logical_type,None),Expression::Sum{argument,logical_t...
+    |       ^ help: if this is intentional, prefix it with an underscore: `_t`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: `weft-postgresql` (test "security_guarded_transport") generated 1 warning
+warning: unused imports: `Requirement` and `admit_properties`
+    --> crates/weft-postgresql/src/property_definition.rs:1026:39
+     |
+1026 |             comparator_requirements::{admit_properties, registration_key, Requirement},
+     |                                       ^^^^^^^^^^^^^^^^                    ^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` on by default
+
+warning: variable does not need to be mutable
+    --> crates/weft-postgresql/src/truss_runtime.rs:1498:13
+     |
+1498 |         let mut r=request("SELECT a.* FROM \"A\" a");
+     |             ----^
+     |             |
+     |             help: remove this `mut`
+     |
+     = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> crates/weft-postgresql/src/row_join_definition.rs:843:13
+    |
+843 |         let mut binding: Value = serde_json::from_str(include_str!(
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+
+warning: `weft-postgresql` (lib test) generated 3 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 3 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 17.70s
