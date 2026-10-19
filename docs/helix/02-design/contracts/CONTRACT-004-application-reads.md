@@ -266,6 +266,13 @@ program until their version-specific native admission and execution are qualifie
 legacy raw-read catalog versions do not authorize it. This candidate introduces
 no raw SQL execution endpoint and does not enable UMF's guarded client generator.
 
+UMF's preservation schema intentionally accepts unknown object members. The
+selected Weft interpretation derives a private closed schema for declared object
+shapes, retaining explicit map-value schemas and the exact original source/schema
+bytes. Unknown members in selected payload/table/column/type/reference/policy
+objects refuse before lowering; arbitrary declared CoreLiteral map keys retain
+their authored meaning. This closure is not contextual policy validation.
+
 The pinned original schema and provenance live in
 `spec/upstream/umf-tables-0.1.0.*`. Structural schema checks do not substitute for
 UMF's contextual source interpretation or native policy/constraint enforcement.

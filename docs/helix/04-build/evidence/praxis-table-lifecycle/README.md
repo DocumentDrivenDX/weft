@@ -21,11 +21,10 @@ bun scripts/module-boundaries.ts
 bun scripts/check-specs.ts
 ```
 
-Nine focused integration tests cover original bytes, explicit profile/program
+Ten focused integration tests cover original bytes, explicit profile/program
 version, keyset and count custody, policy-source pin changes, complete inventory,
 primary Keys, FK pairs and target Key identity, opaque command/extension refusal,
-forged contexts/mappings, and retention of unselected module content. All184
-existing PostgreSQL library tests pass; the decimal-domain regression took over
+forged contexts/mappings, and retention of unselected module content. The prior52d0926d full PostgreSQL library regression passed184tests; the decimal-domain regression took over
 one minute and was allowed to finish. Native Python and WASM target compilation
 pass; WASM compilation is not browser execution evidence. Module ownership checks
 pass for11packages. Source license audit passes with dual-license headers and
@@ -33,8 +32,8 @@ package metadata.
 
 The installed native Python/CLI comparison is reproducible using the candidate
 wheel, the `compile_raw_read` example and
-`tests/raw-postgresql/table-lifecycle-bindings-check.py`. Its [machine receipt](receipt.json) records ten passing installed-Python/CLI
-comparisons in [bindings.json](bindings.json), including four accepted and six
+`tests/raw-postgresql/table-lifecycle-bindings-check.py`. Its [machine receipt](receipt.json) records eighteen passing installed-Python/CLI
+comparisons in [bindings.json](bindings.json), including four accepted and fourteen
 refused requests. The local wheel hash and exact source hashes are retained. No connection or data execution is used.
 
 Remaining gates: typed command declarations and mutation lowering, date/time
@@ -43,3 +42,13 @@ privilege admission for data access, cursor generation/principal binding,
 seed/evolution migration support, actual browser parity, Praxis/Lakebase
 acceptance and immutable publication. Existing UMF client-generation refusal
 remains. This component does not establish full Praxis support or a release.
+
+
+A final negative control found that52d0926d structurally accepted an unknown
+selected payload member because the original UMF schema deliberately preserves
+unknown members. The successor derives a private closed interpretation schema
+from those exact pinned schema bytes; source and upstream schema remain unchanged.
+Eight selected member locations now refuse in both native interfaces, while a
+focused Core test preserves arbitrary declared CoreLiteral map keys. The final
+wheel/CLI comparison, focused integration tests, WASM target check and licensing
+were rerun. No native execution authority was available in the precursor either.

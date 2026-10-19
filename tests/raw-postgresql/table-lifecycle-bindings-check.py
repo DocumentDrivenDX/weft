@@ -58,6 +58,20 @@ def main():
     changed["modules"][0]["extensions"]["umf.tables"]["commands"] = [{"future": True}]
     pin(opaque, changed)
     cases.append(("uninterpreted-command", opaque, "blocked"))
+    for path in (
+        (), ("tables", 0), ("tables", 0, "record"),
+        ("tables", 0, "columns", 0), ("tables", 0, "columns", 0, "nativeType"),
+        ("tables", 0, "policy"), ("tables", 0, "policy", "person"),
+        ("tables", 0, "policy", "person", "select"),
+    ):
+        request = copy.deepcopy(base)
+        changed = copy.deepcopy(source)
+        selected = changed["modules"][0]["extensions"]["umf.tables"]
+        for part in path:
+            selected = selected[part]
+        selected["future"] = True
+        pin(request, changed)
+        cases.append(("unknown-selected-member-" + "/".join(map(str, path)), request, "blocked"))
     results = []
     for name, request, expected in cases:
         original = encode(request)
