@@ -278,3 +278,71 @@ The pinned original schema and provenance live in
 UMF's contextual source interpretation or native policy/constraint enforcement.
 Positive/refusal compiler evidence lives in
 [the candidate receipt](../../04-build/evidence/praxis-table-lifecycle/README.md).
+
+## Named native operation invocation candidate — 2026-10-19
+
+The dedicated `weft.table-operation/0.1` invocation selects `module` and
+`operation` from the exact original binding source and supplies typed CoreLiteral
+inputs. Its closed request contains `version`, `target`, `binding`, `module`,
+`operation`, `call`, and optional `idempotencyKey`. A call is either
+`{kind:"single",inputs,after?,size?}` or `{kind:"batch",items}`. `after` is an ordered
+original Key tuple for a declared page only. A batch invokes one declared write,
+is bounded by its declaration, preserves input order and is one transaction.
+Module identity must match the native lifecycle context. Reads reject replay
+keys; writes enforce the declared required/optional caller key, bounded to256
+UTF-8 bytes. Connection identity and role selection never come from this wire.
+
+The shared Rust frontend admits original mappings and selected operation meaning,
+checks exact input inventory/domains/native capacities and produces an opaque
+admitted operation. Unknown versions/members, undeclared operations, invalid
+cursor tuples, mutable-Key assignments and unsupported carriers refuse. Existing
+raw read/action/search entry points do not acquire a command-inventory bypass.
+The initial native lowering subset is string/integer/decimal/boolean/UUID/bits128;
+date/time/binary and broader statement forms remain separately required gates.
+
+PostgreSQL programs bind all input and literal data; source values never become
+SQL fragments. Explicit predicates, ordered projections and original conflict
+Keys drive lowering. Count uses an exact integer text result; scalar numerics
+return exact text. Cardinality checks use lookahead. Page continuation adds the
+complete ASC Key tuple comparison in the same native ordering. Mutation programs
+return an affected-row marker even without business projections. A declared
+maximum is an admission/transaction outcome: excess effects must roll back the
+entire operation/batch, never be clipped by a hidden write LIMIT. RETURNING and
+ON CONFLICT add their actual SELECT privilege/policy requirements.
+
+Compilation authenticates no native deployment or person/batch role. Programs
+retain original request/source, declaration and invocation digests, complete
+transaction/replay/cursor obligations and `nativeExecutionQualified:false`.
+Full source recompilation checks a program; a self-rehashed digest alone is no
+proof. Native ledger/current generation, effective privileges, forced RLS,
+policy/principal scope, atomic durable receipts and host transaction execution
+remain mandatory before admitting a generated operation. No release or full
+Praxis support follows from compiler acceptance alone.
+
+
+The `pg18-effect-count/0.1` write guard counts direct target rows through a
+materialized data-modifying CTE and raises SQLSTATE22012 on excess effects. The
+statement fails before a result can commit; it never clips a write. Source-native
+foreign-key actions retain their own declared PostgreSQL semantics and are not
+included in this target-row count. This is not an all-graph effects bound or a
+claim that native referential actions apply child-table RLS as direct DML does.
+Host batch atomicity and durable outcomes still require their own execution gate.
+
+`eq`/`ne` are null-safe; `in` and boolean composition preserve ordinary SQL
+three-valued membership semantics, including NULL. Prefix data is literal data,
+including percent/underscore. Known integer controls normalize to typed plan
+integers while the complete original source/request retains authored lexical
+bytes. Cursor metadata requires source/principal binding; it does not attest
+that an untrusted `after` tuple is already authenticated. DBAPI transport always
+binds a parameter tuple, including the empty tuple for percent escaping.
+
+
+Single `many`/`page` calls may lower their requested `size` to1 through the
+source-declared maximum; write/singleton/count and batch calls cannot override
+it. Result metadata distinguishes effective and declared maxima. Canonical
+`nativeInputs`, `nativeAfter` and literal `nativeValue` carry validated driver
+scalars. Integer and decimal tokens normalize exactly, including extreme-exponent
+zero, without passing floats or unbounded numeric lexemes to PostgreSQL. Original
+tokens remain in the retained request/source. Driver binding expansion is bounded
+to8MiB; emitted programs remain bounded to32MiB and the ordinary closed JSON
+reader's depth/node limits. Drivers bind these issued scalars, not reparsed tokens.

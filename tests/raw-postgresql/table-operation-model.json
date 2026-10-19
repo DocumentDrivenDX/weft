@@ -1,0 +1,732 @@
+{
+  "umf": "0.10.0",
+  "id": "synthetic-table-lifecycle",
+  "vocabularies": {
+    "umf.tables": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "demo",
+      "namespace": "demo",
+      "elements": [
+        {
+          "id": "id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "owner",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "Note",
+          "kind": "record",
+          "members": [
+            {
+              "module": "demo",
+              "element": "id"
+            },
+            {
+              "module": "demo",
+              "element": "owner"
+            }
+          ],
+          "keys": [
+            {
+              "id": "primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "demo",
+                  "element": "id"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "umf.tables": {
+          "profile": "postgresql18/0.1",
+          "tables": [
+            {
+              "id": "notes",
+              "record": {
+                "module": "demo",
+                "element": "Note"
+              },
+              "name": "notes",
+              "columns": [
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  "name": "id",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "name": "owner",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                }
+              ],
+              "indexes": [],
+              "checks": [],
+              "foreignKeys": [],
+              "policy": {
+                "mode": "native-rls",
+                "person": {
+                  "select": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  },
+                  "insert": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  },
+                  "update": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  },
+                  "delete": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    }
+                  }
+                },
+                "batch": {
+                  "select": {
+                    "kind": "allow"
+                  },
+                  "insert": {
+                    "kind": "deny"
+                  },
+                  "update": {
+                    "kind": "deny"
+                  },
+                  "delete": {
+                    "kind": "deny"
+                  }
+                }
+              }
+            }
+          ],
+          "seedSets": [],
+          "commands": [
+            {
+              "version": "umf.table-operation/0.1",
+              "id": "read_many",
+              "parameters": [
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "consistency": "statement",
+              "replay": "none",
+              "body": {
+                "kind": "read",
+                "table": "notes",
+                "fields": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "where": {
+                  "op": "eq",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "value": {
+                    "kind": "parameter",
+                    "parameter": "owner"
+                  }
+                },
+                "orderBy": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "direction": "asc"
+                  }
+                ],
+                "result": "many",
+                "maxRows": 100
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "id": "read_one",
+              "parameters": [
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "consistency": "statement",
+              "replay": "none",
+              "body": {
+                "kind": "read",
+                "table": "notes",
+                "fields": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "where": {
+                  "op": "eq",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "value": {
+                    "kind": "parameter",
+                    "parameter": "owner"
+                  }
+                },
+                "orderBy": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "direction": "asc"
+                  }
+                ],
+                "result": "one",
+                "maxRows": 1
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "id": "read_optional",
+              "parameters": [
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "consistency": "statement",
+              "replay": "none",
+              "body": {
+                "kind": "read",
+                "table": "notes",
+                "fields": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "where": {
+                  "op": "eq",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "value": {
+                    "kind": "parameter",
+                    "parameter": "owner"
+                  }
+                },
+                "orderBy": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "direction": "asc"
+                  }
+                ],
+                "result": "optional",
+                "maxRows": 1
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "id": "read_page",
+              "parameters": [
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "consistency": "statement",
+              "replay": "none",
+              "body": {
+                "kind": "read",
+                "table": "notes",
+                "fields": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "where": {
+                  "op": "eq",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "value": {
+                    "kind": "parameter",
+                    "parameter": "owner"
+                  }
+                },
+                "orderBy": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "direction": "asc"
+                  }
+                ],
+                "result": "page",
+                "maxRows": 100,
+                "cursorKey": "primary"
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "id": "read_count",
+              "parameters": [
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "consistency": "statement",
+              "replay": "none",
+              "body": {
+                "kind": "read",
+                "table": "notes",
+                "fields": [],
+                "where": {
+                  "op": "eq",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  },
+                  "value": {
+                    "kind": "parameter",
+                    "parameter": "owner"
+                  }
+                },
+                "orderBy": [],
+                "result": "count",
+                "maxRows": 1
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "consistency": "transaction",
+              "replay": "caller-key-required",
+              "id": "create",
+              "parameters": [
+                {
+                  "id": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  }
+                },
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "body": {
+                "kind": "insert",
+                "table": "notes",
+                "values": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "id"
+                    }
+                  },
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "owner"
+                    }
+                  }
+                ],
+                "returning": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "maxRows": 1
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "consistency": "transaction",
+              "replay": "caller-key-required",
+              "id": "rename",
+              "parameters": [
+                {
+                  "id": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  }
+                },
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "body": {
+                "kind": "update",
+                "table": "notes",
+                "where": {
+                  "op": "eq",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  "value": {
+                    "kind": "parameter",
+                    "parameter": "id"
+                  }
+                },
+                "values": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "owner"
+                    }
+                  }
+                ],
+                "returning": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "maxRows": 1
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "consistency": "transaction",
+              "replay": "caller-key-required",
+              "id": "remove",
+              "parameters": [
+                {
+                  "id": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  }
+                }
+              ],
+              "body": {
+                "kind": "delete",
+                "table": "notes",
+                "where": {
+                  "op": "eq",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  "value": {
+                    "kind": "parameter",
+                    "parameter": "id"
+                  }
+                },
+                "returning": [],
+                "maxRows": 10
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "consistency": "transaction",
+              "replay": "caller-key-required",
+              "id": "put_ignore",
+              "parameters": [
+                {
+                  "id": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  }
+                },
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "body": {
+                "kind": "upsert",
+                "table": "notes",
+                "conflictKey": "primary",
+                "values": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "id"
+                    }
+                  },
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "owner"
+                    }
+                  }
+                ],
+                "onConflict": "ignore",
+                "updateFields": [],
+                "returning": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "maxRows": 1
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "consistency": "transaction",
+              "replay": "caller-key-required",
+              "id": "put_update",
+              "parameters": [
+                {
+                  "id": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  }
+                },
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "body": {
+                "kind": "upsert",
+                "table": "notes",
+                "conflictKey": "primary",
+                "values": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "id"
+                    }
+                  },
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "owner"
+                    }
+                  }
+                ],
+                "onConflict": "update",
+                "updateFields": [
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "returning": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "maxRows": 1
+              }
+            },
+            {
+              "version": "umf.table-operation/0.1",
+              "consistency": "transaction",
+              "replay": "caller-key-required",
+              "id": "create_batch",
+              "parameters": [
+                {
+                  "id": "id",
+                  "field": {
+                    "module": "demo",
+                    "element": "id"
+                  }
+                },
+                {
+                  "id": "owner",
+                  "field": {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                }
+              ],
+              "batch": {
+                "maxItems": 100
+              },
+              "body": {
+                "kind": "insert",
+                "table": "notes",
+                "values": [
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "id"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "id"
+                    }
+                  },
+                  {
+                    "field": {
+                      "module": "demo",
+                      "element": "owner"
+                    },
+                    "value": {
+                      "kind": "parameter",
+                      "parameter": "owner"
+                    }
+                  }
+                ],
+                "returning": [
+                  {
+                    "module": "demo",
+                    "element": "id"
+                  },
+                  {
+                    "module": "demo",
+                    "element": "owner"
+                  }
+                ],
+                "maxRows": 1
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

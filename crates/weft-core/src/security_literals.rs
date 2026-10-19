@@ -8,7 +8,7 @@ const MAX_TEXT:usize=4_000_000;
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-LITERAL","model","Security literal or refinement refused")}
 #[derive(Debug,Clone,PartialEq,Eq,PartialOrd,Ord)]
 pub enum ScalarLiteral{Boolean(bool),String(String),Binary(String),Number(BigInt)}
-fn coefficient(token:&str,scale:u64,precision:Option<u64>)->Result<BigInt>{
+pub(crate) fn coefficient(token:&str,scale:u64,precision:Option<u64>)->Result<BigInt>{
  if token.len()>MAX_TEXT{return Err(fail());}
  let (negative,body)=if let Some(v)=token.strip_prefix('-'){(true,v)}else{(false,token)};
  let at=body.find(['e','E']);let (mantissa,exponent)=if let Some(at)=at{(&body[..at],&body[at+1..])}else{(body,"0")};

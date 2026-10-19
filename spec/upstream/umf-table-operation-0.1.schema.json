@@ -1,0 +1,504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-operation:0.1",
+  "title": "UMF declared table operation candidate0.1",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "umf.table-operation/0.1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "field": {
+            "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+          }
+        },
+        "required": [
+          "id",
+          "field"
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 64
+    },
+    "body": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "read"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "minItems": 0,
+              "maxItems": 1600
+            },
+            "where": {
+              "$ref": "#/$defs/predicate"
+            },
+            "orderBy": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+                  },
+                  "direction": {
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  }
+                },
+                "required": [
+                  "field",
+                  "direction"
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 32
+            },
+            "result": {
+              "enum": [
+                "many",
+                "one",
+                "optional",
+                "page",
+                "count"
+              ]
+            },
+            "maxRows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "cursorKey": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "kind",
+            "table",
+            "fields",
+            "where",
+            "orderBy",
+            "result",
+            "maxRows"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "insert"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "returning": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "minItems": 0,
+              "maxItems": 1600
+            },
+            "maxRows": {
+              "const": 1
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/assignment"
+              },
+              "minItems": 1,
+              "maxItems": 1600
+            }
+          },
+          "required": [
+            "kind",
+            "table",
+            "returning",
+            "maxRows",
+            "values"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "update"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "returning": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "minItems": 0,
+              "maxItems": 1600
+            },
+            "maxRows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/assignment"
+              },
+              "minItems": 1,
+              "maxItems": 1600
+            },
+            "where": {
+              "$ref": "#/$defs/predicate"
+            }
+          },
+          "required": [
+            "kind",
+            "table",
+            "returning",
+            "maxRows",
+            "values",
+            "where"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "delete"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "returning": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "minItems": 0,
+              "maxItems": 1600
+            },
+            "maxRows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "where": {
+              "$ref": "#/$defs/predicate"
+            }
+          },
+          "required": [
+            "kind",
+            "table",
+            "returning",
+            "maxRows",
+            "where"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "upsert"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "returning": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "minItems": 0,
+              "maxItems": 1600
+            },
+            "maxRows": {
+              "const": 1
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/assignment"
+              },
+              "minItems": 1,
+              "maxItems": 1600
+            },
+            "conflictKey": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "onConflict": {
+              "enum": [
+                "ignore",
+                "update"
+              ]
+            },
+            "updateFields": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "minItems": 0,
+              "maxItems": 1600
+            }
+          },
+          "required": [
+            "kind",
+            "table",
+            "returning",
+            "maxRows",
+            "values",
+            "conflictKey",
+            "onConflict",
+            "updateFields"
+          ]
+        }
+      ]
+    },
+    "consistency": {
+      "enum": [
+        "statement",
+        "transaction"
+      ]
+    },
+    "replay": {
+      "enum": [
+        "none",
+        "caller-key-required",
+        "caller-key-optional"
+      ]
+    },
+    "batch": {
+      "type": "object",
+      "properties": {
+        "maxItems": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "maxItems"
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "id",
+    "parameters",
+    "body",
+    "consistency",
+    "replay"
+  ],
+  "$defs": {
+    "value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "parameter"
+            },
+            "parameter": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "kind",
+            "parameter"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "literal"
+            },
+            "value": {
+              "$ref": "urn:umf:tables:0.1.0#/$defs/literal"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ]
+        }
+      ]
+    },
+    "predicate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "all"
+            }
+          },
+          "required": [
+            "op"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "and",
+                "or"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/predicate"
+              },
+              "minItems": 1,
+              "maxItems": 100
+            }
+          },
+          "required": [
+            "op",
+            "args"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "not"
+            },
+            "arg": {
+              "$ref": "#/$defs/predicate"
+            }
+          },
+          "required": [
+            "op",
+            "arg"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "isNull"
+            },
+            "field": {
+              "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+            }
+          },
+          "required": [
+            "op",
+            "field"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "in"
+            },
+            "field": {
+              "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/value"
+              },
+              "minItems": 1,
+              "maxItems": 100
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "values"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "eq",
+                "ne",
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "startsWith"
+              ]
+            },
+            "field": {
+              "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+            },
+            "value": {
+              "$ref": "#/$defs/value"
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "value"
+          ]
+        }
+      ]
+    },
+    "assignment": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+        },
+        "value": {
+          "$ref": "#/$defs/value"
+        }
+      },
+      "required": [
+        "field",
+        "value"
+      ]
+    }
+  }
+}

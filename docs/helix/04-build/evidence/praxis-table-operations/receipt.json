@@ -1,0 +1,100 @@
+{
+  "candidate": "weft-sql0.4.48 unpublished dev wheel",
+  "base": "713186b604e602549607b4a1e63052cc236199ac",
+  "upstreamUmf": "6d623fc528c725de305bfe07531ef156dc8f45f4",
+  "scope": "declared single-table operation compilation and synthetic native SQL/session composition; no production data admission",
+  "nativeExecutionQualified": false,
+  "browserExecutionQualified": false,
+  "verification": {
+    "focusedOperationTests": 10,
+    "lifecycleCustodyTests": 10,
+    "installedPythonCliParity": 27,
+    "selfRehashedProgramControls": 10,
+    "nativePostgresqlAssertions": 50,
+    "nativeReceipt": "native.json",
+    "legacyPostgresqlLibraryTests": {
+      "passed": 184,
+      "failed": 0,
+      "scope": "current feature precursor before operation-only canonical driver-value and per-call read-size additions; final additions covered by focused and installed/native reruns"
+    },
+    "workspaceAllTargets": "passed",
+    "pythonNoDefaultFeatures": "passed",
+    "wasm32RawReadFeature": "passed; compilation only",
+    "moduleBoundaries": {
+      "passed": true,
+      "workspacePackages": 11
+    },
+    "specs": {
+      "passed": true,
+      "artifacts": 89,
+      "schemas": 101,
+      "fixtures": 636
+    },
+    "licenseAudit": [
+      {
+        "root": "/private/tmp/umf-praxis-weft",
+        "headers": 716,
+        "packages": [
+          "crates/weft-python/pyproject.toml",
+          "package.json",
+          "packages/weft-browser/package.json"
+        ]
+      },
+      {
+        "wheel": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+        "license": "MIT OR Apache-2.0",
+        "licenseFiles": [
+          "LICENSE.md",
+          "LICENSE-MIT",
+          "LICENSE-APACHE",
+          "THIRD-PARTY-LICENSES.txt"
+        ]
+      }
+    ],
+    "hostedCandidate": "pending push/run"
+  },
+  "toolchain": {
+    "rust": "1.90.0",
+    "python": "3.11.17",
+    "maturin": "1.9.6",
+    "platform": "macOS arm64",
+    "postgresql": "18.6",
+    "psycopg": "3.2.13",
+    "pydantic": "2.13.5",
+    "umfAccess": "0.1.0.dev2 local e48c0ba source wheel",
+    "umfCodegen": "0.1.0a1 local 6d623fc source wheel"
+  },
+  "localWheel": {
+    "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "2110754f1b166603f848f819cee0a3d7197f9fa16a4fd573baf21ec8c118afd8",
+    "published": false,
+    "profile": "dev",
+    "license": "MIT OR Apache-2.0"
+  },
+  "sourceFiles": {
+    ".github/workflows/table-operations.yml": "79c5a694ad4c0bb77441528628282a6b6737b3a870317b6ca56c7cac6cec5aa7",
+    "crates/weft-core/src/table_operation.rs": "2920c173c7eb9a807b5dba89cf6e95c18c058d3ca4a5a305e3ff523dbc454168",
+    "crates/weft-core/src/table_operation/schema.rs": "adef1f2ae816fb2ce7a2f4f0023e931c9d5500e73c15132f0af18be5a9659f76",
+    "crates/weft-core/src/table_operation/validation.rs": "d84a5941e19fe61244d2b827ef4ff18155fd1769967624cf074a446711df3bb6",
+    "crates/weft-core/src/table_operation/values.rs": "0214f0ded49e7db84b0eede1f1f49b89c961c3c59cba34e2613ff0de5197e41c",
+    "crates/weft-postgresql/src/table_operation.rs": "b77423e009d15af6ac8a13fc8edba70602575c31c6304b8df661abce4874bc03",
+    "crates/weft-postgresql/tests/table_operation.rs": "cfd19335d2418585af69c2b0a2d3114bf170f839edca484ce2b860a2808dfe23",
+    "spec/upstream/umf-table-operation-0.1.schema.json": "e37f5f00f44a5252e56f74a8c12aeb4fccf5ef827811584f3a5d2e2b1e30a2e0",
+    "tests/raw-postgresql/table-operation-bindings.py": "29507e6bc1dc7ecce0b6dd8bd4f091089b42b0f0d76efe5f2efe7f322dce5f15",
+    "tests/raw-postgresql/table-operation-model.json": "8c515220a071fd5797d4e711ebb3a9b4c24a4804c86c31378b06bf4b293d0a2e",
+    "tests/raw-postgresql/table-operation-native.py": "f1b2c7df5acbcdf1986c61dea53064bc765e53d0da2f5a92429a1fa18b3effa0"
+  },
+  "unqualified": [
+    "production host executor",
+    "durable data replay",
+    "authenticated opaque cursors",
+    "generated table methods",
+    "Psycopg2/SQLAlchemy operation composition and real-pool/fork parity",
+    "managed Lakebase",
+    "release",
+    "WASM browser execution",
+    "date/time/binary codecs",
+    "required schema evolution and seeds",
+    "private Praxis typed client conversion"
+  ]
+}

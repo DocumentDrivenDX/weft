@@ -1651,7 +1651,8 @@
             "mod:table_lifecycle",
             "mod:raw_action",
             "mod:raw_bulk",
-            "mod:search"
+            "mod:search",
+            "mod:table_operation"
           ],
           "pathReferences": []
         },
@@ -2758,6 +2759,55 @@
             "fn:obligation"
           ],
           "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/table_operation.rs",
+          "publicDeclarations": [
+            "struct:OperationRequest",
+            "field:version",
+            "field:target",
+            "field:binding",
+            "field:module",
+            "field:operation",
+            "field:call",
+            "field:idempotency_key",
+            "enum:OperationCall",
+            "struct:OperationField",
+            "field:reference",
+            "field:native",
+            "field:carrier",
+            "field:nullable",
+            "field:declaration",
+            "field:native_type",
+            "struct:AdmittedOperation",
+            "fn:native_value",
+            "fn:native_inputs",
+            "fn:native_after",
+            "fn:max_rows",
+            "fn:request",
+            "fn:declaration",
+            "fn:table",
+            "fn:field",
+            "fn:key",
+            "fn:obligations",
+            "fn:admit_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/table_operation/schema.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/table_operation/validation.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/table_operation/values.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
         }
       ]
     },
@@ -3110,7 +3160,8 @@
             "mod:raw_bulk",
             "mod:search",
             "mod:current_presence",
-            "mod:related_read"
+            "mod:related_read",
+            "mod:table_operation"
           ],
           "pathReferences": []
         },
@@ -3895,6 +3946,14 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/table_operation.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/tree.rs",
           "publicDeclarations": [
             "fn:integrity"
@@ -4222,7 +4281,9 @@
             "fn:compile_managed_action_json",
             "fn:compile_managed_bulk_json",
             "fn:compile_related_read_json",
-            "mod:engine_ordered_page"
+            "mod:engine_ordered_page",
+            "fn:compile_table_operation_json",
+            "fn:check_table_operation_json"
           ],
           "pathReferences": []
         },
@@ -4382,7 +4443,9 @@
             "fn:compile_engine_export_json",
             "fn:compile_managed_action_json",
             "fn:compile_managed_bulk_json",
-            "fn:compile_related_read_json"
+            "fn:compile_related_read_json",
+            "fn:compile_table_operation_json",
+            "fn:check_table_operation_json"
           ],
           "pathReferences": []
         }
@@ -4479,7 +4542,9 @@
             "fn:compile_unity_search_json",
             "fn:compile_managed_action_json",
             "fn:compile_managed_bulk_json",
-            "fn:compile_related_read_json"
+            "fn:compile_related_read_json",
+            "fn:compile_table_operation_json",
+            "fn:check_table_operation_json"
           ],
           "pathReferences": []
         }

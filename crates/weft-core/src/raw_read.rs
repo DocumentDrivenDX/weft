@@ -135,13 +135,16 @@ pub fn binding_record(binding:&Binding,logical_table:&[String])->Result<crate::m
 }
 
 #[derive(Debug)]
-struct AdmittedModel {
-    document: Json,
-    records: BTreeMap<Vec<String>, crate::model::Record>,
-    lifecycle:Option<crate::table_lifecycle::AdmittedLifecycle>,
+pub(crate) struct AdmittedModel {
+    pub(crate) document: Json,
+    pub(crate) records: BTreeMap<Vec<String>, crate::model::Record>,
+    pub(crate) lifecycle:Option<crate::table_lifecycle::AdmittedLifecycle>,
 }
 
 fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
+    prepare_operation_model(binding,None)
+}
+pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>) -> Result<AdmittedModel> {
     let doc = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
     if crate::json::sha256(binding.model_json.as_bytes()) != binding.model_sha256 {
         return Err("model source pin mismatch");
@@ -294,7 +297,7 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
             return Err("relationship endpoints/multiplicity differ from UMF");
         }
     }
-    let lifecycle=crate::table_lifecycle::admit(binding,&doc,&records)?;
+    let lifecycle=crate::table_lifecycle::admit(binding,&doc,&records,operation)?;
     Ok(AdmittedModel { document: doc, records, lifecycle })
 }
 

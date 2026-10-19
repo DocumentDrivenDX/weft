@@ -194,3 +194,10 @@ pub fn compile_managed_bulk_json(request:&js_sys::JsString)->Result<String,wasm_
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_related_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_related_read_json(&original))}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_table_operation_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::compile_table_operation_json(&strict_text(request,4_194_304)?))}
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn check_table_operation_json(program:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::check_table_operation_json(&strict_text(program,33_554_432)?))}

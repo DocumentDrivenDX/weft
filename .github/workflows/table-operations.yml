@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Declared table operation candidate
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  native-table-operations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432/tcp
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: DocumentDrivenDX/umf
+          ref: 6d623fc528c725de305bfe07531ef156dc8f45f4
+          path: upstream-umf
+      - uses: dtolnay/rust-toolchain@1.90.0
+      - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build the candidate compiler and exact upstream host dependencies
+        run: |
+          python -m pip install maturin==1.9.6 build==1.3.0
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out /tmp/operation-wheels
+          python -m build --wheel --outdir /tmp/operation-wheels upstream-umf/python/umf_access
+          python -m build --wheel --outdir /tmp/operation-wheels upstream-umf/python/umf_codegen
+          python -m pip install /tmp/operation-wheels/*.whl 'psycopg[binary]==3.2.13' 'pydantic==2.13.5'
+      - name: Check closed declarations, source custody and shared native bindings
+        run: |
+          cargo test --locked -p weft-postgresql --test table_operation --test table_lifecycle
+          cargo build --locked -p weft-postgresql --example compile_table_operation
+          python -I tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation /tmp/operation-bindings.json
+      - name: Native RLS, bounds, keyset, upsert and atomic rollback oracle
+        env:
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+        run: >-
+          python -I tests/raw-postgresql/table-operation-native.py
+          --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres"
+          --report /tmp/operation-native.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: declared-table-operation-candidate
+          path: |
+            /tmp/operation-bindings.json
+            /tmp/operation-native.json

@@ -2757,3 +2757,28 @@ compiler evidence and limits are recorded in
 This is an unpublished candidate. Typed operation declarations, additional native
 codecs, generated client admission, native data execution and full Praxis/release
 acceptance remain open. The independently coordinated0.4.46 cohort is not retagged.
+
+
+### Praxis declared table operation compiler — 2026-10-19
+
+The reserved0.4.48 candidate lowers exact UMF6d623fc52 declarations through the
+shared Rust core and PostgreSQL backend, exposed through native Python and WASM
+compilation APIs. Original module/source, Keys, input domains, conflict whitelists,
+read bounds, direct-effect write guards and explicit host obligations remain in
+the program. Canonical driver scalars preserve original exact tokens separately;
+per-call read size can only reduce the authored many/page bound. No invocation
+accepts SQL, chooses a principal or acquires authority from a rehashed program.
+
+[Source-bound verification](evidence/praxis-table-operations/README.md) records20
+focused tests,27 installed Python/CLI comparisons,10 tamper controls and50 native
+PostgreSQL18.6 assertions through installed public sync/async UMF sessions. All37
+sync and8 async leases exit, including repeated cancellation under a confirmed
+backend lock wait. Legacy184-test PostgreSQL regression, workspace/default/WASM
+compilation, adopted module boundaries, specs and dual-license audits are scoped
+in the receipt. Browser execution and the new hosted CI outcome are not claimed.
+
+This closes compiler and synthetic native-session composition work only. Current
+ledger/native privilege admission, generated methods, authenticated cursors,
+durable replay, remaining required codecs, migrations/seeds and private consumer
+conversion still gate full Praxis release. No0.4.48 tag/assets were published.
+The independently published0.4.47 packaging repair is integrated separately.

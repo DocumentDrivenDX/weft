@@ -327,3 +327,5 @@ pub mod search;
 pub mod current_presence;
 
 pub mod related_read;
+
+pub mod table_operation;

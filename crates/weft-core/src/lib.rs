@@ -201,3 +201,5 @@ pub mod raw_action;
 pub mod raw_bulk;
 
 pub mod search;
+
+pub mod table_operation;

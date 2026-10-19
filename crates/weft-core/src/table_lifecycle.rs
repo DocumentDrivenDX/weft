@@ -26,7 +26,7 @@ fn known_payload(value: &Value) -> bool {
         .as_ref()
         .is_some_and(|validator| validator.is_valid(value))
 }
-fn close_declared_objects(schema: &mut Value) {
+pub(crate) fn close_declared_objects(schema: &mut Value) {
     match schema {
         Value::Object(object) => {
             if object.get("type").and_then(Value::as_str) == Some("object")
@@ -103,6 +103,7 @@ pub(crate) fn admit(
     binding: &Binding,
     doc: &Value,
     records: &BTreeMap<Vec<String>, crate::model::Record>,
+    operation: Option<&str>,
 ) -> Result<Option<AdmittedLifecycle>> {
     let modules = doc["modules"].as_array().ok_or("original modules absent")?;
     let selected = records
@@ -150,7 +151,13 @@ pub(crate) fn admit(
         return Err("native table lifecycle selected vocabulary composition unsupported");
     }
     let payload = &module["extensions"]["umf.tables"];
-    if !known_payload(payload) || payload["commands"].as_array().is_none_or(|v| !v.is_empty()) {
+    let commands=payload["commands"].as_array().ok_or("native command inventory absent")?;
+    let commands_known=match operation {
+        None=>commands.is_empty(),
+        Some(id)=>commands.iter().filter(|c|c["id"]==id).count()==1
+            && commands.iter().all(crate::table_operation::known_declaration),
+    };
+    if !known_payload(payload) || !commands_known {
         return Err("native table lifecycle payload or command meaning unsupported");
     }
     let declared = payload["tables"].as_array().ok_or("native tables absent")?;
