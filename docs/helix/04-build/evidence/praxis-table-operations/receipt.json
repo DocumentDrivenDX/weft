@@ -33,7 +33,7 @@
     "licenseAudit": [
       {
         "root": "/private/tmp/umf-praxis-weft",
-        "headers": 716,
+        "headers": 717,
         "packages": [
           "crates/weft-python/pyproject.toml",
           "package.json",
@@ -59,6 +59,15 @@
       "fieldsPerRecord": 12,
       "compileSeconds": 3.5677875420078635,
       "controls": 5
+    },
+    "realChromium": {
+      "passed": true,
+      "cases": 27,
+      "tamperControls": 1,
+      "invalidUnicodeControls": 2,
+      "receipt": "browser.json",
+      "browser": "153.0.8010.12",
+      "scope": "actual shared WASM compiler and program checking only; no database authorization/execution"
     }
   },
   "toolchain": {
@@ -70,7 +79,8 @@
     "psycopg": "3.2.13",
     "pydantic": "2.13.5",
     "umfAccess": "0.1.0.dev2 local e48c0ba source wheel",
-    "umfCodegen": "0.1.0a1 local 6d623fc source wheel"
+    "umfCodegen": "0.1.0a1 local 6d623fc source wheel",
+    "wasmBindgen": "0.2.105"
   },
   "localWheel": {
     "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
@@ -80,7 +90,7 @@
     "license": "MIT OR Apache-2.0"
   },
   "sourceFiles": {
-    ".github/workflows/table-operations.yml": "79c5a694ad4c0bb77441528628282a6b6737b3a870317b6ca56c7cac6cec5aa7",
+    ".github/workflows/table-operations.yml": "5364d317806afb4984fce30c599454dffb971af376e3541f8febc3f3e1197e85",
     "crates/weft-core/src/table_operation.rs": "2920c173c7eb9a807b5dba89cf6e95c18c058d3ca4a5a305e3ff523dbc454168",
     "crates/weft-core/src/table_operation/schema.rs": "adef1f2ae816fb2ce7a2f4f0023e931c9d5500e73c15132f0af18be5a9659f76",
     "crates/weft-core/src/table_operation/validation.rs": "d84a5941e19fe61244d2b827ef4ff18155fd1769967624cf074a446711df3bb6",
@@ -88,9 +98,10 @@
     "crates/weft-postgresql/src/table_operation.rs": "b77423e009d15af6ac8a13fc8edba70602575c31c6304b8df661abce4874bc03",
     "crates/weft-postgresql/tests/table_operation.rs": "cfd19335d2418585af69c2b0a2d3114bf170f839edca484ce2b860a2808dfe23",
     "spec/upstream/umf-table-operation-0.1.schema.json": "e37f5f00f44a5252e56f74a8c12aeb4fccf5ef827811584f3a5d2e2b1e30a2e0",
-    "tests/raw-postgresql/table-operation-bindings.py": "29507e6bc1dc7ecce0b6dd8bd4f091089b42b0f0d76efe5f2efe7f322dce5f15",
+    "tests/raw-postgresql/table-operation-bindings.py": "3417d2201998c7135dc2a3543240ac01ae0cd48b7efa206d6a14a35a0454ec85",
     "tests/raw-postgresql/table-operation-model.json": "8c515220a071fd5797d4e711ebb3a9b4c24a4804c86c31378b06bf4b293d0a2e",
-    "tests/raw-postgresql/table-operation-native.py": "f1b2c7df5acbcdf1986c61dea53064bc765e53d0da2f5a92429a1fa18b3effa0"
+    "tests/raw-postgresql/table-operation-native.py": "f1b2c7df5acbcdf1986c61dea53064bc765e53d0da2f5a92429a1fa18b3effa0",
+    "tests/raw-postgresql/table-operation-browser.mjs": "743ff751adbf306ad02eaa26b9310170d4fcc9e12a9f30135910772a882be7ff"
   },
   "unqualified": [
     "production host executor",
@@ -100,7 +111,6 @@
     "Psycopg2/SQLAlchemy operation composition and real-pool/fork parity",
     "managed Lakebase",
     "release",
-    "WASM browser execution",
     "date/time/binary codecs",
     "required schema evolution and seeds",
     "private Praxis typed client conversion"
@@ -112,5 +122,6 @@
     "postRebaseFeatureRevision": "00636091ad30261169422b59985ca0c5a036bd94",
     "runtimeDiff": "none between pre/post rebase; five release/capacity fixture files only",
     "requalification": "focused tests and rebuilt installed wheel/native parity; current-core capacity smoke"
-  }
+  },
+  "browserCompilerQualified": true
 }

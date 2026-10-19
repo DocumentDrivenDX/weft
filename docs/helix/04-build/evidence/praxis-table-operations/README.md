@@ -62,4 +62,17 @@ including caller savepoints and repeated cancellation during a confirmed row-loc
 wait. Psycopg2/SQLAlchemy composition, real pools and production execution remain
 unqualified. The final compiler passes10 operation plus10 custody tests,27
 installed CLI/Python comparisons and10 self-rehashed controls. `nativeExecutionQualified`
-remains false. No tag or release asset was published for this candidate.
+remains false. Real Chromium153.0.8010.12 now agrees with installed native compilation on all27
+cases, checks compiled programs and rejects one modified program and two invalid
+Unicode transports. The [browser receipt](browser.json) pins actual WASM/JS
+bytes built with wasm-bindgen0.2.105; no host network IO occurs during compilation.
+This qualifies the shared browser compiler only. No tag or release asset was
+published for this candidate.
+
+Browser reproduction additionally uses Rust's wasm32 target, wasm-bindgen-cli
+0.2.105 and Playwright1.62.1 with Chromium. Pass a fourth output argument to the
+Python parity script for its exact request/native-result corpus, build
+`weft-wasm` with `raw-postgresql-reads`, and generate web bindings with the
+matching CLI. Run `table-operation-browser.mjs` with corpus, binding-directory
+and report paths. `WEFT_PLAYWRIGHT_MODULE` selects the installed pinned module.
+The CI workflow records these concrete commands and retains the browser report.

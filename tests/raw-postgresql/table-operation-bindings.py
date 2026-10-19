@@ -47,6 +47,7 @@ for path in [[],['body'],['body','values',0],['parameters',0]]:
     for part in path:selected=selected[part]
     selected['future']=True;text=encode(model);invalid['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest());cases.append(('unknown-member-'+str(path),invalid,'blocked'))
 results=[]
+browser_cases=[]
 for name,value,status in cases:
     raw=encode(value)
     native=json.loads(subprocess.run([str(Path(sys.argv[1]).resolve(strict=True))],input=raw,text=True,capture_output=True,check=True,timeout=60).stdout)
@@ -58,6 +59,7 @@ for name,value,status in cases:
         assert python['obligations']['nativeExecutionQualified'] is False
         assert json.loads(weft.check_table_operation_json(encode(python)))['status']=='checked'
     results.append({'name':name,'status':status,'nativePythonEqual':True})
+    browser_cases.append({'name':name,'request':raw,'expected':python})
 program=json.loads(weft.compile_table_operation_json(encode(request('rename'))))
 controls=0
 for field in ['sql','dbapiSql','module','operation','parameterSources','outputs','result','obligations','nativeInputs','nativeAfter']:
@@ -65,6 +67,7 @@ for field in ['sql','dbapiSql','module','operation','parameterSources','outputs'
     changed['structuralDigest']=hashlib.sha256(json.dumps(changed,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
     assert json.loads(weft.check_table_operation_json(encode(changed)))['status']=='blocked',field
     controls+=1
+if len(sys.argv)>3:Path(sys.argv[3]).write_text(json.dumps(browser_cases,ensure_ascii=False,separators=(',',':'))+'\n')
 report={'cases':results,'selfRehashedProgramControls':controls,'nativeExecutionQualified':False,'browserExecutionQualified':False}
 Path(sys.argv[2]).write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'parityCases':len(results),'selfRehashedControls':controls}))

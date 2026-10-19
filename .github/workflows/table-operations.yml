@@ -26,7 +26,12 @@ jobs:
           ref: 6d623fc528c725de305bfe07531ef156dc8f45f4
           path: upstream-umf
       - uses: dtolnay/rust-toolchain@1.90.0
+        with:
+          targets: wasm32-unknown-unknown
       - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -41,7 +46,7 @@ jobs:
         run: |
           cargo test --locked -p weft-postgresql --test table_operation --test table_lifecycle
           cargo build --locked -p weft-postgresql --example compile_table_operation
-          python -I tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation /tmp/operation-bindings.json
+          python -I tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation /tmp/operation-bindings.json /tmp/operation-browser-cases.json
       - name: Native RLS, bounds, keyset, upsert and atomic rollback oracle
         env:
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
@@ -49,6 +54,14 @@ jobs:
           python -I tests/raw-postgresql/table-operation-native.py
           --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres"
           --report /tmp/operation-native.json
+      - name: Real Chromium shared native and WASM compiler parity
+        run: |
+          cargo build --locked -p weft-wasm --target wasm32-unknown-unknown --features raw-postgresql-reads
+          cargo install wasm-bindgen-cli --version 0.2.105 --locked --root /tmp/operation-wasm-tools
+          /tmp/operation-wasm-tools/bin/wasm-bindgen --target web --out-dir /tmp/operation-web target/wasm32-unknown-unknown/debug/weft_wasm.wasm
+          npm install --prefix /tmp/operation-browser --ignore-scripts --no-package-lock playwright@1.62.1
+          node /tmp/operation-browser/node_modules/playwright/cli.js install --with-deps chromium
+          WEFT_PLAYWRIGHT_MODULE=/tmp/operation-browser/node_modules/playwright/index.mjs node tests/raw-postgresql/table-operation-browser.mjs /tmp/operation-browser-cases.json /tmp/operation-web /tmp/operation-browser.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -56,3 +69,4 @@ jobs:
           path: |
             /tmp/operation-bindings.json
             /tmp/operation-native.json
+            /tmp/operation-browser.json

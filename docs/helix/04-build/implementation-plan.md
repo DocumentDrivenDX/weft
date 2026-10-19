@@ -2782,3 +2782,15 @@ ledger/native privilege admission, generated methods, authenticated cursors,
 durable replay, remaining required codecs, migrations/seeds and private consumer
 conversion still gate full Praxis release. No0.4.48 tag/assets were published.
 The independently published0.4.47 packaging repair is integrated separately.
+
+
+### Praxis shared compiler real-browser qualification — 2026-10-19
+
+The operation candidate now has actual Chromium153.0.8010.12 evidence: all27
+original request/result pairs agree with installed native compilation, compiled
+programs verify, and one altered program plus two invalid Unicode transports
+refuse. Rust1.90.0/wasm-bindgen0.2.105 build the actual shared core; browser IO is
+disabled after module loading. The [browser receipt](evidence/praxis-table-operations/browser.json)
+pins WASM/JS bytes, and the candidate CI now reproduces the browser comparison.
+This supersedes the earlier compilation-only browser status for this compiler
+subset, without granting native execution authority or closing Praxis release.
