@@ -1,7 +1,9 @@
 # Declared table operation compiler candidate
 
 Unpublished Weft0.4.48 successor on `codex/praxis-lifecycle-048`. The separately
-coordinated0.4.47 release repair remains independent. Original UMF6d623fc52 supplies
+coordinated0.4.47 release repair is published and integrated at12051af8.
+Rebasing preserves every compiler/runtime source byte; only release documentation
+and current-core capacity fixtures differ from the verified pre-rebase tree. Original UMF6d623fc52 supplies
 the pinned `umf.table-operation/0.1` declaration schema; full core0.10 source
 bytes and native mappings remain preserved. All fixtures are public synthetic
 examples, with no private Praxis names, source, SQL or data copied.

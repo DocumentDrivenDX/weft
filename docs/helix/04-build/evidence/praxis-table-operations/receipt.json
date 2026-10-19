@@ -51,7 +51,15 @@
         ]
       }
     ],
-    "hostedCandidate": "pending push/run"
+    "hostedCandidate": "pending push/run",
+    "currentCoreCapacitySmoke": {
+      "status": "passed",
+      "compiler": "0.4.48",
+      "records": 1000,
+      "fieldsPerRecord": 12,
+      "compileSeconds": 3.5677875420078635,
+      "controls": 5
+    }
   },
   "toolchain": {
     "rust": "1.90.0",
@@ -66,7 +74,7 @@
   },
   "localWheel": {
     "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
-    "sha256": "2110754f1b166603f848f819cee0a3d7197f9fa16a4fd573baf21ec8c118afd8",
+    "sha256": "1afe1000520b0f86d1c9224d82bdfd567feccd09f62bec27d133741039c5cc23",
     "published": false,
     "profile": "dev",
     "license": "MIT OR Apache-2.0"
@@ -96,5 +104,13 @@
     "date/time/binary codecs",
     "required schema evolution and seeds",
     "private Praxis typed client conversion"
-  ]
+  ],
+  "integration": {
+    "upstreamRelease": "0.4.47",
+    "upstreamRevision": "12051af87cd9f910f880f21fe6b95a507e2fcb94",
+    "preRebaseFeatureRevision": "36b1e7fc",
+    "postRebaseFeatureRevision": "00636091ad30261169422b59985ca0c5a036bd94",
+    "runtimeDiff": "none between pre/post rebase; five release/capacity fixture files only",
+    "requalification": "focused tests and rebuilt installed wheel/native parity; current-core capacity smoke"
+  }
 }
