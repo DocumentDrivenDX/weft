@@ -5,6 +5,7 @@ No native SQL execution or profile promotion.
 """
 import hashlib,json,sys
 from pathlib import Path
+from licensed_source import source_custody
 from evidence_audit import strict
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-warehouse-compound-native'
@@ -13,7 +14,7 @@ from warehouse_capture import capture
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 custody=strict((BASE/'custody.json').read_text())
 for name,digest in custody['inputHashes'].items():assert sha(BASE/name)==digest,name
-assert sha(BASE/'warehouse_capture.py')==sha(ROOT/'tests/ashlar-databricks/warehouse_capture.py')
+source_receipt=source_custody(ROOT/'tests/ashlar-databricks/warehouse_capture.py',sha(BASE/'warehouse_capture.py'))
 summary=strict((BASE/'summary.json').read_text());assert summary['state']=='passed' and summary['cases']==48
 assert sha(BASE/'compound-application-native.py')==summary['harnessSha256']
 assert sha(BASE/'compound-native.py')==summary['builderSha256']
@@ -85,4 +86,4 @@ for identifier,a in artifacts.items():
   assert guard['sql']==check['sql'] and guard['parameters']==params and observed==[['0']]
   checks+=1
 assert used==set(receipts) and same_statement==empty_probes==24 and checks==192
-print(json.dumps(dict(status='passed',cases=48,independentDecodedComparisons=48,integrityStatements=checks,terminalStatements=len(receipts),sameStatementWarehouseCases=24,separateEmptyPageProbes=24,warehouseIdentity=warehouse,scope='Independent nested sequence, structured/recursive/map, exact integer and optional absent expectations with full page exhaustion across props/native ID homes. Empty pages use separate probes. No fresh execution, host DB execution or candidate promotion.'),indent=2))
+print(json.dumps(dict(status='passed',sourceCustody=source_receipt,cases=48,independentDecodedComparisons=48,integrityStatements=checks,terminalStatements=len(receipts),sameStatementWarehouseCases=24,separateEmptyPageProbes=24,warehouseIdentity=warehouse,scope='Independent nested sequence, structured/recursive/map, exact integer and optional absent expectations with full page exhaustion across props/native ID homes. Empty pages use separate probes. No fresh execution, host DB execution or candidate promotion.'),indent=2))

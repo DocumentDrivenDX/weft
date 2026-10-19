@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC1: reject corruption in saved unsigned boundary evidence."""
 import copy,hashlib,json,os,pathlib,subprocess,sys,tempfile
+from retained_output import replay_output
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-007-unsigned-boundaries-native'
 artifacts=[json.loads(l) for l in (BASE/'compile-artifacts.jsonl').read_text().splitlines()]
@@ -34,6 +35,6 @@ with tempfile.TemporaryDirectory(prefix='weft-unsigned-controls-') as temp:
   else:assert run.returncode!=0 and 'AssertionError' in run.stderr,(name,run.stdout,run.stderr)
   reports.append({'control':name,'exitCode':run.returncode,'expectedOutcome':'accepted' if name=='baseline' else 'refused'})
 report={'status':'passed','controls':reports,'sourceSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'scope':'Baseline plus 14 temporary evidence corruptions; no native database execution.'}
-OUT=ROOT/'docs/helix/04-build/evidence/B-007-unsigned-reconciliation'
+OUT=replay_output(ROOT/'docs/helix/04-build/evidence/B-007-unsigned-reconciliation');OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'controls.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'status':'passed','controls':len(reports)}))

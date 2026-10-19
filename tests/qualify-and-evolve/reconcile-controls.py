@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """@covers US-006-AC1: reject corrupted saved-native receipt inputs."""
 import copy,json,os,pathlib,subprocess,tempfile,sys
+from retained_output import replay_output
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-006-application-native'
 artifacts=[json.loads(x) for x in (BASE/'compile-artifacts.jsonl').read_text().splitlines()]
@@ -33,6 +34,6 @@ with tempfile.TemporaryDirectory(prefix='weft-receipt-controls-') as temp:
   if name=='baseline':assert run.returncode==0,run.stderr
   else:assert run.returncode!=0 and ('AssertionError' in run.stderr or 'KeyError' in run.stderr),(name,run.stdout,run.stderr)
   reports.append({'control':name,'exitCode':run.returncode,'expectedOutcome':'accepted' if name=='baseline' else 'refused'})
-OUT=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-application-reconciliation'
+OUT=replay_output(ROOT/'docs/helix/04-build/evidence/B-007-ashlar-application-reconciliation');OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'controls.json').write_text(json.dumps({'status':'passed','controls':reports,'scope':'Verifier corruption controls; not native execution.'},indent=2)+'\n')
 print(json.dumps({'status':'passed','controls':len(reports)}))

@@ -5,6 +5,7 @@ No fresh SQL execution, candidate promotion or production qualification.
 """
 import hashlib,json,sys
 from pathlib import Path
+from licensed_source import source_custody
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native'
 sys.path.insert(0,str(ROOT/'tests/ashlar-databricks'))
@@ -13,7 +14,7 @@ from evidence_audit import strict
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 custody=strict((BASE/'custody.json').read_text())
 for name,digest in custody['inputHashes'].items():assert sha(BASE/name)==digest,name
-assert sha(BASE/'warehouse_capture.py')==sha(ROOT/'tests/ashlar-databricks/warehouse_capture.py')
+source_receipt=source_custody(ROOT/'tests/ashlar-databricks/warehouse_capture.py',sha(BASE/'warehouse_capture.py'))
 summary=strict((BASE/'summary.json').read_text())
 assert summary['state']=='passed' and summary['cases']==summary['warehouseApplicationCases']==112
 assert sha(BASE/'application-native.py')==summary['harnessSha256']
@@ -98,4 +99,4 @@ for identifier,artifact in artifacts.items():
    assert guard['sql']==check['sql'] and guard['parameters']==parameters and observed==[['0']]
    checks+=1
 assert used==set(statements) and same_statement==96 and separate_probe==16
-print(json.dumps(dict(status='passed',cases=112,independentRowComparisons=112,sameStatementWarehouseCases=same_statement,separateEmptyQueryProbes=separate_probe,integrityStatements=checks,terminalStatements=len(statements),warehouseIdentity=warehouse,scope='Independent COUNT bags/group order and full single/composite keyset page sequences across four typed/props homes and signed8/64. Empty pages have separately labeled warehouse probes; no same-statement identity claim for them, no fresh execution, host DB execution or candidate promotion.'),indent=2))
+print(json.dumps(dict(status='passed',sourceCustody=source_receipt,cases=112,independentRowComparisons=112,sameStatementWarehouseCases=same_statement,separateEmptyQueryProbes=separate_probe,integrityStatements=checks,terminalStatements=len(statements),warehouseIdentity=warehouse,scope='Independent COUNT bags/group order and full single/composite keyset page sequences across four typed/props homes and signed8/64. Empty pages have separately labeled warehouse probes; no same-statement identity claim for them, no fresh execution, host DB execution or candidate promotion.'),indent=2))

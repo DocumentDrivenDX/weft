@@ -4,6 +4,7 @@
 """
 import hashlib,json,re,sys
 from pathlib import Path
+from licensed_source import source_custody
 from collections import Counter
 from evidence_audit import strict
 ROOT=Path(__file__).resolve().parents[2]
@@ -13,7 +14,7 @@ from warehouse_capture import capture
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 custody=strict((BASE/'custody.json').read_text())
 for name,digest in custody['inputHashes'].items():assert sha(BASE/name)==digest,name
-assert sha(BASE/'warehouse_capture.py')==sha(ROOT/'tests/ashlar-databricks/warehouse_capture.py')
+source_receipt=source_custody(ROOT/'tests/ashlar-databricks/warehouse_capture.py',sha(BASE/'warehouse_capture.py'))
 summary=strict((BASE/'summary.json').read_text());assert summary['state']=='passed' and summary['cases']==52
 assert sha(BASE/'relationship-native.py')==summary['harnessSha256']
 warehouse=summary['warehouseIdentity']
@@ -106,4 +107,4 @@ assert set(identities)==same|probes and len(same)==296 and len(probes)==4
 setup=set(receipts)-used
 assert setup=={'identity-node_type_a','identity-edge_current','identity-edge_ab','identity-publication_manifest','resolve-fixture-vector'}
 for label in setup:assert native_rows(label)
-print(json.dumps(dict(status='passed',cases=52,positive=positive,refusals=refused,uniqueNativeGuards=len(guards),sameStatementWarehouseResults=len(same),separateEmptyQueryProbes=len(probes),warehouseIdentity=warehouse,terminalStatements=len(receipts),scope='Independent forward/inverse duplicate bags, bound lookahead, composite-key EXISTS and pre-query integrity refusals across canonical/serving edges and props/typed homes. Empty EXISTS uses separate probes. No fresh SQL execution, host DB execution or candidate promotion.'),indent=2))
+print(json.dumps(dict(status='passed',sourceCustody=source_receipt,cases=52,positive=positive,refusals=refused,uniqueNativeGuards=len(guards),sameStatementWarehouseResults=len(same),separateEmptyQueryProbes=len(probes),warehouseIdentity=warehouse,terminalStatements=len(receipts),scope='Independent forward/inverse duplicate bags, bound lookahead, composite-key EXISTS and pre-query integrity refusals across canonical/serving edges and props/typed homes. Empty EXISTS uses separate probes. No fresh SQL execution, host DB execution or candidate promotion.'),indent=2))

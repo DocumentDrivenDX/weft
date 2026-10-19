@@ -4,6 +4,7 @@ Reconcile saved accepted native receipts and independently authored compound val
 """
 import hashlib,json
 from pathlib import Path
+from retained_output import replay_output
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-006-compound-application-native'
 def unique(items,key):
@@ -50,7 +51,7 @@ for identifier,a in artifacts.items():
   assert guard['sql']==c['sql'] and guard['parameters']==params and rows(guard)==[['0']];checks+=1
  report.append({'id':identifier,'statementId':query['response']['statement_id'],'expected':outcomes[identifier]['expected']})
 assert used==set(statements)
-OUT=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-compound-page-reconciliation';OUT.mkdir(exist_ok=True)
+OUT=replay_output(ROOT/'docs/helix/04-build/evidence/B-007-ashlar-compound-page-reconciliation');OUT.mkdir(exist_ok=True)
 r={'status':'passed','cases':48,'integrityReceipts':checks,'acceptedReceipts':len(used),'reconcilerSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'sources':[{'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in [BASE/'summary.json',BASE/'compile-artifacts.jsonl',accepted,BASE/'custody.json',ROOT/'tests/ashlar-databricks/compound-application-native.py']],'scope':'Saved accepted native receipts; strict decoded expected-value comparison. Not a fresh native execution or production profile.','casesReconciled':report}
 (OUT/'summary.json').write_text(json.dumps(r,indent=2,ensure_ascii=False)+'\n')
 print(json.dumps({'status':'passed','cases':48,'integrityReceipts':checks,'acceptedReceipts':len(used)}))

@@ -64,3 +64,17 @@ movement. Normal and optimized configuration suites each pass16 tests.
 [Actual optimized source replay](resource-mutations.json) passes all7 original
 mutants with clean baselines and retained original/mutant digests. It does not
 claim diagnostics-export or complete hosted conformance qualification.
+
+Run39266505188 passed the repaired mutation gate and subsequent compiler gates,
+then refused historical source hashes whose only change was the leading SPDX
+annotation. The successor audit proves exact historical body bytes after exactly
+one matching leading license comment, records both hashes and refuses all other
+changes. Artifact hashes remain exact; JSON/binary receipts cannot use that
+source adjustment. Saved native evidence and support assessments are unchanged.
+
+Replay also exposed reconciliation scripts rewriting archived summary outputs.
+The retained orchestrator now redirects those products into a temporary tree;
+explicit external control destinations retain their ownership. The full
+[successor retained replay](licensed-retained-replay.json) passes45 components
+and136 evidence references with no archived inputs changed. This is a custody
+and replay correction, not fresh database execution or full release qualification.
