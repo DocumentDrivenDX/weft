@@ -358,3 +358,14 @@ ordering, including fields omitted from the result, without sorting scalar text
 coercions or exposing the hidden values. Count participates in the same guard.
 The SDK additionally checks cardinality, exact carriers and serialized wire size;
 this compiler guard alone grants no execution or principal authority.
+
+Mutation results additionally carry `nativeWriteFrameGuard` with profile
+`pg18-write-frame/0.1`, the same8388608-byte uncompressed-value limit,
+SQLSTATE22012, `includesLookahead:false` and `partialFrames:false`. The existing
+materialized effect-count guard also sums returning value octets and the effect
+marker. An oversized RETURNING frame fails the native statement, rolling back
+its effects. Empty business projections retain only the effect marker for host
+counting; hosts return no invented empty business rows. Atomic batch execution
+also checks its cumulative serialized wire budget before commit. Durable outcome
+storage, authentication and recovery remain host/SDK obligations, not permissions
+conferred by this compiler program.

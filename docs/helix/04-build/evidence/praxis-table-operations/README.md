@@ -98,3 +98,20 @@ legacy184-test evidence remains predecessor evidence. UMF independently verifies
 its per-call native reader, scoped cursors and compressed-frame refusal. No
 compiler result authenticates a principal or admits durable writes, and no0.4.48
 release has been published.
+
+## Atomic mutation-returning frames — 2026-10-19
+
+The [mutation-frame receipt](mutation-frames/receipt.json) pins the next compiler
+bytes and local wheel. `pg18-write-frame/0.1` measures uncompressed RETURNING
+octets and the effect marker inside the existing materialized effect-count
+guard. Oversize causes SQLSTATE22012 and native statement rollback, with no
+partial frame or write clipping. The host additionally bounds the cumulative
+batch wire frame and owns atomic authenticated outcome storage.
+
+Twenty-two focused tests,27 native/Python and Chromium comparisons,10 altered
+program controls,50 native PG18.6 assertions,11-package boundary checks,
+workspace/all-target/specification and dual-license checks pass. This extends
+the dedicated operation compiler only. Native admission, effect-only durable
+recovery and sync/async driver behavior have separate UMF SDK qualification.
+Generated lifecycle clients, remaining lifecycle/codec/consumer acceptance and
+publication still gate the complete Praxis release.

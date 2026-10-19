@@ -1,0 +1,42 @@
+{
+  "capturedAt": "2026-10-19T22:20:20.018086+00:00",
+  "scope": "unpublished0.4.48 pg18-write-frame/0.1 guard; compiler is not a native authority issuer",
+  "parent": "ff1695675b05c98c0ae56d7cdd675b82426f65b2",
+  "sourceFiles": {
+    "crates/weft-postgresql/src/table_operation.rs": "7f394c2f08afa01c82dfab735a83270c97352f59de94c4c4da371f8fec1e3649",
+    "crates/weft-postgresql/tests/table_operation.rs": "022f354cf2b45a4d9fa9675127ddaf5aa59cf3177f0290cf80d4c1f6f1cac6fc",
+    "tests/raw-postgresql/table-operation-bindings.py": "3417d2201998c7135dc2a3543240ac01ae0cd48b7efa206d6a14a35a0454ec85",
+    "tests/raw-postgresql/table-operation-browser.mjs": "743ff751adbf306ad02eaa26b9310170d4fcc9e12a9f30135910772a882be7ff",
+    "tests/raw-postgresql/table-operation-native.py": "f1b2c7df5acbcdf1986c61dea53064bc765e53d0da2f5a92429a1fa18b3effa0"
+  },
+  "wheel": {
+    "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "ec97ab83961b254ed21e3a5a755c14b5f3b3acd21057830c3008753989e578e9"
+  },
+  "checks": {
+    "focusedRustTests": 22,
+    "installedPythonCliComparisons": 27,
+    "selfRehashedControls": 10,
+    "nativePostgresqlAssertions": 50,
+    "actualChromiumComparisons": 27,
+    "browserTamperControls": 1,
+    "browserUnicodeControls": 2,
+    "workspaceAllTargets": "pass",
+    "moduleBoundaryPackages": 11,
+    "governedSpecs": "pass",
+    "license": "MIT OR Apache-2.0"
+  },
+  "tools": {
+    "rust": "1.90.0",
+    "maturin": "1.9.6",
+    "wasmBindgen": "0.2.105",
+    "playwright": "1.62.1",
+    "chromium": "153.0.8010.12",
+    "postgresql": "18.6"
+  },
+  "remaining": [
+    "SDK/generated client and full private consumer acceptance",
+    "remaining codecs, seeds and migration evolution",
+    "immutable prerelease publication"
+  ]
+}

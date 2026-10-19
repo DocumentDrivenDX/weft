@@ -1,0 +1,21 @@
+[
+  {
+    "root": "/private/tmp/umf-praxis-weft",
+    "headers": 717,
+    "packages": [
+      "crates/weft-python/pyproject.toml",
+      "package.json",
+      "packages/weft-browser/package.json"
+    ]
+  },
+  {
+    "wheel": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "license": "MIT OR Apache-2.0",
+    "licenseFiles": [
+      "LICENSE.md",
+      "LICENSE-MIT",
+      "LICENSE-APACHE",
+      "THIRD-PARTY-LICENSES.txt"
+    ]
+  }
+]

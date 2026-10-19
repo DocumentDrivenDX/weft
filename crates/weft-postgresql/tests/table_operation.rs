@@ -425,3 +425,32 @@ fn read_frames_bound_uncompressed_bytes_and_preserve_unprojected_order() {
     assert!(sql.ends_with("ORDER BY r.\"umf_sort_0\" ASC"));
     assert!(compile(request("create"))["result"]["nativeReadGuard"].is_null());
 }
+
+#[test]
+fn mutation_frames_bound_returning_octets_and_effects_atomically() {
+    for id in [
+        "create",
+        "rename",
+        "remove",
+        "put_ignore",
+        "put_update",
+        "create_batch",
+    ] {
+        let p = compile(request(id));
+        assert_eq!(p["status"], "compiled", "{p}");
+        assert_eq!(
+            p["result"]["nativeWriteFrameGuard"],
+            json!({
+                "profile":"pg18-write-frame/0.1","maxNativeBytes":8388608,
+                "sqlstate":"22012","includesLookahead":false,"partialFrames":false
+            })
+        );
+        let sql = p["sql"].as_str().unwrap();
+        assert!(sql.contains("AND COALESCE(pg_catalog.sum("));
+        assert!(sql.contains("pg_catalog.octet_length("));
+        assert!(sql.contains("<= 8388608"));
+        assert!(!sql.contains("pg_column_size"));
+        assert!(!sql.contains(" LIMIT "));
+    }
+    assert!(compile(request("read_many"))["result"]["nativeWriteFrameGuard"].is_null());
+}

@@ -322,7 +322,21 @@ fn compile(raw: &str) -> Result<Value> {
             .collect::<Vec<_>>();
         format!("WITH umf_read AS MATERIALIZED ({sql}), umf_frame AS MATERIALIZED (SELECT CASE WHEN COALESCE(pg_catalog.sum({}),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_read AS r) SELECT {} FROM umf_frame AS b CROSS JOIN umf_read AS r WHERE b.ok=1{}",sizes.join(" + "),visible.join(", "),if frame_order.is_empty(){String::new()}else{format!(" ORDER BY {}",frame_order.join(", "))})
     } else {
-        format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) <= {} THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_effects) SELECT e.* FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok = 1",operation.max_rows())
+        let mut sizes = outputs
+            .iter()
+            .map(|output| {
+                Ok(format!(
+                    "COALESCE(pg_catalog.octet_length(e.{}::pg_catalog.text)::pg_catalog.int8,0)",
+                    q(output["name"]
+                        .as_str()
+                        .ok_or("write output identity absent")?)?
+                ))
+            })
+            .collect::<Result<Vec<_>>>()?;
+        sizes.push(
+            "pg_catalog.octet_length(e.umf_affected::pg_catalog.text)::pg_catalog.int8".into(),
+        );
+        format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) <= {} AND COALESCE(pg_catalog.sum({}),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.* FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok = 1",operation.max_rows(),sizes.join(" + "))
     };
     let batch = matches!(request.call, OperationCall::Batch { .. });
     let mut program = json!({"version":"weft.table-operation/0.1","status":"compiled","target":request.target,
@@ -331,7 +345,7 @@ fn compile(raw: &str) -> Result<Value> {
   "nativeInputs":operation.native_inputs()?,"nativeAfter":operation.native_after()?,
   "declarationDigest":weft_core::json::sha256(weft_core::mutation::canonical(operation.declaration()).as_bytes()),
   "sql":sql,"transport":{"profile":"dbapi-percent/0.1","bindEmptyParameterTuple":true},"parameterOrder":lower.slots.iter().map(|s|s["id"].clone()).collect::<Vec<_>>(),"parameterSources":lower.slots,"outputs":outputs,
-  "result":{"kind":if read{body["result"].clone()}else{json!("mutation")},"maxRows":operation.max_rows(),"declaredMaxRows":body["maxRows"],"countScope":"direct-target-rows","referentialActions":"source-declared-native-FK-actions-not-counted-by-this-bound","affectedMarker":if read{Value::Null}else{json!("umf_affected")},"nativeReadGuard":if read{json!({"profile":"pg18-read-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":true,"partialFrames":false})}else{Value::Null},"nativeBoundGuard":if read{Value::Null}else{json!({"profile":"pg18-effect-count/0.1","sqlstate":"22012","excessEffects":"statement-error-and-transaction-rollback","writeLimitClipping":false})},"lookahead":read&&body["result"]!="count","cursor":cursor},
+  "result":{"kind":if read{body["result"].clone()}else{json!("mutation")},"maxRows":operation.max_rows(),"declaredMaxRows":body["maxRows"],"countScope":"direct-target-rows","referentialActions":"source-declared-native-FK-actions-not-counted-by-this-bound","affectedMarker":if read{Value::Null}else{json!("umf_affected")},"nativeReadGuard":if read{json!({"profile":"pg18-read-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":true,"partialFrames":false})}else{Value::Null},"nativeWriteFrameGuard":if read{Value::Null}else{json!({"profile":"pg18-write-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":false,"partialFrames":false})},"nativeBoundGuard":if read{Value::Null}else{json!({"profile":"pg18-effect-count/0.1","sqlstate":"22012","excessEffects":"statement-error-and-transaction-rollback","writeLimitClipping":false})},"lookahead":read&&body["result"]!="count","cursor":cursor},
   "obligations":{"tableLifecycle":operation.obligations(),"nativeExecutionQualified":false,
    "nativeFunctionAndOperatorClosure":"required-before-execution","consistency":operation.declaration()["consistency"],
    "transaction":{"batch":batch,"atomic":"entire-invocation","commitResponsibility":"host-caller-contract","onBoundExceeded":"rollback-entire-operation-or-batch","writeLimitClipping":false},

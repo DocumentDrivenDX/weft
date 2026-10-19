@@ -2808,3 +2808,16 @@ checks and dual-license audits. The UMF reader owns source-approved live
 admission, transaction/session/cursor behavior and final wire bounds. Durable
 writes, generated lifecycle methods and all remaining full Praxis release gates
 remain open; the reserved0.4.48 cohort is still unpublished.
+
+### Atomic bounded mutation results — 2026-10-19
+
+`pg18-write-frame/0.1` adds an8MiB uncompressed RETURNING bound to the native
+effect-count guard. SQLSTATE22012 rolls back excess effects or bytes inside the
+statement. Empty projections retain only the private affected marker; SDKs must
+not invent business rows from it. The
+[source-bound verification](evidence/praxis-table-operations/mutation-frames/receipt.json)
+records22 focused tests,27 Python/CLI/Chromium comparisons,10 tamper controls,
+50 PG18.6 assertions and workspace/module/spec/license checks. UMF owns live
+source/current-role admission, transaction execution and authenticated outcome
+recovery. No generic native authority flag is promoted, and no0.4.48 artifact is
+published before the remaining full Praxis gates close.
