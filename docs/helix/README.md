@@ -1,5 +1,10 @@
 # Weft specification index
 
+The unpublished [Praxis DBAPI transport candidate](04-build/evidence/praxis-dbapi/README.md)
+adds compiler-owned positional transport to raw PostgreSQL reads and related
+composition. Scoped local native/generated-client evidence passes; full lifecycle
+and release qualification remain open.
+
 Python 0.4.36 is published with explicit Truss backend0.4.39 support for
 fixed decimal(12,2) and original stable Record/Field IDs when names are absent.
 Authored names take precedence; old backend registrations retain their refusals.

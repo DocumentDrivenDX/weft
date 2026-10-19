@@ -534,7 +534,7 @@ mod tests {
             let compiled=match case["compilerApi"].as_str().unwrap(){"compile_search_json"=>compile_json(raw),"compile_raw_read_json"=>crate::raw_read::compile_json(raw),_=>panic!("unknown captured owner API")};
             let p:Json=serde_json::from_str(&compiled).unwrap();assert_eq!(p["status"],"compiled","{}: {p}",case["declaration"]);
             assert!(p["obligations"].get("nativeCatalogFence").is_some());assert!(p["version"].as_str().unwrap().ends_with("/0.2"));
-            if case["baselineStatus"]=="blocked"{assert_eq!(case["declaration"],"any_terms");red+=1;}else{assert_eq!(weft_core::json::sha256(compiled.as_bytes()),case["baselineProgramSha256"],"unrelated actual program changed: {}",case["declaration"]);}
+            if case["baselineStatus"]=="blocked"{assert_eq!(case["declaration"],"any_terms");red+=1;}else{assert_eq!(weft_core::json::sha256(compiled.as_bytes()),case["dbapiProgramSha256"],"DBAPI successor program changed: {}",case["declaration"]);}
         }
         assert_eq!(red,1);
     }
