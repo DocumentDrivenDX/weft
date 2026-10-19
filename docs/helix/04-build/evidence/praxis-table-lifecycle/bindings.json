@@ -49,6 +49,46 @@
       "name": "uninterpreted-command",
       "status": "blocked",
       "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-tables/0",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-tables/0/record",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-tables/0/columns/0",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-tables/0/columns/0/nativeType",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-tables/0/policy",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-tables/0/policy/person",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-selected-member-tables/0/policy/person/select",
+      "status": "blocked",
+      "nativePythonEqual": true
     }
   ],
   "nativeExecutionQualified": false,

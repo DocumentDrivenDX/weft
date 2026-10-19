@@ -7,8 +7,46 @@ use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
 type Result<T> = std::result::Result<T, &'static str>;
 
-#[jsonschema::validator(path = "../../spec/upstream/umf-tables-0.1.0.schema.json")]
-struct TablePayload;
+// UMF's preservation schema permits unknown object members. Selected compiler
+// interpretation is narrower: close only declared object shapes in a private
+// schema copy. Never alter the original source or its pinned upstream schema;
+// explicit additionalProperties schemas (CoreLiteral maps) remain intact.
+fn known_payload(value: &Value) -> bool {
+    static VALIDATOR: std::sync::OnceLock<Option<jsonschema::Validator>> =
+        std::sync::OnceLock::new();
+    VALIDATOR
+        .get_or_init(|| {
+            let mut schema: Value = serde_json::from_str(include_str!(
+                "../../../spec/upstream/umf-tables-0.1.0.schema.json"
+            ))
+            .ok()?;
+            close_declared_objects(&mut schema);
+            jsonschema::options().build(&schema).ok()
+        })
+        .as_ref()
+        .is_some_and(|validator| validator.is_valid(value))
+}
+fn close_declared_objects(schema: &mut Value) {
+    match schema {
+        Value::Object(object) => {
+            if object.get("type").and_then(Value::as_str) == Some("object")
+                && object.contains_key("properties")
+                && !object.contains_key("additionalProperties")
+            {
+                object.insert("additionalProperties".into(), Value::Bool(false));
+            }
+            for child in object.values_mut() {
+                close_declared_objects(child);
+            }
+        }
+        Value::Array(items) => {
+            for child in items {
+                close_declared_objects(child);
+            }
+        }
+        _ => {}
+    }
+}
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields, rename_all = "camelCase")]
@@ -112,9 +150,7 @@ pub(crate) fn admit(
         return Err("native table lifecycle selected vocabulary composition unsupported");
     }
     let payload = &module["extensions"]["umf.tables"];
-    if !TablePayload::is_valid(payload)
-        || payload["commands"].as_array().is_none_or(|v| !v.is_empty())
-    {
+    if !known_payload(payload) || payload["commands"].as_array().is_none_or(|v| !v.is_empty()) {
         return Err("native table lifecycle payload or command meaning unsupported");
     }
     let declared = payload["tables"].as_array().ok_or("native tables absent")?;
@@ -342,4 +378,28 @@ pub(crate) fn admit(
         source_digest: binding.model_sha256.clone(),
         tables: result,
     }))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn private_schema_closure_preserves_explicit_literal_map_keys() {
+        let mut schema: Value = serde_json::from_str(include_str!(
+            "../../../spec/upstream/umf-tables-0.1.0.schema.json"
+        ))
+        .unwrap();
+        schema["$ref"] = json!("#/$defs/literal");
+        schema.as_object_mut().unwrap().remove("type");
+        schema.as_object_mut().unwrap().remove("properties");
+        schema.as_object_mut().unwrap().remove("required");
+        close_declared_objects(&mut schema);
+        let validator = jsonschema::options().build(&schema).unwrap();
+        assert!(validator.is_valid(&json!({"map":{"arbitrary-key":{"string":"value"}}})));
+        assert!(
+            !validator.is_valid(&json!({"map":{"arbitrary-key":{"string":"value","future":true}}}))
+        );
+        assert!(!validator.is_valid(&json!({"map":{},"future":true})));
+    }
 }

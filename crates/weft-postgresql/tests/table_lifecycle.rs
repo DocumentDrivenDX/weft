@@ -269,3 +269,27 @@ fn native_count_keeps_table_obligations_and_requires_complete_module_inventory()
     other_profile["verificationProfile"] = json!("source-exact/0.1");
     assert_eq!(compile(other_profile)["status"], "blocked");
 }
+
+#[test]
+fn preserved_unknown_members_cannot_be_selected_as_known_table_meaning() {
+    for pointer in [
+        "/modules/0/extensions/umf.tables",
+        "/modules/0/extensions/umf.tables/tables/0",
+        "/modules/0/extensions/umf.tables/tables/0/record",
+        "/modules/0/extensions/umf.tables/tables/0/columns/0",
+        "/modules/0/extensions/umf.tables/tables/0/columns/0/nativeType",
+        "/modules/0/extensions/umf.tables/tables/0/policy",
+        "/modules/0/extensions/umf.tables/tables/0/policy/person",
+        "/modules/0/extensions/umf.tables/tables/0/policy/person/select",
+    ] {
+        let mut r = request();
+        let mut doc = source();
+        doc.pointer_mut(pointer)
+            .unwrap()
+            .as_object_mut()
+            .unwrap()
+            .insert("future".into(), json!(true));
+        repin(&mut r, &doc);
+        assert_eq!(compile(r)["status"], "blocked", "{pointer}");
+    }
+}
