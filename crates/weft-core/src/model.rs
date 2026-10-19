@@ -324,6 +324,27 @@ impl Catalog {
                     if e["kind"] == "record" && name.matches(self.query_name(e).unwrap_or("")) {
                         selected08(&input.pin, e)?;
                         self.validate_selected010(&input.pin, e)?;
+                        if self.raw_read_opaque_extensions && input.pin.umf_version == "0.10.0" {
+                            for member in e["members"].as_array().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 Record has no members"))? {
+                                let validate_reference = |reference: &Value| -> Result<()> {
+                                    let module_id = reference["module"].as_str().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 reference module absent"))?;
+                                    let element_id = reference["element"].as_str().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 reference element absent"))?;
+                                    let (module_index, element_indexes) = self.element_locations[d].get(module_id).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 reference module absent"))?;
+                                    let element_index = element_indexes.get(element_id).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 reference element absent"))?;
+                                    let field = &self.documents[d]["modules"][*module_index]["elements"][*element_index];
+                                    selected010_raw_read(&input.pin, field)?;
+                                    if let Some(item) = field.get("itemType") {
+                                        let item_module = item["module"].as_str().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item module absent"))?;
+                                        let item_element = item["element"].as_str().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item element absent"))?;
+                                        let (item_module_index, item_indexes) = self.element_locations[d].get(item_module).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item module absent"))?;
+                                        let item_index = item_indexes.get(item_element).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item element absent"))?;
+                                        selected010_raw_read(&input.pin, &self.documents[d]["modules"][*item_module_index]["elements"][*item_index])?;
+                                    }
+                                    Ok(())
+                                };
+                                validate_reference(member)?;
+                            }
+                        }
                         found.push(Record {
                             identity: Identity {
                                 document_id: input.pin.document_id.clone(),

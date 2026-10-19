@@ -59,7 +59,7 @@ fn compile(raw:&str)->Result<Value>{
  let doc:Value=serde_json::from_str(&r.selection.binding.model_json).unwrap();
  let module=doc["modules"].as_array().unwrap().iter().find(|v|v["id"]==admitted.index()["record"]["module"]).ok_or("original Record module absent")?;
  if path!=vec![module["namespace"].as_str().ok_or("Record namespace absent")?.to_string(),admitted.record()["name"].as_str().ok_or("Record name absent")?.to_string()]{return Err("selected Record/table owner differs")}
- let original_columns=weft_core::column_custody::admit_columns(&r.selection.binding.model_sha256,&doc,&m.target,&m.native_columns,table,&admitted.index()["record"])?;
+ let original_columns=weft_core::column_custody::admit_columns(&r.selection.binding.model_sha256,&doc,&m.target,&m.native_columns,table,&admitted.index()["record"],"0.8.0")?;
  let (vector_native,vector_type,_)=original_columns.get(&field_key(&m.vector_binding.field)).ok_or("original vector ColumnSet absent")?;
  if vector_native!=&m.vector_binding.native||vector_type!="array<float>"{return Err("original vector binding must be ARRAY<FLOAT>")}
  let row_nullable=|reference:&Value|weft_core::column_custody::row_null(&doc,&admitted.index()["record"],reference,&original_columns);

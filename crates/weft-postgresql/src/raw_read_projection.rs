@@ -5,10 +5,12 @@ use std::collections::BTreeMap;
 use weft_core::{column_custody as custody,raw_read::{AdmittedRead,Table,Carrier}};
 type Result<T>=std::result::Result<T,&'static str>;
 pub(crate) struct ProjectionColumn {pub(crate) native:String,pub(crate) metadata:Json,pub(crate) generation:Json}
-pub(crate) fn columns(a:&AdmittedRead,table:&Table)->Result<BTreeMap<String,ProjectionColumn>>{
- columns_for(&a.request().binding,&a.request().target,a.original_document(),a.original_record(&table.logical)?,table,a.request().verification_profile.as_deref()==Some("source-exact/0.1"))
+pub(crate) fn columns(a:&AdmittedRead,table:&Table,expected_core_version:&str)->Result<BTreeMap<String,ProjectionColumn>>{
+ let doc=a.original_document();
+ let exact=a.request().verification_profile.as_deref()==Some("source-exact/0.1");
+ columns_for(&a.request().binding,&a.request().target,doc,a.original_record(&table.logical)?,table,exact,expected_core_version)
 }
-pub(crate) fn columns_for(binding:&weft_core::raw_read::Binding,target_name:&str,doc:&Json,record:&weft_core::model::Record,table:&Table,exact:bool)->Result<BTreeMap<String,ProjectionColumn>>{
+pub(crate) fn columns_for(binding:&weft_core::raw_read::Binding,target_name:&str,doc:&Json,record:&weft_core::model::Record,table:&Table,exact:bool,expected_core_version:&str)->Result<BTreeMap<String,ProjectionColumn>>{
  let raw=binding.native_columns.as_ref().ok_or("native ColumnSet envelope absent")?;
  let packet:custody::NativeColumnsEnvelope=serde_json::from_value(raw.clone()).map_err(|_|"closed native ColumnSet envelope required")?;
  let target=json!({"platform":if target_name=="postgresql18"{"postgresql"}else{"lakebase"},"majorVersion":"18"});
@@ -16,9 +18,9 @@ pub(crate) fn columns_for(binding:&weft_core::raw_read::Binding,target_name:&str
  let reference=json!({"module":record.identity.module,"element":record.identity.element});
  let mut facts=BTreeMap::new();let mut owners=BTreeMap::new();let members=record.value["members"].as_array().ok_or("Record members absent")?;
  for set in &packet.sets {
-  let original=custody::original_column_set(&binding.model_sha256,doc,&target,set)?;
+  let original=custody::original_column_set(&binding.model_sha256,doc,&target,set,expected_core_version)?;
   if !original["columns"].as_array().unwrap().iter().any(|c|members.contains(&c["field"])){continue}
-  for (field,shape) in if exact {custody::admit_columns_with_collation(&binding.model_sha256,doc,&target,set,table,&reference)?}else{custody::admit_columns(&binding.model_sha256,doc,&target,set,table,&reference)?} {
+  for (field,shape) in if exact {custody::admit_columns_with_collation(&binding.model_sha256,doc,&target,set,table,&reference,expected_core_version)?}else{custody::admit_columns(&binding.model_sha256,doc,&target,set,table,&reference,expected_core_version)?} {
    if facts.insert(field.clone(),shape).is_some(){return Err("duplicate original native column declaration")};owners.insert(field,set);
   }
  }

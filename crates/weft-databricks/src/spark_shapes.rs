@@ -38,6 +38,7 @@ pub(crate) fn columns(a: &AdmittedRead, table: &Table) -> Result<BTreeMap<String
             doc,
             &envelope.target,
             set,
+            "0.8.0",
         )?;
         let members = record.value["members"]
             .as_array()
@@ -57,6 +58,7 @@ pub(crate) fn columns(a: &AdmittedRead, table: &Table) -> Result<BTreeMap<String
             set,
             table,
             &reference,
+            "0.8.0",
         )?;
         for (field, shape) in current {
             if physical.insert(field, shape).is_some() {

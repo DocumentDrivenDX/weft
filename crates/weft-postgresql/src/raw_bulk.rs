@@ -38,7 +38,7 @@ fn compile(raw: &str) -> Result<Value> {
     if template["status"] != "compiled" {
         return Err("native action lowering blocked");
     }
-    let read = crate::raw_read::lower(admitted.selection())?;
+    let read = crate::raw_read::lower_action_selection(admitted.selection())?;
     let q = admitted.selection().query();
     if q.limit_clause.is_some() || q.with.is_some() {
         return Err("bulk requires original complete bounded selection");
@@ -239,7 +239,7 @@ fn compile(raw: &str) -> Result<Value> {
         // The bulk host owns the same original search-path context as action SQL;
         // no read-host appSchema parameter is invented or bound by the SDK.
         let selected=admitted.selection();let table=selected.request().binding.tables.iter().find(|t|t.logical==effect.entity.key.table).ok_or("bulk original selection table absent")?;
-        let columns=crate::raw_read::native_projection::columns(selected,table)?;
+        let columns=crate::raw_read::native_projection::columns(selected,table,"0.8.0")?;
         let mut selected_admissions=columns.values().map(|c|json!({"nativeAdmission":crate::raw_read::native_projection::action_admission(c,table,&r.selection.binding.schema)})).collect::<Vec<_>>();
         selected_admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.selection.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
         let mut packet=template["obligations"]["nativeProjection"].clone();let values=packet["columns"].as_array_mut().unwrap();for value in selected_admissions {if !values.contains(&value){values.push(value);}}program["obligations"]["nativeProjection"]=packet;

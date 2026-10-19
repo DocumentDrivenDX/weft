@@ -644,10 +644,11 @@ impl<'a> Lower<'a> {
     }
 }
 pub(crate) fn lower(admitted: &AdmittedRead) -> Result<Json> { lower_profile(admitted,true) }
-pub(crate) fn lower_search_input(admitted:&AdmittedRead)->Result<Json>{lower_profile(admitted,false)}
-fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {lower_profile_inner(admitted,bounded,false,false,&[],None)}
-pub(crate) fn lower_related_fragment(admitted:&AdmittedRead,bounded:bool,prefix:&[String],predicate:Option<&str>)->Result<Json>{lower_profile_inner(admitted,bounded,true,true,prefix,predicate)}
-fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_limit:bool,allow_unused:bool,prefix:&[String],additional_predicate:Option<&str>) -> Result<Json> {
+pub(crate) fn lower_search_input(admitted:&AdmittedRead)->Result<Json>{lower_profile_inner(admitted,false,false,false,&[],None,"0.8.0")}
+pub(crate) fn lower_action_selection(admitted:&AdmittedRead)->Result<Json>{lower_profile_inner(admitted,true,false,false,&[],None,"0.8.0")}
+fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {let expected=if admitted.request().verification_profile.as_deref()==Some("source-exact/0.1"){"0.10.0"}else{"0.8.0"};lower_profile_inner(admitted,bounded,false,false,&[],None,expected)}
+pub(crate) fn lower_related_fragment(admitted:&AdmittedRead,bounded:bool,prefix:&[String],predicate:Option<&str>)->Result<Json>{let expected=if admitted.request().verification_profile.as_deref()==Some("source-exact/0.1"){"0.10.0"}else{"0.8.0"};lower_profile_inner(admitted,bounded,true,true,prefix,predicate,expected)}
+fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_limit:bool,allow_unused:bool,prefix:&[String],additional_predicate:Option<&str>,expected_core_version:&str) -> Result<Json> {
     let r = admitted.request();
     let q = admitted.query();
     if r.snapshots.is_some() || r.version != "weft.raw-read/0.1"
@@ -840,7 +841,7 @@ fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_lim
     let mut native_columns=BTreeMap::new();
     if r.binding.native_columns.is_some(){
         for (alias,(table,_)) in &l.scans {
-            for (logical,c) in native_projection::columns(admitted,table)? {
+            for (logical,c) in native_projection::columns(admitted,table,expected_core_version)? {
                 native_columns.insert((alias.clone(),logical),c);
             }
         }

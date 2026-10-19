@@ -174,10 +174,10 @@ mod raw_read_tests {
     }
     #[test]
     fn source_exact_verification_requires_complete_authored_collation_facts(){
-        let native:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-drift-request.json")).unwrap();
+        let native:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-010-drift-request.json")).unwrap();
         let np=compile(native);assert_eq!(np["status"],"compiled","{np}");assert_eq!(np["outputs"].as_array().unwrap().len(),1);assert_eq!(np["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),4);
 
-        let r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-request.json")).unwrap();
+        let r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-010-request.json")).unwrap();
         let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
         assert_eq!(p["obligations"]["nativeProjection"]["verificationProfile"],"source-exact/0.1");
         let admissions=p["obligations"]["nativeProjection"]["columns"].as_array().unwrap();
@@ -197,6 +197,32 @@ mod raw_read_tests {
         }
         let legacy:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request.json")).unwrap();
         let lp=compile(legacy);assert!(lp["obligations"]["nativeProjection"].get("verificationProfile").is_none());assert!(lp["obligations"]["nativeProjection"]["columns"].as_array().unwrap().iter().all(|a|!a["nativeAdmission"]["sql"].as_str().unwrap().contains("dep.objid=ty.oid")));
+    }
+    #[test]
+    fn source_exact_umf010_column_custody_requires_one_caller_selected_version(){
+        fn model(r:&mut Value,change:impl FnOnce(&mut Value)){
+            let mut d:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();change(&mut d);
+            let raw=d.to_string();let sha=weft_core::json::sha256(raw.as_bytes());r["binding"]["modelJson"]=json!(raw);r["binding"]["modelSha256"]=json!(sha);
+            for set in r["binding"]["nativeColumns"]["sets"].as_array_mut().unwrap(){set["columnSet"]["documentSha256"]=json!(sha);}
+        }
+        fn native_binding(r:&mut Value,change:impl FnOnce(&mut Value)){
+            let set=&mut r["binding"]["nativeColumns"]["sets"][0];let mut d:Value=serde_json::from_str(set["binding"]["documentJson"].as_str().unwrap()).unwrap();change(&mut d);
+            let raw=d.to_string();let sha=weft_core::json::sha256(raw.as_bytes());set["binding"]["documentJson"]=json!(raw);set["binding"]["documentSha256"]=json!(sha);
+        }
+        let mut r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-010-request.json")).unwrap();
+        model(&mut r,|d|d["umf"]=json!("0.10.0"));
+        r["binding"]["nativeColumns"]["sets"][0]["columnSet"]["coreVersion"]=json!("0.10.0");
+        native_binding(&mut r,|d|{d["umf"]=json!("0.10.0");d["extensions"]["umf.binding"]["logical"]["coreVersion"]=json!("0.10.0");});
+        let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
+
+        let old:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-source-exact-request.json")).unwrap();assert_eq!(compile(old)["status"],"blocked");
+        let mut bad=r.clone();bad["binding"]["nativeColumns"]["sets"][0]["columnSet"]["coreVersion"]=json!("0.8.0");assert_eq!(compile(bad)["status"],"blocked");
+        let mut bad=r.clone();native_binding(&mut bad,|d|d["umf"]=json!("0.8.0"));assert_eq!(compile(bad)["status"],"blocked");
+        let mut bad=r.clone();native_binding(&mut bad,|d|d["extensions"]["umf.binding"]["logical"]["coreVersion"]=json!("0.8.0"));assert_eq!(compile(bad)["status"],"blocked");
+        let mut bad=r.clone();model(&mut bad,|d|d["umf"]=json!("0.9.0"));assert_eq!(compile(bad)["status"],"blocked");
+        let mut bad=r.clone();model(&mut bad,|d|{let f=d["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="payload").unwrap();f["semanticTypes"]=json!([{"vocabulary":"urn:fixture","version":"1","term":"opaque-binary"}]);});assert_eq!(compile(bad)["status"],"blocked");
+        let mut bad=r.clone();bad["binding"]["nativeColumns"]["sets"][0]["columnSet"]["documentSha256"]=json!("0".repeat(64));assert_eq!(compile(bad)["status"],"blocked");
+        let mut bad=r.clone();bad["binding"]["nativeColumns"]["sets"][0]["binding"]["documentSha256"]=json!("0".repeat(64));assert_eq!(compile(bad)["status"],"blocked");
     }
     fn compile(r: Value) -> Value {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()

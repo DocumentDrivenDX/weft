@@ -181,7 +181,7 @@ fn compile(raw: &str) -> Result<Json> {
         Some(schema) => format!("{}.{}", ident(schema)?, ident(&table.native)?),
         None => ident(&table.native)?,
     };
-    let source_columns=if r.selection.verification_profile.as_deref()==Some("source-exact/0.1") {Some(crate::raw_read::native_projection::columns(admitted.selection(),table)?)}else{None};
+    let source_columns=if r.selection.verification_profile.as_deref()==Some("source-exact/0.1") {Some(crate::raw_read::native_projection::columns(admitted.selection(),table,"0.8.0")?)}else{None};
     if let (Some(columns),Some(vector))=(&source_columns,&r.vector_binding) {
         let original=field(&doc,&vector.field)?;let logical=original["name"].as_str().ok_or("source-exact vector Field name absent")?;
         let c=columns.get(logical).ok_or("source-exact vector Field column absent")?;

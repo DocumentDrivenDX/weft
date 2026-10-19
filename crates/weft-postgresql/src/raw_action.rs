@@ -448,7 +448,7 @@ fn compile(source: &str) -> Result<Value> {
         for logical in tables {
             let table=r.binding.tables.iter().find(|t|t.logical==logical).ok_or("original action native table absent")?;
             let record=weft_core::raw_read::binding_record(&r.binding,&logical)?;
-            let columns=crate::raw_read::native_projection::columns_for(&r.binding,&r.target,&doc,&record,table,true)?;
+            let columns=crate::raw_read::native_projection::columns_for(&r.binding,&r.target,&doc,&record,table,true,"0.8.0")?;
             for column in columns.values(){admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_admission(column,table,&r.binding.schema)}));}
             admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
             let mut allowed=vec![];

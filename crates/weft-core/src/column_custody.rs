@@ -34,9 +34,11 @@ pub fn native_type(raw:&str)->Result<String>{
  Ok(chars.into_iter().filter(|c|!c.is_ascii_whitespace()).collect::<String>().to_ascii_lowercase())
 }
 /// Resolve exact source custody before a target selects Record-relevant sets.
-pub fn original_column_set<'a>(model_sha256:&str,doc:&'a Value,target:&Value,custody:&NativeColumns)->Result<&'a Value>{
+pub fn original_column_set<'a>(model_sha256:&str,doc:&'a Value,target:&Value,custody:&NativeColumns,expected_core_version:&str)->Result<&'a Value>{
+ if !matches!(expected_core_version,"0.8.0"|"0.10.0"){return Err("unsupported ColumnSet source core profile")}
+ if expected_core_version=="0.10.0"&&!matches!((target["platform"].as_str(),target["majorVersion"].as_str()),(Some("postgresql"),Some("18"))|(Some("lakebase"),Some("18"))){return Err("current ColumnSet source profile requires PG18 or Lakebase18")}
  let source=&custody.column_set;
- if doc["vocabularies"]["umf.access"]["version"]!="0.1.0"||source.document_id!=doc["id"]||source.core_version!="0.8.0"||source.document_sha256!=model_sha256{return Err("ColumnSet original model source differs")}
+ if doc["umf"]!=expected_core_version||doc["vocabularies"]["umf.access"]["version"]!="0.1.0"||source.document_id!=doc["id"]||source.core_version!=expected_core_version||source.document_sha256!=model_sha256{return Err("ColumnSet original model source differs")}
  let mut sets=vec![];
  for (mi,module) in doc["modules"].as_array().unwrap().iter().enumerate(){
    for (ci,set) in module["extensions"]["umf.access"]["columns"].as_array().into_iter().flatten().enumerate(){
@@ -50,21 +52,21 @@ pub fn original_column_set<'a>(model_sha256:&str,doc:&'a Value,target:&Value,cus
  if crate::json::sha256(custody.binding.document_json.as_bytes())!=custody.binding.document_sha256{return Err("original binding source pin differs")}
  Ok(set)
 }
-pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
- admit_columns_inner(model_sha256,doc,target,custody,table,record,false)
+pub fn admit_columns(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value,expected_core_version:&str)->Result<Columns>{
+ admit_columns_inner(model_sha256,doc,target,custody,table,record,false,expected_core_version)
 }
 /// Admit explicitly authored collation facts for the source-exact PG profile.
-pub fn admit_columns_with_collation(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value)->Result<Columns>{
- admit_columns_inner(model_sha256,doc,target,custody,table,record,true)
+pub fn admit_columns_with_collation(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value,expected_core_version:&str)->Result<Columns>{
+ admit_columns_inner(model_sha256,doc,target,custody,table,record,true,expected_core_version)
 }
-fn admit_columns_inner(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value,with_collation:bool)->Result<Columns>{
- let set=original_column_set(model_sha256,doc,target,custody)?;let b=&custody.binding;
+fn admit_columns_inner(model_sha256:&str,doc:&Value,target:&Value,custody:&NativeColumns,table:&raw_read::Table,record:&Value,with_collation:bool,expected_core_version:&str)->Result<Columns>{
+ let set=original_column_set(model_sha256,doc,target,custody,expected_core_version)?;let b=&custody.binding;
  if !exact_keys(set,&["binding","target","columns"],&[])||!exact_keys(&set["binding"],&["sourceId","module"],&[])||b.source_id.is_empty(){return Err("closed original ColumnSet required")}
  let binding=crate::json::checked_json(&b.document_json).map_err(|_|"original binding JSON refused")?;
- if crate::json::sha256(b.document_json.as_bytes())!=b.document_sha256||binding["umf"]!="0.8.0"||binding["vocabularies"]["umf.binding"]["version"]!="0.2.0"||binding["id"].as_str().is_none_or(str::is_empty)||set["binding"]!=json!({"sourceId":b.source_id,"module":record["module"]})||set["target"]!=*target{return Err("ColumnSet binding/source/target differs")}
+ if crate::json::sha256(b.document_json.as_bytes())!=b.document_sha256||binding["umf"]!=expected_core_version||binding["vocabularies"]["umf.binding"]["version"]!="0.2.0"||binding["id"].as_str().is_none_or(str::is_empty)||set["binding"]!=json!({"sourceId":b.source_id,"module":record["module"]})||set["target"]!=*target{return Err("ColumnSet binding/source/target differs")}
  let payload=&binding["extensions"]["umf.binding"];
  if !exact_keys(payload,&["profile","logical","target","elements","fields","relationships","indexes"],&[])||!exact_keys(&payload["logical"],&["documentId","coreVersion"],&[])||!exact_keys(&payload["target"],&["system","version"],&["subset"]){return Err("closed original binding profile required")}
- if payload["profile"]!="umf-binding-2"||payload["logical"]!=json!({"documentId":doc["id"],"coreVersion":"0.8.0"})||payload["target"]["system"]!=target["platform"]||payload["target"]["version"]!=target["majorVersion"]||payload["target"]["subset"]!="typed-access-columns/0.1"{return Err("original binding logical/native target differs")}
+ if payload["profile"]!="umf-binding-2"||payload["logical"]!=json!({"documentId":doc["id"],"coreVersion":expected_core_version})||payload["target"]["system"]!=target["platform"]||payload["target"]["version"]!=target["majorVersion"]||payload["target"]["subset"]!="typed-access-columns/0.1"{return Err("original binding logical/native target differs")}
  let elements=payload["elements"].as_array().ok_or("binding element inventory absent")?.iter().filter(|v|v["module"]==record["module"]&&v["element"]==record["element"]).collect::<Vec<_>>();
  if elements.len()!=1||!exact_keys(elements[0],&["module","element","table"],&[])||elements[0]["table"]!=table.native{return Err("original native Record table differs")}
  let record_body=doc["modules"].as_array().unwrap().iter().find(|m|m["id"]==record["module"]).and_then(|m|m["elements"].as_array().unwrap().iter().find(|e|e["id"]==record["element"])).ok_or("original ColumnSet Record absent")?;
