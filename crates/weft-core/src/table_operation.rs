@@ -6,6 +6,7 @@ use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
 mod schema;
 mod validation;
+mod batch_scope;
 mod values;
 mod temporal;
 pub(crate) use schema::known_declaration;
@@ -54,9 +55,12 @@ pub struct AdmittedOperation {
     declaration: Value,
     table: Table,
     fields: BTreeMap<String, OperationField>,
+    source_table: Option<Table>,
+    source_fields: BTreeMap<String, OperationField>,
     parameter_fields: BTreeMap<String, OperationField>,
     keys: BTreeMap<String, Vec<Value>>,
     obligations: Value,
+    batch_insert_scope: bool,
 }
 impl AdmittedOperation {
     pub fn native_value(&self, reference: &Value, value: &Value) -> Result<Value> {
@@ -125,6 +129,13 @@ impl AdmittedOperation {
             .get(&reference_id(reference)?)
             .ok_or("operation Field is outside its table")
     }
+    pub fn source_table(&self) -> Option<&Table> { self.source_table.as_ref() }
+    pub fn source_field(&self, reference: &Value) -> Result<&OperationField> {
+        self.source_fields.get(&reference_id(reference)?).ok_or("Field is outside the declared source table")
+    }
+    pub fn native_source_value(&self, reference: &Value, value: &Value) -> Result<Value> {
+        values::native_value(self.source_field(reference)?, value)
+    }
     pub fn key(&self, id: &str) -> Result<&[Value]> {
         self.keys
             .get(id)
@@ -133,6 +144,10 @@ impl AdmittedOperation {
     }
     pub fn obligations(&self) -> &Value {
         &self.obligations
+    }
+    /// Whether an original-source batch insert is independent of its own prior rows.
+    pub fn batch_insert_scope(&self) -> bool {
+        self.batch_insert_scope
     }
 }
 fn reference_id(reference: &Value) -> Result<String> {
@@ -238,6 +253,18 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         .find(|t| t.logical == path)
         .ok_or("operation native mapping absent")?
         .clone();
+    let source_declaration = if declaration["body"]["kind"] == "insertFrom" {
+        Some(payload["tables"].as_array().unwrap().iter().find(|t| t["id"] == declaration["body"]["source"]["table"]).ok_or("source table is outside the module")?)
+    } else { None };
+    let source_table = source_declaration.map(|source| request.binding.tables.iter().find(|t| t.native == source["name"].as_str().unwrap()).cloned().ok_or("source native mapping absent")).transpose()?;
+    let mut source_fields = BTreeMap::new();
+    let batch_insert_scope = matches!(&request.call, OperationCall::Batch { .. })
+        && declaration["body"]["kind"] == "insert"
+        && batch_scope::independent_insert_scope(
+            payload,
+            &table_declaration["record"],
+            &table_declaration["id"],
+        );
     let mut fields = BTreeMap::new();
     let mut parameter_fields = BTreeMap::new();
     for current_table in payload["tables"].as_array().unwrap() {
@@ -297,6 +324,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
             if current_table["id"] == table_declaration["id"] {
                 fields.insert(reference.clone(), resolved.clone());
             }
+            if source_declaration.is_some_and(|source| source["id"] == current_table["id"]) { source_fields.insert(reference.clone(), resolved.clone()); }
             if parameter_fields.insert(reference, resolved).is_some() {
                 return Err("ambiguous original parameter Field binding");
             }
@@ -305,7 +333,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
     let kind = declaration["body"]["kind"].as_str().unwrap();
     let mut commands = match kind {
         "read" => vec!["select"],
-        "insert" => vec!["insert"],
+        "insert" | "insertFrom" => vec!["insert"],
         "update" => vec!["update"],
         "delete" => vec!["delete"],
         "upsert" => {
@@ -335,10 +363,15 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
             commands.push("select");
         }
     }
-    let mut obligations = lifecycle.obligation(&BTreeSet::from([path]))?;
+    let mut paths = BTreeSet::from([path.clone()]);
+    if let Some(source) = &source_table {
+        paths.insert(source.logical.clone());
+        if source.logical == path && !commands.contains(&"select") { commands.push("select"); }
+    }
+    let mut obligations = lifecycle.obligation(&paths)?;
     for item in obligations["tables"].as_array_mut().unwrap() {
         item.as_object_mut().unwrap().remove("command");
-        item["commands"] = json!(commands);
+        item["commands"] = if item["id"] == table_declaration["id"] { json!(commands) } else { json!(["select"]) };
     }
     let admitted = AdmittedOperation {
         request,
@@ -346,6 +379,8 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         declaration,
         table,
         fields,
+        source_table,
+        source_fields,
         parameter_fields,
         keys: record["keys"]
             .as_array()
@@ -359,6 +394,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
             })
             .collect::<Result<_>>()?,
         obligations,
+        batch_insert_scope,
     };
     validate(admitted, record, table_declaration)
 }

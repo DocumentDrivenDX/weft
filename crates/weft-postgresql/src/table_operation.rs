@@ -4,6 +4,7 @@ use serde_json::{json, Value};
 use std::collections::BTreeMap;
 use weft_core::raw_read::Carrier;
 use weft_core::table_operation::{self, AdmittedOperation, OperationCall, OperationField};
+mod insert_batch;
 type Result<T> = std::result::Result<T, &'static str>;
 fn q(value: &str) -> Result<String> {
     crate::Identifier::new(value)
@@ -14,13 +15,17 @@ struct Lower<'a> {
     operation: &'a AdmittedOperation,
     slots: Vec<Value>,
     identities: BTreeMap<String, usize>,
+    source_scope: bool,
 }
-impl Lower<'_> {
+impl<'a> Lower<'a> {
+    fn field(&self, reference: &Value) -> Result<&'a OperationField> {
+        if self.source_scope { self.operation.source_field(reference) } else { self.operation.field(reference) }
+    }
     fn column(&self, reference: &Value, alias: bool) -> Result<String> {
         Ok(format!(
             "{}{}",
-            if alias { "t." } else { "" },
-            q(&self.operation.field(reference)?.native)?
+            if !alias { "" } else if self.source_scope { "s." } else { "t." },
+            q(&self.field(reference)?.native)?
         ))
     }
     fn slot(&mut self, source: Value, field: &OperationField) -> String {
@@ -45,13 +50,15 @@ impl Lower<'_> {
         }
     }
     fn value(&mut self, value: &Value, reference: &Value) -> Result<String> {
-        let field = self.operation.field(reference)?;
+        let field = self.field(reference)?;
+        if value["kind"] == "currentPrincipal" { return Ok("(CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")".into()); }
+        if value["kind"] == "sourceField" { return Ok(format!("s.{}",q(&self.operation.source_field(&value["field"])?.native)?)); }
         if value["kind"]=="currentTimestamp" { return Ok("CURRENT_TIMESTAMP".into()); }
         Ok(self.slot(
             if value["kind"] == "parameter" {
                 json!({"kind":"input","parameter":value["parameter"]})
             } else {
-                json!({"kind":"literal","value":value["value"],"nativeValue":self.operation.native_value(reference,&value["value"])?})
+                json!({"kind":"literal","value":value["value"],"nativeValue":if self.source_scope { self.operation.native_source_value(reference,&value["value"])? } else { self.operation.native_value(reference,&value["value"])? }})
             },
             field,
         ))
@@ -140,6 +147,7 @@ fn compile(raw: &str) -> Result<Value> {
         operation: &operation,
         slots: vec![],
         identities: BTreeMap::new(),
+        source_scope: false,
     };
     let mut outputs = vec![];
     let mut projections = vec![];
@@ -276,6 +284,19 @@ fn compile(raw: &str) -> Result<Value> {
                     values.join(", ")
                 )
             }
+            "insertFrom" => {
+                let mut columns=vec![];let mut values=vec![];
+                for assignment in body["values"].as_array().unwrap() {
+                    columns.push(lower.column(&assignment["field"],false)?);
+                    values.push(lower.value(&assignment["value"],&assignment["field"])?);
+                }
+                lower.source_scope=true;
+                let predicate=lower.predicate(&body["source"]["where"])?;
+                lower.source_scope=false;
+                let source=operation.source_table().ok_or("source relation absent")?;
+                let source_relation=format!("{}.{}",q(request.binding.schema.as_deref().ok_or("source schema absent")?)?,q(&source.native)?);
+                format!("INSERT INTO {relation} AS t ({}) SELECT {} FROM {source_relation} AS s WHERE {predicate} RETURNING {returning}",columns.join(", "),values.join(", "))
+            }
             "update" => {
                 let assignments = body["values"]
                     .as_array()
@@ -343,11 +364,13 @@ fn compile(raw: &str) -> Result<Value> {
         );
         format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) <= {} AND COALESCE(pg_catalog.sum({}),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.* FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok = 1",operation.max_rows(),sizes.join(" + "))
     };
+    let native_inputs = operation.native_inputs()?;
+    let native_batch = insert_batch::compile(&operation, &lower, &outputs, &projections, &native_inputs)?;
     let batch = matches!(request.call, OperationCall::Batch { .. });
     let mut program = json!({"version":"weft.table-operation/0.1","status":"compiled","target":request.target,
   "requestJson":raw,"requestSha256":weft_core::json::sha256(raw.as_bytes()),"binding":request.binding,
   "module":request.module,"operation":request.operation,"declaration":operation.declaration(),
-  "nativeInputs":operation.native_inputs()?,"nativeAfter":operation.native_after()?,
+  "nativeInputs":native_inputs,"nativeAfter":operation.native_after()?,
   "declarationDigest":weft_core::json::sha256(weft_core::mutation::canonical(operation.declaration()).as_bytes()),
   "sql":sql,"transport":{"profile":"dbapi-percent/0.1","bindEmptyParameterTuple":true},"parameterOrder":lower.slots.iter().map(|s|s["id"].clone()).collect::<Vec<_>>(),"parameterSources":lower.slots,"outputs":outputs,
   "result":{"kind":if read{body["result"].clone()}else{json!("mutation")},"maxRows":operation.max_rows(),"declaredMaxRows":body["maxRows"],"countScope":"direct-target-rows","referentialActions":"source-declared-native-FK-actions-not-counted-by-this-bound","affectedMarker":if read{Value::Null}else{json!("umf_affected")},"nativeReadGuard":if read{json!({"profile":"pg18-read-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":true,"partialFrames":false})}else{Value::Null},"nativeWriteFrameGuard":if read{Value::Null}else{json!({"profile":"pg18-write-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":false,"partialFrames":false})},"nativeBoundGuard":if read{Value::Null}else{json!({"profile":"pg18-effect-count/0.1","sqlstate":"22012","excessEffects":"statement-error-and-transaction-rollback","writeLimitClipping":false})},"lookahead":read&&body["result"]!="count","cursor":cursor},
@@ -357,6 +380,9 @@ fn compile(raw: &str) -> Result<Value> {
    "replay":{"mode":operation.declaration()["replay"],"durableOutcomeRequired":!read,"automaticRetry":false,"scope":["module","operation","source","deployment","ledger-head","verified-principal","ordered-exact-inputs","caller-key"]},
    "cursorScope":["operation","exact-inputs","source","deployment","ledger-head","principal","role-policy-scope"]}});
     crate::dbapi::attach(&mut program)?;
+    if let Some(native_batch) = native_batch {
+        program["nativeBatch"] = native_batch;
+    }
     program["structuralDigest"] = json!(weft_core::json::sha256(
         weft_core::mutation::canonical(&program).as_bytes()
     ));

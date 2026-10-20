@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-10-20T01:34:44.205308+00:00",
+  "scope": "unpublished local macOS ARM64 PG18.6 snapshot INSERT-SELECT and independent plain INSERT batch MERGE compiler component",
+  "umfHostCommit": "7e680b38d",
+  "operationSchemaProducer": "e2579c79fc5518088de1b9ac18da917a0385006f",
+  "focusedRustTests": 17,
+  "cliPythonParityCases": 48,
+  "chromiumWasmParityCases": 48,
+  "nativeHostSnapshotAssertions": 29,
+  "nativeHostBatchAssertions": 64,
+  "nativeHostFrameRollbackAssertions": 6,
+  "nativeBalancedLeases": 39,
+  "wheel": {
+    "name": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "3e97eddfc9349125c15d81a3795e3064f73bedba4a4a933bd68c7b0f8629fa13",
+    "license": "MIT OR Apache-2.0",
+    "published": false
+  },
+  "sourceFiles": {
+    "crates/weft-core/src/table_operation.rs": "1314b2895d8c7ad7febb0b09fda625848e6a9447cd10a4b82211aa4e4bf7be02",
+    "crates/weft-core/src/table_operation/validation.rs": "c2f601b5aff823f096febf985f21391bf8ea2d90f241dabd941c1c837d7bb8c8",
+    "crates/weft-core/src/table_operation/batch_scope.rs": "4d5b69b4157355756df32dba285844ac12495edb1e67cb22acc474edf74b9bb9",
+    "crates/weft-postgresql/src/table_operation.rs": "aaedec330867ca4b6ff39160b45fd1717d9eb9b3574391bf7f254ca89d558086",
+    "crates/weft-postgresql/src/table_operation/insert_batch.rs": "f535dcef6ec10e1cf886c1ad8662f8906ef4ba3acbc9228af595ad4d8363c152",
+    "crates/weft-postgresql/tests/table_operation.rs": "0afa0206d2f2e81f31464b1dde82a801238e0334821fbf4b14ba90a02d485dbb",
+    "spec/upstream/umf-table-operation-0.1.schema.json": "127b524b7921adc24602110c0ef086ab5698228f58a00d44168848a5f41e3d79",
+    "tests/raw-postgresql/table-operation-bindings.py": "73170f6a9e8ecd6e278f68dbc883a461146861c7b308d1a6ee5f013fa795a106",
+    "tests/raw-postgresql/table-snapshot-model.json": "ad4b1e2ecdf12cdc6735e7876818b9138efe5eb36cb3e25e4dd98ec6b42783aa"
+  },
+  "fullPraxisAcceptance": false
+}

@@ -5,10 +5,29 @@ struct Check<'a> {
     parameters: BTreeMap<String, &'a OperationField>,
     used: BTreeSet<String>,
     nodes: usize,
+    source_scope: bool,
+    assignment: bool,
 }
 impl Check<'_> {
     fn value(&mut self, value: &Value, field: &Value) -> Result<()> {
-        let target = self.admitted.field(field)?;
+        let target = if self.source_scope { self.admitted.source_field(field)? } else { self.admitted.field(field)? };
+        if value["kind"] == "currentPrincipal" {
+            return if target.carrier==Carrier::String && matches!(target.native_type["kind"].as_str(),Some("text"|"varchar")) { Ok(()) } else { Err("current principal needs native text storage") };
+        }
+        if value["kind"] == "sourceField" {
+            if !self.assignment || self.source_scope { return Err("source Field is only available in insert-from assignments"); }
+            let origin=self.admitted.source_field(&value["field"])?;
+            if origin.carrier != target.carrier || origin.native_type != target.native_type || origin.nullable && !target.nullable { return Err("source native capacity or availability differs"); }
+            if let Some(values)=origin.declaration["allowedValues"].as_array().filter(|v|!v.is_empty()) {
+                for value in values { if !value.is_null() || origin.nullable { literal(target,value)?; } }
+            } else {
+                if target.declaration.get("allowedValues").is_some() { return Err("source does not prove target membership"); }
+                let source=crate::security_literals::normalized_facets(&origin.declaration).map_err(|_|"source facets unsupported")?;
+                let destination=crate::security_literals::normalized_facets(&target.declaration).map_err(|_|"target facets unsupported")?;
+                for (key,facet) in destination.as_object().ok_or("target facets absent")? { if source.get(key) != Some(facet) { return Err("source does not prove target refinement"); } }
+            }
+            return Ok(());
+        }
         if value["kind"] == "currentTimestamp" {
             return if target.carrier==Carrier::Timestamp && target.native_type["kind"]=="timestamptz" { Ok(()) } else { Err("transaction timestamp requires explicit instant storage") };
         }
@@ -47,7 +66,7 @@ impl Check<'_> {
             }
             "not" => self.predicate(&node["arg"], depth + 1),
             _ => {
-                let field = self.admitted.field(&node["field"])?;
+                let field = if self.source_scope { self.admitted.source_field(&node["field"])? } else { self.admitted.field(&node["field"])? };
                 if op == "isNull" {
                     return Ok(());
                 }
@@ -99,6 +118,8 @@ pub(super) fn validate(
         parameters: BTreeMap::new(),
         used: BTreeSet::new(),
         nodes: 0,
+        source_scope: false,
+        assignment: false,
     };
     for parameter in admitted.declaration["parameters"].as_array().unwrap() {
         let id = parameter["id"].as_str().unwrap();
@@ -192,6 +213,12 @@ pub(super) fn validate(
             return Err("write replay key outside bounds");
         }
         unique_refs(&admitted, &body["returning"])?;
+        if kind == "insertFrom" {
+            if admitted.source_table().is_none() { return Err("original source table absent"); }
+            check.source_scope=true;
+            check.predicate(&body["source"]["where"],0)?;
+            check.source_scope=false;
+        }
         if kind == "update" || kind == "delete" {
             check.predicate(&body["where"], 0)?
         }
@@ -221,9 +248,11 @@ pub(super) fn validate(
                 if column.get("generated").is_some() || kind == "update" && !mutable(reference) {
                     return Err("operation assigns generated/immutable/Key Field");
                 }
+                check.assignment=true;
                 check.value(&assignment["value"], reference)?;
+                check.assignment=false;
             }
-            if kind == "insert" || kind == "upsert" {
+            if kind == "insert" || kind == "insertFrom" || kind == "upsert" {
                 for column in table["columns"].as_array().unwrap() {
                     if !admitted.field(&column["field"])?.nullable
                         && column.get("generated").is_none()

@@ -2788,10 +2788,19 @@
             "fn:declaration",
             "fn:table",
             "fn:field",
+            "fn:source_table",
+            "fn:source_field",
+            "fn:native_source_value",
             "fn:key",
             "fn:obligations",
+            "fn:batch_insert_scope",
             "fn:admit_json"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/table_operation/batch_scope.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
@@ -3956,6 +3965,11 @@
             "fn:compile_json",
             "fn:check_json"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/table_operation/insert_batch.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {

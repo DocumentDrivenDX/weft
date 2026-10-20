@@ -95,6 +95,39 @@ for label,fixture in [('direct','table-related-model.json'),('nested','table-rel
     model['modules'][0]['extensions']['umf.tables']['tables'][0]['policy']['person']['select']['matches'][0]['future']={'retained':True}
     text=encode(model);bad['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
     cases.append(('related-'+label+'-unknown-pair-refuses',bad,'blocked'))
+# Atomic source snapshots use original same-module source fields and native identity.
+model=json.loads((root/'table-snapshot-model.json').read_text());module=model['modules'][0]
+fields={e['id']:e for e in module['elements'] if e['kind']=='field'}
+records={e['id']:e for e in module['elements'] if e['kind']=='record'}
+tables=[]
+for table in module['extensions']['umf.tables']['tables']:
+    record=records[table['record']['element']];key=next(k for k in record['keys'] if k.get('primary'))
+    tables.append({'logical':['demo',record['id']],'native':table['name'],'key':[f['element'] for f in key['fields']],
+                   'columns':[{'logical':c['field']['element'],'native':c['name'],'carrier':fields[c['field']['element']]['scalarType'],
+                               'nullable':fields[c['field']['element']]['nullability']=='absent-allowed'} for c in table['columns']]})
+snapshot=request('create');text=encode(model)
+snapshot['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest(),tables=tables)
+snapshot.update(operation='capture',call={'kind':'single','inputs':{'snapshot_id':{'string':'s1'},'source_id':{'string':'n1'},'comment':None}})
+cases.append(('atomic-source-snapshot',snapshot,'compiled'))
+all_rows=copy.deepcopy(snapshot);all_rows.update(operation='capture_all',call={'kind':'single','inputs':{'comment':None}})
+cases.append(('atomic-source-overflow-declaration',all_rows,'compiled'))
+for label,mutate in [
+    ('source-field-outside-source',lambda c:c['body']['values'][1]['value'].update(field={'module':'demo','element':'actor'})),
+    ('source-predicate-cannot-read-copy',lambda c:c['body']['source']['where'].update(value={'kind':'sourceField','field':{'module':'demo','element':'id'}})),
+    ('identity-cannot-be-time',lambda c:c['body']['values'][4].update(value={'kind':'currentPrincipal'})),
+    ('unknown-source-meaning',lambda c:c['body']['source'].update(future=True)),
+]:
+    bad=copy.deepcopy(snapshot);model=json.loads(bad['binding']['modelJson'])
+    command=next(c for c in model['modules'][0]['extensions']['umf.tables']['commands'] if c['id']=='capture')
+    mutate(command);text=encode(model);bad['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
+    cases.append((label,bad,'blocked'))
+principal=request('create_batch');model=json.loads(principal['binding']['modelJson'])
+command=next(c for c in model['modules'][0]['extensions']['umf.tables']['commands'] if c['id']=='create_batch')
+command['parameters']=[p for p in command['parameters'] if p['id']=='id']
+command['body']['values'][1]['value']={'kind':'currentPrincipal'}
+text=encode(model);principal['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
+principal['call']['items']=[{'id':{'string':'a'}},{'id':{'string':'b'}}]
+cases.append(('batch-native-principal',principal,'compiled'))
 results=[]
 browser_cases=[]
 for name,value,status in cases:
@@ -109,6 +142,12 @@ for name,value,status in cases:
         assert json.loads(weft.check_table_operation_json(encode(python)))['status']=='checked'
     results.append({'name':name,'status':status,'nativePythonEqual':True})
     browser_cases.append({'name':name,'request':raw,'expected':python})
+batch_program=json.loads(weft.compile_table_operation_json(encode(principal)))
+assert 'CURRENT_USER::pg_catalog.text' in batch_program['nativeBatch']['sql']
+batch_program['nativeBatch']['sql']='forged'
+batch_program.pop('structuralDigest')
+batch_program['structuralDigest']=hashlib.sha256(json.dumps(batch_program,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+assert json.loads(weft.check_table_operation_json(encode(batch_program)))['status']=='blocked'
 program=json.loads(weft.compile_table_operation_json(encode(request('rename'))))
 controls=0
 for field in ['sql','dbapiSql','module','operation','parameterSources','outputs','result','obligations','nativeInputs','nativeAfter']:

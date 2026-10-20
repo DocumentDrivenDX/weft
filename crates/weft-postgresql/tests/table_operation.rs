@@ -243,6 +243,106 @@ fn bulk_is_one_declared_operation_with_explicit_atomic_bounds_and_no_hidden_writ
 }
 
 #[test]
+fn plain_insert_batch_emits_ordered_insert_only_merge_with_source_ordinals() {
+    let r = request("create_batch");
+    let program = compile(r.clone());
+    assert_eq!(program["status"], "compiled", "{program}");
+    let batch = &program["nativeBatch"];
+    assert_eq!(batch["version"], "weft.table-insert-batch/0.1");
+    assert_eq!(batch["ordinalColumn"], "umf_input_ordinal");
+    assert_eq!(batch["parameterOrder"], json!(["nativeRows"]));
+    assert_eq!(batch["dbapiParameterOrder"], json!(["nativeRows"]));
+    let sql = batch["sql"].as_str().unwrap();
+    assert!(sql.contains("jsonb_array_elements($1::pg_catalog.jsonb) WITH ORDINALITY"));
+    assert!(sql.contains("MERGE INTO"));
+    assert!(sql.contains("ON FALSE WHEN NOT MATCHED THEN INSERT"));
+    assert!(sql.contains("ORDER BY umf_input_ordinal"));
+    assert!(sql.contains("RETURNING i.umf_input_ordinal AS umf_input_ordinal"));
+    assert!(sql.contains("pg_catalog.count(*) AS effects"));
+    assert!(!sql.contains("count(DISTINCT"));
+    assert!(sql.contains("umf_input_ordinal"));
+    assert!(!sql.contains("WHEN MATCHED"));
+    assert_eq!(
+        serde_json::from_str::<Value>(
+            &weft_postgresql::table_operation::check_json(&program.to_string())
+        )
+        .unwrap()["status"],
+        "checked"
+    );
+
+    let mut no_key_output = r;
+    let mut source: Value = serde_json::from_str(no_key_output["binding"]["modelJson"].as_str().unwrap()).unwrap();
+    let command = source["modules"][0]["extensions"]["umf.tables"]["commands"]
+        .as_array_mut().unwrap().iter_mut().find(|item| item["id"] == "create_batch").unwrap();
+    command["body"]["returning"] = json!([{"module":"demo","element":"owner"}]);
+    repin(&mut no_key_output, source);
+    let no_key_program = compile(no_key_output);
+    assert_eq!(no_key_program["status"], "compiled", "{no_key_program}");
+    assert!(no_key_program.get("nativeBatch").is_some());
+    assert!(no_key_program["nativeBatch"]["sql"]
+        .as_str()
+        .unwrap()
+        .contains("RETURNING i.umf_input_ordinal AS umf_input_ordinal"));
+    assert!(!no_key_program["nativeBatch"]["sql"]
+        .as_str()
+        .unwrap()
+        .contains("umf_batch_key_"));
+
+    let mut literal_batch = request("create_batch");
+    let mut literal_source: Value = serde_json::from_str(
+        literal_batch["binding"]["modelJson"].as_str().unwrap(),
+    )
+    .unwrap();
+    let command = literal_source["modules"][0]["extensions"]["umf.tables"]["commands"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|item| item["id"] == "create_batch")
+        .unwrap();
+    command["parameters"]
+        .as_array_mut()
+        .unwrap()
+        .retain(|parameter| parameter["id"] != "owner");
+    command["body"]["values"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|assignment| assignment["field"]["element"] == "owner")
+        .unwrap()["value"] = json!({"kind":"literal","value":{"string":"fixed"}});
+    repin(&mut literal_batch, literal_source);
+    for item in literal_batch["call"]["items"].as_array_mut().unwrap() {
+        item.as_object_mut().unwrap().remove("owner");
+    }
+    let literal_program = compile(literal_batch);
+    assert_eq!(literal_program["status"], "compiled", "{literal_program}");
+    assert_eq!(literal_program["nativeBatch"]["parameterOrder"], json!(["nativeRows", "nativeLiterals"]));
+    assert_eq!(literal_program["nativeBatch"]["dbapiParameterOrder"], json!(["nativeRows", "nativeLiterals"]));
+    let literal_sql = literal_program["nativeBatch"]["sql"].as_str().unwrap();
+    assert!(literal_sql.contains("CROSS JOIN umf_batch_literals AS l"));
+    assert!(literal_sql.contains("VALUES (i.\"slot0\", i.\"slot1\")"));
+
+    let mut empty_returning = request("create_batch");
+    let mut empty_source: Value = serde_json::from_str(
+        empty_returning["binding"]["modelJson"].as_str().unwrap(),
+    )
+    .unwrap();
+    let command = empty_source["modules"][0]["extensions"]["umf.tables"]["commands"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|item| item["id"] == "create_batch")
+        .unwrap();
+    command["body"]["returning"] = json!([]);
+    repin(&mut empty_returning, empty_source);
+    let empty_program = compile(empty_returning);
+    assert_eq!(empty_program["status"], "compiled", "{empty_program}");
+    assert!(empty_program.get("nativeBatch").is_some());
+    let empty_sql = empty_program["nativeBatch"]["sql"].as_str().unwrap();
+    assert!(!empty_sql.contains(", ,"));
+    assert!(empty_sql.contains("SELECT m.umf_input_ordinal, m.umf_affected FROM"));
+}
+
+#[test]
 fn exact_integer_decimal_and_noncanonical_json_integer_bounds_never_round_or_panic() {
     for (family, native, facets, carrier, values) in [
         (
@@ -515,4 +615,21 @@ fn transaction_clock_values_are_typed_and_never_become_input_slots() {
     let command=model["modules"][0]["extensions"]["umf.tables"]["commands"].as_array_mut().unwrap().iter_mut().find(|c|c["id"]=="create").unwrap();
     command["body"]["values"][2]["field"]=json!({"module":"demo","element":"owner"});
     repin(&mut r,model);assert_eq!(compile(r)["status"],"blocked");
+}
+
+#[test]
+fn batch_principal_is_native_and_has_no_caller_slot() {
+    let mut r = request("create_batch");
+    let mut model = source();
+    let command = model["modules"][0]["extensions"]["umf.tables"]["commands"].as_array_mut().unwrap().iter_mut().find(|c| c["id"] == "create_batch").unwrap();
+    command["parameters"] = json!([{"id":"id","field":{"module":"demo","element":"id"}}]);
+    command["body"]["values"][1]["value"] = json!({"kind":"currentPrincipal"});
+    repin(&mut r, model);
+    r["call"]["items"] = json!([{"id":{"string":"a"}},{"id":{"string":"b"}}]);
+    let p = compile(r.clone());
+    assert_eq!(p["status"], "compiled", "{p}");
+    assert!(p["nativeBatch"]["sql"].as_str().unwrap().contains("CURRENT_USER::pg_catalog.text"));
+    assert_eq!(p["nativeBatch"]["parameterOrder"], json!(["nativeRows"]));
+    r["call"]["items"][0]["owner"] = json!({"string":"forged"});
+    assert_eq!(compile(r)["status"], "blocked");
 }

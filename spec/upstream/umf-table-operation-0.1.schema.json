@@ -291,6 +291,65 @@
             "onConflict",
             "updateFields"
           ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "insertFrom"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "returning": {
+              "type": "array",
+              "items": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "minItems": 0,
+              "maxItems": 1600
+            },
+            "maxRows": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/assignment"
+              },
+              "minItems": 1,
+              "maxItems": 1600
+            },
+            "source": {
+              "type": "object",
+              "properties": {
+                "table": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "where": {
+                  "$ref": "#/$defs/predicate"
+                }
+              },
+              "required": [
+                "table",
+                "where"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "table",
+            "returning",
+            "maxRows",
+            "values",
+            "source"
+          ]
         }
       ]
     },
@@ -373,6 +432,32 @@
           },
           "required": [
             "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "currentPrincipal"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "sourceField"
+            },
+            "field": {
+              "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+            }
+          },
+          "required": [
+            "kind",
+            "field"
           ]
         }
       ]
