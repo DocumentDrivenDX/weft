@@ -1,0 +1,22 @@
+{
+  "capturedAt": "2026-10-20T03:10:03.898155+00:00",
+  "scope": "local macOS PG18.6 seed domain-admission regression and private source-selected seed fixture preparation",
+  "reason": "seed profile must select native-operation field domains consistently, including enum/range-bearing columns",
+  "focusedRustTests": 3,
+  "privateNativeSeedTables": 15,
+  "privateNativeStoredColumns": 185,
+  "privateSyntheticSeedRows": 31,
+  "privateSourceCopiedToPublicRepository": false,
+  "privatePreparationReportSha256": "a76907545b02a87e47e2c3d44cbf620d31acfcad407947a0a99719d9ccfaee1e",
+  "fullPrivateMethodAcceptance": false,
+  "wheel": {
+    "name": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "38e99059d9f40bb8e4ca9d5830ff503279730415c5142c0748292b8eab24f7c4",
+    "license": "MIT OR Apache-2.0",
+    "published": false
+  },
+  "sourceFiles": {
+    "crates/weft-core/src/raw_read.rs": "c9e06e716090d862275ddf4b83a4028abb048cbcdf5f589291cd1518fa458d91",
+    "crates/weft-postgresql/tests/table_seed.rs": "c846a55eba6e2d397b7a573bb414697c7154985b242527f19e2ff9b779bc3e8e"
+  }
+}

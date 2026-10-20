@@ -215,7 +215,7 @@ fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) ->
                 return Err("column absent/ambiguous in UMF");
             };
             let (field, member) = matches[0];
-            (if operation.is_some() { crate::model::selected010_table_operation(&record.pin, field) } else { crate::model::selected010_raw_read(&record.pin, field) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
+            (if operation.is_some() || seed { crate::model::selected010_table_operation(&record.pin, field) } else { crate::model::selected010_raw_read(&record.pin, field) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
             if version != "0.10.0" && field.get("extensions").and_then(Json::as_object).is_some_and(|m| !m.is_empty()) {
                 return Err("column meaning outside scalar read profile");
             }

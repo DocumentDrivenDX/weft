@@ -33,3 +33,14 @@ fn seed_literals_obey_domains_required_fields_unknown_meaning_and_original_capac
  }
  let mut bad=r;bad["sql"]=json!("INSERT arbitrary");assert_eq!(compile(bad)["status"],"blocked");
 }
+
+#[test]
+fn seeds_use_native_operation_domain_admission_and_enforce_original_enum_values(){
+ let mut r=request();let mut source:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();
+ source["modules"][0]["elements"][1]["allowedValues"]=json!([{"string":"alice"},{"string":"bob"}]);
+ source["modules"][0]["elements"][1]["facets"]=json!({"length":{"unit":"unicode-scalar","min":1,"max":8}});
+ let repin=|r:&mut Value,s:&Value|{let text=s.to_string();r["binding"]["modelJson"]=json!(text);r["binding"]["modelSha256"]=json!(weft_core::json::sha256(text.as_bytes()));};
+ repin(&mut r,&source);assert_eq!(compile(r.clone())["status"],"compiled");
+ source["modules"][0]["extensions"]["umf.tables"]["seedSets"][0]["rows"][0]["values"][1]["value"]=json!({"string":"mallory"});
+ repin(&mut r,&source);assert_eq!(compile(r)["status"],"blocked");
+}
