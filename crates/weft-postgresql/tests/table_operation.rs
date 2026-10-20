@@ -484,3 +484,35 @@ fn temporal_operations_are_exact_and_do_not_expand_raw_read_admission() {
     let bound:weft_core::raw_read::Binding=serde_json::from_value(r["binding"].clone()).unwrap();
     assert!(weft_core::raw_read::binding_record(&bound,&["demo".into(),"Note".into()]).is_err());
 }
+
+#[test]
+fn declared_domains_enforce_original_enumerations_ranges_and_literal_inputs() {
+    let mut r=request("create");let mut model=source();
+    model["modules"][0]["elements"][1]["allowedValues"]=json!([{"string":"alice"},{"string":"bob"}]);
+    model["modules"][0]["elements"][1]["facets"]=json!({"length":{"unit":"unicode-scalar","min":1,"max":8}});
+    repin(&mut r,model);
+    assert_eq!(compile(r.clone())["status"],"compiled");
+    r["call"]["inputs"]["owner"]=json!({"string":"other"});
+    assert_eq!(compile(r.clone())["status"],"blocked");
+    let binding:weft_core::raw_read::Binding=serde_json::from_value(r["binding"].clone()).unwrap();
+    assert!(weft_core::raw_read::binding_record(&binding,&["demo".into(),"Note".into()]).is_err());
+}
+
+#[test]
+fn transaction_clock_values_are_typed_and_never_become_input_slots() {
+    let mut r=request("create");let mut model=source();let reference=json!({"module":"demo","element":"at"});
+    model["modules"][0]["elements"].as_array_mut().unwrap().push(json!({"id":"at","kind":"field","scalarType":"timestamp","cardinality":"one","nullability":"required","extensions":{}}));
+    model["modules"][0]["elements"][2]["members"].as_array_mut().unwrap().push(reference.clone());
+    model["modules"][0]["extensions"]["umf.tables"]["tables"][0]["columns"].as_array_mut().unwrap().push(json!({"field":reference,"name":"at","nativeType":{"kind":"timestamptz"}}));
+    r["binding"]["tables"][0]["columns"].as_array_mut().unwrap().push(json!({"logical":"at","native":"at","carrier":"timestamp","nullable":false}));
+    let command=model["modules"][0]["extensions"]["umf.tables"]["commands"].as_array_mut().unwrap().iter_mut().find(|c|c["id"]=="create").unwrap();
+    command["body"]["values"].as_array_mut().unwrap().push(json!({"field":reference,"value":{"kind":"currentTimestamp"}}));
+    command["body"]["returning"].as_array_mut().unwrap().push(reference);
+    repin(&mut r,model.clone());let program=compile(r.clone());
+    assert_eq!(program["status"],"compiled","{program}");
+    assert!(program["sql"].as_str().unwrap().contains("CURRENT_TIMESTAMP"));
+    assert_eq!(program["nativeInputs"][0].as_object().unwrap().len(),2);
+    let command=model["modules"][0]["extensions"]["umf.tables"]["commands"].as_array_mut().unwrap().iter_mut().find(|c|c["id"]=="create").unwrap();
+    command["body"]["values"][2]["field"]=json!({"module":"demo","element":"owner"});
+    repin(&mut r,model);assert_eq!(compile(r)["status"],"blocked");
+}

@@ -132,3 +132,13 @@ native driver/pool execution. Its synthetic fixture covers source-declared
 current timestamps, predicates, alternate ambient timezone/date format, exact
 rows, replay/batch and both transaction owners. Neither component completes the
 remaining seeds/evolution, private Praxis/managed runtime or publication gates.
+
+The [scalar-domain/clock increment](scalar-domains/receipt.json) pins the exact
+UMF operation-schema producer and adds typed transaction-time values plus
+source-field enumeration admission in the dedicated operation profile. Generic
+raw guards remain. Original allowed values and range/width/length qualifiers are
+checked without floats; the matching UMF candidate emits native CHECKs and typed
+client validation. Native compiler, Python and actual Chromium WASM agree on the
+closed corpus. The separate UMF150-assertion native fixture proves generated
+execution and native domain enforcement; compiler acceptance alone grants no
+native authority. Full seeds/evolution, consumer and publication gates remain.

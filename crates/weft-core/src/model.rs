@@ -41,6 +41,7 @@ pub struct Catalog {
     security_inputs: bool,
     pub(crate) identity_name_fallback: bool,
     raw_read_opaque_extensions: bool,
+    native_operation_domains: bool,
     pub(crate) exact_scalars: bool,
     pub(crate) exact_dates: bool,
     pub(crate) bounded_current_strings: bool,
@@ -83,15 +84,18 @@ pub(crate) fn selected08(pin: &ModelPin, element: &Value) -> Result<()> {
 /// preserve their value domain. External semantic type references are retained
 /// in source but remain outside the raw scalar profile.
 pub(crate) fn selected010(pin: &ModelPin, element: &Value) -> Result<()> {
-    selected010_inner(pin, element, false)
+    selected010_inner(pin, element, false, false)
 }
 /// Raw reads may inspect core identity/value fields while retaining known
 /// extension metadata without interpreting it. The original source and selected
 /// values remain intact.
 pub(crate) fn selected010_raw_read(pin: &ModelPin, element: &Value) -> Result<()> {
-    selected010_inner(pin, element, true)
+    selected010_inner(pin, element, true, false)
 }
-fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool) -> Result<()> {
+pub(crate) fn selected010_table_operation(pin: &ModelPin, element: &Value) -> Result<()> {
+    selected010_inner(pin,element,true,true)
+}
+fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool, native_domains: bool) -> Result<()> {
     if pin.umf_version != "0.10.0" { return Ok(()); }
     const KNOWN: &[&str] = &["id", "name", "title", "description", "kind", "scalarType",
         "nullability", "cardinality", "itemType", "recordType", "facets", "members",
@@ -108,7 +112,7 @@ fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: b
             })
         })
     });
-    if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())))
+    if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())&&!(native_domains&&element["kind"]=="field"&&k=="allowedValues")))
         || element.get("semanticTypes").is_some()
         || !extensions_supported
     { return Err(fail("WFT-TYPE", "Selected UMF 0.10 element has semantics outside the raw scalar profile")); }
@@ -145,7 +149,8 @@ impl Catalog {
     }
 
     fn validate_selected010(&self, pin: &ModelPin, element: &Value) -> Result<()> {
-        if self.raw_read_opaque_extensions { selected010_raw_read(pin, element) }
+        if self.native_operation_domains { selected010_table_operation(pin, element) }
+        else if self.raw_read_opaque_extensions { selected010_raw_read(pin, element) }
         else { selected010(pin, element) }
     }
 
@@ -179,6 +184,11 @@ impl Catalog {
         let mut catalog = Self::prepare_version(inputs, Some("0.10.0"), false)?;
         catalog.identity_name_fallback = true;
         catalog.raw_read_opaque_extensions = true;
+        Ok(catalog)
+    }
+    pub(crate) fn prepare_table_operation010(inputs: Vec<ModuleInput>) -> Result<Self> {
+        let mut catalog=Self::prepare_raw_read010(inputs)?;
+        catalog.native_operation_domains=true;
         Ok(catalog)
     }
     pub(crate) fn prepare_security_bounded_strings(inputs: Vec<ModuleInput>) -> Result<Self> {
@@ -271,7 +281,7 @@ impl Catalog {
                 (module["id"].as_str().unwrap().to_owned(), (mi, elements))
             }).collect()
         }).collect();
-        Ok(Self { inputs, documents, element_locations, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:matches!(required_version,Some("0.8.0"|"0.10.0")), identity_name_fallback:false, raw_read_opaque_extensions:false })
+        Ok(Self { inputs, documents, element_locations, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:matches!(required_version,Some("0.8.0"|"0.10.0")), identity_name_fallback:false, raw_read_opaque_extensions:false, native_operation_domains:false })
     }
     pub(crate) fn local_element_by_ids(&self, document: usize, module: &str, element: &str) -> Option<&Value> {
         let (module_index, elements) = self.element_locations.get(document)?.get(module)?;
@@ -332,13 +342,13 @@ impl Catalog {
                                     let (module_index, element_indexes) = self.element_locations[d].get(module_id).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 reference module absent"))?;
                                     let element_index = element_indexes.get(element_id).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 reference element absent"))?;
                                     let field = &self.documents[d]["modules"][*module_index]["elements"][*element_index];
-                                    selected010_raw_read(&input.pin, field)?;
+                                    self.validate_selected010(&input.pin, field)?;
                                     if let Some(item) = field.get("itemType") {
                                         let item_module = item["module"].as_str().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item module absent"))?;
                                         let item_element = item["element"].as_str().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item element absent"))?;
                                         let (item_module_index, item_indexes) = self.element_locations[d].get(item_module).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item module absent"))?;
                                         let item_index = item_indexes.get(item_element).ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 item element absent"))?;
-                                        selected010_raw_read(&input.pin, &self.documents[d]["modules"][*item_module_index]["elements"][*item_index])?;
+                                        self.validate_selected010(&input.pin, &self.documents[d]["modules"][*item_module_index]["elements"][*item_index])?;
                                     }
                                     Ok(())
                                 };

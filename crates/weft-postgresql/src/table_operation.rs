@@ -46,6 +46,7 @@ impl Lower<'_> {
     }
     fn value(&mut self, value: &Value, reference: &Value) -> Result<String> {
         let field = self.operation.field(reference)?;
+        if value["kind"]=="currentTimestamp" { return Ok("CURRENT_TIMESTAMP".into()); }
         Ok(self.slot(
             if value["kind"] == "parameter" {
                 json!({"kind":"input","parameter":value["parameter"]})

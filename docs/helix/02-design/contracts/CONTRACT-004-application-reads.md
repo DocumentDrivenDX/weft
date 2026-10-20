@@ -396,3 +396,20 @@ bounds, checked-source custody, caller identity and transaction/outcome obligati
 remain mandatory. UMF owns native finite-domain constraints, source-proved catalog
 witnesses, installation, generated methods and authenticated execution. This
 compiler extension grants no native authority and publishes no release by itself.
+
+### Declared scalar-domain and transaction-clock increment
+
+Original current-core scalar fields may declare allowed values, numeric ranges,
+integer widths and Unicode-scalar/byte length bounds. The dedicated operation
+Catalog admits these only in its explicit source profile; generic raw source
+admission keeps its prior guards. Exact literal validation applies to invocation
+inputs and declared constants before emission. Original field/domain/source pins
+remain intact, and hosts must prove matching native constraints before execution.
+
+A declared value `{kind:"currentTimestamp"}` requires a timestamp field mapped
+to explicit `timestamptz`. Lowering emits only fixed `CURRENT_TIMESTAMP`, with
+PostgreSQL transaction-time semantics; it allocates no caller input or function
+name. Incorrect target types, extra parameters and unknown selected qualifiers
+refuse. The same value may participate in typed assignments or predicates. Stable
+keyset continuation still promises no cross-page snapshot. Durable replay and
+actual identity/privilege/RLS/installation admission remain host obligations.

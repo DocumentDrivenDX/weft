@@ -9,6 +9,9 @@ struct Check<'a> {
 impl Check<'_> {
     fn value(&mut self, value: &Value, field: &Value) -> Result<()> {
         let target = self.admitted.field(field)?;
+        if value["kind"] == "currentTimestamp" {
+            return if target.carrier==Carrier::Timestamp && target.native_type["kind"]=="timestamptz" { Ok(()) } else { Err("transaction timestamp requires explicit instant storage") };
+        }
         if value["kind"] == "literal" {
             return literal(target, &value["value"]);
         }

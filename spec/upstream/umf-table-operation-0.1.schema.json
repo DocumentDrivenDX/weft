@@ -363,6 +363,17 @@
             "kind",
             "value"
           ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "currentTimestamp"
+            }
+          },
+          "required": [
+            "kind"
+          ]
         }
       ]
     },

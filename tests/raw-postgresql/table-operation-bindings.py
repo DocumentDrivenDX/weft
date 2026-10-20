@@ -65,6 +65,18 @@ for name,value in [('rounding',{'timestamp':'2026-01-01T00:00:00.1234567Z'}),('u
     bad=copy.deepcopy(temporal);bad['call']['inputs']['at']=value;cases.append(('temporal-'+name,bad,'blocked'))
 for value in ['1900-02-29','infinity','0000-01-01']:
     bad=copy.deepcopy(temporal);bad['call']['inputs']['day']={'date':value};cases.append(('date-'+value,bad,'blocked'))
+domain=request('create');model=json.loads(source_text)
+model['modules'][0]['elements'][1]['allowedValues']=[{'string':'alice'},{'string':'bob'}]
+model['modules'][0]['elements'][1]['facets']={'length':{'unit':'unicode-scalar','min':1,'max':8}}
+text=encode(model);domain['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
+cases.append(('source-domain-enumeration',domain,'compiled'))
+bad=copy.deepcopy(domain);bad['call']['inputs']['owner']={'string':'other'};cases.append(('source-domain-rejects',bad,'blocked'))
+clock=copy.deepcopy(temporal);model=json.loads(clock['binding']['modelJson'])
+command=next(c for c in model['modules'][0]['extensions']['umf.tables']['commands'] if c['id']=='create')
+command['parameters']=[p for p in command['parameters'] if p['id']!='at']
+next(v for v in command['body']['values'] if v['field']['element']=='at')['value']={'kind':'currentTimestamp'}
+text=encode(model);clock['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest());clock['call']['inputs'].pop('at')
+cases.append(('source-transaction-clock',clock,'compiled'))
 results=[]
 browser_cases=[]
 for name,value,status in cases:

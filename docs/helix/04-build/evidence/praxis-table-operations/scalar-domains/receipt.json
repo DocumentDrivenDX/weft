@@ -1,0 +1,52 @@
+{
+  "capturedAt": "2026-10-20T00:02:20.236988+00:00",
+  "scope": "unpublished original scalar-domain and typed transaction-clock operation compiler; native authority remains a host obligation",
+  "parent": "f910d9c6137861e15f93fe9b316703fb5412cf8d",
+  "umfSchemaProducer": "638f104d4d1ff05c932849f96a7029dbac1a5808",
+  "sourceFiles": {
+    ".github/workflows/table-operations.yml": "f25e2e2cf3bf9c860df739bf953f7286a4776473569f31ddbf1ccf7a4eb9b57f",
+    "crates/weft-core/src/model.rs": "63fdf7472d409e8232407478d886867bd3e6e34d3d13390a0cd540f855838235",
+    "crates/weft-core/src/raw_read.rs": "2e0fd43aeb33e662c6a3d86269580acb60a248b72e27755a65cf93b01b90612f",
+    "crates/weft-core/src/table_operation/validation.rs": "563a53e153419ca05a71c0cf96e0f165dcea8e81ac99db358ef5acc62e83c1ee",
+    "crates/weft-postgresql/src/table_operation.rs": "9f5dabb7f6a40ce5dd43d6fcef265d53de7d088629092ddff026196ac922db72",
+    "crates/weft-postgresql/tests/table_operation.rs": "772ef83153779ad39bbc74e3ffde4906d0371fc2e173af190429986e488b55a2",
+    "docs/helix/02-design/contracts/CONTRACT-004-application-reads.md": "21a5df618540b2d707ed807b04a03b0ebd405e44229157abe9f13fdb65526537",
+    "docs/helix/04-build/evidence/praxis-table-operations/README.md": "ccedeb05dcd2a3d5535caf91fb878e23b23d5034405aeb1219453eb9fcdb12fd",
+    "spec/upstream/umf-table-operation-0.1.schema.json": "f747faf5f674c0e3b0f9e905ad91344df554eed420abd2637eb685b151b8171f",
+    "spec/upstream/umf-table-operation-0.1.source.json": "e281893ffdd9c32d0f233fb50f058d3f085b4e359d3a566a76d4ce8a4061752a",
+    "tests/raw-postgresql/table-operation-bindings.py": "68eca3e27f4b13c88fa76799b1eb7168f336e99bb3205ff6b2e1cb71b36e6e02"
+  },
+  "wheel": {
+    "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "6fc781de6a7684fcc437338031336eff85f50c51109697f94e67a3ce0717e7f7",
+    "license": "MIT OR Apache-2.0"
+  },
+  "checks": {
+    "sharedCoreTests": 339,
+    "focusedOperationTests": 15,
+    "workspaceAllTargetsCompilation": "pass",
+    "nativePythonCliComparisons": 37,
+    "actualChromiumWasmComparisons": 37,
+    "selfRehashedProgramControls": 10,
+    "browserTamperControls": 1,
+    "browserUnicodeControls": 2,
+    "moduleBoundaryPackages": 11,
+    "moduleBoundaryTests": 16,
+    "moduleBoundaryAssertions": 30,
+    "governedSpecs": "pass"
+  },
+  "hostNativeEvidence": "UMF638f104d4 scalar-domains packet:150 PG18 assertions over six driver/pool variants and both transaction owners,74/74 balanced leases",
+  "limits": [
+    "exact original scalar domains only; unsupported selected qualifiers refuse",
+    "generic raw source admission retains its guards",
+    "currentTimestamp requires explicit timestamp/timestamptz and emits transaction-time keyword only",
+    "no caller SQL/function or clock parameter is introduced",
+    "native source/current installation/role/RLS/transaction/outcome obligations remain required"
+  ],
+  "remaining": [
+    "paired immutable compiler CI pin and full cohort validation",
+    "seed execution, broader forward evolution/runtime upgrades",
+    "selected private full-method/data and available managed acceptance",
+    "versioned immutable publication"
+  ]
+}

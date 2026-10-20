@@ -171,7 +171,7 @@ pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>)
     };
     let catalog = match version {
         "0.8.0" => crate::model::Catalog::prepare_security(vec![input]),
-        "0.10.0" => crate::model::Catalog::prepare_raw_read010(vec![input]),
+        "0.10.0" => if operation.is_some() { crate::model::Catalog::prepare_table_operation010(vec![input]) } else { crate::model::Catalog::prepare_raw_read010(vec![input]) },
         _ => return Err("raw-read supports original UMF core 0.8.0 and 0.10.0 sources"),
     }.map_err(|_| "UMF core envelope/profile refused")?;
     let n = |value: &str| crate::syntax::Name {
@@ -211,7 +211,7 @@ pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>)
                 return Err("column absent/ambiguous in UMF");
             };
             let (field, member) = matches[0];
-            crate::model::selected010_raw_read(&record.pin, field).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
+            (if operation.is_some() { crate::model::selected010_table_operation(&record.pin, field) } else { crate::model::selected010_raw_read(&record.pin, field) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
             if version != "0.10.0" && field.get("extensions").and_then(Json::as_object).is_some_and(|m| !m.is_empty()) {
                 return Err("column meaning outside scalar read profile");
             }
