@@ -1,0 +1,11 @@
+{
+  "repository": "DocumentDrivenDX/umf",
+  "revision": "0fa1d777b6d1a3b3b8f613932d71bdf42e280cea",
+  "source": "tests/unified/table-related-fixture.ts",
+  "license": "MIT OR Apache-2.0",
+  "scope": "public synthetic direct/nested source for structural compiler parity; native policy authority stays in the host",
+  "sha256": {
+    "table-related-model.json": "ec9940193e7748198e2b6466dc47926bf789401ced1abc12fdafc98b3dc6f506",
+    "table-related-nested-model.json": "0e73a731a43fa2830084d5d732ba3e63234f29d0265cab1f6cf03c0f96b961e6"
+  }
+}

@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: DocumentDrivenDX/umf
-          ref: 638f104d4d1ff05c932849f96a7029dbac1a5808
+          ref: 0fa1d777b6d1a3b3b8f613932d71bdf42e280cea
           path: upstream-umf
       - uses: dtolnay/rust-toolchain@1.90.0
         with:

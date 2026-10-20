@@ -77,6 +77,24 @@ command['parameters']=[p for p in command['parameters'] if p['id']!='at']
 next(v for v in command['body']['values'] if v['field']['element']=='at')['value']={'kind':'currentTimestamp'}
 text=encode(model);clock['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest());clock['call']['inputs'].pop('at')
 cases.append(('source-transaction-clock',clock,'compiled'))
+for label,fixture in [('direct','table-related-model.json'),('nested','table-related-nested-model.json')]:
+    model=json.loads((root/fixture).read_text());module=model['modules'][0]
+    fields={e['id']:e for e in module['elements'] if e['kind']=='field'}
+    records={e['id']:e for e in module['elements'] if e['kind']=='record'}
+    tables=[]
+    for table in module['extensions']['umf.tables']['tables']:
+        record=records[table['record']['element']];key=next(k for k in record['keys'] if k.get('primary'))
+        tables.append({'logical':['demo',record['id']],'native':table['name'],'key':[f['element'] for f in key['fields']],
+                       'columns':[{'logical':c['field']['element'],'native':c['name'],'carrier':fields[c['field']['element']]['scalarType'],
+                                   'nullable':fields[c['field']['element']]['nullability']=='absent-allowed'} for c in table['columns']]})
+    value=request('read_many');text=encode(model)
+    value['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest(),tables=tables)
+    value.update(operation='all_notes',call={'kind':'single','inputs':{}})
+    cases.append(('related-'+label,value,'compiled'))
+    bad=copy.deepcopy(value);model=json.loads(bad['binding']['modelJson'])
+    model['modules'][0]['extensions']['umf.tables']['tables'][0]['policy']['person']['select']['matches'][0]['future']={'retained':True}
+    text=encode(model);bad['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
+    cases.append(('related-'+label+'-unknown-pair-refuses',bad,'blocked'))
 results=[]
 browser_cases=[]
 for name,value,status in cases:

@@ -396,6 +396,25 @@ mod tests {
     use super::*;
 
     #[test]
+    fn related_association_source_is_closed_without_inventing_a_foreign_key() {
+        let mut schema: Value = serde_json::from_str(include_str!(
+            "../../../spec/upstream/umf-tables-0.1.0.schema.json"
+        )).unwrap();
+        schema["$ref"] = json!("#/$defs/rowRule");
+        for key in ["type", "properties", "required"] { schema.as_object_mut().unwrap().remove(key); }
+        close_declared_objects(&mut schema);
+        let validator = jsonschema::options().build(&schema).unwrap();
+        let rule = json!({"kind":"related","record":{"module":"demo","element":"Membership"},
+            "matches":[{"source":{"module":"demo","element":"id"},"target":{"module":"demo","element":"memberNote"}}],
+            "rule":{"kind":"owner","field":{"module":"demo","element":"memberPerson"}}});
+        assert!(validator.is_valid(&rule));
+        let mut unknown = rule.clone(); unknown["matches"][0]["future"] = json!({"preserved":true});
+        let original = unknown.clone(); assert!(!validator.is_valid(&unknown)); assert_eq!(unknown, original);
+        let mut empty = rule.clone(); empty["matches"] = json!([]); assert!(!validator.is_valid(&empty));
+        let mut nested = rule.clone(); nested["rule"] = rule; assert!(validator.is_valid(&nested));
+    }
+
+    #[test]
     fn private_schema_closure_preserves_explicit_literal_map_keys() {
         let mut schema: Value = serde_json::from_str(include_str!(
             "../../../spec/upstream/umf-tables-0.1.0.schema.json"

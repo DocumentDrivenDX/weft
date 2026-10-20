@@ -1,0 +1,28 @@
+{
+  "capturedAt": "2026-10-20T00:32:08.263170+00:00",
+  "scope": "local macOS ARM64 native/Python/Chromium WASM structural compilation of source-declared association policies; host retains native authorization and RLS meaning",
+  "umfProducerCommit": "0fa1d777b6d1a3b3b8f613932d71bdf42e280cea",
+  "weftParent": "6e907632267a7140d07865d295da6ca2d23a6b3f",
+  "coreClosureTests": 2,
+  "cliPythonParityCases": 41,
+  "chromiumWasmParityCases": 41,
+  "selfRehashedProgramControls": 10,
+  "browserTamperControls": 1,
+  "browserUnicodeControls": 2,
+  "wheel": {
+    "name": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "9bc3373cc813359b5f9d2331accd0e10e8a9d58de0217a6e90f47bc212e093cf",
+    "license": "MIT OR Apache-2.0",
+    "published": false
+  },
+  "sourceFiles": {
+    "spec/upstream/umf-tables-0.1.0.schema.json": "e91eba6b807287b07a69d5d0cd4e2003696bb997852c07c8fb3d3416d8ba5ce1",
+    "spec/upstream/umf-tables-0.1.0.source.json": "8313f102c31f0b36eca517e2d347012a2adb71e1b5e019db1662e1e1932df427",
+    "crates/weft-core/src/table_lifecycle.rs": "c3b03139f85a85f61b1401559fb1cc8ecc9fdd92ac9b8ac745b9ab39fb9d48ca",
+    "tests/raw-postgresql/table-operation-bindings.py": "ecce0fd6cadaa6e33c7d7c26e61eab033dd1f49a0b7df7993b30bd7d025d91fe",
+    "tests/raw-postgresql/table-related-model.json": "ec9940193e7748198e2b6466dc47926bf789401ced1abc12fdafc98b3dc6f506",
+    "tests/raw-postgresql/table-related-nested-model.json": "0e73a731a43fa2830084d5d732ba3e63234f29d0265cab1f6cf03c0f96b961e6",
+    "tests/raw-postgresql/table-related-model.source.json": "003f596fdb04cf3ed45e5afe40728cd06d30f2d99f8c8b9b43643d5b44b18432"
+  },
+  "fullPraxisAcceptance": false
+}
