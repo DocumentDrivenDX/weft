@@ -4,13 +4,14 @@ use crate::raw_read::{Binding, Carrier, Table};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
+use std::ops::Deref;
+use std::sync::Arc;
 mod schema;
 mod validation;
 mod batch_scope;
 mod values;
 mod temporal;
 pub(crate) use schema::known_declaration;
-use validation::validate;
 use values::{domain, literal};
 type Result<T> = std::result::Result<T, &'static str>;
 #[derive(Debug, Deserialize, Serialize)]
@@ -24,6 +25,21 @@ pub struct OperationRequest {
     pub call: OperationCall,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub idempotency_key: Option<String>,
+}
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields, rename_all = "camelCase")]
+pub struct OperationModuleRequest {
+    pub version: String,
+    pub target: String,
+    pub binding: Binding,
+    pub module: String,
+}
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields, rename_all = "camelCase")]
+struct OperationBindRequest {
+    call: OperationCall,
+    #[serde(default)]
+    idempotency_key: Option<String>,
 }
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "kind", rename_all = "lowercase", deny_unknown_fields)]
@@ -47,29 +63,123 @@ pub struct OperationField {
     pub nullable: bool,
     pub declaration: Value,
     pub native_type: Value,
+    pub prepared_literal: Option<Arc<crate::security_literals::PreparedLiteral>>,
+}
+#[derive(Debug)]
+struct OperationSource {
+    target: String,
+    module: String,
+    binding: Arc<Binding>,
+    model: Arc<crate::raw_read::AdmittedModel>,
+    metadata: Arc<ModuleMetadata>,
+}
+#[derive(Debug)]
+struct ResolvedTable {
+    table: Arc<Table>,
+    fields: Arc<BTreeMap<String, Arc<OperationField>>>,
+    keys: Arc<BTreeMap<String, Vec<Value>>>,
+    batch_insert_scope_eligible: bool,
+}
+#[derive(Debug)]
+struct ModuleMetadata {
+    module_index: usize,
+    commands: BTreeMap<String, usize>,
+    tables: BTreeMap<String, usize>,
+    elements: BTreeMap<String, usize>,
+    resolved_tables: BTreeMap<String, Arc<ResolvedTable>>,
+    parameter_fields: Arc<BTreeMap<String, Arc<OperationField>>>,
+    related_tables: Arc<BTreeMap<String, Arc<Table>>>,
+    related_fields: Arc<BTreeMap<String, BTreeSet<String>>>,
+}
+#[derive(Debug)]
+pub struct PreparedOperationModule {
+    source: Arc<OperationSource>,
+}
+#[derive(Debug)]
+pub struct PreparedOperation {
+    identity: OperationIdentity,
+    static_operation: Arc<StaticOperation>,
+}
+#[derive(Debug)]
+pub struct OperationIdentity {
+    pub version: String,
+    pub target: String,
+    pub binding: Arc<Binding>,
+    pub module: String,
+    pub operation: String,
+}
+#[derive(Debug)]
+pub struct StaticOperation {
+    declared_max_rows: u64,
+    declaration: Value,
+    declaration_digest: String,
+    table: Arc<Table>,
+    fields: Arc<BTreeMap<String, Arc<OperationField>>>,
+    source_table: Option<Arc<Table>>,
+    source_fields: Arc<BTreeMap<String, Arc<OperationField>>>,
+    related_tables: Arc<BTreeMap<String, Arc<Table>>>,
+    related_fields: Arc<BTreeMap<String, BTreeSet<String>>>,
+    parameter_fields: Arc<BTreeMap<String, Arc<OperationField>>>,
+    keys: Arc<BTreeMap<String, Vec<Value>>>,
+    obligations: Value,
+    batch_insert_scope_eligible: bool,
+    cursor_fields: Vec<OperationField>,
 }
 #[derive(Debug)]
 pub struct AdmittedOperation {
-    request: OperationRequest,
+    identity: OperationIdentity,
+    static_operation: Arc<StaticOperation>,
+    call: OperationCall,
+    idempotency_key: Option<String>,
     max_rows: u64,
-    declaration: Value,
-    table: Table,
-    fields: BTreeMap<String, OperationField>,
-    source_table: Option<Table>,
-    source_fields: BTreeMap<String, OperationField>,
-    related_tables: BTreeMap<String, Table>,
-    related_fields: BTreeMap<String, BTreeSet<String>>,
-    parameter_fields: BTreeMap<String, OperationField>,
-    keys: BTreeMap<String, Vec<Value>>,
-    obligations: Value,
-    batch_insert_scope: bool,
+}
+impl PreparedOperationModule {
+    pub fn prepare_operation(&self, operation: &str) -> Result<PreparedOperation> {
+        prepare_static_operation(Arc::clone(&self.source), operation)
+    }
+    pub fn prepare_query_module(&self) -> Result<crate::table_query::AdmittedQueryModule> {
+        crate::table_query::prepare_module_shared(self.source.target.clone(), self.source.module.clone(), Arc::clone(&self.source.binding), Arc::clone(&self.source.model))
+    }
+}
+impl PreparedOperation {
+    pub fn bind(&self, call: OperationCall, idempotency_key: Option<String>) -> Result<AdmittedOperation> {
+        let declaration_max = self.static_operation.declared_max_rows;
+        let max_rows = match (&call, self.static_operation.declaration["body"]["kind"].as_str(), self.static_operation.declaration["body"]["result"].as_str()) {
+            (OperationCall::Single { size: Some(size), .. }, Some("read"), Some("many" | "page")) if *size > 0 && *size <= declaration_max => *size,
+            (OperationCall::Single { size: Some(_), .. }, ..) => return Err("requested read size exceeds declared result bounds"),
+            _ => declaration_max,
+        };
+        let bound = AdmittedOperation {
+            identity: OperationIdentity { version: "weft.table-operation/0.1".into(), target: self.identity.target.clone(), binding: Arc::clone(&self.identity.binding), module: self.identity.module.clone(), operation: self.identity.operation.clone() },
+            static_operation: Arc::clone(&self.static_operation),
+            call,
+            idempotency_key,
+            max_rows,
+        };
+        validation::validate_call(&bound)?;
+        Ok(bound)
+    }
+    pub fn bind_json(&self, raw: &str) -> Result<AdmittedOperation> {
+        if raw.len() > 4_194_304 { return Err("operation invocation capacity exceeded"); }
+        let request: OperationBindRequest = serde_json::from_value(crate::json::checked_json(raw).map_err(|_| "operation invocation JSON invalid or duplicate")?).map_err(|_| "operation invocation shape differs")?;
+        self.bind(request.call, request.idempotency_key)
+    }
+    pub fn declaration(&self) -> &Value { &self.static_operation.declaration }
+    pub fn declaration_digest(&self) -> &str { &self.static_operation.declaration_digest }
+    pub fn identity(&self) -> &OperationIdentity { &self.identity }
+}
+impl Deref for AdmittedOperation {
+    type Target = StaticOperation;
+    fn deref(&self) -> &Self::Target { &self.static_operation }
 }
 impl AdmittedOperation {
+    pub fn declaration_digest(&self) -> &str { &self.static_operation.declaration_digest }
+    /// Convert a value already admitted by `bind` / `bind_json`; this is not input admission.
     pub fn native_value(&self, reference: &Value, value: &Value) -> Result<Value> {
         values::native_value(self.field(reference)?, value)
     }
     pub fn native_inputs(&self) -> Result<Vec<BTreeMap<String, Value>>> {
-        let rows: Vec<_> = match &self.request.call {
+        let rows: Vec<_> = match &self.call {
             OperationCall::Single { inputs, .. } => vec![inputs],
             OperationCall::Batch { items } => items.iter().collect(),
         };
@@ -95,7 +205,7 @@ impl AdmittedOperation {
         Ok(result)
     }
     pub fn native_after(&self) -> Result<Option<Vec<Value>>> {
-        match &self.request.call {
+        match &self.call {
             OperationCall::Single {
                 after: Some(after), ..
             } => {
@@ -113,9 +223,11 @@ impl AdmittedOperation {
     pub fn max_rows(&self) -> u64 {
         self.max_rows
     }
-    pub fn request(&self) -> &OperationRequest {
-        &self.request
+    pub fn request(&self) -> &OperationIdentity {
+        &self.identity
     }
+    pub fn call(&self) -> &OperationCall { &self.call }
+    pub fn idempotency_key(&self) -> Option<&str> { self.idempotency_key.as_deref() }
     pub fn declaration(&self) -> &Value {
         &self.declaration
     }
@@ -125,17 +237,20 @@ impl AdmittedOperation {
     pub fn field(&self, reference: &Value) -> Result<&OperationField> {
         self.fields
             .get(&reference_id(reference)?)
+            .map(Arc::as_ref)
             .ok_or("operation Field is outside its table")
     }
-    pub fn source_table(&self) -> Option<&Table> { self.source_table.as_ref() }
+    pub fn source_table(&self) -> Option<&Table> { self.source_table.as_deref() }
     pub fn source_field(&self, reference: &Value) -> Result<&OperationField> {
-        self.source_fields.get(&reference_id(reference)?).ok_or("Field is outside the declared source table")
+        self.source_fields.get(&reference_id(reference)?).map(Arc::as_ref).ok_or("Field is outside the declared source table")
     }
+    /// Convert an already admitted source value; this does not revalidate authored input.
     pub fn native_source_value(&self, reference: &Value, value: &Value) -> Result<Value> {
         values::native_value(self.source_field(reference)?, value)
     }
-    pub fn related_table(&self, id: &str) -> Result<&Table> { self.related_tables.get(id).ok_or("related table is outside the module") }
-    pub fn related_field(&self, id: &str, reference: &Value) -> Result<&OperationField> { { let key=reference_id(reference)?; if !self.related_fields.get(id).is_some_and(|fields|fields.contains(&key)) { return Err("related Field is outside its table"); } self.parameter_fields.get(&key).ok_or("related Field absent") } }
+    pub fn related_table(&self, id: &str) -> Result<&Table> { self.related_tables.get(id).map(Arc::as_ref).ok_or("related table is outside the module") }
+    pub fn related_field(&self, id: &str, reference: &Value) -> Result<&OperationField> { { let key=reference_id(reference)?; if !self.related_fields.get(id).is_some_and(|fields|fields.contains(&key)) { return Err("related Field is outside its table"); } self.parameter_fields.get(&key).map(Arc::as_ref).ok_or("related Field absent") } }
+    /// Convert an already admitted related-table value; this does not revalidate authored input.
     pub fn native_related_value(&self, id: &str, reference: &Value, value: &Value) -> Result<Value> { values::native_value(self.related_field(id,reference)?,value) }
     pub fn key(&self, id: &str) -> Result<&[Value]> {
         self.keys
@@ -148,7 +263,7 @@ impl AdmittedOperation {
     }
     /// Whether an original-source batch insert is independent of its own prior rows.
     pub fn batch_insert_scope(&self) -> bool {
-        self.batch_insert_scope
+        self.batch_insert_scope_eligible && matches!(self.call, OperationCall::Batch { .. })
     }
 }
 fn reference_id(reference: &Value) -> Result<String> {
@@ -160,182 +275,170 @@ fn reference_id(reference: &Value) -> Result<String> {
     ])
     .to_string())
 }
+pub fn prepare_module_json(raw: &str) -> Result<PreparedOperationModule> {
+    if raw.len() > 8_388_608 { return Err("operation module request capacity exceeded"); }
+    let request: OperationModuleRequest = serde_json::from_value(
+        crate::json::checked_json(raw).map_err(|_| "operation module JSON invalid or duplicate")?,
+    ).map_err(|_| "operation module request shape differs")?;
+    if request.version != "weft.table-operation-module/0.1" { return Err("operation module version differs"); }
+    let source = prepare_source(request.target, request.module, request.binding)?;
+    Ok(PreparedOperationModule { source })
+}
+
+fn prepare_source(target: String, module_id: String, binding: Binding) -> Result<Arc<OperationSource>> {
+    if !matches!(target.as_str(), "postgresql18" | "lakebase18")
+        || binding.native_lifecycle.as_ref().is_none_or(|lifecycle| lifecycle.module != module_id)
+    { return Err("operation target/module profile differs"); }
+    let source_json = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
+    if crate::json::sha256(binding.model_json.as_bytes()) != binding.model_sha256 { return Err("model source pin mismatch"); }
+    let module_index = source_json["modules"].as_array().ok_or("model modules absent")?.iter().position(|m| m["id"] == module_id).ok_or("operation module absent")?;
+    let module = &source_json["modules"][module_index];
+    let first_operation = module["extensions"]["umf.tables"]["commands"].as_array().ok_or("operation command inventory absent")?.iter()
+        .find(|command| known_declaration(command)).and_then(|command| command["id"].as_str()).ok_or("operation module has no supported command")?.to_owned();
+    let binding = Arc::new(binding);
+    let model = Arc::new(crate::raw_read::prepare_operation_document(&binding, source_json, Some(&first_operation))?);
+    let metadata = Arc::new(prepare_module_metadata(&binding, &model, module_index)?);
+    Ok(Arc::new(OperationSource { target, module: module_id, binding, model, metadata }))
+}
+
+fn prepare_module_metadata(binding: &Binding, model: &crate::raw_read::AdmittedModel, module_index: usize) -> Result<ModuleMetadata> {
+    let module = &model.document["modules"][module_index];
+    let payload = &module["extensions"]["umf.tables"];
+    let mut commands = BTreeMap::new();
+    for (index, command) in payload["commands"].as_array().ok_or("operation command inventory absent")?.iter().enumerate() {
+        if let Some(id) = command["id"].as_str() {
+            if commands.insert(id.to_owned(), index).is_some() { return Err("duplicate operation command identity"); }
+        }
+    }
+    let mut tables = BTreeMap::new();
+    for (index, table) in payload["tables"].as_array().ok_or("operation table inventory absent")?.iter().enumerate() {
+        if let Some(id) = table["id"].as_str() { tables.entry(id.to_owned()).or_insert(index); }
+    }
+    let mut elements = BTreeMap::new();
+    for (index, element) in module["elements"].as_array().ok_or("operation module elements absent")?.iter().enumerate() {
+        if let Some(id) = element["id"].as_str() { elements.entry(id.to_owned()).or_insert(index); }
+    }
+
+    let mut binding_by_native = BTreeMap::new();
+    let mut binding_by_logical = BTreeMap::new();
+    for (index, table) in binding.tables.iter().enumerate() {
+        binding_by_native.entry(table.native.clone()).or_insert(index);
+        binding_by_logical.entry(table.logical.clone()).or_insert(index);
+    }
+    let mut resolved_tables = BTreeMap::new();
+    let mut parameter_fields = BTreeMap::<String, Arc<OperationField>>::new();
+    let mut related_tables = BTreeMap::new();
+    let mut related_fields = BTreeMap::<String, BTreeSet<String>>::new();
+    let batch_scope_by_table = batch_scope::independent_insert_scopes(payload);
+    for current_table in payload["tables"].as_array().ok_or("operation table inventory absent")? {
+        let table_id = current_table["id"].as_str().ok_or("table identity absent")?.to_owned();
+        let native_name = current_table["name"].as_str().ok_or("table name absent")?;
+        let bound_index = *binding_by_native.get(native_name).ok_or("parameter table mapping absent")?;
+        let bound_table = &binding.tables[bound_index];
+        let mut bound_columns = BTreeMap::new();
+        for (index, column) in bound_table.columns.iter().enumerate() { bound_columns.entry(column.native.clone()).or_insert(index); }
+        let mut fields = BTreeMap::new();
+        for column in current_table["columns"].as_array().ok_or("table columns absent")? {
+            let field_id = column["field"]["element"].as_str().ok_or("Field identity absent")?;
+            let field_index = *elements.get(field_id).ok_or("original operation Field absent")?;
+            let field = &module["elements"][field_index];
+            let native_column = column["name"].as_str().ok_or("operation column name absent")?;
+            let bound_column_index = *bound_columns.get(native_column).ok_or("operation column mapping absent")?;
+            let bound = &bound_table.columns[bound_column_index];
+            if field["semanticTypes"].as_array().is_some_and(|v| !v.is_empty()) { return Err("operation semantic type interpreter unavailable"); }
+            if matches!(bound.carrier, Carrier::Uuid | Carrier::Bits128 | Carrier::Date | Carrier::Timestamp) {
+                if field["facets"].as_object().is_some_and(|v| !v.is_empty()) || field["allowedValues"].as_array().is_some_and(|v| !v.is_empty()) {
+                    return Err("operation exact carrier qualifiers unsupported");
+                }
+            }
+            let prepared_literal = if matches!(bound.carrier, Carrier::Uuid | Carrier::Bits128 | Carrier::Date | Carrier::Timestamp) {
+                None
+            } else {
+                Some(Arc::new(crate::security_literals::PreparedLiteral::new(field).map_err(|_| "operation Field facets unsupported")?))
+            };
+            let reference = reference_id(&column["field"])?;
+            let mut native_type = column["nativeType"].clone();
+            for key in ["length", "precision", "scale"] {
+                if let Some(value) = native_type.get(key) {
+                    let n = crate::security_literals::unsigned(value).map_err(|_| "native operation capacity invalid")?;
+                    native_type[key] = json!(n);
+                }
+            }
+            let resolved = Arc::new(OperationField { reference: column["field"].clone(), native: bound.native.clone(), carrier: bound.carrier.clone(), nullable: bound.nullable, declaration: field.clone(), native_type, prepared_literal });
+            fields.insert(reference.clone(), Arc::clone(&resolved));
+            if parameter_fields.insert(reference.clone(), Arc::clone(&resolved)).is_some() { return Err("ambiguous original parameter Field binding"); }
+            related_fields.entry(table_id.clone()).or_default().insert(reference);
+        }
+        let record_id = current_table["record"]["element"].as_str().ok_or("table Record identity absent")?;
+        let record_index = *elements.get(record_id).ok_or("operation Record absent")?;
+        let record = &module["elements"][record_index];
+        let logical = vec![module["namespace"].as_str().ok_or("module namespace absent")?.to_owned(), record["name"].as_str().or_else(|| record["id"].as_str()).ok_or("Record name absent")?.to_owned()];
+        let logical_index = *binding_by_logical.get(&logical).ok_or("operation native mapping absent")?;
+        let table = Arc::new(binding.tables[logical_index].clone());
+        let keys = record["keys"].as_array().ok_or("Record keys absent")?.iter().map(|key| {
+            Ok((key["id"].as_str().ok_or("Key ID absent")?.to_owned(), key["fields"].as_array().ok_or("Key Fields absent")?.clone()))
+        }).collect::<Result<BTreeMap<_, _>>>()?;
+        let batch_insert_scope_eligible = batch_scope_by_table.get(&table_id).copied().unwrap_or(false);
+        related_tables.insert(table_id.clone(), Arc::clone(&table));
+        resolved_tables.insert(table_id, Arc::new(ResolvedTable { table, fields: Arc::new(fields), keys: Arc::new(keys), batch_insert_scope_eligible }));
+    }
+    Ok(ModuleMetadata { module_index, commands, tables, elements, resolved_tables, parameter_fields: Arc::new(parameter_fields), related_tables: Arc::new(related_tables), related_fields: Arc::new(related_fields) })
+}
+
 pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
-    if raw.len() > 4_194_304 {
-        return Err("operation request capacity exceeded");
-    }
-    let request: OperationRequest = serde_json::from_value(
-        crate::json::checked_json(raw).map_err(|_| "operation JSON invalid or duplicate")?,
-    )
-    .map_err(|_| "operation request shape differs")?;
-    if request.version != "weft.table-operation/0.1"
-        || !matches!(request.target.as_str(), "postgresql18" | "lakebase18")
-        || request
-            .binding
-            .native_lifecycle
-            .as_ref()
-            .is_none_or(|c| c.module != request.module)
-    {
-        return Err("operation target/module profile differs");
-    }
-    let model =
-        crate::raw_read::prepare_operation_model(&request.binding, Some(&request.operation))?;
+    if raw.len() > 4_194_304 { return Err("operation request capacity exceeded"); }
+    let request: OperationRequest = serde_json::from_value(crate::json::checked_json(raw).map_err(|_| "operation JSON invalid or duplicate")?)
+        .map_err(|_| "operation request shape differs")?;
+    if request.version != "weft.table-operation/0.1" { return Err("operation request version differs"); }
+    let source = prepare_source(request.target, request.module, request.binding)?;
+    let module = PreparedOperationModule { source };
+    module.prepare_operation(&request.operation)?.bind(request.call, request.idempotency_key)
+}
+
+fn prepare_static_operation(source: Arc<OperationSource>, operation: &str) -> Result<PreparedOperation> {
+    if operation.is_empty() || operation.len() > 256 { return Err("operation identity invalid"); }
+    let model = &source.model;
+    let metadata = &source.metadata;
+    let request = OperationIdentity { version: "weft.table-operation/0.1".into(), target: source.target.clone(), binding: Arc::clone(&source.binding), module: source.module.clone(), operation: operation.to_owned() };
     let lifecycle = model
         .lifecycle
         .as_ref()
         .ok_or("native lifecycle context absent")?;
-    let module = model.document["modules"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|m| m["id"] == request.module)
-        .ok_or("operation module absent")?;
+    let module = &model.document["modules"][metadata.module_index];
     let payload = &module["extensions"]["umf.tables"];
-    let mut declaration = payload["commands"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|c| c["id"] == request.operation)
-        .ok_or("operation not declared")?
-        .clone();
+    let command_index = *metadata.commands.get(operation).ok_or("operation not declared")?;
+    let mut declaration = payload["commands"][command_index].clone();
     // Known integer controls become typed plan integers; original source bytes
     // remain unchanged in the binding. JSONB/JSON consumers must not turn an
     // authored 1e2 bound into a floating-point plan control.
     let max_rows = crate::security_literals::unsigned(&declaration["body"]["maxRows"])
         .map_err(|_| "operation result bound invalid")?;
     declaration["body"]["maxRows"] = json!(max_rows);
-    let max_rows = match &request.call {
-        OperationCall::Single {
-            size: Some(size), ..
-        } => {
-            if declaration["body"]["kind"] != "read"
-                || !matches!(
-                    declaration["body"]["result"].as_str(),
-                    Some("many" | "page")
-                )
-                || *size == 0
-                || *size > max_rows
-            {
-                return Err("requested read size exceeds declared result bounds");
-            }
-            *size
-        }
-        _ => max_rows,
-    };
     if declaration.get("batch").is_some() {
         let limit = crate::security_literals::unsigned(&declaration["batch"]["maxItems"])
             .map_err(|_| "operation batch bound invalid")?;
         declaration["batch"]["maxItems"] = json!(limit);
     }
-    let table_declaration = payload["tables"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|t| t["id"] == declaration["body"]["table"])
-        .ok_or("operation table not declared")?;
-    let record = module["elements"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|e| e["id"] == table_declaration["record"]["element"])
-        .ok_or("operation Record absent")?;
-    let path = vec![
-        module["namespace"].as_str().unwrap().to_owned(),
-        record["name"]
-            .as_str()
-            .or_else(|| record["id"].as_str())
-            .unwrap()
-            .to_owned(),
-    ];
-    let table = request
-        .binding
-        .tables
-        .iter()
-        .find(|t| t.logical == path)
-        .ok_or("operation native mapping absent")?
-        .clone();
-    let source_declaration = if declaration["body"]["kind"] == "insertFrom" {
-        Some(payload["tables"].as_array().unwrap().iter().find(|t| t["id"] == declaration["body"]["source"]["table"]).ok_or("source table is outside the module")?)
+    let table_id = declaration["body"]["table"].as_str().ok_or("operation table identity absent")?;
+    let table_index = *metadata.tables.get(table_id).ok_or("operation table not declared")?;
+    let table_declaration = &payload["tables"][table_index];
+    let resolved_table = metadata.resolved_tables.get(table_id).ok_or("operation native mapping absent")?;
+    let record_id = table_declaration["record"]["element"].as_str().ok_or("operation Record identity absent")?;
+    let record_index = *metadata.elements.get(record_id).ok_or("operation Record absent")?;
+    let record = &module["elements"][record_index];
+    let path = resolved_table.table.logical.clone();
+    let table = Arc::clone(&resolved_table.table);
+    let source_table_id = if declaration["body"]["kind"] == "insertFrom" {
+        Some(declaration["body"]["source"]["table"].as_str().ok_or("source table identity absent")?)
     } else { None };
-    let source_table = source_declaration.map(|source| request.binding.tables.iter().find(|t| t.native == source["name"].as_str().unwrap()).cloned().ok_or("source native mapping absent")).transpose()?;
-    let mut source_fields = BTreeMap::new();
-    let mut related_tables = BTreeMap::new();
-    let mut related_fields: BTreeMap<String,BTreeSet<String>> = BTreeMap::new();
-    let batch_insert_scope = matches!(&request.call, OperationCall::Batch { .. })
-        && declaration["body"]["kind"] == "insert"
-        && batch_scope::independent_insert_scope(
-            payload,
-            &table_declaration["record"],
-            &table_declaration["id"],
-        );
-    let mut fields = BTreeMap::new();
-    let mut parameter_fields = BTreeMap::new();
-    for current_table in payload["tables"].as_array().unwrap() {
-        let bound_table = request
-            .binding
-            .tables
-            .iter()
-            .find(|t| t.native == current_table["name"].as_str().unwrap())
-            .ok_or("parameter table mapping absent")?;
-        let table_id=current_table["id"].as_str().ok_or("table identity absent")?.to_owned();
-        related_tables.insert(table_id.clone(),bound_table.clone());
-        for column in current_table["columns"].as_array().unwrap() {
-            let field = module["elements"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|f| f["id"] == column["field"]["element"])
-                .ok_or("original operation Field absent")?;
-            let bound = bound_table
-                .columns
-                .iter()
-                .find(|c| c.native == column["name"].as_str().unwrap())
-                .ok_or("operation column mapping absent")?;
-            if field["semanticTypes"]
-                .as_array()
-                .is_some_and(|v| !v.is_empty())
-            {
-                return Err("operation semantic type interpreter unavailable");
-            }
-            if matches!(bound.carrier, Carrier::Uuid | Carrier::Bits128 | Carrier::Date | Carrier::Timestamp) {
-                if field["facets"].as_object().is_some_and(|v| !v.is_empty())
-                    || field["allowedValues"]
-                        .as_array()
-                        .is_some_and(|v| !v.is_empty())
-                {
-                    return Err("operation exact carrier qualifiers unsupported");
-                }
-            } else {
-                crate::security_literals::validate_field(field)
-                    .map_err(|_| "operation Field facets unsupported")?;
-            }
-            let reference = reference_id(&column["field"])?;
-            let mut native_type = column["nativeType"].clone();
-            for key in ["length", "precision", "scale"] {
-                if let Some(value) = native_type.get(key) {
-                    let n = crate::security_literals::unsigned(value)
-                        .map_err(|_| "native operation capacity invalid")?;
-                    native_type[key] = json!(n);
-                }
-            }
-            let resolved = OperationField {
-                reference: column["field"].clone(),
-                native: bound.native.clone(),
-                carrier: bound.carrier.clone(),
-                nullable: bound.nullable,
-                declaration: field.clone(),
-                native_type,
-            };
-            if current_table["id"] == table_declaration["id"] {
-                fields.insert(reference.clone(), resolved.clone());
-            }
-            if source_declaration.is_some_and(|source| source["id"] == current_table["id"]) { source_fields.insert(reference.clone(), resolved.clone()); }
-            related_fields.entry(table_id.clone()).or_default().insert(reference.clone());
-            if parameter_fields.insert(reference, resolved).is_some() {
-                return Err("ambiguous original parameter Field binding");
-            }
-        }
-    }
+    let source_table = source_table_id.map(|id| metadata.resolved_tables.get(id).map(|table| Arc::clone(&table.table)).ok_or("source table is outside the module")).transpose()?;
+    let source_fields = source_table_id.map(|id| metadata.resolved_tables.get(id).map(|table| Arc::clone(&table.fields)).ok_or("source table is outside the module")).transpose()?.unwrap_or_else(|| Arc::new(BTreeMap::new()));
+    let batch_insert_scope_eligible = declaration["body"]["kind"] == "insert" && resolved_table.batch_insert_scope_eligible;
+    let fields = Arc::clone(&resolved_table.fields);
+    let related_tables = Arc::clone(&metadata.related_tables);
+    let related_fields = Arc::clone(&metadata.related_fields);
+    let parameter_fields = Arc::clone(&metadata.parameter_fields);
+    let keys = Arc::clone(&resolved_table.keys);
     let kind = declaration["body"]["kind"].as_str().unwrap();
     let mut commands = match kind {
         "read" => vec!["select"],
@@ -374,7 +477,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         paths.insert(source.logical.clone());
         if source.logical == path && !commands.contains(&"select") { commands.push("select"); }
     }
-    fn related_paths(node: &Value, tables: &BTreeMap<String,Table>, paths: &mut BTreeSet<Vec<String>>) -> Result<()> {
+    fn related_paths(node: &Value, tables: &BTreeMap<String,Arc<Table>>, paths: &mut BTreeSet<Vec<String>>) -> Result<()> {
         if node["op"] == "related" {
             let table=tables.get(node["table"].as_str().ok_or("related table identity absent")?).ok_or("related table is outside the module")?;
             paths.insert(table.logical.clone());related_paths(&node["where"],tables,paths)?;
@@ -390,9 +493,14 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         item.as_object_mut().unwrap().remove("command");
         item["commands"] = if item["id"] == table_declaration["id"] { json!(commands) } else { json!(["select"]) };
     }
-    let admitted = AdmittedOperation {
-        request,
-        max_rows,
+    let cursor_fields = if declaration["body"]["result"] == "page" {
+        declaration["body"]["orderBy"].as_array().into_iter().flatten()
+            .filter_map(|order| reference_id(&order["field"]).ok().and_then(|key| fields.get(&key).map(|field| (**field).clone()))).collect()
+    } else { vec![] };
+    let static_operation = Arc::new(StaticOperation {
+        declared_max_rows: crate::security_literals::unsigned(&declaration["body"]["maxRows"])
+            .map_err(|_| "operation result bound invalid")?,
+        declaration_digest: crate::json::sha256(crate::mutation::canonical(&declaration).as_bytes()),
         declaration,
         table,
         fields,
@@ -401,21 +509,22 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         related_tables,
         related_fields,
         parameter_fields,
-        keys: record["keys"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|k| {
-                Ok((
-                    k["id"].as_str().ok_or("Key ID absent")?.to_owned(),
-                    k["fields"].as_array().ok_or("Key Fields absent")?.clone(),
-                ))
-            })
-            .collect::<Result<_>>()?,
+        keys,
         obligations,
-        batch_insert_scope,
-    };
-    validate(admitted, record, table_declaration)
+        batch_insert_scope_eligible,
+        cursor_fields,
+    });
+    let checked = validation::validate_static(AdmittedOperation {
+        identity: request,
+        static_operation,
+        call: OperationCall::Single { inputs: BTreeMap::new(), size: None, after: None },
+        idempotency_key: None,
+        max_rows,
+    }, record, table_declaration)?;
+    Ok(PreparedOperation { identity: checked.identity, static_operation: checked.static_operation })
 }
 
-pub(crate) fn native_seed_value(field:&OperationField,value:&Value)->Result<Value>{ values::native_value(field,value) }
+pub(crate) fn native_seed_value(field:&OperationField,value:&Value)->Result<Value>{
+    values::literal(field,value)?;
+    values::native_value(field,value)
+}

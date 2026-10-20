@@ -1,0 +1,11 @@
+{
+  "format": "weft-test-fixture-migration/0.1",
+  "fixture": "tests/engine-catalog/native-ashlar-related-request.json",
+  "sourceCoreVersion": "0.8.0",
+  "currentCoreVersion": "0.10.0",
+  "documentId": "typed-native-actions-e2e",
+  "sourceHasSemanticTypes": false,
+  "documentSha256": "1fde802d738d6907e26206a61417438a4ae759a22c70e51ecf8017744c96bdc2",
+  "transformation": "Changed only the embedded document owning-core version to 0.10.0; recomputed the document pin SHA256 and revision, and set pin.umfVersion to 0.10.0. All other document content, including unknown extension payload, remains structurally identical.",
+  "validation": "Validated against current UMF 0.10.0 spec/core/schema.json and semantic-type-reference.schema.json."
+}

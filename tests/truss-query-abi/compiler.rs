@@ -22,12 +22,14 @@ fn original_named_owned_and_independent_queries_compile(){
  }
 }
 #[test]
-fn legacy_modes_refuse_new_binding_and_any_abi_field(){
+fn legacy_core_source_and_old_abi_refuse(){
  let old:Value=serde_json::from_str(include_str!("../../docs/helix/04-build/evidence/mutation-current-truss-20261014/native-query-bundle.json")).unwrap();
  let mut original=request("SELECT COUNT(*) FROM products p");original["modules"]=old["modules"].clone();
  original["target"]["backendVersion"]=json!("0.4.35");original["target"]["targetProfile"]=json!("truss-runtime-pg18.6/0.4");
  let raw=old["bindingJson"].as_str().unwrap();original["target"]["bindingJson"]=json!(raw);original["target"]["bindingSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));
- let positive=run(&original);assert_eq!(positive["status"],"compiled","Original closed target must remain usable: {positive}");
+ // The historical release bundle is retained as evidence, but Core .8 is no
+ // longer admitted by the maintained compiler path.
+ let historical=run(&original);assert_eq!(historical["status"],"blocked","{historical}");assert!(historical.get("sql").is_none());
 
  for version in ["0.4.35","0.4.36","0.4.37"] {
   let mut r=request("SELECT COUNT(*) FROM \"A\" a");r["target"]["backendVersion"]=json!(version);r["target"]["targetProfile"]=json!("truss-runtime-pg18.6/0.4");

@@ -22,7 +22,7 @@ doc['modules'][0]['relationships']=[dict(id='customer-orders',name='orders',sour
 def text(d):return json.dumps(d,ensure_ascii=False,separators=(',',':'))
 def module(d):
     raw=text(d)
-    return dict(documentJson=raw,pin=dict(documentId=d['id'],revision='application-fixture-1',umfVersion='0.7.0',sha256=hashlib.sha256(raw.encode()).hexdigest()),selectedModuleIds=['sales'])
+    return dict(documentJson=raw,pin=dict(documentId=d['id'],revision='application-current010-r1',umfVersion='0.10.0',sha256=hashlib.sha256(raw.encode()).hexdigest()),selectedModuleIds=['sales'])
 def request(sql,profile=None,parameters=None,d=None):
     r=dict(dialect='weft-sql/0.2.0',sql=sql,modules=[module(d or doc)])
     if profile:r['readProfile']=dict(version='weft-application-read/0.2.0',subset=profile)

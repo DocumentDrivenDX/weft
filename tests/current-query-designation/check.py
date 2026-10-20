@@ -13,7 +13,7 @@ expected={
 'prohibited-salary-order-empty':[('order/0','s0',None)],
 'unsupported-salary-sum':[('outputs/0/argument','s0',None)]}
 sha=lambda raw:hashlib.sha256(raw).hexdigest();checks=[]
-assert sha((root/'fixtures/original-owner-source.json').read_bytes())=='2f826621bd3187857f1b4fbab5d9c818891b0df96d55d6a1d379638906e2ebda'
+assert sha((root/'fixtures/original-owner-source.json').read_bytes())=='2a589e5794057e1ad9c5a1ad041bf6adeb0c93c2a903949351233f5947f7a339'
 for name,uses in expected.items():
  raw=(root/'fixtures'/f'{name}.request.json').read_bytes();p=subprocess.run([str(binary)],input=raw,capture_output=True);assert p.returncode==0 and not p.stderr and p.stdout==(root/'fixtures'/f'{name}.report.json').read_bytes(),name
  r=json.loads(p.stdout);request=json.loads(raw);profile=next(s for s in request['opaqueSources'] if s['role']=='query-designation')

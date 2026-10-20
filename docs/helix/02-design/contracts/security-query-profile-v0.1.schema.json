@@ -39,7 +39,9 @@
             "maxLength": 1024
           },
           "umfVersion": {
-            "enum": ["0.8.0", "0.10.0"]
+            "enum": [
+              "0.10.0"
+            ]
           },
           "sha256": {
             "type": "string",

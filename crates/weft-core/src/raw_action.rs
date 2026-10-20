@@ -653,7 +653,7 @@ pub fn admit_json(raw: &str) -> ActionResult<AdmittedAction> {
         checked_json(&request.binding.model_json).map_err(|_| "original model JSON refused")?;
     if request.source.document_sha256 != request.binding.model_sha256
         || request.source.document_id != doc["id"]
-        || request.source.core_version != "0.8.0"
+        || request.source.core_version != "0.10.0"
         || request.source.invocation.id != "umf.actions.tx"
         || request.source.invocation.version != "1"
     {
@@ -768,7 +768,7 @@ pub fn admit_json(raw: &str) -> ActionResult<AdmittedAction> {
         pin: ModelPin {
             document_id: request.source.document_id.clone(),
             revision: request.binding.model_sha256.clone(),
-            umf_version: "0.8.0".into(),
+            umf_version: "0.10.0".into(),
             sha256: sha256(request.binding.model_json.as_bytes()),
         },
         selected_module_ids: array(&doc["modules"])?

@@ -1371,7 +1371,7 @@ mod native066_tests{
  fn run(r:&Value)->Value{serde_json::from_str(&compile_json(&r.to_string())).unwrap()}
  #[test]
  fn exact_native066_bundle_has_separate_cohort_and_old_registration_refuses(){
-  let bundle:Value=serde_json::from_str(include_str!("../../../tests/truss066/native-query-bundle.json")).unwrap();assert_eq!(bundle["binding"]["releaseId"],"truss-catalog-runtime/0.66-candidate");assert_eq!(bundle["binding"]["releaseSha256"],"99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a");assert_eq!(bundle["binding"]["documents"][0]["revision"],"named-query-core-r1");
+  let bundle:Value=serde_json::from_str(include_str!("../../../tests/truss066/native-query-bundle-current010.json")).unwrap();assert_eq!(bundle["binding"]["releaseId"],"truss-catalog-runtime/0.66-candidate");assert_eq!(bundle["binding"]["releaseSha256"],"99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a");assert_eq!(bundle["binding"]["documents"][0]["revision"],"named-query-core-r1");
   for sql in ["SELECT r.token FROM Resource r","SELECT COUNT(*) FROM Resource r","SELECT r.resourceId FROM Resource r WHERE r.token='opaque-token'","SELECT r.token FROM Resource r GROUP BY r.token"]{
    let r=run(&request(&bundle,sql,"0.4.36"));assert_eq!(r["status"],"compiled","{sql}: {r}");assert!(r.get("sql").is_some());
    let r=run(&request(&bundle,sql,"0.4.35"));assert_eq!(r["status"],"blocked","old registration: {r}");assert!(r.get("sql").is_none());
@@ -1381,7 +1381,7 @@ mod native066_tests{
  }
  #[test]
  fn original_native065_mapping_retains_its_original_registration(){
-  let bundle:Value=serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/mutation-current-truss-20261014/native-query-bundle.json")).unwrap();
+  let bundle:Value=serde_json::from_str(include_str!("../../../tests/truss068/native-query-bundle-truss065-current010.json")).unwrap();
   let r=run(&request(&bundle,"SELECT p.name FROM products p","0.4.35"));assert_eq!(r["status"],"compiled","{r}");
   let r=run(&request(&bundle,"SELECT p.name FROM products p","0.4.36"));assert_eq!(r["status"],"blocked");assert!(r.get("sql").is_none());
  }
@@ -1393,7 +1393,7 @@ mod native068_tests {
  use serde_json::{json,Value};
  // Compiler-only namespace fixture over unchanged original named products model.
  // The native68 stamp does not claim this historical installation was upgraded.
- fn bundle()->Value {let f:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/truss066-products.json")).unwrap();let mut binding:Value=serde_json::from_str(f["binding"]["utf8"].as_str().unwrap()).unwrap();binding["releaseId"]=json!("truss-catalog-runtime/0.68-candidate");binding["releaseSha256"]=json!("3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc");json!({"binding":binding,"bindingJson":binding.to_string(),"modules":[{"pin":f["modelPin"],"documentJson":f["model"]["utf8"],"selectedModuleIds":["sales"]}]})}
+ fn bundle()->Value {let f:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/truss066-products-current010.json")).unwrap();let mut binding:Value=serde_json::from_str(f["binding"]["utf8"].as_str().unwrap()).unwrap();binding["releaseId"]=json!("truss-catalog-runtime/0.68-candidate");binding["releaseSha256"]=json!("3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc");json!({"binding":binding,"bindingJson":binding.to_string(),"modules":[{"pin":f["modelPin"],"documentJson":f["model"]["utf8"],"selectedModuleIds":["sales"]}]})}
  fn request(bundle:&Value,sql:&str,version:&str)->Value{let binding=bundle["bindingJson"].as_str().unwrap();json!({"interfaceVersion":"weft-compile/0.2.6","dialect":"weft-sql/0.2.0","timestampComparisonProfile":"umf-rfc3339-exact-instant/1.0.0","modules":bundle["modules"],"sql":sql,"parameters":{},"exactParameters":{},"options":{"allowCandidate":true},"target":{"backendId":"truss.postgresql.runtime","backendVersion":version,"targetProfile":"truss-runtime-pg18.6/0.4","bindingJson":binding,"bindingSha256":weft_core::json::sha256(binding.as_bytes())}})}
  fn run(r:&Value)->Value {serde_json::from_str(&compile_json(&r.to_string())).unwrap()}
  fn edit_binding(bundle:&Value,edit:impl FnOnce(&mut Value))->Value {let mut b=bundle.clone();let mut v=b["binding"].clone();edit(&mut v);b["binding"]=v.clone();b["bindingJson"]=json!(v.to_string());b}
@@ -1436,7 +1436,7 @@ mod native068_tests {
 mod native068_original_names_tests {
  #[test]
  fn original_unnamed_record_ids_are_not_invented_sql_names(){
-  let bundle:serde_json::Value=serde_json::from_str(include_str!("../../../tests/truss068/native-query-bundle.json")).unwrap();let raw=bundle["bindingJson"].as_str().unwrap();let request=serde_json::json!({"interfaceVersion":"weft-compile/0.2.6","dialect":"weft-sql/0.2.0","timestampComparisonProfile":"umf-rfc3339-exact-instant/1.0.0","modules":bundle["modules"],"sql":"SELECT COUNT(*) FROM A a","parameters":{},"exactParameters":{},"options":{"allowCandidate":true},"target":{"backendId":"truss.postgresql.runtime","backendVersion":"0.4.37","targetProfile":"truss-runtime-pg18.6/0.4","bindingJson":raw,"bindingSha256":weft_core::json::sha256(raw.as_bytes())}});let out:serde_json::Value=serde_json::from_str(&super::compile_json(&request.to_string())).unwrap();assert_eq!(out["status"],"blocked");assert_eq!(out["diagnostics"][0]["code"],"WFT-NAME-MISSING");assert!(out.get("sql").is_none());
+  let bundle:serde_json::Value=serde_json::from_str(include_str!("../../../tests/truss068/native-query-bundle-current010.json")).unwrap();let raw=bundle["bindingJson"].as_str().unwrap();let request=serde_json::json!({"interfaceVersion":"weft-compile/0.2.6","dialect":"weft-sql/0.2.0","timestampComparisonProfile":"umf-rfc3339-exact-instant/1.0.0","modules":bundle["modules"],"sql":"SELECT COUNT(*) FROM A a","parameters":{},"exactParameters":{},"options":{"allowCandidate":true},"target":{"backendId":"truss.postgresql.runtime","backendVersion":"0.4.37","targetProfile":"truss-runtime-pg18.6/0.4","bindingJson":raw,"bindingSha256":weft_core::json::sha256(raw.as_bytes())}});let out:serde_json::Value=serde_json::from_str(&super::compile_json(&request.to_string())).unwrap();assert_eq!(out["status"],"blocked");assert_eq!(out["diagnostics"][0]["code"],"WFT-NAME-MISSING");assert!(out.get("sql").is_none());
  }
 }
 
@@ -1445,14 +1445,47 @@ mod native068_original_names_tests {
 mod decimal12_runtime_tests {
     use super::*;
     #[test]
-    fn genuine_unnamed_northwind_binding_compiles_only_new_identity_name_selection() {
-        // Genuine owner-captured accepted model and binding bytes, not a native query pass.
+    fn genuine_unnamed_northwind_binding_compiles_under_current_metadata_profile() {
+        // Genuine source and original owner binding remain frozen. The older
+        // 0.4.39 registration has no authority for this source's DDD/Hohfeld
+        // metadata and must refuse it. For the positive compiler-only check,
+        // derive an explicit 0.71/query-ABI 1.1 binding from the preserved
+        // mapping; this is not a captured installation or native qualification.
         let mut r: serde_json::Value=serde_json::from_str(include_str!("../../../tests/truss-decimal12/fixtures/genuine-northwind-compile-request.json")).unwrap();
-        let original_binding=r["target"]["bindingJson"].clone();let original_modules=r["modules"].clone();
-        let old=run(&r);assert_eq!(old["status"],"blocked");assert_eq!(old["diagnostics"][0]["code"],"WFT-NAME-MISSING");
-        r["target"]["backendVersion"]=json!("0.4.39");let out=run(&r);assert_eq!(out["status"],"compiled","{out}");
-        assert!(out["parameters"].as_array().unwrap().iter().any(|p|p["value"]==original_binding));
-        assert_eq!(r["modules"],original_modules);assert_eq!(r["target"]["bindingJson"],original_binding);
+        let original_binding=r["target"]["bindingJson"].as_str().unwrap().to_owned();
+        let original_modules=r["modules"].clone();
+        r["target"]["backendVersion"]=json!("0.4.39");
+        let retired=run(&r);assert_eq!(retired["status"],"blocked","{retired}");assert!(retired.get("sql").is_none());
+        let mut binding:serde_json::Value=serde_json::from_str(&original_binding).unwrap();
+        let current_binding:serde_json::Value=serde_json::from_str(include_str!("../../../tests/truss-date/native-query-bundle.json")).unwrap();
+        binding["queryAbi"]=current_binding["binding"]["queryAbi"].clone();
+        binding["releaseId"]=current_binding["binding"]["releaseId"].clone();
+        binding["releaseSha256"]=current_binding["binding"]["releaseSha256"].clone();
+        // Retarget the derived binding's exact source identities to the
+        // validated successor model bytes; the frozen captured binding is
+        // unchanged in its fixture.
+        let model_pin=&r["modules"][0]["pin"];
+        for document in binding["documents"].as_array_mut().unwrap() {
+            if document["documentId"]==model_pin["documentId"] {
+                document["revision"]=model_pin["revision"].clone();
+                document["sha256"]=model_pin["sha256"].clone();
+            }
+        }
+        for record in binding["records"].as_array_mut().unwrap() {
+            let update_identity=|identity:&mut serde_json::Value| {
+                if identity["documentId"]==model_pin["documentId"] {identity["revision"]=model_pin["revision"].clone();}
+            };
+            update_identity(&mut record["identity"]);
+            for field in record["fields"].as_array_mut().into_iter().flatten() {update_identity(&mut field["identity"]);}
+        }
+        let current_binding_json=binding.to_string();
+        r["target"]["bindingJson"]=json!(current_binding_json);
+        r["target"]["bindingSha256"]=json!(weft_core::json::sha256(current_binding_json.as_bytes()));
+        r["interfaceVersion"]=json!("weft-compile/0.2.7");
+        r["target"]["backendVersion"]=json!("0.4.41");
+        let out=run(&r);assert_eq!(out["status"],"compiled","{out}");
+        assert!(out["parameters"].as_array().unwrap().iter().any(|p|p["value"]==current_binding_json));
+        assert_eq!(r["modules"],original_modules,"UMF source bytes/pins changed during the compiler-only binding adaptation");
     }
 
     fn request(sql: &str) -> serde_json::Value {
@@ -1520,7 +1553,7 @@ mod canonical_date_runtime_tests {
         let source=d.to_string();let sha=weft_core::json::sha256(source.as_bytes());b["modules"][0]["documentJson"]=json!(source);b["modules"][0]["pin"]["sha256"]=json!(sha);b["modules"][0]["pin"]["umfVersion"]=json!("0.10.0");
         let mut binding:serde_json::Value=serde_json::from_str(b["bindingJson"].as_str().unwrap()).unwrap();binding["documents"][0]["sha256"]=json!(sha);
         binding["queryAbi"]=json!({"identity":"truss-postgresql-logical-query","version":"1.1","sha256":weft_core::json::sha256(include_bytes!("../../../tests/truss-date/query-abi1.1.json"))});
-        binding["records"][0]["fields"].as_array_mut().unwrap().push(json!({"identity":{"module":"m","element":"day","documentId":"adoc","revision":"r1"},"propertyId":"5"}));
+        binding["records"][0]["fields"].as_array_mut().unwrap().push(json!({"identity":{"module":"m","element":"day","documentId":"adoc","revision":"current010-r1"},"propertyId":"5"}));
         let raw=binding.to_string();
         json!({"interfaceVersion":"weft-compile/0.2.7","dialect":"weft-sql/0.2.0","timestampComparisonProfile":"umf-rfc3339-exact-instant/1.0.0","modules":b["modules"],"sql":sql,"parameters":{},"exactParameters":{},"options":{"allowCandidate":true},"target":{"backendId":"truss.postgresql.runtime","backendVersion":"0.4.41","targetProfile":"truss-runtime-pg18.6/0.5","bindingJson":raw,"bindingSha256":weft_core::json::sha256(raw.as_bytes())}})
     }

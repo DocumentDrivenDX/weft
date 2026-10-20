@@ -9,18 +9,18 @@ fn request()->Value {
     let mut request=cases.as_array().unwrap().iter().find(|c|c["expected"]["status"]=="compiled").unwrap()["request"].clone();
     request["interfaceVersion"]=json!("weft-compile/0.5.0");request["dialect"]=json!("weft-sql/0.2.0");
     for module in request["modules"].as_array_mut().unwrap(){
-        let mut doc:Value=serde_json::from_str(module["documentJson"].as_str().unwrap()).unwrap();doc["umf"]=json!("0.8.0");
-        let text=doc.to_string();module["documentJson"]=json!(text);module["pin"]["umfVersion"]=json!("0.8.0");module["pin"]["sha256"]=json!(sha256(text.as_bytes()));
+        let mut doc:Value=serde_json::from_str(module["documentJson"].as_str().unwrap()).unwrap();doc["umf"]=json!("0.10.0");
+        let text=doc.to_string();module["documentJson"]=json!(text);module["pin"]["umfVersion"]=json!("0.10.0");module["pin"]["sha256"]=json!(sha256(text.as_bytes()));
     }
     let fixture:Value=serde_json::from_str(include_str!("security-source-fixture.json")).unwrap();
     let doc=&fixture["resolution"]["documents"][0];let text=doc["document"].to_string();
-    request["modules"]=json!([{"documentJson":text,"pin":{"documentId":doc["document"]["id"],"revision":doc["revision"],"umfVersion":"0.8.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["m"]}]);
+    request["modules"]=json!([{"documentJson":text,"pin":{"documentId":doc["document"]["id"],"revision":doc["revision"],"umfVersion":"0.10.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["m"]}]);
     request["security"]=json!({"version":"umf.security/0.1.0","policyJson":fixture["policy"].to_string(),"ontologyJson":fixture["resolution"]["ontology"].to_string()});request
 }
 fn response(request:&Value)->Value{serde_json::from_str(&Compiler::default().compile_json(&request.to_string())).unwrap()}
 fn refused(response:Value,code:&str){if response["interfaceVersion"]=="weft-compile/0.5.0"{assert!(SecurityResponse::is_valid(&response));}assert_eq!(response["status"],"blocked");assert_eq!(response["diagnostics"][0]["code"],code);for key in ["sql","parameters","logicalPlan"]{assert!(response.get(key).is_none());}}
 #[test]
-fn core08_source_custody_never_activates_uninterpreted_security(){let r=response(&request());assert_eq!(r["interfaceVersion"],"weft-compile/0.5.0");refused(r,"WFT-SECURITY-UNSUPPORTED");}
+fn current010_source_custody_never_activates_uninterpreted_security(){let r=response(&request());assert_eq!(r["interfaceVersion"],"weft-compile/0.5.0");refused(r,"WFT-SECURITY-UNSUPPORTED");}
 #[test]
 fn missing_security_and_prior_core_pin_do_not_downgrade(){let mut r=request();r.as_object_mut().unwrap().remove("security");refused(response(&r),"WFT-INPUT");let mut r=request();r["modules"][0]["pin"]["umfVersion"]=json!("0.7.0");refused(response(&r),"WFT-INPUT");}
 #[test]
@@ -1175,7 +1175,7 @@ struct MainSecurityResponse01;
 fn valid_main_security_response02(value:&Value)->bool {
  let schema:Value=serde_json::from_str(include_str!("../../../docs/helix/02-design/contracts/security-compile-response-v0.2.schema.json")).unwrap();
  let mut registry=jsonschema::Registry::new();
- for raw in [include_str!("../../../docs/helix/02-design/contracts/compile-response-v0.2.schema.json"),include_str!("../../../docs/helix/02-design/contracts/logical-plan-v0.2.schema.json"),include_str!("../../../spec/upstream/umf-0.8.0.schema.json")] {
+ for raw in [include_str!("../../../docs/helix/02-design/contracts/compile-response-v0.2.schema.json"),include_str!("../../../docs/helix/02-design/contracts/logical-plan-v0.2.schema.json"),include_str!("../../../spec/upstream/umf-0.10.0.schema.json"),include_str!("../../../spec/upstream/actions-plan-010/semantic-type-reference.schema.json")] {
   let resource:Value=serde_json::from_str(raw).unwrap();let id=resource["$id"].as_str().unwrap().to_string();registry=registry.add(id,resource).unwrap();
  }
  let registry=registry.prepare().unwrap();jsonschema::options().with_registry(&registry).build(&schema).unwrap().is_valid(value)

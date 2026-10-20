@@ -55,11 +55,11 @@ never a later alias. Duplicate scan aliases and output labels MUST block.
 Selected fields MUST be known `field`, `cardinality:one`, `nullability:required`,
 without record/item type assertions. Initial families: boolean, string, integer,
 decimal. Integers require known width 1..64 and signedness; decimals require known
-precision 1..28 and scale 0..precision. Original core 0.8 facetless integer Fields
-additionally establish mathematical integer meaning without an authored width;
-their LogicalType MUST remain integer with empty facets. Selection MUST require
-`type.integer.unbounded` in addition to `type.integer`. Core 0.7 behavior remains
-unchanged. Exact integer literal tokens MUST remain lexical arbitrary-length
+precision 1..28 and scale 0..precision. Current core 0.10 facetless integer
+Fields additionally establish mathematical integer meaning without an authored
+width; their LogicalType MUST remain integer with empty facets. Selection MUST
+require `type.integer.unbounded` in addition to `type.integer`. Exact integer
+literal tokens MUST remain lexical arbitrary-length
 base-ten integers within common resource limits, without float or i128 coercion.
 Other/unknown selected facets block.
 Native refinements MUST agree through the backend binding's qualified semantic

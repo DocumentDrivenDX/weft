@@ -207,6 +207,9 @@ impl Backend for Third {
                 }
                 p.outputs[0].name.clone()
             }
+            // This deliberately narrow test backend accepts only its V01/V02
+            // fixtures; newer plan families remain a capability refusal.
+            _ => return Err(error("WFT-CAPABILITY")),
         };
         Ok(Select {
             table: m.table.clone(),
@@ -304,7 +307,7 @@ pub(crate) fn target(candidate: bool) -> Target {
     }
 }
 pub(crate) fn binding(c: &Catalog) -> BindingInput {
-    let text=json!({"pins":c.pins(),"record":{"identity":{"documentId":"sales-fixture","revision":c.pins()[0].revision,"module":"sales","element":"customer"},"table":"fixture_customers"},"field":{"identity":{"documentId":"sales-fixture","revision":c.pins()[0].revision,"module":"sales","element":"customer-name"},"column":"display_name"},"extensions":{"unknown":"retained"}}).to_string();
+    let text=json!({"pins":c.pins(),"record":{"identity":{"documentId":"sales-current010-fixture","revision":c.pins()[0].revision,"module":"sales","element":"customer"},"table":"fixture_customers"},"field":{"identity":{"documentId":"sales-current010-fixture","revision":c.pins()[0].revision,"module":"sales","element":"customer-name"},"column":"display_name"},"extensions":{"unknown":"retained"}}).to_string();
     BindingInput {
         profile: "test-third-binding/0.1.0".into(),
         sha256: weft_core::json::sha256(text.as_bytes()),

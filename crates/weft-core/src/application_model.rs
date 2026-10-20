@@ -71,7 +71,7 @@ impl Catalog {
         reference: &Value,
     ) -> Result<(Identity, Value)> {
         let (identity, element) = self.local_element_metadata(record, reference)?;
-        crate::model::selected08(&record.pin, element)?;
+        self.validate_selected010(&record.pin, element)?;
         Ok((identity, element.clone()))
     }
     fn local_element_metadata<'a>(
@@ -79,7 +79,6 @@ impl Catalog {
         record: &Record,
         reference: &Value,
     ) -> Result<(Identity, &'a Value)> {
-        crate::model::reference08(&record.pin, reference, &["module", "element", "role", "key"])?;
         let mid = reference["module"]
             .as_str()
             .ok_or_else(|| fail("Missing local module reference"))?;
@@ -290,7 +289,7 @@ impl Catalog {
                             } else if v["scalarType"]=="date" { ExactScalarType::Date } else { ExactScalarType::Binary } }
                         } else {
                             Shape::Scalar {
-                                logical_type: {let mut ty=scalar_type_projected(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers, c.bounded_current_strings, c.field_projection_decimal38)?;if c.sdk_scalar_presence && availability=="absent-allowed" {ty.nullable=true;}ty},
+                                logical_type: {let mut ty=scalar_type_projected(&required, &name, c.exact_numbers, c.exact_numbers, c.bounded_current_strings, c.field_projection_decimal38)?;if c.sdk_scalar_presence && availability=="absent-allowed" {ty.nullable=true;}ty},
                             }
                         }
                     }
@@ -341,13 +340,11 @@ impl Catalog {
         if matched.len() != 1 {
             return Err(fail("Authored key identity is missing or ambiguous"));
         }
-        crate::model::reference08(&record.pin, matched[0], &["id", "name", "fields", "primary"])?;
         let members = self.members(record, &record.value)?;
         let mut fields = Vec::new();
         let mut types = Vec::new();
         let mut seen = BTreeSet::new();
         for reference in matched[0]["fields"].as_array().unwrap() {
-            crate::model::reference08(&record.pin, reference, &["module", "element"])?;
             let (id, field) = self.local_element(record, reference)?;
             if !members.iter().any(|m| m.identity == id)
                 || !seen.insert((id.module.clone(), id.element.clone()))
@@ -359,7 +356,7 @@ impl Catalog {
                 quoted: true,
                 span: Span { start: 0, end: 0 },
             };
-            types.push(scalar_type(&field, &name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers, self.bounded_current_strings)?);
+            types.push(scalar_type(&field, &name, self.exact_numbers, self.exact_numbers, self.bounded_current_strings)?);
             fields.push(id);
         }
         Ok(AuthoredKey {
@@ -485,9 +482,6 @@ impl Catalog {
         self.relationship_read_definition(source,module,rel,inverse)
     }
     fn relationship_read_definition(&self,source:&Record,module:&Value,rel:&Value,inverse:bool)->Result<RelationshipRead>{
-        crate::model::reference08(&source.pin, rel, &["id", "name", "title", "description", "source", "target", "directed", "sourceMultiplicity", "targetMultiplicity", "targetLifecycle", "associationRecord", "inverse"])?;
-        for endpoint in rel["source"].as_array().unwrap() { crate::model::reference08(&source.pin, endpoint, &["module", "element"])?; }
-        for endpoint in rel["target"].as_array().unwrap() { crate::model::reference08(&source.pin, endpoint, &["module", "element", "key"])?; }
         if rel["source"].as_array().unwrap().len() != 1
             || rel["target"].as_array().unwrap().len() != 1
             || rel["directed"] != true
@@ -501,7 +495,6 @@ impl Catalog {
             .ok_or_else(|| fail("Relationship lifecycle meaning is unsupported"))?;
         for side in ["sourceMultiplicity", "targetMultiplicity"] {
             let m = &rel[side];
-            crate::model::reference08(&source.pin, m, &["min", "max"])?;
             let min = m["min"].as_u64().unwrap();
             if m["max"] != "*" && m["max"].as_u64().is_none_or(|max| max < min) {
                 return Err(fail("Relationship multiplicity is inconsistent"));
@@ -577,7 +570,7 @@ impl Catalog {
                 if module["id"]!=identity.module || !input.selected_module_ids.contains(&identity.module) {continue}
                 for element in module["elements"].as_array().ok_or_else(||fail("Original elements required"))? {
                     if element["id"]!=identity.element {continue}
-                    crate::model::selected08(&input.pin,element)?;
+                    self.validate_selected010(&input.pin,element)?;
                     let name=Name{value:identity.element.clone(),quoted:true,span:crate::ir::Span{start:0,end:0}};
                     let logical_type=scalar_type(element,&name,self.exact_numbers,self.exact_numbers, self.bounded_current_strings)?;
                     found.push(Descriptor{identity:identity.clone(),availability:Some("required".into()),shape:Shape::Scalar{logical_type}});

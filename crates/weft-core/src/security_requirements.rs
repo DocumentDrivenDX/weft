@@ -123,7 +123,7 @@ mod derivation_tests {
   let fixture:Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();
   let source=&fixture["resolution"]["documents"][0];let mut doc=source["document"].clone();
   for element in doc["modules"][0]["elements"].as_array_mut().unwrap(){element["name"]=element["id"].clone();}
-  let text=doc.to_string();let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.8.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
+  let text=doc.to_string();let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.10.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
   let catalog=Catalog::prepare_security(inputs).unwrap();
   let policy=fixture["policy"].to_string();let ontology=fixture["resolution"]["ontology"].to_string();
   let packet=SecuritySourcePacket::read(&policy,&ontology,&catalog).unwrap();let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();

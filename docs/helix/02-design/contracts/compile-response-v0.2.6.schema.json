@@ -254,8 +254,7 @@
               },
               "umfVersion": {
                 "enum": [
-                  "0.7.0",
-                  "0.8.0"
+                  "0.10.0"
                 ]
               },
               "sha256": {
@@ -354,7 +353,10 @@
                         "const": "exactScalar"
                       },
                       "scalarType": {
-                        "enum": ["binary", "timestamp"]
+                        "enum": [
+                          "binary",
+                          "timestamp"
+                        ]
                       }
                     },
                     "required": [

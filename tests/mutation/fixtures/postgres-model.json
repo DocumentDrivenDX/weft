@@ -1,1 +1,457 @@
-{"extensions":{},"id":"sales-fixture","modules":[{"elements":[{"extensions":{},"id":"customer","keys":[{"fields":[{"element":"customer-part","module":"sales"},{"element":"customer-id","module":"sales"}],"id":"customer-pk","name":"customer-pk","primary":true}],"kind":"record","members":[{"element":"customer-id","module":"sales"},{"element":"customer-part","module":"sales"},{"element":"customer-note","module":"sales"},{"element":"customer-active","module":"sales"}],"name":"Customer"},{"extensions":{},"id":"orders","keys":[{"fields":[{"element":"order-part","module":"sales"},{"element":"order-id","module":"sales"},{"element":"order-third","module":"sales"}],"id":"order-pk","name":"order-pk","primary":true}],"kind":"record","members":[{"element":"order-id","module":"sales"},{"element":"order-customer","module":"sales"},{"element":"order-total","module":"sales"},{"element":"order-part","module":"sales"},{"element":"order-third","module":"sales"}],"name":"Orders"},{"cardinality":"one","extensions":{},"facets":{"integerWidth":{"bits":64,"signed":false}},"id":"customer-id","kind":"field","name":"id","nullability":"required","scalarType":"integer"},{"cardinality":"one","extensions":{},"id":"customer-name","kind":"field","name":"name","nullability":"required","scalarType":"string"},{"cardinality":"one","extensions":{},"id":"customer-active","kind":"field","name":"active","nullability":"required","scalarType":"boolean"},{"cardinality":"one","extensions":{},"facets":{"integerWidth":{"bits":64,"signed":false}},"id":"order-customer","kind":"field","name":"customer_id","nullability":"required","scalarType":"integer"},{"cardinality":"one","extensions":{},"facets":{"precision":28,"scale":2},"id":"order-total","kind":"field","name":"total","nullability":"required","scalarType":"decimal"},{"cardinality":"one","extensions":{},"facets":{"integerWidth":{"bits":64,"signed":false}},"id":"order-id","kind":"field","name":"id","nullability":"required","scalarType":"integer"},{"cardinality":"one","extensions":{},"id":"nickname","kind":"field","name":"nickname","nullability":"absent-allowed","scalarType":"string"},{"cardinality":"array","extensions":{},"id":"tags","itemType":{"element":"tag-item","module":"sales"},"kind":"field","name":"tags","nullability":"required"},{"cardinality":"one","extensions":{},"id":"tag-item","kind":"field","name":"item","nullability":"required","scalarType":"string"},{"cardinality":"one","extensions":{},"id":"address","kind":"field","name":"address","nullability":"absent-allowed","references":[{"element":"address-record","module":"sales","role":"record-type"}]},{"extensions":{},"id":"address-record","kind":"record","members":[{"element":"street","module":"sales"},{"element":"zip","module":"sales"}],"name":"Address"},{"cardinality":"one","extensions":{},"id":"street","kind":"field","name":"street","nullability":"required","scalarType":"string"},{"cardinality":"one","extensions":{},"facets":{"integerWidth":{"bits":64,"signed":false}},"id":"zip","kind":"field","name":"zip","nullability":"absent-allowed","scalarType":"integer"},{"cardinality":"one","extensions":{},"facets":{},"id":"customer-part","kind":"field","name":"part","nullability":"required","scalarType":"string"},{"cardinality":"one","extensions":{},"facets":{},"id":"order-part","kind":"field","name":"part","nullability":"required","scalarType":"string"},{"cardinality":"one","extensions":{},"facets":{"integerWidth":{"bits":64,"signed":false}},"id":"order-third","kind":"field","name":"third","nullability":"required","scalarType":"integer"},{"cardinality":"one","extensions":{},"facets":{},"id":"customer-note","kind":"field","name":"note","nullability":"absent-allowed","scalarType":"string"}],"extensions":{"umf.actions":{"actions":[{"atomicity":"single-store","attribution":{"subject":"person-required"},"authorization":{"kind":"roles","profile":{"id":"umf.actions.roles","version":"1"},"roles":["bulk-editor"]},"binding":{"effects":[{"entity":{"parameter":"customer"},"id":"set-active","kind":"set","values":[{"field":{"element":"customer-active","module":"sales"},"value":{"parameter":"active-value"}}]}],"kind":"recipe","profile":{"id":"graph-write","version":"1"}},"description":"Set one required active Field using a typed value input.","failures":[],"id":"set-active","idempotency":"caller-key-optional","name":"Set active","outputs":[],"parameters":[{"id":"customer","kind":"entity","required":true,"target":{"element":"customer","key":"customer-pk","module":"sales"}},{"field":{"element":"customer-active","module":"sales"},"id":"active-value","kind":"value","required":true}],"postconditions":[],"preconditions":[],"reads":[],"result":{"identities":"created-and-changed","receipt":"read-at-least","version":"store-opaque"},"writes":[{"create":false,"delete":false,"fields":[{"element":"customer-active","module":"sales"}],"id":"customer-write","maxEntities":1,"record":{"element":"customer","module":"sales"},"relationships":[],"selector":{"expression":"{\"entity\":\"customer\"}","language":"umf.actions.keys","references":[{"parameter":"customer"}],"version":"1"}}]}]}},"id":"sales","namespace":"sales","relationships":[{"directed":true,"id":"customer-orders","inverse":"customer","name":"orders","source":[{"element":"customer","module":"sales"}],"sourceMultiplicity":{"max":"*","min":0},"target":[{"element":"orders","key":"order-pk","module":"sales"}],"targetLifecycle":"independent","targetMultiplicity":{"max":"*","min":0}}]}],"umf":"0.8.0","vocabularies":{"umf.actions":{"version":"0.1.0"}}}
+{
+  "extensions": {},
+  "id": "sales-fixture",
+  "modules": [
+    {
+      "elements": [
+        {
+          "extensions": {},
+          "id": "customer",
+          "keys": [
+            {
+              "fields": [
+                {
+                  "element": "customer-part",
+                  "module": "sales"
+                },
+                {
+                  "element": "customer-id",
+                  "module": "sales"
+                }
+              ],
+              "id": "customer-pk",
+              "name": "customer-pk",
+              "primary": true
+            }
+          ],
+          "kind": "record",
+          "members": [
+            {
+              "element": "customer-id",
+              "module": "sales"
+            },
+            {
+              "element": "customer-part",
+              "module": "sales"
+            },
+            {
+              "element": "customer-note",
+              "module": "sales"
+            },
+            {
+              "element": "customer-active",
+              "module": "sales"
+            }
+          ],
+          "name": "Customer"
+        },
+        {
+          "extensions": {},
+          "id": "orders",
+          "keys": [
+            {
+              "fields": [
+                {
+                  "element": "order-part",
+                  "module": "sales"
+                },
+                {
+                  "element": "order-id",
+                  "module": "sales"
+                },
+                {
+                  "element": "order-third",
+                  "module": "sales"
+                }
+              ],
+              "id": "order-pk",
+              "name": "order-pk",
+              "primary": true
+            }
+          ],
+          "kind": "record",
+          "members": [
+            {
+              "element": "order-id",
+              "module": "sales"
+            },
+            {
+              "element": "order-customer",
+              "module": "sales"
+            },
+            {
+              "element": "order-total",
+              "module": "sales"
+            },
+            {
+              "element": "order-part",
+              "module": "sales"
+            },
+            {
+              "element": "order-third",
+              "module": "sales"
+            }
+          ],
+          "name": "Orders"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "id": "customer-id",
+          "kind": "field",
+          "name": "id",
+          "nullability": "required",
+          "scalarType": "integer"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "customer-name",
+          "kind": "field",
+          "name": "name",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "customer-active",
+          "kind": "field",
+          "name": "active",
+          "nullability": "required",
+          "scalarType": "boolean"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "id": "order-customer",
+          "kind": "field",
+          "name": "customer_id",
+          "nullability": "required",
+          "scalarType": "integer"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "precision": 28,
+            "scale": 2
+          },
+          "id": "order-total",
+          "kind": "field",
+          "name": "total",
+          "nullability": "required",
+          "scalarType": "decimal"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "id": "order-id",
+          "kind": "field",
+          "name": "id",
+          "nullability": "required",
+          "scalarType": "integer"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "nickname",
+          "kind": "field",
+          "name": "nickname",
+          "nullability": "absent-allowed",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "array",
+          "extensions": {},
+          "id": "tags",
+          "itemType": {
+            "element": "tag-item",
+            "module": "sales"
+          },
+          "kind": "field",
+          "name": "tags",
+          "nullability": "required"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "tag-item",
+          "kind": "field",
+          "name": "item",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "address",
+          "kind": "field",
+          "name": "address",
+          "nullability": "absent-allowed",
+          "references": [
+            {
+              "element": "address-record",
+              "module": "sales",
+              "role": "record-type"
+            }
+          ]
+        },
+        {
+          "extensions": {},
+          "id": "address-record",
+          "kind": "record",
+          "members": [
+            {
+              "element": "street",
+              "module": "sales"
+            },
+            {
+              "element": "zip",
+              "module": "sales"
+            }
+          ],
+          "name": "Address"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "street",
+          "kind": "field",
+          "name": "street",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "id": "zip",
+          "kind": "field",
+          "name": "zip",
+          "nullability": "absent-allowed",
+          "scalarType": "integer"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {},
+          "id": "customer-part",
+          "kind": "field",
+          "name": "part",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {},
+          "id": "order-part",
+          "kind": "field",
+          "name": "part",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "id": "order-third",
+          "kind": "field",
+          "name": "third",
+          "nullability": "required",
+          "scalarType": "integer"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {},
+          "id": "customer-note",
+          "kind": "field",
+          "name": "note",
+          "nullability": "absent-allowed",
+          "scalarType": "string"
+        }
+      ],
+      "extensions": {
+        "umf.actions": {
+          "actions": [
+            {
+              "atomicity": "single-store",
+              "attribution": {
+                "subject": "person-required"
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "bulk-editor"
+                ]
+              },
+              "binding": {
+                "effects": [
+                  {
+                    "entity": {
+                      "parameter": "customer"
+                    },
+                    "id": "set-active",
+                    "kind": "set",
+                    "values": [
+                      {
+                        "field": {
+                          "element": "customer-active",
+                          "module": "sales"
+                        },
+                        "value": {
+                          "parameter": "active-value"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "1"
+                }
+              },
+              "description": "Set one required active Field using a typed value input.",
+              "failures": [],
+              "id": "set-active",
+              "idempotency": "caller-key-optional",
+              "name": "Set active",
+              "outputs": [],
+              "parameters": [
+                {
+                  "id": "customer",
+                  "kind": "entity",
+                  "required": true,
+                  "target": {
+                    "element": "customer",
+                    "key": "customer-pk",
+                    "module": "sales"
+                  }
+                },
+                {
+                  "field": {
+                    "element": "customer-active",
+                    "module": "sales"
+                  },
+                  "id": "active-value",
+                  "kind": "value",
+                  "required": true
+                }
+              ],
+              "postconditions": [],
+              "preconditions": [],
+              "reads": [],
+              "result": {
+                "identities": "created-and-changed",
+                "receipt": "read-at-least",
+                "version": "store-opaque"
+              },
+              "writes": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "customer-active",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "customer-write",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "customer",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"entity\":\"customer\"}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "customer"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "sales",
+      "namespace": "sales",
+      "relationships": [
+        {
+          "directed": true,
+          "id": "customer-orders",
+          "inverse": "customer",
+          "name": "orders",
+          "source": [
+            {
+              "element": "customer",
+              "module": "sales"
+            }
+          ],
+          "sourceMultiplicity": {
+            "max": "*",
+            "min": 0
+          },
+          "target": [
+            {
+              "element": "orders",
+              "key": "order-pk",
+              "module": "sales"
+            }
+          ],
+          "targetLifecycle": "independent",
+          "targetMultiplicity": {
+            "max": "*",
+            "min": 0
+          }
+        }
+      ]
+    }
+  ],
+  "umf": "0.8.0",
+  "vocabularies": {
+    "umf.actions": {
+      "version": "0.1.0"
+    }
+  }
+}

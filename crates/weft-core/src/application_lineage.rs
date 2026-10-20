@@ -474,7 +474,7 @@ mod tests {
         let doc = &current["base"]["closure"]["documents"][0]["document"];
         let text = doc.to_string();
         let mut request = fixture();
-        request["modules"] = json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":"core-r1","umfVersion":"0.8.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["records"]}]);
+        request["modules"] = json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":"core-r1","umfVersion":"0.10.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["records"]}]);
         request["sql"] = json!("SELECT r.token FROM Resource r");
         let refused = prepare(&request.to_string()).err().unwrap();
         assert_eq!(refused.code, "WFT-NAME-MISSING");
@@ -609,7 +609,7 @@ mod v02_read_requirements_tests{
  fn report(sql:&str)->Value{let mut r:Value=serde_json::from_str(include_str!("../../../tests/application-lineage/fixtures/token-equality.request.json")).unwrap();r["interfaceVersion"]=json!("weft-application-lineage/0.2-candidate");r["sql"]=json!(sql);serde_json::from_str(prepare(&r.to_string()).unwrap().json()).unwrap()}
  #[test]
  fn projection_occurrences_and_hidden_uses_have_owner_derived_read_sources(){
-  let r=report("SELECT r.token AS first,r.token AS second FROM Resource r WHERE FALSE AND r.token='opaque-token' ORDER BY r.salary LIMIT 0");let reads=&r["readRequirements"];assert_eq!(reads["scans"].as_array().unwrap().len(),1);assert_eq!(reads["scans"][0]["kind"],"rowRead");let fields=reads["fields"].as_array().unwrap();assert_eq!(fields.len(),4);assert_eq!(fields[0]["path"],"outputs/0/expression");assert_eq!(fields[1]["path"],"outputs/1/expression");assert_eq!(fields[0]["role"],"projection");assert_eq!(fields[2]["path"],"filters/1/left");assert_eq!(fields[3]["role"],"order");for f in fields{assert_eq!(f["descriptor"]["availability"],"required");assert_eq!(f["fieldIdentity"]["revision"],"named-query-core-r1");assert!(f.get("mode").is_none());assert!(f.get("action").is_none());}
+  let r=report("SELECT r.token AS first,r.token AS second FROM Resource r WHERE FALSE AND r.token='opaque-token' ORDER BY r.salary LIMIT 0");let reads=&r["readRequirements"];assert_eq!(reads["scans"].as_array().unwrap().len(),1);assert_eq!(reads["scans"][0]["kind"],"rowRead");let fields=reads["fields"].as_array().unwrap();assert_eq!(fields.len(),4);assert_eq!(fields[0]["path"],"outputs/0/expression");assert_eq!(fields[1]["path"],"outputs/1/expression");assert_eq!(fields[0]["role"],"projection");assert_eq!(fields[2]["path"],"filters/1/left");assert_eq!(fields[3]["role"],"order");for f in fields{assert_eq!(f["descriptor"]["availability"],"required");assert_eq!(f["fieldIdentity"]["revision"],"application-lineage-current010-r1");assert!(f.get("mode").is_none());assert!(f.get("action").is_none());}
  }
  #[test]
  fn field_free_false_count_keeps_both_join_row_scans_and_explicit_sum_limit(){

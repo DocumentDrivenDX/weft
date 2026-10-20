@@ -69,6 +69,9 @@ mod tests {
     use super::*;
     use serde_json::Value;
     use weft_core::compile::Compiler;
+    mod common {
+        include!("../../../tests/ashlar-databricks/common.rs");
+    }
     // @covers US-002-AC2 @covers US-006-AC1 @covers US-006-AC3
     #[test]
     fn engine_pinned_registration_retains_candidate_gate_and_exact_emission() {
@@ -92,13 +95,9 @@ mod tests {
         let old = Compiler {
             registry: old_registry,
         };
-        let fixture: Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/B-006-cross-module-native/compile.json"
-        ))
-        .unwrap();
-        let cases: Vec<Value> = vec![fixture];
+        let cases: Vec<Value> = vec![common::request(common::SALES_SQL)];
         for case in cases {
-            let mut request = case["request"].clone();
+            let mut request = case;
             let before: Value =
                 serde_json::from_str(&old.compile_json(&request.to_string())).unwrap();
             assert_eq!(before["status"], "compiled");

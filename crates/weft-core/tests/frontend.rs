@@ -120,11 +120,11 @@ fn schema_identity_and_dependency_guards() {
 #[test]
 fn sql_page_uses_original_primary_key_and_hidden_continuation() {
     use weft_core::{application_resolve::{resolve_page, Parameters}, application_syntax, model::{Catalog, ModuleInput}};
-    let text = include_str!("../../../tests/fixtures/original-commerce-0.8/ontology.json");
+    let text = include_str!("../../../tests/fixtures/umf010/commerce-paths.json");
     let document: Value = serde_json::from_str(text).unwrap();
     let input: ModuleInput = serde_json::from_value(serde_json::json!({
         "documentJson": text,
-        "pin": {"documentId":document["id"],"revision":"original-commerce0.8","umfVersion":"0.8.0","sha256":weft_core::json::sha256(text.as_bytes())},
+        "pin": {"documentId":document["id"],"revision":"commerce-paths-010","umfVersion":"0.10.0","sha256":weft_core::json::sha256(text.as_bytes())},
         "selectedModuleIds":["domain"]
     })).unwrap();
     let catalog = Catalog::prepare_exact_numbers(vec![input]).unwrap();

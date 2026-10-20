@@ -646,10 +646,11 @@ impl<'a> Lower<'a> {
     }
 }
 pub(crate) fn lower(admitted: &AdmittedRead) -> Result<Json> { lower_profile(admitted,true) }
-pub(crate) fn lower_search_input(admitted:&AdmittedRead)->Result<Json>{lower_profile_inner(admitted,false,false,false,&[],None,"0.8.0")}
-pub(crate) fn lower_action_selection(admitted:&AdmittedRead)->Result<Json>{lower_profile_inner(admitted,true,false,false,&[],None,"0.8.0")}
-fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {let expected=if admitted.request().verification_profile.as_deref()==Some("source-exact/0.1"){"0.10.0"}else{"0.8.0"};lower_profile_inner(admitted,bounded,false,false,&[],None,expected)}
-pub(crate) fn lower_related_fragment(admitted:&AdmittedRead,bounded:bool,prefix:&[String],predicate:Option<&str>)->Result<Json>{let expected=if admitted.request().verification_profile.as_deref()==Some("source-exact/0.1"){"0.10.0"}else{"0.8.0"};lower_profile_inner(admitted,bounded,true,true,prefix,predicate,expected)}
+fn source_core_version(_admitted:&AdmittedRead)->&'static str{"0.10.0"}
+pub(crate) fn lower_search_input(admitted:&AdmittedRead)->Result<Json>{lower_profile_inner(admitted,false,false,false,&[],None,source_core_version(admitted))}
+pub(crate) fn lower_action_selection(admitted:&AdmittedRead)->Result<Json>{lower_profile_inner(admitted,true,false,false,&[],None,source_core_version(admitted))}
+fn lower_profile(admitted: &AdmittedRead, bounded:bool) -> Result<Json> {lower_profile_inner(admitted,bounded,false,false,&[],None,source_core_version(admitted))}
+pub(crate) fn lower_related_fragment(admitted:&AdmittedRead,bounded:bool,prefix:&[String],predicate:Option<&str>)->Result<Json>{lower_profile_inner(admitted,bounded,true,true,prefix,predicate,source_core_version(admitted))}
 fn lower_profile_inner(admitted: &AdmittedRead, bounded:bool,preserve_source_limit:bool,allow_unused:bool,prefix:&[String],additional_predicate:Option<&str>,expected_core_version:&str) -> Result<Json> {
     let r = admitted.request();
     let q = admitted.query();

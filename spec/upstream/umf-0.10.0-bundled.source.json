@@ -1,0 +1,26 @@
+{
+  "format": "weft-umf-schema-bundle-source/0.1",
+  "owner": "UMF",
+  "ownerPinsPath": "spec/upstream/actions-plan-010/owner-pins.json",
+  "ownerPinsSha256": "b624aa8496f51816a7738249d172f9358b978429357132f4de947cc7457f9558",
+  "producer": {
+    "build": "sha256:051d86a7d8043fdb2842533b79457f31e92baf8d969739973992b8cbab8e00eb",
+    "id": "umf.actions.plan-model",
+    "version": "1"
+  },
+  "inputs": [
+    {
+      "path": "spec/upstream/actions-plan-010/core.schema.json",
+      "ownerPath": "spec/core/schema.json",
+      "sha256": "b0467dec0393865ff643c6c82b373306cb66344720677960a04ca82be1b3b152"
+    },
+    {
+      "path": "spec/upstream/actions-plan-010/semantic-type-reference.schema.json",
+      "ownerPath": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "12daea86d95b60f280e74e0f9c3240ba297bc3e8407003bdb1601a53cd7b78ce"
+    }
+  ],
+  "bundlePath": "spec/upstream/umf-0.10.0-bundled.schema.json",
+  "bundleSha256": "ebcb381df0cd673db5593a4769b63e3ec1e0db0c34e920ea51f3bd83c4eaa3c3",
+  "generation": "Inline the owner-pinned semanticType reference resource at its exact external $ref sites; preserve all schema assertions and recursive self-reference semantics."
+}

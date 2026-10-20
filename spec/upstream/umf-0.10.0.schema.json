@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:umf:core:0.10.0",
-  "title": "UMF 0.10.0 semantic references over exact 128-bit and UUID values",
+  "title": "UMF for UMF",
+  "description": "A Document groups Modules and declares the vocabularies used by its extension content. Its identifier names the complete metadata envelope.",
   "type": "object",
   "required": [
     "umf",
@@ -18,9 +19,6 @@
     },
     "vocabularies": {
       "type": "object",
-      "propertyNames": {
-        "$ref": "#/$defs/id"
-      },
       "additionalProperties": {
         "type": "object",
         "required": [
@@ -31,6 +29,9 @@
             "$ref": "#/$defs/version"
           }
         }
+      },
+      "propertyNames": {
+        "$ref": "#/$defs/id"
       }
     },
     "modules": {
@@ -47,23 +48,26 @@
     },
     "aliases": {
       "type": "array",
-      "uniqueItems": true,
       "items": {
         "type": "string",
         "minLength": 1
-      }
+      },
+      "uniqueItems": true
     }
   },
   "$defs": {
     "id": {
+      "description": "UMF language id",
       "type": "string",
       "minLength": 1
     },
     "version": {
+      "description": "UMF language version",
       "type": "string",
       "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
     },
     "knownScalarType": {
+      "description": "Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1. Native refinements remain attached.",
       "enum": [
         "boolean",
         "integer",
@@ -76,32 +80,41 @@
         "timestamp",
         "bits128",
         "uuid"
-      ],
-      "description": "Version-qualified value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1; native refinements remain attached."
+      ]
     },
     "scalarType": {
+      "description": "UMF language scalarType",
       "anyOf": [
         {
           "$ref": "#/$defs/knownScalarType"
         },
         {
-          "type": "string",
-          "minLength": 1,
-          "not": {
-            "$ref": "#/$defs/knownScalarType"
-          },
-          "description": "Unknown family retained with incomplete semantic validation."
+          "description": "Unknown family retained with incomplete semantic validation.",
+          "allOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "not": {
+                "$ref": "#/$defs/knownScalarType"
+              }
+            }
+          ]
         }
       ]
     },
     "extensions": {
+      "description": "UMF language extensions",
       "type": "object",
+      "properties": {},
+      "additionalProperties": true,
       "propertyNames": {
         "$ref": "#/$defs/id"
-      },
-      "additionalProperties": true
+      }
     },
     "reference": {
+      "description": "UMF language reference",
       "type": "object",
       "required": [
         "role",
@@ -121,6 +134,7 @@
       }
     },
     "element": {
+      "description": "An Element describes a Field, Record or Group within a Module. References connect Elements without assuming a particular storage or compute implementation.",
       "type": "object",
       "required": [
         "id",
@@ -137,6 +151,7 @@
           "type": "string"
         },
         "scalarType": {
+          "description": "The Field's intrinsic value family. Native representations and external term meanings remain separate.",
           "$ref": "#/$defs/scalarType"
         },
         "extensions": {
@@ -149,50 +164,54 @@
           }
         },
         "kind": {
+          "description": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType.",
           "type": "string",
-          "minLength": 1,
-          "description": "UMF role; unknown labels remain uninterpreted. Missing is unspecified, never inferred from scalarType."
+          "minLength": 1
         },
         "nullability": {
+          "description": "Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings.",
           "type": "string",
-          "minLength": 1,
-          "description": "Ideal value availability. Unknown labels remain uninterpreted. Missing and unspecified assert no availability constraint. Native absence carriers require explicit bindings."
+          "minLength": 1
         },
         "cardinality": {
+          "description": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, or no assertion. Unknown labels remain uninterpreted.",
           "type": "string",
-          "minLength": 1,
-          "description": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, or no assertion. Unknown labels remain uninterpreted."
+          "minLength": 1
         },
         "itemType": {
+          "description": "Identifies the Field that describes each array item or map value, using explicit Module and Element identifiers.",
           "$ref": "#/$defs/itemType"
         },
         "facets": {
+          "description": "Constrains the values of a Field, including length, numeric width, precision, scale and range.",
           "$ref": "#/$defs/facets"
         },
         "members": {
+          "description": "Lists the Elements explicitly contained by a Record or Group.",
           "type": "array",
-          "uniqueItems": true,
           "items": {
             "$ref": "#/$defs/keyFieldReference"
-          }
+          },
+          "uniqueItems": true
         },
         "keys": {
+          "description": "Declares named ordered Field tuples that identify values of a Record.",
           "type": "array",
-          "minItems": 1,
           "items": {
             "$ref": "#/$defs/key"
-          }
+          },
+          "minItems": 1
         },
         "title": {
           "type": "string"
         },
         "aliases": {
           "type": "array",
-          "uniqueItems": true,
           "items": {
             "type": "string",
             "minLength": 1
-          }
+          },
+          "uniqueItems": true
         },
         "examples": {
           "type": "array",
@@ -202,10 +221,10 @@
         },
         "allowedValues": {
           "type": "array",
-          "minItems": 1,
           "items": {
             "$ref": "#/$defs/literal"
-          }
+          },
+          "minItems": 1
         },
         "default": {
           "type": "object",
@@ -229,15 +248,16 @@
         },
         "semanticTypes": {
           "type": "array",
-          "minItems": 1,
           "items": {
-            "$ref": "#/$defs/semanticTypeReference"
-          }
+            "$ref": "urn:umf:core:semantic-type-reference:1.0.0"
+          },
+          "minItems": 1
         }
       },
       "allOf": [
         {
           "if": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -251,6 +271,7 @@
             }
           },
           "then": {
+            "type": "object",
             "properties": {
               "scalarType": false
             }
@@ -258,6 +279,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "nullability"
             ],
@@ -266,6 +288,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -278,6 +301,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "cardinality"
             ],
@@ -286,6 +310,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -298,6 +323,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "cardinality"
             ],
@@ -312,6 +338,7 @@
           },
           "then": {
             "not": {
+              "type": "object",
               "required": [
                 "scalarType"
               ]
@@ -320,6 +347,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "itemType"
             ],
@@ -328,6 +356,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind",
               "cardinality"
@@ -347,6 +376,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "facets"
             ],
@@ -355,6 +385,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -363,26 +394,21 @@
                 "const": "field"
               },
               "references": {
-                "type": "array",
-                "not": {
-                  "contains": {
-                    "type": "object",
-                    "required": [
-                      "role"
-                    ],
-                    "properties": {
-                      "role": {
-                        "const": "record-type"
-                      }
-                    }
+                "allOf": [
+                  {
+                    "type": "array"
+                  },
+                  {
+                    "not": {}
                   }
-                }
+                ]
               }
             }
           }
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "facets"
             ],
@@ -399,6 +425,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "scalarType"
             ],
@@ -414,6 +441,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "facets"
             ],
@@ -440,6 +468,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "scalarType"
             ],
@@ -452,6 +481,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "facets"
             ],
@@ -478,6 +508,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "scalarType"
             ],
@@ -490,6 +521,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "facets"
             ],
@@ -506,6 +538,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "scalarType"
             ],
@@ -518,6 +551,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "facets"
             ],
@@ -534,6 +568,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "scalarType"
             ],
@@ -546,14 +581,16 @@
         },
         {
           "if": {
-            "properties": {
-              "members": {}
-            },
+            "type": "object",
             "required": [
               "members"
-            ]
+            ],
+            "properties": {
+              "members": {}
+            }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -566,14 +603,16 @@
         },
         {
           "if": {
-            "properties": {
-              "keys": {}
-            },
+            "type": "object",
             "required": [
               "keys"
-            ]
+            ],
+            "properties": {
+              "keys": {}
+            }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind",
               "members"
@@ -588,6 +627,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "examples"
             ],
@@ -596,6 +636,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -608,6 +649,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "allowedValues"
             ],
@@ -616,6 +658,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -628,6 +671,7 @@
         },
         {
           "if": {
+            "type": "object",
             "required": [
               "default"
             ],
@@ -636,6 +680,7 @@
             }
           },
           "then": {
+            "type": "object",
             "required": [
               "kind"
             ],
@@ -649,6 +694,7 @@
       ]
     },
     "module": {
+      "description": "A Module gives Elements and Relationships a namespace within a Document.",
       "type": "object",
       "required": [
         "id",
@@ -682,15 +728,16 @@
         },
         "aliases": {
           "type": "array",
-          "uniqueItems": true,
           "items": {
             "type": "string",
             "minLength": 1
-          }
+          },
+          "uniqueItems": true
         }
       }
     },
     "knownElementKind": {
+      "description": "UMF language knownElementKind",
       "enum": [
         "field",
         "record",
@@ -698,6 +745,7 @@
       ]
     },
     "knownNullability": {
+      "description": "UMF language knownNullability",
       "enum": [
         "required",
         "absent-allowed",
@@ -705,6 +753,7 @@
       ]
     },
     "knownCardinality": {
+      "description": "UMF language knownCardinality",
       "enum": [
         "one",
         "array",
@@ -713,6 +762,7 @@
       ]
     },
     "itemType": {
+      "description": "UMF language itemType",
       "type": "object",
       "required": [
         "module",
@@ -728,31 +778,13 @@
       }
     },
     "facets": {
-      "type": "object",
       "description": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation.",
+      "type": "object",
       "properties": {
         "length": {
           "type": "object",
           "required": [
             "unit"
-          ],
-          "anyOf": [
-            {
-              "required": [
-                "min"
-              ],
-              "properties": {
-                "min": {}
-              }
-            },
-            {
-              "required": [
-                "max"
-              ],
-              "properties": {
-                "max": {}
-              }
-            }
           ],
           "properties": {
             "min": {
@@ -770,21 +802,46 @@
               "minLength": 1
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "allOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "required": [
+                    "min"
+                  ],
+                  "properties": {
+                    "min": {}
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "max"
+                  ],
+                  "properties": {
+                    "max": {}
+                  }
+                }
+              ]
+            }
+          ]
         },
         "precision": {
+          "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding.",
           "type": "integer",
           "minimum": 1,
-          "maximum": 9007199254740991,
-          "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+          "maximum": 9007199254740991
         },
         "scale": {
+          "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale.",
           "type": "integer",
           "minimum": 0,
-          "maximum": 9007199254740991,
-          "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+          "maximum": 9007199254740991
         },
         "integerWidth": {
+          "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
           "type": "object",
           "required": [
             "bits",
@@ -799,29 +856,10 @@
             "signed": {
               "type": "boolean"
             }
-          },
-          "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion."
+          }
         },
         "collectionSize": {
           "type": "object",
-          "anyOf": [
-            {
-              "required": [
-                "min"
-              ],
-              "properties": {
-                "min": {}
-              }
-            },
-            {
-              "required": [
-                "max"
-              ],
-              "properties": {
-                "max": {}
-              }
-            }
-          ],
           "properties": {
             "min": {
               "type": "integer",
@@ -834,28 +872,34 @@
               "maximum": 9007199254740991
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "allOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "required": [
+                    "min"
+                  ],
+                  "properties": {
+                    "min": {}
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "max"
+                  ],
+                  "properties": {
+                    "max": {}
+                  }
+                }
+              ]
+            }
+          ]
         },
         "range": {
           "type": "object",
-          "anyOf": [
-            {
-              "required": [
-                "min"
-              ],
-              "properties": {
-                "min": {}
-              }
-            },
-            {
-              "required": [
-                "max"
-              ],
-              "properties": {
-                "max": {}
-              }
-            }
-          ],
           "properties": {
             "min": {
               "$ref": "#/$defs/literal"
@@ -870,7 +914,31 @@
               "type": "boolean"
             }
           },
-          "additionalProperties": true
+          "additionalProperties": true,
+          "allOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "required": [
+                    "min"
+                  ],
+                  "properties": {
+                    "min": {}
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "max"
+                  ],
+                  "properties": {
+                    "max": {}
+                  }
+                }
+              ]
+            }
+          ]
         }
       },
       "dependentRequired": {
@@ -883,6 +951,7 @@
       }
     },
     "keyFieldReference": {
+      "description": "UMF language keyFieldReference",
       "type": "object",
       "required": [
         "module",
@@ -899,6 +968,7 @@
       "additionalProperties": true
     },
     "key": {
+      "description": "UMF language key",
       "type": "object",
       "required": [
         "id",
@@ -914,11 +984,11 @@
         },
         "fields": {
           "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
           "items": {
             "$ref": "#/$defs/keyFieldReference"
-          }
+          },
+          "minItems": 1,
+          "uniqueItems": true
         },
         "primary": {
           "type": "boolean"
@@ -927,6 +997,7 @@
       "additionalProperties": true
     },
     "relationshipEndpoint": {
+      "description": "UMF language relationshipEndpoint",
       "type": "object",
       "required": [
         "module",
@@ -943,6 +1014,7 @@
       "additionalProperties": true
     },
     "relationshipTarget": {
+      "description": "UMF language relationshipTarget",
       "type": "object",
       "required": [
         "module",
@@ -963,6 +1035,7 @@
       "additionalProperties": true
     },
     "relationshipMultiplicity": {
+      "description": "UMF language relationshipMultiplicity",
       "type": "object",
       "required": [
         "min",
@@ -990,6 +1063,7 @@
       "additionalProperties": true
     },
     "relationship": {
+      "description": "UMF language relationship",
       "type": "object",
       "required": [
         "id",
@@ -1010,17 +1084,17 @@
         },
         "source": {
           "type": "array",
-          "minItems": 1,
           "items": {
             "$ref": "#/$defs/relationshipEndpoint"
-          }
+          },
+          "minItems": 1
         },
         "target": {
           "type": "array",
-          "minItems": 1,
           "items": {
             "$ref": "#/$defs/relationshipTarget"
-          }
+          },
+          "minItems": 1
         },
         "sourceMultiplicity": {
           "$ref": "#/$defs/relationshipMultiplicity"
@@ -1045,6 +1119,7 @@
       "additionalProperties": true
     },
     "literal": {
+      "description": "UMF language literal",
       "oneOf": [
         {
           "type": "null"
@@ -1223,7 +1298,8 @@
         }
       ]
     },
-    "semanticTypeReference": {
+    "semanticType": {
+      "description": "UMF language semanticType",
       "type": "object",
       "required": [
         "vocabulary",
@@ -1244,8 +1320,141 @@
           "minLength": 1
         }
       }
+    },
+    "extensionPackage": {
+      "description": "UMF language extensionPackage",
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "coreVersion",
+        "description",
+        "schema",
+        "semantics",
+        "scopes",
+        "capabilities"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "coreVersion": {
+          "const": "0.10.0"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "semantics": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "document",
+              "module",
+              "element"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "capabilities": {
+          "type": "object",
+          "required": [
+            "validation",
+            "directions",
+            "evidence"
+          ],
+          "properties": {
+            "validation": {
+              "enum": [
+                "structural",
+                "semantic"
+              ]
+            },
+            "directions": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "import",
+                  "export"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "native": {
+              "type": "object",
+              "required": [
+                "system",
+                "version",
+                "subset"
+              ],
+              "properties": {
+                "system": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "subset": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "type": "object",
+                "properties": {
+                  "directions": {
+                    "type": "array",
+                    "minItems": 1
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "required": [
+                  "native"
+                ],
+                "properties": {
+                  "native": true
+                }
+              }
+            }
+          ]
+        }
+      }
     }
   },
-  "description": "Explicit semantic references compose with unchanged core0.9 UUID/128-bit domains; no external term or native enforcement inferred.",
-  "$comment": "Exact endpoint/key resolution, unique IDs/names, inverse collisions, multiplicity bounds and lifecycle coherence require portable semantic validation."
+  "$comment": "Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler aab9cbfe21482c4e7a64e1104178b16078953e02ac93a5f0f3900abce245e327"
 }

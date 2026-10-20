@@ -1,0 +1,130 @@
+{
+  "format": "weft-test-fixture-migrations/0.1",
+  "ownerCoreVersion": "0.10.0",
+  "method": "Every current engine request source in this manifest was validated against the current owner-pinned UMF 0.10 core schema and semantic-type-reference schema. Structural comparison after restoring the source version is equal. No source has semanticTypes. Each request pin was recomputed; embedded logical catalog coreVersion and model hashes were synchronized where present. Frozen original request/response receipts remain unchanged.",
+  "fixtures": [
+    {
+      "fixture": "native-ashlar-dbsql-20261016-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "eee5746541513eaa135ff58d4b2d5da5e0746e3792df5f65e467bf0515990aff",
+      "currentDocumentSha256": "587986d807d6cf985463dd5c4516596e8bca1f4ce9f7f08dd2349b16b8f1ab69",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "bad1c498e9f3c10c84562cd0ed7597e23973c84b6844b6a4b697d7e522146e08",
+      "currentBindingSha256": "a46484781c19b745f19180b8a5295eaf4b9e87ea29efb2ec8dda7b5c93e59c3c"
+    },
+    {
+      "fixture": "ashlar-sdk-presence-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "86dd274cfc8ba5cb5dca86ab0ab0319ad15b5f6877583fb11c8bf11489884d08",
+      "currentDocumentSha256": "4c4933ae26b509488daa806314d3c40c9612fe0bc9ed13beb039004af5367ea6",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "5d831cb9c1c3f48558bdf60f746016d8392b2e08a1bca02b6d07a3f20d04ad92",
+      "currentBindingSha256": "80f8e4c77fdc533c63df61326da0d3ac996bf7ef38b017aa22cc3bae545cf08e"
+    },
+    {
+      "fixture": "ashlar-fields-only-request.json",
+      "documentId": "typed-sdk-primitive-fields",
+      "sourceDocumentSha256": "011a754332655cd55db32f2967197ddf64985b92251909b9e2640a8ea085b8c3",
+      "currentDocumentSha256": "a2c3d0cd9243dec8acfb6fda10782f6eddf09d0cee72933f02ffb38a9845dde5",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "8291f13b9c91c6cdbf193544c9b2822222479af3455e652021d39bc152966718",
+      "currentBindingSha256": "d856015d642ecf9593ac33fa1452015207b371c49063e2ea8fd2226452ead31d"
+    },
+    {
+      "fixture": "native-truss-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "eee5746541513eaa135ff58d4b2d5da5e0746e3792df5f65e467bf0515990aff",
+      "currentDocumentSha256": "587986d807d6cf985463dd5c4516596e8bca1f4ce9f7f08dd2349b16b8f1ab69",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "51b09bf3fbde3d83cbb43f60232773d3d18c52740086e36915719a6cac6d9b9f",
+      "currentBindingSha256": "1f9d747f7e2e1d4d24f59022b25b136f50cc2566a229bf675e3dbce3f176eb25"
+    },
+    {
+      "fixture": "native-ashlar-related-page-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "970d4a773b995ddde1f6425634fbdd2730a3c6502f6123bfbde3156ff985e4f6",
+      "currentDocumentSha256": "1fde802d738d6907e26206a61417438a4ae759a22c70e51ecf8017744c96bdc2",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "a46d08409742c08e515d42f0efe6bc76f9d506b9024d48314a31ecf14d03d9b4",
+      "currentBindingSha256": "b245080bb1ca3462b8cb61082f35c95ca62a910fe3e8dc4f1d0eec1258ecdd07"
+    },
+    {
+      "fixture": "native-ashlar-spark4-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "eee5746541513eaa135ff58d4b2d5da5e0746e3792df5f65e467bf0515990aff",
+      "currentDocumentSha256": "587986d807d6cf985463dd5c4516596e8bca1f4ce9f7f08dd2349b16b8f1ab69",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "304264ba14949b4c86f08488d4b8e2336e7d4cb96ab68eaac186e4381b6d1aea",
+      "currentBindingSha256": "21bbc14db23d5148a0b3f0004fa137315ee9698fdebe03d6d460e2e939a7dfd2"
+    },
+    {
+      "fixture": "native-ashlar-related-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "970d4a773b995ddde1f6425634fbdd2730a3c6502f6123bfbde3156ff985e4f6",
+      "currentDocumentSha256": "1fde802d738d6907e26206a61417438a4ae759a22c70e51ecf8017744c96bdc2",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "21929ae9dce2f0d0ab4e655de8dd192ea4c02958655cbc3eb04a4b3e67d5ae2a",
+      "currentBindingSha256": "570d68634992a77ddf7c0529f1d761d95075b71cd74434a4cc581c881da0b02b"
+    },
+    {
+      "fixture": "ashlar-sdk-ordered-join-refusal-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "60e0c483e200d2c280ab07f531cf8cd8a329382541675f8c61e7cb93f1abd14e",
+      "currentDocumentSha256": "fe1d257b00295f100a9e3bc52ee6b0fded9cfdc4acf2deb41d2ba880c49abac5",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "8771a8bc9701745f400490e471d5202dcf053e591400d3eae468c7e8eb5f0a9c",
+      "currentBindingSha256": "0d74dfc9abf97f0264fb9d8220c001997145e1aaf1b599f9d3fab2ea14bfe8f9"
+    },
+    {
+      "fixture": "ashlar-sdk-ordered-related-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": [
+        "60e0c483e200d2c280ab07f531cf8cd8a329382541675f8c61e7cb93f1abd14e",
+        "60e0c483e200d2c280ab07f531cf8cd8a329382541675f8c61e7cb93f1abd14e"
+      ],
+      "currentDocumentSha256": [
+        "fe1d257b00295f100a9e3bc52ee6b0fded9cfdc4acf2deb41d2ba880c49abac5",
+        "fe1d257b00295f100a9e3bc52ee6b0fded9cfdc4acf2deb41d2ba880c49abac5"
+      ],
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": [
+        "8771a8bc9701745f400490e471d5202dcf053e591400d3eae468c7e8eb5f0a9c",
+        "8771a8bc9701745f400490e471d5202dcf053e591400d3eae468c7e8eb5f0a9c"
+      ],
+      "currentBindingSha256": [
+        "0d74dfc9abf97f0264fb9d8220c001997145e1aaf1b599f9d3fab2ea14bfe8f9",
+        "0d74dfc9abf97f0264fb9d8220c001997145e1aaf1b599f9d3fab2ea14bfe8f9"
+      ]
+    },
+    {
+      "fixture": "ashlar-sdk-ordered-related-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": [
+        "60e0c483e200d2c280ab07f531cf8cd8a329382541675f8c61e7cb93f1abd14e",
+        "60e0c483e200d2c280ab07f531cf8cd8a329382541675f8c61e7cb93f1abd14e"
+      ],
+      "currentDocumentSha256": [
+        "fe1d257b00295f100a9e3bc52ee6b0fded9cfdc4acf2deb41d2ba880c49abac5",
+        "fe1d257b00295f100a9e3bc52ee6b0fded9cfdc4acf2deb41d2ba880c49abac5"
+      ],
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": [
+        "8771a8bc9701745f400490e471d5202dcf053e591400d3eae468c7e8eb5f0a9c",
+        "8771a8bc9701745f400490e471d5202dcf053e591400d3eae468c7e8eb5f0a9c"
+      ],
+      "currentBindingSha256": [
+        "0d74dfc9abf97f0264fb9d8220c001997145e1aaf1b599f9d3fab2ea14bfe8f9",
+        "0d74dfc9abf97f0264fb9d8220c001997145e1aaf1b599f9d3fab2ea14bfe8f9"
+      ]
+    },
+    {
+      "fixture": "ashlar-sdk-ordered-page-request.json",
+      "documentId": "typed-native-actions-e2e",
+      "sourceDocumentSha256": "23d1448b2d6ccdf8bda9c9c35e97e6bb82f6d469bb4bbd50ae97e186e7df71ae",
+      "currentDocumentSha256": "fd012333e9dfb6d4ed51533ebf40984f1511d9c5bd717e5a03d28ac3a494765a",
+      "semanticTypesPresent": false,
+      "sourceBindingSha256": "e06d6c0bba7fcfd1886cc33baa5b33d1bca9dd226a51631b86bf261eacc7ba32",
+      "currentBindingSha256": "cc62c5959d004f9801c875093e4d645d58ec039a94845975428ef56ff24947b2"
+    }
+  ]
+}

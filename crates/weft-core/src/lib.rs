@@ -1,63 +1,63 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-#[cfg(feature="current-presence-graph-requirements-candidate")]
-pub mod current_presence_graph_requirements;
-#[cfg(feature="current-presence-model-requirements-candidate")]
-pub mod current_presence_model_requirements;
-#[cfg(feature="current-presence-context-candidate")]
-pub mod current_presence;
-pub mod current_string_domain;
-pub mod current_query_operands;
-pub mod current_query_designation;
-mod application_read_requirements;
-pub mod application_lineage;
-mod application_property_uses;
-pub mod security_query_properties;
-pub mod mutation_backend;
-mod mutation_selection;
-pub mod mutation;
-mod mutation_syntax;
-pub mod arithmetic_plan;
-mod arithmetic_application_resolve;
-mod application_scope;
 mod application_binary;
-pub mod arithmetic_resolve;
-mod arithmetic_query;
-mod arithmetic_syntax;
-pub mod security_scan_obligations;
-pub mod security_query_uses;
-pub mod security_query_profile;
-pub mod security_mapping_transport;
-pub mod security_evaluation;
-pub mod security_composition;
-pub mod security_ir;
-pub mod security_literals;
-pub mod security_policy_types;
-pub mod security_ontology;
-pub mod security_candidate_ontology;
-pub mod security_candidate_policy_types;
-pub mod security_candidate_ir;
-pub mod security_candidate_dependencies;
-pub mod security_candidate_incidence;
-pub mod security_association_ref;
-pub mod security_source;
-#[cfg(feature="engine-ordered-page-candidate")]
-pub mod application_ordered_page;
 pub mod application_ir;
-pub mod application_navigation;
+pub mod application_lineage;
 pub mod application_model;
+pub mod application_navigation;
+#[cfg(feature = "engine-ordered-page-candidate")]
+pub mod application_ordered_page;
+mod application_property_uses;
+mod application_read_requirements;
 pub mod application_resolve;
+mod application_scope;
 pub mod application_syntax;
+mod arithmetic_application_resolve;
+pub mod arithmetic_plan;
+mod arithmetic_query;
+pub mod arithmetic_resolve;
+mod arithmetic_syntax;
 pub mod backend;
 mod backend_emission;
 pub mod compile;
+#[cfg(feature = "current-presence-context-candidate")]
+pub mod current_presence;
+#[cfg(feature = "current-presence-graph-requirements-candidate")]
+pub mod current_presence_graph_requirements;
+#[cfg(feature = "current-presence-model-requirements-candidate")]
+pub mod current_presence_model_requirements;
+pub mod current_query_designation;
+pub mod current_query_operands;
+pub mod current_string_domain;
 pub mod error;
 mod exact;
 mod exact_instant;
 pub mod ir;
 pub mod json;
 pub mod model;
+pub mod mutation;
+pub mod mutation_backend;
+mod mutation_selection;
+mod mutation_syntax;
 mod path_syntax;
 mod resolve;
+pub mod security_association_ref;
+pub mod security_candidate_dependencies;
+pub mod security_candidate_incidence;
+pub mod security_candidate_ir;
+pub mod security_candidate_ontology;
+pub mod security_candidate_policy_types;
+pub mod security_composition;
+pub mod security_evaluation;
+pub mod security_ir;
+pub mod security_literals;
+pub mod security_mapping_transport;
+pub mod security_ontology;
+pub mod security_policy_types;
+pub mod security_query_profile;
+pub mod security_query_properties;
+pub mod security_query_uses;
+pub mod security_scan_obligations;
+pub mod security_source;
 pub mod syntax;
 use error::{Diagnostic, Result};
 use ir::LogicalPlan;
@@ -143,15 +143,15 @@ pub fn prepare_and_resolve_application(
     Ok((catalog, plan))
 }
 
+pub mod backend03;
+mod path_application_resolve;
 mod path_ir;
 mod path_query;
 mod path_resolve;
-mod path_application_resolve;
-pub mod backend03;
 pub mod security_backend;
 pub mod security_lowering;
-pub mod security_requirements;
 pub mod security_parameter_sources;
+pub mod security_requirements;
 pub mod security_source_context;
 
 mod security_result_check;
@@ -188,7 +188,7 @@ pub mod security_aggregate_results;
 pub mod security_operand_values;
 
 /// Optional conditional relational conformance; never native authority.
-#[cfg(feature="current-query-refinement-candidate")]
+#[cfg(feature = "current-query-refinement-candidate")]
 pub mod current_query_refinement;
 
 pub mod column_custody;
@@ -204,3 +204,4 @@ pub mod search;
 
 pub mod table_operation;
 pub mod table_seed;
+pub mod table_query;

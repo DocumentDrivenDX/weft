@@ -6,8 +6,8 @@
       "sets": [
         {
           "binding": {
-            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"action-original-binding-doc\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}},\"modules\":[],\"extensions\":{\"umf.binding\":{\"profile\":\"umf-binding-2\",\"logical\":{\"documentId\":\"typed-native-actions-e2e\",\"coreVersion\":\"0.8.0\"},\"target\":{\"system\":\"postgresql\",\"version\":\"18\",\"subset\":\"typed-access-columns/0.1\"},\"elements\":[{\"module\":\"sales\",\"element\":\"order\",\"table\":\"orders\"}],\"fields\":[{\"module\":\"sales\",\"element\":\"id\",\"storage\":\"column\",\"column\":\"id\"},{\"module\":\"sales\",\"element\":\"status\",\"storage\":\"column\",\"column\":\"status\"}],\"relationships\":[],\"indexes\":[]}}}",
-            "documentSha256": "097b9117f0d20f5586454d6a0176f5d3308ed4dc348255a04316703656515bf8",
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"action-original-binding-doc\",\"vocabularies\":{\"umf.binding\":{\"version\":\"0.2.0\"}},\"modules\":[],\"extensions\":{\"umf.binding\":{\"profile\":\"umf-binding-2\",\"logical\":{\"documentId\":\"typed-native-actions-e2e\",\"coreVersion\":\"0.10.0\"},\"target\":{\"system\":\"postgresql\",\"version\":\"18\",\"subset\":\"typed-access-columns/0.1\"},\"elements\":[{\"module\":\"sales\",\"element\":\"order\",\"table\":\"orders\"}],\"fields\":[{\"module\":\"sales\",\"element\":\"id\",\"storage\":\"column\",\"column\":\"id\"},{\"module\":\"sales\",\"element\":\"status\",\"storage\":\"column\",\"column\":\"status\"}],\"relationships\":[],\"indexes\":[]}}}",
+            "documentSha256": "9ca5260c9019d6d956a9600f3d23cc92fed4bc2532bdda6bcced32b23aff8005",
             "sourceId": "native-action-original-columns"
           },
           "columnSet": {

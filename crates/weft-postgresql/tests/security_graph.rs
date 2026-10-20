@@ -7,7 +7,7 @@ const PHYSICAL:&str=include_str!("../../../docs/helix/03-test/fixtures/security-
 fn fixture()->(Catalog,SecurityLogicalPlan,GraphSource){
  let r:Value=serde_json::from_str(REQUEST).unwrap();let modules:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let catalog=Catalog::prepare_security(modules).unwrap();
  let packet=SecuritySourcePacket::read(r["policyJson"].as_str().unwrap(),r["ontologyJson"].as_str().unwrap(),&catalog).unwrap();let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();
- let source=GraphSource{version:"weft.truss.security.graph-source/0.1-candidate".into(),native_schema_revision:"1".into(),physical_module:ModuleInput{document_json:PHYSICAL.into(),pin:ModelPin{document_id:"adoc".into(),revision:"r1".into(),umf_version:"0.8.0".into(),sha256:sha256(PHYSICAL.as_bytes())},selected_module_ids:vec!["m".into()]},inventory_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/native-inventory.json").into(),correspondence_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/binding-correspondence.json").into(),logical_resolution_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/resolution.json").into(),logical_transport_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/transport.json").into()};(catalog,plan,source)
+ let source=GraphSource{version:"weft.truss.security.graph-source/0.1-candidate".into(),native_schema_revision:"1".into(),physical_module:ModuleInput{document_json:PHYSICAL.into(),pin:ModelPin{document_id:"adoc".into(),revision:"r1".into(),umf_version:"0.10.0".into(),sha256:sha256(PHYSICAL.as_bytes())},selected_module_ids:vec!["m".into()]},inventory_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/native-inventory.json").into(),correspondence_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/binding-correspondence.json").into(),logical_resolution_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/resolution.json").into(),logical_transport_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/transport.json").into()};(catalog,plan,source)
 }
 #[test]
 fn original_reified_graph_correspondence_preserves_namespaces_and_guards_all_endpoints(){
@@ -190,4 +190,47 @@ fn public_relationship_correspondence_uses_original_installed_catalog_and_old_re
  }
  let mut source=original.clone();let mut c:serde_json::Value=serde_json::from_str(&source.correspondence_json).unwrap();let entry=c["queryRelationships"][0].clone();c["queryRelationships"].as_array_mut().unwrap().push(entry);source.correspondence_json=c.to_string();assert!(GraphBinding::read_relationship_candidate(&plan,&logical,&source).is_err());
  let mut source=original;source.version="weft.truss.security.graph-source/0.1-candidate".into();assert!(GraphBinding::read_relationship_candidate(&plan,&logical,&source).is_err());
+}
+
+#[test]
+fn public_relationship_refuses_unbounded_logical_salary_against_signed64_native_salary(){
+ let mut request:Value=serde_json::from_str(include_str!("security-public-relationship/compiler-request.json")).unwrap();
+ let source_document=request["modules"][0]["documentJson"].as_str().unwrap().to_owned();
+ let mut document:Value=serde_json::from_str(&source_document).unwrap();
+ let salary=document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="salary").unwrap();
+ salary.as_object_mut().unwrap().remove("facets");
+ let document_json=document.to_string();
+ let document_digest=sha256(document_json.as_bytes());
+ request["modules"][0]["documentJson"]=json!(document_json);
+ request["modules"][0]["pin"]["sha256"]=json!(document_digest);
+ let mut ontology:Value=serde_json::from_str(request["ontologyJson"].as_str().unwrap()).unwrap();
+ ontology["documents"][0]["revision"]=request["modules"][0]["pin"]["revision"].clone();
+ request["ontologyJson"]=json!(ontology.to_string());
+ let modules:Vec<ModuleInput>=serde_json::from_value(request["modules"].clone()).unwrap();
+ let catalog=Catalog::prepare_security(modules).unwrap();
+ let packet=SecuritySourcePacket::read(request["policyJson"].as_str().unwrap(),request["ontologyJson"].as_str().unwrap(),&catalog).unwrap_or_else(|error|panic!("logical fixture mutation should remain admissible: {error:?}"));
+ let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();
+ let (_,_,mut source)=fixture();
+ // The current positive relationship fixture follows the observed facetless
+ // native integer domain. Exercise the narrower-storage refusal explicitly by
+ // constructing a separate signed-64 physical source here.
+ let mut native_document:Value=serde_json::from_str(&source.physical_module.document_json).unwrap();
+ let native_salary=native_document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="salary").unwrap();
+ native_salary["facets"]=json!({"integerWidth":{"bits":64,"signed":true}});
+ source.physical_module.document_json=native_document.to_string();
+ source.physical_module.pin.sha256=sha256(source.physical_module.document_json.as_bytes());
+ let mut inventory:Value=serde_json::from_str(&source.inventory_json).unwrap();
+ let native_salary_property=inventory["inventory"]["properties"].as_array_mut().unwrap().iter_mut().find(|p|p["element"]=="salary").unwrap();
+ native_salary_property["facets"]=json!({"integerWidth":{"bits":64,"signed":true}});
+ source.inventory_json=inventory.to_string();
+ let mut resolution:Value=serde_json::from_str(&source.logical_resolution_json).unwrap();
+ resolution["documents"][0]["document"]=document;
+ source.logical_resolution_json=resolution.to_string();
+ let mut correspondence:Value=serde_json::from_str(&source.correspondence_json).unwrap();
+ correspondence["logicalSourceDigests"]["document"]=json!(document_digest);
+ correspondence["logicalSourceDigests"]["resolution"]=json!(sha256(source.logical_resolution_json.as_bytes()));
+ correspondence["physicalSourceSha256"]=json!(source.physical_module.pin.sha256);
+ correspondence["inventorySha256"]=json!(sha256(source.inventory_json.as_bytes()));
+ source.correspondence_json=correspondence.to_string();
+ assert!(GraphBinding::read_relationship_candidate(&plan,&catalog,&source).is_err());
 }

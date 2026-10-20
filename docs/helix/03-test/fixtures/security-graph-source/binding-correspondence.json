@@ -2,12 +2,12 @@
   "version": "truss.reified-security-binding-fixture/0.1-candidate",
   "scope": "Explicit owned fixture correspondence, not installed/authenticated owner/compiler admission.",
   "logicalSourceDigests": {
-    "document": "1eb64de9c3cdf8fcde1c1d37325136330508686cca70b6550c780df7d74085e8",
-    "resolution": "d6591a68b48b4f4a56b1631fce26dd66ac99a9d4f1f60c02c77c178bb3636e74",
+    "document": "9aa974d51a9c8ee9d82b510770b5560fdb9e1c1a35c1f666ee61a8a8bda43f17",
+    "resolution": "8cebfeed12df6aa634890cf18cb2c6b54a023ec53d7c758616a68600df9d5058",
     "policy": "ac1dc5841de60f64b8c268417124818c089ef247549fa75a621f1785f0b6ec97",
     "transport": "83ce25c40a5840b09c5eb4e95d1b4f756e4cb57c8d3429ba5c2e4dc850df48c6"
   },
-  "physicalSourceSha256": "37ba63adcfb8c618902fd708d09b5a0837674e393bc8817373b92e78a5bcfd73",
+  "physicalSourceSha256": "794caaf5b9bb23c1f2dc0e9a0590a5049bd28b9820834e7c997de01fa563e4b1",
   "inventorySha256": "4160caee59523a7a5fd33f21a6cf039b7004cd0bf0034028ef478b06df9035df",
   "entities": [
     {

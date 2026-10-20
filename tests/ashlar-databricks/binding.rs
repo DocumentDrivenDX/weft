@@ -13,9 +13,9 @@ fn catalog() -> Catalog {
     Catalog::prepare(vec![ModuleInput {
         document_json: raw.into(),
         pin: ModelPin {
-            document_id: "sales-fixture".into(),
-            revision: "1".into(),
-            umf_version: "0.7.0".into(),
+            document_id: "sales-current010-fixture".into(),
+            revision: "current010-1".into(),
+            umf_version: "0.10.0".into(),
             sha256: sha256(raw.as_bytes()),
         },
         selected_module_ids: vec!["sales".into()],
@@ -23,7 +23,7 @@ fn catalog() -> Catalog {
     .unwrap()
 }
 fn identity(element: &str) -> Value {
-    json!({"documentId":"sales-fixture","revision":"1","module":"sales","element":element})
+    json!({"documentId":"sales-current010-fixture","revision":"current010-1","module":"sales","element":element})
 }
 fn fixture() -> Value {
     json!({

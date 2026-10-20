@@ -1,0 +1,116 @@
+{
+  "sourceFixture": "public-filter-requests-r25.json",
+  "successorFixture": "public-filter-requests-current010.json",
+  "validation": {
+    "api": "UMF 0.10.0 validateDocument",
+    "result": "all nine positive model envelopes valid; UNKNOWN_EXTENSION warning for umf.access is expected from core-only registry; backend admits the separately pinned extension profile",
+    "bindingMigration": "Nested ColumnSet source coreVersion/SHA retargeted to successor model. Embedded binding document envelope and logical.coreVersion updated to 0.10.0; binding document SHA recalculated.",
+    "originalFixture": "unchanged; retained as historical UMF 0.8 evidence"
+  },
+  "cases": [
+    {
+      "declaration": "string_list",
+      "oldRequestSha256": "8077f82802286f6ad7b1ba2ab87f1809bdbc15270c2416df888d7e6ee4286db7",
+      "newRequestSha256": "546dddd834645e8a1f22a141cd979ee17a2f6592ff98230f08ee6e57efef1ab0",
+      "dbapiProgramSha256": "db6759d3b4426c9b632dc7230db6d984314306f51e12de37916b006ac8f1b8de",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "string_not_list",
+      "oldRequestSha256": "1bf1ec060baaed3f5ccb64448aeb953229f1c4f75988d636c3e3e0e742a7363b",
+      "newRequestSha256": "03c22f21d6aa7cb1c040efd7c4fc3758ad5bc3df0cf942bdecca17b136c35ad3",
+      "dbapiProgramSha256": "9684ae9a8b52f034848866e106a15afae25b26e62fec9bf42bbe1459097397e6",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "integer_list",
+      "oldRequestSha256": "d8f136963d3b84ef9852ff67d76cc198b45b436e29b9f15b5215f1699a550808",
+      "newRequestSha256": "893a62aa4f4041fd5a1e6db174e8b9142b1f30235e87818f4bccd8c6d4bc015e",
+      "dbapiProgramSha256": "44240ed80414a09ea8a1af9b79835376759c51f24970ee14aab0629942ce8a4f",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "decimal_list",
+      "oldRequestSha256": "beef3495775f36eabce0309a54143492db3e4a3e7f8e42296378988b3422680f",
+      "newRequestSha256": "6576eba295b5cfd602ee15e592ec24d180491c423a52c577d5ce93ab5a650aa2",
+      "dbapiProgramSha256": "c607acfa9e2d3da53f2d54d7135381728f9521ba102ed252e88ca4a9716d782a",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "boolean_list",
+      "oldRequestSha256": "fce8223519e582f982ef0b2ca12736402166a8b6f38d3460bd862134bacadc3b",
+      "newRequestSha256": "b8d310fa03b647d2479f4dcc57a7345dfafadcff14bf34bdb2b18a7646e15815",
+      "dbapiProgramSha256": "61a76ae93db9def0ff255ee670c2c07d757972ada2d7dca8cfe4568ede462aa5",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "nullable_scalar",
+      "oldRequestSha256": "2b6d8937e29f6aceb62c3ce7bdffe474891dd10d3fa3b9cd3fb4ca1134e61a96",
+      "newRequestSha256": "ef093adb453987bb72228cc49deed2cd95024603ecf12b5c6e7585f89dc19a05",
+      "dbapiProgramSha256": "8c547add397eb1af2377547b5d4c46f487c82ffd833c88cc2c13f15165544ec1",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "all_terms",
+      "oldRequestSha256": "e9ef7ab499f7fd5fe0f68bfe41cf949be52a4e57c23a42692c779aadf88f8406",
+      "newRequestSha256": "a9c5dc1ce85c646f0667b9e3c2f918ca42110411496c64e94a6b6ecec588724d",
+      "dbapiProgramSha256": "f10983ec9793398e7e2d914fffd244afe5bca6ed4bde1fae01f1f88b5d2ded64",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "literal_empty",
+      "oldRequestSha256": "1a141af9c595a811040b04ebea2c790ed86bb3d2aeeab687a9e73368c3cabc57",
+      "newRequestSha256": "82717352d57a0a139fdecb925423c1b352e4b38e5e8ed5fd9e147fd3f2ce4b8f",
+      "dbapiProgramSha256": "ccf4a2e99daedd1f2949b07098c422ffe16a0f05f4fd1b4f4c97ab77b651d6d6",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "literal_nulls",
+      "oldRequestSha256": "e97c3d03c5e39c4de76ed923e94926fc42151427a9daf4ae271a8ef7b1b61a51",
+      "newRequestSha256": "1acf6850fe9e4a1b03664a037cd4b2d1c32ca56538250b5f7890db4a9b3643a8",
+      "dbapiProgramSha256": "55fab90f3ac0a554ff72344ab45911f718b55a16415b50345580930c7ee0b2ec",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    },
+    {
+      "declaration": "raw_terms",
+      "oldRequestSha256": "36910044eb96cb25f69ec34e0f255601b458f110b71237ac4128f10261c5fac8",
+      "newRequestSha256": "36910044eb96cb25f69ec34e0f255601b458f110b71237ac4128f10261c5fac8",
+      "dbapiProgramSha256": "257d13e68f322dbe65355b55780453b2eaa035dd16bd083929c2717b991b4719",
+      "semanticChanges": "Historical UMF 0.8 raw-read request remains unchanged and is explicitly refused; current raw-read successor is covered separately."
+    },
+    {
+      "declaration": "raw_pages",
+      "oldRequestSha256": "ee9548ba9ec046318ac142c55517c96e6494b83b9dacc13c49abfc713630f721",
+      "newRequestSha256": "ee9548ba9ec046318ac142c55517c96e6494b83b9dacc13c49abfc713630f721",
+      "dbapiProgramSha256": "89a2d7e7cee8e419fab7747805400651ea58346986e60c7c8507c76ee631edd9",
+      "semanticChanges": "Historical UMF 0.8 raw-read request remains unchanged and is explicitly refused; current raw-read successor is covered separately."
+    },
+    {
+      "declaration": "any_terms",
+      "oldRequestSha256": "875848ae4bee66090745e12680679d9ddf9901ca7050ffe90c7c8f8aedab226c",
+      "newRequestSha256": "7cbe524b29da6db5fdc184224ce2521eca345d7a5669c47cb7187b88a3c24d86",
+      "dbapiProgramSha256": "PENDING_CURRENT_010_PROGRAM_SHA256",
+      "newModelSha256": "dbd3f460177a2c639e134c88d5a577e8f01eb5569690852b310f4a16ff1c2326",
+      "nativeBindingDocSha256": "9a793cc565bada9693885fc4d090b4242f0ffbfbc3e44cc8152e1e3f0979d4bd",
+      "semanticChanges": "Successor model preserves authored fields/extensions/query text. Model and embedded binding logical core pins migrated to UMF 0.10.0; source/artifact SHA pins recalculated. No filter/query/native column semantics changed."
+    }
+  ]
+}

@@ -291,7 +291,8 @@ mod tests {
         if packet["compiler"] == "ashlar-spark4" {
             packet["compiler"] = json!("ashlar-spark4-pages");
             for side in ["source", "target"] {
-                packet[side]["interfaceVersion"] = json!("weft-compile/0.2.2");
+                packet[side]["interfaceVersion"] = json!("weft-compile/0.2.7");
+                packet[side]["timestampComparisonProfile"] = json!("umf-rfc3339-exact-instant/1.0.0");
                 packet[side]["target"]["backendVersion"] =
                     json!(weft_databricks::authored_pages::LOCAL_VERSION);
             }

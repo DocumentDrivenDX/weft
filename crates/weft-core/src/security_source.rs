@@ -46,7 +46,7 @@ impl SecuritySourcePacket{
   if docs.len()!=catalog.inputs().len(){return Err(fail("WFT-SECURITY-PIN"));}
   for doc in docs{
    let id=doc["documentId"].as_str().unwrap();
-   if !ids.insert(id)||!catalog.inputs().iter().any(|m|m.pin.document_id==id&&doc["revision"]==m.pin.revision&&matches!(m.pin.umf_version.as_str(),"0.8.0"|"0.10.0")){return Err(fail("WFT-SECURITY-PIN"));}
+   if !ids.insert(id)||!catalog.inputs().iter().any(|m|m.pin.document_id==id&&doc["revision"]==m.pin.revision&&m.pin.umf_version=="0.10.0"){return Err(fail("WFT-SECURITY-PIN"));}
   }
   let mut rule_ids=BTreeSet::new();for rule in policy["rules"].as_array().unwrap(){
    if !rule_ids.insert(rule["id"].as_str().unwrap()){return Err(fail("WFT-SECURITY-SOURCE"));}

@@ -512,11 +512,11 @@ mod tests {
     #[test]
     fn initial_plan_requires_projection_root_before_output_validation() {
         let modules=crate::model::ModuleInput{
-            document_json:include_str!("../../../docs/helix/03-test/fixtures/sales.umf.json").into(),
-            pin:crate::ir::ModelPin{document_id:"sales-fixture".into(),revision:"fixture".into(),umf_version:"0.7.0".into(),sha256:crate::json::sha256(include_str!("../../../docs/helix/03-test/fixtures/sales.umf.json").as_bytes())},
-            selected_module_ids:vec!["sales".into()],
+            document_json:include_str!("../../../tests/fixtures/umf010/commerce-paths.json").into(),
+            pin:crate::ir::ModelPin{document_id:"urn:umf:domain:commerce".into(),revision:"commerce-paths-010".into(),umf_version:"0.10.0".into(),sha256:crate::json::sha256(include_str!("../../../tests/fixtures/umf010/commerce-paths.json").as_bytes())},
+            selected_module_ids:vec!["domain".into()],
         };
-        let (_,mut plan)=crate::prepare_and_resolve("SELECT c.name FROM Customer c",vec![modules]).unwrap();
+        let (_,mut plan)=crate::prepare_and_resolve("SELECT c.name FROM customers c",vec![modules]).unwrap();
         let Node::Project{input,..}=plan.root else {panic!("resolved query must have projection")};
         plan.root=*input;
         let emission=Emission{sql:"SELECT plausible".into(),parameters:vec![],columns:vec![],obligations:vec![]};

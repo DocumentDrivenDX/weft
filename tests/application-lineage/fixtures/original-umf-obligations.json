@@ -336,7 +336,7 @@
         {
           "revision": "core-r1",
           "document": {
-            "umf": "0.8.0",
+            "umf": "0.10.0",
             "id": "independent-protection-core",
             "vocabularies": {},
             "modules": [

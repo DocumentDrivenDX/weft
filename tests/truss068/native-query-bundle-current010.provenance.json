@@ -1,0 +1,8 @@
+{
+  "sourceFixture": "tests/truss068/native-query-bundle.json",
+  "sourceDocumentSha256": "77a2b0cfdb0528ee6452955a6057f179b89c482ece01dfd0492e4f369d215061",
+  "currentDocumentSha256": "274740675915c0c3cf1522236e33fa2b09119c24936d3c071b556361311e1679",
+  "sourceUmf": "0.7.0",
+  "currentUmf": "0.10.0",
+  "migration": "Version-only migration. The complete authored document is byte/structure-equivalent after restoring the source umf value; neither document contains semanticTypes. Only source and binding document SHA pins were refreshed. Existing historical release binding id, release hash, native layout, and SQL remain unchanged."
+}

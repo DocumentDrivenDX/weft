@@ -15,7 +15,8 @@ fn request(sql: &str) -> String {
     let mut request: Value = serde_json::from_str(FIXTURE).unwrap();
     let physical =
         include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/adoc.json");
-    let source=GraphSource{version:"weft.truss.security.graph-source/0.1-candidate".into(),native_schema_revision:"1".into(),physical_module:ModuleInput{document_json:physical.into(),pin:ModelPin{document_id:"adoc".into(),revision:"r1".into(),umf_version:"0.8.0".into(),sha256:sha256(physical.as_bytes())},selected_module_ids:vec!["m".into()]},inventory_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/native-inventory.json").into(),correspondence_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/binding-correspondence.json").into(),logical_resolution_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/resolution.json").into(),logical_transport_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/transport.json").into()};
+    let physical_document: Value = serde_json::from_str(physical).unwrap();
+    let source=GraphSource{version:"weft.truss.security.graph-source/0.1-candidate".into(),native_schema_revision:"1".into(),physical_module:ModuleInput{document_json:physical.into(),pin:ModelPin{document_id:"adoc".into(),revision:"r1".into(),umf_version:physical_document["umf"].as_str().unwrap().into(),sha256:sha256(physical.as_bytes())},selected_module_ids:vec!["m".into()]},inventory_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/native-inventory.json").into(),correspondence_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/binding-correspondence.json").into(),logical_resolution_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/resolution.json").into(),logical_transport_json:include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/transport.json").into()};
     let binding = serde_json::to_string(&source).unwrap();
     request["bindingJson"] = json!(binding);
     request["sql"] = json!(sql);
@@ -357,9 +358,10 @@ fn operand_values_refuse_invalid_later_rows_missing_occurrences_and_foreign_cont
  let raw=query_use_request("SELECT COUNT(*) FROM Resource r WHERE r.salary=999",Some("original-authorized"),true);
  with_security_mapping_context(&raw,|ctx|{
  let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let plan=prepare_relational_graph_sql(ctx,&source)?;assert_eq!(plan.operand_reads().len(),1);let sql=plan.operand_reads()[0]["sql"].as_str().unwrap();assert!(sql.contains("LIMIT 4097"));assert!(!sql.contains("integerToken')::pg_catalog.numeric"));
- let mut batch=json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":[{"scan":"s0","rows":[{"nativeRowId":"2","operands":[{"index":0,"cell":{"disposition":"original","value":{"integerToken":"100"}}}]}]}]});
+ let cells=ctx.requirements().operators().iter().enumerate().map(|(index,_)|json!({"index":index,"cell":{"disposition":"original","value":{"integerToken":"100"}}})).collect::<Vec<_>>();
+ let mut batch=json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":[{"scan":"s0","rows":[{"nativeRowId":"2","operands":cells}]}]});
  let checked=check_operand_values(ctx,&batch.to_string())?;assert_eq!(checked.counts()["s0"],1);
- let mut large=batch.clone();large["scans"][0]["rows"][0]["operands"][0]["cell"]["value"]=json!({"integerToken":"9223372036854775808"});check_operand_values(ctx,&large.to_string())?;
+ let mut out_of_domain=batch.clone();out_of_domain["scans"][0]["rows"][0]["operands"][0]["cell"]["value"]=json!({"integerToken":"9223372036854775808"});assert!(check_operand_values(ctx,&out_of_domain.to_string()).is_err());
  for value in [json!({"integerToken":"not a number"}),json!({"integerToken":"1.5"}),Value::Null]{let mut bad=batch.clone();bad["scans"][0]["rows"].as_array_mut().unwrap().push(json!({"nativeRowId":"3","operands":[{"index":0,"cell":{"disposition":"original","value":value}}]}));assert!(check_operand_values(ctx,&bad.to_string()).is_err());}
  for mutation in 0..6{let mut bad=batch.clone();match mutation{0=>bad["scans"][0]["rows"][0]["operands"]=json!([]),1=>bad["scans"][0]["rows"][0]["operands"][0]["index"]=json!(1),2=>bad["contextSha256"]=json!("0".repeat(64)),3=>bad["nativeAdmission"]=json!(true),4=>bad["scans"][0]["rows"][0]["operands"][0]["cell"]=json!({"disposition":"absent"}),_=>{let row=bad["scans"][0]["rows"][0].clone();bad["scans"][0]["rows"].as_array_mut().unwrap().push(row)}};assert!(check_operand_values(ctx,&bad.to_string()).is_err());}
  batch["scans"][0]["rows"]=json!([]);assert_eq!(check_operand_values(ctx,&batch.to_string())?.counts()["s0"],0);
@@ -396,12 +398,13 @@ fn separate_relational_handoff_checks_original_operands_results_and_rejects_old_
  assert!(inspect_guarded_relational_result(&json!([input["version"],input["sourceRequestJson"],input["sourceOutputJson"],input["operandBatchJson"],input["batchJson"]]).to_string()).is_err());
 }
 #[test]
-fn postgresql_codec_checks_refuse_nul_and_native_numeric_overflow_without_narrowing_umf(){
+fn postgresql_codecs_preserve_text_and_enforce_declared_integer_domain(){
  use weft_core::{security_mapping_transport::with_security_mapping_context,security_operand_values::*};use weft_postgresql::security_native_codecs::*;
  for value in ["雪'","x\0y"]{let mut raw:Value=serde_json::from_str(&query_use_request("SELECT r.resourceId FROM Resource r WHERE r.resourceId=:id",None,false)).unwrap();raw["parameters"]=json!({"id":{"family":"string","value":value}});let result=with_security_mapping_context(&raw.to_string(),|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();check_postgresql_parameter_codecs(ctx,&source)?;Ok(())});assert_eq!(result.is_ok(),!value.contains('\0'));}
  let raw=query_use_request("SELECT COUNT(*) FROM Resource r WHERE r.salary=100",Some("original-authorized"),true);
- with_security_mapping_context(&raw,|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let batch=|token:&str|json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":[{"scan":"s0","rows":[{"nativeRowId":"2","operands":[{"index":0,"cell":{"disposition":"original","value":{"integerToken":token}}}]}]}]}).to_string();
- for (token,native) in [("9223372036854775808",true),("1e131071",true),("1e131072",false)]{let raw=batch(token);check_operand_values(ctx,&raw)?;assert_eq!(check_postgresql_operand_codecs(ctx,&source,&raw).is_ok(),native);}
+ with_security_mapping_context(&raw,|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let batch=|token:&str|{let operands=ctx.requirements().operators().iter().enumerate().map(|(index,_)|json!({"index":index,"cell":{"disposition":"original","value":{"integerToken":token}}})).collect::<Vec<_>>();json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":[{"scan":"s0","rows":[{"nativeRowId":"2","operands":operands}]}]}).to_string()};
+ let max_i64=batch("9223372036854775807");check_operand_values(ctx,&max_i64)?;check_postgresql_operand_codecs(ctx,&source,&max_i64)?;
+ for token in ["9223372036854775808","1e131071","1e131072"]{let raw=batch(token);assert!(check_operand_values(ctx,&raw).is_err());assert!(check_postgresql_operand_codecs(ctx,&source,&raw).is_err());}
  Ok(())}).unwrap();
 }
 fn nullable_salary_request(raw:&str)->String{

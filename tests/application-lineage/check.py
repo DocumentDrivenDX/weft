@@ -28,7 +28,7 @@ for query in original['queries']:
   if source['role']=='fixture':assert source['utf8']==(root/'fixtures/current-query-source.json').read_text()
  for use in report['uses']:
   for key in ['mode','modeSource','originalAction']:assert key not in use
-  assert use['fieldIdentity']['revision']=='named-query-core-r1'
+  assert use['fieldIdentity']['revision']==original['closure']['documents'][0]['revision']
  for expected in query['expectedStoredUses']:
   use=next(u for u in report['uses'] if u['path']==expected['path'])
   assert use['scan']==expected['scan'] and use['field']['elementId']==expected['field']

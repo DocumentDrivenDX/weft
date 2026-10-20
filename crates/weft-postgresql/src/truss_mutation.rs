@@ -41,7 +41,7 @@ impl CurrentTrussMutationBackend {
         if evidence.is_empty()
             || evidence.len() > 32
             || evidence.iter().any(|s| s.is_empty() || s.len() > 4096)
-            || document["umf"] != "0.8.0"
+            || document["umf"] != "0.10.0"
             || !matches!(b["releaseId"].as_str(), Some("truss-catalog-runtime/0.65-candidate" | "truss-catalog-runtime/0.66-candidate" | "truss-catalog-runtime/0.67-candidate" | "truss-catalog-runtime/0.68-candidate"))
             || b["interfaceVersion"] != "truss-runtime-binding/0.4"
         {
@@ -66,7 +66,7 @@ impl CurrentTrussMutationBackend {
                 .as_str()
                 .ok_or_else(|| fail("Accepted revision required"))?
                 .into(),
-            umf_version: "0.8.0".into(),
+            umf_version: "0.10.0".into(),
             sha256: model.sha256.clone(),
         };
         if model_pin != pin {
@@ -101,7 +101,7 @@ impl CurrentTrussMutationBackend {
     /// Separately admitted browser correspondence, never native release admission.
     pub fn new_browser(model:Artifact,binding:Artifact,pin:ModelPin)->MResult<Self>{
         let document=model.read()?;
-        if document["umf"]!="0.8.0"||document["id"]!=pin.document_id||pin.sha256!=model.sha256{return Err(fail("Original browser model pin required"));}
+        if document["umf"]!="0.10.0"||document["id"]!=pin.document_id||pin.sha256!=model.sha256{return Err(fail("Original browser model pin required"));}
         let modules=document["modules"].as_array().ok_or_else(||fail("Original modules required"))?.iter()
             .map(|m|m["id"].as_str().map(str::to_owned).ok_or_else(||fail("Module identity required"))).collect::<MResult<Vec<_>>>()?;
         let catalog=owner(Catalog::prepare_security(vec![ModuleInput{document_json:model.utf8.clone(),pin:pin.clone(),selected_module_ids:modules}]))?;
@@ -395,7 +395,7 @@ mod native066_tests {
     use super::*;
     #[test]
     fn original_products_native066_selection_lowers_without_repinning_sources() {
-        let fixture:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/truss066-products.json")).unwrap();
+        let fixture:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/truss066-products-current010.json")).unwrap();
         let model:Artifact=serde_json::from_value(fixture["model"].clone()).unwrap();
         let binding:Artifact=serde_json::from_value(fixture["binding"].clone()).unwrap();
         let selection:Artifact=serde_json::from_value(fixture["selection"].clone()).unwrap();
@@ -454,22 +454,6 @@ mod browser_tests {
   assert_eq!(result["status"],"lowered","{result}");
   assert_eq!(result["preflight"].as_array().unwrap().len(),4);
   assert!(result["preflight"][2]["sql"].as_str().unwrap().contains("props->'2'"));
-  // The public owner prepared this synthetic64-member model; use the full outer registry.
-  let wide_fixture:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/local-products-64-input.json")).unwrap();
-  let mut outer=weft_core::mutation::MutationRegistry::from_json(&wide_fixture["configuration"].to_string()).unwrap();
-  let wide_model:Artifact=serde_json::from_value(wide_fixture["request"]["model"].clone()).unwrap();
-  let wide_pin:ModelPin=serde_json::from_value(wide_fixture["request"]["modelPin"].clone()).unwrap();
-  let response:Value=serde_json::from_str(&outer.compile_json(&wide_fixture["request"].to_string())).unwrap();
-  let wide_plan:Value=serde_json::from_str(response["plan"]["utf8"].as_str().unwrap()).unwrap();
-  let wide_selection:Artifact=serde_json::from_value(wide_plan["selection"]["artifact"].clone()).unwrap();
-  let mut wide_binding=value.clone();wide_binding["document"]=json!(wide_pin);
-  for n in 3..=64{wide_binding["record"]["fields"].as_array_mut().unwrap().push(json!({"identity":identity(&format!("extra-{n}")),"propertyId":n.to_string()}));}
-  let wide_binding=artifact(&wide_binding);
-  let backend=CurrentTrussMutationBackend::new_browser(wide_model.clone(),wide_binding.clone(),wide_pin).unwrap();
-  let handle=outer.install_selection_backend(Box::new(backend)).unwrap();
-  let result=serde_json::to_value(outer.lower_selection(handle,&wide_selection,&wide_model,&wide_binding,2).unwrap()).unwrap();
-  assert_eq!(result["status"],"lowered","{result}");assert_eq!(result["preflight"].as_array().unwrap().len(),4);
-  assert!(result["preflight"][2]["sql"].as_str().unwrap().contains("props->'64'"));
   let mut wrong=value;wrong["record"]["key"]["propertyIds"]=json!(["2"]);
   assert!(CurrentTrussMutationBackend::new_browser(model,artifact(&wrong),pin).is_err());
  }

@@ -1,0 +1,31 @@
+{
+  "request": {
+    "interfaceVersion": "weft-compile/0.2.0",
+    "dialect": "weft-sql/0.2.0",
+    "sql": "SELECT t.name, SUM(t.rank) AS total FROM Thing t WHERE t.active = TRUE GROUP BY t.name",
+    "modules": [
+      {
+        "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"column-fixture\",\"vocabularies\":{},\"modules\":[{\"id\":\"main\",\"namespace\":\"columns\",\"elements\":[{\"id\":\"thing\",\"name\":\"Thing\",\"kind\":\"record\",\"members\":[{\"module\":\"types\",\"element\":\"name\"},{\"module\":\"main\",\"element\":\"rank\"},{\"module\":\"main\",\"element\":\"active\"}],\"extensions\":{}},{\"id\":\"rank\",\"name\":\"rank\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}}]},{\"id\":\"types\",\"namespace\":\"types\",\"elements\":[{\"id\":\"name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}}]}],\"extensions\":{}}",
+        "pin": {
+          "documentId": "column-fixture",
+          "revision": "1",
+          "umfVersion": "0.10.0",
+          "sha256": "d54119688887bf2141665c28182708b17df8c89feaebd586278894d7616268f5"
+        },
+        "selectedModuleIds": [
+          "main"
+        ]
+      }
+    ],
+    "target": {
+      "backendId": "ashlar.databricks",
+      "backendVersion": "0.1.0-qualified",
+      "targetProfile": "dbsql2026.39-qualified",
+      "bindingJson": "{\"profile\":\"ashlar-databricks-candidate/0.1.0\",\"layoutRevision\":\"ashlar-delta/0.3\",\"layoutSha256\":\"ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e\",\"modelPins\":[{\"documentId\":\"column-fixture\",\"revision\":\"1\",\"umfVersion\":\"0.10.0\",\"sha256\":\"d54119688887bf2141665c28182708b17df8c89feaebd586278894d7616268f5\"}],\"publication\":{\"id\":\"weft-column-fixtures\",\"manifestUuid\":\"c70e3478-e8c2-46ee-a954-26a836f15bec\",\"tables\":[{\"name\":[\"client_dev\",\"weft_b006_20261008_columns\",\"node_type_a\"],\"uuid\":\"9a81f3a6-32d2-4d6c-afc6-28f90774a6b8\",\"version\":1}]},\"records\":[{\"logical\":{\"documentId\":\"column-fixture\",\"revision\":\"1\",\"module\":\"main\",\"element\":\"thing\"},\"table\":0,\"kind\":\"nodeProjection\",\"sourceSystem\":\"weft-columns-64-exact\",\"typeId\":\"1\",\"schemaRevision\":\"fixture-schema-1\",\"properties\":[{\"logical\":{\"documentId\":\"column-fixture\",\"revision\":\"1\",\"module\":\"types\",\"element\":\"name\"},\"home\":{\"kind\":\"column\",\"value\":\"group_value\",\"present\":\"group_present\",\"nativeType\":\"STRING\"}},{\"logical\":{\"documentId\":\"column-fixture\",\"revision\":\"1\",\"module\":\"main\",\"element\":\"rank\"},\"home\":{\"kind\":\"column\",\"value\":\"rank_value\",\"present\":\"rank_present\",\"nativeType\":\"BIGINT\"}},{\"logical\":{\"documentId\":\"column-fixture\",\"revision\":\"1\",\"module\":\"main\",\"element\":\"active\"},\"home\":{\"kind\":\"props\",\"propertyId\":\"25\"}}]}]}",
+      "bindingSha256": "4e9826d4994389a9f28ca2c51816d02289be0cdfc92800ff3d1a5d7896a3750a"
+    },
+    "options": {
+      "allowCandidate": false
+    }
+  }
+}

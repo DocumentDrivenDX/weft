@@ -33,13 +33,13 @@ mod tests {
     use std::cell::Cell;
 
     fn request() -> Value {
-        let document = include_str!("../../../tests/fixtures/original-commerce-0.8/ontology.json");
+        let document = include_str!("../../../tests/fixtures/umf010/commerce-paths.json");
         json!({
             "interfaceVersion":"weft-compile/0.4.0", "dialect":"weft-sql/0.4.0",
             "sql":"SELECT l.id FROM order_lines l",
             "modules":[{"documentJson":document,"pin":{
                 "documentId":"urn:umf:domain:commerce","revision":"original",
-                "umfVersion":"0.8.0","sha256":crate::json::sha256(document.as_bytes())
+                "umfVersion":"0.10.0","sha256":crate::json::sha256(document.as_bytes())
             },"selectedModuleIds":["domain"]}],
             "target":{"backendId":"transport-test","backendVersion":"1.0.0",
                 "targetProfile":"test04","bindingJson":"{}","bindingSha256":crate::json::sha256(b"{}")}

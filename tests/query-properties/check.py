@@ -3,7 +3,6 @@
 import copy, hashlib, json, os, pathlib, subprocess
 root=pathlib.Path(__file__).resolve().parent
 producer=os.environ['WEFT_QUERY_PROPERTIES']
-legacy=os.environ['WEFT_SECURITY_MAPPING']
 checks=[]
 def run(binary,raw):return subprocess.run([binary],input=raw.encode(),capture_output=True)
 def refused(raw):
@@ -30,12 +29,12 @@ for name in ['operators','range','field-free-count']:
   assert [u['required'] for u in report['uses']]==[['order'],['equality'],['equality'],['order']]
   assert len({u['path'] for u in report['uses']})==4
  else:assert report['uses']==[] and list(report['scans'])==['s0']
- old=run(legacy,raw);assert old.returncode==0 and not old.stderr
- assert old.stdout==(root/'fixtures'/f'{name}.legacy.json').read_bytes()
- assert json.loads(run(legacy,p.stdout.decode()).stdout)['status']=='refused'
+ # `.legacy.json` is a retained historical receipt only; the released checker
+ # no longer invokes a pre-0.10 producer on current source.
  for key in ['required','mode','originalAction','uses','authority']:
   bad=copy.deepcopy(request);bad[key]=[];refused(json.dumps(bad))
  bad=copy.deepcopy(request);bad['modules'][0]['pin']['sha256']='0'*64;refused(json.dumps(bad))
+ old=copy.deepcopy(request);document=json.loads(old['modules'][0]['documentJson']);document['umf']='0.8.0';source=json.dumps(document,ensure_ascii=False,sort_keys=True,separators=(',',':'));module=old['modules'][0];module['documentJson']=source;module['pin']['umfVersion']='0.8.0';module['pin']['sha256']=hashlib.sha256(source.encode()).hexdigest();profile=json.loads(old['queryProfileJson']);profile['modelPins']=[module['pin']];old['queryProfileJson']=json.dumps(profile,ensure_ascii=False,sort_keys=True,separators=(',',':'));refused(json.dumps(old))
  checks.append(name+': exact source/hash/AST occurrence report; legacy bytes preserved; annotation and pin substitutions refused')
 request=json.loads((root/'fixtures/operators.request.json').read_text())
 for sql in ['SELECT COUNT(DISTINCT r.salary) FROM Resource r','SELECT COUNT(*) FROM Resource r LIMIT 0','SELECT COUNT(*) FROM Resource r WHERE FALSE']:

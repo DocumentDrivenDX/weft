@@ -3,11 +3,11 @@ use serde_json::{json, Value};
 use weft_core::json::sha256;
 pub const SALES_SQL: &str = "SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name";
 pub fn identity(element: &str) -> Value {
-    json!({"documentId":"sales-fixture","revision":"1","module":"sales","element":element})
+    json!({"documentId":"sales-current010-fixture","revision":"current010-1","module":"sales","element":element})
 }
 pub fn request(sql: &str) -> Value {
     let document = include_str!("../../docs/helix/03-test/fixtures/sales.umf.json");
-    let pin = json!({"documentId":"sales-fixture","revision":"1","umfVersion":"0.7.0","sha256":sha256(document.as_bytes())});
+    let pin = json!({"documentId":"sales-current010-fixture","revision":"current010-1","umfVersion":"0.10.0","sha256":sha256(document.as_bytes())});
     let records=[("customer","1",vec![("customer-id","23"),("customer-name","24"),("customer-active","25")]),("orders","2",vec![("order-customer","26"),("order-total","27")])]
         .into_iter().map(|(element,type_id,fields)|json!({"logical":identity(element),"table":0,"kind":"object","sourceSystem":"weft-synthetic","typeId":type_id,"schemaRevision":"fixture-schema-1",
         "properties":fields.into_iter().map(|(e,p)|json!({"logical":identity(e),"home":{"kind":"props","propertyId":p}})).collect::<Vec<_>>()})).collect::<Vec<_>>();
@@ -42,7 +42,7 @@ pub fn relationship_request(sql: &str, projection: bool) -> Value {
         }
     }
     binding["publication"]["tables"].as_array_mut().unwrap().push(json!({"name":["client_dev","weft_b006_fixture",if projection {"edge_ab"} else {"edge_current"}],"uuid":"fixture-edge-uuid","version":0}));
-    binding["relationships"] = json!([{"logical":{"documentId":"sales-fixture","revision":"1","module":"sales","relationship":"customer-orders"},"acceptedDefinition":definition,"table":1,"kind":if projection {"edgeProjection"} else {"edge"},"sourceSystem":"weft-synthetic","typeId":"3","schemaRevision":"fixture-schema-1","source":identity("customer"),"target":identity("orders")}]);
+    binding["relationships"] = json!([{"logical":{"documentId":"sales-current010-fixture","revision":"current010-1","module":"sales","relationship":"customer-orders"},"acceptedDefinition":definition,"table":1,"kind":if projection {"edgeProjection"} else {"edge"},"sourceSystem":"weft-synthetic","typeId":"3","schemaRevision":"fixture-schema-1","source":identity("customer"),"target":identity("orders")}]);
     let raw = binding.to_string();
     request["target"]["bindingJson"] = json!(raw);
     request["target"]["bindingSha256"] = json!(sha256(raw.as_bytes()));

@@ -73,8 +73,8 @@ impl OriginalMutationBackend {
             ));
         }
         let input = &catalog.inputs()[0];
-        if input.pin.umf_version != "0.8.0" {
-            return Err(fail("ACTION", "Original core0.8 input required"));
+        if input.pin.umf_version != "0.10.0" {
+            return Err(fail("ACTION", "Original core0.10 input required"));
         }
         let model = Artifact {
             media_type: "application/json".into(),

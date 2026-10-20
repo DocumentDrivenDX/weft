@@ -1,0 +1,36 @@
+{
+  "owner": "UMF",
+  "scope": "Current UMF 0.10 action-plan producer and source schemas, copied byte-for-byte from the current owner checkout.",
+  "resources": [
+    {
+      "file": "core.schema.json",
+      "ownerPath": "spec/core/schema.json",
+      "sha256": "b0467dec0393865ff643c6c82b373306cb66344720677960a04ca82be1b3b152"
+    },
+    {
+      "file": "semantic-type-reference.schema.json",
+      "ownerPath": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "12daea86d95b60f280e74e0f9c3240ba297bc3e8407003bdb1601a53cd7b78ce"
+    },
+    {
+      "file": "extension-package.schema.json",
+      "ownerPath": "spec/core/extension-package.schema.json",
+      "sha256": "483a7e318ce45fb81921ca9020faf5b035582a956e0d07327ae9efd8be811e9a"
+    },
+    {
+      "file": "plan.schema.json",
+      "ownerPath": "spec/extensions/actions/plan.schema.json",
+      "sha256": "b809454aff9865d455e3658eef507b2664633477c73cb848d93da524d8757766"
+    },
+    {
+      "file": "plan-model.schema.json",
+      "ownerPath": "spec/extensions/actions/plan-model.schema.json",
+      "sha256": "b99226c6188624ec240fb1db96a5fcdfcb15c6fe2b8f2c60276e13f7003b9998"
+    }
+  ],
+  "producer": {
+    "build": "sha256:051d86a7d8043fdb2842533b79457f31e92baf8d969739973992b8cbab8e00eb",
+    "id": "umf.actions.plan-model",
+    "version": "1"
+  }
+}

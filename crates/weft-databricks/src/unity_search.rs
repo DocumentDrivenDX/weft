@@ -59,7 +59,7 @@ fn compile(raw:&str)->Result<Value>{
  let doc:Value=serde_json::from_str(&r.selection.binding.model_json).unwrap();
  let module=doc["modules"].as_array().unwrap().iter().find(|v|v["id"]==admitted.index()["record"]["module"]).ok_or("original Record module absent")?;
  if path!=vec![module["namespace"].as_str().ok_or("Record namespace absent")?.to_string(),admitted.record()["name"].as_str().ok_or("Record name absent")?.to_string()]{return Err("selected Record/table owner differs")}
- let original_columns=weft_core::column_custody::admit_columns(&r.selection.binding.model_sha256,&doc,&m.target,&m.native_columns,table,&admitted.index()["record"],"0.8.0")?;
+ let original_columns=weft_core::column_custody::admit_columns(&r.selection.binding.model_sha256,&doc,&m.target,&m.native_columns,table,&admitted.index()["record"],"0.10.0")?;
  let (vector_native,vector_type,_)=original_columns.get(&field_key(&m.vector_binding.field)).ok_or("original vector ColumnSet absent")?;
  if vector_native!=&m.vector_binding.native||vector_type!="array<float>"{return Err("original vector binding must be ARRAY<FLOAT>")}
  let row_nullable=|reference:&Value|weft_core::column_custody::row_null(&doc,&admitted.index()["record"],reference,&original_columns);
@@ -201,8 +201,8 @@ mod tests{
      fields.push(json!({"module":reference["module"],"element":reference["element"],"storage":"column","column":native}));
    }
    doc["modules"][0]["extensions"]["umf.access"]["columns"]=json!([{"binding":{"sourceId":"uc-search-binding","module":"search"},"target":r["managed"]["target"],"columns":columns}]);
-   let binding=json!({"umf":"0.8.0","id":"uc-search-binding","vocabularies":{"umf.binding":{"version":"0.2.0"}},"modules":[],"extensions":{"umf.binding":{"profile":"umf-binding-2","logical":{"documentId":doc["id"],"coreVersion":"0.8.0"},"target":{"system":"unity-catalog","version":r["managed"]["target"]["majorVersion"],"subset":"typed-access-columns/0.1"},"elements":[{"module":"search","element":"Doc","table":"docs"}],"fields":fields,"relationships":[],"indexes":[]}}}).to_string();
-   r["managed"]["nativeColumns"]=json!({"columnSet":{"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":"pending","module":"search","pointer":"/modules/0/extensions/umf.access/columns/0"},"binding":{"sourceId":"uc-search-binding","documentJson":binding,"documentSha256":weft_core::json::sha256(binding.as_bytes())}});
+   let binding=json!({"umf":"0.10.0","id":"uc-search-binding","vocabularies":{"umf.binding":{"version":"0.2.0"}},"modules":[],"extensions":{"umf.binding":{"profile":"umf-binding-2","logical":{"documentId":doc["id"],"coreVersion":"0.10.0"},"target":{"system":"unity-catalog","version":r["managed"]["target"]["majorVersion"],"subset":"typed-access-columns/0.1"},"elements":[{"module":"search","element":"Doc","table":"docs"}],"fields":fields,"relationships":[],"indexes":[]}}}).to_string();
+   r["managed"]["nativeColumns"]=json!({"columnSet":{"documentId":doc["id"],"coreVersion":"0.10.0","documentSha256":"pending","module":"search","pointer":"/modules/0/extensions/umf.access/columns/0"},"binding":{"sourceId":"uc-search-binding","documentJson":binding,"documentSha256":weft_core::json::sha256(binding.as_bytes())}});
    repin(r,doc);
  }
  #[test]fn ann_current_hydration_and_native_hybrid_are_owned(){

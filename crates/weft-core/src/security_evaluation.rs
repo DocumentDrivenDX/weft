@@ -250,7 +250,7 @@ mod tests{
  fn plan(policy:&Value)->(Catalog,SecurityLogicalPlan){plan_with_ontology(policy,None)}
  pub(super) fn plan_with_ontology(policy:&Value,ontology:Option<&Value>)->(Catalog,SecurityLogicalPlan){
   let f:Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();let s=&f["resolution"]["documents"][0];let text=s["document"].to_string();
-  let inputs=serde_json::from_value(serde_json::json!([{"documentJson":text,"pin":{"documentId":s["document"]["id"],"revision":s["revision"],"umfVersion":"0.8.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();let catalog=Catalog::prepare_security(inputs).unwrap();let packet=crate::security_source::SecuritySourcePacket::read(&policy.to_string(),&ontology.unwrap_or(&f["resolution"]["ontology"]).to_string(),&catalog).unwrap();let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();(catalog,plan)
+  let inputs=serde_json::from_value(serde_json::json!([{"documentJson":text,"pin":{"documentId":s["document"]["id"],"revision":s["revision"],"umfVersion":"0.10.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();let catalog=Catalog::prepare_security(inputs).unwrap();let packet=crate::security_source::SecuritySourcePacket::read(&policy.to_string(),&ontology.unwrap_or(&f["resolution"]["ontology"]).to_string(),&catalog).unwrap();let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();(catalog,plan)
  }
  #[test]
  fn portable_project_membership_and_whole_collection_refusal_correspondence(){

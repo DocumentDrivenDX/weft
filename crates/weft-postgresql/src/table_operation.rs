@@ -150,6 +150,15 @@ impl<'a> Lower<'a> {
 }
 fn compile(raw: &str) -> Result<Value> {
     let operation = table_operation::admit_json(raw)?;
+    let mut program = compile_admitted(&operation, true)?;
+    program["requestJson"] = json!(raw);
+    program["requestSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+    program["binding"] = json!(operation.request().binding.as_ref());
+    program["declaration"] = operation.declaration().clone();
+    program["structuralDigest"] = json!(weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes()));
+    Ok(program)
+}
+pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact: bool) -> Result<Value> {
     let request = operation.request();
     let body = &operation.declaration()["body"];
     let kind = body["kind"].as_str().unwrap();
@@ -164,7 +173,7 @@ fn compile(raw: &str) -> Result<Value> {
         q(&operation.table().native)?
     );
     let mut lower = Lower {
-        operation: &operation,
+        operation,
         slots: vec![],
         identities: BTreeMap::new(),
         source_scope: false,
@@ -193,7 +202,7 @@ fn compile(raw: &str) -> Result<Value> {
             let order = body["orderBy"].as_array().unwrap();
             let fields = order.iter().map(|o| o["field"].clone()).collect::<Vec<_>>();
             cursor = json!({"key":body["cursorKey"],"fields":fields,"ordering":"declared-lexicographic-order","directions":order.iter().map(|o|o["direction"].clone()).collect::<Vec<_>>(),"requiresSourceAndPrincipalBinding":true});
-            if matches!(&request.call, OperationCall::Single { after: Some(_), .. }) {
+            if matches!(operation.call(), OperationCall::Single { after: Some(_), .. }) {
                 let columns = fields
                     .iter()
                     .map(|f| lower.column(f, true))
@@ -398,13 +407,13 @@ fn compile(raw: &str) -> Result<Value> {
         format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) <= {} AND COALESCE(pg_catalog.sum({}),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.* FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok = 1",operation.max_rows(),sizes.join(" + "))
     };
     let native_inputs = operation.native_inputs()?;
-    let native_batch = insert_batch::compile(&operation, &lower, &outputs, &projections, &native_inputs)?;
-    let batch = matches!(request.call, OperationCall::Batch { .. });
+    let native_batch = insert_batch::compile(operation, &lower, &outputs, &projections, &native_inputs)?;
+    let batch = matches!(operation.call(), OperationCall::Batch { .. });
     let mut program = json!({"version":"weft.table-operation/0.1","status":"compiled","target":request.target,
-  "requestJson":raw,"requestSha256":weft_core::json::sha256(raw.as_bytes()),"binding":request.binding,
-  "module":request.module,"operation":request.operation,"declaration":operation.declaration(),
+  "binding":{"modelSha256":request.binding.model_sha256},
+  "module":request.module,"operation":request.operation,"callKind":if batch {"batch"} else {"single"},"idempotencyKey":operation.idempotency_key(),
   "nativeInputs":native_inputs,"nativeAfter":operation.native_after()?,
-  "declarationDigest":weft_core::json::sha256(weft_core::mutation::canonical(operation.declaration()).as_bytes()),
+  "declarationDigest":operation.declaration_digest(),
   "sql":sql,"transport":{"profile":"dbapi-percent/0.1","bindEmptyParameterTuple":true},"parameterOrder":lower.slots.iter().map(|s|s["id"].clone()).collect::<Vec<_>>(),"parameterSources":lower.slots,"outputs":outputs,
   "result":{"kind":if read{body["result"].clone()}else{json!("mutation")},"maxRows":operation.max_rows(),"declaredMaxRows":body["maxRows"],"countScope":"direct-target-rows","referentialActions":"source-declared-native-FK-actions-not-counted-by-this-bound","affectedMarker":if read{Value::Null}else{json!("umf_affected")},"nativeReadGuard":if read{json!({"profile":"pg18-read-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":true,"partialFrames":false})}else{Value::Null},"nativeWriteFrameGuard":if read{Value::Null}else{json!({"profile":"pg18-write-frame/0.1","maxNativeBytes":8388608,"sqlstate":"22012","includesLookahead":false,"partialFrames":false})},"nativeBoundGuard":if read{Value::Null}else{json!({"profile":"pg18-effect-count/0.1","sqlstate":"22012","excessEffects":"statement-error-and-transaction-rollback","writeLimitClipping":false})},"lookahead":read&&body["result"]!="count","cursor":cursor},
   "obligations":{"tableLifecycle":operation.obligations(),"nativeExecutionQualified":false,
@@ -416,16 +425,50 @@ fn compile(raw: &str) -> Result<Value> {
     if let Some(native_batch) = native_batch {
         program["nativeBatch"] = native_batch;
     }
-    program["structuralDigest"] = json!(weft_core::json::sha256(
-        weft_core::mutation::canonical(&program).as_bytes()
-    ));
+    if !compact {
+        program["binding"] = json!(request.binding.as_ref());
+        program["declaration"] = operation.declaration().clone();
+        program["structuralDigest"] = json!(weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes()));
+    }
     Ok(program)
+}
+pub struct PreparedOperationModule {
+    inner: weft_core::table_operation::PreparedOperationModule,
+    query_module: std::sync::OnceLock<std::result::Result<super::table_query::PreparedQueryModule, &'static str>>,
+}
+pub struct PreparedOperation { inner: weft_core::table_operation::PreparedOperation }
+impl PreparedOperationModule {
+    pub fn prepare(source: &str) -> Result<Self> {
+        weft_core::table_operation::prepare_module_json(source).map(|inner| Self { inner, query_module: std::sync::OnceLock::new() })
+    }
+    pub fn prepare_operation(&self, operation: &str) -> Result<PreparedOperation> {
+        self.inner.prepare_operation(operation).map(|inner| PreparedOperation { inner })
+    }
+    pub fn prepare_query(&self, operation: &str) -> Result<super::table_query::PreparedQuery> {
+        let module = self.query_module.get_or_init(|| {
+            self.inner.prepare_query_module()
+                .map(super::table_query::PreparedQueryModule::from_admitted)
+        });
+        let module = module.as_ref().map_err(|error| *error)?;
+        module.prepare_operation(operation)
+    }
+}
+impl PreparedOperation {
+    pub fn bind_json(&self, call: &str) -> String {
+        match self.inner.bind_json(call).and_then(|operation| compile_admitted(&operation, true)) {
+            Ok(program) => {
+                let output = program.to_string();
+                if output.len() > 33_554_432 { blocked("operation program capacity exceeded") } else { output }
+            }
+            Err(reason) => blocked(reason),
+        }
+    }
 }
 pub fn compile_json(request: &str) -> String {
     match compile(request) {
         Ok(program) => {
             let output = program.to_string();
-            if output.len() > 33_554_432 || weft_core::json::checked_json(&output).is_err() {
+            if output.len() > 33_554_432 {
                 blocked("operation program capacity exceeded")
             } else {
                 output

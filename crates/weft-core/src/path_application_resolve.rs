@@ -271,13 +271,13 @@ GROUP BY l.id ORDER BY l.id;"#;
         r#"CROSS JOIN EXPAND_PATHS(l."order_lines.product_id", "products.supplier_id") AS p"#;
 
     fn catalog() -> Catalog {
-        let raw = include_str!("../../../tests/fixtures/original-commerce-0.8/ontology.json");
-        Catalog::prepare(vec![ModuleInput {
+        let raw = include_str!("../../../tests/fixtures/umf010/commerce-paths.json");
+        Catalog::prepare_exact_numbers(vec![ModuleInput {
             document_json: raw.into(),
             pin: ModelPin {
                 document_id: "urn:umf:domain:commerce".into(),
-                revision: "c7-original".into(),
-                umf_version: "0.8.0".into(),
+                revision: "commerce-paths-010".into(),
+                umf_version: "0.10.0".into(),
                 sha256: crate::json::sha256(raw.as_bytes()),
             },
             selected_module_ids: vec!["domain".into()],
@@ -359,7 +359,7 @@ GROUP BY l.id ORDER BY l.id;"#;
         for hop in path["hops"].as_array().unwrap() {
             for id in ["identity", "from", "to"] {
                 assert_eq!(hop[id]["documentId"], "urn:umf:domain:commerce");
-                assert_eq!(hop[id]["revision"], "c7-original");
+                assert_eq!(hop[id]["revision"], "commerce-paths-010");
             }
         }
         assert!(caps(&value).contains(&"relationship.twoHopPaths"));
@@ -588,7 +588,7 @@ GROUP BY l.id ORDER BY l.id;"#;
     #[test]
     fn separately_declared_inverse_and_optional_count_fixture_keeps_own_semantics() {
         let mut doc: Value = serde_json::from_str(include_str!(
-            "../../../tests/fixtures/original-commerce-0.8/ontology.json"
+            "../../../tests/fixtures/umf010/commerce-paths.json"
         ))
         .unwrap();
         doc["id"] = json!("path-inverse-optional-fixture");
@@ -606,12 +606,12 @@ GROUP BY l.id ORDER BY l.id;"#;
             }
         }
         let raw = doc.to_string();
-        let catalog = Catalog::prepare(vec![ModuleInput {
+        let catalog = Catalog::prepare_exact_numbers(vec![ModuleInput {
             document_json: raw.clone(),
             pin: ModelPin {
                 document_id: "path-inverse-optional-fixture".into(),
                 revision: "test-only".into(),
-                umf_version: "0.8.0".into(),
+                umf_version: "0.10.0".into(),
                 sha256: crate::json::sha256(raw.as_bytes()),
             },
             selected_module_ids: vec!["domain".into()],

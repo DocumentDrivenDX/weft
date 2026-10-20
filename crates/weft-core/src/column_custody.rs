@@ -35,8 +35,7 @@ pub fn native_type(raw:&str)->Result<String>{
 }
 /// Resolve exact source custody before a target selects Record-relevant sets.
 pub fn original_column_set<'a>(model_sha256:&str,doc:&'a Value,target:&Value,custody:&NativeColumns,expected_core_version:&str)->Result<&'a Value>{
- if !matches!(expected_core_version,"0.8.0"|"0.10.0"){return Err("unsupported ColumnSet source core profile")}
- if expected_core_version=="0.10.0"&&!matches!((target["platform"].as_str(),target["majorVersion"].as_str()),(Some("postgresql"),Some("18"))|(Some("lakebase"),Some("18"))){return Err("current ColumnSet source profile requires PG18 or Lakebase18")}
+ if expected_core_version!="0.10.0"{return Err("unsupported ColumnSet source core profile")}
  let source=&custody.column_set;
  if doc["umf"]!=expected_core_version||doc["vocabularies"]["umf.access"]["version"]!="0.1.0"||source.document_id!=doc["id"]||source.core_version!=expected_core_version||source.document_sha256!=model_sha256{return Err("ColumnSet original model source differs")}
  let mut sets=vec![];

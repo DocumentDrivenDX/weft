@@ -481,7 +481,7 @@ mod tests {
         assert_eq!(p.null_rank(0, &CursorValue::Null {}).unwrap(), 0);
         assert_eq!(p.null_rank(2, &present("code-a")).unwrap(), 0);
         assert!(p.base().order.is_empty());
-        assert!(p.base().page_key.is_none());
+        assert_eq!(p.base().page_key.as_ref().map(|key| key.id.as_str()), Some("alternate"));
         assert_eq!(p.base().ir_version, "weft-ir/0.2.0");
         assert_eq!(p.after().unwrap().sort_values, cursor().sort_values);
         let no_suffix = prepare(

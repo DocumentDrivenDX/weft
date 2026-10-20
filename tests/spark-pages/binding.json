@@ -1,5 +1,5 @@
 {
-  "umf": "0.8.0",
+  "umf": "0.10.0",
   "id": "spark-pages-physical",
   "vocabularies": {
     "umf.binding": {
@@ -12,7 +12,7 @@
       "profile": "umf-binding-2",
       "logical": {
         "documentId": "spark-pages-authored",
-        "coreVersion": "0.8.0"
+        "coreVersion": "0.10.0"
       },
       "target": {
         "system": "spark-delta",

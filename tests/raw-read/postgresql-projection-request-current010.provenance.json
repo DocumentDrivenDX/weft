@@ -1,0 +1,8 @@
+{
+  "sourceFixture": "postgresql-projection-request.json",
+  "sourceFixtureSha256": "07a09c7598406c2b7233776d3aebdec841770a3e3482c90d3c8dfd7e9c6983c5",
+  "successorFixture": "postgresql-projection-request-current010.json",
+  "migration": "Preserves the original UMF 0.10 logical model, PostgreSQL projection, vector/bytea bindings, and absent collation declarations. The nested native ColumnSet document is already UMF 0.10; its umf.binding logical coreVersion was stale at 0.8.0. Corrected that identity and recomputed the nested source hash from exact bytes. The ColumnSet document pin remains the exact logical model SHA-256. No native type, field, query, or collation meaning changed.",
+  "nestedNativeDocumentSha256": "fd4855b3e34dc63b2cefba5a90e2beb838880f6a8e6439e2219683d963ac4695",
+  "logicalDocumentSha256": "1a59c9a919feade3a6eea7bc98582a9f2b8c200b8c34752a183f2bf82ab45f91"
+}

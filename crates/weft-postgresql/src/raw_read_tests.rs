@@ -151,7 +151,7 @@ mod raw_read_tests {
     }
     #[test]
     fn native_projection_retains_original_binary_vector_and_admission(){
-        let r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request.json")).unwrap();
+        let r:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request-current010.json")).unwrap();
         let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
         assert_eq!(p["outputs"][2]["carrier"],"vector");assert_eq!(p["outputs"][5]["decoder"]["profile"],"pg-bytea/0.1");
         assert_eq!(p["obligations"]["nativeProjection"]["columns"].as_array().unwrap().len(),7);
@@ -195,7 +195,7 @@ mod raw_read_tests {
             let raw=d.to_string();let sha=weft_core::json::sha256(raw.as_bytes());b["binding"]["modelJson"]=json!(raw);b["binding"]["modelSha256"]=json!(sha);b["binding"]["nativeColumns"]["sets"][0]["columnSet"]["documentSha256"]=json!(sha);
             assert_eq!(compile(b)["status"],"blocked");
         }
-        let legacy:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request.json")).unwrap();
+        let legacy:Value=serde_json::from_str(include_str!("../../../tests/raw-read/postgresql-projection-request-current010.json")).unwrap();
         let lp=compile(legacy);assert!(lp["obligations"]["nativeProjection"].get("verificationProfile").is_none());assert!(lp["obligations"]["nativeProjection"]["columns"].as_array().unwrap().iter().all(|a|!a["nativeAdmission"]["sql"].as_str().unwrap().contains("dep.objid=ty.oid")));
     }
     #[test]

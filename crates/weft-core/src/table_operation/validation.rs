@@ -125,7 +125,7 @@ fn unique_refs(admitted: &AdmittedOperation, refs: &Value) -> Result<Vec<String>
     }
     Ok(names)
 }
-pub(super) fn validate(
+pub(super) fn validate_static(
     admitted: AdmittedOperation,
     record: &Value,
     table: &Value,
@@ -157,7 +157,6 @@ pub(super) fn validate(
     if read {
         if admitted.declaration["replay"] != "none"
             || admitted.declaration.get("batch").is_some()
-            || admitted.request.idempotency_key.is_some()
         {
             return Err("read cannot carry write replay or batch grants");
         }
@@ -213,19 +212,6 @@ pub(super) fn validate(
             || admitted.declaration["replay"] == "none"
         {
             return Err("write needs transaction and declared replay");
-        }
-        if admitted.declaration["replay"] == "caller-key-required"
-            && admitted.request.idempotency_key.is_none()
-        {
-            return Err("write replay key required");
-        }
-        if admitted
-            .request
-            .idempotency_key
-            .as_ref()
-            .is_some_and(|s| s.is_empty() || s.len() > 256 || s.contains('\0'))
-        {
-            return Err("write replay key outside bounds");
         }
         unique_refs(&admitted, &body["returning"])?;
         if kind == "insertFrom" {
@@ -317,42 +303,47 @@ pub(super) fn validate(
     if check.parameters.keys().any(|id| !check.used.contains(id)) {
         return Err("unused declared operation input");
     }
+    drop(check);
+    Ok(admitted)
+}
+
+pub(super) fn validate_call(admitted: &AdmittedOperation) -> Result<()> {
+    let body = &admitted.declaration["body"];
+    let read = body["kind"] == "read";
+    if !read {
+        if admitted.declaration["replay"] == "caller-key-required" && admitted.idempotency_key().is_none() {
+            return Err("write replay key required");
+        }
+        if admitted.idempotency_key().is_some_and(|s| s.is_empty() || s.len() > 256 || s.contains('\0')) {
+            return Err("write replay key outside bounds");
+        }
+    } else if admitted.idempotency_key().is_some() {
+        return Err("read cannot carry write replay key");
+    }
     let validate_inputs = |inputs: &BTreeMap<String, Value>| -> Result<()> {
-        if inputs.len() != check.parameters.len() {
+        if inputs.len() != admitted.declaration["parameters"].as_array().ok_or("operation parameter inventory absent")?.len() {
             return Err("operation input inventory differs");
         }
-        for (id, field) in &check.parameters {
-            literal(
-                field,
-                inputs.get(id).ok_or("required operation input absent")?,
-            )?
+        for parameter in admitted.declaration["parameters"].as_array().unwrap() {
+            let id = parameter["id"].as_str().ok_or("operation parameter absent")?;
+            let field = admitted.parameter_fields.get(&reference_id(&parameter["field"])?).ok_or("parameter domain outside owning module")?;
+            literal(field, inputs.get(id).ok_or("required operation input absent")?)?;
         }
         Ok(())
     };
-    match &admitted.request.call {
+    match admitted.call() {
         OperationCall::Single { inputs, after, .. } => {
             validate_inputs(inputs)?;
             if let Some(after) = after {
-                if cursor_fields.is_empty() || after.len() != cursor_fields.len() {
-                    return Err("operation cursor tuple differs");
-                }
-                for (field, value) in cursor_fields.iter().zip(after) {
-                    literal(field, value)?
-                }
+                if admitted.cursor_fields.is_empty() || after.len() != admitted.cursor_fields.len() { return Err("operation cursor tuple differs"); }
+                for (field, value) in admitted.cursor_fields.iter().zip(after) { literal(field, value)?; }
             }
         }
         OperationCall::Batch { items } => {
-            let limit =
-                crate::security_literals::unsigned(&admitted.declaration["batch"]["maxItems"])
-                    .map_err(|_| "operation batch not declared")?;
-            if read || items.is_empty() || items.len() as u64 > limit {
-                return Err("operation batch size/kind differs");
-            }
-            for inputs in items {
-                validate_inputs(inputs)?
-            }
+            let limit = crate::security_literals::unsigned(&admitted.declaration["batch"]["maxItems"]).map_err(|_| "operation batch not declared")?;
+            if read || items.is_empty() || items.len() as u64 > limit { return Err("operation batch size/kind differs"); }
+            for inputs in items { validate_inputs(inputs)?; }
         }
     }
-    drop(check);
-    Ok(admitted)
+    Ok(())
 }

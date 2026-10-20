@@ -10,8 +10,8 @@ pub fn local()->AuthoredPages<crate::local_spark4::LocalSpark4>{AuthoredPages{ba
 pub fn managed()->AuthoredPages<crate::managed_20261016::Managed20261016>{AuthoredPages{backend:crate::managed_20261016::Managed20261016,version:MANAGED_VERSION}}
 impl<B:Backend> Backend for AuthoredPages<B>{
  type Mapping=B::Mapping;type TargetPlan=B::TargetPlan;
- fn describe(&self)->Result<Manifest>{let mut manifest=self.backend.describe()?;manifest.backend_version=self.version.into();manifest.interface_version="weft-backend/0.2.2".into();
-  let language=LanguageProfile{dialect_profile:"weft-sql/0.2.0".into(),ir_version:"weft-ir/0.2.2".into()};manifest.language_profiles.push(language.clone());
+ fn describe(&self)->Result<Manifest>{let mut manifest=self.backend.describe()?;manifest.backend_version=self.version.into();manifest.interface_version="weft-backend/0.2.7".into();
+  let language=LanguageProfile{dialect_profile:"weft-sql/0.2.0".into(),ir_version:"weft-ir/0.2.7".into()};manifest.language_profiles.push(language.clone());
   for capability in &mut manifest.capabilities{capability.language_profiles.push(language.clone());capability.status=Status::Candidate;capability.evidence.clear();capability.constraints.push("Separate original authored-Key page language candidate; complete native publication and key integrity required".into());}
   manifest.evidence.clear();Ok(manifest)
  }

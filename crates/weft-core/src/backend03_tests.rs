@@ -6,13 +6,13 @@ use std::sync::{
     Arc,
 };
 pub(crate) fn catalog() -> Catalog {
-    let raw = include_str!("../../../tests/fixtures/original-commerce-0.8/ontology.json");
+    let raw = include_str!("../../../tests/fixtures/umf010/commerce-paths.json");
     Catalog::prepare(vec![crate::model::ModuleInput {
         document_json: raw.into(),
         pin: crate::ir::ModelPin {
             document_id: "urn:umf:domain:commerce".into(),
-            revision: "c7-original".into(),
-            umf_version: "0.8.0".into(),
+            revision: "commerce-paths-010".into(),
+            umf_version: "0.10.0".into(),
             sha256: crate::json::sha256(raw.as_bytes()),
         },
         selected_module_ids: vec!["domain".into()],

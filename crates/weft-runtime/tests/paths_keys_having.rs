@@ -109,15 +109,21 @@ fn old_versions_and_mismatched_realizations_remain_closed() {
     assert_eq!(compile(&backend)["status"], "blocked");
 }
 #[test]
-fn exact_old_public_response_bytes_stay_unchanged() {
-    let request =
-        include_str!("../../../tests/fixtures/original-supply-chain-having/old-request.json");
-    let prior =
-        include_str!("../../../tests/fixtures/original-supply-chain-having/old-response.json");
-    assert_eq!(
-        weft_runtime::paths_keys::compile_json(request).as_bytes(),
-        prior.trim_end_matches('\n').as_bytes()
-    );
+fn retired_core_source_is_refused_without_rewriting_frozen_response() {
+    let mut request: Value = serde_json::from_str(include_str!(
+        "../../../tests/fixtures/original-supply-chain-having/old-request.json"
+    ))
+    .unwrap();
+    request["interfaceVersion"] = json!("weft-compile/0.4.1");
+    request["dialect"] = json!("weft-sql/0.4.1");
+    request["target"]["backendVersion"] = json!("0.4.1-count-star-having-candidate");
+    let result = compile(&request);
+    assert_eq!(result["status"], "blocked");
+    assert_eq!(result["status"], "blocked");
+    // The historical response remains a frozen receipt; it is not regenerated
+    // or treated as current-runtime evidence.
+    assert!(include_str!("../../../tests/fixtures/original-supply-chain-having/old-response.json")
+        .contains("0.8.0"));
 }
 #[test]
 fn complete_group_bag_guard_expression_and_bound_slot_are_retained() {
@@ -186,32 +192,19 @@ fn complete_group_bag_guard_expression_and_bound_slot_are_retained() {
     assert!(populations.iter().any(|(_, n)| violates(*n)));
 }
 #[test]
-fn exact_old_distinct_public_artifact_bytes_stay_unchanged() {
-    let request = include_str!(
+fn retired_distinct_source_is_explicitly_refused() {
+    let mut request: Value = serde_json::from_str(include_str!(
         "../../../tests/fixtures/original-supply-chain-having/old-distinct-request.json"
-    );
-    let prior = include_str!(
-        "../../../tests/fixtures/original-supply-chain-having/old-distinct-response.json"
-    );
-    assert_eq!(
-        weft_runtime::paths_keys::compile_json(request).as_bytes(),
-        prior.trim_end_matches('\n').as_bytes()
-    );
-    let mut next: Value = serde_json::from_str(request).unwrap();
-    next["interfaceVersion"] = json!("weft-compile/0.4.1");
-    next["dialect"] = json!("weft-sql/0.4.1");
-    next["target"]["backendVersion"] = json!("0.4.1-count-star-having-candidate");
-    let newer = compile(&next);
-    assert_eq!(newer["status"], "compiled", "{newer}");
-    let older: Value = serde_json::from_str(prior).unwrap();
-    assert_eq!(
-        newer["logicalPlan"]["having"],
-        older["logicalPlan"]["having"]
-    );
-    assert_eq!(newer["sql"], older["sql"]);
-    assert_eq!(newer["parameters"], older["parameters"]);
-    assert_eq!(newer["columns"], older["columns"]);
-    assert_eq!(newer["obligations"], older["obligations"]);
+    ))
+    .unwrap();
+    request["interfaceVersion"] = json!("weft-compile/0.4.1");
+    request["dialect"] = json!("weft-sql/0.4.1");
+    request["target"]["backendVersion"] = json!("0.4.1-count-star-having-candidate");
+    let result = compile(&request);
+    assert_eq!(result["status"], "blocked");
+    assert_eq!(result["status"], "blocked");
+    assert!(include_str!("../../../tests/fixtures/original-supply-chain-having/old-distinct-response.json")
+        .contains("0.8.0"));
 }
 #[test]
 fn original_model_binding_pins_and_cross_profile_refusals_are_explicit() {

@@ -30,7 +30,7 @@ pub struct Compiler {
 impl Compiler {
     /// Compile with this instance's explicitly registered Backend03 adapters.
     pub fn compile_json(&self, raw: &str) -> String {
-        self.compile_json_internal(raw, None)
+        self.compile_json_internal(raw, None, false)
     }
     /// Compose registered adapters once, after the complete request and typed
     /// query have passed admission. Panic payloads are excluded from the response;
@@ -40,14 +40,23 @@ impl Compiler {
         raw: &str,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory))
+        self.compile_json_internal(raw, Some(factory), false)
+    }
+    /// Trusted host-selected interpretation for facetless mathematical numeric fields.
+    pub fn compile_json_with_exact_numbers_factory(
+        &self,
+        raw: &str,
+        factory: &mut RegistryFactory<'_>,
+    ) -> String {
+        self.compile_json_internal(raw, Some(factory), true)
     }
     fn compile_json_internal(
         &self,
         raw: &str,
         factory: Option<&mut RegistryFactory<'_>>,
+        exact_numbers: bool,
     ) -> String {
-        let result = self.admit_and_emit(raw, factory);
+        let result = self.admit_and_emit(raw, factory, exact_numbers);
         let mut output = match result {
             Ok(value) => value,
             Err(diagnostic) => json!({
@@ -71,6 +80,7 @@ impl Compiler {
         &self,
         raw: &str,
         factory: Option<&mut RegistryFactory<'_>>,
+        exact_numbers: bool,
     ) -> Result<Value> {
         if raw.len() > 16 * 1024 * 1024 {
             return Err(Diagnostic::new(
@@ -117,7 +127,11 @@ impl Compiler {
         }
         crate::json::checked_json(&req.target.binding_json)
             .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
-        let catalog = Catalog::prepare(req.modules)?;
+        let catalog = if exact_numbers {
+            Catalog::prepare_exact_numbers(req.modules)?
+        } else {
+            Catalog::prepare(req.modules)?
+        };
         let query = crate::path_query::parse041(&req.sql)?;
         let plan = crate::path_application_resolve::resolve(
             &catalog,

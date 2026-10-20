@@ -10,6 +10,18 @@ use serde_json::{json, Value};
 use std::collections::{BTreeSet, HashMap};
 
 type ModuleElementIndex = HashMap<String, (usize, HashMap<String, usize>)>;
+type RecordLocation = (usize, usize);
+#[derive(Debug, Default, Clone)]
+struct RecordNameIndex {
+    quoted_names: HashMap<String, Vec<RecordLocation>>,
+    unquoted_names: HashMap<String, Vec<RecordLocation>>,
+    quoted_unnamed_ids: HashMap<String, Vec<RecordLocation>>,
+    unquoted_unnamed_ids: HashMap<String, Vec<RecordLocation>>,
+    scoped_quoted_names: HashMap<(String, String), Vec<RecordLocation>>,
+    scoped_unquoted_names: HashMap<(String, String), Vec<RecordLocation>>,
+    scoped_quoted_unnamed_ids: HashMap<(String, String), Vec<RecordLocation>>,
+    scoped_unquoted_unnamed_ids: HashMap<(String, String), Vec<RecordLocation>>,
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -47,6 +59,7 @@ pub struct Catalog {
     pub(crate) bounded_current_strings: bool,
     pub(crate) documents: Vec<Value>,
     element_locations: Vec<ModuleElementIndex>,
+    record_names: Vec<RecordNameIndex>,
 }
 #[derive(Debug, Clone)]
 pub struct Record {
@@ -57,28 +70,6 @@ pub struct Record {
 }
 fn fail(code: &str, message: &str) -> Diagnostic {
     Diagnostic::new(code, "model", message)
-}
-/// Newly admitted owning versions must not turn additional selected meaning into
-/// ignored annotations. Older owning-version behavior remains unchanged.
-pub(crate) fn selected08(pin: &ModelPin, element: &Value) -> Result<()> {
-    if pin.umf_version != "0.8.0" { return Ok(()); }
-    const KNOWN: &[&str] = &["id", "name", "title", "description", "kind",
-        "scalarType", "nullability", "cardinality", "itemType", "recordType",
-        "facets", "members", "keys", "references", "extensions"];
-    if element.as_object().is_none_or(|m| m.keys().any(|k| !KNOWN.contains(&k.as_str())))
-        || element.get("extensions").is_some_and(|e| e.as_object().is_none_or(|m| !m.is_empty()))
-    { return Err(fail("WFT-TYPE", "Selected core 0.8 element contains unestablished semantics")); }
-    if element["kind"] == "record" && element.get("references").and_then(Value::as_array).is_some_and(|r| !r.is_empty()) {
-        return Err(fail("WFT-TYPE", "Selected core 0.8 Record reference roles are unestablished"));
-    }
-    for member in element.get("members").and_then(Value::as_array).into_iter().flatten() {
-        reference08(pin, member, &["module", "element"])?;
-    }
-    if let Some(item) = element.get("itemType") { reference08(pin, item, &["module", "element"])?; }
-    for reference in element.get("references").and_then(Value::as_array).into_iter().flatten() {
-        reference08(pin, reference, &["module", "element", "role"])?;
-    }
-    Ok(())
 }
 /// UMF 0.10 selected semantics are admitted only where this compiler can
 /// preserve their value domain. External semantic type references are retained
@@ -126,17 +117,7 @@ fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: b
     }
     Ok(())
 }
-pub(crate) fn reference08(pin: &ModelPin, reference: &Value, known: &[&str]) -> Result<()> {
-    if pin.umf_version == "0.8.0" && reference.as_object().is_none_or(|m| m.keys().any(|k| !known.contains(&k.as_str()))) {
-        return Err(fail("WFT-TYPE", "Selected core 0.8 reference contains unestablished qualifiers"));
-    }
-    Ok(())
-}
-#[jsonschema::validator(path = "../../spec/upstream/umf-0.7.0.schema.json")]
-struct Envelope;
-#[jsonschema::validator(path = "../../spec/upstream/umf-0.8.0.schema.json")]
-struct Envelope08;
-#[jsonschema::validator(path = "../../spec/upstream/umf-0.10.0.schema.json")]
+#[jsonschema::validator(path = "../../spec/upstream/umf-0.10.0-bundled.schema.json")]
 struct Envelope10;
 impl Catalog {
     /// Immutable evidence of the trusted SDK scalar presence preparation path.
@@ -148,7 +129,7 @@ impl Catalog {
         })
     }
 
-    fn validate_selected010(&self, pin: &ModelPin, element: &Value) -> Result<()> {
+    pub(crate) fn validate_selected010(&self, pin: &ModelPin, element: &Value) -> Result<()> {
         if self.native_operation_domains { selected010_table_operation(pin, element) }
         else if self.raw_read_opaque_extensions { selected010_raw_read(pin, element) }
         else { selected010(pin, element) }
@@ -174,10 +155,6 @@ impl Catalog {
     }
     /// Source custody only; security activation remains independently gated.
     pub fn prepare_security(inputs: Vec<ModuleInput>) -> Result<Self> {
-        let current = inputs.iter().all(|input| input.pin.umf_version == "0.10.0");
-        Self::prepare_version(inputs, Some(if current { "0.10.0" } else { "0.8.0" }), false)
-    }
-    pub(crate) fn prepare_security010(inputs: Vec<ModuleInput>) -> Result<Self> {
         Self::prepare_version(inputs, Some("0.10.0"), false)
     }
     pub(crate) fn prepare_raw_read010(inputs: Vec<ModuleInput>) -> Result<Self> {
@@ -222,8 +199,8 @@ impl Catalog {
             if doc["id"] != input.pin.document_id {
                 return Err(fail("WFT-PIN", "Owning document identity mismatch"));
             }
-            if !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0" | "0.10.0")
-                || doc["umf"] != input.pin.umf_version
+            if input.pin.umf_version != "0.10.0"
+                || doc["umf"] != "0.10.0"
                 || required_version.is_some_and(|version| input.pin.umf_version != version)
             {
                 return Err(fail("WFT-MODEL-VERSION", "Unsupported UMF profile"));
@@ -234,11 +211,7 @@ impl Catalog {
                     "Empty revision or repeated owning document",
                 ));
             }
-            if !(match input.pin.umf_version.as_str() {
-                "0.8.0" => Envelope08::is_valid(&doc),
-                "0.10.0" => Envelope10::is_valid(&doc),
-                _ => Envelope::is_valid(&doc),
-            }) {
+            if !Envelope10::is_valid(&doc) {
                 return Err(fail(
                     "WFT-MODEL",
                     "Document violates the pinned UMF envelope",
@@ -281,7 +254,42 @@ impl Catalog {
                 (module["id"].as_str().unwrap().to_owned(), (mi, elements))
             }).collect()
         }).collect();
-        Ok(Self { inputs, documents, element_locations, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:matches!(required_version,Some("0.8.0"|"0.10.0")), identity_name_fallback:false, raw_read_opaque_extensions:false, native_operation_domains:false })
+        let record_names = documents.iter().map(|document| {
+            let mut index = RecordNameIndex::default();
+            for (module_index, module) in document["modules"].as_array().unwrap().iter().enumerate() {
+                for (element_index, element) in module["elements"].as_array().unwrap().iter().enumerate() {
+                    if element["kind"] != "record" { continue; }
+                    let namespace = module["namespace"].as_str();
+                    if let Some(name) = element["name"].as_str() {
+                        index.quoted_names.entry(name.to_owned()).or_default().push((module_index, element_index));
+                        index.unquoted_names.entry(name.to_ascii_lowercase()).or_default().push((module_index, element_index));
+                        if let Some(namespace) = namespace {
+                            let folded_namespace = namespace.to_ascii_lowercase();
+                            index.scoped_quoted_names.entry((namespace.to_owned(), name.to_owned())).or_default().push((module_index, element_index));
+                            index.scoped_unquoted_names.entry((namespace.to_owned(), name.to_ascii_lowercase())).or_default().push((module_index, element_index));
+                            if folded_namespace != namespace {
+                                index.scoped_quoted_names.entry((folded_namespace.clone(), name.to_owned())).or_default().push((module_index, element_index));
+                                index.scoped_unquoted_names.entry((folded_namespace, name.to_ascii_lowercase())).or_default().push((module_index, element_index));
+                            }
+                        }
+                    } else if let Some(id) = element["id"].as_str() {
+                        index.quoted_unnamed_ids.entry(id.to_owned()).or_default().push((module_index, element_index));
+                        index.unquoted_unnamed_ids.entry(id.to_ascii_lowercase()).or_default().push((module_index, element_index));
+                        if let Some(namespace) = namespace {
+                            let folded_namespace = namespace.to_ascii_lowercase();
+                            index.scoped_quoted_unnamed_ids.entry((namespace.to_owned(), id.to_owned())).or_default().push((module_index, element_index));
+                            index.scoped_unquoted_unnamed_ids.entry((namespace.to_owned(), id.to_ascii_lowercase())).or_default().push((module_index, element_index));
+                            if folded_namespace != namespace {
+                                index.scoped_quoted_unnamed_ids.entry((folded_namespace.clone(), id.to_owned())).or_default().push((module_index, element_index));
+                                index.scoped_unquoted_unnamed_ids.entry((folded_namespace, id.to_ascii_lowercase())).or_default().push((module_index, element_index));
+                            }
+                        }
+                    }
+                }
+            }
+            index
+        }).collect();
+        Ok(Self { inputs, documents, element_locations, record_names, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version == Some("0.10.0"), identity_name_fallback:false, raw_read_opaque_extensions:false, native_operation_domains:false })
     }
     pub(crate) fn local_element_by_ids(&self, document: usize, module: &str, element: &str) -> Option<&Value> {
         let (module_index, elements) = self.element_locations.get(document)?.get(module)?;
@@ -303,7 +311,7 @@ impl Catalog {
             if !input.selected_module_ids.contains(&identity.module) { continue; }
             if let Some(element) = self.local_element_by_ids(document, &identity.module, &identity.element) {
                 if element["kind"] == "record" {
-                    selected08(&input.pin, element)?;
+                    self.validate_selected010(&input.pin, element)?;
                     found.push(Record { identity: identity.clone(), pin: input.pin.clone(), value: element.clone(), document });
                 }
             }
@@ -319,7 +327,51 @@ impl Catalog {
     pub fn record(&self, namespace: Option<&Name>, name: &Name) -> Result<Record> {
         let mut found = Vec::new();
         for (d, input) in self.inputs.iter().enumerate() {
-            for module in self.documents[d]["modules"].as_array().unwrap() {
+            let index = &self.record_names[d];
+            let named = if let Some(namespace) = namespace {
+                let key = (namespace.value.clone(), name.value.clone());
+                if name.quoted {
+                    index.scoped_quoted_names.get(&key)
+                } else {
+                    index.scoped_unquoted_names.get(&key)
+                }
+            } else {
+                if name.quoted {
+                    index.quoted_names.get(&name.value)
+                } else {
+                    index.unquoted_names.get(&name.value)
+                }
+            }.map(Vec::as_slice).unwrap_or(&[]);
+            let unnamed = if self.identity_name_fallback {
+                if let Some(namespace) = namespace {
+                    let key = (namespace.value.clone(), name.value.clone());
+                    if name.quoted {
+                        index.scoped_quoted_unnamed_ids.get(&key)
+                    } else {
+                        index.scoped_unquoted_unnamed_ids.get(&key)
+                    }
+                } else {
+                    if name.quoted {
+                        index.quoted_unnamed_ids.get(&name.value)
+                    } else {
+                        index.unquoted_unnamed_ids.get(&name.value)
+                    }
+                }.map(Vec::as_slice).unwrap_or(&[])
+            } else { &[] };
+            let (mut named_index, mut unnamed_index) = (0, 0);
+            while named_index < named.len() || unnamed_index < unnamed.len() {
+                let (module_index, element_index) = if named_index == named.len()
+                    || (unnamed_index < unnamed.len() && unnamed[unnamed_index] < named[named_index])
+                {
+                    let location = unnamed[unnamed_index];
+                    unnamed_index += 1;
+                    location
+                } else {
+                    let location = named[named_index];
+                    named_index += 1;
+                    location
+                };
+                let module = &self.documents[d]["modules"][module_index];
                 if !input
                     .selected_module_ids
                     .iter()
@@ -330,11 +382,10 @@ impl Catalog {
                 if namespace.is_some_and(|n| !n.matches(module["namespace"].as_str().unwrap())) {
                     continue;
                 }
-                for e in module["elements"].as_array().unwrap() {
-                    if e["kind"] == "record" && name.matches(self.query_name(e).unwrap_or("")) {
-                        selected08(&input.pin, e)?;
-                        self.validate_selected010(&input.pin, e)?;
-                        if self.raw_read_opaque_extensions && input.pin.umf_version == "0.10.0" {
+                let e = &module["elements"][element_index];
+                if e["kind"] == "record" {
+                    self.validate_selected010(&input.pin, e)?;
+                    if self.raw_read_opaque_extensions && input.pin.umf_version == "0.10.0" {
                             for member in e["members"].as_array().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 Record has no members"))? {
                                 let validate_reference = |reference: &Value| -> Result<()> {
                                     let module_id = reference["module"].as_str().ok_or_else(|| fail("WFT-TYPE", "Selected UMF 0.10 reference module absent"))?;
@@ -354,19 +405,18 @@ impl Catalog {
                                 };
                                 validate_reference(member)?;
                             }
-                        }
-                        found.push(Record {
-                            identity: Identity {
-                                document_id: input.pin.document_id.clone(),
-                                revision: input.pin.revision.clone(),
-                                module: module["id"].as_str().unwrap().into(),
-                                element: e["id"].as_str().unwrap().into(),
-                            },
-                            pin: input.pin.clone(),
-                            value: e.clone(),
-                            document: d,
-                        });
                     }
+                    found.push(Record {
+                        identity: Identity {
+                            document_id: input.pin.document_id.clone(),
+                            revision: input.pin.revision.clone(),
+                            module: module["id"].as_str().unwrap().into(),
+                            element: e["id"].as_str().unwrap().into(),
+                        },
+                        pin: input.pin.clone(),
+                        value: e.clone(),
+                        document: d,
+                    });
                 }
             }
         }
@@ -433,14 +483,13 @@ impl Catalog {
             )
             .at(&name.span)
         })?;
-        selected08(&record.pin, field)?;
         self.validate_selected010(&record.pin, field)?;
         let ideal;
         let selected=if optional03 && field["nullability"]=="absent-allowed" {
             // Derive the ideal scalar domain, leaving original selected source bytes untouched.
             ideal={let mut v=field.clone();v["nullability"]=Value::String("required".into());v};&ideal
         } else {field};
-        let logical_type = scalar_type_projected(selected, name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers, self.bounded_current_strings, self.field_projection_decimal38)?;
+        let logical_type = scalar_type_projected(selected, name, self.exact_numbers, self.exact_numbers, self.bounded_current_strings, self.field_projection_decimal38)?;
         Ok((
             identity,
             logical_type,
@@ -517,40 +566,158 @@ pub(crate) fn scalar_type_projected(field: &Value, name: &Name, mathematical_int
 }
 
 #[cfg(test)]
-mod numeric_preparation_tests {
+mod core010_admission_tests {
     use super::*;
-    #[test]
-    fn explicit_identity_names_preserve_precedence_ambiguity_and_original_bytes() {
-        let mut doc = json!({"umf":"0.7.0","id":"owner","vocabularies":{},"extensions":{},"modules":[{"id":"m","namespace":"m","extensions":{},"elements":[{"id":"row-id","kind":"record","members":[{"module":"m","element":"field.id"},{"module":"m","element":"other-id"}],"extensions":{}},{"id":"field.id","kind":"field","scalarType":"string","nullability":"required","cardinality":"one","extensions":{}},{"id":"other-id","name":"Authored","kind":"field","scalarType":"string","nullability":"required","cardinality":"one","extensions":{}}]}]});
-        let input = |v:&Value| {let raw=v.to_string();ModuleInput{document_json:raw.clone(),pin:ModelPin{document_id:"owner".into(),revision:"r1".into(),sha256:sha256(raw.as_bytes()),umf_version:"0.7.0".into()},selected_module_ids:vec!["m".into()]}};
-        let name = |v:&str| Name{value:v.into(),quoted:true,span:crate::ir::Span{start:0,end:0}};
-        let original=input(&doc);let mut c=Catalog::prepare(vec![original.clone()]).unwrap();
-        assert!(c.record(None,&name("row-id")).is_err());c.identity_name_fallback=true;
-        let record=c.record(None,&name("row-id")).unwrap();assert_eq!(record.identity.element,"row-id");
-        assert_eq!(c.field(&record,&name("field.id")).unwrap().0.element,"field.id");
-        assert_eq!(c.field(&record,&name("Authored")).unwrap().0.element,"other-id");
-        assert!(c.field(&record,&name("other-id")).is_err());
-        assert_eq!(c.record_members(&record).unwrap()[0].name,"field.id");assert_eq!(c.inputs(),&[original]);
-        doc["modules"][0]["elements"][2]["name"]=json!("field.id");
-        let mut c=Catalog::prepare(vec![input(&doc)]).unwrap();c.identity_name_fallback=true;let r=c.record(None,&name("row-id")).unwrap();assert!(c.field(&r,&name("field.id")).is_err());
-        doc["modules"][0]["elements"][0]["name"]=json!("AuthoredRow");let mut c=Catalog::prepare(vec![input(&doc)]).unwrap();c.identity_name_fallback=true;assert!(c.record(None,&name("row-id")).is_err());assert!(c.record(None,&name("AuthoredRow")).is_ok());
-    }
-    #[test]
-    fn exact_numeric_mode_is_explicit_and_preserves_original_source() {
-        let source = r#" {"umf":"0.7.0","id":"numeric-owner","vocabularies":{},"extensions":{},"modules":[{"id":"m","namespace":"m","extensions":{},"elements":[{"id":"row","name":"Row","kind":"record","members":[{"module":"m","element":"amount"},{"module":"m","element":"units"}],"extensions":{}},{"id":"amount","name":"amount","kind":"field","scalarType":"decimal","nullability":"required","cardinality":"one","extensions":{}},{"id":"units","name":"units","kind":"field","scalarType":"integer","nullability":"required","cardinality":"one","extensions":{}}]}]} "#;
-        let input=ModuleInput{document_json:source.into(),pin:ModelPin{document_id:"numeric-owner".into(),revision:"r1".into(),sha256:sha256(source.as_bytes()),umf_version:"0.7.0".into()},selected_module_ids:vec!["m".into()]};
-        let owner=Identity{document_id:"numeric-owner".into(),revision:"r1".into(),module:"m".into(),element:"row".into()};
-        let default=Catalog::prepare(vec![input.clone()]).unwrap();
-        assert!(default.entity_descriptor(&default.record_by_identity(&owner).unwrap()).is_err());
-        let exact=Catalog::prepare_exact_numbers(vec![input.clone()]).unwrap();
-        let graph=exact.entity_descriptor(&exact.record_by_identity(&owner).unwrap()).unwrap().graph;
-        assert_eq!(exact.inputs(),&[input]);
-        for id in ["amount","units"] {
-            let descriptor=graph.iter().find(|d|d.identity.element==id).unwrap();
-            let crate::application_model::Shape::Scalar{logical_type}=&descriptor.shape else{panic!()};
-            assert_eq!(logical_type.facets,json!({}));
-            let value=if id=="amount"{"9007199254740993.1234567890123456789000"}else{"900719925474099312345678901234567890"};
-            crate::exact::literal(&crate::syntax::Literal{value:value.into(),kind:crate::syntax::LiteralKind::Number,span:crate::ir::Span{start:0,end:0}},logical_type).unwrap();
+
+    fn current_input() -> ModuleInput {
+        let document_json = include_str!("../../../tests/raw-postgresql/table-lifecycle-model.json").to_owned();
+        let doc: Value = serde_json::from_str(&document_json).unwrap();
+        ModuleInput {
+            pin: ModelPin {
+                document_id: doc["id"].as_str().unwrap().to_owned(),
+                revision: "current-fixture".into(),
+                umf_version: "0.10.0".into(),
+                sha256: sha256(document_json.as_bytes()),
+            },
+            document_json,
+            selected_module_ids: vec!["demo".into()],
         }
+    }
+
+    #[test]
+    fn current_010_is_admitted_and_older_core_versions_are_rejected() {
+        let input = current_input();
+        let catalog = Catalog::prepare(vec![input.clone()]).expect("UMF 0.10 is supported");
+        assert_eq!(catalog.pins()[0].umf_version, "0.10.0");
+        Catalog::prepare_security(vec![input]).expect("security preparation uses the same current core");
+
+        for version in ["0.7.0", "0.8.0"] {
+            let mut document: Value = serde_json::from_str(&current_input().document_json).unwrap();
+            document["umf"] = json!(version);
+            let document_json = document.to_string();
+            let mut input = current_input();
+            input.document_json = document_json.clone();
+            input.pin.umf_version = version.into();
+            input.pin.sha256 = sha256(document_json.as_bytes());
+            let error = Catalog::prepare(vec![input.clone()]).unwrap_err();
+            assert_eq!(error.code, "WFT-MODEL-VERSION", "version {version}");
+            assert_eq!(Catalog::prepare_security(vec![input]).unwrap_err().code, "WFT-MODEL-VERSION");
+        }
+    }
+
+    #[test]
+    fn indexed_record_lookup_preserves_name_matching_and_ambiguity() {
+        let mut input = current_input();
+        let mut document: Value = serde_json::from_str(&input.document_json).unwrap();
+        document["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|element| element["id"] == "Note").unwrap()["name"] = json!("Display");
+        input.document_json = document.to_string();
+        input.pin.sha256 = sha256(input.document_json.as_bytes());
+        let single = Catalog::prepare_raw_read010(vec![input.clone()]).unwrap();
+        let name = |value: &str, quoted| Name {
+            value: value.into(), quoted, span: crate::ir::Span { start: 0, end: 0 },
+        };
+        assert_eq!(single.record(None, &name("display", false)).unwrap().identity.element, "Note");
+        assert!(single.record(None, &name("DISPLAY", false)).is_err());
+        assert_eq!(single.record(None, &name("Display", true)).unwrap().identity.element, "Note");
+        assert!(single.record(None, &name("display", true)).is_err());
+
+        let elements = document["modules"][0]["elements"].as_array_mut().unwrap();
+        let mut duplicate = elements.iter().find(|element| element["id"] == "Note").unwrap().clone();
+        duplicate["id"] = json!("Note2");
+        duplicate["name"] = json!("DISPLAY");
+        elements.push(duplicate);
+        input.document_json = document.to_string();
+        input.pin.sha256 = sha256(input.document_json.as_bytes());
+        let catalog = Catalog::prepare_raw_read010(vec![input]).unwrap();
+
+        assert_eq!(catalog.record(None, &name("display", false)).unwrap_err().code, "WFT-NAME-AMBIGUOUS");
+        assert_eq!(catalog.record(None, &name("Display", true)).unwrap().identity.element, "Note");
+        assert_eq!(catalog.record(None, &name("DISPLAY", true)).unwrap().identity.element, "Note2");
+        // A declared display Name takes precedence over the identity-ID fallback.
+        assert!(catalog.record(None, &name("Note", true)).is_err());
+    }
+
+    #[test]
+    fn current_selected_content_still_refuses_unrecognized_extension_meaning() {
+        let mut input = current_input();
+        let mut document: Value = serde_json::from_str(&input.document_json).unwrap();
+        let field = document["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|element| element["id"] == "owner").unwrap();
+        field["extensions"]["example.unknown"] = json!({"payload": 1});
+        input.document_json = document.to_string();
+        input.pin.sha256 = sha256(input.document_json.as_bytes());
+        let mut catalog = Catalog::prepare(vec![input]).unwrap();
+        catalog.identity_name_fallback = true;
+        let name = Name { value: "owner".into(), quoted: true, span: crate::ir::Span { start: 0, end: 0 } };
+        let record_name = Name { value: "Note".into(), quoted: true, span: crate::ir::Span { start: 0, end: 0 } };
+        let record = catalog.record(None, &record_name).unwrap();
+        assert_eq!(catalog.field(&record, &name).unwrap_err().code, "WFT-TYPE");
+    }
+
+    #[test]
+    fn exact_numeric_mode_remains_available_for_current_core_sources() {
+        let mut document: Value = serde_json::from_str(current_input().document_json.as_str()).unwrap();
+        let elements = document["modules"][0]["elements"].as_array_mut().unwrap();
+        for element in elements.iter_mut() {
+            if element["name"].is_null() {
+                element["name"] = element["id"].clone();
+            }
+        }
+        let record = elements.iter_mut().find(|element| element["id"] == "Note").unwrap();
+        record["members"].as_array_mut().unwrap().extend([
+            json!({"module":"demo","element":"amount"}),
+            json!({"module":"demo","element":"units"}),
+        ]);
+        elements.extend([
+            json!({"id":"amount","name":"amount","kind":"field","scalarType":"decimal","nullability":"required","cardinality":"one","extensions":{}}),
+            json!({"id":"units","name":"units","kind":"field","scalarType":"integer","nullability":"required","cardinality":"one","extensions":{}}),
+        ]);
+        let document_json = document.to_string();
+        let input = ModuleInput {
+            pin: ModelPin {
+                document_id: document["id"].as_str().unwrap().to_owned(),
+                revision: "numeric-current".into(),
+                umf_version: "0.10.0".into(),
+                sha256: sha256(document_json.as_bytes()),
+            },
+            document_json,
+            selected_module_ids: vec!["demo".into()],
+        };
+        let identity = Identity {
+            document_id: input.pin.document_id.clone(),
+            revision: input.pin.revision.clone(),
+            module: "demo".into(),
+            element: "Note".into(),
+        };
+        let default = Catalog::prepare(vec![input.clone()]).unwrap();
+        assert!(default.entity_descriptor(&default.record_by_identity(&identity).unwrap()).is_err());
+        let exact = Catalog::prepare_exact_numbers(vec![input.clone()]).unwrap();
+        let graph = exact.entity_descriptor(&exact.record_by_identity(&identity).unwrap()).unwrap().graph;
+        assert_eq!(exact.inputs(), &[input]);
+        for id in ["amount", "units"] {
+            let descriptor = graph.iter().find(|d| d.identity.element == id).unwrap();
+            let crate::application_model::Shape::Scalar { logical_type } = &descriptor.shape else { panic!() };
+            assert_eq!(logical_type.facets, json!({}));
+            let value = if id == "amount" { "9007199254740993.1234567890123456789000" } else { "900719925474099312345678901234567890" };
+            crate::exact::literal(&crate::syntax::Literal { value: value.into(), kind: crate::syntax::LiteralKind::Number, span: crate::ir::Span { start: 0, end: 0 } }, logical_type).unwrap();
+        }
+    }
+
+    #[test]
+    fn derived_commerce_path_successor_passes_the_current_core_schema() {
+        let document_json = include_str!("../../../tests/fixtures/umf010/commerce-paths.json").to_owned();
+        let document: Value = serde_json::from_str(&document_json).unwrap();
+        let catalog = Catalog::prepare(vec![ModuleInput {
+            pin: ModelPin {
+                document_id: document["id"].as_str().unwrap().to_owned(),
+                revision: "commerce-paths-010".into(),
+                umf_version: "0.10.0".into(),
+                sha256: sha256(document_json.as_bytes()),
+            },
+            document_json,
+            selected_module_ids: vec!["domain".into()],
+        }]).expect("the adapted test source validates under current UMF core");
+        assert_eq!(catalog.pins()[0].umf_version, "0.10.0");
     }
 }

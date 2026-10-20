@@ -86,6 +86,48 @@ impl MutationCompiler {
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_raw_read_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> { let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_raw_read_json(&original)) }
 
+/// Pure preparation for a source-pinned PostgreSQL table query. The prepared
+/// value carries no native connection, cursor, authorization, or result state.
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub struct TableQueryPreparation { inner: weft_runtime::PreparedTableQuery }
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+impl TableQueryPreparation {
+    #[wasm_bindgen::prelude::wasm_bindgen(constructor)]
+    pub fn new(request:&js_sys::JsString)->Result<TableQueryPreparation,wasm_bindgen::JsValue> {
+        let source=strict_text(request,8_388_608)?;
+        weft_runtime::PreparedTableQuery::prepare(&source)
+            .map(|inner|Self{inner})
+            .map_err(|error|wasm_bindgen::JsValue::from_str(error))
+    }
+    pub fn program_json(&self)->String { self.inner.program_json() }
+    pub fn bind_json(&self,call:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> {
+        Ok(self.inner.bind_json(&strict_text(call,8_388_608)?))
+    }
+}
+
+/// Module-level immutable query source index with lazy operation preparation.
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub struct TableQueryModulePreparation { inner: weft_runtime::PreparedTableQueryModule }
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+impl TableQueryModulePreparation {
+    #[wasm_bindgen::prelude::wasm_bindgen(constructor)]
+    pub fn new(request:&js_sys::JsString)->Result<TableQueryModulePreparation,wasm_bindgen::JsValue> {
+        let source=strict_text(request,8_388_608)?;
+        weft_runtime::PreparedTableQueryModule::prepare(&source)
+            .map(|inner|Self{inner})
+            .map_err(|error|wasm_bindgen::JsValue::from_str(error))
+    }
+    pub fn prepare_operation(&self,operation:&js_sys::JsString)->Result<TableQueryPreparation,wasm_bindgen::JsValue> {
+        let id=strict_text(operation,256)?;
+        self.inner.prepare_operation(&id).map(|inner|TableQueryPreparation{inner})
+            .map_err(|error|wasm_bindgen::JsValue::from_str(error))
+    }
+}
+
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_native_privilege_probes_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let original=strict_text(request,4_194_304)?;Ok(weft_runtime::compile_native_privilege_probes_json(&original))}

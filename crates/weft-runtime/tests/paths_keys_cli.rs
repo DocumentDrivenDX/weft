@@ -49,7 +49,7 @@ fn produced_binary_preserves_original_collection_and_count_artifacts() {
         request["sql"]=json!(query);
         let raw=format!(" \r\n{}\t\n",request);
         let result=protocol(&raw);
-        assert_eq!(result["status"],"compiled");
+        assert_eq!(result["status"],"compiled","{result}");
         assert_eq!(result["qualification"]["status"],"candidate");
         assert_eq!(result["modelPins"],json!([request["modules"][0]["pin"].clone()]));
     }

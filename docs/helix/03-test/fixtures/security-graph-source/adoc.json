@@ -1,5 +1,5 @@
 {
-  "umf": "0.8.0",
+  "umf": "0.10.0",
   "id": "adoc",
   "vocabularies": {},
   "extensions": {},
@@ -156,7 +156,13 @@
           "scalarType": "integer",
           "nullability": "required",
           "cardinality": "one",
-          "extensions": {}
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": true
+            }
+          }
         },
         {
           "id": "Assignment",
@@ -378,5 +384,6 @@
         }
       ]
     }
-  ]
+  ],
+  "title": "Current UMF 0.10 synthetic native authorization model"
 }

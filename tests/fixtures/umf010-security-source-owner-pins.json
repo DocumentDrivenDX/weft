@@ -1,0 +1,9 @@
+{
+  "ownerRepository": "DocumentDrivenDX/umf",
+  "ownerCommit": "a251ea5f876b7c69ef5e429af43621852242d324",
+  "sourcePath": "tests/security/weft-source-fixture.json",
+  "sourceSha256": "993718c144379e4ed227458971608b5efc001a60d2e21e8dd3471744382caa1c",
+  "coreDocumentSha256": "b345d0463c54f9ae3c4fadf5c0e84a323e8192b483867a066c6103ac36d16757",
+  "schemaPath": "spec/core/schema.json",
+  "schemaSha256": "e769332c4de4a446eeb40abc8cc45ca4a27db3210ee71aab0f1efd848f35a928"
+}

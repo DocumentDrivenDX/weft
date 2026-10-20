@@ -1,17 +1,26 @@
 {
   "owner": "UMF",
-  "revision": "c1e316c42ebe2a3a87420a5edc7e1ae751137b5b",
-  "scope": "Exact committed prepared local-action owner cohort; original schema bytes unchanged. Browser/native/publication qualification remains separate.",
+  "scope": "Current UMF 0.10 action-plan producer and source schemas, shared by standard and local action-plan fixtures; execution authority is separately admitted.",
   "resources": [
     {
       "file": "core.schema.json",
-      "ownerPath": "spec/core/schema-properties-document.schema.json",
-      "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e"
+      "ownerPath": "spec/core/schema.json",
+      "sha256": "b0467dec0393865ff643c6c82b373306cb66344720677960a04ca82be1b3b152"
+    },
+    {
+      "file": "semantic-type-reference.schema.json",
+      "ownerPath": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "12daea86d95b60f280e74e0f9c3240ba297bc3e8407003bdb1601a53cd7b78ce"
+    },
+    {
+      "file": "extension-package.schema.json",
+      "ownerPath": "spec/core/extension-package.schema.json",
+      "sha256": "483a7e318ce45fb81921ca9020faf5b035582a956e0d07327ae9efd8be811e9a"
     },
     {
       "file": "plan.schema.json",
       "ownerPath": "spec/extensions/actions/plan.schema.json",
-      "sha256": "6ab8bf676e60724792cf2ac41c7c3cd1c143a5c3173e9b63b334672e92547089"
+      "sha256": "b809454aff9865d455e3658eef507b2664633477c73cb848d93da524d8757766"
     },
     {
       "file": "plan-model.schema.json",
@@ -20,8 +29,8 @@
     }
   ],
   "producer": {
+    "build": "sha256:051d86a7d8043fdb2842533b79457f31e92baf8d969739973992b8cbab8e00eb",
     "id": "umf.actions.plan-model",
-    "version": "1",
-    "build": "sha256:6b331c0b5118435a79eb19b3c66464b4ea1ed3e70134fc3b71e07913487a408b"
+    "version": "1"
   }
 }

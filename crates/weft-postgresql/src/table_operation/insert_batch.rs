@@ -87,7 +87,7 @@ pub(super) fn compile(
     native_inputs: &[BTreeMap<String, Value>],
 ) -> Result<Option<Value>> {
     let body = &operation.declaration()["body"];
-    if !matches!(&operation.request().call, OperationCall::Batch { .. })
+    if !matches!(operation.call(), OperationCall::Batch { .. })
         || body["kind"] != "insert"
         || !operation.batch_insert_scope()
         || operation.max_rows() == 0
@@ -275,7 +275,7 @@ pub(super) fn compile(
                 .to_owned(),
         ])
         .collect::<Vec<_>>();
-    let expected_items = match &operation.request().call {
+    let expected_items = match operation.call() {
         OperationCall::Batch { items } => items.len(),
         _ => return Ok(None),
     };

@@ -8,7 +8,7 @@ use sqlparser::{
     dialect::PostgreSqlDialect,
     parser::Parser,
 };
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 type Result<T> = std::result::Result<T, &'static str>;
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
@@ -149,12 +149,20 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
 pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>) -> Result<AdmittedModel> {
     prepare_native_model(binding,operation,false)
 }
-pub(crate) fn prepare_seed_model(binding: &Binding) -> Result<AdmittedModel> { prepare_native_model(binding,None,true) }
+pub(crate) fn prepare_seed_model(binding: &Binding) -> Result<AdmittedModel> {
+    prepare_native_model(binding,None,true)
+}
 fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) -> Result<AdmittedModel> {
+    let doc = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
+    prepare_native_document(binding, doc, operation, seed)
+}
+pub(crate) fn prepare_operation_document(binding: &Binding, doc: Json, operation:Option<&str>) -> Result<AdmittedModel> {
+    prepare_native_document(binding, doc, operation, false)
+}
+fn prepare_native_document(binding: &Binding, doc: Json, operation:Option<&str>, seed:bool) -> Result<AdmittedModel> {
     if binding.tables.iter().flat_map(|t| &t.columns).any(|c| matches!(c.carrier, Carrier::Date | Carrier::Timestamp))
         && ((operation.is_none() && !seed) || binding.native_lifecycle.is_none())
     { return Err("temporal carriers require declared native lifecycle operations"); }
-    let doc = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
     if crate::json::sha256(binding.model_json.as_bytes()) != binding.model_sha256 {
         return Err("model source pin mismatch");
     }
@@ -173,10 +181,14 @@ fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) ->
             .map(|m| m["id"].as_str().unwrap_or("").to_owned())
             .collect(),
     };
-    let catalog = match version {
-        "0.8.0" => crate::model::Catalog::prepare_security(vec![input]),
-        "0.10.0" => if operation.is_some() || seed { crate::model::Catalog::prepare_table_operation010(vec![input]) } else { crate::model::Catalog::prepare_raw_read010(vec![input]) },
-        _ => return Err("raw-read supports original UMF core 0.8.0 and 0.10.0 sources"),
+    if version != "0.10.0" {
+        return Err("raw-read supports UMF core 0.10.0 sources only");
+    }
+    let catalog = if operation.is_some() || seed {
+        crate::model::Catalog::prepare_table_operation010(vec![input])
+    } else {
+        crate::model::Catalog::prepare_raw_read010(vec![input])
+
     }.map_err(|_| "UMF core envelope/profile refused")?;
     let n = |value: &str| crate::syntax::Name {
         value: value.into(),
@@ -184,6 +196,23 @@ fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) ->
         span: crate::ir::Span { start: 0, end: 0 },
     };
     let mut records = BTreeMap::new();
+    let mut columns_by_table: BTreeMap<Vec<String>, BTreeMap<String, &Column>> = BTreeMap::new();
+    for table in &binding.tables {
+        let columns = columns_by_table.entry(table.logical.clone()).or_default();
+        for column in &table.columns {
+            columns.entry(column.logical.clone()).or_insert(column);
+        }
+    }
+    let mut relationships_by_id: HashMap<String, Vec<&Json>> = HashMap::new();
+    let mut relationships_by_module_id: HashMap<(String, String), Vec<&Json>> = HashMap::new();
+    for module in modules {
+        let module_id = module["id"].as_str().ok_or("model module ID")?;
+        for relationship in module["relationships"].as_array().into_iter().flatten() {
+            let id = relationship["id"].as_str().ok_or("model relationship ID")?;
+            relationships_by_id.entry(id.to_owned()).or_default().push(relationship);
+            relationships_by_module_id.entry((module_id.to_owned(), id.to_owned())).or_default().push(relationship);
+        }
+    }
     for table in &binding.tables {
         if table.logical.len() != 2 {
             return Err("logical table path");
@@ -192,33 +221,24 @@ fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) ->
             .record(Some(&n(&table.logical[0])), &n(&table.logical[1]))
             .map_err(|_| "table absent/ambiguous in UMF")?;
         let members = record.value["members"].as_array().ok_or("record members")?;
+        let mut members_by_name: HashMap<String, Vec<(&Json, &Json)>> = HashMap::new();
+        for member in members {
+            let module_id = member["module"].as_str().ok_or("member module ID")?;
+            let element_id = member["element"].as_str().ok_or("member element ID")?;
+            let field = catalog.local_element_by_ids(record.document, module_id, element_id)
+                .ok_or("missing member")?;
+            if let Some(name) = catalog.query_name(field) {
+                members_by_name.entry(name.to_owned()).or_default().push((field, member));
+            }
+        }
         let mut field_ids = BTreeMap::new();
         for c in &table.columns {
-            let mut matches = vec![];
-            for member in members {
-                let Some(module) = modules.iter().find(|m| m["id"] == member["module"]) else {
-                    return Err("missing member module");
-                };
-                let Some(field) = module["elements"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .find(|f| f["id"] == member["element"])
-                else {
-                    return Err("missing member");
-                };
-                if catalog.query_name(field).is_some_and(|name| name == c.logical) {
-                    matches.push((field, member));
-                }
-            }
-            if matches.len() != 1 {
+            let matches = members_by_name.get(&c.logical);
+            if matches.is_none_or(|found| found.len() != 1) {
                 return Err("column absent/ambiguous in UMF");
             };
-            let (field, member) = matches[0];
+            let (field, member) = matches.unwrap()[0];
             (if operation.is_some() || seed { crate::model::selected010_table_operation(&record.pin, field) } else { crate::model::selected010_raw_read(&record.pin, field) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
-            if version != "0.10.0" && field.get("extensions").and_then(Json::as_object).is_some_and(|m| !m.is_empty()) {
-                return Err("column meaning outside scalar read profile");
-            }
             let family = match c.carrier {
                 Carrier::Integer => "integer",
                 Carrier::Decimal => "decimal",
@@ -230,8 +250,7 @@ fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) ->
                 Carrier::Timestamp => "timestamp",
             };
             if matches!(c.carrier, Carrier::Uuid | Carrier::Bits128)
-                && (version != "0.10.0"
-                    || field.get("facets").is_some_and(|v|v != &json!({}))
+                && (field.get("facets").is_some_and(|v|v != &json!({}))
                     || field.get("semanticTypes").is_some())
             { return Err("UMF 0.10 UUID/bits128 native refinements or semantic references are unsupported"); }
             if field["kind"] != "field"
@@ -262,12 +281,11 @@ fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) ->
         let target = records
             .get(&rel.target)
             .ok_or("relationship target binding")?;
-        let declared: Vec<&Json> = modules
-            .iter()
-            .filter(|m|rel.module.as_ref().is_none_or(|name|m["id"]==name.as_str()))
-            .flat_map(|m| m["relationships"].as_array().into_iter().flatten())
-            .filter(|r| r["id"] == rel.id)
-            .collect();
+        let declared = if let Some(module) = &rel.module {
+            relationships_by_module_id.get(&(module.clone(), rel.id.clone())).map(Vec::as_slice).unwrap_or(&[])
+        } else {
+            relationships_by_id.get(&rel.id).map(Vec::as_slice).unwrap_or(&[])
+        };
         if declared.len() != 1 {
             return Err("relationship identity absent/ambiguous in UMF");
         };
@@ -279,17 +297,18 @@ fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) ->
             || ["sourceMultiplicity","targetMultiplicity"].iter().any(|key|d[*key].as_object().is_none_or(|m|m.keys().any(|k|!matches!(k.as_str(),"min"|"max"))))
         {return Err("selected original raw relationship contains unsupported meaning")}
         let target_key=target.value["keys"].as_array().and_then(|keys|keys.iter().find(|k|k["id"]==d["target"][0]["key"])).ok_or("relationship target Key absent")?;
+        let target_columns = columns_by_table.get(&rel.target).ok_or("relationship target binding")?;
         let target_fields=target_key["fields"].as_array().ok_or("relationship target Key fields absent")?.iter().map(|reference| {
-            let module=modules.iter().find(|m|m["id"]==reference["module"]).ok_or("relationship target Field module absent")?;
-            let field=module["elements"].as_array().unwrap().iter().find(|f|f["id"]==reference["element"]).ok_or("relationship target Field absent")?;
+            let module=reference["module"].as_str().ok_or("relationship target Field module absent")?;
+            let element=reference["element"].as_str().ok_or("relationship target Field absent")?;
+            let field=catalog.local_element_by_ids(target.document,module,element).ok_or("relationship target Field absent")?;
             let logical=catalog.query_name(field).ok_or("relationship target Field name absent")?;
-            if !binding.tables.iter().find(|t|t.logical==rel.target).unwrap().columns.iter().any(|c|c.logical==logical){return Err("relationship target Key field unbound")}
+            if !target_columns.contains_key(logical){return Err("relationship target Key field unbound")}
             Ok(logical.to_string())
         }).collect::<Result<Vec<_>>>()?;
         for pair in &rel.pairs {
-            let source_table=binding.tables.iter().find(|t|t.logical==rel.source).unwrap();let target_table=binding.tables.iter().find(|t|t.logical==rel.target).unwrap();
-            let source_column=source_table.columns.iter().find(|c|c.logical==pair[0]).ok_or("relationship source Field unbound")?;
-            let target_column=target_table.columns.iter().find(|c|c.logical==pair[1]).ok_or("relationship target Field unbound")?;
+            let source_column=columns_by_table.get(&rel.source).and_then(|columns|columns.get(&pair[0])).ok_or("relationship source Field unbound")?;
+            let target_column=columns_by_table.get(&rel.target).and_then(|columns|columns.get(&pair[1])).ok_or("relationship target Field unbound")?;
             if source_column.carrier!=target_column.carrier{return Err("relationship native logical carrier mismatch")}
         }
         if rel.pairs.iter().map(|p|p[1].clone()).collect::<Vec<_>>()!=target_fields
@@ -400,6 +419,21 @@ pub fn admit_json(raw: &str) -> Result<AdmittedRead> {
 #[cfg(test)]
 mod source_identity_tests {
     use super::*;
+
+    #[test]
+    fn raw_read_refuses_legacy_owning_core_versions() {
+        let current = include_str!("../../../tests/raw-read/postgresql-source-exact-010-request.json");
+        for version in ["0.7.0", "0.8.0"] {
+            let mut request: Json = serde_json::from_str(current).unwrap();
+            let mut doc: Json = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+            doc["umf"] = json!(version);
+            let source = serde_json::to_string(&doc).unwrap();
+            request["binding"]["modelSha256"] = json!(crate::json::sha256(source.as_bytes()));
+            request["binding"]["modelJson"] = json!(source);
+            let error = admit_json(&request.to_string()).unwrap_err();
+            assert!(error.contains("UMF core 0.10.0 sources only"), "version {version}: {error}");
+        }
+    }
 
     #[test]
     fn original_umf010_uuid_and_bits128_source_is_retained_and_pinned() {

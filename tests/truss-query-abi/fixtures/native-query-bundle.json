@@ -23,7 +23,7 @@
             "identity": {
               "module": "m",
               "element": "A-label",
-              "revision": "r1",
+              "revision": "current010-r1",
               "documentId": "adoc"
             },
             "propertyId": "1"
@@ -32,7 +32,7 @@
             "identity": {
               "module": "m",
               "element": "A-value",
-              "revision": "r1",
+              "revision": "current010-r1",
               "documentId": "adoc"
             },
             "propertyId": "2"
@@ -42,7 +42,7 @@
         "identity": {
           "module": "m",
           "element": "A",
-          "revision": "r1",
+          "revision": "current010-r1",
           "documentId": "adoc"
         }
       },
@@ -67,7 +67,7 @@
             "identity": {
               "module": "m",
               "element": "B-label",
-              "revision": "r1",
+              "revision": "current010-r1",
               "documentId": "adoc"
             },
             "propertyId": "3"
@@ -76,7 +76,7 @@
             "identity": {
               "module": "m",
               "element": "B-value",
-              "revision": "r1",
+              "revision": "current010-r1",
               "documentId": "adoc"
             },
             "propertyId": "4"
@@ -86,7 +86,7 @@
         "identity": {
           "module": "m",
           "element": "B",
-          "revision": "r1",
+          "revision": "current010-r1",
           "documentId": "adoc"
         }
       }
@@ -98,8 +98,8 @@
     },
     "documents": [
       {
-        "sha256": "3b09a347553733ab86a2444fa2558120820e37108d2383b76e906102a0a86eab",
-        "revision": "r1",
+        "sha256": "4bc5df8ec701915ea14a6f612d7d9b11852b07f6b7d319bfbba1d967a072427d",
+        "revision": "current010-r1",
         "documentId": "adoc"
       }
     ],
@@ -109,7 +109,7 @@
       {
         "identity": {
           "module": "m",
-          "revision": "r1",
+          "revision": "current010-r1",
           "documentId": "adoc",
           "relationship": "A-B"
         },
@@ -120,7 +120,7 @@
       {
         "identity": {
           "module": "m",
-          "revision": "r1",
+          "revision": "current010-r1",
           "documentId": "adoc",
           "relationship": "children"
         },
@@ -139,17 +139,17 @@
   "modules": [
     {
       "pin": {
-        "sha256": "3b09a347553733ab86a2444fa2558120820e37108d2383b76e906102a0a86eab",
-        "revision": "r1",
+        "sha256": "4bc5df8ec701915ea14a6f612d7d9b11852b07f6b7d319bfbba1d967a072427d",
+        "revision": "current010-r1",
         "documentId": "adoc",
-        "umfVersion": "0.8.0"
+        "umfVersion": "0.10.0"
       },
-      "documentJson": "{\n  \"umf\": \"0.8.0\",\n  \"id\": \"adoc\",\n  \"vocabularies\": {},\n  \"extensions\": {},\n  \"modules\": [\n    {\n      \"id\": \"m\",\n      \"namespace\": \"m\",\n      \"extensions\": {},\n      \"elements\": [\n        {\n          \"id\": \"A\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"A-label\"\n            },\n            {\n              \"module\": \"m\",\n              \"element\": \"A-value\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"z-alt\",\n              \"name\": \"alt\",\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"A-label\"\n                }\n              ]\n            },\n            {\n              \"id\": \"a-primary\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"A-value\"\n                },\n                {\n                  \"module\": \"m\",\n                  \"element\": \"A-label\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {},\n          \"name\": \"A\"\n        },\n        {\n          \"id\": \"B\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"B-label\"\n            },\n            {\n              \"module\": \"m\",\n              \"element\": \"B-value\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"z-alt\",\n              \"name\": \"alt\",\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"B-label\"\n                }\n              ]\n            },\n            {\n              \"id\": \"a-primary\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"m\",\n                  \"element\": \"B-value\"\n                },\n                {\n                  \"module\": \"m\",\n                  \"element\": \"B-label\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {},\n          \"name\": \"B\"\n        },\n        {\n          \"id\": \"A-label\",\n          \"name\": \"A-label\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"A-value\",\n          \"name\": \"A-value\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"B-label\",\n          \"name\": \"B-label\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"B-value\",\n          \"name\": \"B-value\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        }\n      ],\n      \"relationships\": [\n        {\n          \"id\": \"A-B\",\n          \"name\": \"A-B\",\n          \"source\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"A\"\n            }\n          ],\n          \"target\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"B\",\n              \"key\": \"a-primary\"\n            }\n          ],\n          \"sourceMultiplicity\": {\n            \"min\": 0,\n            \"max\": 1\n          },\n          \"targetMultiplicity\": {\n            \"min\": 0,\n            \"max\": 2\n          },\n          \"targetLifecycle\": \"independent\",\n          \"directed\": true\n        },\n        {\n          \"id\": \"children\",\n          \"name\": \"children\",\n          \"source\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"A\"\n            }\n          ],\n          \"target\": [\n            {\n              \"module\": \"m\",\n              \"element\": \"A\",\n              \"key\": \"a-primary\"\n            }\n          ],\n          \"sourceMultiplicity\": {\n            \"min\": 0,\n            \"max\": 1\n          },\n          \"targetMultiplicity\": {\n            \"min\": 0,\n            \"max\": 4\n          },\n          \"targetLifecycle\": \"owned\",\n          \"directed\": true\n        }\n      ]\n    }\n  ]\n}",
+      "documentJson": "{\"extensions\":{},\"id\":\"adoc\",\"modules\":[{\"elements\":[{\"extensions\":{},\"id\":\"A\",\"keys\":[{\"fields\":[{\"element\":\"A-label\",\"module\":\"m\"}],\"id\":\"z-alt\",\"name\":\"alt\"},{\"fields\":[{\"element\":\"A-value\",\"module\":\"m\"},{\"element\":\"A-label\",\"module\":\"m\"}],\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"A-label\",\"module\":\"m\"},{\"element\":\"A-value\",\"module\":\"m\"}],\"name\":\"A\"},{\"extensions\":{},\"id\":\"B\",\"keys\":[{\"fields\":[{\"element\":\"B-label\",\"module\":\"m\"}],\"id\":\"z-alt\",\"name\":\"alt\"},{\"fields\":[{\"element\":\"B-value\",\"module\":\"m\"},{\"element\":\"B-label\",\"module\":\"m\"}],\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true}],\"kind\":\"record\",\"members\":[{\"element\":\"B-label\",\"module\":\"m\"},{\"element\":\"B-value\",\"module\":\"m\"}],\"name\":\"B\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"A-label\",\"kind\":\"field\",\"name\":\"A-label\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"A-value\",\"kind\":\"field\",\"name\":\"A-value\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"B-label\",\"kind\":\"field\",\"name\":\"B-label\",\"nullability\":\"required\",\"scalarType\":\"string\"},{\"cardinality\":\"one\",\"extensions\":{},\"id\":\"B-value\",\"kind\":\"field\",\"name\":\"B-value\",\"nullability\":\"required\",\"scalarType\":\"string\"}],\"extensions\":{},\"id\":\"m\",\"namespace\":\"m\",\"relationships\":[{\"directed\":true,\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"element\":\"A\",\"module\":\"m\"}],\"sourceMultiplicity\":{\"max\":1,\"min\":0},\"target\":[{\"element\":\"B\",\"key\":\"a-primary\",\"module\":\"m\"}],\"targetLifecycle\":\"independent\",\"targetMultiplicity\":{\"max\":2,\"min\":0}},{\"directed\":true,\"id\":\"children\",\"name\":\"children\",\"source\":[{\"element\":\"A\",\"module\":\"m\"}],\"sourceMultiplicity\":{\"max\":1,\"min\":0},\"target\":[{\"element\":\"A\",\"key\":\"a-primary\",\"module\":\"m\"}],\"targetLifecycle\":\"owned\",\"targetMultiplicity\":{\"max\":4,\"min\":0}}]}],\"title\":\"Current UMF 0.10 query ABI compiler fixture preserving original model meaning\",\"umf\":\"0.10.0\",\"vocabularies\":{}}",
       "selectedModuleIds": [
         "m"
       ]
     }
   ],
   "actorOid": "16384",
-  "bindingJson": "{\"schema\": \"truss\", \"records\": [{\"keys\": [{\"keyId\": \"a-primary\", \"propertyIds\": [\"2\", \"1\"]}, {\"keyId\": \"z-alt\", \"propertyIds\": [\"1\"]}], \"fields\": [{\"identity\": {\"module\": \"m\", \"element\": \"A-label\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"1\"}, {\"identity\": {\"module\": \"m\", \"element\": \"A-value\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"2\"}], \"typeId\": \"1\", \"identity\": {\"module\": \"m\", \"element\": \"A\", \"revision\": \"r1\", \"documentId\": \"adoc\"}}, {\"keys\": [{\"keyId\": \"a-primary\", \"propertyIds\": [\"4\", \"3\"]}, {\"keyId\": \"z-alt\", \"propertyIds\": [\"3\"]}], \"fields\": [{\"identity\": {\"module\": \"m\", \"element\": \"B-label\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"3\"}, {\"identity\": {\"module\": \"m\", \"element\": \"B-value\", \"revision\": \"r1\", \"documentId\": \"adoc\"}, \"propertyId\": \"4\"}], \"typeId\": \"2\", \"identity\": {\"module\": \"m\", \"element\": \"B\", \"revision\": \"r1\", \"documentId\": \"adoc\"}}], \"queryAbi\": {\"sha256\": \"9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806\", \"version\": \"1.0\", \"identity\": \"truss-postgresql-logical-query\"}, \"documents\": [{\"sha256\": \"3b09a347553733ab86a2444fa2558120820e37108d2383b76e906102a0a86eab\", \"revision\": \"r1\", \"documentId\": \"adoc\"}], \"releaseId\": \"truss-catalog-runtime/0.69-candidate\", \"maximumBytes\": 1048576, \"relationships\": [{\"identity\": {\"module\": \"m\", \"revision\": \"r1\", \"documentId\": \"adoc\", \"relationship\": \"A-B\"}, \"sourceTypeId\": \"1\", \"targetTypeId\": \"2\", \"relationshipTypeId\": \"1\"}, {\"identity\": {\"module\": \"m\", \"revision\": \"r1\", \"documentId\": \"adoc\", \"relationship\": \"children\"}, \"sourceTypeId\": \"1\", \"targetTypeId\": \"1\", \"relationshipTypeId\": \"2\"}], \"releaseSha256\": \"5e703a8a144e99ff0744e5f6c9926439787f9d2c51b3e28df4e56f8f40f639e7\", \"installationId\": \"06e3ff07-1304-4937-a8d7-1750e29abe4e\", \"catalogRevision\": 1, \"maximumScanRows\": 100, \"interfaceVersion\": \"truss-runtime-binding/0.5\", \"maximumResultRows\": 100}"
+  "bindingJson": "{\"catalogRevision\":1,\"documents\":[{\"documentId\":\"adoc\",\"revision\":\"current010-r1\",\"sha256\":\"4bc5df8ec701915ea14a6f612d7d9b11852b07f6b7d319bfbba1d967a072427d\"}],\"installationId\":\"06e3ff07-1304-4937-a8d7-1750e29abe4e\",\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumBytes\":1048576,\"maximumResultRows\":100,\"maximumScanRows\":100,\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"sha256\":\"9fce2c91eff11ae2d8e6c0e3759b425efb1457e2c9675dc4383fc28430909806\",\"version\":\"1.0\"},\"records\":[{\"fields\":[{\"identity\":{\"documentId\":\"adoc\",\"element\":\"A-label\",\"module\":\"m\",\"revision\":\"current010-r1\"},\"propertyId\":\"1\"},{\"identity\":{\"documentId\":\"adoc\",\"element\":\"A-value\",\"module\":\"m\",\"revision\":\"current010-r1\"},\"propertyId\":\"2\"}],\"identity\":{\"documentId\":\"adoc\",\"element\":\"A\",\"module\":\"m\",\"revision\":\"current010-r1\"},\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"typeId\":\"1\"},{\"fields\":[{\"identity\":{\"documentId\":\"adoc\",\"element\":\"B-label\",\"module\":\"m\",\"revision\":\"current010-r1\"},\"propertyId\":\"3\"},{\"identity\":{\"documentId\":\"adoc\",\"element\":\"B-value\",\"module\":\"m\",\"revision\":\"current010-r1\"},\"propertyId\":\"4\"}],\"identity\":{\"documentId\":\"adoc\",\"element\":\"B\",\"module\":\"m\",\"revision\":\"current010-r1\"},\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"4\",\"3\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"3\"]}],\"typeId\":\"2\"}],\"relationships\":[{\"identity\":{\"documentId\":\"adoc\",\"module\":\"m\",\"relationship\":\"A-B\",\"revision\":\"current010-r1\"},\"relationshipTypeId\":\"1\",\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\"},{\"identity\":{\"documentId\":\"adoc\",\"module\":\"m\",\"relationship\":\"children\",\"revision\":\"current010-r1\"},\"relationshipTypeId\":\"2\",\"sourceTypeId\":\"1\",\"targetTypeId\":\"1\"}],\"releaseId\":\"truss-catalog-runtime/0.69-candidate\",\"releaseSha256\":\"5e703a8a144e99ff0744e5f6c9926439787f9d2c51b3e28df4e56f8f40f639e7\",\"schema\":\"truss\"}"
 }

@@ -8,6 +8,45 @@ const MAX_TEXT:usize=4_000_000;
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-LITERAL","model","Security literal or refinement refused")}
 #[derive(Debug,Clone,PartialEq,Eq,PartialOrd,Ord)]
 pub enum ScalarLiteral{Boolean(bool),String(String),Binary(String),Number(BigInt)}
+/// A validated scalar Field with its authored allowed-value domain normalized once.
+/// Reusing this avoids reparsing an allowed-value list for every invocation value.
+#[derive(Debug,Clone)]
+pub struct PreparedLiteral {
+ base: Value,
+ allowed: Option<BTreeSet<ScalarLiteral>>,
+}
+impl PreparedLiteral {
+ pub fn new(field:&Value)->Result<Self>{
+  validate_field(field)?;
+  Self::from_validated(field)
+ }
+ pub(crate) fn from_validated(field:&Value)->Result<Self>{
+  let base=json!({
+   "kind":field["kind"],
+   "cardinality":field["cardinality"],
+   "nullability":field["nullability"],
+   "scalarType":field["scalarType"],
+   "facets":normalized_facets(field)?,
+  });
+  let authored=field.get("allowedValues").cloned();
+  let allowed=if let Some(values)=authored {
+   let values=values.as_array().ok_or_else(fail)?;
+   let mut identities=BTreeSet::new();
+   for value in values {
+    let identity=scalar(&base,value,true)?.ok_or_else(fail)?;
+    if !identities.insert(identity){return Err(fail());}
+   }
+   Some(identities)
+  } else {None};
+  Ok(Self{base,allowed})
+ }
+ pub fn check(&self,value:&Value)->Result<()>{
+  if let Some(identity)=scalar(&self.base,value,true)? {
+   if self.allowed.as_ref().is_some_and(|allowed|!allowed.contains(&identity)){return Err(fail());}
+  }
+  Ok(())
+ }
+}
 pub(crate) fn coefficient(token:&str,scale:u64,precision:Option<u64>)->Result<BigInt>{
  if token.len()>MAX_TEXT{return Err(fail());}
  let (negative,body)=if let Some(v)=token.strip_prefix('-'){(true,v)}else{(false,token)};

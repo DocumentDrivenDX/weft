@@ -1,0 +1,131 @@
+{
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "const": "umf.actions.plan-model/1"
+    },
+    "model": {
+      "$ref": "urn:umf:actions:plan:1#/$defs/model"
+    },
+    "action": {
+      "$ref": "urn:umf:actions:plan:1#/$defs/action"
+    },
+    "entityParameter": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "target": {
+      "$ref": "urn:umf:actions:plan:1#/$defs/key"
+    },
+    "assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "field": {
+            "$ref": "urn:umf:actions:plan:1#/$defs/field"
+          }
+        },
+        "required": [
+          "input",
+          "field"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "frames": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "producer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "const": "umf.actions.plan-model"
+        },
+        "version": {
+          "const": "1"
+        },
+        "build": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "build"
+      ],
+      "additionalProperties": true
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "const": "urn:umf:actions:plan-model:1"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "additionalProperties": true
+    },
+    "obligations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "const": "checked"
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ],
+        "additionalProperties": true
+      },
+      "minItems": 1,
+      "maxItems": 10000
+    }
+  },
+  "required": [
+    "protocol",
+    "model",
+    "action",
+    "entityParameter",
+    "target",
+    "assignments",
+    "frames",
+    "producer",
+    "schema",
+    "obligations"
+  ],
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:plan-model:1"
+}

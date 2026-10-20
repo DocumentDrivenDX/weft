@@ -138,7 +138,7 @@ mod tests{
  #[test]
  fn actual_atomic_producer_batches_preserve_pinned_headers_cells_and_empty_denials(){
   let corpus:Value=serde_json::from_str(include_str!("../../../tests/current-query-presence/fixtures/actual-atomic-transport.json")).unwrap();
-  assert_eq!(corpus["sourcePacketSha256"],"123be2df9ef80b9a1a25904ea6b886924ac8d63b52de88b4c5a6b34fdc020acb");
+  assert_eq!(corpus["sourcePacketSha256"],"2642a1128e76274b445c019a784435b1ac2f06d0aac9bfeb013dbee9b0567361");
   let mut rendered=0;let mut refused=0;let mut empty=0;let mut states=BTreeSet::new();let mut captured_artifacts=Vec::new();
   for case in corpus["cases"].as_array().unwrap(){
    let result=&case["result"];assert_eq!(result["authority"],false);assert_eq!(result["complete"],false);

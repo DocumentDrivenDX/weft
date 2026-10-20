@@ -25,9 +25,9 @@ for name,(scans,fields) in expected.items():
  reads=r['readRequirements'];assert len(reads['scans'])==scans
  assert [(f['scan'],f['path'],f['fieldIdentity']['element'],f['role']) for f in reads['fields']]==fields,name
  for f in reads['fields']:
-  assert f['descriptor']['availability']=='required' and f['fieldIdentity']['revision']=='named-query-core-r1'
+  assert f['descriptor']['availability']=='required' and f['fieldIdentity']['revision']=='current010-lineage-r1'
   assert not set(f)&{'mode','originalAction','action','authority'}
- assert all(s['kind']=='rowRead' and s['recordIdentity']['revision']=='named-query-core-r1' for s in reads['scans'])
+ assert all(s['kind']=='rowRead' and s['recordIdentity']['revision']=='current010-lineage-r1' for s in reads['scans'])
  assert bool(reads['unsupportedSources'])==(name=='sum-unsupported')
  request=json.loads(raw)
  for key in ['readRequirements','applicationPlan','mode','originalAction']:

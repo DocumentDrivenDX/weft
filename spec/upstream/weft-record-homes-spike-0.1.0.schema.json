@@ -134,7 +134,7 @@
           "$ref": "#/$defs/identity"
         },
         "umfVersion": {
-          "const": "0.8.0"
+          "const": "0.10.0"
         },
         "sha256": {
           "type": "string",

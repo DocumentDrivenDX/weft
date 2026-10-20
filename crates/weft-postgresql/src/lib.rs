@@ -1,23 +1,20 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-mod native_catalog_fence;
-mod dbapi;
-pub mod current_scalar;
-pub mod truss_mutation;
-pub mod raw_read;
-pub mod native_privilege_probes;
-pub mod mutation;
-pub mod truss_runtime;
-mod storage_composition;
-pub mod pg18;
 pub mod access;
 pub mod binding;
 pub mod candidate;
 pub mod collection;
 #[cfg(feature = "conformance-original")]
 pub mod conformance_original;
+pub mod current_scalar;
+mod dbapi;
 mod json_codec;
+pub mod mutation;
+mod native_catalog_fence;
+pub mod native_privilege_probes;
 pub mod original_admission;
+pub mod pg18;
 pub mod presence_definition;
+pub mod raw_read;
 pub mod read_context_definition;
 pub mod recursive_observation;
 pub mod relationship_definition;
@@ -25,8 +22,11 @@ pub mod relationship_lowering;
 mod row_codec;
 pub mod row_tree_mapping;
 pub mod row_value_traversal;
+mod storage_composition;
 pub mod structured;
 mod tree;
+pub mod truss_mutation;
+pub mod truss_runtime;
 pub mod value_definition;
 // PostgreSQL emission primitives. Storage mappings and engine support are separate.
 use weft_core::{
@@ -79,31 +79,83 @@ impl Parameters {
         let position = self.0.len() + 1;
         self.0.push(ParameterSlot {
             position,
-            logical_type:logical_type.into(),
+            logical_type: logical_type.into(),
             value,
             origin,
         });
         Ok(format!("${position}"))
     }
-    pub fn push_binary(&mut self,value:String,origin:serde_json::Value)->Result<String> {
+    pub fn push_binary(&mut self, value: String, origin: serde_json::Value) -> Result<String> {
         use base64::Engine;
-        if value.len()>1048576 || self.0.len()>=1024 { return Err(Diagnostic::new("WFT-LIMIT","emit","Binary parameter bounds exceeded")); }
-        let bytes=base64::engine::general_purpose::STANDARD.decode(&value).map_err(|_|Diagnostic::new("WFT-BINARY-DOMAIN","emit","Canonical base64 required"))?;
-        if base64::engine::general_purpose::STANDARD.encode(bytes)!=value {return Err(Diagnostic::new("WFT-BINARY-DOMAIN","emit","Canonical base64 required"));}
-        let position=self.0.len()+1;
-        self.0.push(ParameterSlot {position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Binary},value,origin});
+        if value.len() > 1048576 || self.0.len() >= 1024 {
+            return Err(Diagnostic::new(
+                "WFT-LIMIT",
+                "emit",
+                "Binary parameter bounds exceeded",
+            ));
+        }
+        let bytes = base64::engine::general_purpose::STANDARD
+            .decode(&value)
+            .map_err(|_| {
+                Diagnostic::new("WFT-BINARY-DOMAIN", "emit", "Canonical base64 required")
+            })?;
+        if base64::engine::general_purpose::STANDARD.encode(bytes) != value {
+            return Err(Diagnostic::new(
+                "WFT-BINARY-DOMAIN",
+                "emit",
+                "Canonical base64 required",
+            ));
+        }
+        let position = self.0.len() + 1;
+        self.0.push(ParameterSlot {
+            position,
+            logical_type: weft_core::backend::ParameterType::Exact {
+                kind: weft_core::backend::ExactParameterKind::ExactScalar,
+                scalar_type: weft_core::application_model::ExactScalarType::Binary,
+            },
+            value,
+            origin,
+        });
         Ok(format!("${position}"))
     }
-    pub fn push_timestamp(&mut self,value:String,origin:serde_json::Value)->Result<String> {
-        if value.len()>1048576 || self.0.len()>=1024 {return Err(Diagnostic::new("WFT-LIMIT","emit","Timestamp parameter bounds exceeded"));}
-        let position=self.0.len()+1;
-        self.0.push(ParameterSlot{position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Timestamp},value,origin});
+    pub fn push_timestamp(&mut self, value: String, origin: serde_json::Value) -> Result<String> {
+        if value.len() > 1048576 || self.0.len() >= 1024 {
+            return Err(Diagnostic::new(
+                "WFT-LIMIT",
+                "emit",
+                "Timestamp parameter bounds exceeded",
+            ));
+        }
+        let position = self.0.len() + 1;
+        self.0.push(ParameterSlot {
+            position,
+            logical_type: weft_core::backend::ParameterType::Exact {
+                kind: weft_core::backend::ExactParameterKind::ExactScalar,
+                scalar_type: weft_core::application_model::ExactScalarType::Timestamp,
+            },
+            value,
+            origin,
+        });
         Ok(format!("${position}"))
     }
-    pub(crate) fn push_date(&mut self,value:String,origin:serde_json::Value)->Result<String> {
-        if value.len()!=10 || self.0.len()>=1024 {return Err(Diagnostic::new("WFT-LIMIT","emit","Date parameter bounds exceeded"));}
-        let position=self.0.len()+1;
-        self.0.push(ParameterSlot{position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Date},value,origin});
+    pub(crate) fn push_date(&mut self, value: String, origin: serde_json::Value) -> Result<String> {
+        if value.len() != 10 || self.0.len() >= 1024 {
+            return Err(Diagnostic::new(
+                "WFT-LIMIT",
+                "emit",
+                "Date parameter bounds exceeded",
+            ));
+        }
+        let position = self.0.len() + 1;
+        self.0.push(ParameterSlot {
+            position,
+            logical_type: weft_core::backend::ParameterType::Exact {
+                kind: weft_core::backend::ExactParameterKind::ExactScalar,
+                scalar_type: weft_core::application_model::ExactScalarType::Date,
+            },
+            value,
+            origin,
+        });
         Ok(format!("${position}"))
     }
     pub fn into_slots(self) -> Vec<ParameterSlot> {
@@ -323,10 +375,12 @@ pub mod raw_bulk;
 
 pub mod search;
 
-#[cfg(feature="current-presence-candidate")]
+#[cfg(feature = "current-presence-candidate")]
 pub mod current_presence;
 
 pub mod related_read;
 
 pub mod table_operation;
 pub mod table_seed;
+pub mod table_query;
+mod query_wire;

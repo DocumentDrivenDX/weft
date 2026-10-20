@@ -1,0 +1,8 @@
+{
+  "historicalEvidence": "docs/helix/04-build/evidence/mutation-current-truss-20261014/native-query-bundle.json",
+  "currentOwnerSource": "tests/mutation/fixtures/truss066-products-current010.json",
+  "originalDocumentSha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+  "currentDocumentSha256": "0260ad68d21965d8eb3b1ab2c4e1bf3edb9c89f723883541cf509e97fc19e81f",
+  "umfVersion": "0.10.0",
+  "migration": "Derived test successor of frozen 0.65 evidence. Uses the exact current 0.10 owner model, verified structurally equivalent to the archived document after restoring umf=0.8. Native release identifier/hash and all other binding behavior remain unchanged; the binding document pin and source identity revisions were refreshed to the actual current owner pin."
+}

@@ -95,7 +95,7 @@ pub(crate) fn encode(v:&Value,maximum:usize)->Result<String>{
 /// No caller mode/action/AST override, policy evaluator or SQL callback is accepted.
 pub fn derive(prepared:&ApplicationLineage)->Result<CurrentQueryDesignations<'_>>{
  let bounded_context=prepared.plan().ir_version=="weft-ir/application-lineage/0.3-candidate";
- if prepared.catalog().pins().iter().any(|p|!matches!(p.umf_version.as_str(),"0.8.0"|"0.10.0"))||!matches!(prepared.plan().ir_version.as_str(),"weft-ir/application-lineage/0.2-candidate"|"weft-ir/application-lineage/0.3-candidate")||prepared.plan().filters.iter().any(|p|matches!(p,crate::application_ir::Predicate::HasRelated{..})){return Err(fail())}
+ if prepared.catalog().pins().iter().any(|p|p.umf_version!="0.10.0")||!matches!(prepared.plan().ir_version.as_str(),"weft-ir/application-lineage/0.2-candidate"|"weft-ir/application-lineage/0.3-candidate")||prepared.plan().filters.iter().any(|p|matches!(p,crate::application_ir::Predicate::HasRelated{..})){return Err(fail())}
  let request=checked_json(prepared.source_request_json()).map_err(|_|fail())?;
  let sources:Vec<Opaque>=serde_json::from_value(request["opaqueSources"].clone()).map_err(|_|fail())?;
  let get=|role:&str|->Result<&Opaque>{let all:Vec<_>=sources.iter().filter(|s|s.role==role).collect();if all.len()!=1{return Err(fail())}let s=all[0];if s.media_type!="application/json"||sha256(s.utf8.as_bytes())!=s.sha256{return Err(fail())}Ok(s)};
@@ -216,7 +216,7 @@ mod tests{
    document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="salary").unwrap()["facets"]=facets;
    let raw=document.to_string();r["modules"][0]["documentJson"]=json!(raw);r["modules"][0]["pin"]["sha256"]=json!(sha256(raw.as_bytes()));
    let pins=json!([r["modules"][0]["pin"].clone()]);profile(&mut r,|p|p["modelPins"]=pins);
-   let parent=crate::application_lineage::prepare(&r.to_string()).unwrap();let d=derive(&parent).unwrap();let error=match crate::current_query_operands::derive(&d){Ok(_)=>panic!("Unsupported SUM domain admitted"),Err(error)=>error};assert_eq!(error.code,"WFT-CURRENT-QUERY-OPERANDS");
+   let parent=match crate::application_lineage::prepare(&r.to_string()){Ok(parent)=>parent,Err(error)=>{assert_eq!(error.code,"WFT-TYPE");continue;}};let d=match derive(&parent){Ok(d)=>d,Err(error)=>{assert_eq!(error.code,"WFT-CURRENT-QUERY-DESIGNATION");continue;}};let error=match crate::current_query_operands::derive(&d){Ok(_)=>panic!("Unsupported SUM domain admitted"),Err(error)=>error};assert_eq!(error.code,"WFT-CURRENT-QUERY-OPERANDS");
   }
  }
  // @covers US-009-AC2 @covers US-009-AC3

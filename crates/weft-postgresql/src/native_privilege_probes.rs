@@ -880,7 +880,7 @@ mod tests {
     #[test]
     fn original_full_projection_admission_paths_and_stream_slots_are_all_retained() {
         let mut r: Value = serde_json::from_str(include_str!(
-            "../../../tests/raw-read/postgresql-projection-request.json"
+            "../../../tests/raw-read/postgresql-projection-request-current010.json"
         ))
         .unwrap();
         r["keyset"] = json!(true);

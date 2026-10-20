@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-derived safety selection for set-based inserts.
 use serde_json::Value;
-use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use std::collections::{BTreeMap, BTreeSet};
 
 type RecordRef = (String, String);
 type RelationshipRef = (String, String);
@@ -85,39 +85,40 @@ fn visit_rule(
 
 /// Reject self-FKs and any admitted policy dependency path that returns to the
 /// inserted Record. Unknown policy steps are conservatively ineligible.
-pub(crate) fn independent_insert_scope(
-    payload: &Value,
-    selected_record_value: &Value,
-    selected_table_id: &Value,
-) -> bool {
-    let Some(selected) = record_ref(selected_record_value) else {
-        return false;
-    };
+pub(crate) fn independent_insert_scopes(payload: &Value) -> BTreeMap<String, bool> {
     let Some(declarations) = payload["tables"].as_array() else {
-        return false;
+        return BTreeMap::new();
     };
     let mut tables = BTreeMap::new();
+    let mut table_records = BTreeMap::new();
+    let mut self_foreign_keys = BTreeSet::new();
     let mut foreign_keys: BTreeMap<RelationshipRef, Vec<ForeignKeyEdge>> = BTreeMap::new();
+    let mut valid = true;
     for table in declarations {
         let Some(record) = record_ref(&table["record"]) else {
-            return false;
+            valid = false;
+            continue;
         };
         if tables.insert(record.clone(), table).is_some() {
-            return false;
+            valid = false;
         }
+        if let Some(id) = table["id"].as_str() { table_records.entry(id.to_owned()).or_insert(record.clone()); }
         let Some(keys) = table["foreignKeys"].as_array() else {
-            return false;
+            valid = false;
+            continue;
         };
         for key in keys {
             let Some(target) = record_ref(&key["target"]["record"]) else {
-                return false;
+                valid = false;
+                continue;
             };
-            if record == selected && target == selected {
-                return false;
+            if record == target {
+                self_foreign_keys.insert(record.clone());
             }
             if let Some(reference) = key.get("relationship") {
                 let Some(reference) = relationship_ref(reference) else {
-                    return false;
+                    valid = false;
+                    continue;
                 };
                 foreign_keys
                     .entry(reference)
@@ -126,18 +127,6 @@ pub(crate) fn independent_insert_scope(
             }
         }
     }
-    if !tables.contains_key(&selected) {
-        return false;
-    }
-    // The ID ties this check to the exact selected declaration, not a logical
-    // name supplied independently by the request.
-    if !tables
-        .get(&selected)
-        .is_some_and(|table| table["id"] == *selected_table_id)
-    {
-        return false;
-    }
-
     let mut edges: BTreeMap<RecordRef, BTreeSet<RecordRef>> = BTreeMap::new();
     for (record, table) in &tables {
         for audience in ["person", "batch"] {
@@ -149,28 +138,71 @@ pub(crate) fn independent_insert_scope(
                     &foreign_keys,
                     &mut edges,
                 ) {
-                    return false;
+                    valid = false;
                 }
             }
         }
     }
 
-    let mut pending = VecDeque::from([selected.clone()]);
+    let mut reverse = BTreeMap::<RecordRef, BTreeSet<RecordRef>>::new();
+    for record in tables.keys() { reverse.entry(record.clone()).or_default(); }
+    for (from, destinations) in &edges {
+        for destination in destinations { reverse.entry(destination.clone()).or_default().insert(from.clone()); }
+    }
+    // Iterative Kosaraju pass avoids recursion on source-controlled graph size.
     let mut visited = BTreeSet::new();
-    while let Some(current) = pending.pop_front() {
-        if !visited.insert(current.clone()) {
-            continue;
-        }
-        if let Some(next) = edges.get(&current) {
-            for destination in next {
-                if destination == &selected {
-                    return false;
+    let mut finish = Vec::with_capacity(tables.len());
+    for root in tables.keys() {
+        if visited.contains(root) { continue; }
+        let mut stack = vec![(root.clone(), false)];
+        while let Some((node, exiting)) = stack.pop() {
+            if exiting { finish.push(node); continue; }
+            if !visited.insert(node.clone()) { continue; }
+            stack.push((node.clone(), true));
+            if let Some(next) = edges.get(&node) {
+                for destination in next.iter().rev() {
+                    if !visited.contains(destination) { stack.push((destination.clone(), false)); }
                 }
-                pending.push_back(destination.clone());
             }
         }
     }
-    true
+    let mut component = BTreeMap::<RecordRef, usize>::new();
+    let mut component_sizes = Vec::new();
+    for root in finish.into_iter().rev() {
+        if component.contains_key(&root) { continue; }
+        let component_id = component_sizes.len();
+        let mut size = 0;
+        let mut stack = vec![root.clone()];
+        component.insert(root, component_id);
+        while let Some(node) = stack.pop() {
+            size += 1;
+            if let Some(next) = reverse.get(&node) {
+                for predecessor in next {
+                    if !component.contains_key(predecessor) {
+                        component.insert(predecessor.clone(), component_id);
+                        stack.push(predecessor.clone());
+                    }
+                }
+            }
+        }
+        component_sizes.push(size);
+    }
+    let cyclic: BTreeSet<_> = tables.keys().filter(|record| {
+        let id = component.get(*record).copied().unwrap_or(usize::MAX);
+        component_sizes.get(id).is_some_and(|size| *size > 1)
+            || edges.get(*record).is_some_and(|next| next.contains(*record))
+    }).cloned().collect();
+    table_records.into_iter().map(|(id, record)| {
+        let eligible = valid && !self_foreign_keys.contains(&record) && !cyclic.contains(&record);
+        (id, eligible)
+    }).collect()
+}
+
+#[cfg(test)]
+fn independent_insert_scope(payload: &Value, selected_record_value: &Value, selected_table_id: &Value) -> bool {
+    let Some(record) = record_ref(selected_record_value) else { return false; };
+    independent_insert_scopes(payload).get(selected_table_id.as_str().unwrap_or_default()).copied().unwrap_or(false)
+        && payload["tables"].as_array().is_some_and(|tables| tables.iter().any(|table| table["id"] == *selected_table_id && record_ref(&table["record"]).as_ref() == Some(&record)))
 }
 
 #[cfg(test)]

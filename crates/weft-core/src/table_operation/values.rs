@@ -58,8 +58,12 @@ pub(super) fn literal(field: &OperationField, value: &Value) -> Result<()> {
             Err("128-bit lexical value differs")
         };
     }
-    crate::security_literals::check_literal(&field.declaration, value)
-        .map_err(|_| "operation literal violates original Field")?;
+    if let Some(prepared)=&field.prepared_literal {
+        prepared.check(value).map_err(|_| "operation literal violates original Field")?;
+    } else {
+        crate::security_literals::check_literal(&field.declaration, value)
+            .map_err(|_| "operation literal violates original Field")?;
+    }
     if value.is_null() {
         return Ok(());
     }
@@ -116,10 +120,9 @@ pub(super) fn literal(field: &OperationField, value: &Value) -> Result<()> {
     Ok(())
 }
 
-/// Driver values retain exact mathematical meaning with bounded PG lexical form.
+/// Convert a value that has already passed source-aware call admission into a driver value.
 /// Original CoreLiteral tokens remain in the original request/source for custody.
 pub(super) fn native_value(field: &OperationField, value: &Value) -> Result<Value> {
-    literal(field, value)?;
     if value.is_null() {
         return Ok(Value::Null);
     }

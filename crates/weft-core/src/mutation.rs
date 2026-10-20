@@ -80,7 +80,7 @@ pub struct ActionRegistration {
     pub snapshot: Artifact,
     pub preparation: Artifact,
 }
-#[jsonschema::validator(path="../../spec/upstream/actions-plan/plan-model.schema.json",resources={"urn:umf:actions:plan:1"=>{path="../../spec/upstream/actions-plan/plan.schema.json"},"urn:umf:core:0.8.0"=>{path="../../spec/upstream/actions-plan/core.schema.json"}})]
+#[jsonschema::validator(path="../../spec/upstream/actions-plan-010/plan-model.schema.json",resources={"urn:umf:actions:plan:1"=>{path="../../spec/upstream/actions-plan-010/plan.schema.json"},"urn:umf:core:0.10.0"=>{path="../../spec/upstream/actions-plan-010/core.schema.json"},"urn:umf:core:semantic-type-reference:1.0.0"=>{path="../../spec/upstream/actions-plan-010/semantic-type-reference.schema.json"},"urn:umf:extension-package:0.10.0"=>{path="../../spec/upstream/actions-plan-010/extension-package.schema.json"}})]
 struct PreparationSchema;
 #[derive(Default)]
 pub struct MutationRegistry {
@@ -124,7 +124,7 @@ impl MutationRegistry {
             if prepared["action"] != registration.pin
                 || prepared["model"]["sha256"] != registration.snapshot.sha256
                 || prepared["model"]["documentId"] != model["id"]
-                || model["umf"] != "0.8.0"
+                || model["umf"] != "0.10.0"
             {
                 return Err(fail(
                     "ACTION",
@@ -134,7 +134,7 @@ impl MutationRegistry {
             }
             if prepared["schema"]["sha256"]
                 != sha256(include_bytes!(
-                    "../../../spec/upstream/actions-plan/plan-model.schema.json"
+                    "../../../spec/upstream/actions-plan-010/plan-model.schema.json"
                 ))
             {
                 return Err(fail(
@@ -144,26 +144,12 @@ impl MutationRegistry {
                 ));
             }
             exact(&prepared["producer"], &["id", "version", "build"])?;
-            let owner: Value = serde_json::from_str(include_str!(
-                "../../../spec/upstream/actions-plan/owner-pins.json"
-            ))
-            .expect("pinned build resource");
-            let local = registration.pin["invocation"] == json!({"id":"umf.actions.local-tx","version":"1"});
-            let local_owner: Value = serde_json::from_str(include_str!(
-                "../../../spec/upstream/actions-plan-local/owner-pins.json"
-            )).expect("pinned local owner resource");
-            let expected_owner = if local { &local_owner } else { &owner };
-            let current_owner: Value = serde_json::from_str(include_str!(
-                "../../../spec/upstream/actions-plan-current/owner-pins.json"
-            )).expect("checked current original producer resource");
-            if prepared["producer"] != expected_owner["producer"]
-                && prepared["producer"] != current_owner["producer"] {
-                return Err(fail(
-                    "ACTION",
-                    "action",
-                    "Owner preparation build is not pinned by this compiler",
-                ));
+            if prepared["producer"]["id"] != "umf.actions.plan-model"
+                || prepared["producer"]["version"] != "1"
+            {
+                return Err(fail("ACTION", "action", "Original preparation producer differs"));
             }
+            let local = registration.pin["invocation"] == json!({"id":"umf.actions.local-tx","version":"1"});
             validate_local_bundle(&model, &registration.pin, local)?;
             exact(&prepared["schema"], &["id", "sha256"])?;
             text(&prepared["entityParameter"])?;
@@ -415,7 +401,7 @@ fn validate_model_pin(pin: &Value) -> MResult<()> {
     exact(pin, &["documentId", "revision", "umfVersion", "sha256"])?;
     text(&pin["documentId"])?;
     text(&pin["revision"])?;
-    if pin["umfVersion"] != "0.8.0" || !digest(&pin["sha256"]) {
+    if pin["umfVersion"] != "0.10.0" || !digest(&pin["sha256"]) {
         return Err(fail("INPUT", "input", "Original model pin refused"));
     }
     Ok(())
@@ -513,13 +499,32 @@ fn generated(value: Value) -> MResult<Artifact> {
 mod current_preparation_tests {
     use super::*;
     #[test]
+    fn actual_010_owner_preparation_is_admitted_and_legacy_pin_is_refused() {
+        let source = include_str!("../../../tests/mutation/fixtures/current010-action-registration.json");
+        let registration: ActionRegistration = serde_json::from_str(source).unwrap();
+        assert_eq!(registration.preparation.read().unwrap()["model"]["umfVersion"], "0.10.0");
+        assert!(MutationRegistry::new(vec![registration.clone()]).is_ok());
+
+        let mut legacy = registration;
+        let mut preparation = legacy.preparation.read().unwrap();
+        preparation["model"]["umfVersion"] = json!("0.8.0");
+        legacy.preparation = generated(preparation).unwrap();
+        assert!(MutationRegistry::new(vec![legacy]).is_err());
+    }
+
+    #[test]
     fn current_preparations_compile_and_preserve_compile_boundary_custody() {
         for (raw,request) in [
-            (include_str!("../../../spec/upstream/actions-plan-current/standard-registration.json"),include_str!("../../../spec/upstream/actions-plan-current/standard-request.json")),
-            (include_str!("../../../spec/upstream/actions-plan-current/local-registration.json"),include_str!("../../../spec/upstream/actions-plan-current/local-request.json"))] {
+            (include_str!("../../../tests/mutation/fixtures/current010-action-registration.json"),include_str!("../../../spec/upstream/actions-plan-current/standard-request.json")),
+            (include_str!("../../../tests/mutation/fixtures/current010-local-action-registration.json"),include_str!("../../../spec/upstream/actions-plan-current/local-request.json"))] {
             let registration:ActionRegistration=serde_json::from_str(raw).unwrap();
             let registry=MutationRegistry::new(vec![registration.clone()]).unwrap();
-            let request:Value=serde_json::from_str(request).unwrap();
+            let mut request:Value=serde_json::from_str(request).unwrap();
+            let preparation=registration.preparation.read().unwrap();
+            request["model"]=serde_json::to_value(&registration.snapshot).unwrap();
+            request["modelPin"]=preparation["model"].clone();
+            request["action"]=serde_json::to_value(&registration.pin).unwrap();
+            request["target"]=preparation["target"].clone();
             let response:Value=serde_json::from_str(&registry.compile_json(&request.to_string())).unwrap();assert_eq!(response["status"],"compiled","{response}");
             let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();prepared["target"]["element"]=json!("foreign-original-target");altered.preparation=generated(prepared).unwrap();
             let registry=MutationRegistry::new(vec![altered]).unwrap();
@@ -530,14 +535,22 @@ mod current_preparation_tests {
     }
     #[test]
     fn checked_original_current_standard_and_local_preparations() {
-        for raw in [include_str!("../../../spec/upstream/actions-plan-current/standard-registration.json"), include_str!("../../../spec/upstream/actions-plan-current/local-registration.json")] {
+        for raw in [include_str!("../../../tests/mutation/fixtures/current010-action-registration.json"), include_str!("../../../tests/mutation/fixtures/current010-local-action-registration.json")] {
             let registration:ActionRegistration=serde_json::from_str(raw).unwrap();
             assert!(MutationRegistry::new(vec![registration.clone()]).is_ok());
             for build in ["sha256:ea8280583fe9d7757fbf8df21d1753eaa787857371b9366858e28c9a113b98a1", "sha256:0000000000000000000000000000000000000000000000000000000000000000"] {
                 let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();
                 prepared["producer"]["build"]=json!(build);altered.preparation=generated(prepared).unwrap();
-                assert!(MutationRegistry::new(vec![altered]).is_err());
+                assert!(MutationRegistry::new(vec![altered]).is_ok(),"producer build is descriptive provenance, not an authorization pin: {build}");
             }
+            for (field,value) in [("id",json!("foreign.producer")),("version",json!("2"))] {
+                let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();
+                prepared["producer"][field]=value;altered.preparation=generated(prepared).unwrap();
+                assert!(MutationRegistry::new(vec![altered]).is_err(),"wrong producer {field} must refuse");
+            }
+            let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();
+            prepared["schema"]["sha256"]=json!("0".repeat(64));altered.preparation=generated(prepared).unwrap();
+            assert!(MutationRegistry::new(vec![altered]).is_err(),"wrong schema bytes must refuse");
             let mut altered=registration.clone();let mut prepared=altered.preparation.read().unwrap();
             prepared["action"]["identity"]["action"]=json!("foreign-original-action");altered.preparation=generated(prepared).unwrap();
             assert!(MutationRegistry::new(vec![altered]).is_err());

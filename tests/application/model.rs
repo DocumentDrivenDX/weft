@@ -17,9 +17,9 @@ fn try_catalog(doc: Value) -> Result<Catalog, weft_core::error::Diagnostic> {
     Catalog::prepare(vec![ModuleInput {
         document_json: text.clone(),
         pin: ModelPin {
-            document_id: "sales-fixture".into(),
+            document_id: "sales-current010-fixture".into(),
             revision: "app-fixture".into(),
-            umf_version: "0.7.0".into(),
+            umf_version: "0.10.0".into(),
             sha256: sha256(text.as_bytes()),
         },
         selected_module_ids: vec!["sales".into()],
@@ -301,7 +301,7 @@ fn owning_document_and_selection_limits_are_explicit() {
             pin: ModelPin {
                 document_id: id.into(),
                 revision: "boundary".into(),
-                umf_version: "0.7.0".into(),
+                umf_version: "0.10.0".into(),
                 sha256: sha256(raw.as_bytes()),
             },
             document_json: raw,
@@ -348,9 +348,9 @@ fn catalog_admission_refusal_branches_are_explicit() {
         let raw = doc.to_string();
         ModuleInput {
             pin: ModelPin {
-                document_id: "sales-fixture".into(),
+                document_id: "sales-current010-fixture".into(),
                 revision: "branch".into(),
-                umf_version: "0.7.0".into(),
+                umf_version: "0.10.0".into(),
                 sha256: sha256(raw.as_bytes()),
             },
             document_json: raw,
@@ -493,7 +493,7 @@ fn selected_member_and_compound_meaning_guards_have_exact_diagnostics() {
         ),
         (
             json!({"cardinality":"array","itemType":{"module":"sales","element":"customer-name"},"facets":{"future":true}}),
-            true,
+            false,
             "Selected container or structured facets are unsupported",
         ),
         (

@@ -152,7 +152,7 @@ mod tests{
  fn with_mutated_context(sql:&str,mutate:impl FnOnce(&mut Value),run:impl FnOnce(&SecurityBackendContext<'_>,SecurityManifest)){with_bound_context(sql,mutate,json!([]),run)}
  fn with_bound_context(sql:&str,mutate:impl FnOnce(&mut Value),bindings:Value,run:impl FnOnce(&SecurityBackendContext<'_>,SecurityManifest)){
   let mut f:Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();mutate(&mut f);let source=&f["resolution"]["documents"][0];let mut doc=source["document"].clone();for e in doc["modules"][0]["elements"].as_array_mut().unwrap(){e["name"]=e["id"].clone();if e["scalarType"]=="integer"{e["facets"]=json!({"integerWidth":{"bits":64,"signed":true}});}}
-  let text=doc.to_string();let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.8.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
+  let text=doc.to_string();let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.10.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
   let catalog=crate::model::Catalog::prepare_security(inputs).unwrap();let policy=f["policy"].to_string();let ontology=f["resolution"]["ontology"].to_string();let packet=crate::security_source::SecuritySourcePacket::read(&policy,&ontology,&catalog).unwrap();let plan=crate::security_ir::SecurityLogicalPlan::read(packet,&catalog).unwrap();
   let p=json!({"version":"weft.security.query-profile/0.1.0","id":"coverage","revision":"p1","action":"read","modelPins":catalog.pins(),"policySha256":crate::json::sha256(policy.as_bytes()),"ontologySha256":crate::json::sha256(ontology.as_bytes()),"binding":{"backendId":"fixture","backendVersion":"v1","targetProfile":"fixture","sha256":crate::json::sha256(b"{}")},"targets":[{"documentId":"domain","moduleId":"m","elementId":"Resource"}],"bindings":bindings}).to_string();
   let profile=crate::security_query_profile::SecurityQueryProfile::read(&p,&plan,&catalog,"{}","fixture","v1","fixture").unwrap();let query=crate::security_query_uses::SecurityResolvedQuery::resolve(sql,&catalog,&plan,Default::default(),None).unwrap();let uses=profile.admit_resolved_query(&query,&plan,&catalog,"{}","fixture","v1","fixture").unwrap();let context=SecurityBackendContext::new(&catalog,&plan,&query,&uses,"{}","fixture","v1","fixture").unwrap();
@@ -229,7 +229,7 @@ mod tests{
    let mut put=|tokens:&[&str]|{expected.insert(serde_json::to_string(tokens).unwrap());};
    put(&["primary-action","read"]);
    for (kind,raw) in [("policy",ctx.logical_plan().source().policy_json()),("ontology",ctx.logical_plan().source().ontology_json()),("query",ctx.query().sql())]{put(&[kind,&crate::json::sha256(raw.as_bytes())]);}
-   put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs()[0].pin.sha256]);put(&["module","domain","m"]);
+   put(&["model","domain","schema-1","0.10.0",&ctx.catalog().inputs()[0].pin.sha256]);put(&["module","domain","m"]);
    put(&["scan","s0","domain","m","Resource"]);put(&["action","s0","read"]);
    for rule in ["reader","membership"]{put(&["rule","s0","read",rule]);}
    for (owner,key_field) in [("Staff","staffId"),("Project","projectId"),("Resource","resourceId"),("Ownership","ownerId"),("Assignment","assignmentId")]{
@@ -482,7 +482,7 @@ mod tests{
     let mut put=|tokens:&[&str],scopes:Vec<CoverageScope>|{expected.insert(serde_json::to_string(tokens).unwrap(),scopes.into_iter().collect::<BTreeSet<_>>());};
     put(&["primary-action","read"],vec![read.clone(),app.clone()]);
     for (kind,raw) in [("policy",ctx.logical_plan().source().policy_json()),("ontology",ctx.logical_plan().source().ontology_json()),("query",ctx.query().sql())]{put(&[kind,&crate::json::sha256(raw.as_bytes())],vec![read.clone(),app.clone()]);}
-    put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs()[0].pin.sha256],vec![read.clone(),app.clone()]);put(&["module","domain","m"],vec![read.clone(),app.clone()]);
+    put(&["model","domain","schema-1","0.10.0",&ctx.catalog().inputs()[0].pin.sha256],vec![read.clone(),app.clone()]);put(&["module","domain","m"],vec![read.clone(),app.clone()]);
     put(&["scan","s0","domain","m","Resource"],vec![read.clone(),app.clone()]);put(&["action","s0","read"],vec![read.clone()]);
     for rule in ["reader","membership"]{put(&["rule","s0","read",rule],vec![read.clone()]);}
     for (owner,key_field) in [("Staff","staffId"),("Project","projectId"),("Resource","resourceId"),("Ownership","ownerId"),("Assignment","assignmentId")]{
@@ -1010,7 +1010,7 @@ mod tests{
    let mut put=|tokens:&[&str],kind:E,scopes:Vec<CoverageScope>|{golden.insert(serde_json::to_string(tokens).unwrap(),(kind,scopes.into_iter().collect()));};
    put(&["primary-action","read"],E::PrimaryAction,vec![read.clone(),app.clone()]);
    for (tag,kind,raw) in [("policy",E::Policy,ctx.logical_plan().source().policy_json()),("ontology",E::Ontology,ctx.logical_plan().source().ontology_json()),("query",E::Query,ctx.query().sql())]{put(&[tag,&crate::json::sha256(raw.as_bytes())],kind,vec![read.clone(),app.clone()]);}
-   put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs()[0].pin.sha256],E::Model,vec![read.clone(),app.clone()]);put(&["module","domain","m"],E::Module,vec![read.clone(),app.clone()]);
+   put(&["model","domain","schema-1","0.10.0",&ctx.catalog().inputs()[0].pin.sha256],E::Model,vec![read.clone(),app.clone()]);put(&["module","domain","m"],E::Module,vec![read.clone(),app.clone()]);
    put(&["scan","s0","domain","m","Resource"],E::Scan,vec![read.clone(),app.clone()]);
    put(&["action","s0","read"],E::Action,vec![read.clone()]);put(&["rule","s0","read","reader"],E::Rule,vec![read.clone()]);
    for (owner,field) in [("Staff","staffId"),("Resource","resourceId")]{put(&["key","s0","read","domain","m",owner,"pk"],E::Key,vec![read.clone()]);put(&["key-field","s0","read","domain","m",owner,"pk","1","domain","m",field],E::KeyField,vec![read.clone()]);put(&["field","s0","read","domain","m",owner,"domain","m",field],E::Field,vec![read.clone()]);}
@@ -1267,7 +1267,7 @@ mod tests{
   for (sql,optional,kind,nullable) in [("SELECT r.salary FROM Resource r",true,Output::Field,false),("SELECT r.salary FROM Resource r",false,Output::Field,false),("SELECT COUNT(*) FROM Resource r",false,Output::Count,false),("SELECT SUM(r.salary) FROM Resource r",false,Output::Sum,true)]{
    let mut f:Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();f["policy"]["rules"][0]["disclosure"][0]["disposition"]=json!({"kind":"original"});let source=&f["resolution"]["documents"][0];let mut doc=source["document"].clone();
    for e in doc["modules"][0]["elements"].as_array_mut().unwrap(){e["name"]=e["id"].clone();if e["scalarType"]=="integer"{e["facets"]=json!({"integerWidth":{"bits":64,"signed":true}});}if optional&&e["id"]=="salary"{e["nullability"]=json!("absent-allowed");}}
-   let text=doc.to_string();let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.8.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
+   let text=doc.to_string();let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.10.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
    let catalog=crate::model::Catalog::prepare_security(inputs).unwrap();let policy=f["policy"].to_string();let ontology=f["resolution"]["ontology"].to_string();let packet=crate::security_source::SecuritySourcePacket::read(&policy,&ontology,&catalog).unwrap();let plan=crate::security_ir::SecurityLogicalPlan::read(packet,&catalog).unwrap();
    let query=crate::security_query_uses::SecurityResolvedQuery::resolve(sql,&catalog,&plan,Default::default(),None).unwrap();let app=query.application_plan();
    let mut out=Collector(vec![]);crate::security_payload_applicability::output("output",&app.outputs[0],app,&mut out).unwrap();

@@ -10,7 +10,7 @@ fn source(sum: bool) -> Value {
 fn id(element: &str) -> Identity {
     Identity {
         document_id: "domain".into(),
-        revision: "query-value-core-r1".into(),
+        revision: "query-value-current010-r1".into(),
         module: "m".into(),
         element: element.into(),
     }

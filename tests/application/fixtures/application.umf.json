@@ -1,6 +1,6 @@
 {
-  "umf": "0.7.0",
-  "id": "sales-fixture",
+  "umf": "0.10.0",
+  "id": "sales-current010-fixture",
   "vocabularies": {
     "future.vendor": {
       "version": "99.0.0"
@@ -286,5 +286,6 @@
         }
       ]
     }
-  }
+  },
+  "title": "Current UMF 0.10 sales test source, preserving the authored sales meanings"
 }

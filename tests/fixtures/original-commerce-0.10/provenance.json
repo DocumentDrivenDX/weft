@@ -1,0 +1,10 @@
+{
+  "format": "weft-test-fixture-migration/0.1",
+  "source": "tests/fixtures/original-commerce-0.8/ontology.json",
+  "sourceSha256": "51d87c554df36846e41378cfaafc81277fcab61f6c891a6c64f34dba8fd9ac2a",
+  "fixture": "tests/fixtures/original-commerce-0.10/ontology.json",
+  "fixtureSha256": "c2ffba1673f7e66797639a3797fe3e15e6f385ec72105ea838916efeafab6f9e",
+  "transformation": "Changed only the owning core version from 0.8.0 to 0.10.0. All authored elements, scalarType values, cardinalities, nullability, facets, keys, relationships, vocabularies, extensions, and ordering are byte-preserved.",
+  "semanticTypesPresent": false,
+  "schemaValidation": "Validated against the current UMF 0.10.0 spec/core/schema.json with its owner-pinned semantic-type-reference resource."
+}

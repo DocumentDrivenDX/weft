@@ -278,4 +278,35 @@ mod tests {
         assert_eq!(error.phase,"parse");
         assert_eq!(error.message,"Predicate list is empty");
     }
+
+    #[test]
+    fn current010_exact_number_profile_preserves_unbounded_integer_tokens() {
+        let text = include_str!("../../../tests/fixtures/umf010/commerce-paths.json");
+        let document: serde_json::Value = serde_json::from_str(text).unwrap();
+        let input: crate::model::ModuleInput = serde_json::from_value(serde_json::json!({
+            "documentJson": text,
+            "pin": {
+                "documentId": document["id"],
+                "revision": "commerce-paths-010",
+                "umfVersion": "0.10.0",
+                "sha256": crate::json::sha256(text.as_bytes())
+            },
+            "selectedModuleIds": ["domain"]
+        })).unwrap();
+        let catalog = Catalog::prepare_exact_numbers(vec![input]).unwrap();
+        for token in [
+            "9007199254740993",
+            "-0",
+            "99999999999999999999999999999999999999",
+            "100000000000000000000000000000000000000000000000000",
+        ] {
+            let query = crate::syntax::parse(&format!(
+                "SELECT o.quantity FROM order_lines o WHERE o.quantity = {token}"
+            )).unwrap();
+            let plan = resolve(&catalog, query).unwrap();
+            assert!(plan.required_capabilities.iter().any(|c| c == "type.integer.unbounded"));
+            let encoded = serde_json::to_string(&plan).unwrap();
+            assert!(encoded.contains(token), "mathematical integer token was changed: {encoded}");
+        }
+    }
 }

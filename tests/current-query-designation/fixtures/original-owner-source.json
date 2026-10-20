@@ -5,14 +5,14 @@
     "pins": [
       {
         "documentId": "domain",
-        "revision": "query-value-core-r1"
+        "revision": "query-value-current010-r1"
       }
     ],
     "documents": [
       {
-        "revision": "query-value-core-r1",
+        "revision": "query-value-current010-r1",
         "document": {
-          "umf": "0.8.0",
+          "umf": "0.10.0",
           "id": "domain",
           "vocabularies": {},
           "modules": [
@@ -308,7 +308,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "title": "Current UMF 0.10 designation fixture preserving original query meanings"
         }
       }
     ]

@@ -1,0 +1,8 @@
+{
+  "fixture": "commerce-paths.json",
+  "originRepository": "DocumentDrivenDX/weft",
+  "originPath": "tests/fixtures/original-commerce-0.8/ontology.json",
+  "originSha256": "51d87c554df36846e41378cfaafc81277fcab61f6c891a6c64f34dba8fd9ac2a",
+  "derivation": "Test-only current-format successor; preserves record/field/relationship IDs, authored names, keys and path meanings; integer fields retain facetless mathematical-integer meaning. Validated against DocumentDrivenDX/umf spec/core/schema.json at owner commit a251ea5f876b7c69ef5e429af43621852242d324.",
+  "coreVersion": "0.10.0"
+}

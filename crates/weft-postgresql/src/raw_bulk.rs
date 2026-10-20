@@ -241,7 +241,7 @@ fn compile(raw: &str) -> Result<Value> {
         // The bulk host owns the same original search-path context as action SQL;
         // no read-host appSchema parameter is invented or bound by the SDK.
         let selected=admitted.selection();let table=selected.request().binding.tables.iter().find(|t|t.logical==effect.entity.key.table).ok_or("bulk original selection table absent")?;
-        let columns=crate::raw_read::native_projection::columns(selected,table,"0.8.0")?;
+        let columns=crate::raw_read::native_projection::columns(selected,table,"0.10.0")?;
         let mut selected_admissions=columns.values().map(|c|json!({"nativeAdmission":crate::raw_read::native_projection::action_admission(c,table,&r.selection.binding.schema)})).collect::<Vec<_>>();
         selected_admissions.push(json!({"nativeAdmission":crate::raw_read::native_projection::action_table_admission(table,&r.selection.binding.schema,&columns.values().map(|c|c.native.clone()).collect::<Vec<_>>())}));
         let mut packet=template["obligations"]["nativeProjection"].clone();let values=packet["columns"].as_array_mut().unwrap();for value in selected_admissions {if !values.contains(&value){values.push(value);}}program["obligations"]["nativeProjection"]=packet;
@@ -287,7 +287,21 @@ mod tests {
             let mut r=r.clone();for c in ["action","selection"]{r[c]["binding"]["nativeCatalogFence"]=json!({"version":"umf.pg-ts-fence/0.1","schema":"native_fence","view":"ts_catalog_lock","owner":"fence_owner","ownerProfile":"non-login-maintainer/0.1"});}if neutral {r["selection"]["binding"].as_object_mut().unwrap().remove("schema");r["action"]["binding"].as_object_mut().unwrap().remove("schema");}
             let p=result(&r);assert_eq!(p["status"],"compiled","{p}");
             if let Ok(dir)=std::env::var("WEFT_COMPOSED_TERM_OUTPUT") {std::fs::write(format!("{dir}/bulk-{}.json",if neutral{"neutral"}else{"qualified"}),p.to_string()).unwrap();}
-            if !neutral {let old:Value=serde_json::from_str(include_str!("../../../tests/native-actions/source-exact-terms-read-r20.json")).unwrap();assert_eq!(p["readTemplate"]["sql"],old["sql"]);assert_eq!(p["readTemplate"]["outputs"],old["outputs"]);assert_eq!(p["readTemplate"]["obligations"]["termFilter"],old["obligations"]["termFilter"],"existing raw analyzer SQL remains unchanged; fence/version are new");}
+            if !neutral {
+                // Compare the composed read against an independent compile of
+                // the same current 0.10 source selection. The checked-in r20
+                // snapshot is historical UMF 0.8 and cannot be used as a
+                // positive oracle for this current-source composition.
+                let mut selection = r["selection"].clone();
+                selection["verificationProfile"] = json!("source-exact/0.1");
+                let independent: Value = serde_json::from_str(
+                    &crate::raw_read::compile_json(&selection.to_string()),
+                ).unwrap();
+                assert_eq!(independent["status"], "compiled", "{independent}");
+                assert_eq!(p["readTemplate"]["sql"], independent["sql"]);
+                assert_eq!(p["readTemplate"]["outputs"], independent["outputs"]);
+                assert_eq!(p["readTemplate"]["obligations"]["termFilter"], independent["obligations"]["termFilter"], "current 0.10 raw analyzer source and projection survive composition; fence/version are new");
+            }
             let top=&p["obligations"]["termFilter"];let original=&p["readTemplate"]["obligations"]["termFilter"];
             assert_eq!(top["version"],original["version"]);assert_eq!(top["nativeCatalogBeforeAfter"],true);
             assert_eq!(top["indexes"].as_array().unwrap().len(),1);
@@ -399,7 +413,7 @@ mod list_parameter_tests {
         assert_eq!(scalar["status"], "compiled", "{scalar}");
         assert_eq!(
             scalar["structuralDigest"]["sha256"],
-            "96464cf62dc5c5995eac318bb3cc6b7ca84118a6367a13268fb5faa083c362a5"
+            "c3ea5764c1d836ffc82b56ca5b90f8e4a0cf9586bfafbcf97a32995ffea5d5c7"
         );
         let r = list_request();
         let p = compile(&r);

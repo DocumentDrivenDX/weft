@@ -111,6 +111,49 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
             ),
         ),
     ];
+    // Current UMF 0.10 fixture bindings. Each exact digest is paired with its existing
+    // independently selected conformance composition; request content never chooses a path.
+    let current_fixture_presets = [
+        ("0476e3c6fbc29662b94cf0c289d170f565903cf381e42c0bdae844d55f3cd673", include_str!("../../../tests/truss-postgresql/fixtures/original-map-composition.json")),
+        ("0a317578e4196af9073065cde4c074ff1d339ff3a623c88c2b1ba244c737e4fd", include_str!("../../../tests/truss-postgresql/fixtures/original-optional-props-composition.json")),
+        ("0aceaefff55e99b1d46012c83b3ee50f9f5c747f1b8312f1fb5f71d956eac1a6", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-map-props-composition.json")),
+        ("0c27f060954e146cb9d1a7ac8964b2638e7adfdce5b3d6d942d90adb9cf6040c", include_str!("../../../tests/truss-postgresql/fixtures/original-numeric-map-composition.json")),
+        ("0cfc07cca22c67c6377d986774d10dbfc271814195e492dfe4bc17d5c42e213a", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-1-row-composition.json")),
+        ("1225655dac95a262f6c3f8e23299fc1cdd595dbd7660e9dbaea9924138fb3aa8", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-address-props-composition.json")),
+        ("17322b0189c57fc10d78ef3ccc58989b8a39a8612c523b7d42f7273f078cd51e", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-address-row-composition.json")),
+        ("3daf2d7f1b8ece6bc7841e204ed1fc79aeaf13afd3a8df9cf5ae20061265de05", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-64-props-composition.json")),
+        ("3e5b1a3c1e1c8bdf8c930cb9564d38eba526e8c79745d869c5dd7eee5afbb238", include_str!("../../../tests/truss-postgresql/fixtures/original-boolean-sequence-composition.json")),
+        ("4d899e79815f5fadab46a69050d98464b53d4cf9e7dc18eec3f2a628b8fd284e", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-map-props-composition.json")),
+        ("4df8317369b12fb35180a7bd25010f2e304c8d0975d7ea4121f8f0ad80e2d190", include_str!("../../../tests/truss-postgresql/fixtures/original-nested-sequence-composition.json")),
+        ("52fe6b47421c3d07323d5bcbe69aad72dfa8ce8822ebcc2d564c654dede3e6a7", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-16-row-composition.json")),
+        ("597ebe635a8bd49a922d722c1d6217550ad64b60e6c0dd73261285b1bf8a8191", include_str!("../../../tests/truss-postgresql/fixtures/original-numeric-address-composition.json")),
+        ("61aa76b41a42c3027fad041cd3ddb7a14d9df88cdd8c01e9c7ad02258ab8f612", include_str!("../../../tests/truss-postgresql/fixtures/original-address-composition.json")),
+        ("6a436f0302ef1eb69fe37404353c3b4feb4b4974bcc52fd2458029abee71829a", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-8-row-composition.json")),
+        ("6a9b8bd538f96d079a95a0edab06cdc513018ef0a6be2b7c65bc2acd0fbec84b", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-1-props-composition.json")),
+        ("6e6bca6b696e615f90e849fdf28e4c59ff37d04c69050811ce58da36583c207e", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-address-row-composition.json")),
+        ("70406629972d111990951b254496466355c01aceae8ddda7f066053673140d3a", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-16-props-composition.json")),
+        ("7229e3335ef37064cee9e90f4facd4e9ad40988c9f48c0443c5b0b732c7781c4", include_str!("../../../tests/truss-postgresql/fixtures/original-relationship-composition.json")),
+        ("7bf6efcc4ee91e8d99b82a7bf47f6ae3f2290cbfc76e01af9bd9318f8137409d", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-address-props-composition.json")),
+        ("7e0c5b5f6877dc660d7c790da815b39e48ff1ad92d2eefb2b5b9a150c4365f7e", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-nested-sequence-props-composition.json")),
+        ("8c4f88f02ec2785fecb284118a9e79d988db7b403f88426b4bb4162274b5b488", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-32-props-composition.json")),
+        ("8edaea53370e79a79f7a7ee5d942e69c3fb5c71be0fe4aa211412d04f126ecda", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-64-row-composition.json")),
+        ("925a99c24c01c58fba3a0a6b8d68353a27e73c932ea4bfc8298613fd3bf632d4", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-8-props-composition.json")),
+        ("9311e8cf3e074e3b35279b40af64148bd3ea969d5f28ebc6845b7e13fa041575", include_str!("../../../tests/truss-postgresql/fixtures/original-cyclic-composition.json")),
+        ("97abc7301357a0c2062c795112cc78731a38956095b9b84874c5fc717db5a1df", include_str!("../../../tests/truss-postgresql/fixtures/original-multi-recursive-entity-composition.json")),
+        ("aae1fa7abcdf9d8299329a27cc2a6e94604836ad0c5c9e05b9cc84c1ddfc1a56", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-map-row-composition.json")),
+        ("b47ff86169066f7e7a8577b5c453e2ac1d8d41dd05360cbf37ae6ac0317b6a20", include_str!("../../../tests/truss-postgresql/fixtures/original-tags-composition.json")),
+        ("b56eaf284a4c35a5b098c2db076342d2b4dccb4538d2f98a35ea56e7f5cb93bf", include_str!("../../../tests/truss-postgresql/fixtures/original-boolean-row-composition.json")),
+        ("ba69e63f90afffbb6142ecee09bd5a0e93d93a2900b696b195cec27620aaabd1", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-cyclic-props-composition.json")),
+        ("c5e659a2fe9ab134efa373386c0e82d4bb0de16dcd69e974d6ae23d8d8b44ddc", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-tags-props-composition.json")),
+        ("c7a467fc170902dfe8999bb9134cc3780665b395e9cdc3cef712ff2f9c496112", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-nested-sequence-row-composition.json")),
+        ("d5becfdba02475398a0f0b1e9116e986f60c9dbaa8bdc0dcadc0a2ff85117386", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-cyclic-row-composition.json")),
+        ("e5be0971897ab32f351181403896273fbc96e1e82b5fe5f8d48e41441fc6001f", include_str!("../../../tests/truss-postgresql/fixtures/original-optional-row-composition.json")),
+        ("e852dd144a5d12e2b9274c60a0fd3e09ffdd78ec9522345390034a0288b9096a", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-tags-row-composition.json")),
+        ("f39034611d5f7131df31bb6422254e5fcfef4ec3b8b80e0bfce9c2c275aa68bb", include_str!("../../../tests/truss-postgresql/fixtures/original-boolean-props-composition.json")),
+        ("f4afd82251fd100a6c76d4d776e82e045b1fd03569099a11a61645cb4af9c3d4", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-32-row-composition.json")),
+        ("f7bbd33d0093ae0147ea96275f8038949bb9d05cdda6969b4c27abd5195362ab", include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-map-row-composition.json")),
+    ];
+
     let raw = if target.binding_sha256
         == "f598a497fee406abd64999f3d60a4a2ba2eeb192926987c48656f40590f7b1ba"
     {
@@ -124,6 +167,7 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
             .chain(entity_presets.iter())
             .chain(signed_presets.iter())
             .chain(boolean_presets.iter())
+            .chain(current_fixture_presets.iter())
             .find(|(pin, _)| *pin == target.binding_sha256)
             .map(|(_, raw)| *raw)
             .ok_or_else(|| fail("Binding has no explicitly compiled conformance composition"))?

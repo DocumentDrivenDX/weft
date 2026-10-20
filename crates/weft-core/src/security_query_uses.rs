@@ -85,7 +85,7 @@ mod tests{
  use serde_json::{json,Value};
  fn fixture()->(Catalog,SecurityLogicalPlan){
   let f:Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();let mut doc=f["resolution"]["documents"][0]["document"].clone();for e in doc["modules"][0]["elements"].as_array_mut().unwrap(){e["name"]=e["id"].clone();if e["scalarType"]=="integer"{e["facets"]=json!({"integerWidth":{"bits":64,"signed":true}});}}let text=doc.to_string();
-  let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":"domain","revision":"schema-1","umfVersion":"0.8.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();let catalog=Catalog::prepare_security(inputs).unwrap();let packet=crate::security_source::SecuritySourcePacket::read(&f["policy"].to_string(),&f["resolution"]["ontology"].to_string(),&catalog).unwrap();let security=SecurityLogicalPlan::read(packet,&catalog).unwrap();(catalog,security)
+  let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":"domain","revision":"schema-1","umfVersion":"0.10.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();let catalog=Catalog::prepare_security(inputs).unwrap();let packet=crate::security_source::SecuritySourcePacket::read(&f["policy"].to_string(),&f["resolution"]["ontology"].to_string(),&catalog).unwrap();let security=SecurityLogicalPlan::read(packet,&catalog).unwrap();(catalog,security)
  }
  #[test]
  fn extraction_covers_every_operator_and_both_join_occurrences(){

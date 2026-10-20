@@ -454,7 +454,7 @@ pub fn inspect_selection(selection: &Artifact, model: &Artifact) -> MResult<Vec<
 }
 fn validate_selection(program: &Value, document: &Value) -> MResult<Vec<Value>> {
     exact(program, &["protocol", "record", "key", "predicate"])?;
-    if program["protocol"] != "weft.update-selection/1" || document["umf"] != "0.8.0" {
+    if program["protocol"] != "weft.update-selection/1" || document["umf"] != "0.10.0" {
         return Err(refused("Exact selection/core profile required"));
     }
     validate_ref(&program["key"], true)?;

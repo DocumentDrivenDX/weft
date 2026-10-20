@@ -208,7 +208,7 @@ mod tests {
         }
         let text=document.to_string();
         let modules=json!([{"documentJson":text,"pin":{"documentId":document["id"],"revision":source["revision"],
-            "umfVersion":"0.8.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["m"]}]);
+            "umfVersion":"0.10.0","sha256":sha256(text.as_bytes())},"selectedModuleIds":["m"]}]);
         let mut ontology=case["ontology"].clone();
         let salary=ontology["entities"].as_array_mut().unwrap().iter_mut().find(|e|e["type"]["elementId"]=="Resource").unwrap()
             ["fields"].as_array_mut().unwrap().iter_mut().find(|f|f["ref"]["elementId"]=="salary").unwrap();

@@ -94,7 +94,7 @@ mod tests {
     };
     fn doc() -> serde_json::Value {
         serde_json::from_str(include_str!(
-            "../../../tests/fixtures/original-commerce-0.8/ontology.json"
+            "../../../tests/fixtures/umf010/commerce-paths.json"
         ))
         .unwrap()
     }
@@ -105,7 +105,7 @@ mod tests {
             pin: ModelPin {
                 document_id: id.into(),
                 revision: revision.into(),
-                umf_version: "0.8.0".into(),
+                umf_version: "0.10.0".into(),
                 sha256: crate::json::sha256(document_json.as_bytes()),
             },
             document_json,
@@ -113,13 +113,13 @@ mod tests {
         }
     }
     fn catalog() -> Catalog {
-        let raw = include_str!("../../../tests/fixtures/original-commerce-0.8/ontology.json");
+        let raw = include_str!("../../../tests/fixtures/umf010/commerce-paths.json");
         Catalog::prepare(vec![ModuleInput {
             document_json: raw.into(),
             pin: ModelPin {
                 document_id: "urn:umf:domain:commerce".into(),
-                revision: "c7-original".into(),
-                umf_version: "0.8.0".into(),
+                revision: "commerce-paths-010".into(),
+                umf_version: "0.10.0".into(),
                 sha256: crate::json::sha256(raw.as_bytes()),
             },
             selected_module_ids: vec!["domain".into()],
@@ -160,7 +160,7 @@ mod tests {
             &c,
             &[(
                 name("l"),
-                record(&c, "urn:umf:domain:commerce", "c7-original", "order_lines"),
+                record(&c, "urn:umf:domain:commerce", "commerce-paths-010", "order_lines"),
                 "s0".into(),
             )],
             &args,
@@ -188,7 +188,7 @@ mod tests {
         let c = catalog();
         let visible = vec![(
             name("l"),
-            record(&c, "urn:umf:domain:commerce", "c7-original", "order_lines"),
+            record(&c, "urn:umf:domain:commerce", "commerce-paths-010", "order_lines"),
             "s0".into(),
         )];
         for sql in [
@@ -264,7 +264,7 @@ mod tests {
     #[test]
     fn alias_case_quoting_and_ambiguity_follow_existing_scope() {
         let c = catalog();
-        let r = record(&c, "urn:umf:domain:commerce", "c7-original", "order_lines");
+        let r = record(&c, "urn:umf:domain:commerce", "commerce-paths-010", "order_lines");
         let visible = vec![(name("l"), r.clone(), "s0".into())];
         let (a, s) =
             fragment(r#"RELATED_PATHS(L."order_lines.product_id", "products.supplier_id", 2)"#);

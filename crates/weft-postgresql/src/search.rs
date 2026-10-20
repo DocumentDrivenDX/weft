@@ -181,7 +181,7 @@ fn compile(raw: &str) -> Result<Json> {
         Some(schema) => format!("{}.{}", ident(schema)?, ident(&table.native)?),
         None => ident(&table.native)?,
     };
-    let source_columns=if r.selection.verification_profile.as_deref()==Some("source-exact/0.1") {Some(crate::raw_read::native_projection::columns(admitted.selection(),table,"0.8.0")?)}else{None};
+    let source_columns=if r.selection.verification_profile.as_deref()==Some("source-exact/0.1") {Some(crate::raw_read::native_projection::columns(admitted.selection(),table,"0.10.0")?)}else{None};
     if let (Some(columns),Some(vector))=(&source_columns,&r.vector_binding) {
         let original=field(&doc,&vector.field)?;let logical=original["name"].as_str().ok_or("source-exact vector Field name absent")?;
         let c=columns.get(logical).ok_or("source-exact vector Field column absent")?;
@@ -527,10 +527,10 @@ mod tests {
     }
     #[test]
     fn actual_public_filter_declarations_keep_original_owner_admission(){
-        let fixture:Json=serde_json::from_str(include_str!("../../../tests/native-search/public-filter-requests-r25.json")).unwrap();
-        let cases=fixture["requests"].as_array().unwrap();assert_eq!(cases.len(),12);
+        let mut fixture:Json=serde_json::from_str(include_str!("../../../tests/native-search/public-filter-requests-current010.json")).unwrap();
+        let cases=fixture["requests"].as_array_mut().unwrap();assert_eq!(cases.len(),12);
         let mut red=0;
-        for case in cases {
+        for case in cases.iter_mut() {
             let raw=case["requestText"].as_str().unwrap();assert_eq!(weft_core::json::sha256(raw.as_bytes()),case["requestSha256"]);
             let compiled=match case["compilerApi"].as_str().unwrap(){"compile_search_json"=>compile_json(raw),"compile_raw_read_json"=>crate::raw_read::compile_json(raw),_=>panic!("unknown captured owner API")};
             let p:Json=serde_json::from_str(&compiled).unwrap();

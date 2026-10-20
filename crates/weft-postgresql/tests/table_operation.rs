@@ -82,6 +82,31 @@ fn all_declared_read_write_conflict_and_batch_shapes_compile_without_native_auth
     }
 }
 #[test]
+fn prepared_operation_module_reuses_source_and_returns_compact_call_programs() {
+    let first = request("read_many");
+    let source = json!({
+        "version":"weft.table-operation-module/0.1",
+        "target":first["target"],
+        "module":first["module"],
+        "binding":first["binding"],
+    });
+    let module = weft_postgresql::table_operation::PreparedOperationModule::prepare(&source.to_string()).unwrap();
+    let operation = module.prepare_operation("read_many").unwrap();
+    let bind = |inputs: Value| json!({"call":{"kind":"single","inputs":inputs}}).to_string();
+    let compiled: Value = serde_json::from_str(&operation.bind_json(&bind(json!({"owner":{"string":"alice"}})))).unwrap();
+    let changed: Value = serde_json::from_str(&operation.bind_json(&bind(json!({"owner":{"string":"bob"}})))).unwrap();
+    assert_eq!(compiled["status"], "compiled");
+    assert_eq!(compiled["sql"], changed["sql"]);
+    assert_eq!(compiled["nativeInputs"][0]["owner"], json!("alice"));
+    assert_eq!(changed["nativeInputs"][0]["owner"], json!("bob"));
+    assert_eq!(compiled["binding"], json!({"modelSha256":first["binding"]["modelSha256"]}));
+    for retired in ["requestJson", "requestSha256", "declaration", "structuralDigest"] {
+        assert!(compiled.get(retired).is_none(), "compact program retained {retired}");
+    }
+    assert_eq!(compiled["callKind"], "single");
+    assert_eq!(compiled["declarationDigest"].as_str().unwrap().len(), 64);
+}
+#[test]
 fn source_original_sql_is_not_a_request_surface_and_legacy_guards_stay_closed() {
     let mut r = request("read_many");
     r["sql"] = json!("SELECT secret");

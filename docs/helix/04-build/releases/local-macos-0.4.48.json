@@ -1,0 +1,27 @@
+{
+  "status": "pending",
+  "version": "0.4.48",
+  "platform": "macos-arm64",
+  "functionalQualification": "local-only",
+  "sourceFreezeCommit": "PENDING_AFTER_SOURCE_FREEZE",
+  "wheel": {
+    "name": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION.whl",
+    "sha256": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION"
+  },
+  "nativeModuleSha256": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION",
+  "localFunctionalChecks": [
+    {
+      "id": "exact-installed-wheel",
+      "status": "pending",
+      "evidence": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION"
+    },
+    {
+      "id": "scoped-0.4.48-functional-suite",
+      "status": "pending",
+      "evidence": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION"
+    }
+  ],
+  "otherPlatforms": "Build and installed packaging checks only; functional qualification is not claimed.",
+  "nativeSparkOrDatabricksExecution": "not claimed",
+  "fullSuiteQualification": "not claimed"
+}

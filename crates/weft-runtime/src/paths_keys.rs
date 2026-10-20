@@ -15,7 +15,7 @@ pub fn compile_json(request: &str) -> String {
     let version041=weft_core::json::checked_json(request).ok().is_some_and(|r|r["interfaceVersion"]=="weft-compile/0.4.1");
     if version041 {
         let mut factory=|_: &Catalog, _: Plan04View<'_>, _: CompositionInput<'_>| -> Result<Registry>{let mut r=Registry::default();r.register(weft_databricks::paths_keys_having::CountStarHaving)?;Ok(r)};
-        weft_core::compile::v041::Compiler::default().compile_json_with_factory(request,&mut factory)
+        weft_core::compile::v041::Compiler::default().compile_json_with_exact_numbers_factory(request,&mut factory)
     } else {
         let mut factory=|_: &Catalog, _: Plan04View<'_>, _: CompositionInput<'_>| -> Result<Registry>{let mut r=Registry::default();r.register(weft_databricks::paths_keys::PathsKeys)?;Ok(r)};
         Compiler::default().compile_json_with_factory(request,&mut factory)
@@ -284,7 +284,10 @@ mod tests {
                 if member == "nullability" {
                     "WFT-TYPE"
                 } else {
-                    "WFT-CAPABILITY"
+                    // A facetless 0.10 integer selects an exact mathematical
+                    // domain outside this path-key profile, so type admission
+                    // refuses before the backend capability check.
+                    "WFT-TYPE"
                 }
             );
         }

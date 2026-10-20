@@ -160,7 +160,7 @@ mod tests {
  fn source_bound_spark_shapes_preserve_exact_columns_and_refuse_wrong_custody(){
   let mut r=request();let doc:Value=serde_json::from_str(r["binding"]["modelJson"].as_str().unwrap()).unwrap();
   let physical=include_str!("../../../tests/spark-pages/binding.json");
-  r["binding"]["nativeColumns"]=json!({"target":{"platform":"spark-delta","majorVersion":"spark4-delta4"},"sets":[{"columnSet":{"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":r["binding"]["modelSha256"],"module":"commerce","pointer":"/modules/0/extensions/umf.access/columns/0"},"binding":{"sourceId":"physical","documentJson":physical,"documentSha256":weft_core::json::sha256(physical.as_bytes())}}]});
+  r["binding"]["nativeColumns"]=json!({"target":{"platform":"spark-delta","majorVersion":"spark4-delta4"},"sets":[{"columnSet":{"documentId":doc["id"],"coreVersion":"0.10.0","documentSha256":r["binding"]["modelSha256"],"module":"commerce","pointer":"/modules/0/extensions/umf.access/columns/0"},"binding":{"sourceId":"physical","documentJson":physical,"documentSha256":weft_core::json::sha256(physical.as_bytes())}}]});
   let compiled=output(r.clone());assert_eq!(compiled["status"],"compiled","{compiled}");
   assert_eq!(compiled["outputs"][0]["nativeType"],"string");assert_eq!(compiled["outputs"][1]["nullable"],true);
   for fault in 0..4{let mut bad=r.clone();match fault {
@@ -194,7 +194,7 @@ mod tests {
   binding["extensions"]["umf.binding"]["fields"].as_array_mut().unwrap().push(json!({"module":"commerce","element":"embedding","storage":"column","column":"embedding"}));
   let source=serde_json::to_string(&doc).unwrap();let physical=binding.to_string();let sha=weft_core::json::sha256(source.as_bytes());
   r["binding"]["modelJson"]=json!(source);r["binding"]["modelSha256"]=json!(sha);
-  r["binding"]["nativeColumns"]=json!({"target":{"platform":"spark-delta","majorVersion":"spark4-delta4"},"sets":[{"columnSet":{"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":sha,"module":"commerce","pointer":"/modules/0/extensions/umf.access/columns/0"},"binding":{"sourceId":"physical","documentJson":physical,"documentSha256":weft_core::json::sha256(physical.as_bytes())}}]});
+  r["binding"]["nativeColumns"]=json!({"target":{"platform":"spark-delta","majorVersion":"spark4-delta4"},"sets":[{"columnSet":{"documentId":doc["id"],"coreVersion":"0.10.0","documentSha256":sha,"module":"commerce","pointer":"/modules/0/extensions/umf.access/columns/0"},"binding":{"sourceId":"physical","documentJson":physical,"documentSha256":weft_core::json::sha256(physical.as_bytes())}}]});
   r["sql"]=json!(r#"SELECT o.small, o.amount, o.payload, o.embedding FROM "commerce"."Order" AS o ORDER BY o.id ASC"#);r["binding"]["relationships"]=json!([]);r["binding"]["tables"].as_array_mut().unwrap().truncate(1);r["snapshots"]=json!({"orders":1});
   let p=output(r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["outputs"][0]["nativeType"],"smallint");assert_eq!(p["outputs"][0]["integerWidth"]["bits"],16);assert_eq!(p["outputs"][1]["precision"],18);assert_eq!(p["outputs"][1]["scale"],4);assert_eq!(p["outputs"][2]["carrier"],"binary");assert_eq!(p["outputs"][3]["carrier"],"vector");assert_eq!(p["outputs"][3]["dimensions"],3);
  }
@@ -218,7 +218,7 @@ mod tests {
    let members=doc["modules"][0]["elements"].as_array().unwrap().iter().find(|e|e["id"]==*record).unwrap()["members"].as_array().unwrap();let id=format!("physical-{record}");
    let mut set=original.clone();set["binding"]["sourceId"]=json!(id);set["columns"].as_array_mut().unwrap().retain(|c|members.contains(&c["field"]));sets.push(set);
    let mut binding=physical.clone();binding["id"]=json!(id);binding["extensions"]["umf.binding"]["elements"].as_array_mut().unwrap().retain(|e|e["element"]==*record);binding["extensions"]["umf.binding"]["fields"].as_array_mut().unwrap().retain(|f|members.contains(&json!({"module":f["module"],"element":f["element"]})));let source=binding.to_string();
-   packets.push(json!({"columnSet":{"documentId":doc["id"],"coreVersion":"0.8.0","documentSha256":"pending","module":"commerce","pointer":format!("/modules/0/extensions/umf.access/columns/{index}")},"binding":{"sourceId":id,"documentJson":source,"documentSha256":weft_core::json::sha256(source.as_bytes())}}));
+   packets.push(json!({"columnSet":{"documentId":doc["id"],"coreVersion":"0.10.0","documentSha256":"pending","module":"commerce","pointer":format!("/modules/0/extensions/umf.access/columns/{index}")},"binding":{"sourceId":id,"documentJson":source,"documentSha256":weft_core::json::sha256(source.as_bytes())}}));
   }
   doc["modules"][0]["extensions"]["umf.access"]["columns"]=json!(sets);let source=doc.to_string();let sha=weft_core::json::sha256(source.as_bytes());for packet in &mut packets{packet["columnSet"]["documentSha256"]=json!(sha)}
   r["binding"]["modelJson"]=json!(source);r["binding"]["modelSha256"]=json!(sha);r["binding"]["nativeColumns"]=json!({"target":{"platform":"spark-delta","majorVersion":"spark4-delta4"},"sets":packets});

@@ -503,7 +503,7 @@ mod tests {
         let pin = ModelPin {
             document_id: "d".into(),
             revision: "r".into(),
-            umf_version: "0.8.0".into(),
+            umf_version: "0.10.0".into(),
             sha256: "a".repeat(64),
         };
         PlanParts {
@@ -677,17 +677,17 @@ mod tests {
     #[test]
     fn original_catalog_cross_module_key_is_preserved() {
         let mut doc: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/03-test/fixtures/sales.umf.json"
+            "../../../tests/fixtures/umf010/commerce-paths.json"
         ))
         .unwrap();
         let elements = doc["modules"][0]["elements"].as_array_mut().unwrap();
         let index = elements
             .iter()
-            .position(|v| v["id"] == "customer-id")
+            .position(|v| v["id"] == "customers.id")
             .unwrap();
         let field = elements.remove(index);
         doc["modules"][0]["elements"][0]["members"][0]["module"] = serde_json::json!("shared");
-        doc["modules"][0]["elements"][0]["keys"] = serde_json::json!([{"id":"primary","name":"primary","fields":[{"module":"shared","element":"customer-id"}]}]);
+        doc["modules"][0]["elements"][0]["keys"] = serde_json::json!([{"id":"identity","name":"identity","fields":[{"module":"shared","element":"customers.id"}]}]);
         doc["modules"]
             .as_array_mut()
             .unwrap()
@@ -696,32 +696,32 @@ mod tests {
         let catalog = crate::model::Catalog::prepare(vec![crate::model::ModuleInput {
             document_json: text.clone(),
             pin: ModelPin {
-                document_id: "sales-fixture".into(),
-                revision: "r".into(),
-                umf_version: "0.7.0".into(),
+                document_id: "urn:umf:domain:commerce".into(),
+                revision: "commerce-paths-010".into(),
+                umf_version: "0.10.0".into(),
                 sha256: crate::json::sha256(text.as_bytes()),
             },
-            selected_module_ids: vec!["sales".into(), "shared".into()],
+            selected_module_ids: vec!["domain".into(), "shared".into()],
         }])
         .unwrap();
         let record = catalog
             .record(
                 None,
                 &crate::syntax::Name {
-                    value: "Customer".into(),
+                    value: "customers".into(),
                     quoted: true,
                     span: Span { start: 0, end: 8 },
                 },
             )
             .unwrap();
-        let key = catalog.authored_key(&record, "primary").unwrap();
+        let key = catalog.authored_key(&record, "identity").unwrap();
         assert_eq!(key.fields[0].module, "shared");
-        assert_eq!(record.identity.module, "sales");
+        assert_eq!(record.identity.module, "domain");
         let make = || RelationshipRead {
             identity: crate::application_model::RelationshipIdentity {
-                document_id: "sales-fixture".into(),
-                revision: "r".into(),
-                module: "sales".into(),
+                document_id: "urn:umf:domain:commerce".into(),
+                revision: "commerce-paths-010".into(),
+                module: "domain".into(),
                 relationship: "self".into(),
             },
             inverse: false,

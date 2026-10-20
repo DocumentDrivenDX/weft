@@ -39,6 +39,29 @@
         {
           "type": "object",
           "properties": {
+            "kind": { "const": "query" },
+            "language": { "const": "weft.pg-select/0.1" },
+            "sql": { "type": "string", "minLength": 1, "maxLength": 65536 },
+            "outputs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+                  "field": { "$ref": "urn:umf:tables:0.1.0#/$defs/ref" }
+                },
+                "required": ["name", "field"]
+              },
+              "minItems": 1,
+              "maxItems": 1600
+            },
+            "maxRows": { "type": "integer", "minimum": 1, "maximum": 1000 }
+          },
+          "required": ["kind", "language", "sql", "outputs", "maxRows"]
+        },
+        {
+          "type": "object",
+          "properties": {
             "kind": {
               "const": "read"
             },

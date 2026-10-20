@@ -885,7 +885,7 @@ mod tests {
             }
         }
         let raw = doc.to_string();
-        let inputs=serde_json::from_value(json!([{"documentJson":raw,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.8.0","sha256":crate::json::sha256(raw.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
+        let inputs=serde_json::from_value(json!([{"documentJson":raw,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.10.0","sha256":crate::json::sha256(raw.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
         let catalog = crate::model::Catalog::prepare_security(inputs).unwrap();
         let policy = f["policy"].to_string();
         let ontology = f["resolution"]["ontology"].to_string();

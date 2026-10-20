@@ -4,18 +4,18 @@ use serde_json::{json, Value};
 use weft_core::json::sha256;
 
 fn request(release: &str, backend: &str) -> Value {
-    let document = json!({"umf":"0.8.0","id":"compat","vocabularies":{},"extensions":{},"modules":[{"id":"m","namespace":"m","elements":[
+    let document = json!({"umf":"0.10.0","id":"compat","title":"Current UMF 0.10 runtime release compatibility fixture","vocabularies":{},"extensions":{},"modules":[{"id":"m","namespace":"m","elements":[
         {"id":"record","name":"Record","kind":"record","extensions":{},"members":[{"module":"m","element":"id"}],"keys":[{"id":"pk","name":"pk","primary":true,"fields":[{"module":"m","element":"id"}]}]},
         {"id":"id","name":"id","kind":"field","extensions":{},"scalarType":"string","cardinality":"one","nullability":"required"}
     ]}]}).to_string();
     let digest = sha256(document.as_bytes());
-    let identity = |element: &str| json!({"documentId":"compat","revision":"r1","module":"m","element":element});
+    let identity = |element: &str| json!({"documentId":"compat","revision":"current010-r1","module":"m","element":element});
     let binding = json!({"interfaceVersion":"truss-runtime-binding/0.4","schema":"truss","installationId":"fixture",
         "releaseId":release,"releaseSha256":if release=="truss-catalog-runtime/0.67-candidate" {"8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee"} else if release=="truss-catalog-runtime/0.66-candidate" {"99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a"} else {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},"catalogRevision":1,"maximumScanRows":100,"maximumResultRows":10,"maximumBytes":100000,
-        "documents":[{"documentId":"compat","revision":"r1","sha256":digest}],
+        "documents":[{"documentId":"compat","revision":"current010-r1","sha256":digest}],
         "records":[{"identity":identity("record"),"typeId":"1","fields":[{"identity":identity("id"),"propertyId":"1"}],"keys":[{"keyId":"pk","propertyIds":["1"]}]}],"relationships":[]}).to_string();
     json!({"interfaceVersion":"weft-compile/0.2.6","dialect":"weft-sql/0.2.0","timestampComparisonProfile":"umf-rfc3339-exact-instant/1.0.0","options":{"allowCandidate":true},"parameters":{},"exactParameters":{},"sql":"SELECT r.id FROM Record r ORDER BY r.id LIMIT 10",
-        "modules":[{"documentJson":document,"pin":{"documentId":"compat","revision":"r1","umfVersion":"0.8.0","sha256":digest},"selectedModuleIds":["m"]}],
+        "modules":[{"documentJson":document,"pin":{"documentId":"compat","revision":"current010-r1","umfVersion":"0.10.0","sha256":digest},"selectedModuleIds":["m"]}],
         "readProfile":{"version":"weft-application-read/0.2.0","subset":"entity-page"},
         "target":{"backendId":"truss.postgresql.runtime","backendVersion":backend,"targetProfile":"truss-runtime-pg18.6/0.4","bindingJson":binding,"bindingSha256":sha256(binding.as_bytes())}})
 }
