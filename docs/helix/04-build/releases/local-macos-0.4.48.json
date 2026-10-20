@@ -1,27 +1,83 @@
 {
-  "status": "pending",
+  "status": "passed",
   "version": "0.4.48",
   "platform": "macos-arm64",
   "functionalQualification": "local-only",
-  "sourceFreezeCommit": "PENDING_AFTER_SOURCE_FREEZE",
+  "postgresqlVersion": "18.6",
+  "sourceFreezeCommit": "db1e0dc5b1ec6aec0f12646421cefc314989d974",
   "wheel": {
-    "name": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION.whl",
-    "sha256": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION"
+    "name": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "def824d16bc00f9deb50c7c63bc08a728cff631eef25cf2616032b761e1c679c"
   },
-  "nativeModuleSha256": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION",
+  "nativeModuleSha256": "36224fd006f525e26e79ad2504bee7ffd75439ce1c8367564cfeb7c826e736a4",
+  "frozenSourceBuild": {
+    "allArchivePayloadsByteIdentical": true,
+    "rebuiltContainerSha256": "b238aa0985d93a7b84138530ef62873f62f7c76a4ab5f64b267ee99202e63d2a",
+    "selectedArtifact": "previously installed and qualified exact wheel; rebuilt ZIP timestamps differ"
+  },
   "localFunctionalChecks": [
     {
       "id": "exact-installed-wheel",
-      "status": "pending",
-      "evidence": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION"
+      "status": "passed",
+      "checks": "archive payload, RECORD, metadata, ABI tag, license notices and native-module identity"
     },
     {
-      "id": "scoped-0.4.48-functional-suite",
-      "status": "pending",
-      "evidence": "PENDING_AFTER_LOCAL_MACOS_QUALIFICATION"
+      "id": "actual-80-native-queries",
+      "status": "passed",
+      "operations": 80,
+      "comparisons": 483,
+      "failures": 0,
+      "leasesAcquired": 483,
+      "leasesReturned": 483,
+      "reportSha256": "39f3e339d2950ab9aa9dbe68d9750238a26a7bf75d3658656a08b956eb47406d",
+      "evidenceTransfer": "all 80 prepared execution-program byte hashes identical on final indexed compiler; private corpus remains private"
+    },
+    {
+      "id": "sample-methods",
+      "status": "passed",
+      "methods": 7,
+      "operations": 8,
+      "checks": 15,
+      "leasesAcquired": 19,
+      "leasesReturned": 19,
+      "reportSha256": "1294957e57724b69ce29cd0b2ffd2e8b5f1a4bfbb3aa80579a080410539e2c78",
+      "scope": "qualified component evidence retained; no additional native campaign"
+    },
+    {
+      "id": "final-installed-prepared-batches",
+      "status": "passed",
+      "cases": 4,
+      "assertions": 58,
+      "leasesAcquired": 19,
+      "leasesReturned": 19,
+      "largestInsertObjects": 1000,
+      "largestInsertMutationStatements": 1,
+      "reportSha256": "1209569dc4adaa5e3775010a10939c5f1c1e291661cfedd8b864643b5ead777c"
+    },
+    {
+      "id": "maintained-failure-dispositions",
+      "status": "passed",
+      "coreSelectors": 24,
+      "runtimeSelectors": 41,
+      "postgresqlSelectors": 22,
+      "pathsKeysCli": 1,
+      "databricksFocusedTests": 123,
+      "mutationLoweringTests": 8,
+      "relationshipGuardedCountTests": 2,
+      "securityRecordHomeTests": 11,
+      "scope": "one combined Rust campaign followed by only affected failing selectors; historical B-001 spike is not the maintained compiler"
+    },
+    {
+      "id": "final-cost-review",
+      "status": "passed",
+      "scope": "one shared prepared schema/index owner; precomputed allowed-value membership, sparse seed positions and SCC batch eligibility; no whole-schema work per invocation or per-table graph traversal"
     }
   ],
   "otherPlatforms": "Build and installed packaging checks only; functional qualification is not claimed.",
   "nativeSparkOrDatabricksExecution": "not claimed",
-  "fullSuiteQualification": "not claimed"
+  "fullSuiteQualification": "not claimed",
+  "knownLimits": [
+    "Host-owned external reference table absent from supplied private plugin; no complete application/UI claim.",
+    "Query codecs/function subset and result limits remain explicit; no time-only result codec."
+  ]
 }
