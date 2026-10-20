@@ -633,3 +633,16 @@ fn batch_principal_is_native_and_has_no_caller_slot() {
     r["call"]["items"][0]["owner"] = json!({"string":"forged"});
     assert_eq!(compile(r)["status"], "blocked");
 }
+
+#[test]
+fn mixed_direction_cursor_carries_complete_order_with_original_key_suffix() {
+    let mut r=request("read_page");let mut model=source();
+    let command=model["modules"][0]["extensions"]["umf.tables"]["commands"].as_array_mut().unwrap().iter_mut().find(|c|c["id"]=="read_page").unwrap();
+    command["body"]["orderBy"]=json!([{"field":{"module":"demo","element":"owner"},"direction":"desc"},{"field":{"module":"demo","element":"id"},"direction":"asc"}]);
+    repin(&mut r,model);r["call"]["after"]=json!([{"string":"alice"},{"string":"n1"}]);
+    let p=compile(r.clone());assert_eq!(p["status"],"compiled","{p}");
+    assert_eq!(p["nativeAfter"],json!(["alice","n1"]));
+    assert_eq!(p["result"]["cursor"]["directions"],json!(["desc","asc"]));
+    let sql=p["sql"].as_str().unwrap();assert!(sql.contains(" < "));assert!(sql.contains(" > "));assert!(sql.contains(" OR "));assert!(sql.contains(" DESC"));
+    r["call"]["after"]=json!([{"string":"n1"}]);assert_eq!(compile(r)["status"],"blocked");
+}

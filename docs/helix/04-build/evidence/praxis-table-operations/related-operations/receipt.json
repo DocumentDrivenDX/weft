@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-10-20T01:44:11.788142+00:00",
+  "scope": "unpublished local macOS ARM64 mixed-direction keyset and same-module typed related-predicate compiler",
+  "umfProducerCommit": "7c3a81e5469a31e17de09aac7c48e247b904e6b7",
+  "focusedRustTests": 18,
+  "cliPythonParityCases": 56,
+  "chromiumWasmParityCases": 56,
+  "hostMixedPagingNativeAssertions": 17,
+  "hostRelatedDeleteNativeAssertions": 19,
+  "hostBalancedNativeLeases": 24,
+  "wheel": {
+    "name": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "35cd03baa4c4307791351ba150068ea2af9a64c7bc5be49b6c577d2096a338b4",
+    "license": "MIT OR Apache-2.0",
+    "published": false
+  },
+  "sourceFiles": {
+    "crates/weft-core/src/table_operation.rs": "360d5bc0a639eaac2083a6bc322c65af9d80ad9a8307648f0d9acb2ca008d3fd",
+    "crates/weft-core/src/table_operation/validation.rs": "5e2a64d459489b823649aecf9e22b7c2497f64b675dbb15631c496baf2685cad",
+    "crates/weft-postgresql/src/table_operation.rs": "7c91a3af0e8a5bf2045cb539ddb751a19f717e579879a649428e34bd2e10f29b",
+    "crates/weft-postgresql/tests/table_operation.rs": "a4cbd390ccd151933cd53a9f8dcf08aa0c0578ca869f301f43bb114dd667c8e8",
+    "spec/upstream/umf-table-operation-0.1.schema.json": "96629a1ec9b22f0f5c7d301c7af999fd2b47da39fb5a74daf4f9482655bf06e9",
+    "tests/raw-postgresql/table-operation-bindings.py": "3c0d6071a05595206e7f6086d77ecb081d9faa18d4fe9ebff2756ca7aa883f16",
+    "tests/raw-postgresql/table-snapshot-model.json": "70464a7fc72ada6f4a02bdc2980a44f4830ec33f609968d7a4ddc46df0590886"
+  },
+  "fullPraxisAcceptance": false
+}

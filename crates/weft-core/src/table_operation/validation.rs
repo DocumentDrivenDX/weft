@@ -6,11 +6,15 @@ struct Check<'a> {
     used: BTreeSet<String>,
     nodes: usize,
     source_scope: bool,
+    related_scope: Option<String>,
     assignment: bool,
 }
-impl Check<'_> {
+impl<'a> Check<'a> {
+    fn field(&self, reference: &Value) -> Result<&'a OperationField> {
+        if let Some(table)=&self.related_scope { self.admitted.related_field(table,reference) } else if self.source_scope { self.admitted.source_field(reference) } else { self.admitted.field(reference) }
+    }
     fn value(&mut self, value: &Value, field: &Value) -> Result<()> {
-        let target = if self.source_scope { self.admitted.source_field(field)? } else { self.admitted.field(field)? };
+        let target = self.field(field)?;
         if value["kind"] == "currentPrincipal" {
             return if target.carrier==Carrier::String && matches!(target.native_type["kind"].as_str(),Some("text"|"varchar")) { Ok(()) } else { Err("current principal needs native text storage") };
         }
@@ -65,8 +69,21 @@ impl Check<'_> {
                 Ok(())
             }
             "not" => self.predicate(&node["arg"], depth + 1),
+            "related" => {
+                let id=node["table"].as_str().ok_or("related table identity absent")?;
+                self.admitted.related_table(id)?;
+                let mut seen=BTreeSet::new();
+                for pair in node["matches"].as_array().ok_or("related matches absent")? {
+                    if !seen.insert(pair.to_string()) { return Err("duplicate related match"); }
+                    let source=self.field(&pair["source"])?;let target=self.admitted.related_field(id,&pair["target"])?;
+                    if source.carrier!=target.carrier || source.native_type!=target.native_type { return Err("related native equality capacity differs"); }
+                }
+                let previous=self.related_scope.replace(id.to_owned());
+                let result=self.predicate(&node["where"],depth+1);self.related_scope=previous;result
+            }
+
             _ => {
-                let field = if self.source_scope { self.admitted.source_field(&node["field"])? } else { self.admitted.field(&node["field"])? };
+                let field = self.field(&node["field"])?;
                 if op == "isNull" {
                     return Ok(());
                 }
@@ -119,6 +136,7 @@ pub(super) fn validate(
         used: BTreeSet::new(),
         nodes: 0,
         source_scope: false,
+        related_scope: None,
         assignment: false,
     };
     for parameter in admitted.declaration["parameters"].as_array().unwrap() {
@@ -169,17 +187,14 @@ pub(super) fn validate(
                 .ok_or("original page Key absent")?;
             let key = key["fields"].as_array().unwrap();
             let order = body["orderBy"].as_array().unwrap();
-            if key.len() != order.len()
-                || key.iter().zip(order).any(|(f, o)| {
-                    f != &o["field"]
-                        || o["direction"] != "asc"
-                        || !body["fields"].as_array().unwrap().contains(f)
-                })
+            if order.len() < key.len()
+                || key.iter().zip(&order[order.len().saturating_sub(key.len())..]).any(|(f, o)| f != &o["field"])
+                || order.iter().any(|o| !body["fields"].as_array().unwrap().contains(&o["field"]))
             {
-                return Err("operation cursor Key/order/projection differs");
+                return Err("operation cursor Key suffix/order/projection differs");
             }
-            for reference in key {
-                let field = admitted.field(reference)?;
+            for item in order {
+                let field = admitted.field(&item["field"])?;
                 if field.nullable
                     || !matches!(
                         field.carrier,

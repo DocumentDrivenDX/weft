@@ -109,6 +109,27 @@ snapshot=request('create');text=encode(model)
 snapshot['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest(),tables=tables)
 snapshot.update(operation='capture',call={'kind':'single','inputs':{'snapshot_id':{'string':'s1'},'source_id':{'string':'n1'},'comment':None}})
 cases.append(('atomic-source-snapshot',snapshot,'compiled'))
+related_delete=copy.deepcopy(snapshot);related_delete.update(operation='remove_related',call={'kind':'single','inputs':{'owner':{'string':'alice'}}})
+cases.append(('typed-related-delete',related_delete,'compiled'))
+for label,mutate in [
+    ('table-escape',lambda c:c['body']['where'].update(table='external')),
+    ('wrong-target-field',lambda c:c['body']['where']['matches'][0].update(target={'module':'demo','element':'actor'})),
+    ('capacity-mismatch',lambda c:c['body']['where']['matches'][0].update(source={'module':'demo','element':'observedAt'})),
+    ('unknown-match',lambda c:c['body']['where']['matches'][0].update(future=True)),
+]:
+    bad=copy.deepcopy(related_delete);model=json.loads(bad['binding']['modelJson'])
+    command=next(c for c in model['modules'][0]['extensions']['umf.tables']['commands'] if c['id']=='remove_related')
+    mutate(command);text=encode(model);bad['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
+    cases.append(('related-delete-'+label,bad,'blocked'))
+
+mixed=copy.deepcopy(snapshot);mixed.pop('idempotencyKey');mixed.update(operation='recent_snapshots',call={'kind':'single','inputs':{},'after':[{'timestamp':'2026-10-19T10:00:00.123456Z'},{'string':'p1'}]})
+cases.append(('mixed-direction-exact-cursor',mixed,'compiled'))
+bad=copy.deepcopy(mixed);bad['call']['after'].pop();cases.append(('mixed-direction-incomplete-cursor',bad,'blocked'))
+bad=copy.deepcopy(mixed);model=json.loads(bad['binding']['modelJson'])
+command=next(c for c in model['modules'][0]['extensions']['umf.tables']['commands'] if c['id']=='recent_snapshots')
+command['body']['orderBy'].reverse();text=encode(model);bad['binding'].update(modelJson=text,modelSha256=hashlib.sha256(text.encode()).hexdigest())
+cases.append(('mixed-direction-missing-key-suffix',bad,'blocked'))
+
 all_rows=copy.deepcopy(snapshot);all_rows.update(operation='capture_all',call={'kind':'single','inputs':{'comment':None}})
 cases.append(('atomic-source-overflow-declaration',all_rows,'compiled'))
 for label,mutate in [

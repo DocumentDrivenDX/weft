@@ -16,15 +16,17 @@ struct Lower<'a> {
     slots: Vec<Value>,
     identities: BTreeMap<String, usize>,
     source_scope: bool,
+    related_scope: Option<(String,String)>,
+    next_alias: usize,
 }
 impl<'a> Lower<'a> {
     fn field(&self, reference: &Value) -> Result<&'a OperationField> {
-        if self.source_scope { self.operation.source_field(reference) } else { self.operation.field(reference) }
+        if let Some((id,_))=&self.related_scope { self.operation.related_field(id,reference) } else if self.source_scope { self.operation.source_field(reference) } else { self.operation.field(reference) }
     }
     fn column(&self, reference: &Value, alias: bool) -> Result<String> {
         Ok(format!(
             "{}{}",
-            if !alias { "" } else if self.source_scope { "s." } else { "t." },
+            if !alias { String::new() } else if let Some((_,name))=&self.related_scope { format!("{name}.") } else if self.source_scope { "s.".to_owned() } else { "t.".to_owned() },
             q(&self.field(reference)?.native)?
         ))
     }
@@ -58,7 +60,7 @@ impl<'a> Lower<'a> {
             if value["kind"] == "parameter" {
                 json!({"kind":"input","parameter":value["parameter"]})
             } else {
-                json!({"kind":"literal","value":value["value"],"nativeValue":if self.source_scope { self.operation.native_source_value(reference,&value["value"])? } else { self.operation.native_value(reference,&value["value"])? }})
+                json!({"kind":"literal","value":value["value"],"nativeValue":if let Some((id,_))=&self.related_scope { self.operation.native_related_value(id,reference,&value["value"])? } else if self.source_scope { self.operation.native_source_value(reference,&value["value"])? } else { self.operation.native_value(reference,&value["value"])? }})
             },
             field,
         ))
@@ -80,6 +82,24 @@ impl<'a> Lower<'a> {
                 )
             }
             "not" => format!("(NOT {})", self.predicate(&node["arg"])?),
+            "related" => {
+                let id=node["table"].as_str().ok_or("related table identity absent")?;
+                let table=self.operation.related_table(id)?;
+                let alias=format!("umf_related_{}",self.next_alias);self.next_alias+=1;
+                let relation=format!("{}.{}",q(self.operation.request().binding.schema.as_deref().ok_or("native schema absent")?)?,q(&table.native)?);
+                let mut parts=vec![];
+                for pair in node["matches"].as_array().ok_or("related matches absent")? {
+                    let source=self.column(&pair["source"],true)?;
+                    let target=self.operation.related_field(id,&pair["target"])?;
+                    let target=format!("{alias}.{}",q(&target.native)?);
+                    parts.push(format!("{source} = {target}"));
+                }
+                let previous=self.related_scope.replace((id.to_owned(),alias.clone()));
+                let inner=self.predicate(&node["where"]);self.related_scope=previous;
+                parts.push(inner?);
+                format!("EXISTS (SELECT 1 FROM {relation} AS {alias} WHERE {})",parts.join(" AND "))
+            }
+
             "isNull" => format!("({} IS NULL)", self.column(&node["field"], true)?),
             "in" => {
                 let column = self.column(&node["field"], true)?;
@@ -148,6 +168,8 @@ fn compile(raw: &str) -> Result<Value> {
         slots: vec![],
         identities: BTreeMap::new(),
         source_scope: false,
+        related_scope: None,
+        next_alias: 0,
     };
     let mut outputs = vec![];
     let mut projections = vec![];
@@ -168,8 +190,9 @@ fn compile(raw: &str) -> Result<Value> {
         let result = body["result"].as_str().unwrap();
         let mut predicate = lower.predicate(&body["where"])?;
         if result == "page" {
-            let fields = operation.key(body["cursorKey"].as_str().unwrap())?;
-            cursor = json!({"key":body["cursorKey"],"fields":fields,"ordering":"ascending-complete-original-key","requiresSourceAndPrincipalBinding":true});
+            let order = body["orderBy"].as_array().unwrap();
+            let fields = order.iter().map(|o| o["field"].clone()).collect::<Vec<_>>();
+            cursor = json!({"key":body["cursorKey"],"fields":fields,"ordering":"declared-lexicographic-order","directions":order.iter().map(|o|o["direction"].clone()).collect::<Vec<_>>(),"requiresSourceAndPrincipalBinding":true});
             if matches!(&request.call, OperationCall::Single { after: Some(_), .. }) {
                 let columns = fields
                     .iter()
@@ -185,10 +208,20 @@ fn compile(raw: &str) -> Result<Value> {
                         ))
                     })
                     .collect::<Result<Vec<_>>>()?;
-                let compare = if fields.len() == 1 {
-                    format!("{} > {}", columns[0], values[0])
+                let ascending = order.iter().all(|o| o["direction"] == "asc");
+                let descending = order.iter().all(|o| o["direction"] == "desc");
+                let compare = if ascending || descending {
+                    let operator = if ascending { ">" } else { "<" };
+                    if fields.len() == 1 { format!("{} {operator} {}", columns[0], values[0]) }
+                    else { format!("({}) {operator} ({})", columns.join(", "), values.join(", ")) }
                 } else {
-                    format!("({}) > ({})", columns.join(", "), values.join(", "))
+                    // Mixed directions require a lexicographic disjunction. Bind
+                    // each scalar once; no sign flips, casts or precision loss.
+                    (0..fields.len()).map(|i| {
+                        let mut terms = (0..i).map(|j| format!("{} = {}", columns[j], values[j])).collect::<Vec<_>>();
+                        terms.push(format!("{} {} {}", columns[i], if order[i]["direction"] == "asc" { ">" } else { "<" }, values[i]));
+                        format!("({})", terms.join(" AND "))
+                    }).collect::<Vec<_>>().join(" OR ")
                 };
                 predicate = format!("({predicate}) AND ({compare})");
             }

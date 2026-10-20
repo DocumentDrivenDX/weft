@@ -1,0 +1,9 @@
+{
+  "repository": "DocumentDrivenDX/umf",
+  "revision": "7c3a81e5469a31e17de09aac7c48e247b904e6b7",
+  "path": "tests/unified/table-snapshot-fixture.ts",
+  "export": "snapshotSource",
+  "sha256": "812bb0a8c1712f435cfce90aafeecf897437fadafd01547ef2e82cf99344fc96",
+  "fixtureSha256": "70464a7fc72ada6f4a02bdc2980a44f4830ec33f609968d7a4ddc46df0590886",
+  "license": "MIT OR Apache-2.0"
+}

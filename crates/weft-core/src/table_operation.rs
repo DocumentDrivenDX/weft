@@ -57,6 +57,8 @@ pub struct AdmittedOperation {
     fields: BTreeMap<String, OperationField>,
     source_table: Option<Table>,
     source_fields: BTreeMap<String, OperationField>,
+    related_tables: BTreeMap<String, Table>,
+    related_fields: BTreeMap<String, BTreeSet<String>>,
     parameter_fields: BTreeMap<String, OperationField>,
     keys: BTreeMap<String, Vec<Value>>,
     obligations: Value,
@@ -97,15 +99,11 @@ impl AdmittedOperation {
             OperationCall::Single {
                 after: Some(after), ..
             } => {
-                let key = self.key(
-                    self.declaration["body"]["cursorKey"]
-                        .as_str()
-                        .ok_or("cursor Key absent")?,
-                )?;
+                let order = self.declaration["body"]["orderBy"].as_array().ok_or("cursor ordering absent")?;
                 Ok(Some(
-                    key.iter()
+                    order.iter()
                         .zip(after)
-                        .map(|(field, value)| self.native_value(field, value))
+                        .map(|(item, value)| self.native_value(&item["field"], value))
                         .collect::<Result<_>>()?,
                 ))
             }
@@ -136,6 +134,9 @@ impl AdmittedOperation {
     pub fn native_source_value(&self, reference: &Value, value: &Value) -> Result<Value> {
         values::native_value(self.source_field(reference)?, value)
     }
+    pub fn related_table(&self, id: &str) -> Result<&Table> { self.related_tables.get(id).ok_or("related table is outside the module") }
+    pub fn related_field(&self, id: &str, reference: &Value) -> Result<&OperationField> { { let key=reference_id(reference)?; if !self.related_fields.get(id).is_some_and(|fields|fields.contains(&key)) { return Err("related Field is outside its table"); } self.parameter_fields.get(&key).ok_or("related Field absent") } }
+    pub fn native_related_value(&self, id: &str, reference: &Value, value: &Value) -> Result<Value> { values::native_value(self.related_field(id,reference)?,value) }
     pub fn key(&self, id: &str) -> Result<&[Value]> {
         self.keys
             .get(id)
@@ -258,6 +259,8 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
     } else { None };
     let source_table = source_declaration.map(|source| request.binding.tables.iter().find(|t| t.native == source["name"].as_str().unwrap()).cloned().ok_or("source native mapping absent")).transpose()?;
     let mut source_fields = BTreeMap::new();
+    let mut related_tables = BTreeMap::new();
+    let mut related_fields: BTreeMap<String,BTreeSet<String>> = BTreeMap::new();
     let batch_insert_scope = matches!(&request.call, OperationCall::Batch { .. })
         && declaration["body"]["kind"] == "insert"
         && batch_scope::independent_insert_scope(
@@ -274,6 +277,8 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
             .iter()
             .find(|t| t.native == current_table["name"].as_str().unwrap())
             .ok_or("parameter table mapping absent")?;
+        let table_id=current_table["id"].as_str().ok_or("table identity absent")?.to_owned();
+        related_tables.insert(table_id.clone(),bound_table.clone());
         for column in current_table["columns"].as_array().unwrap() {
             let field = module["elements"]
                 .as_array()
@@ -325,6 +330,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
                 fields.insert(reference.clone(), resolved.clone());
             }
             if source_declaration.is_some_and(|source| source["id"] == current_table["id"]) { source_fields.insert(reference.clone(), resolved.clone()); }
+            related_fields.entry(table_id.clone()).or_default().insert(reference.clone());
             if parameter_fields.insert(reference, resolved).is_some() {
                 return Err("ambiguous original parameter Field binding");
             }
@@ -346,7 +352,7 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         _ => return Err("operation kind unsupported"),
     };
     fn reads_column(predicate: &Value) -> bool {
-        if predicate.get("field").is_some() {
+        if predicate.get("field").is_some() || predicate.get("matches").is_some() {
             return true;
         }
         if let Some(args) = predicate["args"].as_array() {
@@ -368,6 +374,17 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         paths.insert(source.logical.clone());
         if source.logical == path && !commands.contains(&"select") { commands.push("select"); }
     }
+    fn related_paths(node: &Value, tables: &BTreeMap<String,Table>, paths: &mut BTreeSet<Vec<String>>) -> Result<()> {
+        if node["op"] == "related" {
+            let table=tables.get(node["table"].as_str().ok_or("related table identity absent")?).ok_or("related table is outside the module")?;
+            paths.insert(table.logical.clone());related_paths(&node["where"],tables,paths)?;
+        }
+        if let Some(args)=node["args"].as_array() { for child in args { related_paths(child,tables,paths)?; } }
+        if let Some(child)=node.get("arg") { related_paths(child,tables,paths)?; }
+        Ok(())
+    }
+    related_paths(&declaration["body"]["where"],&related_tables,&mut paths)?;
+    related_paths(&declaration["body"]["source"]["where"],&related_tables,&mut paths)?;
     let mut obligations = lifecycle.obligation(&paths)?;
     for item in obligations["tables"].as_array_mut().unwrap() {
         item.as_object_mut().unwrap().remove("command");
@@ -381,6 +398,8 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
         fields,
         source_table,
         source_fields,
+        related_tables,
+        related_fields,
         parameter_fields,
         keys: record["keys"]
             .as_array()
