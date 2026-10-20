@@ -9,6 +9,11 @@ on:
         required: false
         default: ''
         type: string
+      packaging_run_id:
+        description: Reuse completed wheel packaging artifacts for this same tag
+        required: false
+        default: ''
+        type: string
 env:
   RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
   RELEASE_REQUESTED: ${{ github.ref_type == 'tag' || inputs.tag != '' }}
@@ -19,13 +24,13 @@ concurrency:
   cancel-in-progress: false
 jobs:
   wheels:
+    if: inputs.packaging_run_id == ''
     strategy:
       fail-fast: false
       matrix:
         include:
           - {os: ubuntu-24.04, target: x86_64-unknown-linux-gnu, manylinux: '2014'}
           - {os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, manylinux: '2014'}
-          - {os: macos-14, target: aarch64-apple-darwin, manylinux: auto}
           - {os: macos-15-intel, target: x86_64-apple-darwin, manylinux: auto}
           - {os: windows-2022, target: x86_64-pc-windows-msvc, manylinux: auto}
     runs-on: ${{ matrix.os }}
@@ -53,41 +58,7 @@ jobs:
           assert p==c
           if os.environ['RELEASE_REQUESTED']=='true':assert os.environ['RELEASE_TAG']=='v'+p
           PYTHON
-      - name: Reuse the locally qualified macOS ARM wheel
-        if: matrix.target == 'aarch64-apple-darwin' && env.RELEASE_REQUESTED == 'true'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mkdir -p dist
-          # Tag pushes can start this job before the local wheel is uploaded to
-          # its draft release. Keep the automatic tag trigger and wait briefly
-          # for that exact release asset to appear.
-          for attempt in {1..20}; do
-            rm -f dist/*.whl
-            if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft \
-              && test "$(cat /tmp/release-draft)" = true \
-              && gh release download "$RELEASE_TAG" --pattern 'weft_sql-*-cp39-abi3-macosx_*_arm64.whl' --dir dist; then
-              break
-            fi
-            if test "$attempt" = 20; then
-              echo "Timed out waiting for the draft release and locally qualified macOS ARM wheel" >&2
-              exit 1
-            fi
-            sleep 30
-          done
-          python - <<'PYTHON'
-          import hashlib,json,pathlib,tomllib
-          report=json.loads(pathlib.Path('docs/helix/04-build/releases/local-macos-0.4.48.json').read_text())
-          version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
-          wheel=pathlib.Path('dist')/report['wheel']['name']
-          assert report['status']=='passed' and report['version']==version
-          assert report['platform']=='macos-arm64' and report['functionalQualification']=='local-only'
-          assert len(list(pathlib.Path('dist').glob('*.whl')))==1
-          assert hashlib.sha256(wheel.read_bytes()).hexdigest()==report['wheel']['sha256']
-          PYTHON
       - uses: PyO3/maturin-action@v1
-        if: matrix.target != 'aarch64-apple-darwin' || env.RELEASE_REQUESTED != 'true'
         with:
           maturin-version: '1.9.6'
           rust-toolchain: '1.90.0'
@@ -114,7 +85,7 @@ jobs:
             dist/packaging-*.json
           if-no-files-found: error
   publish:
-    if: (github.ref_type == 'tag' || inputs.tag != '') && needs.wheels.result == 'success'
+    if: always() && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != ''))
     needs: wheels
     runs-on: ubuntu-24.04
     permissions:
@@ -128,7 +99,7 @@ jobs:
           ref: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.sha }}
       - uses: actions/download-artifact@v4
         with:
-          run-id: ${{ github.run_id }}
+          run-id: ${{ inputs.packaging_run_id || github.run_id }}
           github-token: ${{ github.token }}
           pattern: wheels-*
           merge-multiple: true
@@ -138,11 +109,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
+          # The publisher already has release access. Build jobs remain read-only;
+          # macOS functional and installed-package checks ran locally.
+          gh release download "$RELEASE_TAG" --pattern 'weft_sql-*-cp39-abi3-macosx_*_arm64.whl' --dir dist
           python - <<'PYTHON'
           import hashlib,json,os,pathlib,subprocess,tomllib,zipfile
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
           root=pathlib.Path('dist');wheels=sorted(root.glob('*.whl'))
           assert len(wheels)==5
+          local=json.loads(pathlib.Path('docs/helix/04-build/releases/local-macos-0.4.48.json').read_text())
+          assert local['status']=='passed' and local['version']==version
+          assert local['platform']=='macos-arm64' and local['functionalQualification']=='local-only'
+          mac=root/local['wheel']['name']
+          assert hashlib.sha256(mac.read_bytes()).hexdigest()==local['wheel']['sha256']
+          (root/'packaging-aarch64-apple-darwin.json').write_text(json.dumps({'status':'passed','version':version,'wheel':mac.name,'wheelSha256':local['wheel']['sha256'],'nativeModuleSha256':local['nativeModuleSha256'],'scope':'local macOS exact installed archive, RECORD, metadata, ABI and notices checks; reused without another hosted run'},indent=2)+'\n')
           packaging=[json.loads(p.read_text()) for p in sorted(root.glob('packaging-*.json'))]
           assert len(packaging)==5 and {p['wheel']for p in packaging}=={w.name for w in wheels}
           for report in packaging:
@@ -161,7 +141,7 @@ jobs:
           assert report['platform']=='macos-arm64' and report['functionalQualification']=='local-only'
           (root/'local-macos-qualification.json').write_bytes(qualification.read_bytes())
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'distribution':'weft-sql','version':version,'features':features,'wheelPackaging':packaging,'functionalQualification':report,'otherPlatforms':'build and installed packaging only; no native functional qualification claimed','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':features,'wheelPackaging':packaging,'functionalQualification':report,'otherPlatforms':'build and installed packaging only; no native functional qualification claimed','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft
           test "$(cat /tmp/release-draft)" = true
