@@ -329,3 +329,4 @@ pub mod current_presence;
 pub mod related_read;
 
 pub mod table_operation;
+pub mod table_seed;

@@ -894,3 +894,8 @@ pub mod engine_ordered_page;
 pub fn compile_table_operation_json(request:&str)->String{weft_postgresql::table_operation::compile_json(request)}
 #[cfg(feature="raw-postgresql-reads")]
 pub fn check_table_operation_json(program:&str)->String{weft_postgresql::table_operation::check_json(program)}
+
+#[cfg(feature="raw-postgresql-reads")]
+pub fn compile_table_seed_json(request:&str)->String{weft_postgresql::table_seed::compile_json(request)}
+#[cfg(feature="raw-postgresql-reads")]
+pub fn check_table_seed_json(program:&str)->String{weft_postgresql::table_seed::check_json(program)}

@@ -1652,7 +1652,8 @@
             "mod:raw_action",
             "mod:raw_bulk",
             "mod:search",
-            "mod:table_operation"
+            "mod:table_operation",
+            "mod:table_seed"
           ],
           "pathReferences": []
         },
@@ -2825,6 +2826,34 @@
           "path": "crates/weft-core/src/table_operation/values.rs",
           "publicDeclarations": [],
           "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/table_seed.rs",
+          "publicDeclarations": [
+            "struct:SeedRequest",
+            "field:version",
+            "field:target",
+            "field:module",
+            "field:seed_sets",
+            "field:binding",
+            "struct:SeedTable",
+            "field:table",
+            "field:fields",
+            "field:conflict_key",
+            "field:independent",
+            "struct:SeedRow",
+            "field:table",
+            "field:fields",
+            "field:values",
+            "field:ignore",
+            "field:set_index",
+            "struct:AdmittedSeed",
+            "field:request",
+            "field:tables",
+            "field:rows",
+            "fn:admit_json"
+          ],
+          "pathReferences": []
         }
       ]
     },
@@ -3178,7 +3207,8 @@
             "mod:search",
             "mod:current_presence",
             "mod:related_read",
-            "mod:table_operation"
+            "mod:table_operation",
+            "mod:table_seed"
           ],
           "pathReferences": []
         },
@@ -3976,6 +4006,14 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/table_seed.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/tree.rs",
           "publicDeclarations": [
             "fn:integrity"
@@ -4305,7 +4343,9 @@
             "fn:compile_related_read_json",
             "mod:engine_ordered_page",
             "fn:compile_table_operation_json",
-            "fn:check_table_operation_json"
+            "fn:check_table_operation_json",
+            "fn:compile_table_seed_json",
+            "fn:check_table_seed_json"
           ],
           "pathReferences": []
         },
@@ -4467,7 +4507,9 @@
             "fn:compile_managed_bulk_json",
             "fn:compile_related_read_json",
             "fn:compile_table_operation_json",
-            "fn:check_table_operation_json"
+            "fn:check_table_operation_json",
+            "fn:compile_table_seed_json",
+            "fn:check_table_seed_json"
           ],
           "pathReferences": []
         }
@@ -4566,7 +4608,9 @@
             "fn:compile_managed_bulk_json",
             "fn:compile_related_read_json",
             "fn:compile_table_operation_json",
-            "fn:check_table_operation_json"
+            "fn:check_table_operation_json",
+            "fn:compile_table_seed_json",
+            "fn:check_table_seed_json"
           ],
           "pathReferences": []
         }

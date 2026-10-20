@@ -1,0 +1,55 @@
+{
+  "cases": [
+    {
+      "name": "source-seeds",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "last-only",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "missing",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "reordered",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "repeated",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "empty",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-row",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "wrong-carrier",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "missing-required",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "request-sql-refuses",
+      "status": "blocked",
+      "nativePythonEqual": true
+    }
+  ],
+  "nativeExecutionQualified": false
+}

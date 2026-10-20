@@ -1,0 +1,110 @@
+{
+  "scope": "real Chromium shared compiler parity; no native database authority",
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "source-seeds",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "4e45b8a9bdbb8ff0271db83dd02b2bd3a00ab9ef76c9705f39dbf504163d011d"
+    },
+    {
+      "name": "last-only",
+      "status": "compiled",
+      "nativeWasmEqual": true,
+      "requestSha256": "3da348391f13ac1d78e88634cd9eb3e1b930e392097c6590e3bc88688c4368a9"
+    },
+    {
+      "name": "missing",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "348e667585257d402f9a27061dd9a99492ac5e27974de7d3b7a2cc7b27b5bde2"
+    },
+    {
+      "name": "reordered",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "c26bef9a749e8202f8e6dc550a8ac2de24bb8acbaea49b177f33b0684e91fca9"
+    },
+    {
+      "name": "repeated",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "8e47eee58d5944ccbe131607ffcfc5961bd898ce58bd2151f1d1c8ee772223f2"
+    },
+    {
+      "name": "empty",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "98f0cdbf660066b25865ffc8efe525a0402e75a76314430ed1602023b8e1108f"
+    },
+    {
+      "name": "unknown-row",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "efc8edb13962f6dfd64d0a59f5afd066e2868033b05458569b336f82549c1490"
+    },
+    {
+      "name": "wrong-carrier",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "0e7075007860bb2c0e932d07803f4d580e37df441edb4f8dca269c5b4be9ff35"
+    },
+    {
+      "name": "missing-required",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "13e8d88ce2f423885d1131d1f3117bffc698144e8c058212add586836c8d6acb"
+    },
+    {
+      "name": "request-sql-refuses",
+      "status": "blocked",
+      "nativeWasmEqual": true,
+      "requestSha256": "83cb19613beb1dfc923fc04e6f43cde8434b129463c908640ddae50e9f861bba"
+    }
+  ],
+  "tamperControls": 1,
+  "invalidUnicodeTransportControls": 2,
+  "wasmSha256": "1469b3e3c117b43f8c6229a6bd7f94184335c9dc8eb82120bbee9379a9703583",
+  "javascriptSha256": "fdc936c2fee39c2136f8e55e2e840a802715e75865b688170cf24d918b807992",
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbg_length_a95b69f903b746c4",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg_charCodeAt_291b921e27833f8e",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_cast_2241b6af4c4b2941",
+      "kind": "function"
+    }
+  ],
+  "nodeProcess": false,
+  "require": false,
+  "nativeExecutionQualified": false
+}

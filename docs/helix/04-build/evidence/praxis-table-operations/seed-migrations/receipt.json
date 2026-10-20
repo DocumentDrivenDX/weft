@@ -1,0 +1,33 @@
+{
+  "capturedAt": "2026-10-20T02:18:49.210350+00:00",
+  "scope": "unpublished local macOS ARM64 original-source-selected administrative seed compiler; host retains approved migration authority",
+  "umfHostCommit": "8133eaa1d07d363d075a8eed68d2be8a26d22c2d",
+  "focusedRustTests": 2,
+  "cliPythonParityCases": 10,
+  "chromiumWasmParityCases": 10,
+  "hostNativeHarnessAssertions": 26,
+  "hostObservedMutationStatements": 9,
+  "initial1005RowsMutationStatements": 2,
+  "rowOrder": "authored; bounded adjacent same-shape chunks; self-FKs retain row statements",
+  "wheel": {
+    "name": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "fc93c9117c5a91cd25fb365e52a5f4dca9cb6d592fb12084ced707f83f3cd424",
+    "license": "MIT OR Apache-2.0",
+    "published": false
+  },
+  "sourceFiles": {
+    "crates/weft-core/src/table_seed.rs": "e8402eb72a0d5d29a510f6458a5d20262ec2e30cca3d9d69ca609d05f0cc19a7",
+    "crates/weft-core/src/raw_read.rs": "545efeef67c4d7b073a8d32a863d337aab62de8fcc18dddb45099005aa8110df",
+    "crates/weft-core/src/table_lifecycle.rs": "a150552fa8c772ef29ac9a5effe02270af6f537dcafb8697ba514b7052194278",
+    "crates/weft-core/src/table_operation.rs": "77e759a32443e8e4be0699793c9962c13b9edb437dbbc74f7664e89a41cb2484",
+    "crates/weft-postgresql/src/table_seed.rs": "0f1d6fdfba388afb5fb6387e0d580dcb1d4e1bec229b3b03cbc472f7bd8a0fdb",
+    "crates/weft-postgresql/tests/table_seed.rs": "39a8fc9d6951f7957c3bae207ebf809e60e853c12ae41007695c7cd9e316d9a0",
+    "crates/weft-postgresql/examples/compile_table_seed.rs": "e9d98cf5d8c085427f148ac477bcbd74cb1530a0ce46647214e21cb55193e0cb",
+    "crates/weft-python/src/lib.rs": "763f96818025dcead6e696b68771d4aa6a6362d02629bd0da16a41fa231d6eb0",
+    "crates/weft-runtime/src/lib.rs": "28ff306f0ccec4d091544a2ad0fe2e5b68ec235ac5b9414e33152fba5dcdf207",
+    "crates/weft-wasm/src/lib.rs": "6ccb5248013b7d72a2fe6c1c9d9a9ef68559f3944f85511c37515032f1383d54",
+    "tests/raw-postgresql/table-seed-bindings.py": "1845b7de9d882be96e06c314f753a3156a7398fecc25dda07a409b88c329502b",
+    "tests/raw-postgresql/table-seed-browser.mjs": "e768c8750431346f76aa648246f57144faf0c792222793d0a2dbaf4ffc666480"
+  },
+  "fullPraxisAcceptance": false
+}

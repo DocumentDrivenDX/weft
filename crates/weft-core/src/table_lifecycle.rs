@@ -104,7 +104,9 @@ pub(crate) fn admit(
     doc: &Value,
     records: &BTreeMap<Vec<String>, crate::model::Record>,
     operation: Option<&str>,
-) -> Result<Option<AdmittedLifecycle>> {
+) -> Result<Option<AdmittedLifecycle>> { admit_profile(binding,doc,records,operation,false) }
+pub(crate) fn admit_seed(binding:&Binding,doc:&Value,records:&BTreeMap<Vec<String>,crate::model::Record>) -> Result<Option<AdmittedLifecycle>> { admit_profile(binding,doc,records,None,true) }
+fn admit_profile(binding:&Binding,doc:&Value,records:&BTreeMap<Vec<String>,crate::model::Record>,operation:Option<&str>,seed:bool) -> Result<Option<AdmittedLifecycle>> {
     let modules = doc["modules"].as_array().ok_or("original modules absent")?;
     let selected = records
         .values()
@@ -152,11 +154,11 @@ pub(crate) fn admit(
     }
     let payload = &module["extensions"]["umf.tables"];
     let commands=payload["commands"].as_array().ok_or("native command inventory absent")?;
-    let commands_known=match operation {
+    let commands_known=if seed { commands.iter().all(crate::table_operation::known_declaration) } else { match operation {
         None=>commands.is_empty(),
         Some(id)=>commands.iter().filter(|c|c["id"]==id).count()==1
             && commands.iter().all(crate::table_operation::known_declaration),
-    };
+    }};
     if !known_payload(payload) || !commands_known {
         return Err("native table lifecycle payload or command meaning unsupported");
     }

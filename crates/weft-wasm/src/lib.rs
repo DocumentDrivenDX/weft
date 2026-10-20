@@ -201,3 +201,10 @@ pub fn compile_table_operation_json(request:&js_sys::JsString)->Result<String,wa
 #[cfg(feature="raw-postgresql-reads")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn check_table_operation_json(program:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::check_table_operation_json(&strict_text(program,33_554_432)?))}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_table_seed_json(request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::compile_table_seed_json(&strict_text(request,16_777_216)?))}
+#[cfg(feature="raw-postgresql-reads")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn check_table_seed_json(program:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::check_table_seed_json(&strict_text(program,33_554_432)?))}

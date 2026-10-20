@@ -37,6 +37,10 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_table_operation_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(compile_table_seed_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(check_table_seed_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(check_table_operation_json, m)?)?;
     #[cfg(feature="raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_native_privilege_probes_json,m)?)?;
@@ -413,3 +417,10 @@ pub fn compile_table_operation_json(request:&str)->String{weft_runtime::compile_
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]
 pub fn check_table_operation_json(program:&str)->String{weft_runtime::check_table_operation_json(program)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn compile_table_seed_json(request:&str)->String{weft_runtime::compile_table_seed_json(request)}
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn check_table_seed_json(program:&str)->String{weft_runtime::check_table_seed_json(program)}

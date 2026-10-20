@@ -417,3 +417,5 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
     };
     validate(admitted, record, table_declaration)
 }
+
+pub(crate) fn native_seed_value(field:&OperationField,value:&Value)->Result<Value>{ values::native_value(field,value) }

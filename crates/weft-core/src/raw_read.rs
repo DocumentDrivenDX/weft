@@ -147,8 +147,12 @@ fn prepare_model(binding: &Binding) -> Result<AdmittedModel> {
     prepare_operation_model(binding,None)
 }
 pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>) -> Result<AdmittedModel> {
+    prepare_native_model(binding,operation,false)
+}
+pub(crate) fn prepare_seed_model(binding: &Binding) -> Result<AdmittedModel> { prepare_native_model(binding,None,true) }
+fn prepare_native_model(binding: &Binding, operation:Option<&str>, seed:bool) -> Result<AdmittedModel> {
     if binding.tables.iter().flat_map(|t| &t.columns).any(|c| matches!(c.carrier, Carrier::Date | Carrier::Timestamp))
-        && (operation.is_none() || binding.native_lifecycle.is_none())
+        && ((operation.is_none() && !seed) || binding.native_lifecycle.is_none())
     { return Err("temporal carriers require declared native lifecycle operations"); }
     let doc = crate::json::checked_json(&binding.model_json).map_err(|_| "model JSON refused")?;
     if crate::json::sha256(binding.model_json.as_bytes()) != binding.model_sha256 {
@@ -171,7 +175,7 @@ pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>)
     };
     let catalog = match version {
         "0.8.0" => crate::model::Catalog::prepare_security(vec![input]),
-        "0.10.0" => if operation.is_some() { crate::model::Catalog::prepare_table_operation010(vec![input]) } else { crate::model::Catalog::prepare_raw_read010(vec![input]) },
+        "0.10.0" => if operation.is_some() || seed { crate::model::Catalog::prepare_table_operation010(vec![input]) } else { crate::model::Catalog::prepare_raw_read010(vec![input]) },
         _ => return Err("raw-read supports original UMF core 0.8.0 and 0.10.0 sources"),
     }.map_err(|_| "UMF core envelope/profile refused")?;
     let n = |value: &str| crate::syntax::Name {
@@ -304,7 +308,7 @@ pub(crate) fn prepare_operation_model(binding: &Binding, operation:Option<&str>)
             return Err("relationship endpoints/multiplicity differ from UMF");
         }
     }
-    let lifecycle=crate::table_lifecycle::admit(binding,&doc,&records,operation)?;
+    let lifecycle=if seed { crate::table_lifecycle::admit_seed(binding,&doc,&records)? } else { crate::table_lifecycle::admit(binding,&doc,&records,operation)? };
     Ok(AdmittedModel { document: doc, records, lifecycle })
 }
 
