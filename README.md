@@ -10,6 +10,12 @@ Weft implements a Rust compiler with native Python and browser WASM bindings. Th
 
 Python wheels are distributed through [GitHub releases](https://github.com/DocumentDrivenDX/weft/releases). The [0.4.48 qualification report](docs/helix/04-build/releases/local-macos-0.4.48.json) records local macOS ARM64/PostgreSQL 18.6 evidence for current UMF 0.10 declared tables, batches and typed queries. Other platform jobs check packaging only. Earlier PostgreSQL 17.9 synthetic fixtures, Databricks SQL 2026.39 and Chromium evidence retain the exact historical scope in the [support inventory](docs/helix/04-build/evidence/B-007-support-inventory.json). Database execution, authorization, integrity and publication remain host obligations; no broader backend execution claim follows from installing a wheel.
 
+[0.4.49](docs/helix/04-build/releases/v0.4.49.md) optimizes Truss complete-entity
+facts lowering and adds an explicit shared Rust WASM compiler export. Its
+[separate qualification](docs/helix/04-build/releases/local-macos-0.4.49.json)
+records the exact macOS wheel, affected Rust/native tests and five actual
+Chromium parity cases. Earlier qualification retains its original version scope.
+
 Start at [the specification index](docs/helix/README.md), [PRD](docs/helix/01-frame/prd.md), [language contract](docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md) and [test plan](docs/helix/03-test/TP-001-compiler-conformance.md).
 
 ## Validate the specifications
