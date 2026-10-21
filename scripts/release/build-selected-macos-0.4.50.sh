@@ -35,5 +35,6 @@ test "$(find "$output_dir" -maxdepth 1 -name 'weft_sql-0.4.50-*-macosx_*_arm64.w
   --wheel "$wheel" \
   --packaging-report "$output_dir/packaging-macos-arm64.json" \
   --build-report "$output_dir/selected-macos-build-0.4.50.json" \
-  --source-commit "$expected_sha" --target aarch64-apple-darwin
+  --source-commit "$expected_sha" --target aarch64-apple-darwin \
+  --version 0.4.50
 printf 'Wheel and selected-macos-build-0.4.50.json are in %s\n' "$output_dir"

@@ -32,6 +32,7 @@ for asset in ('managed-current-uc-qualification-v0.4.50.json',
 mac = Path('scripts/release/build-selected-macos-0.4.50.sh').read_text()
 assert 'git status --porcelain' in mac and 'git symbolic-ref --short -q HEAD' in mac
 assert "-name 'weft_sql-0.4.50-*-macosx_*_arm64.whl' | wc -l" in mac
+assert '--version 0.4.50' in mac
 verifier = Path('scripts/release/verify-selected-assets-0.4.50.py').read_text()
 assert "backend03-grouped-having" in verifier and "backend03-negative-having" in verifier and "backend02-continuation" in verifier
 assert 'BUILD_RUN_ID: ${{ github.run_id }}' in build and 'WORKFLOW_NAME: ${{ github.workflow }}' in build[build.index('Check exact wheel'):]
@@ -44,6 +45,9 @@ assert '--prior-grouped-gzip' in publish and '--prior-negative-gzip' in publish 
 assert "requestJson" in verifier and "artifactJson" in verifier
 assert "expectedRows" in verifier and "orderedParameterSha256" in verifier
 assert "weft-local-program-parity/0.2" in verifier and "prior_artifact.get('sql')" in verifier and "localWheel" in verifier
+assert "'priorEvidence') == {'asset': baseline_asset, 'sha256': baseline_sha}" in verifier
+assert "'gzipEvidence') == {" in verifier and "'compressedSha256': sha(prior_path)" in verifier
+assert "'reportSha256': baseline_ref.get('sha256')" in verifier
 assert '0.4.50' in Path('crates/weft-python/Cargo.toml').read_text()
 assert '0.4.50' in Path('crates/weft-python/pyproject.toml').read_text()
 lock = Path('Cargo.lock').read_text().split('name = "weft-python"\n', 1)[1].split('\n\n', 1)[0]
