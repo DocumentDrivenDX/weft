@@ -1,0 +1,92 @@
+
+running 1 test
+test security_composition::tests::all_permit_require_forbid_truths_and_rule_order ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 354 filtered out; finished in 0.02s
+
+
+
+running 1 test
+test security_composition::tests::bounded_disposition_oracle_correspondence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 354 filtered out; finished in 0.83s
+
+
+
+running 1 test
+test security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 354 filtered out; finished in 0.00s
+
+
+
+running 1 test
+test security_composition::tests::portable_typescript_truth_corpus_correspondence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 354 filtered out; finished in 0.00s
+
+
+
+running 1 test
+test security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 354 filtered out; finished in 0.00s
+
+
+
+running 1 test
+test current010_source_custody_never_activates_uninterpreted_security ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.02s
+
+
+
+running 1 test
+test invalid_source_digest_refuses_before_security_gate ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.00s
+
+
+
+running 1 test
+test rehashed_catalog_input_cannot_substitute_for_prepared_definitions ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.01s
+
+
+
+running 1 test
+test security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.01s
+
+
+
+running 1 test
+test security04_owner_refusals_never_dispatch_registration ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.01s
+
+
+
+running 1 test
+test separate_security_protocols_preserve_callback_and_blocked_response_boundaries ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.03s
+
+
+
+running 1 test
+test source_packet_cannot_be_reused_with_changed_model_bytes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.00s
+
+
+
+running 1 test
+test unsupported_security_does_not_invoke_backend_factory ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.01s
+
+
+{"status": "passed", "actualMappedRustTests": 13}
