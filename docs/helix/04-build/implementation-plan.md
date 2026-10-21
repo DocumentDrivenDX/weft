@@ -39,6 +39,16 @@ invocation counts, unchanged values and live authorization negatives, then the
 original consumer harness. No latency gain or release qualification is claimed
 until those gates pass. No token/spend ceiling or date was supplied.
 
+Release checks on 2026-10-21 also exposed stale validation inventories from
+already merged UMF0.10/table-query work. The specification checker now admits
+the existing SHA-bound 0.10 bundle beside historical0.8; the two-hop positive
+fixture uses0.10 and explicitly rejects0.8. Module ownership now includes the
+existing prepared table/query/literal APIs, sqlparser's existing visitor feature,
+the existing owner-schema bundler, and this change's explicit WASM export.
+No dependency edge or source ownership rule is relaxed. All11 Cargo modules and
+16 boundary controls pass locally. This repairs validation bookkeeping; it does
+not extend native support claims or change the frozen compiler artifact.
+
 ## Scope
 
 Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 now accepts the structural backend boundary; public contracts remain draft specifications with scoped executable evidence. No production storage compatibility is claimed.
