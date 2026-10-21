@@ -6,7 +6,7 @@ from reliability.config import load_config
 from reliability.process import run
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 CORRESPONDENCE={
- 'WFT-FM-001':[('security_admission','core08_source_custody_never_activates_uninterpreted_security'),('security_admission','unsupported_security_does_not_invoke_backend_factory'),('security_admission','separate_security_protocols_preserve_callback_and_blocked_response_boundaries'),('security_admission','security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output'),('security_admission','security04_owner_refusals_never_dispatch_registration')],
+ 'WFT-FM-001':[('security_admission','current010_source_custody_never_activates_uninterpreted_security'),('security_admission','unsupported_security_does_not_invoke_backend_factory'),('security_admission','separate_security_protocols_preserve_callback_and_blocked_response_boundaries'),('security_admission','security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output'),('security_admission','security04_owner_refusals_never_dispatch_registration')],
  'WFT-FM-002':[('lib','security_composition::tests::all_permit_require_forbid_truths_and_rule_order'),('lib','security_composition::tests::portable_typescript_truth_corpus_correspondence')],
  'WFT-FM-003':[('lib','security_composition::tests::all_permit_require_forbid_truths_and_rule_order')],
  'WFT-FM-004':[('lib','security_composition::tests::bounded_disposition_oracle_correspondence'),('lib','security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict'),('lib','security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain')],

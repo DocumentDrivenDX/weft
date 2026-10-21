@@ -51,6 +51,19 @@ not extend native support claims or change the frozen compiler artifact.
 
 ## Scope
 
+### Formal correspondence maintenance — 2026-10-21
+
+The broader compiler workflow39653099110 reached its formal gate and correctly
+refused a zero-test selection. Its map still named
+`core08_source_custody_never_activates_uninterpreted_security`, while the existing
+test had been renamed `current010_source_custody_never_activates_uninterpreted_security`
+in the0.4.48 source freeze db1e0dc5. The core implementation, test source and SMT
+model are unchanged by the performance work. Correct the map to that existing
+test; all13 mapped actual Rust tests pass with exactly one selected case each.
+The unchanged SMT model was not rerun locally; this is not a whole-workspace or
+new native-security qualification. No compiler/package input or release wheel
+changes. See `evidence/hohfeld-performance-20261021/formal-mapped-tests.json`.
+
 Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 now accepts the structural backend boundary; public contracts remain draft specifications with scoped executable evidence. No production storage compatibility is claimed.
 
 ## Shared Constraints

@@ -1,0 +1,84 @@
+{
+  "status": "passed",
+  "scope": "actual mapped Rust tests with the repaired selector; unchanged SMT model not rerun",
+  "results": [
+    {
+      "target": "lib",
+      "name": "security_composition::tests::all_permit_require_forbid_truths_and_rule_order",
+      "passed": 1,
+      "seconds": 62.62597504199948
+    },
+    {
+      "target": "lib",
+      "name": "security_composition::tests::bounded_disposition_oracle_correspondence",
+      "passed": 1,
+      "seconds": 0.9678773329942487
+    },
+    {
+      "target": "lib",
+      "name": "security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict",
+      "passed": 1,
+      "seconds": 0.13676870800554752
+    },
+    {
+      "target": "lib",
+      "name": "security_composition::tests::portable_typescript_truth_corpus_correspondence",
+      "passed": 1,
+      "seconds": 0.12672454194398597
+    },
+    {
+      "target": "lib",
+      "name": "security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain",
+      "passed": 1,
+      "seconds": 0.1354139579925686
+    },
+    {
+      "target": "security_admission",
+      "name": "current010_source_custody_never_activates_uninterpreted_security",
+      "passed": 1,
+      "seconds": 0.2618285000207834
+    },
+    {
+      "target": "security_admission",
+      "name": "invalid_source_digest_refuses_before_security_gate",
+      "passed": 1,
+      "seconds": 0.13147587497951463
+    },
+    {
+      "target": "security_admission",
+      "name": "rehashed_catalog_input_cannot_substitute_for_prepared_definitions",
+      "passed": 1,
+      "seconds": 0.12228379200678319
+    },
+    {
+      "target": "security_admission",
+      "name": "security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output",
+      "passed": 1,
+      "seconds": 0.14933154202299193
+    },
+    {
+      "target": "security_admission",
+      "name": "security04_owner_refusals_never_dispatch_registration",
+      "passed": 1,
+      "seconds": 0.13726391701493412
+    },
+    {
+      "target": "security_admission",
+      "name": "separate_security_protocols_preserve_callback_and_blocked_response_boundaries",
+      "passed": 1,
+      "seconds": 0.16498025000328198
+    },
+    {
+      "target": "security_admission",
+      "name": "source_packet_cannot_be_reused_with_changed_model_bytes",
+      "passed": 1,
+      "seconds": 0.1327827079803683
+    },
+    {
+      "target": "security_admission",
+      "name": "unsupported_security_does_not_invoke_backend_factory",
+      "passed": 1,
+      "seconds": 0.13438458304153755
+    }
+  ]
+}
