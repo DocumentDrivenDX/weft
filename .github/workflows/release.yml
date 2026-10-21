@@ -107,15 +107,17 @@ jobs:
       - name: Record exact artifacts and publish
         env:
           GH_TOKEN: ${{ github.token }}
+          PACKAGING_RUN_ID: ${{ inputs.packaging_run_id }}
         run: |
           test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/${RELEASE_TAG}^{commit}")"
           # Documentation/release-validation fixes need not rebuild unchanged
           # compiler artifacts. Prove the packaging source is an ancestor and
           # all compiler, build, owner-schema and contract inputs are identical.
           PACKAGING_COMMIT=$(git rev-parse HEAD)
-          if test -n '${{ inputs.packaging_run_id }}'; then
-            PACKAGING_COMMIT=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/${{ inputs.packaging_run_id }}" --jq .head_sha)
-            test "$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/${{ inputs.packaging_run_id }}" --jq .conclusion)" = success
+          if test -n "$PACKAGING_RUN_ID"; then
+            case "$PACKAGING_RUN_ID" in *[!0-9]*) exit 1;; esac
+            PACKAGING_COMMIT=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PACKAGING_RUN_ID" --jq .head_sha)
+            test "$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PACKAGING_RUN_ID" --jq .conclusion)" = success
             git merge-base --is-ancestor "$PACKAGING_COMMIT" HEAD
             git diff --exit-code "$PACKAGING_COMMIT" HEAD -- Cargo.toml Cargo.lock crates spec docs/helix/02-design/contracts
           fi
