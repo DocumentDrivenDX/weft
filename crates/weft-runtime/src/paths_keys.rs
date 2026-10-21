@@ -18,9 +18,12 @@ pub fn compile_json(request: &str) -> String {
             r["target"]["backendId"]==weft_databricks::paths_keys_having_spark42::ID);
         let managed_current=weft_core::json::checked_json(request).ok().is_some_and(|r|
             r["target"]["backendId"]==weft_databricks::managed_current_core::ID);
+        let managed_current_xxhash64=weft_core::json::checked_json(request).ok().is_some_and(|r|
+            r["target"]["backendId"]==weft_databricks::managed_current_core_xxhash64::ID);
         let mut factory=move |_: &Catalog, _: Plan04View<'_>, _: CompositionInput<'_>| -> Result<Registry>{
             let mut r=Registry::default();
-            if managed_current {r.register(weft_databricks::managed_current_core::ManagedCurrentCore)?;}
+            if managed_current_xxhash64 {r.register(weft_databricks::managed_current_core_xxhash64::ManagedCurrentCoreXxhash64)?;}
+            else if managed_current {r.register(weft_databricks::managed_current_core::ManagedCurrentCore)?;}
             else if current_spark42 {r.register(weft_databricks::paths_keys_having_spark42::CountStarHavingSpark42)?;}
             else {r.register(weft_databricks::paths_keys_having::CountStarHaving)?;}
             Ok(r)
@@ -248,6 +251,29 @@ mod tests {
         assert!(publication["parameters"]["nativeProfile"]["warehouseRelease"].is_null());
         assert_eq!(publication["parameters"]["nativeProfile"]["engine"],"databricks-serverless-spark-jobs");
         assert!(publication["parameters"]["nativeProfile"]["requirements"].as_array().unwrap().iter().any(|item|item=="keep the six-role installation inventory separate from the four-role manifest data vector"));
+        let mut xxhash64 = r.clone();
+        let mut v4_binding: Value = serde_json::from_str(xxhash64["target"]["bindingJson"].as_str().unwrap()).unwrap();
+        v4_binding["layoutRevision"] = json!("ashlar-delta/0.4-xxhash64");
+        v4_binding["layoutSha256"] = json!("a".repeat(64));
+        v4_binding["lookupHashProfile"] = json!("spark-xxhash64-typed-key/0.1");
+        let raw = v4_binding.to_string(); let digest = weft_core::json::sha256(raw.as_bytes());
+        xxhash64["target"] = json!({"backendId":weft_databricks::managed_current_core_xxhash64::ID,"backendVersion":weft_databricks::managed_current_core_xxhash64::VERSION,"targetProfile":weft_databricks::managed_current_core_xxhash64::PROFILE,"bindingJson":raw,"bindingSha256":digest});
+        let v4 = compile(&xxhash64); assert_eq!(v4["status"], "compiled", "{v4}");
+        assert_eq!(v4["backend"]["backendId"], weft_databricks::managed_current_core_xxhash64::ID);
+        assert_eq!(v4["backend"]["backendVersion"], weft_databricks::managed_current_core_xxhash64::VERSION);
+        assert_eq!(v4["backend"]["targetProfile"], weft_databricks::managed_current_core_xxhash64::PROFILE);
+        assert_eq!(v4["backend"]["interfaceVersion"], "weft-backend/0.3.0");
+        assert_eq!(v4["targetContext"]["id"], weft_databricks::managed_current_core_xxhash64::PROFILE);
+        let v4_pub=v4["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.publication").unwrap();
+        assert_eq!(v4_pub["parameters"]["layoutRevision"],"ashlar-delta/0.4-xxhash64");
+        assert_eq!(v4_pub["parameters"]["layoutSha256"],"a".repeat(64));
+        assert_eq!(v4_pub["parameters"]["nativeProfile"]["lookupHashProfile"],"spark-xxhash64-typed-key/0.1");
+        assert_eq!(v4["sql"], a["sql"]); assert_eq!(v4["parameters"], a["parameters"]); assert_eq!(v4["logicalPlan"], a["logicalPlan"]);
+        assert_eq!(v4["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.nativeProfile").unwrap()["parameters"]["lookupHashProfile"], "spark-xxhash64-typed-key/0.1");
+        let mut crossed_layout = r.clone(); crossed_layout["target"]["backendId"] = json!(weft_databricks::managed_current_core_xxhash64::ID); crossed_layout["target"]["backendVersion"] = json!(weft_databricks::managed_current_core_xxhash64::VERSION); crossed_layout["target"]["targetProfile"] = json!(weft_databricks::managed_current_core_xxhash64::PROFILE);
+        assert_ne!(compile(&crossed_layout)["status"], "compiled");
+        let mut crossed_target = xxhash64.clone(); crossed_target["target"]["backendId"] = json!(weft_databricks::managed_current_core::ID); crossed_target["target"]["backendVersion"] = json!(weft_databricks::managed_current_core::VERSION); crossed_target["target"]["targetProfile"] = json!(weft_databricks::managed_current_core::PROFILE);
+        assert_ne!(compile(&crossed_target)["status"], "compiled");
         let mut old=r.clone();old["target"]["backendId"]=json!(weft_databricks::paths_keys_having_spark42::ID);old["target"]["backendVersion"]=json!(weft_databricks::paths_keys_having_spark42::VERSION);old["target"]["targetProfile"]=json!(weft_databricks::paths_keys_having_spark42::PROFILE);
         assert_ne!(compile(&old)["status"],"compiled");
         let mut crossed=r.clone();let mut crossed_binding:Value=serde_json::from_str(crossed["target"]["bindingJson"].as_str().unwrap()).unwrap();crossed_binding["records"][0]["table"]=json!(edge_index);let crossed_raw=crossed_binding.to_string();let crossed_digest=weft_core::json::sha256(crossed_raw.as_bytes());crossed["target"]["bindingJson"]=json!(crossed_raw);crossed["target"]["bindingSha256"]=json!(crossed_digest);assert_ne!(compile(&crossed)["status"],"compiled");

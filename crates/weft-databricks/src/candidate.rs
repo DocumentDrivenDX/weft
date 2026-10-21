@@ -588,7 +588,7 @@ fn numeric_guard(value: &str, ty: &LogicalType) -> String {
 
 // All historical registrations retain the single-revision admission boundary.
 pub(crate) fn validate_mapping(c: &Context<'_>, allow_compatible: bool) -> Result<Validated<Binding>> {
-        let binding = if c.target.id==crate::local_spark4_sdk::PROFILE {binding::admit_sdk(c.catalog,c.binding_value)?}else if c.target.id==crate::managed_current_core::PROFILE {binding::admit_managed_current(c.catalog,c.binding_value)?}else if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
+        let binding = if c.target.id==crate::local_spark4_sdk::PROFILE {binding::admit_sdk(c.catalog,c.binding_value)?}else if c.target.id==crate::managed_current_pages_xxhash64::PROFILE {binding::admit_managed_current_xxhash64(c.catalog,c.binding_value)?}else if c.target.id==crate::managed_current_pages::PROFILE {binding::admit_managed_current(c.catalog,c.binding_value)?}else if c.target.id==crate::managed_current_core::PROFILE {binding::admit_managed_current(c.catalog,c.binding_value)?}else if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
         if !allow_compatible && binding.records.iter().any(|r| !r.compatible_schema_revisions.is_empty()) {
             return Err(fail("WFT-BINDING", "Compatible physical revisions require the separate candidate registration"));
         }

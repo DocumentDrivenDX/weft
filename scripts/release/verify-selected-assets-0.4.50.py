@@ -111,16 +111,16 @@ require(proof.get('linuxWheel') == {'sha256': linux_sha, 'nativeModuleSha256': l
 require(proof.get('macosWheel') == {'sha256': mac_sha, 'nativeModuleSha256': mac_native['native'], 'recordSha256': mac_native['record']}, 'managed proof does not bind the macOS wheel bytes and RECORD')
 
 case_files = {
-    'backend03GroupedHaving': ('backend03-grouped-having', a.backend03_evidence, '0.1.0-managed-current-core-candidate', 'weft-backend/0.3.0'),
-    'backend03NegativeHaving': ('backend03-negative-having', a.backend03_negative_having_evidence, '0.1.0-managed-current-core-candidate', 'weft-backend/0.3.0'),
-    'backend02Page1': ('backend02-page1', a.backend02_page1_evidence, '0.1.0-managed-current-core-pages-candidate', 'weft-backend/0.2.7'),
-    'backend02Continuation': ('backend02-continuation', a.backend02_continuation_evidence, '0.1.0-managed-current-core-pages-candidate', 'weft-backend/0.2.7'),
+    'backend03GroupedHaving': ('backend03-grouped-having', a.backend03_evidence, 'ashlar.databricks.managed-uc-spark-xxhash64', '0.2.0-managed-current-core-xxhash64-candidate', 'ashlar-managed-current-core/0.2-xxhash64', 'weft-backend/0.3.0'),
+    'backend03NegativeHaving': ('backend03-negative-having', a.backend03_negative_having_evidence, 'ashlar.databricks.managed-uc-spark-xxhash64', '0.2.0-managed-current-core-xxhash64-candidate', 'ashlar-managed-current-core/0.2-xxhash64', 'weft-backend/0.3.0'),
+    'backend02Page1': ('backend02-page1', a.backend02_page1_evidence, 'ashlar.databricks.managed-uc-spark-xxhash64', '0.2.0-managed-current-core-xxhash64-pages-candidate', 'ashlar-managed-current-core/0.2-xxhash64', 'weft-backend/0.2.7'),
+    'backend02Continuation': ('backend02-continuation', a.backend02_continuation_evidence, 'ashlar.databricks.managed-uc-spark-xxhash64', '0.2.0-managed-current-core-xxhash64-pages-candidate', 'ashlar-managed-current-core/0.2-xxhash64', 'weft-backend/0.2.7'),
 }
 case_refs = proof['managedUc']['caseEvidence']
 require(set(case_refs) == set(case_files), 'exact four native case evidence references required')
 runtime = None
 publication = None
-for case_name, (case_id, path, backend_version, interface_version) in case_files.items():
+for case_name, (case_id, path, backend_id, backend_version, target_profile, interface_version) in case_files.items():
     evidence = json.loads(path.read_text())
     reference = case_refs[case_name]
     require(reference == {'asset': path.name, 'sha256': sha(path)}, f'{case_name}: case evidence asset digest mismatch')
@@ -184,9 +184,29 @@ for case_name, (case_id, path, backend_version, interface_version) in case_files
     require(hashlib.sha256(artifact_json.encode('utf-8')).hexdigest() == evidence.get('artifactSha256'), f'{case_name}: artifact digest mismatch')
     request, artifact = json.loads(request_json), json.loads(artifact_json)
     require(canonical_json(request) == request_json and canonical_json(artifact) == artifact_json, f'{case_name}: compiler request/artifact bytes are not canonical JSON')
-    require(request.get('target', {}).get('backendId') == 'ashlar.databricks.managed-uc-spark' and request['target'].get('backendVersion') == backend_version and request['target'].get('targetProfile') == 'ashlar-managed-current-core/0.1', f'{case_name}: exact managed request target required')
+    target = request.get('target')
+    require(type(target) is dict and target.get('backendId') == backend_id and target.get('backendVersion') == backend_version and target.get('targetProfile') == target_profile, f'{case_name}: exact managed request target required')
     backend = artifact.get('backend')
-    require(type(backend) is dict and backend == {'backendId': 'ashlar.databricks.managed-uc-spark', 'backendVersion': backend_version, 'interfaceVersion': interface_version, 'targetProfile': 'ashlar-managed-current-core/0.1'}, f'{case_name}: compiled artifact target/interface mismatch')
+    require(type(backend) is dict and backend == {'backendId': backend_id, 'backendVersion': backend_version, 'interfaceVersion': interface_version, 'targetProfile': target_profile}, f'{case_name}: compiled artifact target/interface mismatch')
+    try:
+        binding_json = target.get('bindingJson')
+        binding = json.loads(binding_json)
+    except (TypeError, json.JSONDecodeError):
+        raise SystemExit(f'{case_name}: exact managed binding JSON required')
+    require(type(binding_json) is str and canonical_json(binding) == binding_json and hashlib.sha256(binding_json.encode('utf-8')).hexdigest() == target.get('bindingSha256') == artifact.get('bindingSha256'), f'{case_name}: request and artifact binding digest mismatch')
+    require(binding.get('profile') == 'ashlar-managed-current-core/0.1' and binding.get('layoutRevision') == receipt['manifest'].get('profile_version') == 'ashlar-delta/0.4-xxhash64' and is_sha(binding.get('layoutSha256')) and binding.get('lookupHashProfile') == 'spark-xxhash64-typed-key/0.1', f'{case_name}: exact observed .4-xxhash64 binding profile required')
+    bound_vector = {'.'.join(item['name']): {'uuid': item['uuid'], 'version': item['version']} for item in binding.get('publication', {}).get('tables', []) if type(item) is dict and type(item.get('name')) is list}
+    require(binding.get('publication', {}).get('id') == receipt['manifest'].get('publication_id') and binding.get('publication', {}).get('manifestUuid') == receipt['weftBindingInputs']['manifestUuid'] and bound_vector == expected_vector, f'{case_name}: compiler binding differs from observed publication vector')
+    target_context = artifact.get('targetContext')
+    require(type(target_context) is dict and target_context.get('id') == target_profile and target_context.get('storageLayoutRevision') == 'ashlar-delta/0.4-xxhash64', f'{case_name}: compiler artifact target context does not bind the .4 physical layout')
+    obligations = artifact.get('obligations')
+    require(type(obligations) is list, f'{case_name}: artifact obligations required')
+    publication_obligation = next((item for item in obligations if item.get('id') == 'ashlar.candidate.publication'), None)
+    publication_native = publication_obligation.get('parameters', {}).get('nativeProfile') if type(publication_obligation) is dict else None
+    require(type(publication_obligation) is dict and publication_obligation.get('parameters', {}).get('layoutRevision') == binding['layoutRevision'] and publication_obligation.get('parameters', {}).get('layoutSha256') == binding['layoutSha256'] and type(publication_native) is dict and publication_native.get('targetProfile') == target_profile and publication_native.get('storageLayoutRevision') == binding['layoutRevision'] and publication_native.get('lookupHashProfile') == binding['lookupHashProfile'], f'{case_name}: publication obligation differs from the exact physical binding')
+    native_obligation = next((item for item in obligations if item.get('id') == 'ashlar.nativeProfile'), None)
+    native = native_obligation.get('parameters') if type(native_obligation) is dict else None
+    require(type(native) is dict and native.get('targetProfile') == target_profile and native.get('storageLayoutRevision') == binding['layoutRevision'] and native.get('lookupHashProfile') == binding['lookupHashProfile'] and 'verify the selected Databricks serverless Spark Jobs runtime/build, authenticated principal, Unity Catalog catalog/schema/table UUIDs and Delta protocol before SQL' in native.get('requirements', []), f'{case_name}: host-verifiable .4 native profile obligation required')
     require(artifact.get('status') == 'compiled' and evidence.get('artifactStatus') == 'compiled', f'{case_name}: public compiler artifact must be compiled')
     require(type(artifact.get('sql')) is str and hashlib.sha256(artifact['sql'].encode('utf-8')).hexdigest() == evidence.get('compilerSqlSha256'), f'{case_name}: emitted compiler SQL digest mismatch')
     require(type(request.get('sql')) is str and hashlib.sha256(request['sql'].encode('utf-8')).hexdigest() == evidence.get('sqlSha256'), f'{case_name}: original request SQL digest mismatch')

@@ -61,6 +61,11 @@ impl PathsKeys {
         let binding = crate::binding::admit_managed_current(c.catalog, c.binding_value)?;
         crate::paths::validate_sources_with(c, binding)
     }
+    pub(crate) fn validate_binding_managed_current_xxhash64(&self, c: &Context<'_>, profile: &str) -> Result<Validated<Binding>> {
+        if c.target.id != profile { return Err(refusal("Explicit managed UC current-core xxhash64 profile required")); }
+        let binding = crate::binding::admit_managed_current_xxhash64(c.catalog, c.binding_value)?;
+        crate::paths::validate_sources_with(c, binding)
+    }
     pub(crate) fn validate_binding_for_profile(
         &self,
         c: &Context<'_>,

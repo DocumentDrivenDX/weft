@@ -20,6 +20,8 @@ pub struct Binding {
     pub profile: String,
     pub layout_revision: String,
     pub layout_sha256: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub lookup_hash_profile: Option<String>,
     pub model_pins: Vec<ModelPin>,
     pub publication: Publication,
     pub records: Vec<Record>,
@@ -175,11 +177,18 @@ fn faithful_binding(value:&Value)->Result<Binding>{
 /// Admission proves mapping structure/model agreement, never database custody.
 /// Runtime policy, publication, schema and exact field correspondence are host obligations.
 pub const NATIVE_NULL_ENCODING:&str="ashlar-weft-json-native-null/0.1-candidate";
-pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {admit_mode(catalog,value,false,false,false)}
-pub(crate) fn admit03(catalog:&Catalog,value:&Value)->Result<Binding> {admit_mode(catalog,value,true,false,false)}
-pub(crate) fn admit_sdk(catalog:&Catalog,value:&Value)->Result<Binding>{admit_mode(catalog,value,true,true,false)}
+pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {admit_mode(catalog,value,false,false,false,false)}
+pub(crate) fn admit03(catalog:&Catalog,value:&Value)->Result<Binding> {admit_mode(catalog,value,true,false,false,false)}
+pub(crate) fn admit_sdk(catalog:&Catalog,value:&Value)->Result<Binding>{admit_mode(catalog,value,true,true,false,false)}
 pub(crate) fn admit_managed_current(catalog:&Catalog,value:&Value)->Result<Binding>{
-    let binding=admit_mode(catalog,value,true,true,true)?;
+    let binding=admit_mode(catalog,value,true,true,true,false)?;
+    validate_managed_roles(binding)
+}
+pub(crate) fn admit_managed_current_xxhash64(catalog:&Catalog,value:&Value)->Result<Binding>{
+    let binding=admit_mode(catalog,value,true,true,true,true)?;
+    validate_managed_roles(binding)
+}
+fn validate_managed_roles(binding:Binding)->Result<Binding>{
     let roles=binding.publication.tables.iter().map(|t|t.name[2].as_str()).collect::<BTreeSet<_>>();
     let namespaces=binding.publication.tables.iter().map(|t|(&t.name[0],&t.name[1])).collect::<BTreeSet<_>>();
     if binding.publication.tables.len()!=4 || roles!=BTreeSet::from(["object_current","edge_current","tombstone","whole_source_history"]) || namespaces.len()!=1 {
@@ -193,7 +202,7 @@ pub(crate) fn admit_managed_current(catalog:&Catalog,value:&Value)->Result<Bindi
     }
     Ok(binding)
 }
-fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool,sdk:bool,managed_current:bool)->Result<Binding> {
+fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool,sdk:bool,managed_current:bool,managed_xxhash64:bool)->Result<Binding> {
     // Core Identity intentionally retains a wider compatibility surface. A
     // backend mapping cannot silently ignore extra members in that identity.
     if let Some(records) = value["records"].as_array() {
@@ -234,15 +243,23 @@ fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool,sdk:bool,managed_
         }
     }
     let binding=faithful_binding(value)?;
-    let profile_ok = if managed_current {
+    let profile_ok = if managed_xxhash64 {
+        binding.profile == "ashlar-managed-current-core/0.1"
+            && binding.layout_revision == "ashlar-delta/0.4-xxhash64"
+            && binding.layout_sha256.len() == 64
+            && binding.layout_sha256.bytes().all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
+            && binding.lookup_hash_profile.as_deref() == Some("spark-xxhash64-typed-key/0.1")
+    } else if managed_current {
         binding.profile == "ashlar-managed-current-core/0.1"
             && binding.layout_revision == "ashlar-delta/0.3"
             && binding.layout_sha256.len() == 64
             && binding.layout_sha256.bytes().all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
+            && binding.lookup_hash_profile.is_none()
     } else {
         binding.profile == PROFILE
             && binding.layout_revision == "ashlar-delta/0.3"
             && binding.layout_sha256 == LAYOUT_SHA256
+            && binding.lookup_hash_profile.is_none()
     };
     if !profile_ok {
         return Err(fail("Unregistered Ashlar layout or binding profile"));

@@ -72,7 +72,11 @@ pub(crate) fn compile_original(method:&str,request:&Value)->Result<Value>{
     weft_core::compile::Compiler { registry }.compile_json(&encode(request))
   },
   "ashlar-spark4-pages"=>{
-    let registry=if request["target"]["backendId"]==weft_databricks::managed_current_core::ID {
+    let registry=if request["target"]["backendId"]==weft_databricks::managed_current_core_xxhash64::ID {
+      let mut registry=weft_core::backend::Registry::default();
+      registry.register(weft_databricks::authored_pages::managed_current_core_xxhash64()).map_err(|_|"managed current-core xxhash64 page backend registration refused")?;
+      registry
+    } else if request["target"]["backendId"]==weft_databricks::managed_current_core::ID {
       let mut registry=weft_core::backend::Registry::default();
       registry.register(weft_databricks::authored_pages::managed_current_core()).map_err(|_|"managed current-core page backend registration refused")?;
       registry
@@ -201,7 +205,11 @@ fn compile_page_original(method:&str,request:&Value,size:u16,after:Option<Vec<St
  let raw=if matches!(method,"truss-runtime"|"truss-runtime-binary"){weft_postgresql::truss_runtime::compile_page_json(&encode(request),size,after.clone())}else{
   let mut factory=|_:&weft_core::model::Catalog,_:weft_core::backend::Plan<'_>,_:weft_core::compile::CompositionInput<'_>|{
     let target_id=request["target"]["backendId"].as_str().unwrap_or("");
-    if method=="ashlar-spark4-pages" && target_id==weft_databricks::managed_current_core::ID {
+    if method=="ashlar-spark4-pages" && target_id==weft_databricks::managed_current_core_xxhash64::ID {
+     let mut registry=weft_core::backend::Registry::default();
+     registry.register(weft_databricks::authored_pages::managed_current_core_xxhash64()).map_err(|_|weft_core::error::Diagnostic::new("WFT-ENGINE-READ","engine", "managed current-core xxhash64 page target registration refused"))?;
+     Ok(registry)
+    } else if method=="ashlar-spark4-pages" && target_id==weft_databricks::managed_current_core::ID {
      let mut registry=weft_core::backend::Registry::default();
      registry.register(weft_databricks::authored_pages::managed_current_core()).map_err(|_|weft_core::error::Diagnostic::new("WFT-ENGINE-READ","engine", "managed current-core page target registration refused"))?;
      Ok(registry)
@@ -320,6 +328,20 @@ pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->Strin
   assert!(next_publication["parameters"]["nativeProfile"]["warehouseRelease"].is_null());
   assert_eq!(next_publication["parameters"]["nativeProfile"]["engine"],"databricks-serverless-spark-jobs");
   assert_ne!(next["artifact"]["sql"],p["artifact"]["sql"]);
+  let mut xxhash64=r.clone();let mut v4_binding:Value=serde_json::from_str(xxhash64["target"]["bindingJson"].as_str().unwrap()).unwrap();
+  v4_binding["layoutRevision"]=json!("ashlar-delta/0.4-xxhash64");v4_binding["layoutSha256"]=json!("b".repeat(64));v4_binding["lookupHashProfile"]=json!("spark-xxhash64-typed-key/0.1");
+  let raw=v4_binding.to_string();let digest=weft_core::json::sha256(raw.as_bytes());
+  xxhash64["target"]=json!({"backendId":weft_databricks::managed_current_pages_xxhash64::ID,"backendVersion":weft_databricks::authored_pages::MANAGED_CURRENT_XXHASH64_VERSION,"targetProfile":weft_databricks::managed_current_pages_xxhash64::PROFILE,"bindingJson":raw,"bindingSha256":digest});
+  let v4=compile_page_original("ashlar-spark4-pages",&xxhash64,2,None).unwrap();assert_eq!(v4["status"],"compiled","{v4}");
+  assert_eq!(v4["artifact"]["backend"]["backendId"],weft_databricks::managed_current_pages_xxhash64::ID);assert_eq!(v4["artifact"]["backend"]["backendVersion"],weft_databricks::authored_pages::MANAGED_CURRENT_XXHASH64_VERSION);assert_eq!(v4["artifact"]["backend"]["targetProfile"],weft_databricks::managed_current_pages_xxhash64::PROFILE);
+  assert_eq!(v4["artifact"]["backend"]["interfaceVersion"],"weft-backend/0.2.7");
+  assert_eq!(v4["artifact"]["targetContext"]["id"],weft_databricks::managed_current_pages_xxhash64::PROFILE);
+  let v4_pub=v4["artifact"]["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.publication").unwrap();assert_eq!(v4_pub["parameters"]["layoutRevision"],"ashlar-delta/0.4-xxhash64");assert_eq!(v4_pub["parameters"]["layoutSha256"],"b".repeat(64));assert_eq!(v4_pub["parameters"]["nativeProfile"]["lookupHashProfile"],"spark-xxhash64-typed-key/0.1");
+  let v4_native=v4["artifact"]["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.nativeProfile").unwrap();assert!(v4_native["parameters"]["requirements"].as_array().unwrap().iter().any(|r|r=="verify the selected Databricks serverless Spark Jobs runtime/build, authenticated principal, Unity Catalog catalog/schema/table UUIDs and Delta protocol before SQL"));
+  assert_eq!(v4["artifact"]["sql"],p["artifact"]["sql"]);assert_eq!(v4["artifact"]["parameters"],p["artifact"]["parameters"]);assert_eq!(v4["outputs"],p["outputs"]);assert_eq!(v4["artifact"]["targetContext"]["storageLayoutRevision"],"ashlar-delta/0.4-xxhash64");
+  let v4_next:Value=serde_json::from_str(&check_page_json(&v4.to_string(),&xxhash64.to_string(),"[\"bar\"]")).unwrap();assert_eq!(v4_next["status"],"compiled","{v4_next}");assert_eq!(v4_next["artifact"]["sql"],next["artifact"]["sql"]);
+  let mut crossed=r.clone();crossed["target"]["backendId"]=json!(weft_databricks::managed_current_pages_xxhash64::ID);crossed["target"]["backendVersion"]=json!(weft_databricks::authored_pages::MANAGED_CURRENT_XXHASH64_VERSION);crossed["target"]["targetProfile"]=json!(weft_databricks::managed_current_pages_xxhash64::PROFILE);assert_ne!(compile_page_original("ashlar-spark4-pages",&crossed,2,None).unwrap()["status"],"compiled");
+  let mut crossed_back=xxhash64.clone();crossed_back["target"]["backendId"]=json!(weft_databricks::managed_current_core::ID);crossed_back["target"]["backendVersion"]=json!(weft_databricks::authored_pages::MANAGED_CURRENT_VERSION);crossed_back["target"]["targetProfile"]=json!(weft_databricks::managed_current_pages::PROFILE);assert_ne!(compile_page_original("ashlar-spark4-pages",&crossed_back,2,None).unwrap()["status"],"compiled");
   let mut wrong=r.clone();wrong["target"]["targetProfile"]=json!(weft_databricks::local_spark42::PROFILE);
   assert_ne!(compile_page_original("ashlar-spark4-pages",&wrong,2,None).unwrap()["status"],"compiled");
  }

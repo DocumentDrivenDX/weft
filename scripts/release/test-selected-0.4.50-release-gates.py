@@ -35,6 +35,12 @@ assert "-name 'weft_sql-0.4.50-*-macosx_*_arm64.whl' | wc -l" in mac
 assert '--version 0.4.50' in mac
 verifier = Path('scripts/release/verify-selected-assets-0.4.50.py').read_text()
 assert "backend03-grouped-having" in verifier and "backend03-negative-having" in verifier and "backend02-continuation" in verifier
+assert "ashlar.databricks.managed-uc-spark-xxhash64" in verifier
+assert "0.2.0-managed-current-core-xxhash64-candidate" in verifier
+assert "0.2.0-managed-current-core-xxhash64-pages-candidate" in verifier
+assert "ashlar-delta/0.4-xxhash64" in verifier and "spark-xxhash64-typed-key/0.1" in verifier
+assert "artifact.get('targetContext')" in verifier and "ashlar.candidate.publication" in verifier and "ashlar.nativeProfile" in verifier
+assert "verify the selected Databricks serverless Spark Jobs runtime/build, authenticated principal, Unity Catalog catalog/schema/table UUIDs and Delta protocol before SQL" in verifier
 assert 'BUILD_RUN_ID: ${{ github.run_id }}' in build and 'WORKFLOW_NAME: ${{ github.workflow }}' in build[build.index('Check exact wheel'):]
 assert '--version 0.4.50' in build
 enricher = Path('scripts/release/enrich-selected-wheel-report.py').read_text()

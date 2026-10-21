@@ -32,6 +32,8 @@ pub mod paths_keys_having;
 pub mod paths_keys_having_spark42;
 pub mod managed_current_core;
 pub mod managed_current_pages;
+pub mod managed_current_core_xxhash64;
+pub mod managed_current_pages_xxhash64;
 
 pub mod implicit_arithmetic;
 
