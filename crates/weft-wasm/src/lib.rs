@@ -22,6 +22,14 @@ pub fn compile_json(request: &str) -> String {
     weft_runtime::compile_json(request)
 }
 
+/// Explicit fixed Truss runtime lowering, shared with the Python binding.
+/// Compilation alone grants no native execution or authorization.
+#[cfg(feature = "truss-postgresql-pg18")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_truss_runtime_json(request: &str) -> String {
+    weft_runtime::compile_truss_runtime_json(request)
+}
+
 #[cfg(feature = "test-original")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_json_with_conformance_configuration(request: &str, configuration: &str) -> String {

@@ -722,6 +722,11 @@ impl Backend for Runtime {
         if let Some(navigation)=&plan.navigation{filters.push(build.navigation(navigation)?);}
         let mut projections = vec![];
         let mut columns = vec![];
+        // Current runtime metadata helpers each return a whole JSON object.
+        // Materialize each (source occurrence, helper) once per selected row;
+        // projecting five members must not execute its authority/source scan
+        // five times. Older registrations keep their original emission.
+        let mut metadata_sources: BTreeMap<(String, String), String> = BTreeMap::new();
         for (i, o) in plan.outputs.iter().enumerate() {
             let (sql, representation, ids) = match &o.expression {
                 app::Expression::Count { logical_type } => (
@@ -815,7 +820,27 @@ impl Backend for Runtime {
                         if !self.entity_times { return Err(unsupported("Timestamp entity profile requires runtime0.4.7")); }
                         "query_object_times"
                     } else { "query_object_attribution" };
-                    let sql = format!("(\"truss\".\"{helper}\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4,{}.id)->{})::pg_catalog.text", m.record(record)?.type_id, Identifier::new(scan)?.sql(), literal(name)?);
+                    let sql = if self.canonical_dates {
+                        let key = (scan.clone(), helper.to_owned());
+                        let alias = if let Some(alias) = metadata_sources.get(&key) { alias.clone() } else {
+                            let mut index = metadata_sources.len();
+                            let alias = loop {
+                                let candidate = format!("__weft_facts_{index}");
+                                if !build.aliases.contains_key(&candidate)
+                                    && !build.aliases.contains_key(&format!("{candidate}_value"))
+                                    && !metadata_sources.values().any(|v| v == &candidate) { break candidate; }
+                                index += 1;
+                            };
+                            let quoted = Identifier::new(&alias)?.sql();
+                            let value = Identifier::new(&format!("{alias}_value"))?.sql();
+                            from.push_str(&format!(" CROSS JOIN LATERAL (WITH {value} AS MATERIALIZED (SELECT \"truss\".\"{helper}\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4,{}.id) AS value) SELECT value FROM {value}) AS {quoted}", m.record(record)?.type_id, Identifier::new(scan)?.sql()));
+                            metadata_sources.insert(key, alias.clone());
+                            alias
+                        };
+                        format!("({}.value->{})::pg_catalog.text", Identifier::new(&alias)?.sql(), literal(name)?)
+                    } else {
+                        format!("(\"truss\".\"{helper}\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4,{}.id)->{})::pg_catalog.text", m.record(record)?.type_id, Identifier::new(scan)?.sql(), literal(name)?)
+                    };
                     (sql, Representation::NativeMetadata { metadata: metadata.clone(), logical_type: logical_type.clone(), carrier: ScalarCarrier::Text,
                         decoder: if matches!(metadata, app::NativeMetadata::Version) { ScalarDecoder::ExactInteger } else { ScalarDecoder::Text } }, vec![record.clone()])
                 },
@@ -1558,6 +1583,23 @@ mod canonical_date_runtime_tests {
         json!({"interfaceVersion":"weft-compile/0.2.7","dialect":"weft-sql/0.2.0","timestampComparisonProfile":"umf-rfc3339-exact-instant/1.0.0","modules":b["modules"],"sql":sql,"parameters":{},"exactParameters":{},"options":{"allowCandidate":true},"target":{"backendId":"truss.postgresql.runtime","backendVersion":"0.4.41","targetProfile":"truss-runtime-pg18.6/0.5","bindingJson":raw,"bindingSha256":weft_core::json::sha256(raw.as_bytes())}})
     }
     fn run(r:&serde_json::Value)->serde_json::Value {serde_json::from_str(&compile_json(&r.to_string())).unwrap()}
+    #[test]
+    fn complete_entity_materializes_each_native_facts_helper_once() {
+        let mut r=request("SELECT a.* FROM A a");
+        r["readProfile"]=json!({"version":"weft-truss-entity-read/0.3.0","subset":"complete-entity"});
+        let out=run(&r);assert_eq!(out["status"],"compiled","{out}");
+        let sql=out["sql"].as_str().unwrap();
+        for helper in ["query_object_attribution","query_object_times","query_object_load_id"] {
+            assert_eq!(sql.matches(&format!("\"{helper}\"(")).count(),1,"{sql}");
+        }
+        assert_eq!(sql.matches(" AS MATERIALIZED ").count(),3,"{sql}");
+        for name in ["_version","_created_by","_updated_by","_original_author","_original_at","_created_at","_updated_at","_load_id"] {
+            assert!(out["columns"].as_array().unwrap().iter().any(|c|c["outputName"]==name),"{out}");
+        }
+        let plain=run(&request("SELECT a.day FROM A a"));
+        assert_eq!(plain["status"],"compiled","{plain}");
+        assert!(!plain["sql"].as_str().unwrap().contains("CROSS JOIN LATERAL"));
+    }
     #[test]
     fn canonical_dates_project_compare_and_preserve_typed_tokens() {
         let r=request("SELECT a.day FROM A a WHERE a.day='2000-02-29'");let out=run(&r);assert_eq!(out["status"],"compiled","{out}");assert!(out["sql"].as_str().unwrap().contains("COLLATE \"C\""));assert!(out["parameters"].as_array().unwrap().iter().any(|p|p["value"]=="2000-02-29" && p["logicalType"]["scalarType"]=="date"));

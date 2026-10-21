@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "version": "0.4.49",
+  "platform": "macos-arm64",
+  "functionalQualification": "local-only",
+  "postgresqlVersion": "18.6",
+  "sourceFreezeCommit": "5f013200cf36ddcaf5d4a380ba961267f819f7ca",
+  "wheel": {
+    "name": "weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117"
+  },
+  "nativeModuleSha256": "2c0169ba875c3dd174e5c450c851d1cb295fddc2adf29943e660e8b6a9c9aa88",
+  "frozenSourceBuild": {
+    "allArchivePayloadsByteIdentical": true,
+    "rebuiltContainerSha256": "2b35ea95ce45e1114daac0ca67bd76b27c9adc2da4263bf940dc40a31508ea32",
+    "selectedArtifact": "original qualified installed wheel; only ZIP container timestamps may differ"
+  },
+  "localFunctionalChecks": [
+    {
+      "id": "exact-installed-wheel",
+      "status": "passed",
+      "report": "../evidence/hohfeld-performance-20261021/weft-hp-packaging.json"
+    },
+    {
+      "id": "affected-release-feature-rust",
+      "status": "passed",
+      "tests": 372,
+      "report": "../evidence/hohfeld-performance-20261021/rust-tests.log"
+    },
+    {
+      "id": "actual-chromium-native-byte-parity",
+      "status": "passed",
+      "cases": 5,
+      "browser": "151.0.7922.34",
+      "report": "../evidence/hohfeld-performance-20261021/browser-summary.json"
+    },
+    {
+      "id": "truss-native-compiled-and-statement-budgets",
+      "status": "passed",
+      "tests": 16,
+      "scope": "Truss performance branch, PostgreSQL18.6, exact installed 0.4.49 native wheel; complete entity helpers retain nested authority proofs, live revocation, wildcard collision, legacy scan bound, combined read-only API and client statement budgets"
+    }
+  ],
+  "otherPlatforms": "Build and installed packaging checks only; no native functional qualification claimed.",
+  "fullSuiteQualification": "not claimed",
+  "nativeSparkOrDatabricksExecution": "not claimed",
+  "knownLimits": [
+    "Legacy ABI1.1 complete-source population bounds unchanged.",
+    "Hohfeld current adapter retains separate catalog and data transactions; sampled latency targets not all established."
+  ]
+}

@@ -53,6 +53,13 @@ const core08Pin = await json('spec/upstream/umf-0.8.0.source.json');
 assert(createHash('sha256').update(core08Text, 'utf8').digest('hex') === core08Pin.sha256,
   'Pinned UMF 0.8 schema bytes differ');
 ajv.addSchema(JSON.parse(core08Text));
+// Current security contracts use the owner-pinned 0.10 bundle, including its
+// semantic-type reference resource. Retain 0.8 for historical contracts.
+const core010Pin = await json('spec/upstream/umf-0.10.0-bundled.source.json');
+const core010Text = await read(core010Pin.bundlePath);
+assert(createHash('sha256').update(core010Text, 'utf8').digest('hex') === core010Pin.bundleSha256,
+  'Pinned UMF 0.10 schema bytes differ');
+ajv.addSchema(JSON.parse(core010Text));
 const schemas = [];
 for (const file of files.filter(f => f.endsWith('.schema.json'))) {
   const schema = await json(file);
