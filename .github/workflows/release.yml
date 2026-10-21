@@ -117,7 +117,7 @@ jobs:
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
           root=pathlib.Path('dist');wheels=sorted(root.glob('*.whl'))
           assert len(wheels)==5
-          local=json.loads(pathlib.Path('docs/helix/04-build/releases/local-macos-0.4.48.json').read_text())
+          local=json.loads(pathlib.Path(f'docs/helix/04-build/releases/local-macos-{version}.json').read_text())
           assert local['status']=='passed' and local['version']==version
           assert local['platform']=='macos-arm64' and local['functionalQualification']=='local-only'
           mac=root/local['wheel']['name']
@@ -135,7 +135,7 @@ jobs:
           # The local qualification report is source-controlled with this tag.
           # It records its actual platform and scope; target packaging reports
           # do not promote it to native execution on other operating systems.
-          qualification=pathlib.Path('docs/helix/04-build/releases/local-macos-0.4.48.json')
+          qualification=pathlib.Path(f'docs/helix/04-build/releases/local-macos-{version}.json')
           report=json.loads(qualification.read_text())
           assert report['status']=='passed' and report['version']==version
           assert report['platform']=='macos-arm64' and report['functionalQualification']=='local-only'

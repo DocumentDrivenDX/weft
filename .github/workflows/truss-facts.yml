@@ -1,0 +1,50 @@
+name: Truss facts compiler regression
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  shared-compiler:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CARGO_PROFILE_TEST_OPT_LEVEL: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - run: rustup toolchain install 1.90.0 --profile minimal --target wasm32-unknown-unknown && rustup default 1.90.0
+      - run: cargo test --locked -p weft-postgresql canonical_date_runtime_tests
+      - run: python -m pip install maturin==1.9.6
+      - run: maturin build --manifest-path crates/weft-python/Cargo.toml --release --locked --out /tmp/wheels
+      - run: python -m pip install /tmp/wheels/*.whl
+      - run: python tests/truss-facts/check.py --reports /tmp/reports.json
+      - run: cargo build --locked -p weft-wasm --features truss-postgresql-pg18 --target wasm32-unknown-unknown
+      - run: cargo install wasm-bindgen-cli --version 0.2.105 --locked
+      - run: wasm-bindgen --target web --out-dir /tmp/weft-web target/wasm32-unknown-unknown/debug/weft_wasm.wasm
+      - run: bun build packages/weft-browser/src/index.ts --target browser --outdir /tmp/wrapper
+      - run: bun install --frozen-lockfile
+      - run: bunx --bun playwright@1.62.1 install --with-deps chromium
+      - run: node tests/compile/browser-check.mjs
+        env:
+          WEFT_PROBE_JS: /tmp/weft-web/weft_wasm.js
+          WEFT_PROBE_WASM: /tmp/weft-web/weft_wasm_bg.wasm
+          WEFT_BROWSER_WRAPPER: /tmp/wrapper/index.js
+          WEFT_FRONTEND_CORPUS: tests/truss-facts/cases.json
+          WEFT_FRONTEND_REPORTS: /tmp/reports.json
+          WEFT_PROBE_API: compile_truss_runtime_json
+          WEFT_FRONTEND_BROWSER_SUMMARY: /tmp/browser-summary.json
+          WEFT_BROWSER_RECEIPTS: /tmp/browser-receipts.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: truss-facts-parity
+          path: |
+            /tmp/reports.json
+            /tmp/browser-summary.json
+            /tmp/browser-receipts.json
