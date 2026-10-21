@@ -40,7 +40,33 @@ impl Backend for PathsKeys {
         Ok(m)
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
-        if c.target.id != PROFILE {
+        self.validate_binding_for_profile(c, PROFILE)
+    }
+    fn assess(&self, c: &Context<'_>, b: &Binding) -> Result<Vec<Assessment>> {
+        Paths.assess(c, b)
+    }
+    fn lower(&self, c: &Context<'_>, b: &Binding) -> Result<PathTargetPlan> {
+        crate::candidate::path_lowering::lower_keys(c, b)
+    }
+    fn emit(&self, c: &Context<'_>, p: &PathTargetPlan) -> Result<Emission> {
+        Paths.emit(c, p)
+    }
+}
+
+impl PathsKeys {
+    pub(crate) fn validate_binding_managed_current(&self, c: &Context<'_>, profile: &str) -> Result<Validated<Binding>> {
+        if c.target.id != profile {
+            return Err(refusal("Explicit managed UC current-core profile required"));
+        }
+        let binding = crate::binding::admit_managed_current(c.catalog, c.binding_value)?;
+        crate::paths::validate_sources_with(c, binding)
+    }
+    pub(crate) fn validate_binding_for_profile(
+        &self,
+        c: &Context<'_>,
+        profile: &str,
+    ) -> Result<Validated<Binding>> {
+        if c.target.id != profile {
             return Err(refusal("Explicit paths-keys profile required"));
         }
         for o in c.plan.outputs() {
@@ -81,14 +107,5 @@ impl Backend for PathsKeys {
             }
         }
         crate::paths::validate_sources(c)
-    }
-    fn assess(&self, c: &Context<'_>, b: &Binding) -> Result<Vec<Assessment>> {
-        Paths.assess(c, b)
-    }
-    fn lower(&self, c: &Context<'_>, b: &Binding) -> Result<PathTargetPlan> {
-        crate::candidate::path_lowering::lower_keys(c, b)
-    }
-    fn emit(&self, c: &Context<'_>, p: &PathTargetPlan) -> Result<Emission> {
-        Paths.emit(c, p)
     }
 }

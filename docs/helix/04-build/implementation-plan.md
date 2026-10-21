@@ -2821,3 +2821,13 @@ records22 focused tests,27 Python/CLI/Chromium comparisons,10 tamper controls,
 source/current-role admission, transaction execution and authenticated outcome
 recovery. No generic native authority flag is promoted, and no0.4.48 artifact is
 published before the remaining full Praxis gates close.
+
+### B-006 current local Spark candidate registrations — 2026-10-21
+
+Added additive, exact-target Spark 4.2.0 / Delta 4.4.1 candidate registrations
+for Backend03 grouped count/HAVING and Backend02 authored SDK pages. The existing
+Spark 4.0.1 / Delta 4.0.0 targets retain their identities and behavior. Focused
+compiler tests cover exact tuple dispatch, page continuation and crossed-target
+refusal. These changes establish compiler preparation only; actual Spark/JVM/
+Delta JAR verification and native result/publication custody remain open before
+any current-runtime qualification.

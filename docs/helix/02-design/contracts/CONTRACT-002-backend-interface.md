@@ -88,6 +88,19 @@ SUM must be proved within its input/group domain or disclosed as an exact-or-err
 runtime obligation accepted by the host; overflow-to-null/wrapping is forbidden.
 Its physical layout remains an integration gate, not a definition in this repo.
 
+The local Ashlar compiler also exposes separately registered candidate targets
+for Spark 4.2.0 / Delta 4.4.1. Backend03 grouped `COUNT(*) ... HAVING` uses
+`ashlar.databricks.paths-keys-having` / `0.4.1-count-star-having-spark4.2-candidate` /
+`spark4.2.0-delta4.4.1-paths-keys-having-candidate`. Backend02 authored SDK
+pages use `ashlar.databricks` / `0.2.0-local-spark4.2-pages-candidate` /
+`spark4.2.0-delta4.4.1-candidate`, retaining compiler method
+`ashlar-spark4-pages` and `weft.engine-page/0.1`. Selection requires the exact
+backend ID, version and target profile; no cross-version fallback is permitted.
+The Spark 4.0.1 / Delta 4.0.0 registrations remain unchanged. Spark 4.2 targets
+are candidates pending native execution: the host must verify actual Spark and
+JVM versions, loaded Delta class/JAR identity and hashes, same-session execution,
+full publication vectors, and buffered result custody before writing or closing.
+
 Both backends preserve duplicate rows, isolated sources and selected identity.
 No backend derives authorization from an untrusted query. Unsupported delegation
 or publication guarantees cannot silently fall back to broader privileges/newer data.

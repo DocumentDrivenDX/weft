@@ -4,10 +4,14 @@
 //! key-integrity handling are still mandatory before any result is released.
 use weft_core::{backend::*,error::Result};
 pub const LOCAL_VERSION:&str="0.1.0-local-spark4-pages-candidate";
+pub const LOCAL42_VERSION:&str="0.2.0-local-spark4.2-pages-candidate";
 pub const MANAGED_VERSION:&str="0.1.0-managed-20261016-pages-candidate";
+pub const MANAGED_CURRENT_VERSION:&str="0.1.0-managed-current-core-pages-candidate";
 pub struct AuthoredPages<B>{backend:B,version:&'static str}
 pub fn local()->AuthoredPages<crate::local_spark4::LocalSpark4>{AuthoredPages{backend:crate::local_spark4::LocalSpark4,version:LOCAL_VERSION}}
+pub fn local42()->AuthoredPages<crate::local_spark42::LocalSpark42>{AuthoredPages{backend:crate::local_spark42::LocalSpark42,version:LOCAL42_VERSION}}
 pub fn managed()->AuthoredPages<crate::managed_20261016::Managed20261016>{AuthoredPages{backend:crate::managed_20261016::Managed20261016,version:MANAGED_VERSION}}
+pub fn managed_current_core()->AuthoredPages<crate::managed_current_pages::ManagedCurrentPages>{AuthoredPages{backend:crate::managed_current_pages::ManagedCurrentPages,version:MANAGED_CURRENT_VERSION}}
 impl<B:Backend> Backend for AuthoredPages<B>{
  type Mapping=B::Mapping;type TargetPlan=B::TargetPlan;
  fn describe(&self)->Result<Manifest>{let mut manifest=self.backend.describe()?;manifest.backend_version=self.version.into();manifest.interface_version="weft-backend/0.2.7".into();

@@ -24,7 +24,10 @@ concurrency:
   cancel-in-progress: false
 jobs:
   wheels:
-    if: inputs.packaging_run_id == ''
+    # v0.4.49 has a separate selected-assets path: a bounded Linux build and
+    # promotion of already-qualified Linux/macOS bytes. Never start the legacy
+    # four-host matrix for that exact tag. All other tags keep this workflow.
+    if: inputs.packaging_run_id == '' && github.ref_name != 'v0.4.49' && inputs.tag != 'v0.4.49'
     strategy:
       fail-fast: false
       matrix:
@@ -85,7 +88,7 @@ jobs:
             dist/packaging-*.json
           if-no-files-found: error
   publish:
-    if: always() && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != ''))
+    if: always() && github.ref_name != 'v0.4.49' && inputs.tag != 'v0.4.49' && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != ''))
     needs: wheels
     runs-on: ubuntu-24.04
     permissions:

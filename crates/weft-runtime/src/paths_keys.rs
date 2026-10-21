@@ -14,7 +14,17 @@ pub fn compile_json(request: &str) -> String {
     if request.len()>16*1024*1024 {return Compiler::default().compile_json(request);}
     let version041=weft_core::json::checked_json(request).ok().is_some_and(|r|r["interfaceVersion"]=="weft-compile/0.4.1");
     if version041 {
-        let mut factory=|_: &Catalog, _: Plan04View<'_>, _: CompositionInput<'_>| -> Result<Registry>{let mut r=Registry::default();r.register(weft_databricks::paths_keys_having::CountStarHaving)?;Ok(r)};
+        let current_spark42=weft_core::json::checked_json(request).ok().is_some_and(|r|
+            r["target"]["backendId"]==weft_databricks::paths_keys_having_spark42::ID);
+        let managed_current=weft_core::json::checked_json(request).ok().is_some_and(|r|
+            r["target"]["backendId"]==weft_databricks::managed_current_core::ID);
+        let mut factory=move |_: &Catalog, _: Plan04View<'_>, _: CompositionInput<'_>| -> Result<Registry>{
+            let mut r=Registry::default();
+            if managed_current {r.register(weft_databricks::managed_current_core::ManagedCurrentCore)?;}
+            else if current_spark42 {r.register(weft_databricks::paths_keys_having_spark42::CountStarHavingSpark42)?;}
+            else {r.register(weft_databricks::paths_keys_having::CountStarHaving)?;}
+            Ok(r)
+        };
         weft_core::compile::v041::Compiler::default().compile_json_with_exact_numbers_factory(request,&mut factory)
     } else {
         let mut factory=|_: &Catalog, _: Plan04View<'_>, _: CompositionInput<'_>| -> Result<Registry>{let mut r=Registry::default();r.register(weft_databricks::paths_keys::PathsKeys)?;Ok(r)};
@@ -132,6 +142,116 @@ mod tests {
         ))
         .unwrap();
         assert_eq!(a["diagnostics"][0]["code"], "WFT-VERSION");
+    }
+
+    #[test]
+    fn current_spark42_count_star_target_is_exact_and_old_target_stays_separate() {
+        let mut current = request(
+            "SELECT c.name, COUNT(*) AS total FROM customers c GROUP BY c.name HAVING COUNT(*) > 1 ORDER BY c.name",
+        );
+        current["interfaceVersion"] = json!("weft-compile/0.4.1");
+        current["dialect"] = json!("weft-sql/0.4.1");
+        current["target"]["backendId"] = json!(weft_databricks::paths_keys_having_spark42::ID);
+        current["target"]["backendVersion"] =
+            json!(weft_databricks::paths_keys_having_spark42::VERSION);
+        current["target"]["targetProfile"] =
+            json!(weft_databricks::paths_keys_having_spark42::PROFILE);
+
+        let described=weft_core::backend03::Backend::describe(&weft_databricks::paths_keys_having_spark42::CountStarHavingSpark42).unwrap();
+        assert_eq!(described.backend_version,current["target"]["backendVersion"].as_str().unwrap());
+        assert_eq!(described.backend_id,current["target"]["backendId"].as_str().unwrap());
+
+        let current_artifact = compile(&current);
+        assert_eq!(current_artifact["status"], "compiled", "{current_artifact}; request target={}",current["target"]);
+        assert_eq!(
+            current_artifact["backend"]["backendId"],
+            weft_databricks::paths_keys_having_spark42::ID
+        );
+        assert_eq!(
+            current_artifact["backend"]["backendVersion"],
+            weft_databricks::paths_keys_having_spark42::VERSION
+        );
+        assert_eq!(
+            current_artifact["backend"]["targetProfile"],
+            weft_databricks::paths_keys_having_spark42::PROFILE
+        );
+        let obligation = current_artifact["obligations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|obligation| obligation["id"] == "ashlar.nativeProfile")
+            .unwrap();
+        assert_eq!(obligation["parameters"]["engineVersion"], "4.2.0");
+        assert_eq!(obligation["parameters"]["deltaVersion"], "4.4.1");
+        assert_eq!(obligation["parameters"]["jdkVersion"], "21");
+        assert_eq!(
+            obligation["parameters"]["deltaJars"]["delta-spark_4.2_2.13-4.4.1.jar"],
+            weft_databricks::paths_keys_having_spark42::DELTA_SPARK_SHA256
+        );
+
+        let mut legacy = request("SELECT c.name, COUNT(*) AS total FROM customers c GROUP BY c.name");
+        legacy["interfaceVersion"] = json!("weft-compile/0.4.1");
+        legacy["dialect"] = json!("weft-sql/0.4.1");
+        legacy["target"]["backendVersion"] = json!(weft_databricks::paths_keys_having::VERSION);
+        let legacy_artifact = compile(&legacy);
+        assert_eq!(legacy_artifact["status"], "compiled", "{legacy_artifact}");
+        assert_eq!(
+            legacy_artifact["backend"]["backendVersion"],
+            weft_databricks::paths_keys_having::VERSION
+        );
+
+        for (version, profile) in [
+            (
+                weft_databricks::paths_keys_having::VERSION,
+                weft_databricks::paths_keys_having_spark42::PROFILE,
+            ),
+            (
+                weft_databricks::paths_keys_having_spark42::VERSION,
+                weft_databricks::paths_keys::PROFILE,
+            ),
+        ] {
+            let mut mixed = current.clone();
+            mixed["target"]["backendVersion"] = json!(version);
+            mixed["target"]["targetProfile"] = json!(profile);
+            assert_ne!(compile(&mixed)["status"], "compiled", "{mixed}");
+        }
+    }
+    #[test]
+    fn managed_current_core_grouped_count_retains_uc_versions_and_refuses_local_target(){
+        let mut r=request("SELECT c.name, COUNT(*) AS total FROM customers c GROUP BY c.name HAVING COUNT(*) > 1 ORDER BY c.name");
+        r["interfaceVersion"]=json!("weft-compile/0.4.1");r["dialect"]=json!("weft-sql/0.4.1");
+        let mut binding:Value=serde_json::from_str(r["target"]["bindingJson"].as_str().unwrap()).unwrap();
+        binding["profile"]=json!("ashlar-managed-current-core/0.1");
+        let roles=["object_current","edge_current","tombstone","whole_source_history"];
+        let mut tables=binding["publication"]["tables"].as_array().unwrap().clone();
+        assert_eq!(tables.len(),4);
+        for (index,table) in tables.iter_mut().enumerate(){
+            table["name"]=json!(["client_dev","managed_current_test",roles[index]]);
+            table["uuid"]=json!(format!("00000000-0000-4000-8000-{:012x}",index+1));
+            table["version"]=json!(21+index);
+        }
+        let object_index=roles.iter().position(|role|*role=="object_current").unwrap();
+        let edge_index=roles.iter().position(|role|*role=="edge_current").unwrap();
+        for record in binding["records"].as_array_mut().unwrap(){record["table"]=json!(object_index);}
+        for relationship in binding["relationships"].as_array_mut().unwrap(){relationship["table"]=json!(edge_index);}
+        binding["publication"]["tables"]=json!(tables);
+        let raw=binding.to_string();let digest=weft_core::json::sha256(raw.as_bytes());
+        r["target"]=json!({"backendId":weft_databricks::managed_current_core::ID,"backendVersion":weft_databricks::managed_current_core::VERSION,"targetProfile":weft_databricks::managed_current_core::PROFILE,"bindingJson":raw,"bindingSha256":digest});
+        let a=compile(&r);assert_eq!(a["status"],"compiled","{a}");
+        assert_eq!(a["backend"]["backendId"],weft_databricks::managed_current_core::ID);
+        assert_eq!(a["backend"]["backendVersion"],weft_databricks::managed_current_core::VERSION);
+        assert_eq!(a["backend"]["targetProfile"],weft_databricks::managed_current_core::PROFILE);
+        assert!(a["sql"].as_str().unwrap().contains("`client_dev`.`managed_current_test`.`object_current` VERSION AS OF 21"));
+        assert!(a["sql"].as_str().unwrap().contains("COUNT(*)"));
+        assert!(a["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="ashlar.nativeProfile"&&o["parameters"]["targetProfile"]==weft_databricks::managed_current_core::PROFILE));
+        let publication=a["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.publication").unwrap();
+        assert!(publication["parameters"]["nativeProfile"]["warehouseRelease"].is_null());
+        assert_eq!(publication["parameters"]["nativeProfile"]["engine"],"databricks-serverless-spark-jobs");
+        assert!(publication["parameters"]["nativeProfile"]["requirements"].as_array().unwrap().iter().any(|item|item=="keep the six-role installation inventory separate from the four-role manifest data vector"));
+        let mut old=r.clone();old["target"]["backendId"]=json!(weft_databricks::paths_keys_having_spark42::ID);old["target"]["backendVersion"]=json!(weft_databricks::paths_keys_having_spark42::VERSION);old["target"]["targetProfile"]=json!(weft_databricks::paths_keys_having_spark42::PROFILE);
+        assert_ne!(compile(&old)["status"],"compiled");
+        let mut crossed=r.clone();let mut crossed_binding:Value=serde_json::from_str(crossed["target"]["bindingJson"].as_str().unwrap()).unwrap();crossed_binding["records"][0]["table"]=json!(edge_index);let crossed_raw=crossed_binding.to_string();let crossed_digest=weft_core::json::sha256(crossed_raw.as_bytes());crossed["target"]["bindingJson"]=json!(crossed_raw);crossed["target"]["bindingSha256"]=json!(crossed_digest);assert_ne!(compile(&crossed)["status"],"compiled");
+        let mut crossed_edge=r.clone();let mut crossed_binding:Value=serde_json::from_str(crossed_edge["target"]["bindingJson"].as_str().unwrap()).unwrap();crossed_binding["relationships"][0]["table"]=json!(object_index);let crossed_raw=crossed_binding.to_string();let crossed_digest=weft_core::json::sha256(crossed_raw.as_bytes());crossed_edge["target"]["bindingJson"]=json!(crossed_raw);crossed_edge["target"]["bindingSha256"]=json!(crossed_digest);assert_ne!(compile(&crossed_edge)["status"],"compiled");
     }
     #[test]
     fn repeated_and_mixed_collections_keep_output_order_and_complete_capacity_inventory() {

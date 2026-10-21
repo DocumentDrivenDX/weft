@@ -72,7 +72,11 @@ pub(crate) fn compile_original(method:&str,request:&Value)->Result<Value>{
     weft_core::compile::Compiler { registry }.compile_json(&encode(request))
   },
   "ashlar-spark4-pages"=>{
-    let mut registry=weft_core::backend::Registry::default();registry.register(weft_databricks::authored_pages::local()).map_err(|_|"original local page backend registration refused")?;
+    let registry=if request["target"]["backendId"]==weft_databricks::managed_current_core::ID {
+      let mut registry=weft_core::backend::Registry::default();
+      registry.register(weft_databricks::authored_pages::managed_current_core()).map_err(|_|"managed current-core page backend registration refused")?;
+      registry
+    } else {local_authored_page_target(request)?};
     weft_core::compile::Compiler { registry }.compile_json(&encode(request))
   },
   "ashlar-dbsql-20261016-pages"=>{
@@ -87,6 +91,16 @@ pub(crate) fn compile_original(method:&str,request:&Value)->Result<Value>{
   _=>return Err("unrecognized original engine compiler")};
  let artifact=weft_core::json::checked_json(&raw).map_err(|_|"original compiler output refused")?;
  wrap_artifact(method,request,artifact)
+}
+fn local_authored_page_target(request:&Value)->Result<weft_core::backend::Registry>{
+ let target=&request["target"];
+ let mut registry=weft_core::backend::Registry::default();
+ if target["backendId"]=="ashlar.databricks"&&target["backendVersion"]==weft_databricks::authored_pages::LOCAL_VERSION&&target["targetProfile"]==weft_databricks::local_spark4::PROFILE {
+  registry.register(weft_databricks::authored_pages::local()).map_err(|_|"original local Spark4 page target registration refused")?;
+ }else if target["backendId"]=="ashlar.databricks"&&target["backendVersion"]==weft_databricks::authored_pages::LOCAL42_VERSION&&target["targetProfile"]==weft_databricks::local_spark42::PROFILE {
+  registry.register(weft_databricks::authored_pages::local42()).map_err(|_|"original local Spark4.2 page target registration refused")?;
+ }else{return Err("exact Ashlar authored-page target required")}
+ Ok(registry)
 }
 fn logical_plan_scalar<'a>(artifact:&'a Value,identity:&Value)->Result<&'a Value>{
  let plan=&artifact["logicalPlan"];let graph=plan["typeGraph"].as_array().ok_or("original scalar sibling type graph required")?;let nodes=graph.iter().filter(|d|d["identity"]==*identity).collect::<Vec<_>>();if nodes.len()!=1{return Err("unique original scalar sibling required")};Ok(nodes[0])
@@ -186,9 +200,16 @@ fn compile_page_original(method:&str,request:&Value,size:u16,after:Option<Vec<St
  if base["status"]!="compiled" {return Ok(json!({"version":"weft.engine-page/0.1","status":"blocked","original":base}))}
  let raw=if matches!(method,"truss-runtime"|"truss-runtime-binary"){weft_postgresql::truss_runtime::compile_page_json(&encode(request),size,after.clone())}else{
   let mut factory=|_:&weft_core::model::Catalog,_:weft_core::backend::Plan<'_>,_:weft_core::compile::CompositionInput<'_>|{
-   let mut registry=weft_core::backend::Registry::default();
-   if method=="ashlar-spark4-pages"{registry.register(weft_databricks::authored_pages::local())?;}else{registry.register(weft_databricks::authored_pages::managed())?;}
-   Ok(registry)
+    let target_id=request["target"]["backendId"].as_str().unwrap_or("");
+    if method=="ashlar-spark4-pages" && target_id==weft_databricks::managed_current_core::ID {
+     let mut registry=weft_core::backend::Registry::default();
+     registry.register(weft_databricks::authored_pages::managed_current_core()).map_err(|_|weft_core::error::Diagnostic::new("WFT-ENGINE-READ","engine", "managed current-core page target registration refused"))?;
+     Ok(registry)
+    } else if method=="ashlar-spark4-pages" {local_authored_page_target(request).map_err(|e|weft_core::error::Diagnostic::new("WFT-ENGINE-READ","engine",e))}else{
+     let mut registry=weft_core::backend::Registry::default();
+     registry.register(weft_databricks::authored_pages::managed()).map_err(|_|weft_core::error::Diagnostic::new("WFT-ENGINE-READ","engine", "original managed page target registration refused"))?;
+     Ok(registry)
+   }
   };
   weft_core::compile::Compiler::default().compile_typed_page_json_with_exact_numbers_factory(&encode(request),size,after.clone(),&mut factory)
  };
@@ -263,7 +284,45 @@ pub fn check_page_json(program:&str,current_request:&str,after_json:&str)->Strin
   let mut forged=p.clone();forged["outputs"][1]["decoder"]["bound"]=json!(3);let refused:Value=serde_json::from_str(&check_page_json(&forged.to_string(),&r.to_string(),"null")).unwrap();assert_eq!(refused["status"],"blocked");
  }
  #[test]fn original_page_retains_hidden_key_and_native_continuation(){let r=request();let p=program(&r);assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["outputs"].as_array().unwrap().len(),2);assert_eq!(p["artifact"]["columns"].as_array().unwrap().len(),3);assert_eq!(p["page"]["keyOutputs"],json!([2]));let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"o-1\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");assert_eq!(a["after"],json!(["o-1"]));assert_ne!(a["artifact"]["sql"],p["artifact"]["sql"]);assert!(a["artifact"]["parameters"].as_array().unwrap().iter().any(|v|v["value"]=="o-1"));}
- #[test]fn original_ashlar_page_compilation_retains_snapshot_key_obligation(){for (method,version,raw) in [("ashlar-spark4-pages",weft_databricks::authored_pages::LOCAL_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json")),("ashlar-dbsql-20261016-pages",weft_databricks::authored_pages::MANAGED_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-dbsql-20261016-request.json"))]{let mut r:Value=serde_json::from_str(raw).unwrap();assert_ne!(compile_page_original(method,&r,2,None).unwrap()["status"],"compiled");r["interfaceVersion"]=json!("weft-compile/0.2.7");r["timestampComparisonProfile"]=json!("umf-rfc3339-exact-instant/1.0.0");r["target"]["backendVersion"]=json!(version);let p=compile_page_original(method,&r,2,None).unwrap();assert_eq!(p["status"],"compiled","{p}");assert!(p["artifact"]["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="ashlar.candidate.keyIntegrity"));let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"bar\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");}}
+ #[test]fn original_ashlar_page_compilation_retains_snapshot_key_obligation(){for (method,version,raw) in [("ashlar-spark4-pages",weft_databricks::authored_pages::LOCAL_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json")),("ashlar-dbsql-20261016-pages",weft_databricks::authored_pages::MANAGED_VERSION,include_str!("../../../tests/engine-catalog/native-ashlar-dbsql-20261016-request.json"))]{let mut r:Value=serde_json::from_str(raw).unwrap();assert!(compile_page_original(method,&r,2,None).is_err()||compile_page_original(method,&r,2,None).unwrap()["status"]!="compiled");r["interfaceVersion"]=json!("weft-compile/0.2.7");r["timestampComparisonProfile"]=json!("umf-rfc3339-exact-instant/1.0.0");r["target"]["backendVersion"]=json!(version);if method=="ashlar-spark4-pages"{r["target"]["backendId"]=json!("ashlar.databricks");r["target"]["targetProfile"]=json!(weft_databricks::local_spark4::PROFILE);}let p=compile_page_original(method,&r,2,None).unwrap();assert_eq!(p["status"],"compiled","{p}");assert!(p["artifact"]["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="ashlar.candidate.keyIntegrity"));let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"bar\"]")).unwrap();assert_eq!(a["status"],"compiled","{a}");}}
+ #[test]fn current_spark42_authored_pages_require_exact_target_and_preserve_continuation(){
+  let mut r:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json")).unwrap();
+  r["interfaceVersion"]=json!("weft-compile/0.2.7");r["timestampComparisonProfile"]=json!("umf-rfc3339-exact-instant/1.0.0");r["target"]["backendVersion"]=json!(weft_databricks::authored_pages::LOCAL42_VERSION);r["target"]["targetProfile"]=json!(weft_databricks::local_spark42::PROFILE);
+  let p=compile_page_original("ashlar-spark4-pages",&r,2,None).unwrap();assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["version"],"weft.engine-page/0.1");assert_eq!(p["artifact"]["backend"]["targetProfile"],weft_databricks::local_spark42::PROFILE);
+  let native=p["artifact"]["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.nativeProfile").unwrap();assert_eq!(native["parameters"]["engineVersion"],"4.2.0");assert_eq!(native["parameters"]["deltaVersion"],"4.4.1");
+  let next:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"bar\"]")).unwrap();assert_eq!(next["status"],"compiled","{next}");assert_eq!(next["after"],json!(["bar"]));
+  for (version,profile) in [(weft_databricks::authored_pages::LOCAL_VERSION,weft_databricks::local_spark42::PROFILE),(weft_databricks::authored_pages::LOCAL42_VERSION,weft_databricks::local_spark4::PROFILE)]{let mut bad=r.clone();bad["target"]["backendVersion"]=json!(version);bad["target"]["targetProfile"]=json!(profile);assert!(compile_page_original("ashlar-spark4-pages",&bad,2,None).is_err());}
+ }
+ #[test]fn managed_current_core_pages_compile_four_uc_pins_and_preserve_2_plus_1_continuation(){
+  let mut r:Value=serde_json::from_str(include_str!("../../../tests/engine-catalog/native-ashlar-spark4-request.json")).unwrap();
+  r["interfaceVersion"]=json!("weft-compile/0.2.7");r["timestampComparisonProfile"]=json!("umf-rfc3339-exact-instant/1.0.0");
+  let mut binding:Value=serde_json::from_str(r["target"]["bindingJson"].as_str().unwrap()).unwrap();
+  binding["profile"]=json!("ashlar-managed-current-core/0.1");
+  binding["publication"]["tables"]=json!([
+   {"name":["client_dev","managed_current_test","object_current"],"uuid":"00000000-0000-4000-8000-000000000001","version":11},
+   {"name":["client_dev","managed_current_test","edge_current"],"uuid":"00000000-0000-4000-8000-000000000002","version":12},
+   {"name":["client_dev","managed_current_test","tombstone"],"uuid":"00000000-0000-4000-8000-000000000003","version":13},
+   {"name":["client_dev","managed_current_test","whole_source_history"],"uuid":"00000000-0000-4000-8000-000000000004","version":14}
+  ]);
+  let raw=binding.to_string();let digest=weft_core::json::sha256(raw.as_bytes());
+  r["target"]=json!({"backendId":weft_databricks::managed_current_core::ID,"backendVersion":weft_databricks::authored_pages::MANAGED_CURRENT_VERSION,"targetProfile":weft_databricks::managed_current_core::PROFILE,"bindingJson":raw,"bindingSha256":digest});
+  let p=compile_page_original("ashlar-spark4-pages",&r,2,None).unwrap();
+  assert_eq!(p["status"],"compiled","{p}");assert_eq!(p["version"],"weft.engine-page/0.1");
+  assert_eq!(p["artifact"]["backend"]["backendId"],weft_databricks::managed_current_core::ID);
+  assert_eq!(p["artifact"]["backend"]["targetProfile"],weft_databricks::managed_current_core::PROFILE);
+  assert!(p["artifact"]["sql"].as_str().unwrap().contains("`client_dev`.`managed_current_test`.`object_current` VERSION AS OF 11"));
+  let publication=p["artifact"]["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.publication").unwrap();
+  assert!(publication["parameters"]["nativeProfile"]["warehouseRelease"].is_null());
+  assert_eq!(publication["parameters"]["nativeProfile"]["engine"],"databricks-serverless-spark-jobs");
+  let next:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),"[\"bar\"]")).unwrap();
+  assert_eq!(next["status"],"compiled","{next}");assert_eq!(next["version"],"weft.engine-page/0.1");assert_eq!(next["after"],json!(["bar"]));
+  let next_publication=next["artifact"]["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.publication").unwrap();
+  assert!(next_publication["parameters"]["nativeProfile"]["warehouseRelease"].is_null());
+  assert_eq!(next_publication["parameters"]["nativeProfile"]["engine"],"databricks-serverless-spark-jobs");
+  assert_ne!(next["artifact"]["sql"],p["artifact"]["sql"]);
+  let mut wrong=r.clone();wrong["target"]["targetProfile"]=json!(weft_databricks::local_spark42::PROFILE);
+  assert_ne!(compile_page_original("ashlar-spark4-pages",&wrong,2,None).unwrap()["status"],"compiled");
+ }
  #[test]fn blocked_page_composition_keeps_its_frame_and_original_diagnostics(){let mut r=request();r["sql"]=json!("SELECT unknown FROM absent");let value:Value=serde_json::from_str(&compile_page_json(&json!({"version":"weft.engine-page/0.1","compiler":"truss-runtime","request":r,"pageSize":1}).to_string())).unwrap();assert_eq!(value["version"],"weft.engine-page/0.1");assert_eq!(value["status"],"blocked");assert!(value["original"].is_object());assert!(value.get("artifact").is_none());}
  #[test]fn oversized_page_inputs_refuse_before_parsing(){let large=" ".repeat(4_194_305);let after=" ".repeat(1_048_577);for result in [compile_page_json(&large),check_page_json(&large,"{}","null"),check_page_json("{}",&large,"null"),check_page_json("{}","{}",&after)]{let value:Value=serde_json::from_str(&result).unwrap();assert_eq!(value["status"],"blocked");assert!(value["artifact"].is_null());}}
  #[test]fn page_tampering_and_context_drift_refuse(){let r=request();let p=program(&r);assert_eq!(p["status"],"compiled","{p}");for mode in 0..6{let mut p=p.clone();let mut current=r.clone();match mode{0=>p["pageSize"]=json!(3),1=>p["page"]["keyOutputs"]=json!([0]),2=>p["artifact"]["sql"]=json!("SELECT 1"),3=>current["sql"]=json!("SELECT 1"),4=>current["parameters"]["status"]["family"]=json!("integer"),_=>p["after"]=json!(["o-1"])}let checked:Value=serde_json::from_str(&check_page_json(&p.to_string(),&current.to_string(),"null")).unwrap();assert_eq!(checked["status"],"blocked","{checked}");}for after in ["[]","[1]","{}","[\"a\",\"b\"]"]{let a:Value=serde_json::from_str(&check_page_json(&p.to_string(),&r.to_string(),after)).unwrap();assert_eq!(a["status"],"blocked","{a}");}}

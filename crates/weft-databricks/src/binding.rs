@@ -175,10 +175,25 @@ fn faithful_binding(value:&Value)->Result<Binding>{
 /// Admission proves mapping structure/model agreement, never database custody.
 /// Runtime policy, publication, schema and exact field correspondence are host obligations.
 pub const NATIVE_NULL_ENCODING:&str="ashlar-weft-json-native-null/0.1-candidate";
-pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {admit_mode(catalog,value,false,false)}
-pub(crate) fn admit03(catalog:&Catalog,value:&Value)->Result<Binding> {admit_mode(catalog,value,true,false)}
-pub(crate) fn admit_sdk(catalog:&Catalog,value:&Value)->Result<Binding>{admit_mode(catalog,value,true,true)}
-fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool,sdk:bool)->Result<Binding> {
+pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {admit_mode(catalog,value,false,false,false)}
+pub(crate) fn admit03(catalog:&Catalog,value:&Value)->Result<Binding> {admit_mode(catalog,value,true,false,false)}
+pub(crate) fn admit_sdk(catalog:&Catalog,value:&Value)->Result<Binding>{admit_mode(catalog,value,true,true,false)}
+pub(crate) fn admit_managed_current(catalog:&Catalog,value:&Value)->Result<Binding>{
+    let binding=admit_mode(catalog,value,true,true,true)?;
+    let roles=binding.publication.tables.iter().map(|t|t.name[2].as_str()).collect::<BTreeSet<_>>();
+    let namespaces=binding.publication.tables.iter().map(|t|(&t.name[0],&t.name[1])).collect::<BTreeSet<_>>();
+    if binding.publication.tables.len()!=4 || roles!=BTreeSet::from(["object_current","edge_current","tombstone","whole_source_history"]) || namespaces.len()!=1 {
+        return Err(fail("Managed current-core publication must contain exactly four graph-role table references"));
+    }
+    let object_table=binding.publication.tables.iter().position(|table|table.name[2]=="object_current").ok_or_else(||fail("Missing managed object_current table"))?;
+    let edge_table=binding.publication.tables.iter().position(|table|table.name[2]=="edge_current").ok_or_else(||fail("Missing managed edge_current table"))?;
+    if binding.records.iter().any(|record|record.table!=object_table)
+        || binding.relationships.iter().any(|relationship|relationship.table!=edge_table) {
+        return Err(fail("Managed object and relationship mappings must use their exact current role tables"));
+    }
+    Ok(binding)
+}
+fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool,sdk:bool,managed_current:bool)->Result<Binding> {
     // Core Identity intentionally retains a wider compatibility surface. A
     // backend mapping cannot silently ignore extra members in that identity.
     if let Some(records) = value["records"].as_array() {
@@ -219,10 +234,17 @@ fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool,sdk:bool)->Result
         }
     }
     let binding=faithful_binding(value)?;
-    if binding.profile != PROFILE
-        || binding.layout_revision != "ashlar-delta/0.3"
-        || binding.layout_sha256 != LAYOUT_SHA256
-    {
+    let profile_ok = if managed_current {
+        binding.profile == "ashlar-managed-current-core/0.1"
+            && binding.layout_revision == "ashlar-delta/0.3"
+            && binding.layout_sha256.len() == 64
+            && binding.layout_sha256.bytes().all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
+    } else {
+        binding.profile == PROFILE
+            && binding.layout_revision == "ashlar-delta/0.3"
+            && binding.layout_sha256 == LAYOUT_SHA256
+    };
+    if !profile_ok {
         return Err(fail("Unregistered Ashlar layout or binding profile"));
     }
     if binding.model_pins != catalog.pins() {

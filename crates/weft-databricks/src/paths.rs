@@ -121,6 +121,9 @@ impl Backend for Paths {
 /// Shared original mapping validation; profile admission remains each backend owner.
 pub(crate) fn validate_sources(c: &Context<'_>) -> Result<Validated<Binding>> {
     let b = binding::admit03(c.catalog, c.binding_value)?;
+    validate_sources_with(c, b)
+}
+pub(crate) fn validate_sources_with(c: &Context<'_>, b: Binding) -> Result<Validated<Binding>> {
     for id in &c.selection.records {
         if !b.records.iter().any(|r| &r.logical == id) {
             return Err(fail("Selected original Record lacks mapping"));

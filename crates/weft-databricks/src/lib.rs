@@ -29,6 +29,9 @@ pub mod paths;
 pub mod paths_keys;
 
 pub mod paths_keys_having;
+pub mod paths_keys_having_spark42;
+pub mod managed_current_core;
+pub mod managed_current_pages;
 
 pub mod implicit_arithmetic;
 
@@ -43,6 +46,7 @@ mod raw_numeric;
 mod raw_aggregates;
 
 pub mod local_spark4;
+pub mod local_spark42;
 pub mod local_spark4_fields;
 
 pub mod raw_action;
