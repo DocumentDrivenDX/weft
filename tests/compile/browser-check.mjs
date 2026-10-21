@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import { createReadStream } from 'node:fs';
+import { createReadStream, writeFileSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { readFile, writeFile, stat } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
@@ -52,7 +52,7 @@ try {
  const receipts=[];
  function verifyBatch(cases,responses) {
   if(responses.length!==cases.length)throw new Error('Browser response count differs');
-  responses.forEach((r,i)=>{if(r!==expected[checked+i])throw new Error('WASM/native byte mismatch: '+cases[i].id);receipts.push({id:cases[i].id,requestSha256:createHash('sha256').update(cases[i].request).digest('hex'),actualSha256:createHash('sha256').update(r).digest('hex'),expectedSha256:createHash('sha256').update(expected[checked+i]).digest('hex')})});
+  responses.forEach((r,i)=>{if(r!==expected[checked+i]){if(process.env.WEFT_BROWSER_MISMATCH)writeFileSync(process.env.WEFT_BROWSER_MISMATCH,JSON.stringify({id:cases[i].id,actual:r,expected:expected[checked+i]},null,2)+'\n');throw new Error('WASM/native byte mismatch: '+cases[i].id);}receipts.push({id:cases[i].id,requestSha256:createHash('sha256').update(cases[i].request).digest('hex'),actualSha256:createHash('sha256').update(r).digest('hex'),expectedSha256:createHash('sha256').update(expected[checked+i]).digest('hex')})});
   checked+=cases.length;
  }
  const firstBatch=await nextBatch();if(!firstBatch.length)throw new Error('Empty browser corpus');
@@ -64,7 +64,9 @@ try {
   const io=()=>{throw new Error('Host network IO attempted during compile')};
   globalThis.fetch=io;globalThis.XMLHttpRequest=io;globalThis.WebSocket=io;globalThis.Worker=io;
   const {bindCompiler}=await import(base+'/wrapper.js');
-  const compiler=bindCompiler(api);
+  // The fixed runtime compiler has its own explicit registration; generic
+  // compile_json must continue to refuse this backend when not registered.
+  const compiler=bindCompiler(apiName==='compile_truss_runtime_json'?{compile_json:api[apiName]}:api);
   const compileBatch=batch=>batch.map(c=>apiName==='compile_json_with_conformance_configuration' ? api[apiName](c.request,c.configuration) : compiler.compileJson(c.request));
   globalThis.__weftConfiguredProbe={compileBatch,memory:instance.memory};
   const responses=compileBatch(cases);

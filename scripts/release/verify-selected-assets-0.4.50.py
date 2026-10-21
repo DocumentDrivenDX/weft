@@ -79,7 +79,7 @@ require(re.fullmatch(r'[0-9a-f]{40}', a.source_commit) is not None, 'source comm
 
 run = json.loads(a.linux_run_report.read_text())
 require(run.get('conclusion') == 'success' and run.get('event') == 'workflow_dispatch', 'selected Linux Actions run is not a successful manual build')
-require(run.get('workflowName') == 'Build selected Weft 0.4.49 Linux wheel', 'selected Linux Actions workflow identity mismatch')
+require(run.get('workflowName') == 'Build selected Weft 0.4.50 Linux wheel', 'selected Linux Actions workflow identity mismatch')
 require(run.get('headSha') == a.source_commit, 'selected Linux workflow did not run from the exact source commit')
 linux_sha, mac_sha = sha(a.linux_wheel), sha(a.macos_wheel)
 linux_native, mac_native = wheel_record(a.linux_wheel, 'manylinux'), wheel_record(a.macos_wheel, 'macosx')
@@ -91,7 +91,7 @@ for label, path, wheel, native, target in (
     build = json.loads(path.read_text())
     package = json.loads((a.linux_packaging_report if label == 'linux' else a.macos_packaging_report).read_text())
     require(build.get('status') == package.get('status') == 'passed', f'{label}: build/packaging report not passed')
-    require(build.get('version') == package.get('version') == '0.4.49', f'{label}: wrong version')
+    require(build.get('version') == package.get('version') == '0.4.50', f'{label}: wrong version')
     require(build.get('sourceCommit') == a.source_commit, f'{label}: wrong source commit')
     require(build.get('wheel') == package.get('wheel') == wheel.name, f'{label}: report names another wheel')
     require(build.get('wheelSha256') == package.get('wheelSha256') == sha(wheel), f'{label}: wheel digest mismatch')
@@ -105,7 +105,7 @@ for label, path, wheel, native, target in (
 
 proof = json.loads(a.managed_qualification.read_text())
 require(proof.get('schema') == 'weft-selected-qualification/0.1', 'unsupported qualification report schema')
-require(proof.get('status') == 'passed' and proof.get('version') == '0.4.49', 'managed qualification is not passed for 0.4.49')
+require(proof.get('status') == 'passed' and proof.get('version') == '0.4.50', 'managed qualification is not passed for 0.4.50')
 require(proof.get('sourceCommit') == a.source_commit, 'managed qualification source commit mismatch')
 require(proof.get('linuxWheel') == {'sha256': linux_sha, 'nativeModuleSha256': linux_native['native'], 'recordSha256': linux_native['record']}, 'managed proof does not bind the Linux wheel bytes and RECORD')
 require(proof.get('macosWheel') == {'sha256': mac_sha, 'nativeModuleSha256': mac_native['native'], 'recordSha256': mac_native['record']}, 'managed proof does not bind the macOS wheel bytes and RECORD')
@@ -220,6 +220,8 @@ require(parity.get('schema') == 'weft-local-program-parity/0.2' and parity.get('
 require(parity.get('localWheel') == {'sha256': mac_sha, 'nativeModuleSha256': mac_native['native'], 'recordSha256': mac_native['record']}, 'local parity compile is not bound to selected macOS wheel')
 baseline_sha = sha(a.prior_local_evidence)
 baseline = json.loads(a.prior_local_evidence.read_text())
+baseline_asset = 'local-current/current-native-query-and-sdk-pages-20261021.json'
+require(parity.get('baselinePacket') == {'asset': baseline_asset, 'sha256': baseline_sha}, 'local parity is not bound to the exact retained baseline packet bytes')
 prior_assets = {
     'positive_grouped_graph_query': (a.prior_grouped_gzip, 'positive_grouped_graph_query'),
     'negative_having_query': (a.prior_negative_gzip, 'negative_having_query'),
@@ -261,28 +263,36 @@ parity_cases = parity.get('cases')
 require(type(parity_cases) is dict and set(parity_cases) == set(case_files), 'route-specific parity cases required')
 for case_name in case_files:
     item = parity_cases[case_name]
-    require(item.get('priorEvidence') == {'asset': a.prior_local_evidence.name, 'sha256': baseline_sha}, f'{case_name}: prior local evidence asset digest mismatch')
-    prior_request, prior_artifact = prior_program(*prior_case_key[case_name])
-    local49 = item.get('local49')
-    require(type(local49) is dict, f'{case_name}: .49 local compile evidence required')
-    request_json, artifact_json = local49.get('requestJson'), local49.get('artifactJson')
-    require(type(request_json) is str and type(artifact_json) is str, f'{case_name}: exact .49 local compiler request/artifact required')
-    require(hashlib.sha256(request_json.encode('utf-8')).hexdigest() == local49.get('requestSha256'), f'{case_name}: .49 local request digest mismatch')
-    require(hashlib.sha256(artifact_json.encode('utf-8')).hexdigest() == local49.get('artifactSha256'), f'{case_name}: .49 local artifact digest mismatch')
+    prior_key, page_index = prior_case_key[case_name]
+    prior_path, packet_key = prior_assets[prior_key]
+    baseline_ref = baseline.get('files', {}).get(packet_key)
+    require(item.get('priorEvidence') == {'asset': baseline_asset, 'sha256': baseline_sha}, f'{case_name}: prior local evidence packet digest mismatch')
+    require(item.get('gzipEvidence') == {
+        'asset': prior_path.name,
+        'compressedSha256': sha(prior_path),
+        'reportSha256': baseline_ref.get('sha256') if type(baseline_ref) is dict else None,
+    }, f'{case_name}: prior compressed report digest does not match retained baseline packet')
+    prior_request, prior_artifact = prior_program(prior_key, page_index)
+    local50 = item.get('local50')
+    require(type(local50) is dict, f'{case_name}: .50 local compile evidence required')
+    request_json, artifact_json = local50.get('requestJson'), local50.get('artifactJson')
+    require(type(request_json) is str and type(artifact_json) is str, f'{case_name}: exact .50 local compiler request/artifact required')
+    require(hashlib.sha256(request_json.encode('utf-8')).hexdigest() == local50.get('requestSha256'), f'{case_name}: .50 local request digest mismatch')
+    require(hashlib.sha256(artifact_json.encode('utf-8')).hexdigest() == local50.get('artifactSha256'), f'{case_name}: .50 local artifact digest mismatch')
     request, artifact = json.loads(request_json), json.loads(artifact_json)
     require(canonical_json(request) == request_json and canonical_json(artifact) == artifact_json, f'{case_name}: .49 local request/artifact bytes are not canonical JSON')
-    require(artifact.get('status') == 'compiled' and artifact.get('backend') == prior_artifact.get('backend'), f'{case_name}: .49 local compilation changed the previously qualified backend tuple')
-    require(type(request.get('sql')) is str and request['sql'] == prior_request['sql'], f'{case_name}: .49 compile did not replay the exact prior authored request SQL')
-    require(type(artifact.get('sql')) is str and artifact['sql'] == prior_artifact.get('sql'), f'{case_name}: .49 emitted local target SQL differs from retained .48 native output')
-    require(artifact.get('parameters') == prior_artifact.get('parameters'), f'{case_name}: .49 full ordered parameter slots differ from retained .48 native output')
-    require(artifact.get('bindingSha256') == prior_artifact.get('bindingSha256'), f'{case_name}: .49 local compile changed the retained target binding')
-    require(hashlib.sha256(artifact['sql'].encode('utf-8')).hexdigest() == local49.get('sqlSha256'), f'{case_name}: .49 emitted SQL digest mismatch')
+    require(artifact.get('status') == 'compiled' and artifact.get('backend') == prior_artifact.get('backend'), f'{case_name}: .50 local compilation changed the previously qualified backend tuple')
+    require(type(request.get('sql')) is str and request['sql'] == prior_request['sql'], f'{case_name}: .50 compile did not replay the exact prior authored request SQL')
+    require(type(artifact.get('sql')) is str and artifact['sql'] == prior_artifact.get('sql'), f'{case_name}: .50 emitted local target SQL differs from retained .48 native output')
+    require(artifact.get('parameters') == prior_artifact.get('parameters'), f'{case_name}: .50 full ordered parameter slots differ from retained .48 native output')
+    require(artifact.get('bindingSha256') == prior_artifact.get('bindingSha256'), f'{case_name}: .50 local compile changed the retained target binding')
+    require(hashlib.sha256(artifact['sql'].encode('utf-8')).hexdigest() == local50.get('sqlSha256'), f'{case_name}: .50 emitted SQL digest mismatch')
     slots_sha = hashlib.sha256(canonical_json(artifact['parameters']).encode('utf-8')).hexdigest()
-    require(slots_sha == local49.get('orderedParameterSha256'), f'{case_name}: .49 full ordered parameter digest mismatch')
+    require(slots_sha == local50.get('orderedParameterSha256'), f'{case_name}: .50 full ordered parameter digest mismatch')
 
 a.output.parent.mkdir(parents=True, exist_ok=True)
 a.output.write_text(json.dumps({
-    'status': 'passed', 'tag': 'v0.4.49', 'sourceCommit': a.source_commit,
+    'status': 'passed', 'tag': 'v0.4.50', 'sourceCommit': a.source_commit,
     'linuxBuildRunId': a.linux_run_id, 'linuxBuildWorkflow': run['workflowName'],
     'linuxWheel': {'name': a.linux_wheel.name, 'sha256': linux_sha, 'nativeModuleSha256': linux_native['native'], 'recordSha256': linux_native['record']},
     'macosWheel': {'name': a.macos_wheel.name, 'sha256': mac_sha, 'nativeModuleSha256': mac_native['native'], 'recordSha256': mac_native['record']},

@@ -1,0 +1,91 @@
+{
+  "summary": {
+    "cases": 5,
+    "batchSize": 64,
+    "streamingCorpus": false,
+    "browser": "151.0.7922.34",
+    "playwrightVersion": "1.62.1",
+    "wasmBytes": 17466140,
+    "wasmSha256": "0e67d7443cc1a8d3721f04faa5c831bf84f3edb59cddc27ac7179ab85b14837b",
+    "jsGlueBytes": 12797,
+    "imports": [
+      {
+        "module": "wbg",
+        "name": "__wbg_length_a95b69f903b746c4",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg_charCodeAt_291b921e27833f8e",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_init_externref_table",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_cast_2241b6af4c4b2941",
+        "kind": "function"
+      }
+    ],
+    "initialMemoryBytes": 1900544,
+    "finalMemoryBytes": 2555904,
+    "networkRequests": [
+      "http://weft.spike.test/",
+      "http://weft.spike.test/spike.wasm",
+      "http://weft.spike.test/spike.js",
+      "http://weft.spike.test/wrapper.js"
+    ],
+    "nodeGlobals": false,
+    "byteParity": true
+  },
+  "cases": [
+    {
+      "id": "complete-facts",
+      "requestSha256": "590f5bbb5bb6f071b750d716e56538ea91adb4d479607af282c68304dc8e00f8",
+      "actualSha256": "625fc4f1026fcb0e95179e450aead2a105968c00eec27266ccbda6493bc47432",
+      "expectedSha256": "625fc4f1026fcb0e95179e450aead2a105968c00eec27266ccbda6493bc47432"
+    },
+    {
+      "id": "complete-facts-filtered",
+      "requestSha256": "0ee7ca3c14f5e37869b341f99bb9b54a51f5cd71f215f36d0da8541aa1be74e5",
+      "actualSha256": "d4d858b8b593c0d9e86a396a626c0d00011e0750835fc1cad0ade8e6ad7078ac",
+      "expectedSha256": "d4d858b8b593c0d9e86a396a626c0d00011e0750835fc1cad0ade8e6ad7078ac"
+    },
+    {
+      "id": "plain-field",
+      "requestSha256": "4fe49623dee48bd6121ebc7351cae0397a31fc110b53a5e5c79688fa3396ee69",
+      "actualSha256": "a81271702aa10edb3171a4913c8c7e3d95fbc243f4839c822c5562c920bbc460",
+      "expectedSha256": "a81271702aa10edb3171a4913c8c7e3d95fbc243f4839c822c5562c920bbc460"
+    },
+    {
+      "id": "count",
+      "requestSha256": "d6f51446b9e3ded9475ccb8c78cb3142ab0776f717c6f767ca0be188d17d935d",
+      "actualSha256": "93c43c3c8bbf2b95f6126c266fd7d606fefeb87e144c27e476edaa49af0ee131",
+      "expectedSha256": "93c43c3c8bbf2b95f6126c266fd7d606fefeb87e144c27e476edaa49af0ee131"
+    },
+    {
+      "id": "wrong-binding-pin",
+      "requestSha256": "84aa634edafecf4cac4c9cd71035521b0612df604284c9d6edc7915c15e5bdb5",
+      "actualSha256": "570df3e159a942b2317957e9f0fcee77ecadab3b7755cae176393fd86168ffe6",
+      "expectedSha256": "570df3e159a942b2317957e9f0fcee77ecadab3b7755cae176393fd86168ffe6"
+    }
+  ]
+}

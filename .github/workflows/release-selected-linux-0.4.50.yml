@@ -1,4 +1,4 @@
-name: Build selected Weft 0.4.49 Linux wheel
+name: Build selected Weft 0.4.50 Linux wheel
 on:
   workflow_dispatch:
     inputs:
@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: selected-weft-0.4.49-linux-${{ inputs.source_sha }}
+  group: selected-weft-0.4.50-linux-${{ inputs.source_sha }}
   cancel-in-progress: false
 jobs:
   linux-x86_64:
@@ -21,7 +21,7 @@ jobs:
         with:
           persist-credentials: false
           ref: ${{ inputs.source_sha }}
-      - name: Require the exact reviewed 0.4.49 source
+      - name: Require the exact reviewed 0.4.50 source
         shell: bash
         env:
           EXPECTED_SHA: ${{ inputs.source_sha }}
@@ -35,8 +35,8 @@ jobs:
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
           python - <<'PYTHON'
           import tomllib
-          assert tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']=='0.4.49'
-          assert tomllib.load(open('crates/weft-python/Cargo.toml','rb'))['package']['version']=='0.4.49'
+          assert tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']=='0.4.50'
+          assert tomllib.load(open('crates/weft-python/Cargo.toml','rb'))['package']['version']=='0.4.50'
           PYTHON
       - uses: actions/setup-python@v5
         with:
@@ -58,19 +58,20 @@ jobs:
           python -m venv /tmp/weft-wheel-check
           test "$(find dist -maxdepth 1 -name '*.whl' | wc -l | tr -d ' ')" = 1
           /tmp/weft-wheel-check/bin/python -m pip install --no-deps dist/*.whl
-          /tmp/weft-wheel-check/bin/python scripts/release/verify-wheel-packaging.py --wheel dist/*.whl --version 0.4.49 --output dist/packaging-linux-x86_64.json
+          /tmp/weft-wheel-check/bin/python scripts/release/verify-wheel-packaging.py --wheel dist/*.whl --version 0.4.50 --output dist/packaging-linux-x86_64.json
           python scripts/release/enrich-selected-wheel-report.py \
             --wheel "$(find dist -maxdepth 1 -name '*.whl' -print -quit)" \
             --packaging-report dist/packaging-linux-x86_64.json \
-            --build-report dist/selected-linux-build-0.4.49.json \
+            --build-report dist/selected-linux-build-0.4.50.json \
             --source-commit "$EXPECTED_SHA" --target x86_64-unknown-linux-gnu \
+            --version 0.4.50 \
             --build-run-id "$BUILD_RUN_ID" --workflow-name "$WORKFLOW_NAME"
       - uses: actions/upload-artifact@v4
         with:
-          name: weft-0.4.49-linux-x86_64-${{ inputs.source_sha }}
+          name: weft-0.4.50-linux-x86_64-${{ inputs.source_sha }}
           path: |
             dist/*.whl
             dist/packaging-linux-x86_64.json
-            dist/selected-linux-build-0.4.49.json
+            dist/selected-linux-build-0.4.50.json
           if-no-files-found: error
           retention-days: 90

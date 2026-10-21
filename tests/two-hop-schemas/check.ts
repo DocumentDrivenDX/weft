@@ -10,9 +10,10 @@ const id={documentId:'original',revision:'r1',module:'m',element:'Root'},type={f
 const key={id:'key',fields:[id],types:[type]},rid={documentId:'original',revision:'r1',module:'m',relationship:'link'};
 const hop={identity:rid,inverse:false,from:id,to:id,sourceKey:key,targetKey:key,sourceMultiplicity:{min:0,max:'*'},targetMultiplicity:{min:0,max:'*'},targetLifecycle:'independent'};
 const path={startScan:'root',hops:[hop,hop],span:{start:0,end:20},hopSpans:[{start:1,end:5},{start:6,end:10}]};
-const pin={documentId:'original',revision:'r1',umfVersion:'0.8.0',sha256:'a'.repeat(64)};
+const pin={documentId:'original',revision:'r1',umfVersion:'0.10.0',sha256:'a'.repeat(64)};
 const plan={irVersion:'weft-ir/0.4.0',modulePins:[pin],readProfile:null,requiredCapabilities:[],typeGraph:[],source:{occurrence:'root',record:id,pin},pageKey:null,joins:[],filters:[],groups:[],aggregate:false,outputs:[{name:'paths',expression:{op:'relatedPaths',path,bound:2}}],order:[],limit:null};
 const pv=ajv.getSchema(schemas[0].$id)!;check(pv,plan,true);
+const oldCore=structuredClone(plan);oldCore.modulePins[0].umfVersion='0.8.0';oldCore.source.pin.umfVersion='0.8.0';check(pv,oldCore,false);
 for(const f of [(x:any)=>x.irVersion='weft-ir/0.3.0',(x:any)=>x.pathExpansion={occurrence:'p',path},(x:any)=>x.outputs[0].expression.bound=0,(x:any)=>x.outputs[0].expression.path.hops.pop(),(x:any)=>x.outputs[0].expression.path.nativeId=1,(x:any)=>x.readProfile={kind:'entityPage'}]){let x=structuredClone(plan);f(x);check(pv,x,false)}
 let count=structuredClone(plan);count.aggregate=true;count.outputs=[{name:'n',expression:{op:'countDistinctPathTargets',pathOccurrence:'p',type:{family:'integer',facets:{},nullable:false}}}];check(pv,count,false);count.pathExpansion={occurrence:'p',path};check(pv,count,true);
 const av=ajv.getSchema(schemas[2].$id)!;

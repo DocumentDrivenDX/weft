@@ -1,0 +1,794 @@
+   Compiling memchr v2.8.3
+   Compiling serde_core v1.0.228
+   Compiling libc v0.2.190
+   Compiling serde v1.0.228
+   Compiling cfg-if v1.0.5
+   Compiling zerocopy v0.8.59
+   Compiling parking_lot_core v0.9.12
+   Compiling num-traits v0.2.19
+   Compiling ref-cast v1.0.27
+   Compiling ahash v0.8.12 (/private/tmp/weft-hohfeld-performance/vendor/ahash)
+   Compiling generic-array v0.14.7
+   Compiling typenum v1.20.1
+   Compiling regex-syntax v0.8.11
+   Compiling serde_json v1.0.145
+   Compiling ryu v1.0.23
+   Compiling once_cell v1.21.4
+   Compiling scopeguard v1.2.0
+   Compiling itoa v1.0.18
+   Compiling smallvec v1.16.2
+   Compiling lock_api v0.4.14
+   Compiling aho-corasick v1.1.5
+   Compiling num-integer v0.1.47
+   Compiling num-complex v0.4.6
+   Compiling zmij v1.0.23
+   Compiling foldhash v0.2.0
+   Compiling allocator-api2 v0.2.21
+   Compiling equivalent v1.0.2
+   Compiling borrow-or-share v0.2.4
+   Compiling bit-vec v0.8.0
+   Compiling num-bigint v0.4.8
+   Compiling num-iter v0.1.46
+   Compiling unicode-general-category v1.1.0
+   Compiling block-buffer v0.10.4
+   Compiling parking_lot v0.12.5
+   Compiling bit-set v0.8.0
+   Compiling hashbrown v0.17.1
+   Compiling crypto-common v0.1.7
+   Compiling regex-automata v0.4.18
+   Compiling bytecount v0.6.9
+   Compiling fluent-uri v0.4.1
+   Compiling num-cmp v0.1.0
+   Compiling vsimd v0.8.0
+   Compiling micromap v0.3.0
+   Compiling num-rational v0.4.2
+   Compiling percent-encoding v2.3.2
+   Compiling outref v0.5.2
+   Compiling email_address v0.2.9
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+   Compiling num v0.4.3
+   Compiling referencing v0.56.0
+   Compiling uuid-simd v0.8.0
+   Compiling digest v0.10.7
+   Compiling strum v0.28.0
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling jsonschema-regex v0.56.0
+   Compiling cpufeatures v0.2.17
+   Compiling log v0.4.34
+warning: `ahash` (lib) generated 4 warnings
+   Compiling data-encoding v2.11.1
+   Compiling fraction v0.17.0
+   Compiling base64 v0.22.1
+   Compiling sqlparser v0.63.0
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling sha2 v0.10.9
+   Compiling jsonschema-value v0.56.0
+   Compiling fancy-regex v0.19.2
+   Compiling regex v1.13.1
+   Compiling jsonschema-macros v0.56.0
+   Compiling jsonschema v0.56.0
+   Compiling weft-core v0.1.0 (/private/tmp/weft-hohfeld-performance/crates/weft-core)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:12:24
+   |
+12 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:4:25
+  |
+4 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+7 |     exact,
+  |     ^^^^^
+8 |     ir::{Family, Identity, LogicalType},
+9 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused import: `Value`
+ --> crates/weft-core/src/current_presence.rs:5:23
+  |
+5 | use serde_json::{json,Value};
+  |                       ^^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:838:8
+    |
+838 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:62:15
+   |
+62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:246:19
+    |
+209 | impl Parser {
+    | ----------- method in this implementation
+...
+246 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 55 | impl PathRead {
+    | ------------- methods in this implementation
+...
+120 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:241:12
+    |
+240 | impl Plan {
+    | --------- associated function in this implementation
+241 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:24:9
+   |
+22 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+23 |         alias: Name,
+24 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:9:103
+  |
+9 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `canonical_name` is never used
+   --> crates/weft-core/src/table_query.rs:487:4
+    |
+487 | fn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {
+    |    ^^^^^^^^^^^^^^
+
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-hohfeld-performance/crates/weft-postgresql)
+   Compiling weft-databricks v0.1.0 (/private/tmp/weft-hohfeld-performance/crates/weft-databricks)
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:55:9
+   |
+55 |     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+   |         ----^^^^^^^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: function `lower_current` is never used
+   --> crates/weft-databricks/src/raw_read.rs:232:15
+    |
+232 | pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false,false)}
+    |               ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `holes` is never used
+  --> crates/weft-postgresql/src/native_privilege_probes.rs:36:4
+   |
+36 | fn holes(sql: &str) -> Result<Vec<Hole>> {
+   |    ^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-databricks` (lib) generated 2 warnings (run `cargo fix --lib -p weft-databricks` to apply 1 suggestion)
+   Compiling weft-runtime v0.1.0 (/private/tmp/weft-hohfeld-performance/crates/weft-runtime)
+warning: `weft-core` (lib) generated 12 warnings (run `cargo fix --lib -p weft-core` to apply 4 suggestions)
+warning: unused imports: `Requirement` and `admit_properties`
+    --> crates/weft-postgresql/src/property_definition.rs:1026:39
+     |
+1026 |             comparator_requirements::{admit_properties, registration_key, Requirement},
+     |                                       ^^^^^^^^^^^^^^^^                    ^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` on by default
+
+warning: `weft-postgresql` (lib) generated 1 warning
+warning: unused variable: `t`
+   --> crates/weft-postgresql/tests/security_guarded_transport.rs:235:7
+    |
+235 |  let (t,source)=match &output.output().expression{Expression::Count{logical_type}=>(logical_type,None),Expression::Sum{argument,logical_t...
+    |       ^ help: if this is intentional, prefix it with an underscore: `_t`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: variable does not need to be mutable
+    --> crates/weft-postgresql/src/truss_runtime.rs:1556:13
+     |
+1556 |         let mut r=request("SELECT a.* FROM \"A\" a");
+     |             ----^
+     |             |
+     |             help: remove this `mut`
+     |
+     = note: `#[warn(unused_mut)]` on by default
+
+warning: `weft-postgresql` (test "security_guarded_transport") generated 1 warning
+warning: variable does not need to be mutable
+   --> crates/weft-postgresql/src/row_join_definition.rs:843:13
+    |
+843 |         let mut binding: Value = serde_json::from_str(include_str!(
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+
+warning: `weft-postgresql` (lib test) generated 3 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 3 suggestions)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 46s
+     Running unittests src/lib.rs (/Users/erik/Projects/weft/target/debug/deps/weft_postgresql-414ca652371c9624)
+
+running 207 tests
+test comparator_requirements::tests::selected_field_comparator_requires_exact_type_and_every_requested_operation ... ok
+test comparator_requirements::tests::lexicographic_field_operands_require_both_owned_comparators ... ok
+test comparator_requirements::tests::shared_authored_field_keeps_independent_record_owner_requirements ... ok
+test comparator_requirements::tests::plain_projection_does_not_invent_comparison_and_grouping_requires_equality ... ok
+test current_scalar::tests::effective_scalar_lookup_preserves_original_identity_and_refuses_non_scalar ... ok
+test current_presence::tests::repeated_projection_positions_share_one_cell_mapping_and_header ... ok
+test current_presence::tests::tagged_cell_sql_has_distinct_codec_header_and_actual_parent ... ok
+test current_scalar::tests::actual_original_context_lowers_masked_projection_and_separately_typed_raw_predicate ... ok
+test current_presence::tests::old_profiles_changed_pins_headers_and_field_mappings_refuse ... ok
+test current_presence::tests::transport_retains_five_states_and_row_bags_with_qualified_report ... ok
+test current_presence::tests::identifiers_are_quoted_and_native_text_impossibilities_refuse ... ok
+test current_presence::tests::exact_cell_bytes_and_private_scan_custody_are_required ... ok
+test dbapi::tests::invalid_slots_and_broken_quoted_input_refuse ... ok
+test current_scalar::tests::contributor_bags_keep_count_and_distinct_input_rows_with_empty_aggregate_carrier ... ok
+test dbapi::tests::percent_only_queries_still_require_empty_parameter_tuple ... ok
+test dbapi::tests::preserves_quoted_bytes_and_maps_occurrences_in_emitted_order ... ok
+test dbapi::tests::unicode_multiline_and_crlf_locations_preserve_every_nonparameter_byte ... ok
+test json_codec::tests::distinct_member_identities_cannot_be_collapsed_into_one_object_name ... ok
+test expression::tests::typed_callback_order_and_late_refusal_preserve_atomic_parameters ... ok
+test current_scalar::tests::grouped_field_count_and_private_group_paths_preserve_effective_domain_checks ... ok
+test current_scalar::tests::named_parameters_preserve_original_payload_and_no_field_count_has_eligibility_source ... ok
+test current_scalar::tests::joins_and_distinct_require_each_occurrence_and_matching_effective_scope ... ok
+test leaf_codec_definition::tests::all_leaf_storage_rules_preserve_carriers_and_guard_boolean_casts ... ok
+test leaf_codec_definition::tests::original_leaf_rules_retain_exact_registered_closure ... ok
+test leaf_codec_definition::tests::rehashed_source_unknown_profiles_and_unproven_numeric_selection_refuse ... ok
+test current_scalar::tests::hidden_group_with_count_and_canonical_group_projection_are_distinct_from_unsafe_projection_fold ... ok
+test native_comparator_definition::tests::boolean_cannot_gain_numeric_sum_from_registration ... ok
+test current_scalar::tests::row_versions_and_legacy_unknown_keys_refuse ... ok
+test native_comparator_definition::tests::text_and_decimal_strategies_keep_independent_operations_and_facets ... ok
+test native_comparator_definition::tests::narrowing_and_rehashed_native_meaning_refuse ... ok
+test native_comparator_definition::tests::selected_numeric_sum_sql_preserves_exact_native_types ... ok
+test native_comparator_definition::tests::unsigned64_and_operation_registration_are_independent ... ok
+test current_presence::tests::transport_rejects_weakened_scalar_cells_missing_or_duplicate_rows_and_bad_sources ... ok
+test current_scalar::tests::joined_rows_retain_both_sources_and_aggregates_do_not_claim_contribution ... ok
+test native_catalog_fence::tests::original_fenced_search_and_missing_deployment_refusal ... ok
+test current_scalar::tests::contributor_versions_missing_keys_and_prohibited_uses_refuse_without_downgrade ... ok
+test current_scalar::tests::literal_domain_mismatch_wrong_action_and_prohibited_empty_refuse ... ok
+test native_privilege_probes::tests::emitted_holes_are_distinct_from_quoted_literals_and_identifier_bytes ... ok
+test native_privilege_probes::tests::forged_original_requests_and_unsupported_roles_refuse ... ok
+test current_scalar::tests::original_integer_sum_uses_exact_numeric_accumulation_nullable_text_and_complete_bag ... ok
+test native_privilege_probes::related_tests::original_related_query_and_integrity_roles_remain_one_checked_program ... ok
+test current_scalar::tests::private_row_contribution_is_separate_from_public_columns_and_preserves_v1 ... ok
+test numeric_correspondence::tests::original_mathematical_vectors_and_pairs_without_exponent_expansion ... ok
+test native_privilege_probes::source_semantic_field_tests::related_constant_folded_source_field_is_retained_but_not_fabricated_as_native_used_column ... ok
+test numeric_correspondence::tests::zero_overflow_malformed_parts_and_repeated_budget_are_not_bypassed ... ok
+test presence_definition::tests::altered_meaning_profile_or_original_source_refuses ... ok
+test presence_definition::tests::authored_nullability_does_not_change_absence_empty_or_native_root_rules ... ok
+test comparator_requirements::tests::actual_application_corpus_resolves_home_independent_requirements ... ok
+test native_privilege_probes::tests::original_full_projection_admission_paths_and_stream_slots_are_all_retained ... ok
+test native_privilege_probes::tests::exact_original_read_emits_nonexecuting_typed_var_probes_and_closed_check ... ok
+test presence_definition::tests::original_definition_drives_presence_without_coercion ... ok
+test property_definition::tests::closure_is_authored_and_finite_without_binding_influence ... ok
+test property_definition::tests::native_home_cannot_enter_props_path_without_original_join ... ok
+test current_scalar::tests::sum_context_cannot_route_through_predecessors_even_for_count_or_empty_work ... ok
+test current_scalar::tests::scope_pins_closed_shapes_unknown_sources_and_identifier_injection_refuse_or_quote ... ok
+test native_privilege_probes::search_tests::keyword_without_vector_projection_accepts_original_null_binding ... ok
+test query_wire::tests::bounded_frame_keeps_typed_source_semantics_and_adds_wire_projection_guard_and_ordinal ... ok
+test query_wire::tests::description_keeps_placeholders_and_dbapi_maps_repeats_and_percent_literals ... ok
+test query_wire::tests::float_projection_is_binary64_hex_and_other_scalar_encodings_are_explicit ... ok
+test native_catalog_fence::tests::source_exact_mutation_index_inventory_is_mandatory_projection ... ok
+test query_wire::tests::frame_uses_quoted_aliases_and_rejects_duplicate_or_overflowing_metadata ... ok
+test raw_action::tests::original_source_pins_and_native_markers_are_deterministic ... ok
+test raw_action::tests::unknown_selected_action_and_frame_escape_are_not_ignored ... ok
+test pg18::tests::explicit_pg18_transport_compiles_original_scalar_filter ... ok
+test native_privilege_probes::mutation_tests::bulk_inventories_only_actual_preview_selection_update_and_key_array_protocol ... ok
+test raw_action::tests::wrong_original_source_and_missing_role_mapping_refuse_before_program ... ok
+test raw_action::tests::source_exact_action_retains_complete_original_native_facts ... ok
+test native_privilege_probes::search_tests::original_keyword_and_vector_program_paths_and_typmod_casts_are_preserved ... ok
+test raw_bulk::tests::bounded_set_program_retains_original_sources ... ok
+test raw_bulk::list_parameter_tests::action_value_parameters_remain_scalar_even_when_selection_lists_are_supported ... ok
+test raw_bulk::tests::sentinel_order_and_source_boundaries_refuse ... ok
+test raw_read::raw_read_tests::alternate_relationship_key_preserves_selected_key_and_requires_native_uniqueness ... ok
+test raw_read::raw_read_tests::current010_raw_read_uses_id_fallback_and_retains_known_extensions_opaquely ... ok
+test raw_read::raw_read_tests::empty_membership_preserves_semantic_field_without_fictitious_sql_column_use ... ok
+test raw_read::raw_read_tests::explicit_inverse_self_relationship_retains_canonical_identity_and_default_key ... ok
+test raw_read::raw_read_tests::explicit_schema_binding_and_stream_limit_are_owner_bound ... ok
+test raw_bulk::tests::source_exact_bulk_unions_both_original_admission_packets ... ok
+test raw_read::raw_read_tests::inner_join_refines_only_its_source_ancestor_chain ... ok
+test raw_read::raw_read_tests::native_fk_admission_requires_enforced_immediate_pairs_and_degree_snapshot ... ok
+test raw_read::raw_read_tests::list_membership_retains_bounded_container_and_s8_null_semantics ... ok
+test raw_read::raw_read_tests::raw_read_compiles_deterministically_with_native_role_obligations ... ok
+test raw_read::raw_read_tests::raw_read_grouping_and_decimal_input_refuse_before_sql_exists ... ok
+test raw_read::raw_read_tests::raw_read_model_source_and_target_are_build_time_boundaries ... ok
+test raw_read::raw_read_tests::raw_read_explicit_scale_average_and_exact_distinct_count ... ok
+test raw_read::raw_read_tests::native_projection_retains_original_binary_vector_and_admission ... ok
+test raw_bulk::list_parameter_tests::selection_list_metadata_and_dbapi_transport_are_original ... ok
+test raw_read::raw_read_tests::raw_read_numeric_buckets_keep_exact_group_identity_and_ties ... ok
+test raw_read::raw_read_tests::raw_read_refuses_unreviewable_or_side_effecting_shapes ... ok
+test raw_read::raw_read_tests::raw_read_prefix_rejects_wrong_types_modifiers_and_ungrouped_having ... ok
+test raw_read::raw_read_tests::raw_read_retains_native_privilege_and_complete_cursor_order_provenance ... ok
+test raw_read::raw_read_tests::raw_read_null_safe_distinctness_retains_typed_nullable_parameters ... ok
+test raw_read::raw_read_tests::raw_read_three_edges_admit_and_four_refuse_at_build ... ok
+test raw_read::raw_read_tests::raw_read_prefix_is_binary_not_a_pattern ... ok
+test raw_read::raw_read_tests::selected_original_relationship_unknown_meaning_is_not_erased ... ok
+test raw_read::raw_read_tests::relationship_exists_and_bounded_keys_keep_original_endpoint_key ... ok
+test raw_read::raw_read_tests::signed_numeric_literals_preserve_carrier_and_refuse_signed_expressions ... ok
+test raw_read::raw_read_tests::raw_read_terms_keep_original_index_analyzer_and_native_obligations ... ok
+test read_context_definition::tests::snapshot_custody_is_conditional_but_authority_is_current_in_both_modes ... ok
+test read_context_definition::tests::unknown_obligations_resources_and_serialized_authority_refuse ... ok
+test property_definition::tests::real_authored_field_composes_graph_presence_and_leaf_correspondence ... ok
+test raw_read::raw_read_tests::source_exact_umf010_column_custody_requires_one_caller_selected_version ... ok
+test raw_read::raw_read_tests::raw_read_terms_refuse_missing_ambiguous_or_unsupported_selected_meaning ... ok
+test registered_access::tests::self_join_requests_cannot_move_a_field_to_another_occurrence ... ok
+test related_read::tests::generated_scope_never_shadows_original_target_alias_and_literals_are_not_rewritten ... ok
+test raw_read::raw_read_tests::source_exact_verification_requires_complete_authored_collation_facts ... ok
+test record_definition::tests::fieldless_count_uses_original_record_and_refuses_late_missing_owner_atomically ... ok
+test property_definition::tests::original_decimal_property_compiles_comparator_owned_sum ... ok
+test related_read::tests::original_root_record_wildcard_is_expanded_by_owner_without_source_cap ... ok
+test relational::tests::grouped_join_preserves_order_and_backend_meanings ... ok
+test current_presence::tests::required_absence_and_native_row_budget_boundaries_refuse ... ok
+test relational::tests::global_aggregate_cannot_be_flattened_into_join_or_filter ... ok
+test relational::tests::late_join_refusal_discards_all_source_parameters ... ok
+test result_definition::tests::aggregate_nullability_and_exact_result_facets_are_retained ... ok
+test result_definition::tests::compound_identity_is_finite_and_missing_presence_cannot_be_inferred ... ok
+test result_definition::tests::exact_scalar_types_and_optional_nullable_values_preserve_the_existing_abi ... ok
+test row_custody::tests::admits_all_sixteen_recorded_native_custody_vectors ... ok
+test row_custody::tests::admits_all_ten_recorded_complete_state_native_bags ... ok
+test row_custody::tests::native_bags_require_complete_unique_reachable_tree_structure ... ok
+test row_custody::tests::preserves_native_original_and_null_empty_distinctions ... ok
+test row_custody::tests::rejects_corrupt_custody_without_granting_semantic_correspondence ... ok
+test row_custody::tests::reserves_whole_work_and_charges_failed_and_repeated_admissions ... ok
+test row_custody::tests::tree_index_refuses_corrupt_links_slots_cycles_and_work_bounds ... ok
+test row_custody::tests::tree_rows_reserve_whole_input_and_preserve_unknown_and_orphan_custody ... ok
+test related_read::tests::source_limit_direction_and_original_global_parameters_are_retained ... ok
+test row_join_definition::tests::complete_native_selector_closure_retains_originals_for_both_owner_kinds ... ok
+test related_read::tests::wrong_original_relation_grouped_source_and_unused_global_parameters_refuse ... ok
+test row_join_definition::tests::redirected_columns_foreign_inventory_missing_tokens_and_wrong_owner_refuse ... ok
+test row_value_traversal::tests::native_record_uses_selected_identity_and_original_absence_procedures ... ok
+test row_value_traversal::tests::recorded_native_sequence_preserves_exact_token_and_source_observations ... ok
+test row_join_definition::tests::original_home_composes_exact_join_without_using_candidate_physical_ids ... ok
+test row_join_definition::tests::root_locations_keep_object_and_edge_ownership_and_atomic_slots ... ok
+test native_catalog_fence::tests::original_effect_only_and_composed_mutation_fence ... ok
+test raw_bulk::tests::term_selection_admissions_survive_mutation_composition ... ok
+test search::tests::exact_search_owns_filter_snapshot_and_native_admission ... ok
+test native_privilege_probes::tests::source_exact_search_and_mutations_inventory_original_projection_sql ... ok
+test record_definition::tests::original_record_key_mapping_retains_authored_identity_order_and_types ... ok
+test security_graph_parameters::tests::metadata_ledger_refuses_before_retaining_a_large_clone ... ok
+test search::tests::source_exact_search_preserves_executed_full_column_admissions ... ok
+test security_guarded_transport::tests::bounded_writer_refuses_before_retaining_an_overrun_chunk ... ok
+test security_native_codecs::tests::numeric_raw_cast_boundaries_match_postgresql_storage_format ... ok
+test security_native_codecs::tests::utf8_text_and_jsonb_refuse_nul_without_sanitizing_value ... ok
+test select_definition::aggregate_tests::sum_preserves_exact_family_scale_and_empty_input_nullability ... ok
+test search::tests::unsupported_selected_meaning_never_publishes_sql ... ok
+test select_definition::cursor_bounds_tests::tuple_bounds_refuse_before_callbacks_and_preserve_parameter_state ... ok
+test search::tests::vector_native_version_is_exact_and_retained ... ok
+test table_query::tests::cte_name_scope_does_not_capture_aliases_or_qualified_base_relations ... ok
+test table_query::tests::identity_columns_preserve_base_relation_for_primary_key_grouping ... ok
+test table_query::tests::left_uses_the_native_catalog_string_function ... ok
+test table_query::tests::distinct_sort_membership_uses_exact_expression_identity ... ok
+test table_query::tests::owned_projection_exposes_only_logical_column_names ... ok
+test table_query::tests::postgresql_special_forms_remain_unqualified ... ok
+test table_query::tests::required_outputs_refuse_nullable_aggregates_and_inputs ... ok
+test table_query::tests::sort_alias_is_deterministically_advanced_on_identifier_and_output_collisions ... ok
+test table_query::tests::typed_literals_and_collations_have_a_closed_profile ... ok
+test tests::catalog_slots_keep_signed_native_ids_and_refuse_overflow ... ok
+test tests::identifiers_quote_every_component_and_never_truncate ... ok
+test tests::slots_preserve_exact_values_and_origins_without_deduplicating ... ok
+test truss_browser_binding::layout_compatibility_tests::new_pair_preserves_other_mapping_checks ... ok
+test truss_browser_binding::layout_compatibility_tests::only_complete_known_layout_pairs_admit ... ok
+test security_graph_parameters::tests::original_condition_ordinal_refuses_source_value_codec_and_shape_substitution ... ok
+test truss_mutation::browser_tests::browser_mapping_lowers_original_selection_with_complete_record_preflight ... ok
+test truss_mutation::native066_tests::original_products_native066_selection_lowers_without_repinning_sources ... ok
+test search::tests::ranked_and_filter_term_configuration_obligations_are_executable ... ok
+test truss_runtime::canonical_date_runtime_tests::complete_entity_materializes_each_native_facts_helper_once ... ok
+test truss_runtime::canonical_date_runtime_tests::invalid_dates_and_old_contracts_refuse_without_sql ... ok
+test truss_runtime::canonical_date_runtime_tests::canonical_dates_project_compare_and_preserve_typed_tokens ... ok
+test truss_runtime::cursor_manifest_tests::explicit_cursor_and_ordinary_registrations_keep_distinct_data_contexts ... ok
+test truss_runtime::decimal12_runtime_tests::explicit_decimal12_facet_admission_retains_old_subsets ... ok
+test truss_runtime::cursor_manifest_tests::truss_current010_compile_retains_known_metadata_opaquely ... ok
+test search::tests::source_exact_full_record_and_vector_binding_pins_are_preserved ... ok
+test truss_runtime::decimal12_runtime_tests::new_version_projects_decimal12_and_old_abi_registration_still_refuses ... ok
+test relationship_definition::finite_tests::finite_original_multiplicity_selects_the_correct_direction ... ok
+test truss_runtime::native068_original_names_tests::original_unnamed_record_ids_are_not_invented_sql_names ... ok
+test select_definition::page_order_tests::authored_page_order_cannot_be_replaced_or_partially_compared ... ok
+test truss_runtime::native066_tests::original_native065_mapping_retains_its_original_registration ... ok
+test truss_runtime::decimal12_runtime_tests::decimal_composite_page_and_relationship_key_paths_share_exact_admission ... ok
+test truss_runtime::native068_tests::exact_manifest_wrong_runtime_and_no_automatic_old_cohort_migration ... ok
+test value_definition::tests::cyclic_type_graph_is_finite_and_preserves_original_artifact_bytes ... ok
+test value_definition::tests::authored_definitions_must_match_selected_original_models ... ok
+test value_definition::tests::dangling_unreachable_duplicate_and_corrupt_graphs_refuse ... ok
+test value_definition::tests::graph_scalar_requires_its_exact_admitted_leaf_codec ... ok
+test value_definition::tests::record_member_order_and_scalar_family_are_semantic ... ok
+test value_definition::tests::resolved_topology_cannot_be_replaced_by_another_valid_graph ... ok
+test value_traversal::tests::logical_record_names_and_presence_are_selected_from_original_descriptors ... ok
+test value_definition::tests::record_presence_is_bound_to_exact_original_member_and_field ... ok
+test value_traversal::tests::member_envelopes_distinguish_availability_and_authored_nullability ... ok
+test value_traversal::tests::nested_exact_values_literal_keys_and_empty_containers_survive ... ok
+test value_traversal::tests::nested_wide_containers_charge_pending_work_before_leaf_callbacks ... ok
+test value_traversal::tests::record_assembly_retains_original_order_identity_and_missing_slots ... ok
+test value_traversal::tests::recursive_metadata_is_charged_per_runtime_occurrence_and_missing_members_are_explicit ... ok
+test value_traversal::tests::wide_repeated_values_and_literal_key_work_refuse_without_partial_success ... ok
+test truss_runtime::decimal12_runtime_tests::genuine_unnamed_northwind_binding_compiles_under_current_metadata_profile ... ok
+test truss_runtime::decimal12_runtime_tests::exact_decimal_parameters_keep_text_and_refuse_nonrepresentable_values ... ok
+test truss_runtime::native068_tests::native070_has_its_own_exact_query_and_page_contract ... ok
+test truss_runtime::native068_tests::native068_exact_manifest_has_new_namespace_and_old_versions_refuse ... ok
+test truss_runtime::native066_tests::exact_native066_bundle_has_separate_cohort_and_old_registration_refuses ... ok
+test relationship_definition::tests::original_directed_edges_preserve_direction_keys_and_custody ... ok
+test current_presence::tests::actual_atomic_producer_batches_preserve_pinned_headers_cells_and_empty_denials ... ok
+test search::tests::actual_public_filter_declarations_keep_original_owner_admission ... ok
+test relationship_definition::composite_tests::independent_composite_endpoint_keys_preserve_order_and_refuse_substitution ... ok
+test native_privilege_probes::mutation_tests::original_action_branches_and_nonexecuting_update_insert_rules_are_closed ... ok
+test native_privilege_probes::composed_term_probe_tests::composed_term_and_keyword_guards_are_original_statement_inventory ... ok
+test native_profile::tests::engine_pinned_registration_retains_candidate_gate_and_exact_emission ... ok
+test property_definition::tests::original_unsigned_property_compiles_comparator_owned_sum ... ok
+test property_definition::tests::original_compound_properties_decode_storage_slots_into_logical_members ... ok
+test property_definition::tests::original_signed_integer_properties_admit_and_compile_both_storage_homes ... ok
+test property_definition::tests::original_decimal_domains_compile_both_storage_homes ... ok
+
+test result: ok. 207 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 50.11s
+
+     Running ../../tests/truss-postgresql/binding.rs (/Users/erik/Projects/weft/target/debug/deps/candidate_binding-a9bf5e1cecaab19c)
+
+running 4 tests
+test home_correspondence_refuses_silent_location_fallback ... ok
+test both_home_locations_admit_original_bytes_without_claiming_qualification ... ok
+test shape_hash_profile_and_native_mapping_errors_refuse ... ok
+test rehashed_physical_homes_cannot_redirect_fixed_candidate_templates ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running ../../tests/truss-postgresql/compiler.rs (/Users/erik/Projects/weft/target/debug/deps/candidate_compiler-b8c2c396f8599a1e)
+
+running 18 tests
+test default_candidate_and_altered_bundle_refuse_without_sql ... ok
+test unknown_binding_home_and_execution_meanings_refuse_atomically ... ok
+test unknown_row_obligation_cannot_be_silently_replaced_by_candidate_context ... ok
+test sequence_cannot_fall_back_to_scalar_root_row_storage ... ok
+test unknown_native_join_profile_cannot_select_fixed_row_joins ... ok
+test rehashed_selected_definitions_do_not_override_the_original_umf ... ok
+test relationship_profile_cannot_change_fixed_traversal_meaning ... ok
+test structured_result_keeps_nested_identity_presence_and_exact_numeric_type ... ok
+test composite_key_order_is_not_an_unordered_property_set ... ok
+test candidate_context_cannot_delegate_hidden_state_to_presence_decoding ... ok
+test unknown_selected_codec_cannot_reuse_candidate_type_directed_decoding ... ok
+test unknown_execution_basis_profiles_refuse_before_sql ... ok
+test authored_page_key_missing_wrong_owner_and_wrong_component_refuse_atomically ... ok
+test relational_emission_keeps_owner_selection_and_bag_projection ... ok
+test candidate_registry_compiles_both_homes_and_retains_exact_contracts ... ok
+test selected_page_and_relationship_keys_cannot_replace_registered_meaning ... ok
+test relationship_roles_and_original_definitions_cannot_be_substituted ... ok
+test application_relational_stages_compile_with_typed_result_contracts ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running tests/runtime_release.rs (/Users/erik/Projects/weft/target/debug/deps/runtime_release-ac1e2474ec34b885)
+
+running 2 tests
+test owned_runtime_accepts_only_qualified_releases ... ok
+test page_and_mutation_admission_keep_original_release_identity ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/security_graph.rs (/Users/erik/Projects/weft/target/debug/deps/security_graph-20449811a6b8754c)
+
+running 8 tests
+test public_relationship_refuses_unbounded_logical_salary_against_signed64_native_salary ... ok
+test original_reified_graph_correspondence_preserves_namespaces_and_guards_all_endpoints ... ok
+test original_graph_source_pin_changes_and_ambiguous_mappings_refuse ... ok
+test graph_ordinals_preserve_distinct_constant_sources_and_exact_transformation_payloads ... ok
+test graph_result_checks_complete_ordered_batch_and_rejects_hidden_values ... ok
+test public_relationship_correspondence_uses_original_installed_catalog_and_old_reader_refuses ... ok
+test graph_query_refuses_unsupported_operations_and_context_substitution ... ok
+test graph_query_preserves_actual_output_occurrences_contract_and_subject_slot ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/security_guarded_transport.rs (/Users/erik/Projects/weft/target/debug/deps/security_guarded_transport-42b1169d140ef910)
+
+running 28 tests
+test grouped_sum_disclosed_null_transform_retains_nullable_output ... ok
+test prohibited_and_foreign_sources_never_produce_query_use_guards ... ok
+test operand_value_checks_cover_every_operator_occurrence_on_both_scans ... ok
+test query_use_guards_keep_all_five_operators_and_both_join_scan_occurrences ... ok
+test grouped_sum_of_nullable_original_values_preserves_null_result_domain ... ok
+test mixed_aggregate_contract_keeps_direct_disclosure_and_computed_outputs_distinct ... ok
+test grouped_sum_rejects_null_and_changed_input_lineage ... ok
+test aggregate_result_candidate_preserves_derived_domains_and_old_contract_refusals ... ok
+test relational_parameters_refuse_foreign_graph_sources_without_binding_native_subject ... ok
+test relational_disclosed_cross_family_transform_refuses_before_silent_null_conversion ... ok
+test original_query_action_is_exact_and_missing_grant_refuses_before_query_filters ... ok
+test relational_boolean_group_order_uses_bool_or_and_keeps_absence_key ... ok
+test operand_transform_values_require_original_constant_rule_and_exact_domain ... ok
+test relational_parameters_keep_repeated_named_values_distinct_from_policy_and_subject ... ok
+test relational_sql_count_preserves_subject_and_rule_checks_without_fabricated_field_operands ... ok
+test operand_values_refuse_invalid_later_rows_missing_occurrences_and_foreign_context ... ok
+test relational_sql_keeps_named_input_out_of_sql_and_retains_query_only_operand_guards ... ok
+test guarded_handoff_keeps_source_query_parameter_and_subject_channels_distinct ... ok
+test relational_parameters_preserve_numeric_literals_keyset_order_and_join_occurrences ... ok
+test relational_sql_emits_all_owner_stages_with_pre_query_guards_and_computed_lineage ... ok
+test original_result_batch_passes_correspondence_without_granting_a_release_permit ... ok
+test unsupported_queries_and_injected_authority_inputs_cannot_prepare_handoff ... ok
+test security_descending_order_retains_guarded_selection_and_old_registration_refusal ... ok
+test relational_guard_stages_keep_operand_evaluation_after_capture_validation ... ok
+test postgresql_codecs_preserve_text_and_enforce_declared_integer_domain ... ok
+test complete_guarded_result_refuses_changed_producer_source_or_later_withheld_value ... ok
+test relationship_candidate_keeps_source_observation_terminal_and_closed_old_protocols ... ok
+test separate_relational_handoff_checks_original_operands_results_and_rejects_old_versions ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/table_lifecycle.rs (/Users/erik/Projects/weft/target/debug/deps/table_lifecycle-b9bee17909f29cda)
+
+running 10 tests
+test unselected_native_extension_is_retained_without_granting_or_requiring_its_profile ... ok
+test selected_table_policy_cannot_silently_use_a_legacy_profile ... ok
+test unknown_selected_table_content_and_opaque_commands_refuse ... ok
+test native_table_read_retains_source_and_explicit_unqualified_host_obligations ... ok
+test original_source_whitespace_is_preserved_and_pinned ... ok
+test changed_native_policy_remains_in_source_and_changes_custody_without_sql_reinterpretation ... ok
+test native_count_keeps_table_obligations_and_requires_complete_module_inventory ... ok
+test native_context_and_mapping_tampering_refuses ... ok
+test preserved_unknown_members_cannot_be_selected_as_known_table_meaning ... ok
+test original_fk_custody_is_required_for_native_relationship_bindings ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/table_operation.rs (/Users/erik/Projects/weft/target/debug/deps/table_operation-e216c210ce7cb252)
+
+running 19 tests
+test source_original_sql_is_not_a_request_surface_and_legacy_guards_stay_closed ... ok
+test prepared_operation_module_reuses_source_and_returns_compact_call_programs ... ok
+test mixed_direction_cursor_carries_complete_order_with_original_key_suffix ... ok
+test batch_principal_is_native_and_has_no_caller_slot ... ok
+test transaction_clock_values_are_typed_and_never_become_input_slots ... ok
+test temporal_operations_are_exact_and_do_not_expand_raw_read_admission ... ok
+test declared_domains_enforce_original_enumerations_ranges_and_literal_inputs ... ok
+test bulk_is_one_declared_operation_with_explicit_atomic_bounds_and_no_hidden_write_limit ... ok
+test driver_numeric_values_are_canonical_without_losing_original_tokens ... ok
+test literals_and_user_data_are_only_bound_values_and_native_text_capacity_is_exact ... ok
+test plain_insert_batch_emits_ordered_insert_only_merge_with_source_ordinals ... ok
+test mutation_frames_bound_returning_octets_and_effects_atomically ... ok
+test module_operation_mapping_inputs_and_replay_are_source_checked ... ok
+test keyset_continuation_uses_exact_original_key_tuple_and_lookahead ... ok
+test read_frames_bound_uncompressed_bytes_and_preserve_unprojected_order ... ok
+test source_command_tampering_and_self_rehashed_programs_refuse ... ok
+test requested_read_size_can_only_lower_a_declared_many_or_page_bound ... ok
+test exact_integer_decimal_and_noncanonical_json_integer_bounds_never_round_or_panic ... ok
+test all_declared_read_write_conflict_and_batch_shapes_compile_without_native_authority ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/table_seed.rs (/Users/erik/Projects/weft/target/debug/deps/table_seed-4f854d1ff837186a)
+
+running 3 tests
+test seed_literals_obey_domains_required_fields_unknown_meaning_and_original_capacity ... ok
+test seeds_use_native_operation_domain_admission_and_enforce_original_enum_values ... ok
+test seed_selection_retains_original_source_order_and_bounded_native_chunks ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running ../../tests/truss-query-abi/compiler.rs (/Users/erik/Projects/weft/target/debug/deps/truss_query_abi-0d250927486981ae)
+
+running 4 tests
+test same_abi_preserves_actual_changed_runtime_in_exact_native_parameter ... ok
+test missing_changed_or_extended_abi_refuses ... ok
+test original_named_owned_and_independent_queries_compile ... ok
+test legacy_core_source_and_old_abi_refuse ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/lib.rs (/Users/erik/Projects/weft/target/debug/deps/weft_runtime-7fda4ab814b99d59)
+
+running 47 tests
+test ashlar_tests::ashlar_feature_controls_registration_and_retains_public_artifact ... ok
+test current_presence_graph_requirements_bridge_tests::graph_data_refuses_stored_context_mismatch_before_factory ... ok
+test current_query_object_tests::unsupported_and_legacy_preparations_issue_no_child ... ok
+test current_presence_bridge_tests::old_parent_binding_and_wrong_transport_cannot_enter_new_bridge ... ok
+test current_query_object_tests::scoped_consumer_uses_same_original_parent_and_owned_payload_without_report_import ... ok
+test current_presence_model_requirements_bridge_tests::requirements_use_the_same_original_arc_and_survive_parent_handle_drop ... ok
+test application_lineage_bridge_tests::bridge_returns_exact_original_core_bytes_and_refuses_report_override ... ok
+test engine_read::page_tests::blocked_page_composition_keeps_its_frame_and_original_diagnostics ... ok
+test engine_read::binary_domain_tests::original_optional_scalar_sibling_preserves_missing_and_null ... ok
+test engine_ordered_page::tests::original_related_keys_output_keeps_distinct_sealed_decoder ... ok
+test current_presence_graph_requirements_bridge_tests::graph_data_preserves_original_arc_and_exact_core_report ... ok
+test engine_ordered_page::tests::repeated_field_sort_uses_explicit_selected_key_slots_not_first_field_match ... ok
+test current_query_object_tests::cached_declaration_or_original_context_substitution_refuses_before_consumer ... ok
+test engine_ordered_page::tests::original_joined_tuple_ties_refuse_without_owner_uniqueness_proof ... ok
+test engine_read::binary_domain_tests::current_core10_binary_state_domain_is_distinct_from_ashlar_envelopes ... ok
+test engine_read::related_output_tests::ashlar_related_metadata_faults_refuse_instead_of_guessing ... ok
+test engine_ordered_page::tests::original_mixed_nullish_order_keeps_selected_composite_key_and_full_states ... ok
+test engine_read::page_tests::oversized_page_inputs_refuse_before_parsing ... ok
+test engine_read::sdk_presence_tests::new_presence_profile_requires_original_core010_domain ... ok
+test engine_ordered_page::tests::related_source_and_target_keep_separate_authored_order_keys ... ok
+test engine_read::related_output_tests::ashlar_related_original_preserves_native_representation_and_source_custody ... ok
+test engine_read::sdk_presence_tests::retired_core08_sources_refuse_and_temporal_carriers_remain_held ... ok
+test engine_ordered_page::tests::ordinary_order_key_is_required_exact_and_recompiled ... ok
+test engine_read::sdk_presence_tests::original_scalar_presence_keeps_null_missing_and_source_distinct ... ok
+test engine_read::tests::blocked_original_diagnostics_are_retained ... ok
+test engine_read::related_output_tests::original_truss_related_wrapper_retains_native_key_types_and_representation ... ok
+test engine_read::page_tests::original_page_retains_hidden_key_and_native_continuation ... ok
+test engine_read::related_output_tests::original_required_scalar_null_placement_normalizes_only_after_owner_proof ... ok
+test engine_related_read::tests::original_navigation_identity_context_and_grouped_source_refuse ... ok
+test engine_read::binary_domain_tests::binary_projection_page_delegates_original_scalar_key_cursor ... ok
+test engine_read::tests::native_core010_engine_requests_keep_original_profiles_and_sources ... ok
+test engine_read::page_tests::complete_required_primary_key_asc_page_order_is_owner_proven_redundant ... ok
+test engine_read::tests::original_compiler_and_current_binding_agree_without_losing_decimal_spelling ... ok
+test engine_read::sdk_presence_tests::old_versions_forged_states_source_and_computed_outputs_refuse ... ok
+test engine_related_read::tests::complete_parameter_union_is_owned_across_both_original_queries ... ok
+test engine_export::tests::export_preserves_originals_and_emits_unbounded_ordered_plan ... ok
+test engine_ordered_page::tests::cursor_shape_state_identity_order_and_old_profile_fail_closed ... ok
+test engine_related_read::tests::original_related_export_changes_only_outer_delivery_bound ... ok
+test engine_read::page_tests::original_bounded_related_keys_page_preserves_entity_cursor_and_representation ... ok
+test engine_export::tests::binary_page_export_preserves_original_key_and_representation ... ok
+test engine_read::page_tests::original_ashlar_page_compilation_retains_snapshot_key_obligation ... ok
+test engine_read::tests::changed_context_family_and_program_never_match ... ok
+test engine_read::page_tests::page_tampering_and_context_drift_refuse ... ok
+test engine_export::tests::altered_program_context_and_source_refuse_without_sql ... ok
+test engine_related_read::tests::original_engine_source_selection_preserves_identity_limit_parameters_and_context ... ok
+test engine_related_read::tests::original_related_pages_preserve_source_selection_and_native_key_continuation ... ok
+test current_presence_bridge_tests::actual_presence_bridge_preserves_issued_parent_and_all_producer_artifacts ... ok
+
+test result: ok. 47 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running unittests src/main.rs (/Users/erik/Projects/weft/target/debug/deps/weft_runtime-80842b20c9e68f12)
+
+running 4 tests
+test tests::input_errors_emit_no_response_and_output_errors_are_fatal ... ok
+test tests::ordinary_response_retains_exact_compiler_bytes_and_one_newline ... ok
+test tests::sentinel_bounds_read_even_when_more_input_is_available ... ok
+test tests::exact_byte_boundary_and_multibyte_text ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/security_mapping_cli.rs (/Users/erik/Projects/weft/target/debug/deps/weft_security_mapping-ed4e7a0365b9a492)
+
+running 1 test
+test tests::original_utf8_bytes_and_exact_byte_ceiling ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/compatible_revisions.rs (/Users/erik/Projects/weft/target/debug/deps/compatible_revisions-3b637ba000ffdb71)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/implicit_arithmetic_input.rs (/Users/erik/Projects/weft/target/debug/deps/implicit_arithmetic_input-6c415d65e5793348)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/input.rs (/Users/erik/Projects/weft/target/debug/deps/input-0ceadaa4515cffa7)
+
+running 6 tests
+test actual_stdin_read_error_is_safe_and_nonzero ... ok
+test malformed_utf8_refuses_at_transport_boundary ... ok
+test output_failure_stays_nonzero_even_when_stderr_is_unwritable ... ok
+test actual_stdin_preserves_suffix_after_one_sentinel_byte ... ok
+test one_over_limit_refuses_without_artifact ... ok
+test exact_limit_reaches_normal_compilation ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running tests/paths_cli.rs (/Users/erik/Projects/weft/target/debug/deps/paths_cli-c1e7986fbe36b2a4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/paths_keys_cli.rs (/Users/erik/Projects/weft/target/debug/deps/paths_keys_cli-f8c468edeeace4c5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/paths_keys_having.rs (/Users/erik/Projects/weft/target/debug/deps/paths_keys_having-aaa4caff6b4bd90a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests weft_postgresql
+
+running 7 tests
+test crates/weft-postgresql/src/security_graph_parameters.rs - security_graph_parameters::GraphParameterBindings (line 83) - compile fail ... ok
+test crates/weft-postgresql/src/security_relational_transport.rs - security_relational_transport::GuardedRelationalCandidate (line 89) - compile fail ... ok
+test crates/weft-postgresql/src/security_relational_sql.rs - security_relational_sql::RelationalGraphSql (line 37) - compile fail ... ok
+test crates/weft-postgresql/src/security_relational_parameters.rs - security_relational_parameters::RelationalGraphParameterBindings (line 56) - compile fail ... ok
+test crates/weft-postgresql/src/security_guarded_transport.rs - security_guarded_transport::GuardedGraphCandidate (line 118) - compile fail ... ok
+test crates/weft-postgresql/src/security_query_use_guards.rs - security_query_use_guards::GraphQueryUseGuards (line 81) - compile fail ... ok
+test crates/weft-postgresql/src/security_native_codecs.rs - security_native_codecs::CheckedPostgresqlCodecs (line 115) - compile fail ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.95s
+
+   Doc-tests weft_runtime
+
+running 4 tests
+test crates/weft-runtime/src/lib.rs - CurrentQueryPreparation (line 735) - compile fail ... ok
+test crates/weft-runtime/src/lib.rs - CurrentPresencePreparation (line 1280) - compile fail ... ok
+test crates/weft-runtime/src/lib.rs - CurrentQueryPreparation (line 730) - compile fail ... ok
+test crates/weft-runtime/src/lib.rs - ApplicationLineagePreparation (line 688) - compile fail ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.50s
