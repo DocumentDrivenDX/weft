@@ -1,0 +1,27 @@
+{
+  "scope": "Historical integration prototype on main9137ca2c plus uncommitted Truss query changes. Not selected release qualification.",
+  "observedAt": "2026-10-22T04:08:53.051600+00:00",
+  "baseCommit": "9137ca2c3d6f8982ed0d4770de050ba4be0277ee",
+  "wheelFilename": "weft_sql-0.4.51.dev1-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "692cd7f6d2900ee28dfcc8f6870bff0d1e6711588bbb2764c88807fb59b03bb4",
+  "moduleVersion": "0.4.51-dev.1",
+  "pythonMetadataVersion": "0.4.51.dev1",
+  "wheelSourceWasFrozen": false,
+  "selectedReleaseCohort": false,
+  "coreTests": 355,
+  "backendTests": 199,
+  "backendSeconds": 568.05,
+  "compilerCases": 15,
+  "browserByteParity": true,
+  "browser": "151.0.7922.34",
+  "playwright": "1.62.1",
+  "wasmSha256": "4210531b6331e7fabd35167f38c1507f849308aa58d9769e622169f796ea52e2",
+  "trussNativeDescriptorTests": 3,
+  "trussNativeEntityTests": 4,
+  "notes": [
+    "The generic wrapper boundary correction and exact continuation-byte control are retained in final source; no published artifact changed.",
+    "The number-get import is primitive-only; exact generated glue and raw bad-type controls were reviewed.",
+    "Source freeze, clean cohort build, final Linux/installed/native gates and publication remain required.",
+    "The selected cohort will be rebuilt from public0.4.49 plus this increment; the separate managed UC source/gates remain outside this release."
+  ]
+}

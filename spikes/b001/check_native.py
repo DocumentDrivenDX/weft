@@ -3,7 +3,7 @@ import copy, hashlib, json, os, pathlib, platform, subprocess, sys
 import weft_spike
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 OUT=ROOT/'target'/'b001';OUT.mkdir(parents=True,exist_ok=True)
-corpus=json.loads((ROOT/'docs/helix/03-test/fixtures/cases.json').read_text())
+corpus=json.loads((ROOT/'spikes/b001/fixtures/cases-umf070.json').read_text())
 def adapt(req):
  r=copy.deepcopy(req);r['target']['backendId']='spike.synthetic';return r
 cases=[{'id':c['id'],'request':json.dumps(adapt(c['request']),ensure_ascii=False),'expected':c['expected']} for c in corpus if c['category']=='numeric']

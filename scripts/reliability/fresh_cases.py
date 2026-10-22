@@ -13,7 +13,7 @@ def main():
  out=pathlib.Path(os.environ['WEFT_FRESH_HOST_OUT']);binary=pathlib.Path(os.environ['WEFT_RESOURCE_BINARY'])
  cases=json.loads((out/'resource-cases.json').read_bytes())
  fixture=json.loads((ROOT/'crates/weft-core/tests/security-source-fixture.json').read_bytes());base=next(c['request'] for c in json.loads((ROOT/'docs/helix/03-test/fixtures/cases.json').read_bytes()) if c['expected']['status']=='compiled');request=copy.deepcopy(base)
- document=fixture['resolution']['documents'][0];rawdoc=text(document['document']);request.update(interfaceVersion='weft-compile/0.5.0',dialect='weft-sql/0.2.0',modules=[{'documentJson':rawdoc,'pin':{'documentId':document['document']['id'],'revision':document['revision'],'umfVersion':'0.8.0','sha256':hashlib.sha256(rawdoc.encode()).hexdigest()},'selectedModuleIds':['m']}],security={'version':'umf.security/0.1.0','policyJson':text(fixture['policy']),'ontologyJson':text(fixture['resolution']['ontology'])})
+ document=fixture['resolution']['documents'][0];rawdoc=text(document['document']);request.update(interfaceVersion='weft-compile/0.5.0',dialect='weft-sql/0.2.0',modules=[{'documentJson':rawdoc,'pin':{'documentId':document['document']['id'],'revision':document['revision'],'umfVersion':document['document']['umf'],'sha256':hashlib.sha256(rawdoc.encode()).hexdigest()},'selectedModuleIds':['m']}],security={'version':'umf.security/0.1.0','policyJson':text(fixture['policy']),'ontologyJson':text(fixture['resolution']['ontology'])})
  vectors=[('security-unsupported',request,'WFT-SECURITY-UNSUPPORTED')]
  r=copy.deepcopy(request);r.pop('security');vectors.append(('security-missing',r,'WFT-INPUT'))
  r=copy.deepcopy(request);r['modules'][0]['pin']['sha256']='0'*64;vectors.append(('security-pin',r,'WFT-PIN'))

@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/check-retained-evidence.py", line 101, in <module>
+    visit(value)
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/check-retained-evidence.py", line 98, in visit
+    for child in v.values():visit(child)
+                            ^^^^^^^^^^^^
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/check-retained-evidence.py", line 100, in visit
+    for child in v:visit(child)
+                   ^^^^^^^^^^^^
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/check-retained-evidence.py", line 98, in visit
+    for child in v.values():visit(child)
+                            ^^^^^^^^^^^^
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/check-retained-evidence.py", line 95, in visit
+    receipt=source_custody(p,v['sha256'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/licensed_source.py", line 21, in source_custody
+    raise ValueError('Historical source differs beyond one leading SPDX annotation')
+ValueError: Historical source differs beyond one leading SPDX annotation

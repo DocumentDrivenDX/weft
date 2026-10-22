@@ -1283,7 +1283,7 @@ mod tests {
                 )
                 .unwrap(),
                 BTreeMap::new(),
-                Some(weft_core::application_ir::ReadProfile {
+                Some(weft_core::application_ir::ReadProfile { entity_projection: None,
                     version: "weft-application-read/0.2.0".into(),
                     subset: weft_core::application_ir::Subset::EntityPage,
                 }),
@@ -2329,7 +2329,7 @@ mod tests {
                 )
                 .unwrap(),
                 BTreeMap::new(),
-                Some(weft_core::application_ir::ReadProfile {
+                Some(weft_core::application_ir::ReadProfile { entity_projection: None,
                     version: "weft-application-read/0.2.0".into(),
                     subset: weft_core::application_ir::Subset::EntityPage,
                 }),
@@ -2412,7 +2412,7 @@ mod tests {
                 )
                 .unwrap(),
                 BTreeMap::new(),
-                Some(weft_core::application_ir::ReadProfile {
+                Some(weft_core::application_ir::ReadProfile { entity_projection: None,
                     version: "weft-application-read/0.2.0".into(),
                     subset: weft_core::application_ir::Subset::EntityPage,
                 }),
@@ -2460,7 +2460,7 @@ mod tests {
                         },
                     },
                 )]),
-                Some(weft_core::application_ir::ReadProfile {
+                Some(weft_core::application_ir::ReadProfile { entity_projection: None,
                     version: "weft-application-read/0.2.0".into(),
                     subset: weft_core::application_ir::Subset::EntityPage,
                 }),

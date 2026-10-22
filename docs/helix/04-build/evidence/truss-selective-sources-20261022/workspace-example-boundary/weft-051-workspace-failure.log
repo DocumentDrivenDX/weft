@@ -1,0 +1,462 @@
+compiler-and-evidence	Candidate Rust workspace conformance	﻿2026-10-22T07:50:01.1389775Z ##[group]Run cargo test --workspace --features weft-runtime/truss-postgresql-candidate,weft-runtime/ashlar-databricks-candidate,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1391422Z ^[[36;1mcargo test --workspace --features weft-runtime/truss-postgresql-candidate,weft-runtime/ashlar-databricks-candidate,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked^[[0m
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1424884Z shell: /usr/bin/bash -e {0}
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1425358Z env:
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1425585Z   CARGO_PROFILE_TEST_OPT_LEVEL: 1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1425866Z   CARGO_PROFILE_TEST_DEBUG_ASSERTIONS: true
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1426181Z   CARGO_PROFILE_TEST_OVERFLOW_CHECKS: true
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1426528Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1426952Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1427384Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1427814Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1428187Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1428563Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.1428895Z ##[endgroup]
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.3203798Z    Compiling unicode-ident v1.0.26
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.3217456Z    Compiling proc-macro2 v1.0.107
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.3218547Z    Compiling quote v1.0.47
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.3221683Z    Compiling serde_core v1.0.228
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.3888412Z    Compiling version_check v0.9.5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.5040944Z    Compiling cfg-if v1.0.5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.5110153Z    Compiling libc v0.2.190
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.5376478Z    Compiling autocfg v1.5.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.8525017Z    Compiling memchr v2.8.3
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:01.9066458Z    Compiling serde v1.0.228
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:02.2585042Z    Compiling syn v2.0.119
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:02.3146365Z    Compiling syn v3.0.6
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:03.9986379Z    Compiling zerocopy v0.8.59
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:04.2825010Z    Compiling generic-array v0.14.7
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:04.3917853Z    Compiling serde_json v1.0.145
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:04.4856532Z    Compiling typenum v1.20.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:05.7076370Z    Compiling num-traits v0.2.19
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:05.7946166Z    Compiling ryu v1.0.23
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:05.8456404Z    Compiling itoa v1.0.18
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:06.2731840Z    Compiling ref-cast v1.0.27
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:06.3762432Z    Compiling parking_lot_core v0.9.12
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:06.4990592Z    Compiling block-buffer v0.10.4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:06.5820644Z    Compiling crypto-common v0.1.7
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:06.6464828Z    Compiling ahash v0.8.12 (/home/runner/work/weft/weft/vendor/ahash)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:06.8006319Z    Compiling digest v0.10.7
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:06.9681870Z    Compiling sqlparser_derive v0.6.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:07.3486978Z    Compiling ref-cast-impl v1.0.27
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:07.6146227Z    Compiling once_cell v1.21.4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:07.7806557Z    Compiling serde_derive v1.0.228
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:07.8356994Z    Compiling cpufeatures v0.2.17
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:07.8676299Z    Compiling log v0.4.34
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:08.0565813Z    Compiling sqlparser v0.63.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:08.4084946Z    Compiling sha2 v0.10.9
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:11.7940714Z    Compiling equivalent v1.0.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:11.8136189Z    Compiling foldhash v0.2.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:11.9166484Z    Compiling allocator-api2 v0.2.21
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:12.2376331Z    Compiling hashbrown v0.17.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:12.6395822Z    Compiling num-integer v0.1.47
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:12.8927754Z    Compiling heck v0.5.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:13.0696322Z    Compiling regex-syntax v0.8.11
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:14.9426354Z    Compiling aho-corasick v1.1.5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:15.7296444Z    Compiling winnow v1.0.4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:16.8396359Z    Compiling scopeguard v1.2.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:16.9716430Z    Compiling smallvec v1.16.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:17.0308892Z    Compiling toml_parser v1.1.3+spec-1.1.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:17.3182540Z    Compiling lock_api v0.4.14
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:17.5081501Z    Compiling regex-automata v0.4.18
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:21.6216226Z    Compiling num-bigint v0.4.8
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:21.8096773Z    Compiling indexmap v2.14.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:22.7638373Z    Compiling bit-vec v0.8.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:22.9506332Z    Compiling borrow-or-share v0.2.4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:23.0796209Z    Compiling toml_datetime v1.1.1+spec-1.1.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:23.2658375Z    Compiling toml_edit v0.25.15+spec-1.1.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4438371Z warning: unexpected `cfg` condition value: `128`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4459765Z    --> vendor/ahash/src/fallback_hash.rs:164:11
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4465919Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4516066Z 164 |     #[cfg(target_pointer_width = "128")]
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4516710Z     |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4546033Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4556005Z     = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4576620Z     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4606039Z     = note: `#[warn(unexpected_cfgs)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4635573Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4665914Z warning: unexpected `cfg` condition name: `fuzzing`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4666861Z   --> vendor/ahash/src/random_state.rs:48:58
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4695957Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4726164Z 48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4755998Z    |                                                          ^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4756662Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4786362Z    = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4816051Z    = help: consider using a Cargo feature instead
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4846214Z    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4846973Z             [lints.rust]
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4876273Z             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4906457Z    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4907872Z    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4935672Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4966122Z warning: unexpected `cfg` condition name: `fuzzing`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4985913Z   --> vendor/ahash/src/random_state.rs:68:54
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.4995956Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5026102Z 68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5055927Z    |                                                      ^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5065637Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5085896Z    = help: consider using a Cargo feature instead
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5116085Z    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5125661Z             [lints.rust]
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5146021Z             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5166631Z    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5170708Z    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5172484Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5966809Z warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.5975984Z   --> vendor/ahash/src/convert.rs:69:8
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6035894Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6095976Z 64 | pub(crate) trait ReadFromSlice {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6156136Z    |                  ------------- methods in this trait
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6185913Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6216051Z 69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6246113Z    |        ^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6246703Z 70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6253746Z    |        ^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6254305Z 71 |     fn read_last_u16(&self) -> u16;
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6254903Z    |        ^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6255680Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6256156Z 75 |     fn read_last_u128x2(&self) -> [u128; 2];
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6256759Z    |        ^^^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6257332Z 76 |     fn read_last_u128x4(&self) -> [u128; 4];
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6257902Z    |        ^^^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6258372Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6258866Z    = note: `#[warn(dead_code)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6259322Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6816121Z warning: `ahash` (lib) generated 4 warnings
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:24.6835811Z    Compiling fluent-uri v0.4.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:25.4126283Z    Compiling bit-set v0.8.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:25.5091322Z    Compiling num-rational v0.4.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:27.6175238Z    Compiling parking_lot v0.12.5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:27.8456082Z    Compiling num-iter v0.1.46
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:27.9210650Z    Compiling num-complex v0.4.6
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:28.4406400Z    Compiling micromap v0.3.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:28.7256265Z    Compiling zmij v1.0.23
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:28.8307454Z    Compiling percent-encoding v2.3.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:28.9542289Z    Compiling referencing v0.56.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:30.5203941Z    Compiling num v0.4.3
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:30.8796560Z warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:30.8802117Z    Compiling fancy-regex v0.19.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:32.6366316Z    Compiling proc-macro-crate v3.5.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:33.1094262Z    Compiling regex v1.13.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:33.5286311Z    Compiling jsonschema-regex v0.56.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:34.6526582Z    Compiling unicode-general-category v1.1.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:38.5144775Z    Compiling jsonschema-macros-core v0.56.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:41.0389353Z    Compiling fraction v0.17.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:43.2106284Z    Compiling strum_macros v0.28.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:43.5506112Z    Compiling bytecount v0.6.9
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:43.8730311Z    Compiling outref v0.5.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:43.9146318Z    Compiling num-cmp v0.1.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:44.1796215Z    Compiling vsimd v0.8.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:45.2605516Z    Compiling strum v0.28.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:45.3266275Z    Compiling uuid-simd v0.8.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:45.9096303Z    Compiling jsonschema-value v0.56.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:48.9166263Z    Compiling jsonschema-macros v0.56.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:53.6721659Z    Compiling email_address v0.2.9
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:54.2452356Z    Compiling data-encoding v2.11.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:54.9505590Z    Compiling jsonschema v0.56.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:59.2014117Z    Compiling base64 v0.22.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:59.7958845Z    Compiling getrandom v0.3.4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:50:59.9986401Z    Compiling wasm-bindgen-shared v0.2.105
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:00.3754854Z    Compiling rand_core v0.9.5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:00.5987318Z    Compiling rustversion v1.0.23
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:00.8193542Z    Compiling ppv-lite86 v0.2.21
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:01.1946529Z    Compiling rand_chacha v0.9.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:01.4794363Z    Compiling rand v0.9.5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:01.6446260Z    Compiling rand_xorshift v0.4.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:01.7449742Z    Compiling bumpalo v3.20.3
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:01.9445506Z    Compiling unarray v0.1.4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:01.9945447Z    Compiling bitflags v2.13.2
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:02.1126290Z    Compiling proptest v1.11.0
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:02.3776461Z    Compiling wasm-bindgen-macro-support v0.2.105
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:05.1256485Z    Compiling wasm-bindgen v0.2.105
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:05.9546420Z    Compiling wasm-bindgen-macro v0.2.105
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:07.4026704Z    Compiling weft-core v0.1.0 (/home/runner/work/weft/weft/crates/weft-core)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:11.9897893Z warning: unused import: `Value`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:11.9926144Z   --> crates/weft-core/src/application_lineage.rs:12:24
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:11.9955932Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:11.9986059Z 12 | use serde_json::{json, Value};
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0015970Z    |                        ^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0045915Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0076027Z    = note: `#[warn(unused_imports)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0105455Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0342926Z warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0356051Z  --> crates/weft-core/src/application_resolve.rs:4:25
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0405920Z   |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0416004Z 4 |     application_model::{Descriptor, Shape},
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0416585Z   |                         ^^^^^^^^^^  ^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0417015Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0417317Z 7 |     exact,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0417610Z   |     ^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0418023Z 8 |     ir::{Family, Identity, LogicalType},
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0418559Z 9 |     model::{Catalog, Record},
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0418971Z   |                      ^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0419261Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0419532Z warning: unused import: `Identity`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0445989Z  --> crates/weft-core/src/application_scope.rs:9:18
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0475815Z   |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0476316Z 9 |     ir::{Family, Identity, LogicalType},
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0476819Z   |                  ^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:12.0477087Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:17.2276318Z    Compiling target-lexicon v0.13.5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:17.8886293Z    Compiling pyo3-build-config v0.27.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:19.4486488Z    Compiling pyo3-macros-backend v0.27.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:19.5416802Z    Compiling pyo3-ffi v0.27.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:19.6947262Z    Compiling weft-spike-core v0.1.0 (/home/runner/work/weft/weft/spikes/b001/core)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:23.1046270Z    Compiling memoffset v0.9.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:27.8707272Z    Compiling pyo3 v0.27.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:27.9991400Z    Compiling pyo3-macros v0.27.1
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:28.8666251Z    Compiling unindent v0.2.4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:29.0498369Z    Compiling indoc v2.0.7
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:40.1627961Z    Compiling js-sys v0.3.82
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.7956484Z warning: unused variable: `sdk_read_parameters`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.7986064Z    --> crates/weft-core/src/compile.rs:442:21
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.8015994Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.8046321Z 442 |                 let sdk_read_parameters=req.parameters.clone().unwrap_or_default();
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.8076246Z     |                     ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.8105910Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.8136043Z     = note: `#[warn(unused_variables)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:44.8165426Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1776164Z warning: associated function `new` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1806190Z    --> crates/weft-core/src/application_ir.rs:188:16
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1836032Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1865988Z 185 | impl ReadOrder {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1896297Z     | -------------- associated function in this implementation
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1925891Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1977277Z 188 |  pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.1978567Z     |                ^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2015875Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2045952Z     = note: `#[warn(dead_code)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2075479Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2105983Z warning: struct `PlanSchema03` is never constructed
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2176356Z    --> crates/weft-core/src/arithmetic_application_resolve.rs:838:8
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2187982Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2225845Z 838 | struct PlanSchema03;
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2256044Z     |        ^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2275424Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2285888Z warning: function `derive` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2286594Z   --> crates/weft-core/src/security_scan_obligations.rs:62:15
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2287554Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2288613Z 62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2289916Z    |               ^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2290179Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2290376Z warning: method `finish` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2290926Z    --> crates/weft-core/src/syntax.rs:246:19
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2291401Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2291701Z 209 | impl Parser {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2292113Z     | ----------- method in this implementation
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2292576Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2292982Z 246 |     pub(crate) fn finish(&mut self) -> Result<()> {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2293496Z     |                   ^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2293763Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2294084Z warning: methods `terminal_record` and `terminal_key` are never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2294709Z    --> crates/weft-core/src/path_ir.rs:120:12
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2295429Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2295826Z  55 | impl PathRead {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2296284Z     | ------------- methods in this implementation
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2296841Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2297239Z 120 |     pub fn terminal_record(&self) -> &Identity {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2297774Z     |            ^^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2298215Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2298659Z 123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2299231Z     |            ^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2299509Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2299732Z warning: associated function `new` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2300330Z    --> crates/weft-core/src/path_ir.rs:241:12
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2300846Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2301173Z 240 | impl Plan {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2301660Z     | --------- associated function in this implementation
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2302307Z 241 |     pub fn new(p: PlanParts) -> Result<Self> {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2302834Z     |            ^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2303028Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2303336Z warning: field `span` is never read
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2325972Z   --> crates/weft-core/src/path_query.rs:24:9
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2326593Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2326973Z 22 |     CountDistinctPathTargets {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2327462Z    |     ------------------------ field in this variant
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2327962Z 23 |         alias: Name,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2328373Z 24 |         span: Span,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2328760Z    |         ^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2329074Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2329879Z    = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2330628Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2330774Z warning: field `field` is never read
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2331261Z  --> crates/weft-core/src/security_rule_occurrences.rs:9:103
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2331832Z   |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2356611Z 9 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2385978Z   |                                                                                            ---------- ^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2386831Z   |                                                                                            |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2387513Z   |                                                                                            field in this variant
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2388122Z   |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2416615Z   = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2445566Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2475917Z warning: function `canonical_name` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2505896Z    --> crates/weft-core/src/table_query.rs:487:4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2535843Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2566293Z 487 | fn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2595915Z     |    ^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:51:57.2625462Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:13.5176578Z    Compiling weft-postgresql v0.1.0 (/home/runner/work/weft/weft/crates/weft-postgresql)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3466869Z warning: function `holes` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3496187Z   --> crates/weft-postgresql/src/native_privilege_probes.rs:36:4
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3496873Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3526150Z 36 | fn holes(sql: &str) -> Result<Vec<Hole>> {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3526789Z    |    ^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3556067Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3556648Z    = note: `#[warn(dead_code)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:24.3585561Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:40.4468795Z    Compiling weft-databricks v0.1.0 (/home/runner/work/weft/weft/crates/weft-databricks)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4676134Z warning: unused variable: `ordered`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4706441Z    --> crates/weft-databricks/src/candidate/application.rs:201:5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4735840Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4766036Z 201 |     ordered:Option<&OrderedPage>,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4796138Z     |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_ordered`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4825779Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4855896Z     = note: `#[warn(unused_variables)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.4885631Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8466333Z warning: variable does not need to be mutable
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8496646Z   --> crates/weft-databricks/src/candidate/navigation.rs:55:9
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8515881Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8546297Z 55 |     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8547220Z    |         ----^^^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8547620Z    |         |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8547954Z    |         help: remove this `mut`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8548358Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8548735Z    = note: `#[warn(unused_mut)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8549078Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8549283Z warning: variable does not need to be mutable
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8549931Z   --> crates/weft-databricks/src/candidate/navigation.rs:80:9
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8550538Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8550878Z 80 |     let mut order = source
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8551380Z    |         ----^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8551763Z    |         |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8585862Z    |         help: remove this `mut`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8605521Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8636058Z warning: variable does not need to be mutable
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8636904Z    --> crates/weft-databricks/src/candidate/navigation.rs:143:9
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8637540Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8637937Z 143 |     let mut obligations=admitted.obligations;
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8638490Z     |         ----^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8638895Z     |         |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8639254Z     |         help: remove this `mut`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:42.8639577Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8516375Z warning: function `lower_current` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8517152Z    --> crates/weft-databricks/src/raw_read.rs:232:15
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8517651Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8518444Z 232 | pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false,false)}
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8519394Z     |               ^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8519834Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8520256Z     = note: `#[warn(dead_code)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:43.8520594Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0791893Z warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0816057Z  --> crates/weft-core/src/application_resolve.rs:4:25
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0836017Z   |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0866087Z 4 |     application_model::{Descriptor, Shape},
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0875740Z   |                         ^^^^^^^^^^  ^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0889896Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0893208Z 7 |     exact,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0893987Z   |     ^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0894544Z 8 |     ir::{Family, Identity, LogicalType},
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0895510Z 9 |     model::{Catalog, Record},
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0896047Z   |                      ^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0896581Z   |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0897106Z   = note: `#[warn(unused_imports)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:52:47.0898086Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:36.1726708Z warning: `weft-databricks` (lib) generated 5 warnings (run `cargo fix --lib -p weft-databricks` to apply 3 suggestions)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:36.9104057Z    Compiling weft-spike-python v0.1.0 (/home/runner/work/weft/weft/spikes/b001/python)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:37.6726583Z    Compiling weft-spike-wasm v0.1.0 (/home/runner/work/weft/weft/spikes/b001/wasm)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7686098Z warning: method `terminal_key` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7716004Z    --> crates/weft-core/src/path_ir.rs:123:12
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7725823Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7726264Z  55 | impl PathRead {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7726764Z     | ------------- method in this implementation
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7727299Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7727718Z 123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7728291Z     |            ^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:53:39.7728573Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:42.9496703Z warning: `weft-core` (lib) generated 13 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:42.9526260Z    Compiling weft-backend-probe v0.0.0 (/home/runner/work/weft/weft/tests/register-backend/probe)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1451312Z warning: unreachable pattern
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1476226Z    --> tests/register-backend/probe/src/../../fixture.rs:212:13
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1505781Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1536084Z 212 |             _ => return Err(error("WFT-CAPABILITY")),
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1565823Z     |             ^ no value can reach this
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1595711Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1626093Z note: multiple earlier patterns match some of the same values
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1655942Z    --> tests/register-backend/probe/src/../../fixture.rs:212:13
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1685673Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1715962Z 185 |             Plan::V03(_) => return Err(error("WFT-BACKEND-VERSION")),
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1745799Z     |             ------------ matches some of the same values
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1775733Z 186 |             Plan::V01(p) => {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1805740Z     |             ------------ matches some of the same values
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1835580Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1865717Z 198 |             Plan::V02(p) => {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1895758Z     |             ------------ matches some of the same values
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1925569Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1955728Z 212 |             _ => return Err(error("WFT-CAPABILITY")),
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.1985733Z     |             ^ collectively making this unreachable
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2015822Z     = note: `#[warn(unreachable_patterns)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2045396Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2076186Z warning: variants `MissingColumns`, `UnknownSource`, `WrongNullable`, `Upgrade`, and `Panics` are never constructed
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2105861Z   --> tests/register-backend/probe/src/../../fixture.rs:13:5
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2135681Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2165733Z 10 | pub(crate) enum Behavior {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2195800Z    |                 -------- variants in this enum
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2225775Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2255872Z 13 |     MissingColumns,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2285638Z    |     ^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2315646Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2345812Z 18 |     UnknownSource,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2375646Z    |     ^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2405613Z 19 |     WrongNullable,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2435615Z    |     ^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2465595Z ...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2495657Z 22 |     Upgrade,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2525637Z    |     ^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2555641Z 23 |     Panics,
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2585608Z    |     ^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2615633Z    |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2646207Z    = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2675715Z    = note: `#[warn(dead_code)]` on by default
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2705387Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2735727Z warning: function `modules` is never used
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2765848Z    --> tests/register-backend/probe/src/../../fixture.rs:296:15
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2795600Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2825920Z 296 | pub(crate) fn modules() -> Vec<weft_core::model::ModuleInput> {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2855646Z     |               ^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:43.2885375Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:46.0826047Z warning: `weft-postgresql` (lib) generated 1 warning
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:46.2686202Z warning: `weft-backend-probe` (lib) generated 3 warnings
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:46.2716093Z    Compiling weft-runtime v0.1.0 (/home/runner/work/weft/weft/crates/weft-runtime)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2156331Z error[E0425]: cannot find function `prepare_application_lineage_json` in crate `weft_runtime`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2216097Z    --> crates/weft-runtime/examples/generate_json.rs:6:44
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2241453Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2276250Z   6 |         Some("application")=>weft_runtime::prepare_application_lineage_json(&raw),
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2322522Z     |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in `weft_runtime`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2376004Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2435940Z note: found an item that was configured out
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2437127Z    --> /home/runner/work/weft/weft/crates/weft-runtime/src/lib.rs:713:8
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2495972Z     |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2555977Z 712 | #[cfg(feature = "application-lineage-candidate")]
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2586149Z     |       ----------------------------------------- the item is gated behind the `application-lineage-candidate` feature
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2616533Z 713 | pub fn prepare_application_lineage_json(request: &str) -> weft_core::error::Result<String> {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2675849Z     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2735401Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2766164Z error[E0425]: cannot find function `prepare_current_query_designations_json` in crate `weft_runtime`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2796017Z     --> crates/weft-runtime/examples/generate_json.rs:7:44
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2855670Z      |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2886132Z    7 |         Some("designation")=>weft_runtime::prepare_current_query_designations_json(&raw),
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2945985Z      |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in `weft_runtime`
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.2975867Z      |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3018462Z note: found an item that was configured out
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3045887Z     --> /home/runner/work/weft/weft/crates/weft-runtime/src/lib.rs:1150:8
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3075560Z      |
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3076338Z 1149 | #[cfg(feature = "application-lineage-candidate")]
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3106135Z      |       ----------------------------------------- the item is gated behind the `application-lineage-candidate` feature
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3196827Z 1150 | pub fn prepare_current_query_designations_json(request: &str) -> weft_core::error::Result<String> {
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3197889Z      |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3198276Z 
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3198674Z For more information about this error, try `rustc --explain E0425`.
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3199692Z error: could not compile `weft-runtime` (example "generate_json") due to 2 previous errors
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:54:55.3200498Z warning: build failed, waiting for other jobs to finish...
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:56:19.8608830Z warning: `weft-core` (lib test) generated 7 warnings (5 duplicates) (run `cargo fix --lib -p weft-core --tests` to apply 1 suggestion)
+compiler-and-evidence	Candidate Rust workspace conformance	2026-10-22T07:56:19.8759881Z ##[error]Process completed with exit code 101.

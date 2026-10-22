@@ -84,6 +84,23 @@ with tempfile.TemporaryDirectory(prefix='weft-retained-replay-') as replay_root:
   if name=='audit-native-profile-scopes.py':
    assert report['distinctArtifactScopes']==21 and report['orderedComparisons']==65
   results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})
+def saved_source_custody(path, digest):
+ # Historical matrix claims bind the original checkpoint, not current source.
+ # Current-source qualification is mandatory in separate fresh CI steps.
+ try:
+  return source_custody(path,digest)
+ except ValueError:
+  workspace=ROOT/'docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json'
+  checkpoint=json.loads(workspace.read_bytes())['sourceCheckpoint']
+  assert isinstance(checkpoint,str) and re.fullmatch(r'[0-9a-f]{40}',checkpoint)
+  subprocess.run(['git','merge-base','--is-ancestor',checkpoint,'HEAD'],cwd=ROOT,check=True)
+  relative=path.relative_to(ROOT).as_posix()
+  original=subprocess.run(['git','show',checkpoint+':'+relative],cwd=ROOT,check=True,capture_output=True).stdout
+  assert hashlib.sha256(original).hexdigest()==digest,relative
+  return {'currentSha256':hashlib.sha256(path.read_bytes()).hexdigest(),'historicalSha256':digest,
+          'adjustment':'original-checkpoint-git-object','checkpoint':checkpoint,
+          'currentImplementationEquivalent':False}
+
 references={}
 source_annotations={}
 for name in ['B-007-acceptance-matrix.json','B-007-support-inventory.json']:
@@ -92,7 +109,7 @@ for name in ['B-007-acceptance-matrix.json','B-007-support-inventory.json']:
   if isinstance(v,dict):
    if set(v)=={'path','sha256'}:
     p=ROOT/v['path'];assert p.is_relative_to(ROOT) and p.exists()
-    receipt=source_custody(p,v['sha256'])
+    receipt=saved_source_custody(p,v['sha256'])
     if receipt['adjustment']!='none':source_annotations[v['path']]=receipt
     references[v['path']]=v['sha256']
    for child in v.values():visit(child)
@@ -142,8 +159,8 @@ assert {r['id'] for r in review['criteria']}=={r['id'] for r in matrix['criteria
 for row in review['criteria']:
  assert row['assessment']=='passed' and row['reason']
  for reference in row['evidence']:
-  receipt=source_custody(ROOT/reference['path'],reference['sha256'])
+  receipt=saved_source_custody(ROOT/reference['path'],reference['sha256'])
   if receipt['adjustment']!='none':source_annotations[reference['path']]=receipt
 results.append({'component':'final-workspace-and-criterion-records','result':{'status':'passed','candidateTests':241,'qualifiedTests':242,'criteria':30,'sourceHashesVerified':len(json.loads(source_bytes))},'historicalSourceCustody':historical_custody,'scope':'Saved logs and immutable historical Git object custody only; current files and fresh CI are qualified separately at the final pushed head.'})
-report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'sourceAnnotations':source_annotations,'scope':'Retained receipt reconciliation and synthetic verifier controls only. Exact historical source bodies may carry one explicitly recorded leading SPDX comment; other changes refuse. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
+report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'sourceAnnotations':source_annotations,'scope':'Retained receipt reconciliation and synthetic verifier controls only. Historical source custody uses exact current bytes, one recorded SPDX annotation, or exact original ancestor-checkpoint Git bytes; the latter does not assert current implementation equivalence. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
 print(json.dumps({'status':'passed','components':len(results),'verifiedEvidenceReferences':len(references),'sourceAnnotations':source_annotations,'releaseQualified':False}))

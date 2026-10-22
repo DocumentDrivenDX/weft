@@ -116,3 +116,18 @@ not this execution record.
 ## Current acceptance determination
 
 The [30-criterion matrix](../../04-build/evidence/B-007-acceptance-matrix.json) records this story's passing P0 assertions, covering evidence and exact limits. Both current-source workspace compositions pass; qualified native compiler and actual Python/browser correspondence are separately retained. Historical component observations remain scoped to their recorded revisions. Distribution and production execution are separately qualified; the final CI/review/merge gates remain open.
+
+## Arras metadata source-custody controls
+
+US-003-AC2/AC3 require original-source controls through the actual
+`compile_truss_runtime_json` native Python and Chromium/WASM entrypoints in
+`tests/truss-facts/check.py` and its `cases.json` corpus. Preserve the historical
+Hohfeld case. Add an Arras Record/Field metadata case with its exact document
+version0.1.0 declaration and unchanged source SHA in modelPins. Missing,
+unsupported0.2.0, null/malformed declarations or payloads, wrong carriers and
+unknown selected extensions must block without SQL. A two-document control must
+prove a supported declaration in one document cannot admit another's payload.
+Unselected nested unknown content must remain original. These controls do not
+qualify presentation interpretation, raw-table relationship extension widening,
+protected execution or Arras adapter adoption. Native Truss relationship/query
+composition is separately required in the consumer release gate.

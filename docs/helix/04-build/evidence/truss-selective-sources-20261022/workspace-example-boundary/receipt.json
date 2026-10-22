@@ -1,0 +1,15 @@
+{
+  "scope": "Main integration Cargo example feature boundary; selected release ancestor7dfb5e03 and compiler freeze f0039979 unchanged",
+  "failureRun": 39738802954,
+  "defect": "generate_json calls application-lineage-candidate APIs but lacked Cargo required-features",
+  "fix": "Declare its actual existing application-lineage-candidate requirement",
+  "controls": [
+    "Enabled example cargo check passed",
+    "Candidate-only cargo test --examples compiled both selected examples; zero behavioral tests intentionally, not a semantic conformance claim"
+  ],
+  "files": {
+    "weft-051-example-enabled-check.log": "a96e9540f10d78f917e9fb69b6d1c25bc82e82d1f21710d3f3becb5329bb19ef",
+    "weft-051-workspace-failure.log": "e267d7a2365f64fb60204edd6db24271abe364f0c9d99a1ad0f6b31aef74b809",
+    "weft-051-example-feature-check.log": "10d5fc34f04f3de49cf5e2471146b87a7ed0a33b62106d0eaf7bbe6a14187279"
+  }
+}

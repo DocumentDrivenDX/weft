@@ -10,6 +10,7 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "kebab-case")]
 pub enum Subset {
     CompleteEntity,
+    CompleteEntityPage,
     EntityPage,
     CountSummary,
     RelatedEntityPage,
@@ -19,6 +20,14 @@ pub enum Subset {
 pub struct ReadProfile {
     pub version: String,
     pub subset: Subset,
+    #[serde(rename = "entityProjection", default, skip_serializing_if = "Option::is_none")]
+    pub entity_projection: Option<EntityProjection>,
+}
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EntityProjection {
+    pub facts: Vec<NativeMetadata>,
+    pub relationships: bool,
 }
 #[derive(Debug, Clone, Serialize)]
 pub struct Field {
@@ -129,7 +138,7 @@ pub enum Expression {
     },
 }
 /// Explicit backend-owned facts, never synthetic authored UMF Field identities.
-#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub enum NativeMetadata {
     Version,

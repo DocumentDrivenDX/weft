@@ -1,0 +1,9 @@
+test_explicit_relationship_projection_keeps_100_101_completeness_boundary (test_query_entity_projection_native.QueryEntityProjectionTests.test_explicit_relationship_projection_keeps_100_101_completeness_boundary) ... ok
+test_facts_pages_and_projection_bound_continuation (test_query_entity_projection_native.QueryEntityProjectionTests.test_facts_pages_and_projection_bound_continuation) ... ok
+test_invalid_fact_selection_refuses_before_host_execution (test_query_entity_projection_native.QueryEntityProjectionTests.test_invalid_fact_selection_refuses_before_host_execution) ... ok
+test_selectable_facts_preserve_requested_order_and_compiler_types (test_query_entity_projection_native.QueryEntityProjectionTests.test_selectable_facts_preserve_requested_order_and_compiler_types) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 10.382s
+
+OK

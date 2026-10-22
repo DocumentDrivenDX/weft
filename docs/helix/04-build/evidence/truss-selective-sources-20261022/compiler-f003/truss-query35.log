@@ -1,0 +1,16 @@
+..........................{"managedPopulationBatch": {"start": 0, "objects": 1000, "seconds": 1.0361125830095261}}
+{"managedPopulationBatch": {"start": 1000, "objects": 1000, "seconds": 0.6584814590169117}}
+{"managedPopulationBatch": {"start": 2000, "objects": 1000, "seconds": 0.7596172919729725}}
+{"managedPopulationBatch": {"start": 3000, "objects": 1000, "seconds": 0.5668571250280365}}
+{"managedPopulationBatch": {"start": 4000, "objects": 1000, "seconds": 0.5651490000309423}}
+{"managedPopulationBatch": {"start": 5000, "objects": 1000, "seconds": 0.5586062499787658}}
+{"managedPopulationBatch": {"start": 6000, "objects": 1000, "seconds": 0.5810136660002172}}
+{"managedPopulationBatch": {"start": 7000, "objects": 1000, "seconds": 0.618216416973155}}
+{"managedPopulationBatch": {"start": 8000, "objects": 1000, "seconds": 0.5522421660134569}}
+{"managedPopulationBatch": {"start": 9000, "objects": 1000, "seconds": 0.569302040967159}}
+{"managedPopulationBatch": {"start": 10000, "objects": 1, "seconds": 0.010842750023584813}}
+.........
+----------------------------------------------------------------------
+Ran 35 tests in 89.575s
+
+OK

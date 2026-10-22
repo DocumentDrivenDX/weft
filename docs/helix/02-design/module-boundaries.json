@@ -79,10 +79,16 @@
           "path": "crates/weft-databricks/src/authored_pages.rs",
           "publicDeclarations": [
             "const:LOCAL_VERSION",
+            "const:LOCAL42_VERSION",
             "const:MANAGED_VERSION",
+            "const:MANAGED_CURRENT_VERSION",
+            "const:MANAGED_CURRENT_XXHASH64_VERSION",
             "struct:AuthoredPages",
             "fn:local",
-            "fn:managed"
+            "fn:local42",
+            "fn:managed",
+            "fn:managed_current_core",
+            "fn:managed_current_core_xxhash64"
           ],
           "pathReferences": []
         },
@@ -95,6 +101,7 @@
             "field:profile",
             "field:layout_revision",
             "field:layout_sha256",
+            "field:lookup_hash_profile",
             "field:model_pins",
             "field:publication",
             "field:records",
@@ -307,11 +314,17 @@
             "mod:paths",
             "mod:paths_keys",
             "mod:paths_keys_having",
+            "mod:paths_keys_having_spark42",
+            "mod:managed_current_core",
+            "mod:managed_current_pages",
+            "mod:managed_current_core_xxhash64",
+            "mod:managed_current_pages_xxhash64",
             "mod:implicit_arithmetic",
             "mod:compatible_profile",
             "mod:current_scalar",
             "mod:raw_read",
             "mod:local_spark4",
+            "mod:local_spark42",
             "mod:local_spark4_fields",
             "mod:raw_action",
             "mod:raw_bulk",
@@ -328,6 +341,17 @@
             "const:VERSION",
             "const:PROFILE",
             "struct:LocalSpark4"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/local_spark42.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "const:DELTA_SPARK_SHA256",
+            "const:DELTA_STORAGE_SHA256",
+            "struct:LocalSpark42"
           ],
           "pathReferences": []
         },
@@ -363,6 +387,45 @@
             "const:VERSION",
             "const:PROFILE",
             "struct:Managed20261016"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/managed_current_core.rs",
+          "publicDeclarations": [
+            "const:ID",
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:ManagedCurrentCore"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/managed_current_core_xxhash64.rs",
+          "publicDeclarations": [
+            "const:ID",
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:ManagedCurrentCoreXxhash64"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/managed_current_pages.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:ManagedCurrentPages"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/managed_current_pages_xxhash64.rs",
+          "publicDeclarations": [
+            "const:ID",
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:ManagedCurrentPagesXxhash64"
           ],
           "pathReferences": []
         },
@@ -411,6 +474,18 @@
           "publicDeclarations": [
             "const:VERSION",
             "struct:CountStarHaving"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/paths_keys_having_spark42.rs",
+          "publicDeclarations": [
+            "const:ID",
+            "const:VERSION",
+            "const:PROFILE",
+            "const:DELTA_SPARK_SHA256",
+            "const:DELTA_STORAGE_SHA256",
+            "struct:CountStarHavingSpark42"
           ],
           "pathReferences": []
         },
@@ -614,6 +689,10 @@
             "struct:ReadProfile",
             "field:version",
             "field:subset",
+            "field:entity_projection",
+            "struct:EntityProjection",
+            "field:facts",
+            "field:relationships",
             "struct:Field",
             "field:scan",
             "field:identity",
@@ -4172,6 +4251,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/truss_runtime/selective.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/value_definition.rs",
           "publicDeclarations": [
             "struct:Graph",
@@ -4393,6 +4477,7 @@
             "fn:compile_truss_postgresql_json",
             "fn:compile_truss_runtime_json",
             "fn:compile_truss_runtime_page_json",
+            "fn:compile_truss_runtime_page_transport_json",
             "use:weft_core : : mutation : : MutationRegistry",
             "fn:install_truss_mutation_backend",
             "fn:lower_mutation_selection_json",
@@ -4695,6 +4780,7 @@
             "fn:prepare_security_mapping_json",
             "fn:compile_json",
             "fn:compile_truss_runtime_json",
+            "fn:compile_truss_runtime_page_json",
             "fn:compile_json_with_conformance_configuration",
             "fn:compile_paths_keys_json",
             "fn:compile_implicit_arithmetic_json",
@@ -4993,7 +5079,8 @@
       "roots": [
         "scripts",
         "tests/qualify-and-evolve",
-        "tests/current-scalar-spark"
+        "tests/current-scalar-spark",
+        "tests/truss-entity-selection"
       ],
       "extensions": [
         ".py",
@@ -5036,11 +5123,14 @@
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
         "scripts/python-release/licenses.py",
+        "scripts/release/build-selected-macos-0.4.50.sh",
+        "scripts/release/enrich-selected-wheel-report.py",
         "scripts/release/test-date-smoke-gate.py",
         "scripts/release/test-decimal12-smoke-gate.py",
         "scripts/release/test-native70-smoke-gate.py",
         "scripts/release/test-refinement-smoke-gate.py",
         "scripts/release/test-sdk-smoke-gate.py",
+        "scripts/release/test-selected-0.4.50-release-gates.py",
         "scripts/release/test-wheel-packaging-version-gate.py",
         "scripts/release/test_verify_promotion.py",
         "scripts/release/verify-date-smoke.py",
@@ -5049,6 +5139,7 @@
         "scripts/release/verify-promotion.py",
         "scripts/release/verify-refinement-smoke.py",
         "scripts/release/verify-sdk-smoke.py",
+        "scripts/release/verify-selected-assets-0.4.50.py",
         "scripts/release/verify-wheel-packaging.py",
         "scripts/reliability/__init__.py",
         "scripts/reliability/cargo.py",
@@ -5157,7 +5248,8 @@
         "tests/qualify-and-evolve/truss-session-controls.py",
         "tests/qualify-and-evolve/unsigned-reconcile-controls.py",
         "tests/qualify-and-evolve/verify-qualified-registrations.py",
-        "tests/qualify-and-evolve/warehouse-capture-controls.py"
+        "tests/qualify-and-evolve/warehouse-capture-controls.py",
+        "tests/truss-entity-selection/check.py"
       ],
       "configs": [
         "scripts/reliability/requirements.txt"

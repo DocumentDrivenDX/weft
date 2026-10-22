@@ -1,0 +1,38 @@
+test_active_build_cannot_enter_byte_only_archive (test_custody.CustodyTests.test_active_build_cannot_enter_byte_only_archive) ... ok
+test_active_cargo_archive_dependency_and_member_routes_refuse (test_custody.CustodyTests.test_active_cargo_archive_dependency_and_member_routes_refuse) ... ok
+test_actual_cargo_implicit_archive_library_is_rejected (test_custody.CustodyTests.test_actual_cargo_implicit_archive_library_is_rejected) ... ERROR
+test_actual_current_closure_and_historical_checkpoint (test_custody.CustodyTests.test_actual_current_closure_and_historical_checkpoint) ... ok
+test_archived_excerpt_bytes_remain_bound_without_current_build_interpretation (test_custody.CustodyTests.test_archived_excerpt_bytes_remain_bound_without_current_build_interpretation) ... ok
+test_cargo_configuration_source_activation_overrides_refuse (test_custody.CustodyTests.test_cargo_configuration_source_activation_overrides_refuse) ... ok
+test_changed_deleted_new_inputs_refuse (test_custody.CustodyTests.test_changed_deleted_new_inputs_refuse) ... ok
+test_deleted_substituted_historical_manifest_entries_refuse (test_custody.CustodyTests.test_deleted_substituted_historical_manifest_entries_refuse) ... ok
+test_implicit_module_ancestor_shapes_cannot_activate_archives (test_custody.CustodyTests.test_implicit_module_ancestor_shapes_cannot_activate_archives) ... ok
+test_missing_git_checkpoint_and_wrong_history_refuse (test_custody.CustodyTests.test_missing_git_checkpoint_and_wrong_history_refuse) ... ok
+test_nested_build_named_sources_are_inputs (test_custody.CustodyTests.test_nested_build_named_sources_are_inputs) ... ok
+test_nested_schema_cargo_base_decoy_cannot_bypass (test_custody.CustodyTests.test_nested_schema_cargo_base_decoy_cannot_bypass) ... ok
+test_new_root_inputs_and_excluded_cargo_targets_refuse (test_custody.CustodyTests.test_new_root_inputs_and_excluded_cargo_targets_refuse) ... ok
+test_raw_computed_include_and_schema_inputs_cannot_escape (test_custody.CustodyTests.test_raw_computed_include_and_schema_inputs_cannot_escape) ... ok
+test_supported_raw_include_is_owned_and_comments_are_not_inputs (test_custody.CustodyTests.test_supported_raw_include_is_owned_and_comments_are_not_inputs) ... ok
+test_unknown_alias_path_attribute_refuses (test_custody.CustodyTests.test_unknown_alias_path_attribute_refuses) ... ok
+test_unowned_symlink_and_excluded_embedded_input_refuse (test_custody.CustodyTests.test_unowned_symlink_and_excluded_embedded_input_refuse) ... ok
+
+======================================================================
+ERROR: test_actual_cargo_implicit_archive_library_is_rejected (test_custody.CustodyTests.test_actual_cargo_implicit_archive_library_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/weft-truss-hf04/scripts/reliability/test_custody.py", line 104, in test_actual_cargo_implicit_archive_library_is_rejected
+    result=subprocess.run([os.environ.get('WEFT_CARGO','cargo'),'check','--offline'],cwd=root,env=dict(os.environ,CARGO_TARGET_DIR=str(base/'target')),capture_output=True,timeout=30)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'cargo'
+
+----------------------------------------------------------------------
+Ran 17 tests in 56.457s
+
+FAILED (errors=1)

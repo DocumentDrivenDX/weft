@@ -64,6 +64,28 @@ refuse, while unselected source content remains retained. Selected value
 meanings and representability remain governed by CONTRACT-001 and the registered
 backend capabilities.
 
+### Explicit Arras presentation metadata
+
+The host-selected ordinary Truss runtime profile MAY retain `arras.view` object
+metadata on selected UMF0.10 Record and Field elements without interpreting its
+presentation terms. Admission MUST require the same exact pinned owning document
+to declare `vocabularies["arras.view"].version` as the string `"0.1.0"`.
+For example, `{"vocabularies":{"arras.view":{"version":"0.1.0"}}}` supplies that
+declaration; another document's declaration MUST NOT qualify the selected element.
+The complete original source and model pin MUST remain unchanged.
+
+All unsupported cases MUST block without SQL. For a structurally valid owning UMF
+document, absent or unsupported selected vocabulary declarations, non-object
+payloads, wrong carriers and unknown selected namespaces report WFT-TYPE.
+Malformed owning document declarations retain pinned-envelope WFT-MODEL refusal;
+request, JSON and pin errors retain their existing earlier precedence.
+Failure to establish the exact owning pin MUST block with WFT-PIN. This profile
+MUST NOT strip source metadata, infer a declaration from `hohfeld.view`, interpret
+Arras view terms, or enable presentation metadata in default/security profiles.
+Existing `umf.ddd` and `hohfeld.view` admission retains its prior scope. Raw-table
+relationship extension admission is unchanged. Unknown unselected content remains
+retained under the original source-custody rule above.
+
 Facetless mathematical integer declarations MUST NOT acquire a synthesized width.
 Selection requires an explicit unbounded-integer backend capability. Without an
 admitted exact representability profile, these fields refuse before backend binding
@@ -111,6 +133,52 @@ Diagnostics contain code, severity, message, phase, sourceSpan or module identit
 JSON pointer when known, and recoverability. Deterministic ordering is phase,
 source byte offset (missing last), code and pointer. Unknown unselected content
 is informational; blocking diagnostics are errors. Never leak credentials/data.
+
+## Truss selective query increment — HF-04/05
+
+The unpublished selectable entity projection moves to explicit compile/IR0.2.8 and
+backend interface0.2.9 before release. Published0.2.7 schemas stay byte-preserved.
+Truss runtime backend0.4.43 (buffered/page) and0.4.44 (cursor delivery) select
+query ABI1.2, retaining exact underlying scalar/owner/current-context contracts.
+The existing0.4.41/42 ABI1.1 registrations retain their original behavior.
+Unknown/ambiguous authorized columns use typed `WFT-COLUMN-MISSING` and
+`WFT-COLUMN-AMBIGUOUS`; unresolved or unsupplied sources share
+`WFT-SOURCE-UNAVAILABLE`. Older compile versions retain their diagnostic codes.
+These codes are chosen at resolution, never by parsing a message in the host.
+For0.2.8, an application-parser unsupported-form refusal also runs the existing
+Weft-owned sqlparser0.63 Generic grammar recognizer over the already byte-bounded
+source. A structurally malformed source reportsWFT-SYNTAX; a syntactically valid
+excluded form retainsWFT-UNSUPPORTED; recognizer recursion exhaustion reports
+WFT-LIMIT. This recognition only classifies failure, emits no artifact and grants
+no native-SQL passthrough or name/type semantics. Retain the original diagnostic
+span/message and the older compile profiles' codes; qualify named parameters and
+selected malformed/excluded forms in native/browser compiler parity.
+
+Engine catalog read/page adapters may admit the explicit0.2.8/43/ABI1.2 pair
+alongside their retained0.2.7/41 pair, without relabeling an original program.
+A new43 page program derives44 cursor delivery and the export0.2 target; older
+programs still derive42/export0.1. The new cursor compiler preserves complete
+bounded source selection from the typed plan. Exact indexed candidate filters
+remain admitted; an unlimited portal never substitutes a finite key-seek slice
+for its complete source. Unfiltered/unsupported sources retain their scan/byte
+refusal. Output retains the exact logical plan (except portal LIMIT removal),
+columns, native parameters with positions, and model/binding pins. Native SRFs
+may buffer their complete bounded source before FETCH; driver batch sizes do not
+establish strict process memory or latency bounds. Current native permissions
+remain independently rechecked for each fetch/closing handoff.
+
+Weft may lower admitted singular string/boolean equality conjuncts to the native
+indexed candidate source. Remaining predicates execute over the complete bounded
+candidate set; excessive candidates refuse before result LIMIT or aggregation.
+Other predicates retain the legacy source bound. An explicit authored single
+required string page key may use native ordered seeking after the native complete
+indexable-key inventory gate. Larger/composite/nonstring keys remain admitted
+through bounded fallback; do not infer completeness from a partial key index.
+Truss owns original-cell/root/owner validation, native indexes, current grants,
+statement/operation deadlines and the actual populated runtime migration gate.
+The compiler owns resolved source identities, exact operands and continuation
+semantics. All capability claims remain candidate pending actual native and
+cross-embedding evidence; no compiler artifact proves native index use.
 
 ## Limits and Host Boundary
 
@@ -363,6 +431,22 @@ exact historical parity and cross-embedding evidence, preserving every existing
 index entry and trust boundary.
 
 ## Explicit Truss SQL page composition — 2026-10-13
+
+The selected entity-projection increment adds the corresponding WASM
+`compile_truss_runtime_page_json(request, pageSize, afterJson)` export and thin
+TypeScript `bindTrussPageCompiler(...).compilePageJson(request, pageSize, after)`.
+Both delegate to the same Rust page compiler used by Python. The new browser
+transport admits a numeric integer bound1–999; strings, booleans, fractions and
+nonfinite bounds refuse without coercion. Request scalar text is bounded at
+16MiB; continuation JSON at1MiB with at most1,024 components and64KiB per scalar
+component. UTF-16 surrogates refuse. The wrapper makes bounded temporary copies;
+it does not claim strict total-process allocation isolation.
+
+The selected wasm-bindgen0.2.105 primitive-number import performs only a
+`typeof value === 'number'` check and scalar memory transfer. It adds no system,
+clock, network or host callback capability. Actual Chromium invalid-type,
+one-over-bound, scalar-text and trap-retirement controls are required alongside
+the exact import census. Older generic compile wrappers retain their transport.
 
 The Python `compile_truss_runtime_page_json(request, page_size, after=None)` entrypoint selects the fixed runtime0.4.6 page composition. It takes an unchanged validated compile0.2.2 request plus a page size1–999 and an optional complete required-string key tuple (at most64KiB total). It refuses request readProfile/security, caller ordering/limits, joins/aggregates/relationship page predicates and unsupported key domains. Generic compile entrypoints are unchanged.
 

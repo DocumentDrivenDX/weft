@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "version": "0.4.51",
+  "platform": "macos-arm64",
+  "functionalQualification": "local-only",
+  "postgresqlVersion": "18.6",
+  "sourceFreezeCommit": "86c092178bb8ca1a0d84edfebc175009d8862493",
+  "wheel": {
+    "name": "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "a21faed75304e730c7cc9782394001be2ba1772b429e587f0d1910c2269dabbe"
+  },
+  "nativeModuleSha256": "93bee228350743286073a9400bdf5ec92e387c5e35431bbf34b0f81279c460a2",
+  "localFunctionalChecks": [
+    {
+      "id": "core-backend",
+      "status": "passed",
+      "tests": 874,
+      "coreUnitTests": 357,
+      "backendUnitTests": 200,
+      "ignored": 0
+    },
+    {
+      "id": "selected-runtime-engine",
+      "status": "passed",
+      "tests": 51
+    },
+    {
+      "id": "native-and-Chromium-expected-corpus",
+      "status": "passed",
+      "cases": 33,
+      "additionalFactsCases": 5,
+      "historicalCasesPreserved": 31
+    },
+    {
+      "id": "Truss-installed-independent-corpus",
+      "status": "passed",
+      "tests": 62,
+      "skipped": 0
+    },
+    {
+      "id": "Truss-installed-policy-sourcecut-disclosure",
+      "status": "passed",
+      "tests": 10,
+      "scope": "Focused read-only component; no broader security acceptance or migration"
+    },
+    {
+      "id": "Truss-installed-migration-lineage",
+      "status": "passed",
+      "tests": 80,
+      "skipped": 0,
+      "scope": "Unprotected UMF0.10 nativec433 on PostgreSQL18.6"
+    },
+    {
+      "id": "Truss-original-public-workload",
+      "status": "passed",
+      "objects": 1000,
+      "edges": 1000,
+      "performanceLimits": "Latency budgets provisional; no nominal prior-run baseline"
+    }
+  ],
+  "evidence": "../evidence/truss-selective-sources-20261022/arras-source86c/receipt.json",
+  "otherPlatforms": "New final-source Linux wheels and packaging remain required; no other native execution qualification claimed",
+  "fullSuiteQualification": "Selected core/backend/runtime and actual Truss only; final integration fresh-host/Linux gates remain open",
+  "nativeSparkOrDatabricksExecution": "not claimed"
+}

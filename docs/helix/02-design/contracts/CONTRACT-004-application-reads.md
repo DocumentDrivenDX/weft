@@ -23,6 +23,38 @@ Support complete entity reads, bounded keyset pages, counts, related keys and ty
 
 ## Whole-entity projection and presence
 
+### Explicit Truss entity projection selection — 2026-10-22
+
+Compile0.2.8 MAY explicitly select `weft-truss-entity-read/0.4.0` with subset
+`complete-entity` or `complete-entity-page` and a required closed
+`entityProjection: {facts: [...], relationships: boolean}`. The facts list is an
+ordered, duplicate-free selection of at most eight native facts: `version`,
+`createdBy`, `createdAt`, `updatedBy`, `updatedAt`, `originalAuthor`, `originalAt`
+and `loadId`. An empty selection adds none. Output names retain their established
+underscore spelling. Authored-name collisions refuse. Native facts remain
+backend-owned facts, never invented authored Field identities.
+
+The authored Record member projection remains complete. `relationships: false`
+suppresses automatic relationship expansion; the caller can explicitly request
+the existing bounded `RELATED_KEYS` projection and receives its truncation
+marker. `relationships: true` selects the established complete relationship lists
+and their whole-query refusal above 100; no list silently truncates. The selected
+profile describes this projection boundary explicitly. Older profiles retain
+their exact expansion and refuse the new selector object.
+
+The page subset uses the existing compiler-owned primary-key order, hidden key
+outputs, typed continuation and one-row lookahead. Caller LIMIT, aggregation and
+joins remain excluded by the SQL page entrypoint. Facts and complete relationship
+lists share the page statement snapshot and original native authorization.
+Continuations bind the projection selection as well as the original SQL,
+parameters, model/runtime, caller and resource context. Reusing one after a
+selection change refuses. The profile does not raise source or byte ceilings.
+
+Hosts expose column representations, source identities and the original type
+graph from the compiler artifact, including empty and all-null results. Logical
+nullable/availability and physical SQL-carrier nullability remain separate.
+Neither sampled values nor a second parser may manufacture column types.
+
 `SELECT c.* FROM Customer c` selects every declared Field in the exact ordered `Record.members` list, resolving local dependencies by identity. Bare `*` stays excluded. Duplicate output labels block; explicit scalar projections may coexist only without collisions. Unknown/missing selected member meaning refuses rather than omitting the member.
 
 Each output descriptor names field identity, cardinality, availability, exact type graph, carrier and decoder. Core `required` asserts a value; `absent-allowed` permits absence; `unspecified` asserts neither and cannot establish an application-read representation by itself. Explicit native null is a separate capability, not an inferred meaning of `absent-allowed`. A host-visible cell uses a tagged presence envelope `{state:"absent"}`, `{state:"null"}` or `{state:"value",value:...}` when those states are meaningful. A binding that cannot distinguish required states refuses. Plain SQL NULL cannot substitute for both absence and explicit null.

@@ -460,7 +460,7 @@ mod supplied_configuration_tests {
 #[cfg(test)]
 mod ashlar_tests {
     #[test]
-    fn ashlar_feature_controls_registration_and_retains_public_artifact() {
+    fn retired_ashlar_input_refuses_without_rewriting_historical_artifact() {
         let case: serde_json::Value = serde_json::from_str(include_str!(
             "../../../docs/helix/04-build/evidence/B-006-cross-module-native/compile.json"
         ))
@@ -487,7 +487,14 @@ mod ashlar_tests {
                     weft_core::mutation::canonical(&case["request"]).as_bytes()
                 )
             );
-            assert_eq!(response, current["response"]);
+            // The retained B006 request is UMF0.7. The current source envelope
+            // admits UMF0.10 only; never relabel or strip the old input to make
+            // its historical native success a current support claim.
+            assert_eq!(case["request"]["modules"][0]["pin"]["umfVersion"], "0.7.0");
+            assert_eq!(current["response"]["status"], "compiled");
+            assert_eq!(response["status"], "blocked");
+            assert_eq!(response["diagnostics"][0]["code"], "WFT-INPUT");
+            assert!(response.get("sql").is_none());
         }
         #[cfg(not(feature = "ashlar-databricks-candidate"))]
         {
@@ -571,6 +578,71 @@ pub fn compile_truss_runtime_json(request: &str) -> String {
     weft_postgresql::truss_runtime::compile_json(request)
 }
 
+#[cfg(all(test, feature = "truss-postgresql-pg18"))]
+mod truss_arras_view_entrypoint_tests {
+    use serde_json::{json, Value};
+
+    fn request() -> Value {
+        serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-export-request.json")).unwrap()
+    }
+
+    fn compile_with_document(mut request: Value, document: Value) -> Value {
+        let document_json = document.to_string();
+        let document_sha = weft_core::json::sha256(document_json.as_bytes());
+        request["modules"][0]["documentJson"] = json!(document_json);
+        request["modules"][0]["pin"]["sha256"] = json!(document_sha);
+        let original_binding = request["target"]["bindingJson"].as_str().unwrap();
+        let mut binding: Value = serde_json::from_str(original_binding).unwrap();
+        binding["documents"][0]["sha256"] = json!(document_sha);
+        let binding_json = binding.to_string();
+        request["target"]["bindingSha256"] = json!(weft_core::json::sha256(binding_json.as_bytes()));
+        request["target"]["bindingJson"] = json!(binding_json);
+        serde_json::from_str(&super::compile_truss_runtime_json(&request.to_string())).unwrap()
+    }
+
+    fn assert_refused(output: Value) {
+        assert_eq!(output["status"], "blocked", "{output}");
+        assert!(output.get("sql").is_none(), "{output}");
+    }
+
+    #[test]
+    fn public_truss_runtime_entrypoint_admits_only_declared_opaque_arras_view() {
+        let base = request();
+        let mut document: Value = serde_json::from_str(base["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        document["vocabularies"]["arras.view"] = json!({"version":"0.1.0"});
+        let field = document["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap();
+        field["extensions"]["arras.view"] = json!({"format":"number","unknownOpaqueTerm":{"retained":true}});
+        let positive = compile_with_document(base.clone(), document.clone());
+        assert_eq!(positive["status"], "compiled", "{positive}");
+
+        let mut missing = document.clone();
+        missing["vocabularies"].as_object_mut().unwrap().remove("arras.view");
+        assert_refused(compile_with_document(base.clone(), missing));
+        let mut newer = document.clone();
+        newer["vocabularies"]["arras.view"]["version"] = json!("0.2.0");
+        assert_refused(compile_with_document(base.clone(), newer));
+        let mut null_version = document.clone();
+        null_version["vocabularies"]["arras.view"]["version"] = Value::Null;
+        assert_refused(compile_with_document(base.clone(), null_version));
+        let mut malformed_declaration = document.clone();
+        malformed_declaration["vocabularies"]["arras.view"] = json!("0.1.0");
+        assert_refused(compile_with_document(base.clone(), malformed_declaration));
+        let mut malformed_payload = document.clone();
+        malformed_payload["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["arras.view"] = json!("text");
+        assert_refused(compile_with_document(base.clone(), malformed_payload));
+        let mut wrong_carrier = document.clone();
+        wrong_carrier["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["kind"] = json!("action");
+        assert_refused(compile_with_document(base.clone(), wrong_carrier));
+        let mut unknown_namespace = document;
+        unknown_namespace["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["arras.unknown"] = json!({"selected":true});
+        assert_refused(compile_with_document(base, unknown_namespace));
+    }
+}
+
 #[cfg(feature = "truss-postgresql-pg18")]
 pub fn compile_truss_runtime_page_json(
     request: &str,
@@ -578,6 +650,44 @@ pub fn compile_truss_runtime_page_json(
     after: Option<Vec<String>>,
 ) -> String {
     weft_postgresql::truss_runtime::compile_page_json(request, page_size, after)
+}
+
+/// Browser transport for the same typed page compiler. No SQL interpretation.
+#[cfg(feature = "truss-postgresql-pg18")]
+pub fn compile_truss_runtime_page_transport_json(request:&str,page_size:f64,after_json:&str)->String {
+    let refused=||serde_json::json!({"interfaceVersion":"weft-sql-page/0.2","status":"blocked",
+        "diagnostics":[{"code":"WFT-INPUT","message":"Bounded typed page transport required","phase":"input","severity":"error","recoverability":"correct-input"}]}).to_string();
+    if !page_size.is_finite() || page_size.fract()!=0.0 || !(1.0..=999.0).contains(&page_size)
+        || after_json.len()>1_048_576 {return refused();}
+    let value=match weft_core::json::checked_json(after_json){Ok(value)=>value,Err(_)=>return refused()};
+    let after:Option<Vec<String>>=match serde_json::from_value(value) {
+        Ok(value)=>value,Err(_)=>return refused(),
+    };
+    if after.as_ref().is_some_and(|a|a.len()>1024 || a.iter().any(|s|s.len()>65_536)) {return refused();}
+    compile_truss_runtime_page_json(request,page_size as u16,after)
+}
+
+#[cfg(all(test,feature="truss-postgresql-pg18"))]
+mod truss_page_transport_tests {
+    use super::*;
+    #[test]
+    fn typed_transport_matches_original_page_compiler_and_refuses_untyped_bounds() {
+        let cases:Vec<serde_json::Value>=serde_json::from_str(include_str!("../../../tests/truss-entity-selection/cases.json")).unwrap();
+        for case in cases.into_iter().filter(|c|c["pageSize"].is_number()) {
+            let request=case["request"].to_string();let size=case["pageSize"].as_u64().unwrap() as u16;
+            let after=case.get("after").map(|v|serde_json::from_value(v.clone()).unwrap());
+            assert_eq!(compile_truss_runtime_page_transport_json(&request,size as f64,&case["after"].to_string()),
+                compile_truss_runtime_page_json(&request,size,after),"{}",case["id"]);
+        }
+        for size in [0.0,1000.0,1.5,f64::NAN,f64::INFINITY,f64::NEG_INFINITY] {
+            let result:serde_json::Value=serde_json::from_str(&compile_truss_runtime_page_transport_json("{}",size,"null")).unwrap();
+            assert_eq!(result["diagnostics"][0]["code"],"WFT-INPUT");
+        }
+        for after in ["true","{}","[1]","[\"\\ud800\"]"] {
+            let result:serde_json::Value=serde_json::from_str(&compile_truss_runtime_page_transport_json("{}",1.0,after)).unwrap();
+            assert_eq!(result["diagnostics"][0]["code"],"WFT-INPUT");
+        }
+    }
 }
 
 /// Host-configured mutation compilation; no execution authority.

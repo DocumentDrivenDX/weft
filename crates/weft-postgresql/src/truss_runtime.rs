@@ -34,6 +34,7 @@ fn runtime_identity(value: &str) -> bool {
         .is_some_and(|version| { let parts: Vec<_> = version.split('.').collect();
             parts.len() == 2 && parts.iter().all(|part| !part.is_empty() && part.bytes().all(|b| b.is_ascii_digit())) })
 }
+mod selective;
 const BACKEND: &str = "truss.postgresql.runtime";
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -133,6 +134,7 @@ pub struct Runtime {
     decimal12: bool,
     canonical_dates: bool,
     cursor_delivery: bool,
+    selective_sources: bool,
     required_rebinding: bool,
     parallel_edges: bool,
     engine_imports: bool,
@@ -140,7 +142,7 @@ pub struct Runtime {
     continuation_filter: Option<usize>,
 }
 impl Runtime {
-    fn constraints(&self,inherited:String)->Vec<String>{let inherited=if self.query_abi_v1{inherited.replace("record/composed ownership","record-valued property cells or composed values")}else{inherited};let mut constraints=vec![inherited];if self.decimal12{constraints.push("Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only".into());constraints.push("Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required".into());}if self.query_abi_v1{constraints.push(format!("Explicit Truss query ABI{}; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",if self.canonical_dates{"1.1"}else{"1.0"}));}if self.declarative_fields{constraints.push("Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed".into());}constraints}
+    fn constraints(&self,inherited:String)->Vec<String>{let inherited=if self.query_abi_v1{inherited.replace("record/composed ownership","record-valued property cells or composed values")}else{inherited};let mut constraints=vec![inherited];if self.decimal12{constraints.push("Explicit name-or-stable-ID resolution: authored names win; only absent names use exact original IDs; ambiguity refuses; legacy backend selections remain name-only".into());constraints.push("Explicit decimal(12,2) scalar/item/relationship-key/page-key domain in the actual native admitted catalog; exact original parameter and result tokens with no rounding; original runtime/model correspondence remains required".into());}if self.query_abi_v1{constraints.push(format!("Explicit Truss query ABI{}; directed independent or owned relationships; native statement-snapshot aggregate roots and original descendant attribution; Truss enforces selected current/historical root owner scope and exact actual installation/runtime/model/source pins; no mutation or protected security authority is issued by this compiler",if self.selective_sources{"1.2"}else if self.canonical_dates{"1.1"}else{"1.0"}));}if self.declarative_fields{constraints.push("Native0.66/support0.17 source-only standalone scalar declarations have no invented property/storage; only original Record members can be queried; no security policy or transform execution is installed".into());}constraints}
 
     fn profile(&self) -> &'static str {
         if self.query_abi_v1 {
@@ -156,6 +158,7 @@ impl Runtime {
         }
     }
     fn target(&self) -> &'static str {
+        if self.selective_sources {return if self.cursor_delivery {"truss-runtime-pg18.6-export/0.2"} else {"truss-runtime-pg18.6/0.6"};}
         if self.cursor_delivery { return "truss-runtime-pg18.6-export/0.1"; }
         if self.query_abi_v1 {
             QUERY_ABI_TARGET
@@ -170,7 +173,7 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.cursor_delivery { "0.4.42" } else if self.canonical_dates { "0.4.41" } else if self.native_070 { "0.4.40" } else if self.decimal12 { "0.4.39" } else if self.query_abi_v1 { "0.4.38" } else if self.native_068 { "0.4.37" } else if self.declarative_fields { "0.4.36" } else if self.owned_runtime { "0.4.35" } else if self.recursive_containers { "0.4.34" } else if self.keyed_rebinding { "0.4.33" } else if self.key_backfill { "0.4.32" } else if self.required_rebinding { "0.4.31" } else if self.catalog_rebinding { "0.4.30" } else if self.timestamp_equality { "0.4.29" } else if self.source_references { "0.4.28" } else if self.field_names { "0.4.27" } else if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
+        if self.selective_sources {if self.cursor_delivery {"0.4.44"} else {"0.4.43"}} else if self.cursor_delivery { "0.4.42" } else if self.canonical_dates { "0.4.41" } else if self.native_070 { "0.4.40" } else if self.decimal12 { "0.4.39" } else if self.query_abi_v1 { "0.4.38" } else if self.native_068 { "0.4.37" } else if self.declarative_fields { "0.4.36" } else if self.owned_runtime { "0.4.35" } else if self.recursive_containers { "0.4.34" } else if self.keyed_rebinding { "0.4.33" } else if self.key_backfill { "0.4.32" } else if self.required_rebinding { "0.4.31" } else if self.catalog_rebinding { "0.4.30" } else if self.timestamp_equality { "0.4.29" } else if self.source_references { "0.4.28" } else if self.field_names { "0.4.27" } else if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
             "0.4.6"
         } else if self.retained_metadata {
             "0.4.5"
@@ -315,10 +318,10 @@ impl Backend for Runtime {
     fn describe(&self) -> Result<Manifest> {
         let mut language = vec![LanguageProfile {
             dialect_profile: "weft-sql/0.2.0".into(),
-            ir_version: if self.canonical_dates { "weft-ir/0.2.7" } else if self.timestamp_equality { "weft-ir/0.2.6" } else if self.binary_equality { "weft-ir/0.2.5" } else if self.import_loads { "weft-ir/0.2.4" } else if self.entity_times { "weft-ir/0.2.3" } else if self.complete_entities { "weft-ir/0.2.2" } else if self.exact_scalars { "weft-ir/0.2.1" } else { "weft-ir/0.2.0" }.into(),
+            ir_version: if self.selective_sources {"weft-ir/0.2.8"} else if self.canonical_dates { "weft-ir/0.2.7" } else if self.timestamp_equality { "weft-ir/0.2.6" } else if self.binary_equality { "weft-ir/0.2.5" } else if self.import_loads { "weft-ir/0.2.4" } else if self.entity_times { "weft-ir/0.2.3" } else if self.complete_entities { "weft-ir/0.2.2" } else if self.exact_scalars { "weft-ir/0.2.1" } else { "weft-ir/0.2.0" }.into(),
         }];
         if self.relationships{language.push(LanguageProfile{dialect_profile:"weft-sql/0.2.0".into(),ir_version:"weft-ir/engine-navigation/0.1".into()});}
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:if self.canonical_dates{"weft-backend/0.2.7"}else if self.timestamp_equality{"weft-backend/0.2.6"}else if self.binary_equality{"weft-backend/0.2.5"}else if self.import_loads{"weft-backend/0.2.4"}else if self.entity_times{"weft-backend/0.2.3"}else if self.complete_entities{"weft-backend/0.2.2"}else if self.exact_scalars{"weft-backend/0.2.1"}else{"weft-backend/0.2.0"}.into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":if self.cursor_delivery{"fixed-insensitive-cursor"}else{"live"}}),storage_layout_revision:if self.canonical_dates{"truss-runtime-query-abi/1.1".into()}else if self.query_abi_v1{"truss-runtime-query-abi/1.0".into()}else if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.canonical_dates{vec!["type.date".into(),"compare.date.equal".into(),"compare.date.optionalEqual".into()]}else{vec![]}).chain(if self.decimal12{vec!["type.decimal12Scale2".into()]}else{vec![]}).chain(if self.query_abi_v1{vec!["relationship.owned".into()]}else{vec![]}).chain(if self.declarative_fields{vec!["schema.declarativeScalarFields".into()]}else{vec![]}).chain(if self.complete_entities{vec!["project.nativeMetadata".into(),"relationship.completeKeys".into()]}else{vec![]}).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into(),"relationship.sourceSelection".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).chain(if self.exact_scalars{vec!["type.timestamp".into(),"type.binary".into()]}else{vec![]}).chain(if self.decimal_scale2{vec!["type.decimal.scale2".into()]}else{vec![]}).chain(if self.optional_binary{vec!["compare.binary.optionalEqual".into()]}else{vec![]}).chain(if self.binary_equality{vec!["compare.binary.equal".into()]}else{vec![]}).chain(if self.timestamp_equality{vec!["compare.timestamp.instantEqual".into(),"compare.timestamp.optionalInstantEqual".into()]}else{vec![]}).chain(if self.container_queries{vec!["value.sequence".into(),"value.map".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":if self.query_abi_v1{"rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"}else{"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:self.constraints(if self.recursive_containers{"Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record/composed ownership; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0".into()}else if self.timestamp_equality{"Explicit umf-rfc3339-exact-instant/1.0.0 equality over original stored and operand tokens; arbitrary fractional digits within1MiB; unknown local offset retained separately; no timestamp keys or native timestamp casts".into()}else if self.decimal_scale2{"Exact declared decimal18,2 or18,4 scalar/item/key/page domains; preserve original tokens and refuse nonrepresentable values without rounding; existing binary and optional-binary equality retained".into()}else if self.optional_binary{"Singular required or absent-allowed binary byte equality; absent and null yield SQL UNKNOWN/nonmatch; empty bytes remain a value; canonical typed binary parameters, filters, INNER joins and page filters; timestamps remain projection-only".into()}else if self.binary_equality{"Required singular binary byte equality, canonical base64 literals and explicitly typed binary parameters; INNER joins and page filters; timestamps remain projection-only".into()}else if self.typed_key_pages{"Explicit typed SQL-page entrypoint with required string/boolean/integer/decimal18,4 primary keys and lexical lossless continuations; legacy explicit entity-page profiles remain string-only; typed relationship keys and flat container projections retained".into()}else if self.typed_relationship_keys{"Required string/boolean/integer/decimal18,4 relationship keys; typed comparison/order with original numeric token projection; complete and bounded lists; flat container/entity projections; page keys remain required strings; no binary/timestamp relationship keys or nested values".into()}else if self.container_queries{"Projection-only one-level sequences/maps with required singular scalar item descriptors; exact numeric item text; outer presence; no nested structures, container comparisons or unnesting; complete rootless entity fields and original current item authority".into()}else if self.complete_entities{"Explicit complete entity metadata and complete required-string relationship key lists; maximum100 per list, excess refuses the whole query; original attribution evidence required; rootless scalar records only".into()}else if self.exact_scalars{"Projection-only timestamp/binary exact text tokens; no temporal/binary comparison, grouping, parameters or keys".into()}else if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}),obligations:if self.cursor_delivery{vec![obligation(),cursor_obligation()]}else{vec![obligation()]},status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:if self.selective_sources{"weft-backend/0.2.9"}else if self.canonical_dates{"weft-backend/0.2.7"}else if self.timestamp_equality{"weft-backend/0.2.6"}else if self.binary_equality{"weft-backend/0.2.5"}else if self.import_loads{"weft-backend/0.2.4"}else if self.entity_times{"weft-backend/0.2.3"}else if self.complete_entities{"weft-backend/0.2.2"}else if self.exact_scalars{"weft-backend/0.2.1"}else{"weft-backend/0.2.0"}.into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":if self.cursor_delivery{"fixed-insensitive-cursor"}else{"live"}}),storage_layout_revision:if self.selective_sources{"truss-runtime-query-abi/1.2".into()}else if self.canonical_dates{"truss-runtime-query-abi/1.1".into()}else if self.query_abi_v1{"truss-runtime-query-abi/1.0".into()}else if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.canonical_dates{vec!["type.date".into(),"compare.date.equal".into(),"compare.date.optionalEqual".into()]}else{vec![]}).chain(if self.decimal12{vec!["type.decimal12Scale2".into()]}else{vec![]}).chain(if self.query_abi_v1{vec!["relationship.owned".into()]}else{vec![]}).chain(if self.declarative_fields{vec!["schema.declarativeScalarFields".into()]}else{vec![]}).chain(if self.complete_entities{vec!["project.nativeMetadata".into(),"relationship.completeKeys".into()]}else{vec![]}).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into(),"relationship.sourceSelection".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).chain(if self.exact_scalars{vec!["type.timestamp".into(),"type.binary".into()]}else{vec![]}).chain(if self.decimal_scale2{vec!["type.decimal.scale2".into()]}else{vec![]}).chain(if self.optional_binary{vec!["compare.binary.optionalEqual".into()]}else{vec![]}).chain(if self.binary_equality{vec!["compare.binary.equal".into()]}else{vec![]}).chain(if self.timestamp_equality{vec!["compare.timestamp.instantEqual".into(),"compare.timestamp.optionalInstantEqual".into()]}else{vec![]}).chain(if self.container_queries{vec!["value.sequence".into(),"value.map".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":if self.query_abi_v1{"rootless or aggregate-owned scalar records; directed independent/owned relationships; exact string/boolean and admitted mathematical integer/decimal domains; native roots, authority and domain refusals remain host-owned"}else{"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:self.constraints(if self.recursive_containers{"Projection-only acyclic required-item sequence/map chains with exact scalar leaves; depth32; complete item dependency closure; original numeric and timestamp/binary tokens preserved; map keys unique and array order retained; no container comparisons, unnesting, cyclic items or record/composed ownership; inherited exact-instant timestamp equality remains umf-rfc3339-exact-instant/1.0.0".into()}else if self.timestamp_equality{"Explicit umf-rfc3339-exact-instant/1.0.0 equality over original stored and operand tokens; arbitrary fractional digits within1MiB; unknown local offset retained separately; no timestamp keys or native timestamp casts".into()}else if self.decimal_scale2{"Exact declared decimal18,2 or18,4 scalar/item/key/page domains; preserve original tokens and refuse nonrepresentable values without rounding; existing binary and optional-binary equality retained".into()}else if self.optional_binary{"Singular required or absent-allowed binary byte equality; absent and null yield SQL UNKNOWN/nonmatch; empty bytes remain a value; canonical typed binary parameters, filters, INNER joins and page filters; timestamps remain projection-only".into()}else if self.binary_equality{"Required singular binary byte equality, canonical base64 literals and explicitly typed binary parameters; INNER joins and page filters; timestamps remain projection-only".into()}else if self.typed_key_pages{"Explicit typed SQL-page entrypoint with required string/boolean/integer/decimal18,4 primary keys and lexical lossless continuations; legacy explicit entity-page profiles remain string-only; typed relationship keys and flat container projections retained".into()}else if self.typed_relationship_keys{"Required string/boolean/integer/decimal18,4 relationship keys; typed comparison/order with original numeric token projection; complete and bounded lists; flat container/entity projections; page keys remain required strings; no binary/timestamp relationship keys or nested values".into()}else if self.container_queries{"Projection-only one-level sequences/maps with required singular scalar item descriptors; exact numeric item text; outer presence; no nested structures, container comparisons or unnesting; complete rootless entity fields and original current item authority".into()}else if self.complete_entities{"Explicit complete entity metadata and complete required-string relationship key lists; maximum100 per list, excess refuses the whole query; original attribution evidence required; rootless scalar records only".into()}else if self.exact_scalars{"Projection-only timestamp/binary exact text tokens; no temporal/binary comparison, grouping, parameters or keys".into()}else if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}),obligations:if self.cursor_delivery{vec![obligation(),cursor_obligation()]}else{vec![obligation()]},status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if let Plan::V02(plan)=c.plan {if let Some(navigation)=&plan.navigation{
@@ -351,7 +354,7 @@ impl Backend for Runtime {
             return Err(fail("Exact versioned key binding shape required"));
         }
         if self.query_abi_v1 {
-            if original_binding.get("queryAbi") != Some(&if self.canonical_dates {json!({"identity":"truss-postgresql-logical-query","version":"1.1","sha256":"9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"})} else {query_abi_pin()}) {
+            if original_binding.get("queryAbi") != Some(&if self.selective_sources {selective::query_abi_pin()}else if self.canonical_dates {json!({"identity":"truss-postgresql-logical-query","version":"1.1","sha256":"9b67333abf263078e7e7239fe5accc228b063dc2fcc5488ca068d7331986949f"})} else {query_abi_pin()}) {
                 return Err(fail("Exact Truss logical query ABI pin required"));
             }
         } else if original_binding.get("queryAbi").is_some() {
@@ -672,6 +675,7 @@ impl Backend for Runtime {
             timestamp_equality: self.timestamp_equality,
             canonical_dates: self.canonical_dates,
             recursive_containers: self.recursive_containers,
+            selective_sources: self.selective_sources,
         };
         build
             .aliases
@@ -691,14 +695,7 @@ impl Backend for Runtime {
             json!({"kind":"runtime-binding"}),
         )?;
         build.binding_slot = binding_slot.clone();
-        let source = |s: &app::Scan| -> Result<String> {
-            if let Some(page_key) = &plan.page_key {
-                Ok(format!("\"truss\".\"query_page_objects\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4,{}) AS {}",m.record(&s.record)?.type_id,literal(&page_key.id)?,Identifier::new(&s.occurrence)?.sql()))
-            } else {
-                Ok(format!("\"truss\".\"query_objects\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {}",m.record(&s.record)?.type_id,Identifier::new(&s.occurrence)?.sql()))
-            }
-        };
-        let mut from = source(&plan.source)?;
+        let mut from = build.source(&plan.source,self.continuation_filter,self.cursor_delivery)?;
         for join in &plan.joins {
             let predicates = join
                 .on
@@ -710,7 +707,7 @@ impl Backend for Runtime {
             }
             from.push_str(&format!(
                 " INNER JOIN {} ON {}",
-                source(&join.right)?,
+                build.source(&join.right,self.continuation_filter,self.cursor_delivery)?,
                 predicates.join(" AND ")
             ));
         }
@@ -820,6 +817,7 @@ impl Backend for Runtime {
                         if !self.entity_times { return Err(unsupported("Timestamp entity profile requires runtime0.4.7")); }
                         "query_object_times"
                     } else { "query_object_attribution" };
+                    let helper=if self.selective_sources {format!("person_{helper}")} else {helper.to_owned()};
                     let sql = if self.canonical_dates {
                         let key = (scan.clone(), helper.to_owned());
                         let alias = if let Some(alias) = metadata_sources.get(&key) { alias.clone() } else {
@@ -945,6 +943,7 @@ struct Build<'a> {
     timestamp_equality: bool,
     canonical_dates: bool,
     recursive_containers: bool,
+    selective_sources: bool,
 }
 impl Build<'_> {
     fn descriptor(&self, id: &Identity) -> Result<&Descriptor> {
@@ -1065,9 +1064,9 @@ impl Build<'_> {
         let source=navigation.source();let rel=navigation.relationship();
         if source.aggregate||!source.groups.is_empty()||source.navigation.is_some()||rel.from!=source.source.record||self.aliases.get(&self.plan.source.occurrence)!=Some(&rel.to){return Err(fail("Original navigation source/target identity differs"))}
         let mapped=self.mapping.binding.relationships.iter().find(|m|m.identity==json!(rel.identity)).ok_or_else(||fail("Original navigation relationship mapping missing"))?;
-        let mut native=Build{mapping:self.mapping,plan:source,aliases:BTreeMap::new(),parameters:self.parameters.clone(),binding_slot:self.binding_slot.clone(),relationship_scope:self.relationship_scope,typed_page_mode:false,timestamp_equality:self.timestamp_equality,canonical_dates:self.canonical_dates,recursive_containers:self.recursive_containers};
+        let mut native=Build{mapping:self.mapping,plan:source,aliases:BTreeMap::new(),parameters:self.parameters.clone(),binding_slot:self.binding_slot.clone(),relationship_scope:self.relationship_scope,typed_page_mode:false,timestamp_equality:self.timestamp_equality,canonical_dates:self.canonical_dates,recursive_containers:self.recursive_containers,selective_sources:self.selective_sources};
         native.aliases.insert(source.source.occurrence.clone(),source.source.record.clone());for join in &source.joins{native.aliases.insert(join.right.occurrence.clone(),join.right.record.clone());}
-        let scan=|s:&app::Scan|->Result<String>{Ok(format!("\"truss\".\"query_objects\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {}",self.binding_slot,self.mapping.record(&s.record)?.type_id,Identifier::new(&s.occurrence)?.sql()))};
+        let scan=|s:&app::Scan|->Result<String>{Ok(format!("\"truss\".\"{}\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {}",self.native("query_objects"),self.binding_slot,self.mapping.record(&s.record)?.type_id,Identifier::new(&s.occurrence)?.sql()))};
         let mut from=scan(&source.source)?;for join in &source.joins{let on=join.on.iter().map(|p|native.predicate(p,false)).collect::<Result<Vec<_>>>()?;if on.is_empty(){return Err(fail("Original source join predicate missing"))}from+=&format!(" INNER JOIN {} ON {}",scan(&join.right)?,on.join(" AND "));}
         let mut selected=format!("SELECT {}.id AS source_id FROM {from}",Identifier::new(&source.source.occurrence)?.sql());let predicates=source.filters.iter().map(|p|native.predicate(p,false)).collect::<Result<Vec<_>>>()?;if !predicates.is_empty(){selected+=&format!(" WHERE {}",predicates.join(" AND "));}
         if !source.order.is_empty(){let order=source.order.iter().map(|f|native.scalar(&f.scan,&f.identity,&f.logical_type).map(|v|format!("{} ASC",v.0))).collect::<Result<Vec<_>>>()?;selected+=&format!(" ORDER BY {}",order.join(","));}
@@ -1075,7 +1074,7 @@ impl Build<'_> {
         self.parameters=native.parameters;self.relationship_scope=native.relationship_scope;
         let mut edge="weft_navigation_edge".to_owned();while self.aliases.contains_key(&edge){edge.push('_');}let edge=Identifier::new(&edge)?.sql();let mut selection="weft_navigation_source".to_owned();while self.aliases.contains_key(&selection){selection.push('_');}let selection=Identifier::new(&selection)?.sql();
         let(from_column,to_column)=if rel.inverse{("target_id","source_id")}else{("source_id","target_id")};let target=Identifier::new(&self.plan.source.occurrence)?.sql();
-        Ok(format!("EXISTS (SELECT 1 FROM \"truss\".\"query_edges\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {edge} JOIN ({selected}) AS {selection} ON {selection}.source_id={edge}.{from_column} WHERE {edge}.{to_column}={target}.id)",self.binding_slot,mapped.relationship_type_id))
+        Ok(format!("EXISTS (SELECT 1 FROM \"truss\".\"{}\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {edge} JOIN ({selected}) AS {selection} ON {selection}.source_id={edge}.{from_column} WHERE {edge}.{to_column}={target}.id)",self.native("query_edges"),self.binding_slot,mapped.relationship_type_id))
     }
     fn related(
         &mut self,
@@ -1106,7 +1105,7 @@ impl Build<'_> {
         } else {
             ("source_id", "target_id")
         };
-        let from=format!("\"truss\".\"query_edges\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {edge_alias} JOIN \"truss\".\"query_objects\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {target_alias} ON {target_alias}.id={edge_alias}.{target_column}",self.binding_slot,mapped.relationship_type_id,self.binding_slot,self.mapping.record(&rel.to)?.type_id);
+        let from=format!("\"truss\".\"{}\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {edge_alias} JOIN \"truss\".\"{}\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {target_alias} ON {target_alias}.id={edge_alias}.{target_column}",self.native("query_edges"),self.binding_slot,mapped.relationship_type_id,self.native("query_objects"),self.binding_slot,self.mapping.record(&rel.to)?.type_id);
         let mut predicates = vec![format!("{edge_alias}.{source_column}={outer}.id")];
         let ordered = rel
             .target_key
@@ -1240,7 +1239,8 @@ fn compile_internal_navigation(request: &str, page: Option<(u16, Option<Vec<Stri
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let canonical_dates=version.as_deref()==Some("0.4.41") || cursor_delivery && version.as_deref()==Some("0.4.42");
+    let selective_sources=version.as_deref()==Some("0.4.43") || cursor_delivery && version.as_deref()==Some("0.4.44");
+    let canonical_dates=selective_sources || version.as_deref()==Some("0.4.41") || cursor_delivery && version.as_deref()==Some("0.4.42");
     let decimal12=canonical_dates || version.as_deref()==Some("0.4.39");
     let query_abi_v1=decimal12 || version.as_deref()==Some("0.4.38");
     let native_068=version.as_deref()==Some("0.4.37");
@@ -1329,6 +1329,7 @@ fn compile_internal_navigation(request: &str, page: Option<(u16, Option<Vec<Stri
                 decimal12,
                 canonical_dates,
                 cursor_delivery,
+                selective_sources,
                 required_rebinding,
                 parallel_edges,
                 engine_imports,
@@ -1367,6 +1368,46 @@ fn compile_internal_navigation(request: &str, page: Option<(u16, Option<Vec<Stri
 }
 
 // Same tagged scalar interpretation as ordinary current runtime reads.
+#[cfg(test)]
+mod selected_entity_projection_tests {
+    use serde_json::Value;
+    #[test]
+    fn independently_expected_entity_projection_cases() {
+        let cases:Vec<Value>=serde_json::from_str(include_str!("../../../tests/truss-entity-selection/cases.json")).unwrap();
+        for case in cases {
+            let request=case["request"].to_string();
+            let after=case.get("after").map(|v|serde_json::from_value(v.clone()).unwrap());
+            let raw=match case["pageSize"].as_u64(){
+                Some(size)=>super::compile_page_json(&request,size as u16,after),
+                None=>super::compile_json(&request),
+            };
+            let result:Value=serde_json::from_str(&raw).unwrap();
+            assert_eq!(result["status"],case["expected"]["status"],"{}: {result}",case["id"]);
+            if result["status"]=="blocked"{
+                assert!(result.get("sql").is_none());
+                if case["expected"]["diagnosticCode"].is_string(){assert_eq!(result["diagnostics"][0]["code"],case["expected"]["diagnosticCode"],"{}: {result}",case["id"]);}
+                continue;
+            }
+            let (artifact,visible)=if case["pageSize"].is_null(){(&result,result["columns"].as_array().unwrap().len())}
+                else{(&result["artifact"],result["page"]["visibleOutputs"].as_u64().unwrap() as usize)};
+            let columns=artifact["columns"].as_array().unwrap();
+            if let Some(name)=case["expected"]["sourceFunction"].as_str(){assert!(artifact["sql"].as_str().unwrap().contains(&format!("\"{name}\"(")),"{}: {artifact}",case["id"]);}
+            let labels:Vec<&Value>=columns[..visible].iter().map(|c|&c["outputName"]).collect();
+            assert_eq!(serde_json::to_value(labels).unwrap(),case["expected"]["visibleColumns"],"{}: {artifact}",case["id"]);
+            let facts:Vec<&Value>=columns.iter().filter_map(|c|c["representation"].get("metadata")).collect();
+            assert_eq!(serde_json::to_value(facts).unwrap(),case["expected"]["facts"],"{}",case["id"]);
+            assert_eq!(columns.iter().any(|c|c["representation"]["kind"]=="completeRelatedKeys"),case["expected"]["automaticRelationships"].as_bool().unwrap(),"{}",case["id"]);
+            if case["id"]=="no-facts-no-automatic-relationships" || case["id"]=="version-only" {
+                let sql=artifact["sql"].as_str().unwrap();
+                for helper in ["query_object_attribution","query_object_times","query_object_load_id"] {
+                    let expected=if case["id"]=="version-only" && helper=="query_object_attribution"{1}else{0};
+                    assert_eq!(sql.matches(&format!("\"person_{helper}\"(")).count(),expected,"{}: {sql}",case["id"]);
+                }
+            }
+        }
+    }
+}
+
 fn mutation_scalar_expression(cell:&str,logical:&LogicalType)->String {
  match logical.family {
  Family::String=>format!("({cell}->>'text') COLLATE pg_catalog.\"C\""),
@@ -1376,7 +1417,7 @@ fn mutation_scalar_expression(cell:&str,logical:&LogicalType)->String {
 }
 pub(crate) fn admit_mutation_mapping(c:&Context<'_>)->Result<Mapping>{
  let native_068=weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"]=="truss-catalog-runtime/0.68-candidate";
- let runtime=Runtime{native_068,native_070:false,query_abi_v1:false,decimal12:false,canonical_dates:false,cursor_delivery:false,exact_numbers: true,relationships: true,pages: true,release_030: true,groups: true,selected_metadata: true,exact_scalars: true,retained_metadata: true,complete_entities: true,entity_times: true,import_loads: true,numeric_facets: true,typed_keys: true,live_traversal: true,facet_evolution: true,scalar_containers: true,container_queries: true,typed_relationship_keys: true,typed_key_pages: true,record_evolution: true,required_tightening: true,relationship_tightening: true,container_tightening: true,relationship_names: true,binary_equality: true,optional_binary: true,decimal_scale2: true,field_names: true,source_references: true,timestamp_equality: true,catalog_rebinding: true,key_backfill: true,keyed_rebinding: true,recursive_containers: true,owned_runtime: true,declarative_fields: matches!(weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"].as_str(), Some("truss-catalog-runtime/0.66-candidate" | "truss-catalog-runtime/0.67-candidate" | "truss-catalog-runtime/0.68-candidate")),required_rebinding: true,parallel_edges: true,engine_imports: true,typed_page_mode: false,continuation_filter: None};
+ let runtime=Runtime{native_068,native_070:false,query_abi_v1:false,decimal12:false,canonical_dates:false,cursor_delivery:false,selective_sources:false,exact_numbers: true,relationships: true,pages: true,release_030: true,groups: true,selected_metadata: true,exact_scalars: true,retained_metadata: true,complete_entities: true,entity_times: true,import_loads: true,numeric_facets: true,typed_keys: true,live_traversal: true,facet_evolution: true,scalar_containers: true,container_queries: true,typed_relationship_keys: true,typed_key_pages: true,record_evolution: true,required_tightening: true,relationship_tightening: true,container_tightening: true,relationship_names: true,binary_equality: true,optional_binary: true,decimal_scale2: true,field_names: true,source_references: true,timestamp_equality: true,catalog_rebinding: true,key_backfill: true,keyed_rebinding: true,recursive_containers: true,owned_runtime: true,declarative_fields: matches!(weft_core::json::checked_json(&c.binding.json).map_err(|_| fail("Runtime binding JSON refused"))?["releaseId"].as_str(), Some("truss-catalog-runtime/0.66-candidate" | "truss-catalog-runtime/0.67-candidate" | "truss-catalog-runtime/0.68-candidate")),required_rebinding: true,parallel_edges: true,engine_imports: true,typed_page_mode: false,continuation_filter: None};
  Ok(runtime.validate_binding(c)?.mapping)
 }
 pub(crate) fn mutation_type(mapping:&Mapping,record:&Identity)->Result<String>{Ok(mapping.record(record)?.type_id.clone())}
@@ -1643,12 +1684,15 @@ mod canonical_date_runtime_tests {
             .unwrap();
         let mut document: serde_json::Value = serde_json::from_str(original_document).unwrap();
         assert_eq!(document["umf"], "0.10.0");
+        document["vocabularies"]["arras.view"] = json!({"version":"0.1.0"});
         let elements = document["modules"][0]["elements"].as_array_mut().unwrap();
         let record = elements.iter_mut().find(|element| element["kind"] == "record").unwrap();
         record["extensions"]["umf.ddd"] = json!({"kind":"entity","fields":{"purpose":"retained"}});
         record["extensions"]["hohfeld.view"] = json!({"label":"Order","format":"badge"});
+        record["extensions"]["arras.view"] = json!({"label":"Orders","opaqueFutureTerm":{"keep":[1,2,3]}});
         let field = elements.iter_mut().find(|element| element["kind"] == "field").unwrap();
         field["extensions"]["hohfeld.view"] = json!({"label":"Status","format":"badge"});
+        field["extensions"]["arras.view"] = json!({"label":"Status","format":"badge"});
 
         let document_json = document.to_string();
         let document_sha = weft_core::json::sha256(document_json.as_bytes());
@@ -1667,5 +1711,53 @@ mod canonical_date_runtime_tests {
         assert_eq!(output["status"], "compiled", "{output}");
         assert_eq!(output["modelPins"][0]["umfVersion"], "0.10.0");
         assert_eq!(output["modelPins"][0]["sha256"], request["modules"][0]["pin"]["sha256"]);
+
+        // Compile through the selected Truss registration for each source control.
+        // Payload content stays opaque; only the same owner's exact declaration,
+        // object shape, and supported carrier are admitted.
+        let compile_variant = |source: serde_json::Value| {
+            let document_json = source.to_string();
+            let document_sha = weft_core::json::sha256(document_json.as_bytes());
+            let mut variant = request.clone();
+            variant["modules"][0]["documentJson"] = json!(document_json);
+            variant["modules"][0]["pin"]["sha256"] = json!(document_sha);
+            let binding_raw = variant["target"]["bindingJson"].as_str().unwrap();
+            let mut binding: serde_json::Value = serde_json::from_str(binding_raw).unwrap();
+            binding["documents"][0]["sha256"] = json!(document_sha);
+            let binding_raw = binding.to_string();
+            variant["target"]["bindingJson"] = json!(binding_raw);
+            variant["target"]["bindingSha256"] = json!(weft_core::json::sha256(binding_raw.as_bytes()));
+            serde_json::from_str::<serde_json::Value>(&compile_json(&variant.to_string())).unwrap()
+        };
+        let original = document.clone();
+        let mut missing = original.clone();
+        missing["vocabularies"].as_object_mut().unwrap().remove("arras.view");
+        assert_blocked_without_sql(compile_variant(missing));
+        let mut unsupported = original.clone();
+        unsupported["vocabularies"]["arras.view"]["version"] = json!("0.2.0");
+        assert_blocked_without_sql(compile_variant(unsupported));
+        let mut null_declaration = original.clone();
+        null_declaration["vocabularies"]["arras.view"]["version"] = serde_json::Value::Null;
+        assert_blocked_without_sql(compile_variant(null_declaration));
+        let mut malformed_declaration = original.clone();
+        malformed_declaration["vocabularies"]["arras.view"] = json!("0.1.0");
+        assert_blocked_without_sql(compile_variant(malformed_declaration));
+        let mut malformed_payload = original.clone();
+        malformed_payload["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["arras.view"] = json!("Status");
+        assert_blocked_without_sql(compile_variant(malformed_payload));
+        let mut wrong_carrier = original.clone();
+        wrong_carrier["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["kind"] = json!("action");
+        assert_blocked_without_sql(compile_variant(wrong_carrier));
+        let mut unknown_namespace = original;
+        unknown_namespace["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["example.unknown"] = json!({"meaning":"selected"});
+        assert_blocked_without_sql(compile_variant(unknown_namespace));
+    }
+
+    fn assert_blocked_without_sql(output: serde_json::Value) {
+        assert_eq!(output["status"], "blocked", "{output}");
+        assert!(output.get("sql").is_none(), "blocked compilation leaked SQL: {output}");
     }
 }

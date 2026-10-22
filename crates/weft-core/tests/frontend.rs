@@ -34,6 +34,36 @@ fn independent_corpus_resolution_and_refusals() {
     }
 }
 
+#[test]
+fn retired_b001_numeric_corpus_refuses_without_current_plan() {
+    let original = include_bytes!("../../../spikes/b001/fixtures/cases-umf070.json");
+    assert_eq!(
+        weft_core::json::sha256(original),
+        "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306"
+    );
+    let corpus: Value = serde_json::from_slice(original).unwrap();
+    let mut count = 0;
+    for case in corpus
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|case| case["category"] == "numeric")
+    {
+        let response: Value =
+            serde_json::from_str(&frontend_json(&case["request"].to_string())).unwrap();
+        assert_eq!(response["status"], "blocked", "{}", case["id"]);
+        assert_eq!(
+            response["diagnostics"][0]["code"], "WFT-MODEL-VERSION",
+            "{}",
+            case["id"]
+        );
+        assert!(response.get("logicalPlan").is_none());
+        assert!(response.get("sql").is_none());
+        count += 1;
+    }
+    assert_eq!(count, 575);
+}
+
 fn base(sql: &str) -> Value {
     let corpus: Value = serde_json::from_str(include_str!(
         "../../../docs/helix/03-test/fixtures/cases.json"

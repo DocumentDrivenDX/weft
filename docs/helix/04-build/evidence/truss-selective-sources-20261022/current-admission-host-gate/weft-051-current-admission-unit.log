@@ -1,0 +1,13 @@
+test_original_retired_inputs_refuse_without_relabeling_or_native_promotion (test_fresh_hosts.CurrentCoreAdmissionTests.test_original_retired_inputs_refuse_without_relabeling_or_native_promotion) ... ok
+test_current_baseline_preserves_requests_and_historical_native_gaps (test_fresh_hosts.DeclarationBaselineTests.test_current_baseline_preserves_requests_and_historical_native_gaps) ... ok
+test_reviewed_change_is_exact_additive_ashlar_metadata_only (test_fresh_hosts.DeclarationBaselineTests.test_reviewed_change_is_exact_additive_ashlar_metadata_only) ... ok
+test_actual_isolated_helper_rejects_wrong_compiler_under_optimized_environment (test_fresh_hosts.FreshHostTests.test_actual_isolated_helper_rejects_wrong_compiler_under_optimized_environment) ... ok
+test_optimized_helpers_refuse_before_qualification (test_fresh_hosts.FreshHostTests.test_optimized_helpers_refuse_before_qualification) ... ok
+test_receipt_parity_counts_identifiers_and_wheel_corruptions_refuse (test_fresh_hosts.FreshHostTests.test_receipt_parity_counts_identifiers_and_wheel_corruptions_refuse) ... ok
+test_security_blocked_qualification_refuses_executable_members (test_fresh_hosts.FreshHostTests.test_security_blocked_qualification_refuses_executable_members) ... ok
+test_main_compatibility_cannot_change_requests_or_hide_native_gaps (test_fresh_hosts.MainBaselineTests.test_main_compatibility_cannot_change_requests_or_hide_native_gaps) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 11.623s
+
+OK

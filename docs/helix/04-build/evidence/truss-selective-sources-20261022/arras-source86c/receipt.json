@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "scope": "Local selected compiler and original UMF0.10 source/native Truss composition; not public or Linux qualification",
+  "compilerSourceFreeze": "86c092178bb8ca1a0d84edfebc175009d8862493",
+  "wheel": {
+    "status": "passed",
+    "version": "0.4.51",
+    "wheel": "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+    "wheelSha256": "a21faed75304e730c7cc9782394001be2ba1772b429e587f0d1910c2269dabbe",
+    "nativeModuleSha256": "93bee228350743286073a9400bdf5ec92e387c5e35431bbf34b0f81279c460a2",
+    "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+    "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated"
+  },
+  "releaseProfileWasm": {
+    "wasmSha256": "73012141c317c5eea4feabe81f448b8df832822267cd3ca83b4b1420fe875d30",
+    "wasmBytes": 9740400,
+    "browser": "151.0.7922.34",
+    "playwrightVersion": "1.62.1",
+    "byteParity": true
+  },
+  "checks": {
+    "coreUnit": 357,
+    "backendUnit": 200,
+    "allCoreBackendIncludingIntegrationAndDoctests": 874,
+    "coreBackendTestGroups": 33,
+    "runtimeLibrary": 51,
+    "entityNativeChromiumCases": 33,
+    "factsNativeChromiumCases": 5,
+    "historicalCasesUnchanged": 31,
+    "TrussIndependentInstalled": 62,
+    "TrussNativePolicySourceCutDisclosure": 10,
+    "TrussInstalledMigrationLineage": 80,
+    "TrussOriginalPublicWorkloadObjects": 1000,
+    "TrussOriginalPublicWorkloadEdges": 1000,
+    "skipped": 0
+  },
+  "limits": [
+    "macOS ARM64/Python3.11/PostgreSQL18.6; exact admitted subset only.",
+    "Arras vocabulary metadata is opaque; fixture naming does not qualify the Arras parser/adapter.",
+    "No protected migration, pre0.10 runtime, managed UC/Spark42 execution or broader security acceptance.",
+    "Final-source Linux/full-host CI, merge/publication and clean public artifact adoption remain required.",
+    "No broad p95 or nominal prior-run performance baseline claim."
+  ],
+  "files": {
+    "core-backend874.log": "9e7c8c62111061dfb1dc21e8958e701f2116544de111b1c59a8e3ac30ef23652",
+    "core-backend-unoptimized874.log": "e8dad29f263854090404b7e9a333ac7fc4873123d509d3994ba29e8460a2dffd",
+    "runtime51.log": "f39717aa4d941cfb8b404713588e33997bf8449da8842bd68b3c2c005b8955fb",
+    "packaging.json": "0f1e03ed1c8052401f2a944ee43dce0e45f80c965501e6f50b919634bdbf978c",
+    "wheel-payload-correspondence.json": "ef22215509006c84c81c927f0ea2baa2615261653ffcd37fe0bc514b87102090",
+    "entity33-native.json": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+    "entity33-browser-summary.json": "d775a00ada9d71699ea51162cb38e908b64f944927ae285bea759b62252e1604",
+    "entity33-browser-receipts.json": "f0913cc12cf6f84dc479930c6fd76adf7467455313951ae5b870bfd9df739f90",
+    "facts5-native.json": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+    "facts5-browser-summary.json": "d8d4ee19af9378592bc00f35ba6a15a09e917cd66e9e37691033206cd02e3cb0",
+    "facts5-browser-receipts.json": "244d751b46595009c835362ee17a34572d8e1c13bd7ee0301c7512d868f71b7d",
+    "wasm-build.log": "8f70b80f0b97dca48c87c4baee8a69d6900b0cdaa04fe7928448e1df74985fd7",
+    "specs.log": "c21548553acaade24510dab075d470bedef390938c5b1365aad6685e85d8317f",
+    "cargo-boundaries.log": "bfbb02925bc2fff01e3029e78aa209a113f6173ef6072ba29395bd7328c0b655",
+    "source-boundaries.log": "2324cad42d9cac1d2ed361b7dcc01839095a6789d067da1b7bbea18d0e738662",
+    "boundary-controls16.log": "12d53d2559e41512e56e24aae5f033763816e35b02acf973f1e937b715a528e0",
+    "example-feature-original-failure.log": "b6d11f62db67fe63fcd89dd46ea497d2370e5096731dc949e7d8f68e20cc9a0c",
+    "invalidated-shared-incremental-cache.log": "174e31e13dc06ade6f41eff63c6fb6dc56adbe1fff1c5c57afef64bf74e67e4a",
+    "Truss-native-Arras-original-source.log": "2eac004b8d08edde52db88f23d987d9678e4156738affef309dea03dbb7f1ea9",
+    "Truss-installed-native-policy10.log": "379d8101d05a9aabce3a94f169c1169831282560ca41713c1396c1687e2d2e97",
+    "Truss-installed-independent62.json": "902c9d71fd050484f9937d001a45ab88df720bcc7cf645934770d2e4562b7dd5",
+    "Truss-installed-lineage80.json": "95f22989825bdb905bef9d1b53fa09aff30acad054ad7dc9dca53acd5a7f7de5",
+    "Truss-original-public-workload.json": "741e3cc3189331fd81ff141fb46feec0dd36c3262d82c2d7e890b64f8b02038d"
+  }
+}

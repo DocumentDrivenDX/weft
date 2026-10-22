@@ -5,7 +5,7 @@
 import ast,copy,gzip,hashlib,json
 from pathlib import Path
 from evidence_audit import strict
-from licensed_source import source_custody
+from licensed_source import source_custody,retained_truss_application_inputs
 ROOT=Path(__file__).resolve().parents[2];BASE=ROOT/'docs/helix/04-build/evidence/B-007-current-initial-hosts'
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 custody=strict((BASE/'custody.json').read_text())
@@ -33,8 +33,10 @@ source=ROOT/'docs/helix/04-build/evidence/B-007-truss-application-native/reports
 originals=strict(gzip.decompress(source.read_bytes()).decode());assert len(originals)==76
 for r in originals:expected['truss-'+r['id']]=r['response']
 # Truss requests are separately authored in its native application harness.
-harness=ROOT/'tests/truss-postgresql/application-native.py';namespace={'__file__':str(harness)}
-module=ast.parse(harness.read_text().split('reports=[]\n',1)[0]);module.body=[n for n in module.body if not(isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id in {'BINARY','BINARY_SHA'} for t in n.targets))]
+harness,corpus=retained_truss_application_inputs(ROOT)
+# Use original producer and corpus. Archived location changes only path lookup.
+namespace={'__file__':str(harness),'ROOT':ROOT,'cases':strict(corpus.read_text())}
+module=ast.parse(harness.read_text().split('reports=[]\n',1)[0]);module.body=[n for n in module.body if not(isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id in {'ROOT','cases','BINARY','BINARY_SHA'} for t in n.targets))]
 exec(compile(module,str(harness),'exec'),namespace)
 for c in namespace['cases']:expected_requests['truss-'+c['id']]=c['request']
 assert set(expected)==set(responses)==set(expected_requests)

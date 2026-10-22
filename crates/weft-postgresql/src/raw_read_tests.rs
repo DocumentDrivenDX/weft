@@ -74,6 +74,30 @@ mod raw_read_tests {
         assert_eq!(compile(authored)["status"], "blocked", "ID fallback is used only when authored name is absent");
 
     }
+
+    #[test]
+    fn current010_raw_read_retains_arras_view_only_under_its_declared_vocabulary() {
+        let (mut request, _) = raw010_name_fallback_request();
+        let mut document: Value = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        document["vocabularies"]["arras.view"] = json!({"version":"0.1.0"});
+        let field = document["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|element| element["id"] == "Order_status").unwrap();
+        field["extensions"]["arras.view"] = json!({"label":"Status","opaqueTerm":{"future":true}});
+        let document_json = document.to_string();
+        request["binding"]["modelSha256"] = json!(weft_core::json::sha256(document_json.as_bytes()));
+        request["binding"]["modelJson"] = json!(document_json);
+        assert_eq!(compile(request.clone())["status"], "compiled");
+
+        let mut unsupported = request;
+        let mut document: Value = serde_json::from_str(unsupported["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        document["vocabularies"]["arras.view"]["version"] = json!("0.2.0");
+        let document_json = document.to_string();
+        unsupported["binding"]["modelSha256"] = json!(weft_core::json::sha256(document_json.as_bytes()));
+        unsupported["binding"]["modelJson"] = json!(document_json);
+        let refused = compile(unsupported);
+        assert_eq!(refused["status"], "blocked", "{refused}");
+        assert!(refused.get("sql").is_none(), "{refused}");
+    }
     #[test]
     fn signed_numeric_literals_preserve_carrier_and_refuse_signed_expressions() {
         let mut r=request();r["parameters"]=json!([]);

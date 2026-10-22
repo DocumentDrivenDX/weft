@@ -86,9 +86,9 @@ pub(crate) fn validate(
     for (index, p) in emission.parameters.iter().enumerate() {
         if let crate::backend::ParameterType::Exact {scalar_type,..}=&p.logical_type {
             let (capability,admitted_version)=match scalar_type {
-                crate::application_model::ExactScalarType::Binary=>("compare.binary.equal",matches!(plan,Plan::V02(p) if matches!(p.ir_version.as_str(),"weft-ir/0.2.5"|"weft-ir/0.2.6"|"weft-ir/0.2.7"))),
-                crate::application_model::ExactScalarType::Timestamp=>("compare.timestamp.instantEqual",matches!(plan,Plan::V02(p) if matches!(p.ir_version.as_str(),"weft-ir/0.2.6"|"weft-ir/0.2.7"))),
-                crate::application_model::ExactScalarType::Date=>("compare.date.equal",matches!(plan,Plan::V02(p) if p.ir_version=="weft-ir/0.2.7")),
+                crate::application_model::ExactScalarType::Binary=>("compare.binary.equal",matches!(plan,Plan::V02(p) if matches!(p.ir_version.as_str(),"weft-ir/0.2.5"|"weft-ir/0.2.6"|"weft-ir/0.2.7"|"weft-ir/0.2.8"))),
+                crate::application_model::ExactScalarType::Timestamp=>("compare.timestamp.instantEqual",matches!(plan,Plan::V02(p) if matches!(p.ir_version.as_str(),"weft-ir/0.2.6"|"weft-ir/0.2.7"|"weft-ir/0.2.8"))),
+                crate::application_model::ExactScalarType::Date=>("compare.date.equal",matches!(plan,Plan::V02(p) if matches!(p.ir_version.as_str(),"weft-ir/0.2.7"|"weft-ir/0.2.8"))),
             };
             if p.position!=index+1 || !p.origin.is_object() || !admitted_version
                 || !assessments.iter().any(|a|a.id==capability&&a.status!=crate::backend::Status::Unsupported) {return Err(fail("Exact parameter requires typed admitted equality"));}

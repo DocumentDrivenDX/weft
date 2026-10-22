@@ -1,0 +1,11 @@
+{
+  "scope": "Original B007 references only; byte custody does not assert current implementation equivalence or runtime support",
+  "sources": [
+    {
+      "path": "crates/weft-databricks/src/native_profile.rs",
+      "sha256": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a",
+      "archive": "docs/helix/04-build/evidence/truss-selective-sources-20261022/retained-input-repair/sources/ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a.rs",
+      "gitCommit": "748ecf8573db0c652fe58f2e86449a72631b8cf3"
+    }
+  ]
+}

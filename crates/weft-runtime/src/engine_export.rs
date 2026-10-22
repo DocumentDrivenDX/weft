@@ -12,13 +12,15 @@ fn compile(program:&str,current:&str)->Result<Value,&'static str> {
     let admitted_page = matches!((checked["compiler"].as_str(), checked["version"].as_str()),
         (Some("truss-runtime"), Some("weft.engine-page/0.1"))
         | (Some("truss-runtime-binary"), Some("weft.engine-page/0.2")));
-    if !admitted_page || request["target"]["backendVersion"]!="0.4.41" || request["target"]["targetProfile"]!="truss-runtime-pg18.6/0.5" {
-        return Err("Explicit original Truss ABI1.1 page program required")
+    let selective=request["interfaceVersion"]=="weft-compile/0.2.8" && request["target"]["backendVersion"]=="0.4.43" && request["target"]["targetProfile"]=="truss-runtime-pg18.6/0.6";
+    let legacy=request["interfaceVersion"]=="weft-compile/0.2.7" && request["target"]["backendVersion"]=="0.4.41" && request["target"]["targetProfile"]=="truss-runtime-pg18.6/0.5";
+    if !admitted_page || !(selective || legacy) {
+        return Err("Explicit original Truss page version/ABI pair required")
     }
     let size=checked["pageSize"].as_u64().filter(|v|(1..=999).contains(v)).ok_or("Original page bound required")? as u16;
     let mut derived=request.clone();
-    derived["target"]["backendVersion"]=json!("0.4.42");
-    derived["target"]["targetProfile"]=json!("truss-runtime-pg18.6-export/0.1");
+    derived["target"]["backendVersion"]=json!(if selective {"0.4.44"} else {"0.4.42"});
+    derived["target"]["targetProfile"]=json!(if selective {"truss-runtime-pg18.6-export/0.2"} else {"truss-runtime-pg18.6-export/0.1"});
     let mut export_related=None;
     let raw=if let Some(packet)=checked.get("relatedRequest"){
         let read=crate::engine_related_read::page_read_packet(packet)?;
@@ -60,6 +62,38 @@ pub fn compile_json(program:&str,current_request:&str)->String {
         serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-export-request.json")).unwrap()
     }
     fn page(request:&Value)->Value {serde_json::from_str(&crate::engine_read::compile_page_json(&json!({"version":"weft.engine-page/0.1","compiler":"truss-runtime","request":request,"pageSize":999}).to_string())).unwrap()}
+    #[test] fn abi12_filtered_page_derives_complete_cursor_without_losing_parameter_custody() {
+        let cases:Vec<Value>=serde_json::from_str(include_str!("../../../tests/truss-entity-selection/cases.json")).unwrap();
+        let mut request=cases.iter().find(|c|c["id"]=="ordered-string-filtered-sparse").unwrap()["request"].clone();
+        request.as_object_mut().unwrap().remove("readProfile");
+        request["sql"]=json!("SELECT a.\"A-label\",a.\"A-value\" FROM \"A\" a WHERE a.\"A-value\"=:wanted");
+        request["parameters"]=json!({"wanted":{"family":"string","value":"sparse"}});
+        let original=page(&request);assert_eq!(original["status"],"compiled","{original}");
+        assert!(original["artifact"]["sql"].as_str().unwrap().contains("\"person_query_selected_objects\"("));
+        let mut current=request.clone();current["parameters"]["wanted"]["value"]=json!("ordinary");
+        let out=compile(&original.to_string(),&current.to_string()).unwrap();assert_eq!(out["status"],"compiled","{out}");
+        assert_eq!(out["artifact"]["backend"]["backendVersion"],"0.4.44");
+        assert_eq!(out["artifact"]["logicalPlan"]["limit"],Value::Null);
+        assert!(out["artifact"]["sql"].as_str().unwrap().contains("\"person_query_selected_objects\"("));
+        assert_eq!(out["program"],original);assert_eq!(out["request"],current);
+        assert!(out["artifact"]["parameters"].as_array().unwrap().iter().any(|r|r["value"]=="ordinary"));
+        assert_eq!(out["artifact"]["parameters"].as_array().unwrap().len(),out["checkedPage"]["artifact"]["parameters"].as_array().unwrap().len());
+        let mut damaged=original.clone();damaged["artifact"]["parameters"][1]["value"]=json!("{}");
+        let refused:Value=serde_json::from_str(&compile_json(&damaged.to_string(),&current.to_string())).unwrap();
+        assert_eq!(refused["status"],"blocked");assert!(refused.get("artifact").is_none());
+    }
+
+    #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
+    #[test] fn abi12_binary_adapter_keeps_the_explicit_context_pair() {
+        let cases:Vec<Value>=serde_json::from_str(include_str!("../../../tests/truss-entity-selection/cases.json")).unwrap();
+        let mut request=cases.iter().find(|c|c["id"]=="indexed-string-parameter-with-residual").unwrap()["request"].clone();
+        request.as_object_mut().unwrap().remove("readProfile");request["sql"]=json!("SELECT a.\"A-label\" FROM \"A\" a WHERE a.\"A-label\"=:label");
+        let input=|request:&Value|json!({"version":"weft.engine-read/0.2","compiler":"truss-runtime-binary","request":request}).to_string();
+        let result:Value=serde_json::from_str(&crate::engine_read::compile_json(&input(&request))).unwrap();assert_eq!(result["status"],"compiled","{result}");
+        assert_eq!(result["artifact"]["backend"]["backendVersion"],"0.4.43");
+        request["interfaceVersion"]=json!("weft-compile/0.2.7");
+        let result:Value=serde_json::from_str(&crate::engine_read::compile_json(&input(&request))).unwrap();assert_eq!(result["status"],"blocked","{result}");assert!(result.get("artifact").is_none());
+    }
     #[test] fn export_preserves_originals_and_emits_unbounded_ordered_plan() {
         let request=request();let original=page(&request);assert_eq!(original["status"],"compiled","{original}");
         let out=compile(&original.to_string(),&request.to_string()).unwrap();assert_eq!(out["status"],"compiled","{out}");
