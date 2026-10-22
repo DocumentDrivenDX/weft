@@ -1,0 +1,36 @@
+{
+  "scope": "Local installed Weft0.4.51 frozen compiler/Truss source composition; no final installed Truss48 or hosted/native-other-platform claim",
+  "sourceFreezeCommit": "f003997997e1d1a84ff47df34d1dc181660f2827",
+  "wheelSha256": "fc23ae27b687d49d3f2d495478ce9c55c43f7b9b20765f2967197c2e3afd6390",
+  "nativeModuleSha256": "6d05fb7c27365cc1502117169c8113b93fcfa2db100ef4af4f45d3f5459d419c",
+  "coreTests": 356,
+  "backendTests": 199,
+  "runtimeEngineTests": 50,
+  "independentlyExpectedCases": 29,
+  "actualChromiumByteParity": true,
+  "TrussQueryNativeTests": 35,
+  "TrussProtectedQueryNativeTests": 4,
+  "tuple": "macOSARM64/Python3.11/PostgreSQL18.6/Chromium151",
+  "files": {
+    "browser.log": "0f25c136cc762b62f1d3ed94ac9b97490d84cc5d4f65b6e362e402a2958b012b",
+    "truss-protected4.log": "c0ba6d2dd2708f51f915c512a33f2f3b0ce549e476240d20ed74eb3beac7973d",
+    "runtime-engine50.log": "1d365c2a05b810755c02d24a7ef22a9d66454fa40f9cbe447867041c9eb1c6c9",
+    "wrong-browser-entrypoint.log": "0302747f7fb345e00226716afca965acf78b74963eb6c2ca43fbea883e5aed45",
+    "rust555.log": "62846c43adcafecb952bc5faf3366e34c04d5c0de8cd431bf0656c4d749bfb13",
+    "python-reports.json": "64c47dbbf632ca72c3694e8fa49122ad3675b4f1b0ee30e01fc7895efbc7f814",
+    "packaging.json": "c9be085f0b1d8d1dcaa19914ba86a019ff4ac29dd5574013b8d612d72df3bfb5",
+    "entity29-rust.log": "bc9d5b7d2af04ec61bdbeb15f02e262bd62bc4f9f128ab644df0e4ece00aec5e",
+    "module-boundaries.log": "6039057e4aba14ddf2e78a7766105456f4140b6524c7e642e3400d5f65ad2386",
+    "entity-wrong-zero-test-filter.log": "53febcf4b7e45fcfb3b268126ba55f533fda68c227fa1fe2bedd5ad84cb46184",
+    "truss-query35.log": "b7ca72b4da09cac7131369a7e33b4a39c5efcd0d69d360ea4a349dd85f07e8eb",
+    "browser-receipts.json": "45c6a5ff60ea9f57fb1949e568be01e050025a229977cd203ba2f75ec904e2f7",
+    "specs.log": "c6b99cbc930b8dbe8ebc1d97b812a3dd3beecb54ca82c34412422c9e78c8b8af",
+    "browser-summary.json": "0f25c136cc762b62f1d3ed94ac9b97490d84cc5d4f65b6e362e402a2958b012b"
+  },
+  "limitations": [
+    "Native managed UC/Spark42 tranche is not in the selected public49-based cohort",
+    "Other compiler profiles retain their own scoped evidence; no universal new backend support",
+    "Linux/merge/release/public installation still required",
+    "Truss native profile, exact ACL evidence, real subsequent migration, cursor/corpus gates are independent"
+  ]
+}

@@ -20,7 +20,8 @@ jobs:
         with:
           bun-version: '1.4.2'
       - run: rustup toolchain install 1.90.0 --profile minimal --target wasm32-unknown-unknown && rustup default 1.90.0
-      - run: cargo test --locked -p weft-postgresql canonical_date_runtime_tests
+      - run: cargo test --locked -p weft-core -p weft-postgresql
+      - run: cargo test --locked -p weft-runtime --features raw-postgresql-reads,truss-postgresql-pg18,ashlar-sdk-ordered-page-candidate,ashlar-databricks-qualified,current-postgresql-scalar-candidate,current-databricks-scalar-candidate,current-query-refinement-candidate,current-presence-graph-requirements-candidate
       - run: python -m pip install maturin==1.9.6
       - run: maturin build --manifest-path crates/weft-python/Cargo.toml --release --locked --out /tmp/wheels
       - run: python -m pip install /tmp/wheels/*.whl
@@ -41,6 +42,17 @@ jobs:
           WEFT_PROBE_API: compile_truss_runtime_json
           WEFT_FRONTEND_BROWSER_SUMMARY: /tmp/browser-summary.json
           WEFT_BROWSER_RECEIPTS: /tmp/browser-receipts.json
+      - run: python tests/truss-entity-selection/check.py --reports /tmp/entity-reports.json
+      - run: node tests/compile/browser-check.mjs
+        env:
+          WEFT_PROBE_JS: /tmp/weft-web/weft_wasm.js
+          WEFT_PROBE_WASM: /tmp/weft-web/weft_wasm_bg.wasm
+          WEFT_BROWSER_WRAPPER: /tmp/wrapper/index.js
+          WEFT_FRONTEND_CORPUS: tests/truss-entity-selection/cases.json
+          WEFT_FRONTEND_REPORTS: /tmp/entity-reports.json
+          WEFT_PROBE_API: compile_truss_runtime_entity_selection
+          WEFT_FRONTEND_BROWSER_SUMMARY: /tmp/entity-browser-summary.json
+          WEFT_BROWSER_RECEIPTS: /tmp/entity-browser-receipts.json
       - uses: actions/upload-artifact@v4
         with:
           name: truss-facts-parity
@@ -48,3 +60,6 @@ jobs:
             /tmp/reports.json
             /tmp/browser-summary.json
             /tmp/browser-receipts.json
+            /tmp/entity-reports.json
+            /tmp/entity-browser-summary.json
+            /tmp/entity-browser-receipts.json

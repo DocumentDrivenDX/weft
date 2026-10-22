@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "version": "0.4.51",
+  "platform": "macos-arm64",
+  "functionalQualification": "local-only",
+  "postgresqlVersion": "18.6",
+  "sourceFreezeCommit": "f003997997e1d1a84ff47df34d1dc181660f2827",
+  "wheel": {
+    "name": "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "fc23ae27b687d49d3f2d495478ce9c55c43f7b9b20765f2967197c2e3afd6390"
+  },
+  "nativeModuleSha256": "6d05fb7c27365cc1502117169c8113b93fcfa2db100ef4af4f45d3f5459d419c",
+  "localFunctionalChecks": [
+    {
+      "id": "core-backend",
+      "status": "passed",
+      "tests": 555
+    },
+    {
+      "id": "selected-runtime-engine",
+      "status": "passed",
+      "tests": 50
+    },
+    {
+      "id": "native-and-Chromium-expected-corpus",
+      "status": "passed",
+      "cases": 29
+    },
+    {
+      "id": "Truss-source-native-query",
+      "status": "passed",
+      "tests": 35
+    },
+    {
+      "id": "Truss-source-protected-native-query",
+      "status": "passed",
+      "tests": 4
+    }
+  ],
+  "evidence": "../evidence/truss-selective-sources-20261022/compiler-f003/receipt.json",
+  "otherPlatforms": "Hosted Linux build/packaging remains a separate release gate; no other native functional qualification claimed",
+  "fullSuiteQualification": "not claimed",
+  "nativeSparkOrDatabricksExecution": "not claimed"
+}
