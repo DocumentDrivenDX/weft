@@ -64,6 +64,77 @@ The unchanged SMT model was not rerun locally; this is not a whole-workspace or
 new native-security qualification. No compiler/package input or release wheel
 changes. See `evidence/hohfeld-performance-20261021/formal-mapped-tests.json`.
 
+The authorized Truss HF-04/05 follow-up consumes public Weft0.4.49 and evolves
+the shared compiler for selectable facts, explicit relationship expansion and
+facts with pages. Work starts at current main9137ca2c in an isolated checkout;
+the primary checkout is unchanged. Existing0.4.50 preparation is retained, and
+the next publication version will be selected against actual upstream release
+state. The Truss plan is
+`/Users/erik/Projects/truss/docs/helix/04-build/hohfeld-followup-plan-20261021.md`.
+This is a source reference, not an invented governed cross-flow edge.
+
+First implement the explicit entity-projection profile in CONTRACT-004 and
+consume compiler-owned descriptors. Then version bounded indexed source
+selection with the Truss backend, retaining existing pre-filter source limits
+until native plans on populations above10,000 qualify the new path. No second
+query parser or host-sampled type inference is admitted. Low-confidence estimate
+for the combined query slice is40,000–70,000 additional tokens including review
+and qualification; no overall ceiling or per-slice token meter is available.
+Record actual commands, cases and timings instead of invented token usage.
+
+The first integration prototype on main9137ca2c passes355 core tests,199 backend
+tests,15 installed candidate compiler cases and actual Chromium byte parity,
+plus seven Truss native descriptor/fact/page controls. Its development wheel is
+`0.4.51.dev1` (native module version `0.4.51-dev.1`); it is not published or a
+reserved final release number. The main branch also contains the separate,
+unqualified managed UC tranche reserved for0.4.50. Its required managed-native
+release proof is outside the authorized Truss follow-up and remains mandatory
+for that tranche. Do not promote it through a Truss-only qualification report.
+
+The release cohort will therefore use exact public0.4.49 source
+`6d12e657bed9bf8267e80b8cc7aebc50e57fc799` plus this Truss compiler increment.
+Carry the increment upstream while preserving the managed tranche's separate
+gates. Preserve the first prototype's artifacts as historical component evidence
+and rebuild/qualify the selected cohort from its own frozen source; a prototype
+wheel built from main cannot stand in for that release cohort.
+
+The selected public0.4.49-based source is now frozen at
+`5b51e5ce0df2945fd2f90e8a53e081a6158a1bcb` for component qualification.
+All355 core and199 backend tests pass, plus the feature-enabled shared runtime
+page-transport control,15 installed compiler cases and actual Chromium151 byte
+parity. The clean-built development wheel SHA-256 is
+`0bcf3c81417df7be210e48f2876fc2473498f459fc3c3a7f27e751a883b16ddd`.
+[Original component receipts](evidence/truss-entity-projection-20261022/selected-public049-component/receipt.json)
+retain source hashes, installed RECORD, actual browser artifacts and the initial
+zero-selected-tests transport command. The corrected command explicitly selects
+`truss-postgresql-pg18`. All11 module boundaries and16 controls pass; specs check90
+artifacts/101 schemas/636 scenarios. These are component claims: indexed source
+execution, final protocol/version selection, Linux/release packages and publication
+remain open. Local JavaScript dependencies reuse primary-checkout installed entries.
+
+The next query increment deliberately selects fresh compile/IR0.2.8 and backend-interface0.2.9 and runtime backend43/44 with Truss query ABI1.2. Restore the published0.2.7
+schema bytes; move the unpublished entity-selector branch and its cases to0.2.8.
+CONTRACT-003 governs typed resolution categories and compiler-owned exact indexed
+candidate selection. Truss CONTRACT-007 owns generic native indexes, bounded
+residual/fallback behavior, complete key inventory and actual10,001+ source proof.
+The first fast subset is exact singular string/boolean equality and authored
+single required short-string ordered key pages. Preserve existing exact numeric,
+composite and longer key behavior through the bounded route; do not claim broader
+index support. Native plans, source limits, rollback/current authorization, final
+Linux/installed/browser qualification and publication remain gates.
+
+The new0.2.8 source now passes356 core and199 PostgreSQL backend cases without
+skips/filters, in0.86s/37.15s under test opt-level1. Its26 normative cases include
+new indexed candidate choices, single-string ordered seeks, sparse-filtered pages,
+string/boolean parameters and typed syntax/source/column refusals. All11 module
+boundaries and16 controls pass, and specs check90 artifacts/103 schemas/636 cases.
+The old0.2.7 schemas are restored byte-for-byte from the public0.4.49 source.
+The new private source-lowering module owns only typed plan choices and finite
+native function names; no host SQL rewriting or competing model resolver is added.
+The new fixed Truss ACL query after contained source errors is governed/qualified
+in Truss, not reimplemented by Weft. Installed compiler/browser and real new-ABI
+Truss composition are the next gates; this is not release qualification.
+
 Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 now accepts the structural backend boundary; public contracts remain draft specifications with scoped executable evidence. No production storage compatibility is claimed.
 
 ## Shared Constraints
@@ -2874,3 +2945,16 @@ compiler tests cover exact tuple dispatch, page continuation and crossed-target
 refusal. These changes establish compiler preparation only; actual Spark/JVM/
 Delta JAR verification and native result/publication custody remain open before
 any current-runtime qualification.
+
+### Truss0.4.51 release cohort versus main integration
+
+The public0.4.49-based Truss compiler cohort is frozen at
+`f003997997e1d1a84ff47df34d1dc181660f2827`; source-equivalent documentation/CI
+commit `d5be2fd6` carries its local macOS artifact record. Publish that qualified
+ancestor, after integration/hosted gates. The integration merge preserves the
+separate managed UC/Spark4.2 source from main9137ca2c. Its existing native gates
+and unqualified status remain; Truss evidence cannot promote it. The nine
+preexisting managed Rust surfaces and four managed release scripts now have
+explicit ownership inventory entries. This map repair changes no managed
+implementation or native-support claim. Main's merge tree and the selected
+release ancestor are deliberately distinct and must be named accurately.

@@ -34,8 +34,6 @@ jobs:
         include:
           - {os: ubuntu-24.04, target: x86_64-unknown-linux-gnu, manylinux: '2014'}
           - {os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, manylinux: '2014'}
-          - {os: macos-15-intel, target: x86_64-apple-darwin, manylinux: auto}
-          - {os: windows-2022, target: x86_64-pc-windows-msvc, manylinux: auto}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     steps:
@@ -142,7 +140,7 @@ jobs:
           import hashlib,json,os,pathlib,subprocess,tomllib,zipfile
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
           root=pathlib.Path('dist');wheels=sorted(root.glob('*.whl'))
-          assert len(wheels)==5
+          assert len(wheels)==3
           local=json.loads(pathlib.Path(f'docs/helix/04-build/releases/local-macos-{version}.json').read_text())
           assert local['status']=='passed' and local['version']==version
           assert local['platform']=='macos-arm64' and local['functionalQualification']=='local-only'
@@ -150,7 +148,7 @@ jobs:
           assert hashlib.sha256(mac.read_bytes()).hexdigest()==local['wheel']['sha256']
           (root/'packaging-aarch64-apple-darwin.json').write_text(json.dumps({'status':'passed','version':version,'wheel':mac.name,'wheelSha256':local['wheel']['sha256'],'nativeModuleSha256':local['nativeModuleSha256'],'scope':'local macOS exact installed archive, RECORD, metadata, ABI and notices checks; reused without another hosted run'},indent=2)+'\n')
           packaging=[json.loads(p.read_text()) for p in sorted(root.glob('packaging-*.json'))]
-          assert len(packaging)==5 and {p['wheel']for p in packaging}=={w.name for w in wheels}
+          assert len(packaging)==3 and {p['wheel']for p in packaging}=={w.name for w in wheels}
           for report in packaging:
               assert report['status']=='passed' and report['version']==version
               assert report['wheelSha256']==hashlib.sha256((root/report['wheel']).read_bytes()).hexdigest()

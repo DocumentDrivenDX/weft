@@ -56,7 +56,7 @@ impl<'a> Scope<'a> {
             .records
             .iter()
             .find(|(alias, _, _)| alias.value == n.value)
-            .ok_or_else(|| fail("WFT-NAME-MISSING", "Source alias is not in scope").at(&n.span))?;
+            .ok_or_else(|| fail("WFT-NAME-MISSING", "Source alias is not in scope").unavailable_source().at(&n.span))?;
         Ok((r, s.clone()))
     }
     pub(crate) fn record_for_column(&self, column: &Column) -> Result<(&Record, String)> {
@@ -70,7 +70,7 @@ impl<'a> Scope<'a> {
         }
         if matches != 1 {
             return Err(fail(if matches == 0 { "WFT-NAME-MISSING" } else { "WFT-NAME-AMBIGUOUS" },
-                "Bare Field name must match exactly one visible Record member").at(&column.span));
+                "Bare Field name must match exactly one visible Record member").column(matches>1).at(&column.span));
         }
         Ok(selected.unwrap())
     }

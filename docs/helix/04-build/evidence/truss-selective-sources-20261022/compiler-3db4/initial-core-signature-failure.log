@@ -1,0 +1,202 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-truss-hf04/crates/weft-core)
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:4:25
+  |
+4 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+7 |     exact,
+  |     ^^^^^
+8 |     ir::{Family, Identity, LogicalType},
+9 |     model::{Catalog, Record},
+  |                      ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+error[E0061]: this function takes 2 arguments but 1 argument was supplied
+   --> crates/weft-core/src/compile04.rs:261:32
+    |
+261 |                 "diagnostics":[public_diagnostic(diagnostic)]
+    |                                ^^^^^^^^^^^^^^^^^------------ argument #2 of type `&str` is missing
+    |
+note: function defined here
+   --> crates/weft-core/src/compile.rs:603:4
+    |
+603 | fn public_diagnostic(mut d: Diagnostic, version: &str) -> Value {
+    |    ^^^^^^^^^^^^^^^^^                    -------------
+help: provide the argument
+    |
+261 |                 "diagnostics":[public_diagnostic(diagnostic, /* &str */)]
+    |                                                            ++++++++++++
+
+error[E0061]: this function takes 2 arguments but 1 argument was supplied
+   --> crates/weft-core/src/compile04.rs:267:32
+    |
+267 |                   "diagnostics":[public_diagnostic(Diagnostic::new(
+    |  ________________________________^^^^^^^^^^^^^^^^^-
+268 | |                     "WFT-BACKEND-FAILURE", "capability", "Invalid Backend03 diagnostic envelope",
+269 | |                 ))]
+    | |__________________- argument #2 of type `&str` is missing
+    |
+note: function defined here
+   --> crates/weft-core/src/compile.rs:603:4
+    |
+603 | fn public_diagnostic(mut d: Diagnostic, version: &str) -> Value {
+    |    ^^^^^^^^^^^^^^^^^                    -------------
+help: provide the argument
+    |
+269 |                 "diagnostics":[public_diagnostic(Diagnostic::new(
+270 |                     "WFT-BACKEND-FAILURE", "capability", "Invalid Backend03 diagnostic envelope",
+271 ~                 ), /* &str */)]
+    |
+
+error[E0061]: this function takes 2 arguments but 1 argument was supplied
+   --> crates/weft-core/src/compile041.rs:64:32
+    |
+ 64 |                 "diagnostics":[public_diagnostic(diagnostic)]
+    |                                ^^^^^^^^^^^^^^^^^------------ argument #2 of type `&str` is missing
+    |
+note: function defined here
+   --> crates/weft-core/src/compile.rs:603:4
+    |
+603 | fn public_diagnostic(mut d: Diagnostic, version: &str) -> Value {
+    |    ^^^^^^^^^^^^^^^^^                    -------------
+help: provide the argument
+    |
+ 64 |                 "diagnostics":[public_diagnostic(diagnostic, /* &str */)]
+    |                                                            ++++++++++++
+
+error[E0061]: this function takes 2 arguments but 1 argument was supplied
+   --> crates/weft-core/src/compile041.rs:70:32
+    |
+ 70 |                   "diagnostics":[public_diagnostic(Diagnostic::new(
+    |  ________________________________^^^^^^^^^^^^^^^^^-
+ 71 | |                     "WFT-BACKEND-FAILURE", "capability", "Invalid Backend03 diagnostic envelope",
+ 72 | |                 ))]
+    | |__________________- argument #2 of type `&str` is missing
+    |
+note: function defined here
+   --> crates/weft-core/src/compile.rs:603:4
+    |
+603 | fn public_diagnostic(mut d: Diagnostic, version: &str) -> Value {
+    |    ^^^^^^^^^^^^^^^^^                    -------------
+help: provide the argument
+    |
+ 72 |                 "diagnostics":[public_diagnostic(Diagnostic::new(
+ 73 |                     "WFT-BACKEND-FAILURE", "capability", "Invalid Backend03 diagnostic envelope",
+ 74 ~                 ), /* &str */)]
+    |
+
+error[E0061]: this function takes 2 arguments but 1 argument was supplied
+   --> crates/weft-core/src/compile042.rs:55:32
+    |
+ 55 |                 "diagnostics":[public_diagnostic(diagnostic)]
+    |                                ^^^^^^^^^^^^^^^^^------------ argument #2 of type `&str` is missing
+    |
+note: function defined here
+   --> crates/weft-core/src/compile.rs:603:4
+    |
+603 | fn public_diagnostic(mut d: Diagnostic, version: &str) -> Value {
+    |    ^^^^^^^^^^^^^^^^^                    -------------
+help: provide the argument
+    |
+ 55 |                 "diagnostics":[public_diagnostic(diagnostic, /* &str */)]
+    |                                                            ++++++++++++
+
+error[E0061]: this function takes 2 arguments but 1 argument was supplied
+   --> crates/weft-core/src/compile042.rs:61:32
+    |
+ 61 |                   "diagnostics":[public_diagnostic(Diagnostic::new(
+    |  ________________________________^^^^^^^^^^^^^^^^^-
+ 62 | |                     "WFT-BACKEND-FAILURE", "capability", "Invalid Backend03 diagnostic envelope",
+ 63 | |                 ))]
+    | |__________________- argument #2 of type `&str` is missing
+    |
+note: function defined here
+   --> crates/weft-core/src/compile.rs:603:4
+    |
+603 | fn public_diagnostic(mut d: Diagnostic, version: &str) -> Value {
+    |    ^^^^^^^^^^^^^^^^^                    -------------
+help: provide the argument
+    |
+ 63 |                 "diagnostics":[public_diagnostic(Diagnostic::new(
+ 64 |                     "WFT-BACKEND-FAILURE", "capability", "Invalid Backend03 diagnostic envelope",
+ 65 ~                 ), /* &str */)]
+    |
+
+warning: unused variable: `sdk_read_parameters`
+   --> crates/weft-core/src/compile.rs:441:21
+    |
+441 |                 let sdk_read_parameters=req.parameters.clone().unwrap_or_default();
+    |                     ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+For more information about this error, try `rustc --explain E0061`.
+warning: `weft-core` (lib test) generated 3 warnings
+error: could not compile `weft-core` (lib test) due to 6 previous errors; 3 warnings emitted

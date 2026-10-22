@@ -1,0 +1,11 @@
+file:///private/tmp/weft-truss-hf04/tests/compile/browser-check.mjs:55
+  responses.forEach((r,i)=>{if(r!==expected[checked+i]){if(process.env.WEFT_BROWSER_MISMATCH)writeFileSync(process.env.WEFT_BROWSER_MISMATCH,JSON.stringify({id:cases[i].id,actual:r,expected:expected[checked+i]},null,2)+'\n');throw new Error('WASM/native byte mismatch: '+cases[i].id);}receipts.push({id:cases[i].id,requestSha256:createHash('sha256').update(cases[i].request).digest('hex'),actualSha256:createHash('sha256').update(r).digest('hex'),expectedSha256:createHash('sha256').update(expected[checked+i]).digest('hex')})});
+                                                                                                                                                                                                                                       ^
+
+Error: WASM/native byte mismatch: no-facts-no-automatic-relationships
+    at file:///private/tmp/weft-truss-hf04/tests/compile/browser-check.mjs:55:232
+    at Array.forEach (<anonymous>)
+    at verifyBatch (file:///private/tmp/weft-truss-hf04/tests/compile/browser-check.mjs:55:13)
+    at file:///private/tmp/weft-truss-hf04/tests/compile/browser-check.mjs:107:2
+
+Node.js v26.12.0

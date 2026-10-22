@@ -156,7 +156,7 @@ impl Catalog {
                 },
                 "resolve",
                 "Selected member name missing or ambiguous",
-            )
+            ).column(matches.len()>1)
             .at(&name.span));
         }
         let member = matches.into_iter().next().unwrap();
@@ -463,7 +463,7 @@ impl Catalog {
                 },
                 "resolve",
                 "Relationship name is missing or ambiguous",
-            )
+            ).column(matches.len()>1)
             .at(&name.span));
         }
         let (module, rel, inverse) = matches[0];

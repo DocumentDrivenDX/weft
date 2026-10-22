@@ -1,0 +1,152 @@
+{
+  "interfaceVersion": "truss-query-abi-descriptor/0.1",
+  "identity": "truss-postgresql-logical-query",
+  "version": "1.2",
+  "postgresVersion": "180006",
+  "bindingInterfaceVersion": "truss-runtime-binding/0.5",
+  "schema": "truss",
+  "functions": [
+    {
+      "signature": "truss.person_query_scope(jsonb)",
+      "returns": "void"
+    },
+    {
+      "signature": "truss.person_query_objects(jsonb,int)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "props",
+          "jsonb"
+        ]
+      ]
+    },
+    {
+      "signature": "truss.person_query_edges(jsonb,int)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "source_id",
+          "bigint"
+        ],
+        [
+          "target_id",
+          "bigint"
+        ]
+      ]
+    },
+    {
+      "signature": "truss.person_query_page_objects(jsonb,int,text)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "props",
+          "jsonb"
+        ]
+      ]
+    },
+    {
+      "signature": "truss.query_numeric_value(text,text)",
+      "returns": "boolean"
+    },
+    {
+      "signature": "truss.query_timestamp_instant_key(text,text)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.person_query_object_attribution(jsonb,int,bigint)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.person_query_object_times(jsonb,int,bigint)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.person_query_object_load_id(jsonb,int,bigint)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.query_complete_related_keys(jsonb,int,int)",
+      "returns": "jsonb"
+    },
+    {
+      "signature": "truss.person_query_selected_objects(jsonb,int,jsonb)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "props",
+          "jsonb"
+        ]
+      ]
+    },
+    {
+      "signature": "truss.person_query_seek_objects(jsonb,int,text,text,int)",
+      "returns": [
+        [
+          "id",
+          "bigint"
+        ],
+        [
+          "props",
+          "jsonb"
+        ]
+      ]
+    }
+  ],
+  "sourceValues": {
+    "identity": "native positive signed64 object or edge id; record/relationship type id qualifies identity",
+    "properties": "JSON object keyed by native property id text; missing key is absent; explicit null cell is present null",
+    "scalarCells": "UMF exact string, boolean, integer, decimal, timestamp and binary cells under admitted catalog facets; no precision-losing casts; canonical date cells under the explicit Truss Gregorian subset",
+    "containers": "admitted flat and recursive scalar array/map cells retain order, map keys and absent/null distinctions",
+    "numeric": "integer/decimal source text is validated before PostgreSQL numeric input; admitted signed64 and decimal(18,4)/(18,2) facets retain exact meaning",
+    "timestampComparison": "umf-rfc3339-exact-instant/1.0.0; original token retained; instant key is [wholeSecondsText,fractionDigitsWithoutTrailingZeroes]",
+    "binary": "canonical base64 text; byte equality uses decoded bytes",
+    "date": "canonical Gregorian YYYY-MM-DD, years0001..9999; original tokens; C-collated equality; absent/null remain SQL UNKNOWN",
+    "indexedSubset": "Exact singular string/boolean field equality using original property cells; authored single required string ordered keys with at most1024 UTF8 bytes, empty facets and a complete indexable key inventory. Valid longer, composite and nonstring keys remain stored unchanged and use the bounded legacy fallback."
+  },
+  "graph": {
+    "relationships": "directed independent or owned, one admitted endpoint type pair, no association object or composition; every distinct edge id counts, including parallel edges",
+    "ownership": "acyclic owned forest; object root columns identify the rootless aggregate root; complete current root is validated in the caller statement snapshot",
+    "rootAuthorization": "every observed current or historical attribution root document must occur in binding.documents; its module reader is required before source buffering and final handoff; final query_scope rechecks the complete selected document scope",
+    "relationshipKeys": "complete authored endpoint keys, with tuple arity and exact scalar components preserved"
+  },
+  "entityMetadata": {
+    "attribution": [
+      "_version",
+      "_created_by",
+      "_updated_by",
+      "_original_author",
+      "_original_at"
+    ],
+    "times": [
+      "_created_at",
+      "_updated_at"
+    ],
+    "load": [
+      "_load_id"
+    ],
+    "meaning": "original creation and current version evidence, including descendant effects of an original ownership change; no synthetic child operation; nullable import metadata remains JSON null when absent",
+    "history": "exact original per-entity journal group and immutable owning attempt/transition; historical root interpretation never falls back to a live root"
+  },
+  "execution": {
+    "snapshot": "STABLE public data/fact shims and original STABLE sources use the caller SQL statement snapshot, including own pending writes. The separately invoked VOLATILE person guard observes current permissions; current authority is checked again at final handoff.",
+    "binding": "queryAbi pin is exact; installation id, actual runtime release id+sha256, accepted document revisions+sha256, catalog revision and native mappings remain byte-bound by the original compiled artifact",
+    "wrongRuntime": "execution refuses a different actual installation/runtime binding even when queryAbi is identical",
+    "session": "authenticated original person on host-supplied PostgreSQL connection; caller owns transaction; generated SQL runs with pinned pg_catalog,pg_temp search_path",
+    "limits": "maximumScanRows and maximumResultRows1..10000; maximumBytes1..16777216; legacy complete source bags retain pre-predicate scan bounds; compiler-selected exact string/boolean candidate sources validate every matched row within the same bounded candidate count/bytes before residual predicates; eligible complete single-string ordered keys seek at most pageSize+1 rows; unsupported or nonindexable inventory uses complete bounded fallback; native index traversal has statement/operation deadlines, not a claimed exact index-node bound",
+    "refusals": "invalid binding/profile or unsupported meaning, unauthorized owner/root, stale catalog/observation, malformed exact value, or resource limit refuses the whole query; no partial rows",
+    "invocation": "Finite public person invocation shims check current native family enrollment, original function owner and fresh original caller EXECUTE; source/fact implementations recheck selected current owners; native42501 remains an installation execution failure",
+    "cursorDelivery": "Explicit backend0.4.44 caller-owned insensitive portal removes the SQL result LIMIT while retaining a complete bounded source. Exact indexed candidate filters retain their scan/byte budget; an unlimited portal never uses a finite seek slice as the whole source. Unfiltered/unsupported sources retain ordinary complete scan/byte refusal. Native SRFs may buffer complete bounded sources before portal fetch; host batch sizes are not strict total-process memory or latency guarantees."
+  }
+}

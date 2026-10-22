@@ -1,0 +1,74 @@
+Processing /private/tmp/truss-public-047-clean-runtime-wheels/pgserver_pg18-18.6.1-cp311-cp311-macosx_14_0_arm64.whl
+Processing /private/tmp/weft-hf05-candidate-wheels/weft_sql-0.4.51.dev1-cp39-abi3-macosx_11_0_arm64.whl
+Collecting asn1crypto==1.5.1 (from -r /private/tmp/truss-hf05-dependencies.txt (line 1))
+  Downloading asn1crypto-1.5.1-py2.py3-none-any.whl.metadata (13 kB)
+Collecting attrs==26.1.0 (from -r /private/tmp/truss-hf05-dependencies.txt (line 2))
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting fasteners==0.20 (from -r /private/tmp/truss-hf05-dependencies.txt (line 3))
+  Downloading fasteners-0.20-py3-none-any.whl.metadata (4.8 kB)
+Collecting jsonschema==4.26.0 (from -r /private/tmp/truss-hf05-dependencies.txt (line 4))
+  Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting jsonschema-specifications==2025.9.1 (from -r /private/tmp/truss-hf05-dependencies.txt (line 5))
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting mini-racer==0.14.1 (from -r /private/tmp/truss-hf05-dependencies.txt (line 6))
+  Downloading mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl.metadata (22 kB)
+Collecting pg8000==1.31.5 (from -r /private/tmp/truss-hf05-dependencies.txt (line 7))
+  Downloading pg8000-1.31.5-py3-none-any.whl.metadata (88 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.8/88.8 kB 6.9 MB/s eta 0:00:00
+Collecting platformdirs==4.12.4 (from -r /private/tmp/truss-hf05-dependencies.txt (line 8))
+  Downloading platformdirs-4.12.4-py3-none-any.whl.metadata (5.5 kB)
+Collecting psutil==7.2.2 (from -r /private/tmp/truss-hf05-dependencies.txt (line 9))
+  Downloading psutil-7.2.2-cp36-abi3-macosx_11_0_arm64.whl.metadata (22 kB)
+Collecting psycopg==3.3.6 (from -r /private/tmp/truss-hf05-dependencies.txt (line 10))
+  Downloading psycopg-3.3.6-py3-none-any.whl.metadata (4.4 kB)
+Collecting psycopg-binary==3.3.6 (from -r /private/tmp/truss-hf05-dependencies.txt (line 11))
+  Downloading psycopg_binary-3.3.6-cp311-cp311-macosx_11_0_arm64.whl.metadata (2.7 kB)
+Collecting python-dateutil==3.0.0 (from -r /private/tmp/truss-hf05-dependencies.txt (line 12))
+  Downloading python_dateutil-3.0.0-py2.py3-none-any.whl.metadata (8.2 kB)
+Collecting referencing==0.37.0 (from -r /private/tmp/truss-hf05-dependencies.txt (line 13))
+  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py==2026.9.1 (from -r /private/tmp/truss-hf05-dependencies.txt (line 14))
+  Downloading rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl.metadata (4.1 kB)
+Collecting scramp==1.4.17 (from -r /private/tmp/truss-hf05-dependencies.txt (line 15))
+  Downloading scramp-1.4.17-py3-none-any.whl.metadata (22 kB)
+Collecting six==1.17.0 (from -r /private/tmp/truss-hf05-dependencies.txt (line 16))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting typing_extensions==4.16.0 (from -r /private/tmp/truss-hf05-dependencies.txt (line 17))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting tzdata==2026.5 (from -r /private/tmp/truss-hf05-dependencies.txt (line 18))
+  Downloading tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+Downloading asn1crypto-1.5.1-py2.py3-none-any.whl (105 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.0/105.0 kB 6.5 MB/s eta 0:00:00
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.5/67.5 kB 7.0 MB/s eta 0:00:00
+Downloading fasteners-0.20-py3-none-any.whl (18 kB)
+Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 7.9 MB/s eta 0:00:00
+Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Downloading mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl (18.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 18.5/18.5 MB 27.2 MB/s eta 0:00:00
+Downloading pg8000-1.31.5-py3-none-any.whl (57 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.8/57.8 kB 162.7 MB/s eta 0:00:00
+Downloading platformdirs-4.12.4-py3-none-any.whl (32 kB)
+Downloading psutil-7.2.2-cp36-abi3-macosx_11_0_arm64.whl (129 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 129.9/129.9 kB 177.9 MB/s eta 0:00:00
+Downloading psycopg-3.3.6-py3-none-any.whl (215 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 215.5/215.5 kB 37.1 MB/s eta 0:00:00
+Downloading psycopg_binary-3.3.6-cp311-cp311-macosx_11_0_arm64.whl (4.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 34.5 MB/s eta 0:00:00
+Downloading python_dateutil-3.0.0-py2.py3-none-any.whl (94 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.7/94.7 kB 259.6 MB/s eta 0:00:00
+Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+Downloading rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl (346 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 346.8/346.8 kB 49.2 MB/s eta 0:00:00
+Downloading scramp-1.4.17-py3-none-any.whl (16 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 179.6 MB/s eta 0:00:00
+Downloading tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 348.0/348.0 kB 32.4 MB/s eta 0:00:00
+Installing collected packages: asn1crypto, weft-sql, tzdata, typing_extensions, six, scramp, rpds-py, psycopg-binary, psutil, platformdirs, mini-racer, fasteners, attrs, referencing, python-dateutil, psycopg, pgserver-pg18, pg8000, jsonschema-specifications, jsonschema
+Successfully installed asn1crypto-1.5.1 attrs-26.1.0 fasteners-0.20 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 mini-racer-0.14.1 pg8000-1.31.5 pgserver-pg18-18.6.1 platformdirs-4.12.4 psutil-7.2.2 psycopg-3.3.6 psycopg-binary-3.3.6 python-dateutil-3.0.0 referencing-0.37.0 rpds-py-2026.9.1 scramp-1.4.17 six-1.17.0 typing_extensions-4.16.0 tzdata-2026.5 weft-sql-0.4.51.dev1
+
+[notice] A new release of pip is available: 24.0 -> 26.2.2
+[notice] To update, run: /private/tmp/truss-hf05-venv/bin/python -m pip install --upgrade pip

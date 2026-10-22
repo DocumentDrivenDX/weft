@@ -90,6 +90,7 @@ fn valid_languages(profiles: &[LanguageProfile], interface: &str) -> bool {
                 profile_key(p),
                 ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0") | ("weft-sql/0.2.0", "weft-ir/engine-navigation/0.1")
             ) || (interface == "weft-backend/0.2.8" && matches!(profile_key(p),("weft-sql/0.2.0","weft-ir/engine-ordered-page/0.1")|("weft-sql/0.2.0","weft-ir/engine-navigation/0.2")|("weft-sql/0.2.0","weft-ir/engine-ordered-read/0.1"))) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
+                || (interface == "weft-backend/0.2.9" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.8"))
                 || (interface == "weft-backend/0.2.7" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.7"))
                 || (interface == "weft-backend/0.2.6" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.6"))
                 || (interface == "weft-backend/0.2.5" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.5"))
@@ -148,7 +149,7 @@ pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     Ok(manifest)
 }
 pub fn validate_manifest(m: &Manifest) -> Result<()> {
-    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4" | "weft-backend/0.2.5" | "weft-backend/0.2.6" | "weft-backend/0.2.7" | "weft-backend/0.2.8") || !valid_languages(&m.language_profiles, &m.interface_version) {
+    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4" | "weft-backend/0.2.5" | "weft-backend/0.2.6" | "weft-backend/0.2.7" | "weft-backend/0.2.8" | "weft-backend/0.2.9") || !valid_languages(&m.language_profiles, &m.interface_version) {
         return Err(failure(
             "WFT-BACKEND-VERSION",
             "Unsupported backend interface or language/IR pair",
@@ -539,9 +540,8 @@ impl<B: Backend> Registered for Adapter<B> {
             return Err(failure("WFT-PIN", "Binding byte digest mismatch"));
         }
         let value = (if target.backend_id == "truss.postgresql.runtime"
-            && target.backend_version == "0.4.41"
-            && target.profile_id == "truss-runtime-pg18.6/0.5"
-            && actual_ir == "weft-ir/0.2.7"
+            && ((target.backend_version == "0.4.41" && target.profile_id == "truss-runtime-pg18.6/0.5" && actual_ir == "weft-ir/0.2.7")
+             || (matches!(target.backend_version.as_str(),"0.4.43"|"0.4.44") && matches!(target.profile_id.as_str(),"truss-runtime-pg18.6/0.6"|"truss-runtime-pg18.6-export/0.2") && actual_ir == "weft-ir/0.2.8"))
         {
             crate::json::checked_truss_runtime_catalog_json(&binding.json)
         } else {

@@ -425,7 +425,7 @@ impl Catalog {
                 "WFT-NAME-AMBIGUOUS",
                 "resolve",
                 "Source name matches multiple records",
-            )
+            ).unavailable_source()
             .at(&name.span));
         }
         found.pop().ok_or_else(|| {
@@ -433,7 +433,7 @@ impl Catalog {
                 "WFT-NAME-MISSING",
                 "resolve",
                 "No queryable record matches source",
-            )
+            ).unavailable_source()
             .at(&name.span)
         })
     }
@@ -472,7 +472,7 @@ impl Catalog {
                 "WFT-NAME-AMBIGUOUS",
                 "resolve",
                 "Property name matches multiple members",
-            )
+            ).column(true)
             .at(&name.span));
         }
         let (identity, field) = found.pop().ok_or_else(|| {
@@ -480,7 +480,7 @@ impl Catalog {
                 "WFT-NAME-MISSING",
                 "resolve",
                 "Property not found among record members",
-            )
+            ).column(false)
             .at(&name.span)
         })?;
         self.validate_selected010(&record.pin, field)?;
