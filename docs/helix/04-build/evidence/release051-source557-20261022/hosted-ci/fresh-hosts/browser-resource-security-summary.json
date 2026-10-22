@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 17,
+  "browser": "151.0.7922.34",
+  "byteParity": true,
+  "wasmSha256": "3067ab811c4cdc64e4b6da497a16cef55dc3a89a9b145c09bbbfe94611aa4fc4",
+  "wrapperSha256": "f56f35bffcdc6e10b8807352bc9b3eea3f2f75271bdd34f9605ce7434fe9ac44",
+  "casesAndResponsesSha256": "8b83498becec7322c89f0cd461083d61fbbfe8d480cff9d27048299c13cd0e77",
+  "scope": "Fresh WASM/native library byte parity for7resource and10blocked-security controls; CLI parity covers6resource and10security responses, with1separate input-limit transport refusal. No database/security enforcement."
+}

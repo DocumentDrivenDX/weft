@@ -1,0 +1,152 @@
+{
+  "interfaceVersion": "weft-selected-workspace-test-evidence/0.1",
+  "release": "0.4.51",
+  "selectedSourceCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7",
+  "selectedSourceParent": "84bde6e6f1ebe406cf01f4b344c977739dbe0180",
+  "originalCompilerFreeze": "86c092178bb8ca1a0d84edfebc175009d8862493",
+  "host": {
+    "os": "macOS",
+    "architecture": "arm64",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)"
+  },
+  "environment": {
+    "CARGO_INCREMENTAL": "0",
+    "CARGO_TARGET_DIR": "/private/tmp/weft-arras-051-full-target",
+    "network": "disabled through cargo --offline",
+    "jobs": 2
+  },
+  "sourceInputs": {
+    "Cargo.lock": "0bce49acd09fb11f2b4b2e72ccbb2479c59380f682215128675d48586ca08d78",
+    "crates/weft-runtime/src/lib.rs": "b11946537f03646577d1a6718ed05401084e79cec860855cdbf9e449e14a7a50",
+    "spikes/b001/fixtures/cases-umf070.json": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306",
+    "b001OriginalCorpusSha256": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306"
+  },
+  "runs": [
+    {
+      "name": "selected-candidate-full-workspace",
+      "status": "passed",
+      "sourceCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7",
+      "command": "/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo test --workspace --features weft-runtime/truss-postgresql-candidate,weft-runtime/ashlar-databricks-candidate,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked --offline -j2",
+      "testProfile": "Cargo default test profile; no CARGO_PROFILE_TEST_* overrides set",
+      "result": {
+        "summaries": 62,
+        "passed": 1046,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "selected-qualified-full-workspace",
+      "status": "passed",
+      "sourceCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7",
+      "command": "/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo test --workspace --features weft-runtime/truss-postgresql-qualified,weft-runtime/ashlar-databricks-qualified,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked --offline -j2",
+      "testProfile": "selected CI profile",
+      "profileEnvironment": {
+        "CARGO_PROFILE_TEST_OPT_LEVEL": "1",
+        "CARGO_PROFILE_TEST_DEBUG_ASSERTIONS": "true",
+        "CARGO_PROFILE_TEST_OVERFLOW_CHECKS": "true"
+      },
+      "result": {
+        "summaries": 62,
+        "passed": 1047,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "selected-candidate-focused-runtime",
+      "status": "passed",
+      "sourceCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7",
+      "command": "/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo test --locked --offline -j2 -p weft-runtime --features truss-postgresql-candidate,ashlar-databricks-candidate,test-original,test-third,weft-postgresql/conformance-original",
+      "result": {
+        "summaries": 10,
+        "passed": 21,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "selected-qualified-focused-runtime",
+      "status": "passed",
+      "sourceCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7",
+      "command": "/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo test --locked --offline -j2 -p weft-runtime --features truss-postgresql-qualified,ashlar-databricks-qualified,test-original,test-third,weft-postgresql/conformance-original",
+      "result": {
+        "summaries": 10,
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "superseded-original-candidate-full-workspace",
+      "status": "failed-not-qualified",
+      "sourceHeadAtTestStart": "874e0f67255be297ee321024e8f6d180c668f951",
+      "sourceWorktree": "four B-001 repair paths dirty, exact patch sha256 f278a687caebb0b00b76a8888694a1fd22eecb82b24e3f7a49d47b57770f1461",
+      "failure": "weft-runtime ashlar_tests::ashlar_feature_controls_registration_and_retains_public_artifact got WFT-INPUT versus retired compiled expectation",
+      "result": {
+        "summaries": 42,
+        "passed": 1012,
+        "failed": 1,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "superseded-original-qualified-full-workspace",
+      "status": "cancelled-not-qualified",
+      "sourceHeadAtStart": "84bde6e6f1ebe406cf01f4b344c977739dbe0180",
+      "cancellation": "Root interrupted only positively identified process group PGID 27993 (cargo 27995, selected target test 28996) after SIGINT; root confirmed all absent",
+      "result": {
+        "summaries": 29,
+        "passed": 682,
+        "failed": 0,
+        "ignored": 0
+      }
+    }
+  ],
+  "logs": [
+    {
+      "file": "full-candidate-default-profile.log",
+      "source": "/private/tmp/weft-arras-051-repaired-full-candidate.log",
+      "bytes": 130623,
+      "sha256": "d653d4f55f392e1b453c5edd8f699f9007bf13e0540d5f0ce0fea6d222a18ae5"
+    },
+    {
+      "file": "full-qualified-ci-profile.log",
+      "source": "/private/tmp/weft-arras-051-repaired-full-qualified-ci-profile.log",
+      "bytes": 133795,
+      "sha256": "b4dcec2ff941e7b82b5d4f34ddca6ade90e1e6b68c83289e694a683b632ec99b"
+    },
+    {
+      "file": "focused-runtime-candidate.log",
+      "source": "/private/tmp/weft-arras-051-repaired-runtime-candidate.log",
+      "bytes": 16000,
+      "sha256": "b8a4847c496b8e5583fe2d38d52859366ced2615a7ffd46f356824593392373a"
+    },
+    {
+      "file": "focused-runtime-qualified.log",
+      "source": "/private/tmp/weft-arras-051-repaired-runtime-qualified.log",
+      "bytes": 15109,
+      "sha256": "f12aadf7dc4a0cb2db894c39d86973c395a8ff552eec877c7fbfb3c5d08ee976"
+    },
+    {
+      "file": "original-candidate-failure.log",
+      "source": "/private/tmp/weft-arras-051-full-candidate.log",
+      "bytes": 151004,
+      "sha256": "826d66f5c9baa2f7fe88ba685d34d8b5f30326ae99da8084a3820f33e593dbe3"
+    },
+    {
+      "file": "superseded-qualified-cancelled.log",
+      "source": "/private/tmp/weft-arras-051-full-qualified.log",
+      "bytes": 110343,
+      "sha256": "431cc820cb5d72b1373f92a6689acbfdf392bcb1e89494f2371aeb893583e293"
+    }
+  ],
+  "linuxParityEvidence": "../release051-final-integration-39822650070-20261022/README.md",
+  "qualificationLimits": [
+    "Mac ARM64 local Rust workspace tests only",
+    "The candidate and qualified full-suite test profiles differ and are stated per run",
+    "Linux native/Chromium integration is separate evidence",
+    "This packet does not publish or freeze a release source"
+  ]
+}

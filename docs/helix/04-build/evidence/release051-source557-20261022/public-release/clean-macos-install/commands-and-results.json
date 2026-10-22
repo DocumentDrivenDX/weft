@@ -1,0 +1,67 @@
+{
+  "wheelPackaging": {
+    "command": [
+      "/private/tmp/weft-public-051-clean-venv/bin/python",
+      "/private/tmp/weft-arras-release/scripts/release/verify-wheel-packaging.py",
+      "--wheel",
+      "/private/tmp/weft-public-051-verification/assets/weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+      "--version",
+      "0.4.51",
+      "--output",
+      "/private/tmp/weft-public-051-native/wheel-packaging.json"
+    ],
+    "cwd": "/private/tmp/weft-arras-release",
+    "script": "/private/tmp/weft-arras-release/scripts/release/verify-wheel-packaging.py",
+    "report": "/private/tmp/weft-public-051-native/wheel-packaging.json",
+    "scriptSha256": "4ef4e1a7eead8ecc36f30bc0cbcf77b3cdd891e6ef6008b982f5ef12a0f4d681",
+    "reportSha256": "3104b927a2b0b6cdbcfb6e4bf3fbac2467ce0c1f431dd244b412a4e859e2f7db",
+    "exitStatus": 0,
+    "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "trussFacts": {
+    "command": [
+      "/private/tmp/weft-public-051-clean-venv/bin/python",
+      "/private/tmp/weft-arras-release/tests/truss-facts/check.py",
+      "--reports",
+      "/private/tmp/weft-public-051-native/truss-facts-reports.json"
+    ],
+    "cwd": "/private/tmp/weft-arras-release",
+    "script": "/private/tmp/weft-arras-release/tests/truss-facts/check.py",
+    "report": "/private/tmp/weft-public-051-native/truss-facts-reports.json",
+    "cases": 5,
+    "scriptSha256": "ea728bb16583fed81756946bc26326958a7d883877aa80ad99f5708bb44363ce",
+    "reportSha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+    "reportCases": 5,
+    "exitStatus": 0,
+    "logSha256": "cfed9737600395f596b5e32f8f927ff75c787522b03bae28d80ccd07a5f9624f",
+    "comparisonToPriorSelectedMac": {
+      "newReport": "/private/tmp/weft-public-051-native/truss-facts-reports.json",
+      "priorSelectedMacReport": "/private/tmp/weft-arras-051-final-macos-55715373/facts-reports.json",
+      "byteIdentical": true,
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982"
+    }
+  },
+  "trussEntitySelection": {
+    "command": [
+      "/private/tmp/weft-public-051-clean-venv/bin/python",
+      "/private/tmp/weft-arras-release/tests/truss-entity-selection/check.py",
+      "--reports",
+      "/private/tmp/weft-public-051-native/truss-entity-selection-reports.json"
+    ],
+    "cwd": "/private/tmp/weft-arras-release",
+    "script": "/private/tmp/weft-arras-release/tests/truss-entity-selection/check.py",
+    "report": "/private/tmp/weft-public-051-native/truss-entity-selection-reports.json",
+    "cases": 33,
+    "scriptSha256": "4d764c17e2a24d15d959047db39246a6c6ec991f957726d4c61f498789aad7cf",
+    "reportSha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+    "reportCases": 33,
+    "exitStatus": 0,
+    "logSha256": "af6b0494ec2d1fa683c6129bd32f3990c3a023150ea8a1f4d5a37bcfb35c6057",
+    "comparisonToPriorSelectedMac": {
+      "newReport": "/private/tmp/weft-public-051-native/truss-entity-selection-reports.json",
+      "priorSelectedMacReport": "/private/tmp/weft-arras-051-final-macos-55715373/entity-reports.json",
+      "byteIdentical": true,
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+    }
+  }
+}

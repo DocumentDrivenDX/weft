@@ -1,0 +1,56 @@
+{
+  "assetCount": 9,
+  "checks": [
+    "release tag, draft and prerelease state",
+    "exact nine-file downloaded and metadata asset inventory and sizes",
+    "three wheel checksums from SHA256SUMS",
+    "all wheel ZIP membership, RECORD digest/size and native module content",
+    "Linux packaging reports byte-match hosted outputs; Mac packaging report matches the release constructor and local report values",
+    "Mac functional report byte-matches local report",
+    "release-pins source, freeze, version, wheel and report identities"
+  ],
+  "format": "weft-public-release-verification/1",
+  "packagingReportCount": 3,
+  "passed": true,
+  "releaseMetadata": "/private/tmp/weft-public-051-verification/release-metadata.json",
+  "sourceFreezeCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "tag": "v0.4.51",
+  "tagSourceCommit": "d4b0b98507ae15bd98180a2ea2030ea92ce11d96",
+  "version": "0.4.51",
+  "wheelCount": 3,
+  "wheels": {
+    "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl": {
+      "nativeModule": {
+        "path": "weft/weft.abi3.so",
+        "sha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+        "size": 30007168
+      },
+      "recordAndZipVerified": true,
+      "recordMemberCount": 9,
+      "sha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+      "size": 10443518
+    },
+    "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": {
+      "nativeModule": {
+        "path": "weft/weft.abi3.so",
+        "sha256": "c1d973c1c8a40c99ce5ceb737708e511da7b07a63fe9dcbd8bef9357d3ac6ee5",
+        "size": 38408768
+      },
+      "recordAndZipVerified": true,
+      "recordMemberCount": 9,
+      "sha256": "42f846d689ace027d6bb2951f27c587660d4e5151285fe911ce7a3006d0001de",
+      "size": 12376342
+    },
+    "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+      "nativeModule": {
+        "path": "weft/weft.abi3.so",
+        "sha256": "ef293922003832fbd87041a28c6dbde33927fee573270f203aa51daf06bcd445",
+        "size": 41383776
+      },
+      "recordAndZipVerified": true,
+      "recordMemberCount": 9,
+      "sha256": "a23142f12b59444138b588a8a764666b025552a14036f62d83af022153f1a0a5",
+      "size": 13531659
+    }
+  }
+}

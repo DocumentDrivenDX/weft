@@ -1,0 +1,2286 @@
+{
+  "format": "truss-source-wheel-sdist-runtime-correspondence/1",
+  "sourceCommit": "22ed333528a4f57a24edfca5d3df811269471faf",
+  "runtimeFileCount": 455,
+  "wheelPackageFileCount": 455,
+  "sdistPackageFileCount": 455,
+  "allSourceWheelSdistBytesIdentical": true,
+  "sourceFiles": [
+    {
+      "path": "truss/__init__.py",
+      "size": 12060,
+      "sha256": "2b709459fa5e76c8ffa19d64609b5e2abc57cf5df275cd430fbbd2034025db44"
+    },
+    {
+      "path": "truss/_acceptance_json.py",
+      "size": 5854,
+      "sha256": "c7f33ca7ad1df1dd364fe7851f2bc8cdc5d082166215018d088d290de2ee1b8d"
+    },
+    {
+      "path": "truss/_action_authority_observation.py",
+      "size": 6970,
+      "sha256": "a56dae4f65ea872bb24f711c37bde6f001290857846ce71e424ce95068df4c08"
+    },
+    {
+      "path": "truss/_action_identity_codec.py",
+      "size": 1512,
+      "sha256": "96cd4da92d084320be5c98e079c23d5d00810dc517ac1ceab5f43a359f499c52"
+    },
+    {
+      "path": "truss/_action_role_installation.py",
+      "size": 10907,
+      "sha256": "85516f041ea654604dc7a8b237be987a0dac41e320c3382a8d7ce4a4c89cc5a4"
+    },
+    {
+      "path": "truss/_action_store.py",
+      "size": 28417,
+      "sha256": "53b87e8f9ba6132e8eff63a8a270180085fcf3dbe68daa11d9134e7c62fef0bc"
+    },
+    {
+      "path": "truss/_action_subject_installation.py",
+      "size": 9658,
+      "sha256": "c3620b9e480821962bd8648bf10be589975e8f03ef7c9c60d06118159987030f"
+    },
+    {
+      "path": "truss/_adoption_cancellation.py",
+      "size": 1351,
+      "sha256": "43e3ab5fe0f630aeaab065ae5ca8fbf2416cf0c14029d4b418cb8d72d85cbd0c"
+    },
+    {
+      "path": "truss/_batched_import_runtime.py",
+      "size": 17094,
+      "sha256": "4cfae6e1110e0adeca51131e7a4d8e490e910aca0ccb254850eaa73cbf0fd861"
+    },
+    {
+      "path": "truss/_borrowed_host.py",
+      "size": 9709,
+      "sha256": "16fde7a8d65fa16f795ee486ede23f7937d61446060800226fdb175ef4e10b57"
+    },
+    {
+      "path": "truss/_bounded_receive.py",
+      "size": 2940,
+      "sha256": "839b184779365b1505a719bc29fff8551e9d8ecdd02eb8e602ba28b59aac7a4f"
+    },
+    {
+      "path": "truss/_bulk_set_values.py",
+      "size": 5459,
+      "sha256": "80e77916a28863bc968d1f6b833f2616d9326f4daf6e7aedec3aa13b30cbdaac"
+    },
+    {
+      "path": "truss/_canonical_wire_tree.py",
+      "size": 2977,
+      "sha256": "67be360da1744810174c261bb6ca57b549422c6e027bdba41934cc55f1af0ddd"
+    },
+    {
+      "path": "truss/_catalog_definition_source.py",
+      "size": 5099,
+      "sha256": "a60146c7889d235861212b25a2db27326a016b019d4e4680f30e4423ef130129"
+    },
+    {
+      "path": "truss/_catalog_installation.py",
+      "size": 21168,
+      "sha256": "c6c3206e80828aa097ba2b5cd04dda4815631fd35cdf76b688056f80844d5941"
+    },
+    {
+      "path": "truss/_catalog_report_semantics.py",
+      "size": 3754,
+      "sha256": "9bd142d979f5be4eebeca645ed130ca0ccea951aabb1d32a44691cd4cef4ac5b"
+    },
+    {
+      "path": "truss/_catalog_runtime/barrier.sql",
+      "size": 221,
+      "sha256": "659c4d9dfe8c4cf33b40e2249d3668b1c283e1815f719a47990387d81423d80e"
+    },
+    {
+      "path": "truss/_catalog_runtime/capability-profiles.json",
+      "size": 55775,
+      "sha256": "b93cd0a1136551e1f8c307ece409163209951fb83842b5e787672b373f410c53"
+    },
+    {
+      "path": "truss/_catalog_runtime/catalog-key-backfill-storage.sql",
+      "size": 1660,
+      "sha256": "0126ae1db5cad9619f398d41bd4167706f896dee312591dcccf031bf9136490c"
+    },
+    {
+      "path": "truss/_catalog_runtime/catalog-key-backfill.sql",
+      "size": 22823,
+      "sha256": "5894dfb700829a717142de0eba066310b8cc815b04851f35f665d9aa73e127b0"
+    },
+    {
+      "path": "truss/_catalog_runtime/catalog-rebind-storage.sql",
+      "size": 1292,
+      "sha256": "9b827d0ab7a9fc210ea3f1d7e65d459cdc0953707400cc070cd9f63b586a4d1e"
+    },
+    {
+      "path": "truss/_catalog_runtime/catalog-rebind.sql",
+      "size": 33591,
+      "sha256": "0d7aabd6c9eb48ddd9bd908b6786dac2c9e130d0736fe811cdc3f7ae2eabbeff"
+    },
+    {
+      "path": "truss/_catalog_runtime/containers.sql",
+      "size": 20996,
+      "sha256": "b0a93427d28b412109613ad7cb709f613ead16eb6fe3d3e5ef2f5907c7345dd8"
+    },
+    {
+      "path": "truss/_catalog_runtime/definition-source.sql",
+      "size": 4228,
+      "sha256": "0aa6d163a5c3322a269786defb22ebd70badd0f1ac74cd41a6c8c7813d36fdd0"
+    },
+    {
+      "path": "truss/_catalog_runtime/entity-load.sql",
+      "size": 1517,
+      "sha256": "6100f2ce3783fd06f65e9d257cef4bc395d58b653e402121a9d18b47fe1eeb43"
+    },
+    {
+      "path": "truss/_catalog_runtime/entity-query.sql",
+      "size": 24866,
+      "sha256": "cf4296549c873659eebe2bb84278d07f4fb0da98b970d0b638ba11b20ed9bafc"
+    },
+    {
+      "path": "truss/_catalog_runtime/entity-times.sql",
+      "size": 2052,
+      "sha256": "c0eab24b02425b184c6cf9fef91d87377ece7c0fe3f82763ab5090f4b107ca5c"
+    },
+    {
+      "path": "truss/_catalog_runtime/evolution.sql",
+      "size": 22982,
+      "sha256": "e143834204b34ca58fe3b69ff92b2959aa32e585cbb8bcad55a1e526f23e5ed8"
+    },
+    {
+      "path": "truss/_catalog_runtime/feed-receipts.sql",
+      "size": 8866,
+      "sha256": "299716ead3943bbccea4c146cf010ca7a7b5ef42b9898a6c2d410eb4495108cb"
+    },
+    {
+      "path": "truss/_catalog_runtime/feed.sql",
+      "size": 29323,
+      "sha256": "ebfa70c3b91221aff15c953130c437667f3c40748a6e76a9467a55e1d76c4787"
+    },
+    {
+      "path": "truss/_catalog_runtime/group-audit-reader.sql",
+      "size": 53216,
+      "sha256": "1b80d10290645cdc3d2e12c0f5dd2b3fa76c7ad51cd0effb6fa2d097bd468660"
+    },
+    {
+      "path": "truss/_catalog_runtime/group-profiles.json",
+      "size": 26929,
+      "sha256": "9a19eeafd78ae13a8baa884a58e22b1ec0f67c89899d9e66c826e595af7e160a"
+    },
+    {
+      "path": "truss/_catalog_runtime/group-recovery.sql",
+      "size": 6243,
+      "sha256": "a3fcbd45ea69595b88679903d20533e9bbe18c2f5864caa6a75f82985bdca300"
+    },
+    {
+      "path": "truss/_catalog_runtime/groups.sql",
+      "size": 86760,
+      "sha256": "dcdc317ce1d3844f1d16853576b21c6238de3fe752b4d86fe44d13b2a9f3df22"
+    },
+    {
+      "path": "truss/_catalog_runtime/history.sql",
+      "size": 28868,
+      "sha256": "1e7e93f688fb59ab51af0d7d71afda526628ea9088f8651e95d550376c221c2e"
+    },
+    {
+      "path": "truss/_catalog_runtime/import-batches.sql",
+      "size": 30730,
+      "sha256": "97cf1f1b1012864df0a95c12ba693c5a935a515047ca4533041ee4c8fc3e80a1"
+    },
+    {
+      "path": "truss/_catalog_runtime/imports.sql",
+      "size": 63111,
+      "sha256": "605f63d4cfa6408d15be081eaa101a6473e3ab445e73f741138a7757391d73c3"
+    },
+    {
+      "path": "truss/_catalog_runtime/key-derivation.sql",
+      "size": 14128,
+      "sha256": "b24e881af85d119c88d1ad9c22b23043f34077ed8aaa5dda3ca5b25a3704271c"
+    },
+    {
+      "path": "truss/_catalog_runtime/key-read.sql",
+      "size": 12309,
+      "sha256": "2426f781c3b740d7f2680f4733f88373d6ed7203b6e658f2118bfd3c49666bae"
+    },
+    {
+      "path": "truss/_catalog_runtime/keys.sql",
+      "size": 10932,
+      "sha256": "7dd48722c66c0dd255b098d93b92297539746b1ac4a06fe623564c268d4ad226"
+    },
+    {
+      "path": "truss/_catalog_runtime/layout.sql",
+      "size": 28655,
+      "sha256": "fc2cdc8dfc80aef7f630a21ee9587751b9b026d9491832c0cdbb89c4a72feaa3"
+    },
+    {
+      "path": "truss/_catalog_runtime/lifecycle.sql",
+      "size": 5256,
+      "sha256": "e9a0196578dcd8f9cad4cd796ffcf173fa36086bc7411e4cca82e7501fdcf8b8"
+    },
+    {
+      "path": "truss/_catalog_runtime/lineage.sql",
+      "size": 1849,
+      "sha256": "b808d39ae44cbeca21bd301ff069469cbcea54c6b8fe28eb27f22ce53ce5e2fa"
+    },
+    {
+      "path": "truss/_catalog_runtime/load-audit-reader.sql",
+      "size": 21531,
+      "sha256": "d24a927e9c01a315ff2b24e4bda12207434fa3d476965149f1cff253e35740fc"
+    },
+    {
+      "path": "truss/_catalog_runtime/load-audit-storage.sql",
+      "size": 3009,
+      "sha256": "f714a2a07b9855bb73cc4bb429863cf9f378ab1665498033cb4f3f7418244adb"
+    },
+    {
+      "path": "truss/_catalog_runtime/load-audit-writer.sql",
+      "size": 24301,
+      "sha256": "e97e58b6fd9d60c0988e090980df958a726901d8c3d2279949cf6da2ddb84360"
+    },
+    {
+      "path": "truss/_catalog_runtime/manifest.json",
+      "size": 5196,
+      "sha256": "c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0"
+    },
+    {
+      "path": "truss/_catalog_runtime/migrations.sql",
+      "size": 2099,
+      "sha256": "85f7ff1dac5afca7edc1157dc54edbba489b3fe2c2a3ac9211c0224a32fd468f"
+    },
+    {
+      "path": "truss/_catalog_runtime/operations.sql",
+      "size": 216171,
+      "sha256": "1ecbfecc7642fdb2b21a7180bf4c7c7394587493061e71a9d87977a416cc7ffd"
+    },
+    {
+      "path": "truss/_catalog_runtime/owned.sql",
+      "size": 269581,
+      "sha256": "77248d564e6097537c7a3b8c7b13fe129dd399ef7808a02ef2473816865d5261"
+    },
+    {
+      "path": "truss/_catalog_runtime/ownership.sql",
+      "size": 3231,
+      "sha256": "73b56cc0f438d14ef9ac9f7420d98eadcdc1147569353c4daf8771a42a5344c6"
+    },
+    {
+      "path": "truss/_catalog_runtime/pages.sql",
+      "size": 8158,
+      "sha256": "ab13676c5ff071c6cd1107aae49b62cd29ee4b1a05571fe18e25ec0501c1aba0"
+    },
+    {
+      "path": "truss/_catalog_runtime/person-entrypoints.json",
+      "size": 21869,
+      "sha256": "13be01c73c4812cd2b5f3a8273db4ce8265ed91ae78e577b25d53ea9825ad26a"
+    },
+    {
+      "path": "truss/_catalog_runtime/person-entrypoints.sql",
+      "size": 43093,
+      "sha256": "2c99d9894bf5ae278feb227419851107567e5ee0f2a1583e95113f68e29b5164"
+    },
+    {
+      "path": "truss/_catalog_runtime/plan.sql",
+      "size": 47929,
+      "sha256": "a6aa13e69b95696a39adb61a3bb9999fb48807abf2006fa0daa9dabe126a2437"
+    },
+    {
+      "path": "truss/_catalog_runtime/preconditions.sql",
+      "size": 28843,
+      "sha256": "1adee214ab09da316f4360d9780f2b6187e626dd6c977785b2395b1f0f246773"
+    },
+    {
+      "path": "truss/_catalog_runtime/preparation-baseline.json",
+      "size": 1078,
+      "sha256": "fecfedd6793948b915553c67710b3f4374014df5d89d9e140d591d31776d6c9e"
+    },
+    {
+      "path": "truss/_catalog_runtime/preview.sql",
+      "size": 29394,
+      "sha256": "933f91374edffdb069c336c9aaf27ae68421a78359a39aad3464dc2f2ba3936a"
+    },
+    {
+      "path": "truss/_catalog_runtime/query-abi.json",
+      "size": 7349,
+      "sha256": "8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96"
+    },
+    {
+      "path": "truss/_catalog_runtime/query-export.sql",
+      "size": 8480,
+      "sha256": "52a713f1e5df28320a1c9163cf06f1e2736543b592c6b149329b6a3f00c090d9"
+    },
+    {
+      "path": "truss/_catalog_runtime/query-selective.sql",
+      "size": 11557,
+      "sha256": "8d2523ba89e3322f3a44e0e7567ef3d91bb0154f6a63dcb2b72a6d852bb5ac9d"
+    },
+    {
+      "path": "truss/_catalog_runtime/query.sql",
+      "size": 34821,
+      "sha256": "af38c7bd4c59411cc2349926284564877e4ed4adb6871aaa6bb8131a4dfe2c5d"
+    },
+    {
+      "path": "truss/_catalog_runtime/read.sql",
+      "size": 12411,
+      "sha256": "8ff9f5b8bf48371a50f123da263c55bbf35038b967441e4f3ef8b0564a918df0"
+    },
+    {
+      "path": "truss/_catalog_runtime/reader.sql",
+      "size": 25519,
+      "sha256": "df24b3281fa77061ea69e6e82d22e5aa07ce6811c60489e228bc8dd0cffbb353"
+    },
+    {
+      "path": "truss/_catalog_runtime/runtime.sql",
+      "size": 59680,
+      "sha256": "383b2280e20b3dd6bd31f7edc7654f83ebd7fefc1670739e24c3cf72c85c86cb"
+    },
+    {
+      "path": "truss/_catalog_runtime/scalars.sql",
+      "size": 8695,
+      "sha256": "3ee4e9da7972bb801b643cf6c3a4e92f2e649cfb1b9fb38f2813edd22ced8ebf"
+    },
+    {
+      "path": "truss/_catalog_runtime/schema-cache.sql",
+      "size": 14154,
+      "sha256": "ef9c43fbb48887d670dc86f7cd7689d3bcd83c193f0116df33c75d88689f42f0"
+    },
+    {
+      "path": "truss/_catalog_runtime/source-references.sql",
+      "size": 4273,
+      "sha256": "494989c32543e479b74ce88ab75e30f0efba2b775a0ef3608e291272ddf18ed8"
+    },
+    {
+      "path": "truss/_catalog_runtime/traversal.sql",
+      "size": 11948,
+      "sha256": "b9f78937685920ac1997ba21f86525cfb18dedff06254686bd04e4c8fa45a4f9"
+    },
+    {
+      "path": "truss/_catalog_runtime/view.sql",
+      "size": 3614,
+      "sha256": "857a2c62c284a2462a71acfae88a1fcab840982fe274bcf39a49555692a88614"
+    },
+    {
+      "path": "truss/_catalog_source_reference.py",
+      "size": 2011,
+      "sha256": "1acc9a50a645c7e25248be0a45002ba9938c7cb4de92f32d4fa03b7ef871b6fa"
+    },
+    {
+      "path": "truss/_catalog_support.py",
+      "size": 11545,
+      "sha256": "60004c7922a34cc66e443c7306c82fac9a6db97d2dd12c3190daae1f27181810"
+    },
+    {
+      "path": "truss/_catalog_view_build.py",
+      "size": 11715,
+      "sha256": "58700e5f15814f1b7fbe7984d1ce477c0af13dd16d1e98a0c6939beb3cc45752"
+    },
+    {
+      "path": "truss/_construction_recovery.py",
+      "size": 9579,
+      "sha256": "5addf8b75225472e98ca5575246a765fb8dbcfe0bc1dfc05e3c9c0bd3a7b65ca"
+    },
+    {
+      "path": "truss/_core10_catalog_release.py",
+      "size": 140,
+      "sha256": "10896976889934474fdbb847ec866cd06489d5e50f53bec86683c8ac8e27ddd9"
+    },
+    {
+      "path": "truss/_current_disclosure_computation.py",
+      "size": 1918,
+      "sha256": "9cad5ca133cb5464673fbd9f88dd1eee847672221339eb795ff252997c1d889b"
+    },
+    {
+      "path": "truss/_current_disclosure_context_capture.py",
+      "size": 8275,
+      "sha256": "8852640d73fcfe527246174eeaec518ba8a93928acc046932528d5af10b81e9a"
+    },
+    {
+      "path": "truss/_current_disclosure_evaluation.py",
+      "size": 6421,
+      "sha256": "a32be39ef28eff3f02751923f3a5349a40ea30cf76f3d9f407525d4e05f7d187"
+    },
+    {
+      "path": "truss/_current_disclosure_facts.py",
+      "size": 24815,
+      "sha256": "f33b767d7dea2072bc6d4a195991a000c66ec466ce3831be316168c1edac8585"
+    },
+    {
+      "path": "truss/_current_disclosure_originals.py",
+      "size": 9541,
+      "sha256": "9898af59569b77a48909c8308b98d1a17d880c2583a02a9953f681d74c02fe6e"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/consumer-manifest.json",
+      "size": 1676,
+      "sha256": "83a04c63fe3f2420e4b7d526d4b51bb7e91f248b1164169625d263930aff23a4"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/current-native-disclosure-child.mjs",
+      "size": 1097447,
+      "sha256": "bf3e2af7728fe056ef8b3aba37ad048b0b8ac9485ec31920a1f585a6b72d10d8"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/manifest.json",
+      "size": 32852,
+      "sha256": "153d939786bb01dd2cd206302b3696dd5d5c8e4e1092fbfa4fd64155d09c483c"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/metafile.json",
+      "size": 185754,
+      "sha256": "2432bd757584d21f9fbcc2281848cff63468f514600205b60dace1cfa44b067d"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/ajv/LICENSE",
+      "size": 1090,
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/ajv/package.json",
+      "size": 4405,
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/fast-deep-equal/LICENSE",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/fast-deep-equal/package.json",
+      "size": 1496,
+      "sha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/fast-uri/LICENSE",
+      "size": 1813,
+      "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/fast-uri/package.json",
+      "size": 1983,
+      "sha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/json-schema-traverse/LICENSE",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/json-schema-traverse/package.json",
+      "size": 1004,
+      "sha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/yaml/LICENSE",
+      "size": 738,
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/notices/yaml/package.json",
+      "size": 3254,
+      "sha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c"
+    },
+    {
+      "path": "truss/_current_disclosure_owner/umf-package.json",
+      "size": 4582,
+      "sha256": "47ede67a9bdf6812db7e21de9c829d4de6cb4c0cf2c2f3298bc2a8f1293173a9"
+    },
+    {
+      "path": "truss/_current_disclosure_pipe.py",
+      "size": 1032,
+      "sha256": "02525c9ebb7eb288619ac5a2db8493c0ac601aa9a77d3b2fca42284d520aaec7"
+    },
+    {
+      "path": "truss/_current_disclosure_session.py",
+      "size": 3756,
+      "sha256": "9be63de347b6cdd2e89bc767bb8c5ebae4e52fec709aeb356af763ddd16eeebe"
+    },
+    {
+      "path": "truss/_current_disclosure_stage.py",
+      "size": 12946,
+      "sha256": "7cb031a34e84630212cd76034d140b94d4759f96770bdcc250b429c984f61109"
+    },
+    {
+      "path": "truss/_current_disclosure_wire.py",
+      "size": 4881,
+      "sha256": "c1f16fe7c0efa36163cabe1d9c9d731ba56cbd3e8239c1a7ead49ed678514aa9"
+    },
+    {
+      "path": "truss/_current_query_computation.py",
+      "size": 2479,
+      "sha256": "684115cfe6822d3c50ef4b5c494bbd9497f13b8082e533e7991df2a7247aabe1"
+    },
+    {
+      "path": "truss/_current_query_evaluation.py",
+      "size": 8147,
+      "sha256": "955fe5eb75d0f12a6ff6c3e57e25d963f38f1edeecda0ea28be470ae34a964d9"
+    },
+    {
+      "path": "truss/_current_query_facts.py",
+      "size": 13837,
+      "sha256": "6e6e8a2dc1328549863f56a1af38732446d5d5f9e6db59d17be4dc451ef2352b"
+    },
+    {
+      "path": "truss/_current_query_originals.py",
+      "size": 11790,
+      "sha256": "7e699690ab328b5222858dab06e9b3ceffe2eef1b0979e98846bf6dbfa3630b7"
+    },
+    {
+      "path": "truss/_current_query_owner/consumer-manifest.json",
+      "size": 1658,
+      "sha256": "4fe89ac2d318c9df10de578c31d1f955b5bc57baf843c036a05a178802a8796f"
+    },
+    {
+      "path": "truss/_current_query_owner/current-query-child.mjs",
+      "size": 1127229,
+      "sha256": "5c0996adf80552753899d7b3e196b93f7641bdf82d6bbb30dace8c90ad1ff004"
+    },
+    {
+      "path": "truss/_current_query_owner/manifest.json",
+      "size": 32779,
+      "sha256": "16df44d7d0d1ce2a59c9b12129ab803f025d3fdb4a4aefdf98474b9e22fcbc62"
+    },
+    {
+      "path": "truss/_current_query_owner/metafile.json",
+      "size": 187812,
+      "sha256": "410d17930cd7da80956141385a1300db159f8f302138ab39afd3bea58a2adb31"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/ajv/LICENSE",
+      "size": 1090,
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/ajv/package.json",
+      "size": 4405,
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/fast-deep-equal/LICENSE",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/fast-deep-equal/package.json",
+      "size": 1496,
+      "sha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/fast-uri/LICENSE",
+      "size": 1813,
+      "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/fast-uri/package.json",
+      "size": 1983,
+      "sha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/json-schema-traverse/LICENSE",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/json-schema-traverse/package.json",
+      "size": 1004,
+      "sha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/yaml/LICENSE",
+      "size": 738,
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "path": "truss/_current_query_owner/notices/yaml/package.json",
+      "size": 3254,
+      "sha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c"
+    },
+    {
+      "path": "truss/_current_query_owner/umf-package.json",
+      "size": 4582,
+      "sha256": "47ede67a9bdf6812db7e21de9c829d4de6cb4c0cf2c2f3298bc2a8f1293173a9"
+    },
+    {
+      "path": "truss/_current_query_pipe.py",
+      "size": 8897,
+      "sha256": "2a40be15e14cc524332d72f6f41b038be3fc4d7f3d1ba94394e7649a8cfd05a0"
+    },
+    {
+      "path": "truss/_current_query_protection.py",
+      "size": 19581,
+      "sha256": "97e47b454094dc5857aa7cf8a097bc135810f7a546d780d0dd149a18e7b303ec"
+    },
+    {
+      "path": "truss/_current_query_runtime.py",
+      "size": 18569,
+      "sha256": "cca66079311e344593e0d610459187c2d67de82bdeba699c1947c8ed1fcadb18"
+    },
+    {
+      "path": "truss/_current_query_sources.py",
+      "size": 17163,
+      "sha256": "b51243ac5348909b4d0157ffe19f8593933919f04b4a98e5ee52d62e9d23fdda"
+    },
+    {
+      "path": "truss/_current_query_stage.py",
+      "size": 24365,
+      "sha256": "781416cbcd80b8875fb77ac847822e2614acd69b17a8c629211b5a5f7b5e9f22"
+    },
+    {
+      "path": "truss/_current_query_subjects.py",
+      "size": 18397,
+      "sha256": "533466484e0c11fb77b78b49ff5e0d5520cb24923cfaea0eb21ce83699adf8ca"
+    },
+    {
+      "path": "truss/_directory_resources.py",
+      "size": 2792,
+      "sha256": "50071e477784a508408c9cb9ef9217d6ac4e2a7c216fe3385180fab504e6b01f"
+    },
+    {
+      "path": "truss/_embedded.py",
+      "size": 9263,
+      "sha256": "dae585717dd39c29c5d532313954aa951141d34cf96013c5a1c7a009064923da"
+    },
+    {
+      "path": "truss/_embedded_js/_current_disclosure_owner.json.gz",
+      "size": 551888,
+      "sha256": "4cca36336ff1e34db36e3d82af156d08d158df7c83692cdf2d0ba427dd374586"
+    },
+    {
+      "path": "truss/_embedded_js/_current_query_owner.json.gz",
+      "size": 566448,
+      "sha256": "bb084220f4043526cee4fd1edb414a67d979400016b2dd2afc0d931bf5bc5515"
+    },
+    {
+      "path": "truss/_embedded_js/_preparation_sources.json.gz",
+      "size": 457006,
+      "sha256": "f6dbcace6dce21b3fc9e6cd0ec42a1614e774740a2b42386c91ad2b454c67159"
+    },
+    {
+      "path": "truss/_embedded_js/_umf_core10.json.gz",
+      "size": 486094,
+      "sha256": "9ad27da83581a08310a95e75f7ff70d145cef5f7d46d6103989a91bf2755e165"
+    },
+    {
+      "path": "truss/_embedded_js/licenses.json",
+      "size": 13318,
+      "sha256": "15147a8869b3d901d1ae02463780b7e38a36eeb793958f8be22856a759ad3cc1"
+    },
+    {
+      "path": "truss/_embedded_js/manifest.json",
+      "size": 853,
+      "sha256": "10cd59e88cab06630ff96ecd721e37a1e83b723d3dbb4f050341219e80d4d442"
+    },
+    {
+      "path": "truss/_embedded_js/polyfills.js",
+      "size": 879861,
+      "sha256": "90e2ca9c27a0f9418abd10871346c8407bcf3160ad9fbfa7c67e1ba992a9e976"
+    },
+    {
+      "path": "truss/_embedded_js/runtime.js",
+      "size": 8804,
+      "sha256": "b1263d78ce77f47a9d4e3f300c36493dea6bc41b9d5fae860ff7e8fc9c8c39b3"
+    },
+    {
+      "path": "truss/_embedded_js/sources.json",
+      "size": 4988,
+      "sha256": "0778551f8a8082c280cc35909a49b7ee47eacf903e9685f2c0b94e3051a857ac"
+    },
+    {
+      "path": "truss/_embedded_release.py",
+      "size": 178,
+      "sha256": "f0923bcd50ad650252953fb48bf706cabb985b3f91c18eaf5aeaae6c93a64f37"
+    },
+    {
+      "path": "truss/_engine_action_session.py",
+      "size": 6468,
+      "sha256": "42e80bef2aaca3cbb4aee99597cf82a4625e3b2890da6f58434d8617065ccc98"
+    },
+    {
+      "path": "truss/_engine_preparation.py",
+      "size": 13420,
+      "sha256": "abcf98c68b83b367c9269d29aef5ed8ae71cdaa708ebb1a1446fa57ef1335683"
+    },
+    {
+      "path": "truss/_group_runtime.py",
+      "size": 36794,
+      "sha256": "e020f874494bdfee19f525131f585e4de61afb804c2fb4c2b1b9849c7a0cfe29"
+    },
+    {
+      "path": "truss/_host_call_recovery.py",
+      "size": 7221,
+      "sha256": "10b4744b32d45cbc707e5d68cd2b6ca0b08434f379f46ce34d83f7943cdc9579"
+    },
+    {
+      "path": "truss/_host_contracts.py",
+      "size": 480,
+      "sha256": "b770411254e13147ceed63ab20f16af250d2fdb195473ad88194915cfe640c3f"
+    },
+    {
+      "path": "truss/_host_control_custody.py",
+      "size": 13546,
+      "sha256": "8be34349af502a4e1c3cf91edab3d9f488842ac36241fc5c3c7519a30891b63f"
+    },
+    {
+      "path": "truss/_host_execution.py",
+      "size": 15667,
+      "sha256": "1fec1ae68721d9d669160ce5184adeaa322dd6ce2b65270e9220639a7cf8297b"
+    },
+    {
+      "path": "truss/_host_session.py",
+      "size": 18335,
+      "sha256": "0771acd27361eb57f739081a80e376d5592efe054fc149dcb88e2890a310b4f6"
+    },
+    {
+      "path": "truss/_import_runtime.py",
+      "size": 23044,
+      "sha256": "cec009dbebf127a242e53240d25c52433e3b6b6f5681a37599a687a1291085ea"
+    },
+    {
+      "path": "truss/_installation/definitions.json",
+      "size": 203120,
+      "sha256": "57c1ce65143a99bebd0ab2933ea729b1cfaca41712d871db7300cba90058a115"
+    },
+    {
+      "path": "truss/_installation/definitions.sql",
+      "size": 4487,
+      "sha256": "a549afb4ecdba65f4d42362bae91cbabfc5d2f97e931c8cf7825210f006967d4"
+    },
+    {
+      "path": "truss/_installation/manifest.json",
+      "size": 4741,
+      "sha256": "8f8a196e0f7a38cbafd489da79deb69b7309f3a2e87df0a69ed21a1b3e77fdcc"
+    },
+    {
+      "path": "truss/_installation/sources.zip",
+      "size": 79597,
+      "sha256": "fe6dc14c661e4b0803062b8f76ebc811cbca75a70c37fc6cb7c021e035c24c2a"
+    },
+    {
+      "path": "truss/_installation/statements.json",
+      "size": 165035,
+      "sha256": "c27fbd0a84a63af81d523279f4898e3c9c5443d83c980df460c9189db7c2e8af"
+    },
+    {
+      "path": "truss/_installation_archive.py",
+      "size": 3465,
+      "sha256": "df61bd21f0e8d434a607f527c0d53bf0b9aa4a559399f47a6f36ec41afed92d9"
+    },
+    {
+      "path": "truss/_installation_definition_release.py",
+      "size": 304,
+      "sha256": "baf3b65808ad43a7d711bb508d3f4b3c79a7f5bb26de25af763f6fdefa9d054a"
+    },
+    {
+      "path": "truss/_installation_metadata.py",
+      "size": 11404,
+      "sha256": "b4ba2ba826c07ac53afae8306ee39270e04125abeae3c1f507ecf636e41f9197"
+    },
+    {
+      "path": "truss/_installation_privileges.py",
+      "size": 15377,
+      "sha256": "22928fd3a86234903cb6ff86a00fa5d2e7eec1e247671f945e994d7def8631f3"
+    },
+    {
+      "path": "truss/_installation_resources.py",
+      "size": 7623,
+      "sha256": "6618bfe1f3a91a74dd7cc050d3b70e7f5d222cf519a03bf246f8e4d0a3612e19"
+    },
+    {
+      "path": "truss/_installation_statement_release.py",
+      "size": 305,
+      "sha256": "da3afc29b79d8ed5086ec7f508747f7eebc2a39890d0dabb8421fbef26d11c80"
+    },
+    {
+      "path": "truss/_installed_admission_inventory.py",
+      "size": 25910,
+      "sha256": "64ddb4d1d60e0e81b3df0bc00c607ed1f42f197c03f3e0156480ded619a11343"
+    },
+    {
+      "path": "truss/_inventory_sql/column-acl.sql",
+      "size": 762,
+      "sha256": "45f30d6165c0121f34d9134f483eb0681d779bb5782c719099e8c500c1962ac6"
+    },
+    {
+      "path": "truss/_inventory_sql/dependency.sql",
+      "size": 951,
+      "sha256": "ebf12c25698619a4b96c531521db6d6ab3f75a54550d88c4c5ed30d3a12daa0b"
+    },
+    {
+      "path": "truss/_inventory_sql/manifest.json",
+      "size": 1080,
+      "sha256": "3544d094ff90df4b6966414cfd203db607ae347dd2a4923dc72c92758188f890"
+    },
+    {
+      "path": "truss/_inventory_sql/namespace-acl.sql",
+      "size": 922,
+      "sha256": "8814c328c9fdc35f55c09565142917086b0475f5cb7b9b6ca6c1552eb2ab0a68"
+    },
+    {
+      "path": "truss/_inventory_sql/relation-acl.sql",
+      "size": 1145,
+      "sha256": "57030b17856ffd9146a7280f3ea84481e01acfb3ac54c8fbb0bca3087eb1cdb0"
+    },
+    {
+      "path": "truss/_inventory_sql/routine-acl.sql",
+      "size": 967,
+      "sha256": "45d7c8e83962a8fe0fffdce1950ea6dc0dd374f153286e124248d3b8b4edba04"
+    },
+    {
+      "path": "truss/_lifecycle_runtime.py",
+      "size": 4808,
+      "sha256": "86c2502c3d29427f954593d3b00326645ba2ba21dfd3044a9e658b845898054f"
+    },
+    {
+      "path": "truss/_load_audit_runtime.py",
+      "size": 38258,
+      "sha256": "f3ca7a7b75614d61a8cc89be955cafc57864c1bf7b3641917ea59195e37df4a4"
+    },
+    {
+      "path": "truss/_migration_execute.py",
+      "size": 6297,
+      "sha256": "4b4dc6c4614d974c959807013656dd198008751ba6c64e35f63c3f14cd94d00a"
+    },
+    {
+      "path": "truss/_migration_recipe.py",
+      "size": 5733,
+      "sha256": "f4b474aa74b8c6fd238aca70325219d66ef433ac15cf9119eda143b6d5c670f9"
+    },
+    {
+      "path": "truss/_migration_verify.py",
+      "size": 18058,
+      "sha256": "3401c2058771d14f10ba38e16b1231b7d0cb053ac5413786f77415017e5e2e76"
+    },
+    {
+      "path": "truss/_migrations/132526a7d5429a8cd40ccb7d6ebc16a2448ed0ea3b8bcd75aec89d65403a32d0.manifest.json",
+      "size": 3685,
+      "sha256": "132526a7d5429a8cd40ccb7d6ebc16a2448ed0ea3b8bcd75aec89d65403a32d0"
+    },
+    {
+      "path": "truss/_migrations/71c4c3d4c05a2229c4cdec1643cabe0da7055965f0b0d23195e83ad780042a2e.acl.json",
+      "size": 65424,
+      "sha256": "83dc5e79150670ec525c8c41a05dacdd6c512dee6edb7e4c2e5131c753dbdae0"
+    },
+    {
+      "path": "truss/_migrations/71c4c3d4c05a2229c4cdec1643cabe0da7055965f0b0d23195e83ad780042a2e.json",
+      "size": 1556379,
+      "sha256": "c7fa489e83bb8f0705672dad28e3ff61f6c86c36c6f885a06a49f436246eed1c"
+    },
+    {
+      "path": "truss/_migrations/7ac989147f22d437b1ce0d814ebbfaa25aa868ab5495de125aa5e2bda7b963ea.acl.json",
+      "size": 66096,
+      "sha256": "6700115732ee8630c7d82e9dc5f10a21afd0916066fd225ca203c8dda67345bf"
+    },
+    {
+      "path": "truss/_migrations/7ac989147f22d437b1ce0d814ebbfaa25aa868ab5495de125aa5e2bda7b963ea.json",
+      "size": 1562812,
+      "sha256": "69f2f14227c294977be70cc593eb5e47434c3e7c839c3609c867b7ed5e4a5364"
+    },
+    {
+      "path": "truss/_migrations/9f6aab31802e9bebcd886f735ba9fe0bb405e69d3501a32f36cee8827b544d00.acl.json",
+      "size": 65034,
+      "sha256": "4926b33ad53f54516b47f750c75155a2d9e090dc1d60e633f445ed4aa57349eb"
+    },
+    {
+      "path": "truss/_migrations/9f6aab31802e9bebcd886f735ba9fe0bb405e69d3501a32f36cee8827b544d00.json",
+      "size": 1546818,
+      "sha256": "919f1a5fbd16d69c7a1da677b913058afa9d7f5db0858a8bd2fea5761029e117"
+    },
+    {
+      "path": "truss/_migrations/c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0.json",
+      "size": 1652276,
+      "sha256": "c7bd0ec8860448dee20a4b100298770ae438ff6ed16a070fe7a1e78833bd52d3"
+    },
+    {
+      "path": "truss/_migrations/edge-71c4c3d4c05a2229c4cdec1643cabe0da7055965f0b0d23195e83ad780042a2e-7ac989147f22d437b1ce0d814ebbfaa25aa868ab5495de125aa5e2bda7b963ea.json",
+      "size": 46165,
+      "sha256": "a9c72bf6caade86a806a3f26618e260e9d6eb947e38fa91b96fdfbb6cb29019b"
+    },
+    {
+      "path": "truss/_migrations/edge-7ac989147f22d437b1ce0d814ebbfaa25aa868ab5495de125aa5e2bda7b963ea-c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0.json",
+      "size": 796330,
+      "sha256": "754c329b84b8432a9885ca7146277396b3bf8eea41ce7b215a062245135cc70f"
+    },
+    {
+      "path": "truss/_migrations/edge-9f6aab31802e9bebcd886f735ba9fe0bb405e69d3501a32f36cee8827b544d00-7ac989147f22d437b1ce0d814ebbfaa25aa868ab5495de125aa5e2bda7b963ea.json",
+      "size": 88022,
+      "sha256": "ab5df910a908f6de23afa972accbc2165839a0dff72e5c7ec3c35517cc649db1"
+    },
+    {
+      "path": "truss/_migrations/manifest.json",
+      "size": 6226,
+      "sha256": "7d165e4a344ca66d41a32b32f6bcf20f1f8fe73e4ba1137e4ca65780dcee6243"
+    },
+    {
+      "path": "truss/_migrations/native-deparse-equivalence-0.1.json",
+      "size": 50642,
+      "sha256": "47e3950e0c37620e23eb45978d6ac398e15fde2ca73a05a4310115aba9e29bd1"
+    },
+    {
+      "path": "truss/_migrations/native-initialization-profiles-0.1.json",
+      "size": 2038,
+      "sha256": "b1396e6e406a16cb9989a3f076c40600bd4144bf852b378a58ce20e54a3436d4"
+    },
+    {
+      "path": "truss/_migrations/receipt-model-0.1.evidence.json",
+      "size": 1023,
+      "sha256": "d1911ce69de8eef2600a702bbcd8eb5f7efc0e0c47c37e827244d1d641ed3422"
+    },
+    {
+      "path": "truss/_migrations/receipt-model-0.1.umf.json",
+      "size": 26352,
+      "sha256": "55f602da57b3ddab50963fd177a440832d51bed1cd6354a1bae157f3a55cf042"
+    },
+    {
+      "path": "truss/_native_admission_capture.py",
+      "size": 7458,
+      "sha256": "6b1827ae4f1ea0eac791ec3297b64be8df108ae316457ea437173232652121bd"
+    },
+    {
+      "path": "truss/_native_admission_request.py",
+      "size": 5524,
+      "sha256": "3f224ffbffd3604eb3dd103176893d435e8b09e5baf09f05e43b525f3ef007f9"
+    },
+    {
+      "path": "truss/_native_adoption.py",
+      "size": 16548,
+      "sha256": "47edacf923ae02c6a2f1a8fa80cd1d18fe83d2bc92cd5a883a04072c39f43cf7"
+    },
+    {
+      "path": "truss/_native_arbitration.py",
+      "size": 29704,
+      "sha256": "db3bd7a5b2f021a7fb842293a6c499bbc9663d02fa4ed60805af288694626b85"
+    },
+    {
+      "path": "truss/_native_attachment.py",
+      "size": 3093,
+      "sha256": "febe97fcd23e1e3a6e21b75b1dbca0faa3ed67815bbbfdc4d7d8f2b87e0b53e7"
+    },
+    {
+      "path": "truss/_native_bootstrap.py",
+      "size": 8554,
+      "sha256": "5360480fd613d4a004d5ae66bf995c147608ffb9a044db6ba4df00be2825b158"
+    },
+    {
+      "path": "truss/_native_cancellation.py",
+      "size": 10093,
+      "sha256": "c2d73a372e1ecc15d93bae4e60ef8f129529928c2396cb60d9547ac7fe5f0aa3"
+    },
+    {
+      "path": "truss/_native_deadline.py",
+      "size": 2200,
+      "sha256": "2749993eabd9ebbc27905cc5afbb26ba280b12834294f80bc1186985d0a5147f"
+    },
+    {
+      "path": "truss/_native_driver_profile.py",
+      "size": 8572,
+      "sha256": "e5c3de252a43fa125f7e293dd01bc8d75351d0cddb239fe4ffbcaef79e732b3c"
+    },
+    {
+      "path": "truss/_native_epoch_acquisitions.py",
+      "size": 6259,
+      "sha256": "b72d62406be343a85c38da68bbf05f1553283c944e7d4609ab57f9dd08473f8c"
+    },
+    {
+      "path": "truss/_native_fresh_epoch_capture.py",
+      "size": 10977,
+      "sha256": "4dd0785976aea7dc4bfbe85bdb876e3f8179447a421ca476ff442c49eb8877f4"
+    },
+    {
+      "path": "truss/_native_graph_correspondence.py",
+      "size": 9575,
+      "sha256": "0ad6105b3acabdfc2f024c25fca718a779d1b286aff28210315d54063c242818"
+    },
+    {
+      "path": "truss/_native_ingress_deadline.py",
+      "size": 3862,
+      "sha256": "9b90053dfb75e0ab2ffed5451c42e66e20658959cd465c76cc97544774538cad"
+    },
+    {
+      "path": "truss/_native_model_correspondence.py",
+      "size": 10364,
+      "sha256": "9027fe064b9962884c39f0725238471299c9df17716e183b15dbdbf69c447d18"
+    },
+    {
+      "path": "truss/_native_operation.py",
+      "size": 26652,
+      "sha256": "6a83e6e26726b6ede7f4e9a53507845338f7ffc352859ff9a5c3c63789a8aee3"
+    },
+    {
+      "path": "truss/_native_operation_ordinals.py",
+      "size": 19184,
+      "sha256": "d4c30fe5c22364b4082193c1b28e0dd57e4c993a201e98d1149a275353ce160c"
+    },
+    {
+      "path": "truss/_native_outbound.py",
+      "size": 7662,
+      "sha256": "44148e17c1e4b55d33f34fcdd7c2ff48cd16d69ac237e485ae9d346eb7381102"
+    },
+    {
+      "path": "truss/_native_pg8000.py",
+      "size": 24242,
+      "sha256": "c57b03a4f6f5de46b1e52af18d618944b9887ed5bef7b4bd59d5f498055def26"
+    },
+    {
+      "path": "truss/_native_result_custody.py",
+      "size": 19907,
+      "sha256": "8f6cc0b0476bf02b47303c9e60fad93451217c1a0d3085f93252e49b4710d061"
+    },
+    {
+      "path": "truss/_native_source_census.py",
+      "size": 9751,
+      "sha256": "48a69238f4ce55063ec1564ef6e26ba7a1826cfa65daac4a15c26cd46edd6bbe"
+    },
+    {
+      "path": "truss/_native_source_descriptor.py",
+      "size": 7084,
+      "sha256": "b06e4d96ddc112ba2324b9e5df4c90eaf9cbe2260a36c735560d3575f68fbd27"
+    },
+    {
+      "path": "truss/_native_source_observation.py",
+      "size": 12423,
+      "sha256": "3e0ba73681c2172cda4ee83e28f778b67d82265017b32b88bd46daff51d80d5c"
+    },
+    {
+      "path": "truss/_native_string_request.py",
+      "size": 2967,
+      "sha256": "79b8bb70189bf24e812fc5d399140ee47faa4bd21a517cfc7abc3e040731dc5e"
+    },
+    {
+      "path": "truss/_native_transactions.py",
+      "size": 27563,
+      "sha256": "bd389728f88ed393351a173a02f777f80de704838306e8addba630ed0b0c12ec"
+    },
+    {
+      "path": "truss/_operation_admission.py",
+      "size": 4112,
+      "sha256": "a432bea63a8a5e5a2500a14404722c193a1d2c8f8b20bf0bf72743e9b795859f"
+    },
+    {
+      "path": "truss/_operation_arbitration.py",
+      "size": 15411,
+      "sha256": "e5d21c0a7b39dd1aed90ed96e7c8b1e087144b40898776f3be4e10c71e4313b5"
+    },
+    {
+      "path": "truss/_operation_ordinal.py",
+      "size": 6176,
+      "sha256": "2647f8ce4a599693cbb8942b28375679db78591f0d1ea963a62af339dcb48ab6"
+    },
+    {
+      "path": "truss/_operation_registry.py",
+      "size": 3466,
+      "sha256": "ff6d6ad1e4da23eb5e3fb006d59d9149235a6dfd575d52164a84803aa9d7193f"
+    },
+    {
+      "path": "truss/_owned_import_runtime.py",
+      "size": 17187,
+      "sha256": "b6ffa974e1256ac108bc7300de45cefa5e0a4478378948f8ced1463b981ee4fb"
+    },
+    {
+      "path": "truss/_owner_evidence_json.py",
+      "size": 3825,
+      "sha256": "f0eacdb95cdfe613529cc161892e8123e6e163b1ee347d4fb0c5a5b6728df56e"
+    },
+    {
+      "path": "truss/_preparation_bridge_inventory.py",
+      "size": 811,
+      "sha256": "f40a556f0422de6f859d04771eb5235924e5c9011481e88cf4e10f1dde8a3685"
+    },
+    {
+      "path": "truss/_preparation_catalog_cut.py",
+      "size": 9733,
+      "sha256": "c4d2da1594e0f8b193c59b3e84e6ebe8fe57db175767ce6582b70d66cad643b2"
+    },
+    {
+      "path": "truss/_preparation_compiler_replay.py",
+      "size": 4976,
+      "sha256": "5a7da48fb6c57d26098c29c3d15d1d2faf93e14b8f2bd7f3cd8e36e4e05d5936"
+    },
+    {
+      "path": "truss/_preparation_data_claim.py",
+      "size": 4644,
+      "sha256": "e859967b3763f05511fb623c61ab45f64ed148f72b3a7eb6e2db5bd6d36d2dd7"
+    },
+    {
+      "path": "truss/_preparation_program.py",
+      "size": 11638,
+      "sha256": "d738c172faf1fe31f08506fbd91a24362321760cf47ccc4a81b89da9f8169d70"
+    },
+    {
+      "path": "truss/_preparation_seal_installation.py",
+      "size": 11587,
+      "sha256": "f0144d93fb13d335dfeeb6ccc18b6e1951a14ff3d0d406f21d8ec7a24afd6e71"
+    },
+    {
+      "path": "truss/_preparation_selection.py",
+      "size": 8222,
+      "sha256": "7ee479828cee33244cddccc40cc20d7c1151a6b8d1b0b4afdda4c05ef5819aca"
+    },
+    {
+      "path": "truss/_preparation_source_epoch.py",
+      "size": 20211,
+      "sha256": "c437877592ebb023c95de66b642faa784dce6ffa2c41837e92fca5dcd11c46ca"
+    },
+    {
+      "path": "truss/_preparation_sources.py",
+      "size": 13590,
+      "sha256": "53eca84761c19e4828ecfc9bbc273b00e5c54b17643c33636ef4eaef434961c3"
+    },
+    {
+      "path": "truss/_preparation_sources/licenses/ajv.txt",
+      "size": 1090,
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+    },
+    {
+      "path": "truss/_preparation_sources/licenses/fast-deep-equal.txt",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_preparation_sources/licenses/fast-uri.txt",
+      "size": 1813,
+      "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+    },
+    {
+      "path": "truss/_preparation_sources/licenses/json-schema-traverse.txt",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_preparation_sources/licenses/require-from-string.txt",
+      "size": 1128,
+      "sha256": "6ee0feb1f6ef996ff5a68600f8cf98909cf412d39ef3cdceaefd87d636fa1b7f"
+    },
+    {
+      "path": "truss/_preparation_sources/licenses/yaml.txt",
+      "size": 738,
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "path": "truss/_preparation_sources/manifest.json",
+      "size": 1158,
+      "sha256": "968267dd04f8ee05e439ec9d94580813b73f3eca50d8762d6999f9ed8441f7ab"
+    },
+    {
+      "path": "truss/_preparation_sources/producer.js",
+      "size": 937062,
+      "sha256": "5e09c3834f0ebd67da28654c029b9a9647025b4562334c3f9a52eed62e523406"
+    },
+    {
+      "path": "truss/_preparation_sources/subject-codec.mjs",
+      "size": 370,
+      "sha256": "504ef69caa1c7925c030fdbdb66e905937d20b557e5e091bc1f39fcde2d5e9e2"
+    },
+    {
+      "path": "truss/_preparation_sources_release.py",
+      "size": 198,
+      "sha256": "9c831fb254230814e812d322a60fd6b6cb193249d9611d8977ec1a5b70cd792d"
+    },
+    {
+      "path": "truss/_preview_runtime.py",
+      "size": 8877,
+      "sha256": "a2ba07216a7f40b6c898235fec27ab2461fd8706c279815c1b3b3b616ccd09d2"
+    },
+    {
+      "path": "truss/_profiles/absent-binding-index-declarations.json",
+      "size": 1007,
+      "sha256": "332591930fb0f8a370b24e9607ef1f126f1e53ada88cdfed193c848078b31d8d"
+    },
+    {
+      "path": "truss/_profiles/assembly-construction-diagnostic.json",
+      "size": 916,
+      "sha256": "2e42e685d6e18169d31cd34abc2d43b720f088c39b74182d5f02944d06e56b94"
+    },
+    {
+      "path": "truss/_profiles/assembly-inspection-construction-diagnostic.json",
+      "size": 654,
+      "sha256": "b8c53a93d67ec97a9895d3c4d862f1118758204ab06b1e625f8a0793c74c45d1"
+    },
+    {
+      "path": "truss/_profiles/assembly-inspection.json",
+      "size": 372,
+      "sha256": "5df8b93c35dc11d710744b89b5a1aafd11a8c5aa957c514458db5ad5bb8c3b8d"
+    },
+    {
+      "path": "truss/_profiles/catalog-custody-prerequisite-registration-candidate.json",
+      "size": 2814,
+      "sha256": "bf260c6c411be0f61903c45b581e73e7871a676808a8f324f29b481439de32d2"
+    },
+    {
+      "path": "truss/_profiles/catalog-custody-registration-candidate.json",
+      "size": 12431,
+      "sha256": "8561e275de278b019e7c20628ec98630d77d2011d2967556f614f09e1647793f"
+    },
+    {
+      "path": "truss/_profiles/catalog-enforcement-projection.json",
+      "size": 427,
+      "sha256": "678e52ea00fa984b19162441a33b33ab3d822b58f8ae2c69195dc1d5d658c4b1"
+    },
+    {
+      "path": "truss/_profiles/catalog-feed-finalization-candidate.json",
+      "size": 18739,
+      "sha256": "a1437880c0c839e933d786fe98f9994fc1d795bcefbaf80ae8055ff127e2b2f1"
+    },
+    {
+      "path": "truss/_profiles/catalog-finalizing-custody-prerequisite-registration-candidate.json",
+      "size": 2817,
+      "sha256": "5939823612bff7115d2f247161f9f06f5ed95443ee5960df95e443953337b040"
+    },
+    {
+      "path": "truss/_profiles/catalog-finalizing-custody-registration-candidate.json",
+      "size": 15649,
+      "sha256": "0706da4b4387b49834d095f2fbdc3dfb3ba4bb4e3ac22e7c0afdb64c7429e73b"
+    },
+    {
+      "path": "truss/_profiles/catalog-only-business-guards-candidate.json",
+      "size": 723,
+      "sha256": "3d828946566250384c25ff944a16ccb409ba86d97aed5676601881ed4f20fdbb"
+    },
+    {
+      "path": "truss/_profiles/catalog-prerequisite-custody-capture-candidate.json",
+      "size": 2370,
+      "sha256": "b582d6d36b9498551d082a52de89493ca0b32f19413a15f23833c67b5cc4bbe1"
+    },
+    {
+      "path": "truss/_profiles/catalog-prerequisite-custody-registration-candidate.json",
+      "size": 12426,
+      "sha256": "d981f6a17e54873c781eeece986dbc93a47a7a2ce3460e38d710f13ea0edcaa8"
+    },
+    {
+      "path": "truss/_profiles/catalog-prerequisite-registration-candidate.json",
+      "size": 2530,
+      "sha256": "293bce5ba248e558319eba57ecfe3b5f683d6d89b58033003e33b6aad38cde73"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-assembly.json",
+      "size": 651,
+      "sha256": "ef0a39be769d74037a54f62a138fec47bb3a4fbe46e5e96c2891f70e18227ff5"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-capture-composition-candidate.json",
+      "size": 1047,
+      "sha256": "dbed90210223b331dd02764eb911723f674f45731f40ad64b4317d45856d7dcd"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-composition-candidate.json",
+      "size": 2348,
+      "sha256": "3f5f83a5b827451bdf29a018eca85b0bdac3811a37ec8efcbadafc1a79fd10fe"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-configuration.json",
+      "size": 868,
+      "sha256": "441bff53c4cbc08ff9975f083d896b95a80ae6921d3a0bee244f3eb3502e99b9"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-custody-composition-candidate.json",
+      "size": 2649,
+      "sha256": "eb581afaf2dfaf2d25c2b8d27a0c3b65be843a4cae028a3b9f822a526944892b"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-procedure-candidate.json",
+      "size": 1156,
+      "sha256": "8db9e6848188b94e4c4bd67636a0fd334a507b738bf649c9fb48a1c61fafe38c"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-release.json",
+      "size": 6771,
+      "sha256": "69785d946274b6ac164384af52ce00b8ff585c9711a232c616ffa21dab855dc8"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-semantic-inputs-references.json",
+      "size": 1146,
+      "sha256": "c2289ef0a8aeafebca555a85bb101a39ca59840ada5814430153508116b7a67d"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-semantic-inputs.json",
+      "size": 1010,
+      "sha256": "be634f1d1bdf8f096333e25d15597d2b81af4ace87c9216a8abf304797df2080"
+    },
+    {
+      "path": "truss/_profiles/catalog-report-wide-composition-candidate.json",
+      "size": 2569,
+      "sha256": "d77cf6b399774166da481f0f0e7850271243e8911175b2bb225f9a628d418aba"
+    },
+    {
+      "path": "truss/_profiles/catalog-revision-composition-candidate.json",
+      "size": 1476,
+      "sha256": "6e22d1e2393935f8d15fcade4ca5ac22a6f81b3a0ff47836d24741068d215e57"
+    },
+    {
+      "path": "truss/_profiles/catalog-revision-custody-candidate.json",
+      "size": 2471,
+      "sha256": "877af3261207edb90ebdd824845978c2a6221915f74380e00177c53629d039a3"
+    },
+    {
+      "path": "truss/_profiles/catalog-revision-custody-registration-capture-candidate.json",
+      "size": 2447,
+      "sha256": "16fbd9767b97488ccc428f02dc5a8629890c2029d990245e34226a367a2cf06f"
+    },
+    {
+      "path": "truss/_profiles/catalog-revision-registration-candidate.json",
+      "size": 2987,
+      "sha256": "a32febdea06ee57405d856038ede3b503430a4f823226e0dfa65b072fae2f725"
+    },
+    {
+      "path": "truss/_profiles/catalog-revision-wide-registration-candidate.json",
+      "size": 3220,
+      "sha256": "709a7ff1f3009bf88a02b510fcd32dc783087af14e6142f4366565694b11058e"
+    },
+    {
+      "path": "truss/_profiles/catalog-revision-wide-report-composition-candidate.json",
+      "size": 1630,
+      "sha256": "9269939c2151779c919826ef30beccfea51269f06da1d6241e8f6bb6d80e6253"
+    },
+    {
+      "path": "truss/_profiles/fresh-catalog-lifecycle.json",
+      "size": 561,
+      "sha256": "b477ea156c92210be27b118e1ecbda90dc459795dcecea7b010252fd44cffada"
+    },
+    {
+      "path": "truss/_profiles/fresh-catalog-support-current010.json",
+      "size": 4007,
+      "sha256": "364335de9a0e6968106af189dcb11d5b4c86b2114361fcffd722c4154bf809cb"
+    },
+    {
+      "path": "truss/_profiles/installation-metadata-construction.json",
+      "size": 4979,
+      "sha256": "4220b0f9f0ee565dc898ba8e54d4b5488c9f5bf1686371145ef2f46c9cde9df3"
+    },
+    {
+      "path": "truss/_profiles/local-postgres-runtime.json",
+      "size": 288,
+      "sha256": "9cbe351f9357213b2918fed12380f57daf93551be41c611138b5b94916146bae"
+    },
+    {
+      "path": "truss/_psycopg_census_cut.py",
+      "size": 1740,
+      "sha256": "ecd0083dd51e9c6875ee7915f9d7a53151fbcc5403554fc4d22835861a7078c2"
+    },
+    {
+      "path": "truss/_psycopg_dependency_fact_cut.py",
+      "size": 15772,
+      "sha256": "058de0f1f0947d631048887c6fee8f3cd4247c4e3e1435aa4408adfde830790c"
+    },
+    {
+      "path": "truss/_psycopg_epoch_cut.py",
+      "size": 19974,
+      "sha256": "f0465e80e5858b8fccd35dd3065b97f83ae9cfafb2d6be6c18b7b98a325bc843"
+    },
+    {
+      "path": "truss/_psycopg_fact_cut.py",
+      "size": 9498,
+      "sha256": "2d08a472eb94c32d72768c3a079c2d2a404702dc358ba7068797434580c69325"
+    },
+    {
+      "path": "truss/_psycopg_graph_scope.py",
+      "size": 5505,
+      "sha256": "32244652fac76aa83052426dc359ad723270d3e194a5e20b5b33e7d7d60f2193"
+    },
+    {
+      "path": "truss/_psycopg_source_census.py",
+      "size": 3997,
+      "sha256": "2a6a07c84028ed7bb31529c0926ecc62d06027f5a48b6bc6e5d32400940f1890"
+    },
+    {
+      "path": "truss/_psycopg_subject_observation.py",
+      "size": 9123,
+      "sha256": "9f0622ca60a9eeb9d0dd70fa893a6c87a0863272995418bcf359eaf3e4777628"
+    },
+    {
+      "path": "truss/_query_cache.py",
+      "size": 2601,
+      "sha256": "da27c2af6a507a875216e16ca609eafbdbe89ee2480375adf2059513343688e5"
+    },
+    {
+      "path": "truss/_query_execution.py",
+      "size": 10654,
+      "sha256": "f5b8d466a878783c937856d06709d30c033d757b78c26af00b8ebe922960c0f6"
+    },
+    {
+      "path": "truss/_query_runtime.py",
+      "size": 37157,
+      "sha256": "ea58d31ef2ec65e4886caeb6e72ecf2a66dbee1f2065bd6ce377f57c266b7523"
+    },
+    {
+      "path": "truss/_query_stream_runtime.py",
+      "size": 12359,
+      "sha256": "40d0e6a8035d93bc8b4189e72a6c4adac9f16c8fcfc914dcf2e1df488d355145"
+    },
+    {
+      "path": "truss/_receipt_position.py",
+      "size": 3439,
+      "sha256": "9b3f6274552975005355d12efc50bec07188c20a6c82b64967aec5e6ba341836"
+    },
+    {
+      "path": "truss/_record_preparation.py",
+      "size": 4620,
+      "sha256": "540cf075085eaf07f3f74f436f88b78b90e4f0af5041cd8c70de0045870b4637"
+    },
+    {
+      "path": "truss/_record_schema.py",
+      "size": 26496,
+      "sha256": "a813ddac74fe68aabb1eb2e88cce4956807468e21307dcbffcdfeefc9fe01811"
+    },
+    {
+      "path": "truss/_report_schema.py",
+      "size": 1468,
+      "sha256": "1d81e00350cea9af79cec98ed928899a490b7cbfc0b61d0d6960236f14bbfa62"
+    },
+    {
+      "path": "truss/_report_schema_pins.py",
+      "size": 1298,
+      "sha256": "81318ff050e77c6fa717b7ec94bd6688051d8ef044689a658be7abeea00b6e33"
+    },
+    {
+      "path": "truss/_report_schemas/acceptance-input-v0.1.schema.json",
+      "size": 6208,
+      "sha256": "0278cbbbde843091c005b688fd9c081a2fdff843b9adda006ba80fb87828d7cd"
+    },
+    {
+      "path": "truss/_report_schemas/acceptance-rejection-v0.1.schema.json",
+      "size": 3336,
+      "sha256": "98262b8d99fe0f87f752140a418a4e4f8751c4d28986457302586fee622258cf"
+    },
+    {
+      "path": "truss/_report_schemas/acceptance-report-v0.1.schema.json",
+      "size": 10672,
+      "sha256": "ccdc9976de3c158fae0a14d6cc41685d5f5a289d67daeb86b5e998b4a611e902"
+    },
+    {
+      "path": "truss/_report_schemas/acceptance-report-v0.3.proposal.schema.json",
+      "size": 6593,
+      "sha256": "c54196f8b4324aec768a33eeeab89bc2615a954af0e45559ed2038ccad7f14bf"
+    },
+    {
+      "path": "truss/_report_schemas/direct-cursor-v0.1.schema.json",
+      "size": 7284,
+      "sha256": "bff79ad2e5ccc1047b43bdbe6eeb51b597f098c881313fd980de01c1685b4942"
+    },
+    {
+      "path": "truss/_report_schemas/enforcement-report-v0.1.schema.json",
+      "size": 9371,
+      "sha256": "7af9c786a297583d6eb5489d85f33fb0a04b2c1d0b6551e6d107528cc15c4137"
+    },
+    {
+      "path": "truss/_report_schemas/exact-value-v0.1.schema.json",
+      "size": 5917,
+      "sha256": "0c804796bfbf68339c299f0c55d24db58fcfcc929bffe2d5ffaf4a2f27e24880"
+    },
+    {
+      "path": "truss/_report_schemas/history-event-v0.1.schema.json",
+      "size": 17292,
+      "sha256": "e42f9b48642528cabbb646ccb758eb12b7f030029b712cf5d6f5174cbd90bfa6"
+    },
+    {
+      "path": "truss/_report_schemas/history-event-v0.2.proposal.schema.json",
+      "size": 7628,
+      "sha256": "714923be0f86bd3508a097cabfee63a180e03b19651ebbfa38844bb3e637b425"
+    },
+    {
+      "path": "truss/_report_schemas/history-record-v0.1.schema.json",
+      "size": 7661,
+      "sha256": "c35c1258028cc4c8c95dcd16b561caed4f2a347c086f72ebfc7bfc4f2dfcf2fe"
+    },
+    {
+      "path": "truss/_report_schemas/history-retain-payload-v0.1.proposal.schema.json",
+      "size": 2184,
+      "sha256": "fc08e07a4b09636ac234737be9bb2cf3a9a3c26120baad612176574c17659605"
+    },
+    {
+      "path": "truss/_row_event_attribution.py",
+      "size": 5900,
+      "sha256": "419863856b103ecf992a9eb6ebb23379b40f6d827f10f8af62da545ce6fe4e1a"
+    },
+    {
+      "path": "truss/_row_group_custody.py",
+      "size": 2381,
+      "sha256": "aba5bb687e4f3330e5ef49808ef4964e9885d47c556110162dbe69a2c948e74e"
+    },
+    {
+      "path": "truss/_row_image.py",
+      "size": 4245,
+      "sha256": "a341f2cce268dd60c7c8c6b6540defdde666f00a5d7a2cf4b36b576164fa2738"
+    },
+    {
+      "path": "truss/_row_image_capture.py",
+      "size": 2559,
+      "sha256": "cf29fa04bb13a62abc66bcc27bedcbd252024ad6e072f8e1fb75ab0fb371964d"
+    },
+    {
+      "path": "truss/_row_image_scalar_shape.py",
+      "size": 1421,
+      "sha256": "3b3f6cf32eef0119c10aae7f954f668a82a2b7172b1d19b2be54b4c3e3dc0935"
+    },
+    {
+      "path": "truss/_row_image_tree.py",
+      "size": 3971,
+      "sha256": "b853bceff28d3c14d1739081365e7eaf64961af393f6462e95974b26d48cbbd8"
+    },
+    {
+      "path": "truss/_row_operation_address.py",
+      "size": 4269,
+      "sha256": "f0be89120caa976b3c45ec821a144f6b1c2cf765f504a7ee25c39d8f6c2a8a54"
+    },
+    {
+      "path": "truss/_row_operation_context.py",
+      "size": 3788,
+      "sha256": "9b8579c82cf43b5de2cd4f1aeef28e8eb7d384a132b96131d33f8e44ccb1737a"
+    },
+    {
+      "path": "truss/_row_operation_custody.py",
+      "size": 5031,
+      "sha256": "4e5b9c2fea5ea8f668460c8e1e193e872eee6a3a25715a2796172aedae9dd70e"
+    },
+    {
+      "path": "truss/_row_registry_correspondence.py",
+      "size": 7974,
+      "sha256": "5cc5f62fadcf11f2912df6fef4ea0c59fa35734b07c53990fad4738b5f742aae"
+    },
+    {
+      "path": "truss/_row_touch_registry.py",
+      "size": 3717,
+      "sha256": "db48f33840f61bdf5a0897f0e0ac3ce8491b16e6324579fad0b523c0862f7adc"
+    },
+    {
+      "path": "truss/_runtime_admission.py",
+      "size": 961,
+      "sha256": "74f2abff33d0f170e10ec6c4c991e32e206afc8b69d4269ec16ff5a7ddcbf491"
+    },
+    {
+      "path": "truss/_runtime_profile.py",
+      "size": 550,
+      "sha256": "8239c3c2ca20e31f11738946936d8084f73e831f416f7eb0a17fd5d7a60aa73f"
+    },
+    {
+      "path": "truss/_schema_memory.py",
+      "size": 6783,
+      "sha256": "5ee04ecc6c9b05c3ce86961563a4a824efa1ee9d4877e95c26bc898c5fe4309f"
+    },
+    {
+      "path": "truss/_scram_preparation_login.py",
+      "size": 3248,
+      "sha256": "e10602a07716db8a8ec2710f461cbf508b7cbdff463bdfb84349dbe9a52aabdf"
+    },
+    {
+      "path": "truss/_security_association_binding.py",
+      "size": 14140,
+      "sha256": "003e13b1d4572c43be1a4942f3233f930949fd0649db6522acf55a5539d49dee"
+    },
+    {
+      "path": "truss/_security_authority_change.py",
+      "size": 5651,
+      "sha256": "b349b83ea772dcf1ef9c9ddc387121c12a728f30d3c8fb7fb8038c35f7a19bae"
+    },
+    {
+      "path": "truss/_security_bootstrap/action-mapping-cut.sql",
+      "size": 1509,
+      "sha256": "375b850111d62be282e6e36a8c3e0b7e87a144c5254b4604abf6ed97be0b0ef6"
+    },
+    {
+      "path": "truss/_security_bootstrap/action-role-registry-storage.sql",
+      "size": 2938,
+      "sha256": "c5230941c42f47667fe19451a5356102b6e4e8e3d6e89fbf7534810c1af0d7b4"
+    },
+    {
+      "path": "truss/_security_bootstrap/action-store-issuer.sql",
+      "size": 12401,
+      "sha256": "cdb4e64c15d5bf3d9fb9fcc1b898fbe064d7a70f8bc7aaa6b70803e95a75d5af"
+    },
+    {
+      "path": "truss/_security_bootstrap/action-store-storage.sql",
+      "size": 2872,
+      "sha256": "be42960898c88245e2a23bd88bc2d63e82b1a231d3f1f956d045f770f87f7975"
+    },
+    {
+      "path": "truss/_security_bootstrap/action-subject-cut.sql",
+      "size": 1187,
+      "sha256": "ab7b3b4cd563eaf6e2c59b12e5ade5f01310bac3b77e90d40540a007a9bd58b3"
+    },
+    {
+      "path": "truss/_security_bootstrap/advance.sql",
+      "size": 1484,
+      "sha256": "56f0959a76448e0db3142450d0a246a8024a0a9f8ec2a98b1b955aef792754db"
+    },
+    {
+      "path": "truss/_security_bootstrap/capacity-lock.sql",
+      "size": 425,
+      "sha256": "329aeab27c147d141f1326a47c61628578b2336807d715daefd4b52138cb4dee"
+    },
+    {
+      "path": "truss/_security_bootstrap/capacity.sql",
+      "size": 786,
+      "sha256": "61467af561bcb4dd3ef7d8a0ca90a3969a0dd18dfb6130067932409c63684922"
+    },
+    {
+      "path": "truss/_security_bootstrap/catalog-read-table-cut.sql",
+      "size": 769,
+      "sha256": "eeef5b2b0ca422b97c5ef30c214b828e0f16353717cee11390bf07c5059e664c"
+    },
+    {
+      "path": "truss/_security_bootstrap/catalog-subject.sql",
+      "size": 2716,
+      "sha256": "85262adffef31bdaeecb5090ec13d2439910af77250af73c5804b7f4153cd241"
+    },
+    {
+      "path": "truss/_security_bootstrap/claims.sql",
+      "size": 765,
+      "sha256": "54c01712711b48f8b696fa1317987de38bac6b6b429ff3455a50cea13678aeeb"
+    },
+    {
+      "path": "truss/_security_bootstrap/graph-epoch-read-cut.sql",
+      "size": 634,
+      "sha256": "5b1f301a2499269f4b114070faa8acba317497ee682a19fe860d5a697f15c952"
+    },
+    {
+      "path": "truss/_security_bootstrap/graph-subject.sql",
+      "size": 4322,
+      "sha256": "1f93535eb6a686a0c4546040f64c3aaa307d91a088718846bc06bb13deade3da"
+    },
+    {
+      "path": "truss/_security_bootstrap/guard.sql",
+      "size": 768,
+      "sha256": "3e5fbe0897a90141b2320a228a8a33404c43a4cb16444810db99c38cafd859da"
+    },
+    {
+      "path": "truss/_security_bootstrap/owned-action-role-catalog-cut.sql",
+      "size": 465,
+      "sha256": "51aa30afc0c69833d46a2a1c8d15d69dcb68a7cbac25974029b26b638455e151"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-advisory-exclusion.sql",
+      "size": 2400,
+      "sha256": "bd46a15373e59bf25448d74ed5a2e21a2c5f3b4c80521f369ecf9e44491fc725"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-attempt-anchor-storage.sql",
+      "size": 2207,
+      "sha256": "da865950902f6771b8a26e89632c33ecdeb58d747f54455a2c0839b261862897"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-attempt-anchor.sql",
+      "size": 7969,
+      "sha256": "1772c0e93d88b5b82c143e7df18f1279c21ccc18efd4d68d0b4a562ccb0708e1"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-authority-lock.sql",
+      "size": 1187,
+      "sha256": "0094b739c7ea37406e3e39674eebde7f7e411b41079b8c066e5b887b9aafafdd"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-bridge-inventory.sql",
+      "size": 13225,
+      "sha256": "99271e2374c43af142d617e62c17b31cb5e3b36795975f615328a3cc6ba3f6b2"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-catalog-cut.sql",
+      "size": 3346,
+      "sha256": "60fa366558076ff4d2e710ea0050039129259590308cbf496d59140a0af6101e"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-data-authority-lock.sql",
+      "size": 1540,
+      "sha256": "bdb2af507fcfec179d68820ad7d7aeb9f1a422e79284dd75d7d6b025948f141c"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-literal-authority.sql",
+      "size": 14663,
+      "sha256": "7378feb393284ff01b5e54761c4ca62efab4fc239ec487acb01a2bf59a4a67bc"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-literal-permit.sql",
+      "size": 7800,
+      "sha256": "df026726e32ea53bb7997ca04693dc1d07d049fc6a0937fa43abe2cae3213e6a"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-literal-selection.sql",
+      "size": 13724,
+      "sha256": "c40c823b5b8274f71df4f21c814fe964763e9ae42e08733ded3a14261a2368cf"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-peer-xid.sql",
+      "size": 2164,
+      "sha256": "4fb3ad81997eeaf346b1bbdddc637b4d3920de85e1b024992ce6aad257d74f0f"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-permit-binding-check.sql",
+      "size": 2677,
+      "sha256": "da53d3553828296d4835f9e5c1bea86775f4e5ca28485a17aa79e7eb9b38786f"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-permit-mint.sql",
+      "size": 2958,
+      "sha256": "526dc46e32bdfbcbd6d7766184eee0e2345383a329457be7f3cc7b481638bee0"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-program-binding.sql",
+      "size": 1935,
+      "sha256": "cbb75647a5e455125fcb51d0433c5df41d34a27eeaa321fca8293000f1615a26"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-program-sources-storage.sql",
+      "size": 976,
+      "sha256": "275d15c17f2c67c40ff1d6125bf2d2dcfa86f425d98aaa20c06ac7951e0cd93f"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-program-storage.sql",
+      "size": 1853,
+      "sha256": "5d166367e0ff23d9b4641fb1fc5cd0072472c67b3709a8ed105fafcca962c11d"
+    },
+    {
+      "path": "truss/_security_bootstrap/preparation-seal-storage.sql",
+      "size": 2095,
+      "sha256": "1df3f49d8422e3988ff2c12e67fb5707193e752b9debf0348074c68b5fa13e07"
+    },
+    {
+      "path": "truss/_security_bootstrap/register.sql",
+      "size": 1531,
+      "sha256": "f68f041180cb81faa05d06607c94d7b3ba92bc6426cf5691a28bc35cbfd49126"
+    },
+    {
+      "path": "truss/_security_bootstrap/registered-role-catalog-cut.sql",
+      "size": 558,
+      "sha256": "3cf7bc27db1b60e2c6297634a407e92e1535b4834f18bb53e2986686fb2476d2"
+    },
+    {
+      "path": "truss/_security_bootstrap/settle.sql",
+      "size": 728,
+      "sha256": "0a0fb3d5e0a3e354e83b6a6404191090c6c4e028736a90eb49d774d77dbbd8f2"
+    },
+    {
+      "path": "truss/_security_catalog_assessment.py",
+      "size": 6350,
+      "sha256": "e93932f962f74e320a6a7bc7d83fb706ce28df4e14746028587e71dedfb9575f"
+    },
+    {
+      "path": "truss/_security_catalog_mapping.py",
+      "size": 6743,
+      "sha256": "91de592d37055b6f7759646e0b2df99c012588ffbe5fa700b1f09d83b5c530b0"
+    },
+    {
+      "path": "truss/_security_catalog_read_cut_installation.py",
+      "size": 9202,
+      "sha256": "28be77bec20275979c06d36d24c45005e01a7c52948e4d19deaded6b8d8f16eb"
+    },
+    {
+      "path": "truss/_security_catalog_source_binding.py",
+      "size": 6068,
+      "sha256": "a4b9d5e91cd70cf9ceb99c752b94c055e7e6612aab15b8a0dd401e38b19829b5"
+    },
+    {
+      "path": "truss/_security_catalog_source_epoch.py",
+      "size": 10890,
+      "sha256": "16c71aa6eacb8f076c950b9ce45b4bc29439d09de1066383d480d850a9eab732"
+    },
+    {
+      "path": "truss/_security_catalog_source_installation.py",
+      "size": 10582,
+      "sha256": "035e654e2c6869866d8fc2a0ba2a77f4e8eb672a0a92d627c261b3c7a0a4e92d"
+    },
+    {
+      "path": "truss/_security_catalog_subject_helpers.py",
+      "size": 5093,
+      "sha256": "318246cc20efbbc32c859e577283fe5c12e3cae08133656c33808773f17f06d6"
+    },
+    {
+      "path": "truss/_security_catalog_subject_installation.py",
+      "size": 28104,
+      "sha256": "3231b47edc2e877a1ec19ef16f81910adc3313f2c3b62a740930109566b841a4"
+    },
+    {
+      "path": "truss/_security_data_writer.py",
+      "size": 8407,
+      "sha256": "6c276bbea944801235785c5bbf5d995befca9c2d43a48c83c18343f8a5cb31d6"
+    },
+    {
+      "path": "truss/_security_data_writer_binding.py",
+      "size": 5871,
+      "sha256": "79f68bb4b7d00b6e1d1bb42bdda25a2129289197e5e98105794612a0e380405a"
+    },
+    {
+      "path": "truss/_security_fact_coverage.py",
+      "size": 5305,
+      "sha256": "ac9282190ba288ed45db4bd4dfd14f1a44efe65f20aebb1d20f9e8333e5a0ced"
+    },
+    {
+      "path": "truss/_security_graph_epoch_read.py",
+      "size": 16676,
+      "sha256": "441204274a7fb6433b61a43cc90e5dc8fa6606c5cfcb9b1f5080c77ca8defff8"
+    },
+    {
+      "path": "truss/_security_graph_source.py",
+      "size": 5780,
+      "sha256": "bdbe7406a615ce0857eb0f8b1f09446ffeefbb234634c96a42315916818e870d"
+    },
+    {
+      "path": "truss/_security_graph_subject_installation.py",
+      "size": 22595,
+      "sha256": "84aa30b681d14cd9f3fa3c1e979f1584107cab5bc862ee88e001bd7004d65a55"
+    },
+    {
+      "path": "truss/_security_guarded_source.py",
+      "size": 3338,
+      "sha256": "16dcce987eaee2b68678cf72c40a3b4d461704733f294f83e59954129966fae6"
+    },
+    {
+      "path": "truss/_security_home_installation.py",
+      "size": 7004,
+      "sha256": "51eb335136e019bd10389a310cd9d87dba60de6a84fc37043e57cbb17590b674"
+    },
+    {
+      "path": "truss/_security_mapping.py",
+      "size": 12644,
+      "sha256": "90da49e2d70acbb458add4e7d2ab185465c2a09cd902096a77b13686adbc0e45"
+    },
+    {
+      "path": "truss/_security_preparation_authority.py",
+      "size": 17758,
+      "sha256": "c3b1d6218b82bf434229160817cb2f2d1456d1696e793fd77f279e59ad8e30e6"
+    },
+    {
+      "path": "truss/_security_publication_registration.py",
+      "size": 4890,
+      "sha256": "c6437665c26a1e1f829cd6eea3345e1267e1abbfb6d61ffb41225758e1022fe9"
+    },
+    {
+      "path": "truss/_security_publication_settlement.py",
+      "size": 4864,
+      "sha256": "bcb60b5307b522684229f01f9423f36752ab0fb4ab2d852fdc01b8c65cf605cb"
+    },
+    {
+      "path": "truss/_security_relational_source.py",
+      "size": 1322,
+      "sha256": "4f528e51fa072b05604f0c35dcdc8b3f48f10a6b0a8e4eda89eaeea48988436e"
+    },
+    {
+      "path": "truss/_security_relationship_epoch_read.py",
+      "size": 16745,
+      "sha256": "03eb36f2c466de5c9a1b861e43c6311486ddf359f41fa42caf9a4dbd84897c52"
+    },
+    {
+      "path": "truss/_security_relationship_source.py",
+      "size": 5073,
+      "sha256": "1fb53239e00b2e89510112a8d5c0eb6dd4d9eeed0e9fc8c2ca5eb2f299c04924"
+    },
+    {
+      "path": "truss/_security_source_epoch/alter-routine-ddl-barrier.sql",
+      "size": 430,
+      "sha256": "c22f2f12217a624e96af4dbd6e9ff589917264f17b8f7fa4b87e8c83b5a83e5d"
+    },
+    {
+      "path": "truss/_security_source_epoch/database-ddl-barrier.sql",
+      "size": 643,
+      "sha256": "8c538a4362d58bfabab43b3928533d2ad1e2ca69be66f2e3c78720134c97cfb3"
+    },
+    {
+      "path": "truss/_security_source_epoch/fenced-fresh-lock.sql",
+      "size": 1789,
+      "sha256": "87aff83c73d1892ea374e37b1ee765a04ea89d0350935def31f10b4d22477b8f"
+    },
+    {
+      "path": "truss/_security_source_epoch/fresh-lock.sql",
+      "size": 2220,
+      "sha256": "c8079e213ed87c0e570ae5272cada04edc4302b351e8cddf3824436a9da5de4e"
+    },
+    {
+      "path": "truss/_security_source_epoch/immutability.sql",
+      "size": 1366,
+      "sha256": "026424a0d1a74776e4bbe812bfb7d7d4f488dbffd44aab0f2aabb5bf69f8e1c8"
+    },
+    {
+      "path": "truss/_security_source_epoch/issue.sql",
+      "size": 4570,
+      "sha256": "e9c2df8d807fe93cbd244461562bacc0487e5e5058b4f5db0639d1f157ed23f9"
+    },
+    {
+      "path": "truss/_security_source_epoch/lock.sql",
+      "size": 2297,
+      "sha256": "200db678eb1d1ab04fb7c0a6305e432b3e4ff330dc580ab9cf4d3ab9c4d4ff21"
+    },
+    {
+      "path": "truss/_security_source_epoch/manifest.json",
+      "size": 1153,
+      "sha256": "f704f690068cfc54d4e9dcf7ea210db397a174854b32283dbfcef83942cb01c7"
+    },
+    {
+      "path": "truss/_security_source_epoch/read-fence.sql",
+      "size": 1841,
+      "sha256": "45f1e8df20fd17195c5e62d225ad9a85f815426a765f6cb0d4b111332be95e2b"
+    },
+    {
+      "path": "truss/_security_source_epoch/routine-ddl-barrier.sql",
+      "size": 2572,
+      "sha256": "c614660383c8ff022ade2c04bdd3a8022cc2290d731dc2ff03cefc19c2e25be7"
+    },
+    {
+      "path": "truss/_security_source_epoch/schema-ddl-barrier.sql",
+      "size": 544,
+      "sha256": "651e05acd9c0c840b68ca263b4931219d98f84051a478a0f62f5791497607b61"
+    },
+    {
+      "path": "truss/_security_source_epoch/table-ddl-barrier.sql",
+      "size": 683,
+      "sha256": "ca7f798ecd850fd999e37aebc3523cc32658ecd8b739c8be387fac290596aaa0"
+    },
+    {
+      "path": "truss/_security_source_epoch_installation.py",
+      "size": 10464,
+      "sha256": "bddc56e2adeb2eeac6151d4278434325d2739bb93f79c005046f86e5a358e45c"
+    },
+    {
+      "path": "truss/_source_census/pg18.sql",
+      "size": 16242,
+      "sha256": "494a647e449032e21ebc5e2eb9903619b9385bf99cbde72c63923da44ee23465"
+    },
+    {
+      "path": "truss/_startup_custody.py",
+      "size": 9305,
+      "sha256": "606782c98da6ab4d16abfcccd0f5b2469335f585ccf24e5e6cb42e006944cbec"
+    },
+    {
+      "path": "truss/_umf/licenses/ajv.txt",
+      "size": 1090,
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+    },
+    {
+      "path": "truss/_umf/licenses/fast-deep-equal.txt",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_umf/licenses/fast-uri.txt",
+      "size": 1813,
+      "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+    },
+    {
+      "path": "truss/_umf/licenses/json-schema-traverse.txt",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_umf/licenses/require-from-string.txt",
+      "size": 1128,
+      "sha256": "6ee0feb1f6ef996ff5a68600f8cf98909cf412d39ef3cdceaefd87d636fa1b7f"
+    },
+    {
+      "path": "truss/_umf/licenses/yaml.txt",
+      "size": 738,
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "path": "truss/_umf/runtime-manifest.json",
+      "size": 229,
+      "sha256": "4fc4117b745e5aa7b0e7fd065cbed05151542c1134e2092718cd6595b0acf3f8"
+    },
+    {
+      "path": "truss/_umf/runtime/node_modules/ajv/dist/2020.js",
+      "size": 261871,
+      "sha256": "57cad03e867e41b0bf4a68c13e24b2628312c6dc82a3ca16780a6864130ad40d"
+    },
+    {
+      "path": "truss/_umf/runtime/package.json",
+      "size": 70,
+      "sha256": "9a0a1f4e40bbd5082cbcc0f6b6b515368f2dc8dc60341affdc8c50571819bd49"
+    },
+    {
+      "path": "truss/_umf_core10/acceptance-input-v0.1.schema.json",
+      "size": 6208,
+      "sha256": "0278cbbbde843091c005b688fd9c081a2fdff843b9adda006ba80fb87828d7cd"
+    },
+    {
+      "path": "truss/_umf_core10/keys.mjs",
+      "size": 4339,
+      "sha256": "a2ce760252646f92fc716a3eadf68d6797f1fcb2b777ed8d00be92bb8169918e"
+    },
+    {
+      "path": "truss/_umf_core10/licenses/ajv.txt",
+      "size": 1090,
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+    },
+    {
+      "path": "truss/_umf_core10/licenses/fast-deep-equal.txt",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_umf_core10/licenses/fast-uri.txt",
+      "size": 1813,
+      "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+    },
+    {
+      "path": "truss/_umf_core10/licenses/json-schema-traverse.txt",
+      "size": 1074,
+      "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+    },
+    {
+      "path": "truss/_umf_core10/licenses/require-from-string.txt",
+      "size": 1128,
+      "sha256": "6ee0feb1f6ef996ff5a68600f8cf98909cf412d39ef3cdceaefd87d636fa1b7f"
+    },
+    {
+      "path": "truss/_umf_core10/licenses/yaml.txt",
+      "size": 738,
+      "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "path": "truss/_umf_core10/manifest.json",
+      "size": 2293,
+      "sha256": "dec0c0af9fc135226538db4db99a52a7d31ddf993203b2525123e46822f09b34"
+    },
+    {
+      "path": "truss/_umf_core10/preparation.mjs",
+      "size": 26919,
+      "sha256": "b750fa2c9bf29bd9f3598c4d1b8678b6540bf80a2e160deb01a187d2c6e38e03"
+    },
+    {
+      "path": "truss/_umf_core10/producer-manifest.json",
+      "size": 907,
+      "sha256": "4b557b9452c2591fa43b982253c20448fab94a43898a26d97f0e8e54fc1c967a"
+    },
+    {
+      "path": "truss/_umf_core10/producer.js",
+      "size": 696283,
+      "sha256": "0335643fd700df1eafedb88e6104d532096aa74c6081f8d96372d2779a4d34fd"
+    },
+    {
+      "path": "truss/_umf_key_tuples.py",
+      "size": 11273,
+      "sha256": "b79721d5715118422a5dcfb66ddad3ac053253283926362e00f62fdf3869a34f"
+    },
+    {
+      "path": "truss/_umf_runtime_release.py",
+      "size": 175,
+      "sha256": "6fffae72efd70d9cea5b79b5c16cee65de7a6f4db31cb91b657b47f8a2767ee2"
+    },
+    {
+      "path": "truss/access.py",
+      "size": 19567,
+      "sha256": "34b00772f20ba966b8fd6684de22a7c101f9c4bfb3daa9da1a7ab128406b4628"
+    },
+    {
+      "path": "truss/action_transport.py",
+      "size": 38175,
+      "sha256": "90c6aa2c6b7db69bac4b62f29537b9fe20f5e60077e59b999a2a520bb2907524"
+    },
+    {
+      "path": "truss/assembly.py",
+      "size": 15131,
+      "sha256": "6ab5584c4deae1a398d57bfccee7601e620b50f135a372657b403fcbcec12097"
+    },
+    {
+      "path": "truss/assembly_contracts.py",
+      "size": 2205,
+      "sha256": "950dec79fa1c09a3d5b81cb40ad69c560c48a8a37bdc125a10ef2d6f45d5710f"
+    },
+    {
+      "path": "truss/batched_import.py",
+      "size": 4513,
+      "sha256": "3e1ffb4863a718281e94a4da370c94ad55acce1b56e0d2cbcd895fff1628c5bd"
+    },
+    {
+      "path": "truss/bulk_action_gateway.py",
+      "size": 10155,
+      "sha256": "4137819fc60215e2b051d0970fde0ae38442c141be9f0edcb2d3da154cdfaeeb"
+    },
+    {
+      "path": "truss/capabilities.py",
+      "size": 19493,
+      "sha256": "c2eae9867c4bd5123ca3262e679073f3ce8ddf2dd1b0331660a5e43b6ad8a66f"
+    },
+    {
+      "path": "truss/capability_contracts.py",
+      "size": 11076,
+      "sha256": "89baa8ab2e32a145c80481c9d63b7a6f622013c5c1a37a82e2269da130a71fd0"
+    },
+    {
+      "path": "truss/catalog_preparation.py",
+      "size": 2810,
+      "sha256": "fcbde90f084bd94ee05bf7e94d85c897258b2feff7ff0f2a16ee66253afaa5ea"
+    },
+    {
+      "path": "truss/catalog_report_sources.py",
+      "size": 4718,
+      "sha256": "8338f6520fd7c10de69cb32d2822c80eeda9a3bebd7c84a6df3f5793a3b9d5cf"
+    },
+    {
+      "path": "truss/catalog_results.py",
+      "size": 4415,
+      "sha256": "a20fa3aba53fc6d4b867a818717b9ad0073430322cd7801854e6e89db9525465"
+    },
+    {
+      "path": "truss/catalog_runtime.py",
+      "size": 139818,
+      "sha256": "c3090a85ae7a3d4b210509defc31514729670f62fb2755bd78dbc7852a3e31b0"
+    },
+    {
+      "path": "truss/catalog_view.py",
+      "size": 6544,
+      "sha256": "167fc8fd2e304a9aaf9d485d957b0d124542617caa2f16c82f3d7aee42ec890c"
+    },
+    {
+      "path": "truss/cli.py",
+      "size": 7895,
+      "sha256": "a4c3548e29dbc1a39308a4a12dae875b98dd8bceb3d2cb94916d3b3048bf049e"
+    },
+    {
+      "path": "truss/contracts.py",
+      "size": 6623,
+      "sha256": "e9a47078ea199241eb1f011bb368992dbafcbc50e355ce0341d0729fd8cf9e59"
+    },
+    {
+      "path": "truss/current_disclosure.py",
+      "size": 2095,
+      "sha256": "634fc97d20f07befb394228e10c1646ff3e9cdb19ba9d2c3d106208ff890a40f"
+    },
+    {
+      "path": "truss/current_query.py",
+      "size": 3068,
+      "sha256": "d8e7c06b20a39a61fc793cbbc1852ef6f1c644b886eba6f62206fcf9d9369e68"
+    },
+    {
+      "path": "truss/edge_read.py",
+      "size": 1243,
+      "sha256": "d0257aec55e527796a72fac4758e97cbe4b0e074e6e5c82d532f1c04c07c3148"
+    },
+    {
+      "path": "truss/engine_import.py",
+      "size": 13298,
+      "sha256": "2b5704d08f56645e778bfeef7b1c7b5b4a9f420df00153d0aa33a2adf5e30fd5"
+    },
+    {
+      "path": "truss/execution.py",
+      "size": 3550,
+      "sha256": "ef28d26d5a9f1e50ccdf2e669d4eb85b2a28cb94dd4d54d5f0ac872cec2f2ed9"
+    },
+    {
+      "path": "truss/feed.py",
+      "size": 2405,
+      "sha256": "0f5e5146368c254ea83b2d34229920a1b8bfa70fb3df000edaa7b7f5a820714c"
+    },
+    {
+      "path": "truss/groups.py",
+      "size": 18579,
+      "sha256": "42bbf5d28ae3a728d875b42743c2c480172bc7d70e90735d5b18dc83cdc35992"
+    },
+    {
+      "path": "truss/history.py",
+      "size": 1535,
+      "sha256": "4c808212ef254406f6cf1d594497deda2bcf3deab6fbe6b02df4a149586e40fe"
+    },
+    {
+      "path": "truss/host.py",
+      "size": 6299,
+      "sha256": "bcc2bc9519f8a52670a08468f48afebce449f34679bc8ac2cdcbda8c69eead2e"
+    },
+    {
+      "path": "truss/import_runtime.py",
+      "size": 3284,
+      "sha256": "ca79233f5b9f2ae318f93680c1918265fa5888b4625c21c7fb8d9d4971d34c5b"
+    },
+    {
+      "path": "truss/import_source.py",
+      "size": 788,
+      "sha256": "3026064e89a42ab89f694628c8af56d47548ef9312da13e6aa172959479c9aed"
+    },
+    {
+      "path": "truss/imports.py",
+      "size": 15930,
+      "sha256": "cf35825be7c28e588aa3a7d95b8833f34934cc4bc95460fd98f7fef809fc4603"
+    },
+    {
+      "path": "truss/installation.py",
+      "size": 4366,
+      "sha256": "5d85629768595cc37fd01681810aae65bbce1842a66a33fb7b8cc882a369dd73"
+    },
+    {
+      "path": "truss/lifecycle.py",
+      "size": 1664,
+      "sha256": "ef9159ed6b1ca8405313d877ddd995ad540678de77f5ad0517a16ce887636480"
+    },
+    {
+      "path": "truss/load_audit.py",
+      "size": 6168,
+      "sha256": "60b3fb5814c4f531e7d454a5ba2dc97f07c4dede42e7f42b6974cf8ceda1e250"
+    },
+    {
+      "path": "truss/local_runtime.py",
+      "size": 12914,
+      "sha256": "7a0fce2fd418a3c239e7f6e847ac952d152d1967638251a4ebba2f5f29b90728"
+    },
+    {
+      "path": "truss/migration_planning.py",
+      "size": 7554,
+      "sha256": "be8273c42ca6aece0f66b22ab677111b50189455c67ef2462a08e00e147cc1ff"
+    },
+    {
+      "path": "truss/migrations.py",
+      "size": 16915,
+      "sha256": "ae2aadb5f8c27da4d4a6f3fec6e329c73e18177e4ad2106987bbeb33d543b170"
+    },
+    {
+      "path": "truss/numeric.py",
+      "size": 2392,
+      "sha256": "1933f0d7de65e5f8c7fa02dda6462e83cedc81e9a169d7f1833e8aed447fb2a2"
+    },
+    {
+      "path": "truss/object_read.py",
+      "size": 4060,
+      "sha256": "0c3a7152d6750b4d499663fc0aacfe10676de3906c955dcfa60b9ccb0808aa43"
+    },
+    {
+      "path": "truss/preparation.py",
+      "size": 20905,
+      "sha256": "87bf3a94f7e74770b5884956ea803dd06ea82509eac3d8e20daca4e65172c7d1"
+    },
+    {
+      "path": "truss/preview.py",
+      "size": 3884,
+      "sha256": "bc247fa5bd2f02b21dd38e8971b1ad70697a5848d84791f568a9b3298a7f6536"
+    },
+    {
+      "path": "truss/psycopg_host.py",
+      "size": 52701,
+      "sha256": "97ac55cf12d7c0a9894377b88d91022a0dd27f92722a0b98a6e5e7e0ba97ebcb"
+    },
+    {
+      "path": "truss/py.typed",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "truss/query.py",
+      "size": 4093,
+      "sha256": "bfcda5b3a9f4b8caae91bbf2e3451cb65507e2d400308c75e0d256cf0d0dfa33"
+    },
+    {
+      "path": "truss/query_stream.py",
+      "size": 4110,
+      "sha256": "3e25c8e4bf0020b23e64aed95d55157475d1ca61f38a45a95d7c4777202691e5"
+    },
+    {
+      "path": "truss/reader_catalog.py",
+      "size": 2065,
+      "sha256": "a815a0b7e8b1c428429f98820d8e67751256b2f6a23a4e13196cec467e265f21"
+    },
+    {
+      "path": "truss/receipt_visibility.py",
+      "size": 1014,
+      "sha256": "49a9a078104f740a6257c9f1c82a4f3a56f054dcd361ada3c8f3468c179e4852"
+    },
+    {
+      "path": "truss/recovery_registry.py",
+      "size": 3622,
+      "sha256": "c4590bae27749d8354ab84bffa850a3430f87d12c8c5eaeb91b8af7a628a530b"
+    },
+    {
+      "path": "truss/timestamp.py",
+      "size": 1758,
+      "sha256": "bf5841bc6d160af5c808ec01fc253cd30b270063097c7f949b87e241dcec0051"
+    },
+    {
+      "path": "truss/traversal.py",
+      "size": 1133,
+      "sha256": "bd00e486c0280f65d089fa660b47726d4c9af1b3207c67e67948d54d0f2e00bf"
+    },
+    {
+      "path": "truss/weft.py",
+      "size": 9303,
+      "sha256": "ab7660b24b8e1e80a994e95e5fd83312be7ea60c430e683f03ccb21ccc6cdbc7"
+    }
+  ]
+}
+

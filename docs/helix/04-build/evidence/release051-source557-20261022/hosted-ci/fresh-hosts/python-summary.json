@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "cases": 2181,
+  "byteParity": true,
+  "subprocessDisabled": true,
+  "extensionSha256": "a2e9fd4440366b8bcf0247814df167be53eb838c42c1774ccaae8359de3c493d",
+  "nativeModule": "/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/weft/weft.abi3.so",
+  "version": "0.4.51",
+  "python": "3.12.15 (main, Oct  1 2026, 02:35:59) [GCC 13.3.0]",
+  "scope": "Actual loaded Python ABI with both qualified backends. Byte parity to fresh public Rust runtime on2181 unchanged retired UMF0.7 fixture requests and their independently declared current envelope refusals; zero current compiled inputs and no inherited native qualification; no Python database executions or broader platform claims."
+}

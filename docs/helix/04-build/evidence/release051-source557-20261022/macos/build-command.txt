@@ -1,0 +1,1 @@
+maturin build -v --manifest-path crates/weft-python/Cargo.toml --release --locked --out /private/tmp/weft-arras-051-final-macos-55715373/dist

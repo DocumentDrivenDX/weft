@@ -1,0 +1,3 @@
+Initial attempt: CARGO_INCREMENTAL=0; CARGO_TARGET_DIR=/private/tmp/weft-arras-051-final-target-55715373; CARGO_BUILD_JOBS unset.
+Verbose retry: CARGO_INCREMENTAL=0; CARGO_TARGET_DIR=/private/tmp/weft-arras-051-final-target-55715373; CARGO_BUILD_JOBS=2; CARGO_TERM_COLOR=never.
+Toolchain activation: source /private/tmp/weft-arras-051-rebuild-venv/activate-toolchain.sh
