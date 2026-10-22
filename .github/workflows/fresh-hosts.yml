@@ -25,7 +25,33 @@ jobs:
           cargo install wasm-bindgen-cli --version 0.2.105 --locked
           cargo fetch --locked
       - name: Install actual Chromium and system dependencies
-        run: bunx --bun playwright@1.62.1 install --with-deps chromium
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/configure_ubuntu_apt_sources.py --self-test
+          sudo python3 .github/scripts/configure_ubuntu_apt_sources.py --apply
+          sudo tee /etc/apt/apt.conf.d/zz-weft-network-bounds >/dev/null <<'APT'
+          Acquire::Retries "2";
+          Acquire::http::Timeout "20";
+          Acquire::https::Timeout "20";
+          APT
+          apt_config="$(sudo apt-config dump)"
+          grep -Fqx 'Acquire::Retries "2";' <<<"$apt_config"
+          grep -Fqx 'Acquire::http::Timeout "20";' <<<"$apt_config"
+          grep -Fqx 'Acquire::https::Timeout "20";' <<<"$apt_config"
+          printf '%s\n' "$apt_config" | grep -E '^Acquire::(Retries|http::Timeout|https::Timeout) '
+          sudo timeout --signal=TERM --kill-after=30s 5m apt-get update
+          playwright_dir="$RUNNER_TEMP/playwright"
+          timeout --kill-after=30s 5m npm install --prefix "$playwright_dir" --ignore-scripts --no-package-lock playwright@1.62.1
+          timeout --kill-after=30s 15m node "$playwright_dir/node_modules/playwright/cli.js" install --with-deps chromium
+          WEFT_PLAYWRIGHT_MODULE="$playwright_dir/node_modules/playwright/index.mjs" \
+            timeout --kill-after=10s 60s node --input-type=module -e '
+              import { pathToFileURL } from "node:url";
+              const { chromium } = await import(pathToFileURL(process.env.WEFT_PLAYWRIGHT_MODULE));
+              const browser = await chromium.launch({ headless: true });
+              console.log(`Launched pinned Chromium at ${chromium.executablePath()}`);
+              await browser.close();
+            '
       - name: Install locked JavaScript dependencies
         run: bun install --frozen-lockfile
       - name: Install pinned host diagnostics dependencies
