@@ -1,0 +1,258 @@
+   Compiling ahash v0.8.12 (/private/tmp/weft-arras-release/vendor/ahash)
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+   Compiling referencing v0.56.0
+   Compiling jsonschema-value v0.56.0
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: `ahash` (lib) generated 4 warnings
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling jsonschema-macros v0.56.0
+   Compiling jsonschema v0.56.0
+   Compiling weft-core v0.1.0 (/private/tmp/weft-arras-release/crates/weft-core)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:12:24
+   |
+12 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:4:25
+  |
+4 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+7 |     exact,
+  |     ^^^^^
+8 |     ir::{Family, Identity, LogicalType},
+9 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused import: `Value`
+ --> crates/weft-core/src/current_presence.rs:5:23
+  |
+5 | use serde_json::{json,Value};
+  |                       ^^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:838:8
+    |
+838 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:62:15
+   |
+62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:246:19
+    |
+209 | impl Parser {
+    | ----------- method in this implementation
+...
+246 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 55 | impl PathRead {
+    | ------------- methods in this implementation
+...
+120 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:241:12
+    |
+240 | impl Plan {
+    | --------- associated function in this implementation
+241 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:24:9
+   |
+22 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+23 |         alias: Name,
+24 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:9:103
+  |
+9 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `canonical_name` is never used
+   --> crates/weft-core/src/table_query.rs:487:4
+    |
+487 | fn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {
+    |    ^^^^^^^^^^^^^^
+
+   Compiling weft-databricks v0.1.0 (/private/tmp/weft-arras-release/crates/weft-databricks)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-arras-release/crates/weft-postgresql)
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:55:9
+   |
+55 |     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+   |         ----^^^^^^^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: function `lower_current` is never used
+   --> crates/weft-databricks/src/raw_read.rs:232:15
+    |
+232 | pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false,false)}
+    |               ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `holes` is never used
+  --> crates/weft-postgresql/src/native_privilege_probes.rs:36:4
+   |
+36 | fn holes(sql: &str) -> Result<Vec<Hole>> {
+   |    ^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-databricks` (lib) generated 2 warnings (run `cargo fix --lib -p weft-databricks` to apply 1 suggestion)
+warning: `weft-core` (lib) generated 12 warnings (run `cargo fix --lib -p weft-core` to apply 4 suggestions)
+warning: `weft-postgresql` (lib) generated 1 warning
+   Compiling weft-runtime v0.1.0 (/private/tmp/weft-arras-release/crates/weft-runtime)
+    Finished `test` profile [optimized + debuginfo] target(s) in 57.01s
+     Running unittests src/lib.rs (/private/tmp/weft-truss-hf04/target/debug/deps/weft_runtime-7fda4ab814b99d59)
+
+running 51 tests
+test ashlar_tests::ashlar_feature_controls_registration_and_retains_public_artifact ... ok
+test current_presence_graph_requirements_bridge_tests::graph_data_refuses_stored_context_mismatch_before_factory ... ok
+test current_query_object_tests::unsupported_and_legacy_preparations_issue_no_child ... ok
+test engine_export::tests::abi12_binary_adapter_keeps_the_explicit_context_pair ... ok
+test current_query_object_tests::scoped_consumer_uses_same_original_parent_and_owned_payload_without_report_import ... ok
+test current_presence_bridge_tests::old_parent_binding_and_wrong_transport_cannot_enter_new_bridge ... ok
+test application_lineage_bridge_tests::bridge_returns_exact_original_core_bytes_and_refuses_report_override ... ok
+test current_presence_model_requirements_bridge_tests::requirements_use_the_same_original_arc_and_survive_parent_handle_drop ... ok
+test current_query_object_tests::cached_declaration_or_original_context_substitution_refuses_before_consumer ... ok
+test engine_ordered_page::tests::repeated_field_sort_uses_explicit_selected_key_slots_not_first_field_match ... ok
+test engine_ordered_page::tests::original_related_keys_output_keeps_distinct_sealed_decoder ... ok
+test engine_read::binary_domain_tests::original_optional_scalar_sibling_preserves_missing_and_null ... ok
+test engine_read::page_tests::blocked_page_composition_keeps_its_frame_and_original_diagnostics ... ok
+test current_presence_graph_requirements_bridge_tests::graph_data_preserves_original_arc_and_exact_core_report ... ok
+test engine_ordered_page::tests::original_joined_tuple_ties_refuse_without_owner_uniqueness_proof ... ok
+test engine_read::binary_domain_tests::current_core10_binary_state_domain_is_distinct_from_ashlar_envelopes ... ok
+test engine_ordered_page::tests::original_mixed_nullish_order_keeps_selected_composite_key_and_full_states ... ok
+test engine_ordered_page::tests::ordinary_order_key_is_required_exact_and_recompiled ... ok
+test engine_read::related_output_tests::ashlar_related_metadata_faults_refuse_instead_of_guessing ... ok
+test engine_read::page_tests::oversized_page_inputs_refuse_before_parsing ... ok
+test engine_read::sdk_presence_tests::new_presence_profile_requires_original_core010_domain ... ok
+test engine_read::related_output_tests::ashlar_related_original_preserves_native_representation_and_source_custody ... ok
+test engine_ordered_page::tests::related_source_and_target_keep_separate_authored_order_keys ... ok
+test engine_read::binary_domain_tests::binary_projection_page_delegates_original_scalar_key_cursor ... ok
+test engine_read::page_tests::original_page_retains_hidden_key_and_native_continuation ... ok
+test engine_export::tests::abi12_filtered_page_derives_complete_cursor_without_losing_parameter_custody ... ok
+test engine_read::sdk_presence_tests::retired_core08_sources_refuse_and_temporal_carriers_remain_held ... ok
+test engine_read::tests::blocked_original_diagnostics_are_retained ... ok
+test engine_read::related_output_tests::original_truss_related_wrapper_retains_native_key_types_and_representation ... ok
+test engine_read::sdk_presence_tests::original_scalar_presence_keeps_null_missing_and_source_distinct ... ok
+test engine_read::related_output_tests::original_required_scalar_null_placement_normalizes_only_after_owner_proof ... ok
+test engine_related_read::tests::original_navigation_identity_context_and_grouped_source_refuse ... ok
+test engine_read::page_tests::complete_required_primary_key_asc_page_order_is_owner_proven_redundant ... ok
+test truss_arras_view_entrypoint_tests::public_truss_runtime_entrypoint_admits_only_declared_opaque_arras_view ... ok
+test engine_read::sdk_presence_tests::old_versions_forged_states_source_and_computed_outputs_refuse ... ok
+test engine_export::tests::export_preserves_originals_and_emits_unbounded_ordered_plan ... ok
+test engine_ordered_page::tests::cursor_shape_state_identity_order_and_old_profile_fail_closed ... ok
+test engine_read::tests::native_core010_engine_requests_keep_original_profiles_and_sources ... ok
+test engine_related_read::tests::complete_parameter_union_is_owned_across_both_original_queries ... ok
+test engine_read::tests::original_compiler_and_current_binding_agree_without_losing_decimal_spelling ... ok
+test truss_page_transport_tests::typed_transport_matches_original_page_compiler_and_refuses_untyped_bounds ... ok
+test engine_read::page_tests::original_ashlar_page_compilation_retains_snapshot_key_obligation ... ok
+test engine_read::page_tests::original_bounded_related_keys_page_preserves_entity_cursor_and_representation ... ok
+test engine_export::tests::binary_page_export_preserves_original_key_and_representation ... ok
+test engine_related_read::tests::original_related_export_changes_only_outer_delivery_bound ... ok
+test engine_read::tests::changed_context_family_and_program_never_match ... ok
+test engine_export::tests::altered_program_context_and_source_refuse_without_sql ... ok
+test engine_read::page_tests::page_tampering_and_context_drift_refuse ... ok
+test engine_related_read::tests::original_engine_source_selection_preserves_identity_limit_parameters_and_context ... ok
+test engine_related_read::tests::original_related_pages_preserve_source_selection_and_native_key_continuation ... ok
+test current_presence_bridge_tests::actual_presence_bridge_preserves_issued_parent_and_all_producer_artifacts ... ok
+
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
