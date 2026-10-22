@@ -70,8 +70,11 @@ cases, 10 policy controls or the 1,000-object workload. The first new-host
 attempt's PostgreSQL shared-memory permission failure is retained by the host
 campaign owner; its permission-correct rerun is still required. The previous
 `local-macos-0.4.51.json` has not been rewritten and must not be treated as the
-current source-F qualification. No publication or release authorization is
-asserted here.
+current source-F qualification. The exact original source-86 JSON is preserved
+as [`superseded/local-macos-0.4.51-source86-superseded.json`](superseded/local-macos-0.4.51-source86-superseded.json)
+with SHA-256 `29d71220bb593ecc85c89e8a9f2c7fa9967f97adf98dfa3e85c4c3988e9409d3`;
+its old counts and source identity are not relabeled as source-F results. No
+publication or release authorization is asserted here.
 
 ## Included evidence
 

@@ -260,6 +260,13 @@
       "bytes": 8255,
       "sha256": "ecbb3d9f8e066d8bd7f7f5f53305ebf5d7d8a7285284b24bba11ecb799f1c016",
       "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "superseded/local-macos-0.4.51-source86-superseded.json",
+      "originalPath": "/private/tmp/weft-arras-release/docs/helix/04-build/releases/local-macos-0.4.51.json",
+      "bytes": 2434,
+      "sha256": "29d71220bb593ecc85c89e8a9f2c7fa9967f97adf98dfa3e85c4c3988e9409d3",
+      "role": "Exact unmodified historical local macOS qualification for compiler source 86c092178bb8ca1a0d84edfebc175009d8862493; superseded and not evidence for source F."
     }
   ],
   "excludedLargeHostedInputs": [
