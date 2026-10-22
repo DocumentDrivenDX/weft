@@ -4176,6 +4176,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/truss_runtime/selective.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/value_definition.rs",
           "publicDeclarations": [
             "struct:Graph",

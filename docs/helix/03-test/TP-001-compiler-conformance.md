@@ -19,6 +19,30 @@ ddx:
       kind: informed_by
 ---
 
+## HF-04/05 Truss selectable and indexed candidate profile
+
+Select compile/IR0.2.8, backend interface0.2.9 and Truss backend43/44 with the
+exact candidate ABI1.2 descriptor. Preserve published0.2.7 schema bytes and old
+backend behavior. The26 independently expected entity-selection cases cover
+ordered facts/none/complete relationships, mixed fact pages, explicit bounds,
+continuation, typed missing source/column outcomes, malformed versus well-formed
+excluded SQL (including a named parameter), exact string/boolean source selection,
+and a single-string authored primary key first/next/sparse page. Backend function
+selection assertions do not stand in for Truss's real native plans/data effects.
+
+The existing shared syntax recognizer classifies refusal only; it must never
+produce an executable artifact through the excluded application syntax path.
+Preserve original diagnostics on older compile versions. Keep exact column,
+representation, fact/helper and hidden-key checks. The installed native wheel
+and actual Chromium/WASM must match full artifact bytes for every case; add
+negative byte/type/trap controls through the shared page transport. Core/backend
+regressions, native source/ordinary-person composition, source integrity/fallback
+controls, exact final package cohort and Linux release evidence remain separate.
+No source fixture's old installation identity certifies a new installed runtime.
+The new ABI-shaped fixtures reuse original model/mapping inputs for pure compiler
+qualification; Truss must independently supply actual current native binding pins.
+
+
 # Compiler conformance test plan
 
 ## Testing Strategy

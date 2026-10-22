@@ -15,6 +15,8 @@ for case in cases:
     assert result['status']==expected['status'],(case['id'],result)
     if result['status']=='compiled':
         artifact=result if case['pageSize'] is None else result['artifact']
+        if 'sourceFunction' in expected:
+            assert '"'+expected['sourceFunction']+'"(' in artifact['sql'],(case['id'],artifact)
         columns=artifact['columns'];visible=len(columns) if case['pageSize'] is None else result['page']['visibleOutputs']
         assert [c['outputName'] for c in columns[:visible]]==expected['visibleColumns'],(case['id'],columns)
         assert [c['position'] for c in columns]==list(range(1,len(columns)+1))
@@ -23,7 +25,9 @@ for case in cases:
         if case['pageSize'] is not None:
             assert result['page']['keyOutputs']==list(range(visible,len(columns)))
             assert result['page']['pageSize']==case['pageSize']
-    else:assert 'sql' not in result
+    else:
+        assert 'sql' not in result
+        if 'diagnosticCode' in expected:assert result['diagnostics'][0]['code']==expected['diagnosticCode'],(case['id'],result)
     reports.append({'id':case['id'],'raw':raw})
 args.reports.write_text(json.dumps(reports)+'\n')
 print(json.dumps({'cases':len(cases),'version':weft.__version__,'status':'passed'}))

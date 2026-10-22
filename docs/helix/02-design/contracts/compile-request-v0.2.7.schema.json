@@ -151,56 +151,6 @@
             "subset"
           ],
           "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "version": {
-              "const": "weft-truss-entity-read/0.4.0"
-            },
-            "subset": {
-              "enum": [
-                "complete-entity",
-                "complete-entity-page"
-              ]
-            },
-            "entityProjection": {
-              "type": "object",
-              "properties": {
-                "facts": {
-                  "type": "array",
-                  "maxItems": 8,
-                  "uniqueItems": true,
-                  "items": {
-                    "enum": [
-                      "version",
-                      "createdBy",
-                      "createdAt",
-                      "updatedBy",
-                      "updatedAt",
-                      "originalAuthor",
-                      "originalAt",
-                      "loadId"
-                    ]
-                  }
-                },
-                "relationships": {
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "facts",
-                "relationships"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "required": [
-            "version",
-            "subset",
-            "entityProjection"
-          ],
-          "additionalProperties": false
         }
       ]
     },

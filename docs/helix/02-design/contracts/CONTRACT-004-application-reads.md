@@ -25,7 +25,7 @@ Support complete entity reads, bounded keyset pages, counts, related keys and ty
 
 ### Explicit Truss entity projection selection — 2026-10-22
 
-Compile0.2.7 MAY explicitly select `weft-truss-entity-read/0.4.0` with subset
+Compile0.2.8 MAY explicitly select `weft-truss-entity-read/0.4.0` with subset
 `complete-entity` or `complete-entity-page` and a required closed
 `entityProjection: {facts: [...], relationships: boolean}`. The facts list is an
 ordered, duplicate-free selection of at most eight native facts: `version`,

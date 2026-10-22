@@ -112,6 +112,39 @@ JSON pointer when known, and recoverability. Deterministic ordering is phase,
 source byte offset (missing last), code and pointer. Unknown unselected content
 is informational; blocking diagnostics are errors. Never leak credentials/data.
 
+## Truss selective query increment — HF-04/05
+
+The unpublished selectable entity projection moves to explicit compile/IR0.2.8 and
+backend interface0.2.9 before release. Published0.2.7 schemas stay byte-preserved.
+Truss runtime backend0.4.43 (buffered/page) and0.4.44 (cursor delivery) select
+query ABI1.2, retaining exact underlying scalar/owner/current-context contracts.
+The existing0.4.41/42 ABI1.1 registrations retain their original behavior.
+Unknown/ambiguous authorized columns use typed `WFT-COLUMN-MISSING` and
+`WFT-COLUMN-AMBIGUOUS`; unresolved or unsupplied sources share
+`WFT-SOURCE-UNAVAILABLE`. Older compile versions retain their diagnostic codes.
+These codes are chosen at resolution, never by parsing a message in the host.
+For0.2.8, an application-parser unsupported-form refusal also runs the existing
+Weft-owned sqlparser0.63 Generic grammar recognizer over the already byte-bounded
+source. A structurally malformed source reportsWFT-SYNTAX; a syntactically valid
+excluded form retainsWFT-UNSUPPORTED; recognizer recursion exhaustion reports
+WFT-LIMIT. This recognition only classifies failure, emits no artifact and grants
+no native-SQL passthrough or name/type semantics. Retain the original diagnostic
+span/message and the older compile profiles' codes; qualify named parameters and
+selected malformed/excluded forms in native/browser compiler parity.
+
+Weft may lower admitted singular string/boolean equality conjuncts to the native
+indexed candidate source. Remaining predicates execute over the complete bounded
+candidate set; excessive candidates refuse before result LIMIT or aggregation.
+Other predicates retain the legacy source bound. An explicit authored single
+required string page key may use native ordered seeking after the native complete
+indexable-key inventory gate. Larger/composite/nonstring keys remain admitted
+through bounded fallback; do not infer completeness from a partial key index.
+Truss owns original-cell/root/owner validation, native indexes, current grants,
+statement/operation deadlines and the actual populated runtime migration gate.
+The compiler owns resolved source identities, exact operands and continuation
+semantics. All capability claims remain candidate pending actual native and
+cross-embedding evidence; no compiler artifact proves native index use.
+
 ## Limits and Host Boundary
 
 Initial maxima: request 16 MiB UTF-8; source SQL 64 KiB; each owning model 4 MiB;
