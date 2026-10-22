@@ -1684,12 +1684,15 @@ mod canonical_date_runtime_tests {
             .unwrap();
         let mut document: serde_json::Value = serde_json::from_str(original_document).unwrap();
         assert_eq!(document["umf"], "0.10.0");
+        document["vocabularies"]["arras.view"] = json!({"version":"0.1.0"});
         let elements = document["modules"][0]["elements"].as_array_mut().unwrap();
         let record = elements.iter_mut().find(|element| element["kind"] == "record").unwrap();
         record["extensions"]["umf.ddd"] = json!({"kind":"entity","fields":{"purpose":"retained"}});
         record["extensions"]["hohfeld.view"] = json!({"label":"Order","format":"badge"});
+        record["extensions"]["arras.view"] = json!({"label":"Orders","opaqueFutureTerm":{"keep":[1,2,3]}});
         let field = elements.iter_mut().find(|element| element["kind"] == "field").unwrap();
         field["extensions"]["hohfeld.view"] = json!({"label":"Status","format":"badge"});
+        field["extensions"]["arras.view"] = json!({"label":"Status","format":"badge"});
 
         let document_json = document.to_string();
         let document_sha = weft_core::json::sha256(document_json.as_bytes());
@@ -1708,5 +1711,53 @@ mod canonical_date_runtime_tests {
         assert_eq!(output["status"], "compiled", "{output}");
         assert_eq!(output["modelPins"][0]["umfVersion"], "0.10.0");
         assert_eq!(output["modelPins"][0]["sha256"], request["modules"][0]["pin"]["sha256"]);
+
+        // Compile through the selected Truss registration for each source control.
+        // Payload content stays opaque; only the same owner's exact declaration,
+        // object shape, and supported carrier are admitted.
+        let compile_variant = |source: serde_json::Value| {
+            let document_json = source.to_string();
+            let document_sha = weft_core::json::sha256(document_json.as_bytes());
+            let mut variant = request.clone();
+            variant["modules"][0]["documentJson"] = json!(document_json);
+            variant["modules"][0]["pin"]["sha256"] = json!(document_sha);
+            let binding_raw = variant["target"]["bindingJson"].as_str().unwrap();
+            let mut binding: serde_json::Value = serde_json::from_str(binding_raw).unwrap();
+            binding["documents"][0]["sha256"] = json!(document_sha);
+            let binding_raw = binding.to_string();
+            variant["target"]["bindingJson"] = json!(binding_raw);
+            variant["target"]["bindingSha256"] = json!(weft_core::json::sha256(binding_raw.as_bytes()));
+            serde_json::from_str::<serde_json::Value>(&compile_json(&variant.to_string())).unwrap()
+        };
+        let original = document.clone();
+        let mut missing = original.clone();
+        missing["vocabularies"].as_object_mut().unwrap().remove("arras.view");
+        assert_blocked_without_sql(compile_variant(missing));
+        let mut unsupported = original.clone();
+        unsupported["vocabularies"]["arras.view"]["version"] = json!("0.2.0");
+        assert_blocked_without_sql(compile_variant(unsupported));
+        let mut null_declaration = original.clone();
+        null_declaration["vocabularies"]["arras.view"]["version"] = serde_json::Value::Null;
+        assert_blocked_without_sql(compile_variant(null_declaration));
+        let mut malformed_declaration = original.clone();
+        malformed_declaration["vocabularies"]["arras.view"] = json!("0.1.0");
+        assert_blocked_without_sql(compile_variant(malformed_declaration));
+        let mut malformed_payload = original.clone();
+        malformed_payload["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["arras.view"] = json!("Status");
+        assert_blocked_without_sql(compile_variant(malformed_payload));
+        let mut wrong_carrier = original.clone();
+        wrong_carrier["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["kind"] = json!("action");
+        assert_blocked_without_sql(compile_variant(wrong_carrier));
+        let mut unknown_namespace = original;
+        unknown_namespace["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["example.unknown"] = json!({"meaning":"selected"});
+        assert_blocked_without_sql(compile_variant(unknown_namespace));
+    }
+
+    fn assert_blocked_without_sql(output: serde_json::Value) {
+        assert_eq!(output["status"], "blocked", "{output}");
+        assert!(output.get("sql").is_none(), "blocked compilation leaked SQL: {output}");
     }
 }

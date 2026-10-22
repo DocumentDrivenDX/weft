@@ -571,6 +571,71 @@ pub fn compile_truss_runtime_json(request: &str) -> String {
     weft_postgresql::truss_runtime::compile_json(request)
 }
 
+#[cfg(all(test, feature = "truss-postgresql-pg18"))]
+mod truss_arras_view_entrypoint_tests {
+    use serde_json::{json, Value};
+
+    fn request() -> Value {
+        serde_json::from_str(include_str!("../../../tests/engine-catalog/native-truss-export-request.json")).unwrap()
+    }
+
+    fn compile_with_document(mut request: Value, document: Value) -> Value {
+        let document_json = document.to_string();
+        let document_sha = weft_core::json::sha256(document_json.as_bytes());
+        request["modules"][0]["documentJson"] = json!(document_json);
+        request["modules"][0]["pin"]["sha256"] = json!(document_sha);
+        let original_binding = request["target"]["bindingJson"].as_str().unwrap();
+        let mut binding: Value = serde_json::from_str(original_binding).unwrap();
+        binding["documents"][0]["sha256"] = json!(document_sha);
+        let binding_json = binding.to_string();
+        request["target"]["bindingSha256"] = json!(weft_core::json::sha256(binding_json.as_bytes()));
+        request["target"]["bindingJson"] = json!(binding_json);
+        serde_json::from_str(&super::compile_truss_runtime_json(&request.to_string())).unwrap()
+    }
+
+    fn assert_refused(output: Value) {
+        assert_eq!(output["status"], "blocked", "{output}");
+        assert!(output.get("sql").is_none(), "{output}");
+    }
+
+    #[test]
+    fn public_truss_runtime_entrypoint_admits_only_declared_opaque_arras_view() {
+        let base = request();
+        let mut document: Value = serde_json::from_str(base["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        document["vocabularies"]["arras.view"] = json!({"version":"0.1.0"});
+        let field = document["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap();
+        field["extensions"]["arras.view"] = json!({"format":"number","unknownOpaqueTerm":{"retained":true}});
+        let positive = compile_with_document(base.clone(), document.clone());
+        assert_eq!(positive["status"], "compiled", "{positive}");
+
+        let mut missing = document.clone();
+        missing["vocabularies"].as_object_mut().unwrap().remove("arras.view");
+        assert_refused(compile_with_document(base.clone(), missing));
+        let mut newer = document.clone();
+        newer["vocabularies"]["arras.view"]["version"] = json!("0.2.0");
+        assert_refused(compile_with_document(base.clone(), newer));
+        let mut null_version = document.clone();
+        null_version["vocabularies"]["arras.view"]["version"] = Value::Null;
+        assert_refused(compile_with_document(base.clone(), null_version));
+        let mut malformed_declaration = document.clone();
+        malformed_declaration["vocabularies"]["arras.view"] = json!("0.1.0");
+        assert_refused(compile_with_document(base.clone(), malformed_declaration));
+        let mut malformed_payload = document.clone();
+        malformed_payload["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["arras.view"] = json!("text");
+        assert_refused(compile_with_document(base.clone(), malformed_payload));
+        let mut wrong_carrier = document.clone();
+        wrong_carrier["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["kind"] = json!("action");
+        assert_refused(compile_with_document(base.clone(), wrong_carrier));
+        let mut unknown_namespace = document;
+        unknown_namespace["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|e| e["kind"] == "field").unwrap()["extensions"]["arras.unknown"] = json!({"selected":true});
+        assert_refused(compile_with_document(base, unknown_namespace));
+    }
+}
+
 #[cfg(feature = "truss-postgresql-pg18")]
 pub fn compile_truss_runtime_page_json(
     request: &str,

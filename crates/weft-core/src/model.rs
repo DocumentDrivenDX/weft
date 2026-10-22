@@ -75,18 +75,15 @@ fn fail(code: &str, message: &str) -> Diagnostic {
 /// preserve their value domain. External semantic type references are retained
 /// in source but remain outside the raw scalar profile.
 pub(crate) fn selected010(pin: &ModelPin, element: &Value) -> Result<()> {
-    selected010_inner(pin, element, false, false)
+    selected010_inner(pin, element, false, false, None)
 }
-/// Raw reads may inspect core identity/value fields while retaining known
-/// extension metadata without interpreting it. The original source and selected
-/// values remain intact.
-pub(crate) fn selected010_raw_read(pin: &ModelPin, element: &Value) -> Result<()> {
-    selected010_inner(pin, element, true, false)
+pub(crate) fn selected010_raw_read(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
+    selected010_inner(pin, element, true, false, Some(document))
 }
-pub(crate) fn selected010_table_operation(pin: &ModelPin, element: &Value) -> Result<()> {
-    selected010_inner(pin,element,true,true)
+pub(crate) fn selected010_table_operation(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
+    selected010_inner(pin, element, true, true, Some(document))
 }
-fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool, native_domains: bool) -> Result<()> {
+fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool, native_domains: bool, document: Option<&Value>) -> Result<()> {
     if pin.umf_version != "0.10.0" { return Ok(()); }
     const KNOWN: &[&str] = &["id", "name", "title", "description", "kind", "scalarType",
         "nullability", "cardinality", "itemType", "recordType", "facets", "members",
@@ -98,6 +95,8 @@ fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: b
                 payload.is_object() && match name.as_str() {
                     "umf.ddd" => element["kind"] == "record",
                     "hohfeld.view" => matches!(element["kind"].as_str(), Some("record" | "field")),
+                    "arras.view" => matches!(element["kind"].as_str(), Some("record" | "field"))
+                        && document.is_some_and(|doc| doc["vocabularies"]["arras.view"]["version"] == "0.1.0"),
                     _ => false,
                 }
             })
@@ -130,8 +129,14 @@ impl Catalog {
     }
 
     pub(crate) fn validate_selected010(&self, pin: &ModelPin, element: &Value) -> Result<()> {
-        if self.native_operation_domains { selected010_table_operation(pin, element) }
-        else if self.raw_read_opaque_extensions { selected010_raw_read(pin, element) }
+        if self.native_operation_domains || self.raw_read_opaque_extensions {
+            let document = self.inputs.iter().zip(&self.documents)
+                .find(|(input, _)| input.pin == *pin)
+                .map(|(_, document)| document)
+                .ok_or_else(|| fail("WFT-PIN", "Selected element has no exact owning document"))?;
+            if self.native_operation_domains { selected010_table_operation(pin, element, document) }
+            else { selected010_raw_read(pin, element, document) }
+        }
         else { selected010(pin, element) }
     }
 
@@ -603,6 +608,44 @@ mod core010_admission_tests {
             assert_eq!(error.code, "WFT-MODEL-VERSION", "version {version}");
             assert_eq!(Catalog::prepare_security(vec![input]).unwrap_err().code, "WFT-MODEL-VERSION");
         }
+    }
+
+    #[test]
+    fn arras_view_requires_the_exact_owning_document_declaration() {
+        let mut input_a = current_input();
+        let mut document_a: Value = serde_json::from_str(&input_a.document_json).unwrap();
+        document_a["vocabularies"]["arras.view"] = json!({"version":"0.1.0"});
+        let field_a = document_a["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|element| element["kind"] == "field").unwrap();
+        field_a["extensions"]["arras.view"] = json!({"opaque":"preserved"});
+        input_a.document_json = document_a.to_string();
+        input_a.pin.sha256 = sha256(input_a.document_json.as_bytes());
+
+        let mut input_b = input_a.clone();
+        let mut document_b: Value = serde_json::from_str(&input_b.document_json).unwrap();
+        document_b["id"] = json!("second-document");
+        document_b["vocabularies"].as_object_mut().unwrap().remove("arras.view");
+        input_b.pin.document_id = "second-document".into();
+        let field_b = document_b["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|element| element["kind"] == "field").unwrap();
+        field_b["extensions"]["arras.view"] = json!({"opaque":"belongs to B"});
+        input_b.document_json = document_b.to_string();
+        input_b.pin.sha256 = sha256(input_b.document_json.as_bytes());
+
+        let catalog = Catalog::prepare_raw_read010(vec![input_a.clone(), input_b.clone()]).unwrap();
+        let field_a = &catalog.documents[0]["modules"][0]["elements"].as_array().unwrap()
+            .iter().find(|element| element["kind"] == "field").unwrap();
+        assert!(catalog.validate_selected010(&input_a.pin, field_a).is_ok());
+        let field_b = &catalog.documents[1]["modules"][0]["elements"].as_array().unwrap()
+            .iter().find(|element| element["kind"] == "field").unwrap();
+        assert_eq!(catalog.validate_selected010(&input_b.pin, field_b).unwrap_err().code, "WFT-TYPE");
+
+        // The ordinary selected profile has no document metadata context.
+        let ordinary = Catalog::prepare(vec![input_a.clone()]).unwrap();
+        assert_eq!(ordinary.validate_selected010(&input_a.pin, field_a).unwrap_err().code, "WFT-TYPE");
+        let mut foreign_pin = input_a.pin.clone();
+        foreign_pin.revision = "foreign".into();
+        assert_eq!(catalog.validate_selected010(&foreign_pin, field_a).unwrap_err().code, "WFT-PIN");
     }
 
     #[test]

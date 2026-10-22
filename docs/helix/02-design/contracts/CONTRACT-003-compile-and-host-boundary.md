@@ -64,6 +64,25 @@ refuse, while unselected source content remains retained. Selected value
 meanings and representability remain governed by CONTRACT-001 and the registered
 backend capabilities.
 
+### Explicit Arras presentation metadata
+
+The host-selected ordinary Truss runtime profile MAY retain `arras.view` object
+metadata on selected UMF0.10 Record and Field elements without interpreting its
+presentation terms. Admission MUST require the same exact pinned owning document
+to declare `vocabularies["arras.view"].version` as the string `"0.1.0"`.
+For example, `{"vocabularies":{"arras.view":{"version":"0.1.0"}}}` supplies that
+declaration; another document's declaration MUST NOT qualify the selected element.
+The complete original source and model pin MUST remain unchanged.
+
+Missing, malformed, null or unsupported version declarations, non-object payloads,
+wrong carriers and unknown selected namespaces MUST block with WFT-TYPE and no SQL.
+Failure to establish the exact owning pin MUST block with WFT-PIN. This profile
+MUST NOT strip source metadata, infer a declaration from `hohfeld.view`, interpret
+Arras view terms, or enable presentation metadata in default/security profiles.
+Existing `umf.ddd` and `hohfeld.view` admission retains its prior scope. Raw-table
+relationship extension admission is unchanged. Unknown unselected content remains
+retained under the original source-custody rule above.
+
 Facetless mathematical integer declarations MUST NOT acquire a synthesized width.
 Selection requires an explicit unbounded-integer backend capability. Without an
 admitted exact representability profile, these fields refuse before backend binding
