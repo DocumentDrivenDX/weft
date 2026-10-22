@@ -85,6 +85,20 @@ gates. Preserve the first prototype's artifacts as historical component evidence
 and rebuild/qualify the selected cohort from its own frozen source; a prototype
 wheel built from main cannot stand in for that release cohort.
 
+The selected public0.4.49-based source is now frozen at
+`5b51e5ce0df2945fd2f90e8a53e081a6158a1bcb` for component qualification.
+All355 core and199 backend tests pass, plus the feature-enabled shared runtime
+page-transport control,15 installed compiler cases and actual Chromium151 byte
+parity. The clean-built development wheel SHA-256 is
+`0bcf3c81417df7be210e48f2876fc2473498f459fc3c3a7f27e751a883b16ddd`.
+[Original component receipts](evidence/truss-entity-projection-20261022/selected-public049-component/receipt.json)
+retain source hashes, installed RECORD, actual browser artifacts and the initial
+zero-selected-tests transport command. The corrected command explicitly selects
+`truss-postgresql-pg18`. All11 module boundaries and16 controls pass; specs check90
+artifacts/101 schemas/636 scenarios. These are component claims: indexed source
+execution, final protocol/version selection, Linux/release packages and publication
+remain open. Local JavaScript dependencies reuse primary-checkout installed entries.
+
 Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 now accepts the structural backend boundary; public contracts remain draft specifications with scoped executable evidence. No production storage compatibility is claimed.
 
 ## Shared Constraints
