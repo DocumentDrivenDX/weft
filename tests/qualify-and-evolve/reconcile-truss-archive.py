@@ -4,6 +4,7 @@ Verify retained fresh PostgreSQL application archive and matching embedding coun
 """
 import gzip,hashlib,json
 from pathlib import Path
+from licensed_source import retained_truss_application_inputs
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-007-truss-application-native'
 EMBED=ROOT/'docs/helix/04-build/evidence/B-007-truss-embeddings'
@@ -12,7 +13,7 @@ assert hashlib.sha256(compressed).hexdigest()==custody['gzipSha256']
 raw=gzip.decompress(compressed)
 assert len(raw)==custody['bytes'] and hashlib.sha256(raw).hexdigest()==custody['uncompressedSha256']
 reports=json.loads(raw);summary=json.loads((BASE/'summary.json').read_text())
-corpus=ROOT/'tests/truss-postgresql/fixtures/application-cases.json'
+_,corpus=retained_truss_application_inputs(ROOT)
 assert summary['status']=='passed' and summary['cases']==len(reports)==76
 assert hashlib.sha256(corpus.read_bytes()).hexdigest()==summary['corpusSha256']
 assert hashlib.sha256((BASE/'harness.py').read_bytes()).hexdigest()==summary['harnessSha256']

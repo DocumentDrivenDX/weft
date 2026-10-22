@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/check-retained-evidence.py", line 59, in <module>
+    assert run.returncode==0,(name,run.stdout,run.stderr)
+           ^^^^^^^^^^^^^^^^^
+AssertionError: ('audit-current-hosts.py', '', 'Traceback (most recent call last):\n  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/audit-current-hosts.py", line 42, in <module>\n    if id in expected_requests:assert request==expected_requests[id],id\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: truss-whole-entity-props\n')

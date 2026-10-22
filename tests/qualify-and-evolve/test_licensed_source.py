@@ -30,5 +30,28 @@ class HistoricalSourceCustody(unittest.TestCase):
                 source_custody(artifact,expected)
 
 
+    def test_retained_original_corpus_and_harness_reject_changed_bytes(self):
+        import shutil
+        from licensed_source import retained_truss_application_inputs
+        root=Path(__file__).resolve().parents[2]
+        original_harness,original_corpus=retained_truss_application_inputs(root)
+        with tempfile.TemporaryDirectory() as directory:
+            copied=Path(directory)
+            names=(original_harness,original_corpus,original_harness.with_name('summary.json'))
+            for source in names:
+                target=copied/source.relative_to(root)
+                target.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copy2(source,target)
+            harness,corpus=retained_truss_application_inputs(copied)
+            original=corpus.read_bytes()
+            corpus.write_bytes(original+b'\n')
+            with self.assertRaisesRegex(ValueError,'Original retained Truss corpus custody mismatch'):
+                retained_truss_application_inputs(copied)
+            corpus.write_bytes(original)
+            harness.write_bytes(harness.read_bytes()+b'\nchanged producer')
+            with self.assertRaisesRegex(ValueError,'Historical source differs'):
+                retained_truss_application_inputs(copied)
+
+
 if __name__ == '__main__':
     unittest.main()

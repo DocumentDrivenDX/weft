@@ -1,0 +1,344 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:12:24
+   |
+12 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:4:25
+  |
+4 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+7 |     exact,
+  |     ^^^^^
+8 |     ir::{Family, Identity, LogicalType},
+9 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused variable: `sdk_read_parameters`
+   --> crates/weft-core/src/compile.rs:442:21
+    |
+442 |                 let sdk_read_parameters=req.parameters.clone().unwrap_or_default();
+    |                     ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/application_ir.rs:188:16
+    |
+185 | impl ReadOrder {
+    | -------------- associated function in this implementation
+...
+188 |  pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}
+    |                ^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:838:8
+    |
+838 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:62:15
+   |
+62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:246:19
+    |
+209 | impl Parser {
+    | ----------- method in this implementation
+...
+246 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 55 | impl PathRead {
+    | ------------- methods in this implementation
+...
+120 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:241:12
+    |
+240 | impl Plan {
+    | --------- associated function in this implementation
+241 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:24:9
+   |
+22 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+23 |         alias: Name,
+24 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:9:103
+  |
+9 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `canonical_name` is never used
+   --> crates/weft-core/src/table_query.rs:487:4
+    |
+487 | fn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {
+    |    ^^^^^^^^^^^^^^
+
+warning: `weft-core` (lib) generated 13 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+   Compiling weft-databricks v0.1.0 (/private/tmp/weft-truss-hf04/crates/weft-databricks)
+warning: unused variable: `ordered`
+   --> crates/weft-databricks/src/candidate/application.rs:201:5
+    |
+201 |     ordered:Option<&OrderedPage>,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_ordered`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:55:9
+   |
+55 |     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+   |         ----^^^^^^^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:80:9
+   |
+80 |     let mut order = source
+   |         ----^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/weft-databricks/src/candidate/navigation.rs:143:9
+    |
+143 |     let mut obligations=admitted.obligations;
+    |         ----^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: function `lower_current` is never used
+   --> crates/weft-databricks/src/raw_read.rs:232:15
+    |
+232 | pub(crate) fn lower_current(a:&AdmittedRead,catalog:&str)->Result<J>{lower_inner(a,false,Some(catalog),None,false,false)}
+    |               ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-databricks` (lib) generated 5 warnings (run `cargo fix --lib -p weft-databricks` to apply 3 suggestions)
+   Compiling weft-runtime v0.1.0 (/private/tmp/weft-truss-hf04/crates/weft-runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.93s
+     Running unittests src/lib.rs (target/debug/deps/weft_runtime-a54d6ae8d49ee9a8)
+
+running 18 tests
+test ashlar_tests::retired_ashlar_input_refuses_without_rewriting_historical_artifact ... ok
+test implicit_arithmetic::tests::wrong_version_pair_refuses_before_factory ... ok
+test implicit_arithmetic::tests::exact042_manifest_admitted_and_mixed_or_malformed_pairs_refuse ... ok
+test implicit_arithmetic::tests::repeated_computed_or_explicit_logical_names_refuse ... ok
+test paths_keys::tests::optional_and_numeric_key_variants_refuse_before_lowering ... ok
+test paths_keys::tests::registration_is_explicit_candidate_optin_and_namespace_stays04 ... ok
+test implicit_arithmetic::tests::exact042_retains_inherited_count_star_having ... ok
+test implicit_arithmetic::tests::original_partial_return_requires_additive_capability_and_positioned_outputs ... ok
+test paths_keys::tests::twohop_collection_retains_original_obligations_and_adds_full_prefix_capacity ... ok
+test paths_keys::tests::original_required_onehop_emits_exact_wide_collection_and_standalone_schema ... ok
+test paths_keys::tests::explicitly_authored_inverse_and_composite_string_key_variants_preserve_lineage ... ok
+test paths_keys::tests::repeated_and_mixed_collections_keep_output_order_and_complete_capacity_inventory ... ok
+test paths_keys::tests::current_spark42_count_star_target_is_exact_and_old_target_stays_separate ... ok
+test paths_keys::tests::bound_and_unsupported_composition_controls_are_independent ... ok
+test paths_keys::tests::authored_alias_collisions_allocate_fresh_private_collection_names ... ok
+test implicit_arithmetic::tests::all_four_original_commerce_queries_compile_without_sql_rewriting ... ok
+test paths_keys::tests::scalar_arithmetic_join_and_expanded_grouped_counts_remain_selected ... ok
+test paths_keys::tests::managed_current_core_grouped_count_retains_uc_versions_and_refuses_local_target ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.21s
+
+     Running unittests src/implicit_arithmetic_cli.rs (target/debug/deps/weft_implicit_arithmetic-db54a2836476f873)
+
+running 5 tests
+test tests::input_errors_publish_no_artifact_and_error_payloads_stay_private ... ok
+test tests::sentinel_bounds_the_read_without_draining_unbounded_input ... ok
+test tests::exact_utf8_byte_boundary_and_original_whitespace_are_preserved ... ok
+test tests::write_and_flush_failure_are_fatal_transport_errors ... ok
+test tests::compiler_response_bytes_and_exactly_one_newline_are_preserved ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/paths_keys_cli.rs (target/debug/deps/weft_paths_keys-750bfeb603ebb560)
+
+running 5 tests
+test tests::input_errors_publish_no_artifact_and_error_payloads_stay_private ... ok
+test tests::sentinel_bounds_the_read_without_draining_unbounded_input ... ok
+test tests::exact_utf8_byte_boundary_and_original_whitespace_are_preserved ... ok
+test tests::write_and_flush_failure_are_fatal_transport_errors ... ok
+test tests::compiler_response_bytes_and_exactly_one_newline_are_preserved ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/main.rs (target/debug/deps/weft_runtime-0f168b732e63c0ef)
+
+running 4 tests
+test tests::input_errors_emit_no_response_and_output_errors_are_fatal ... ok
+test tests::ordinary_response_retains_exact_compiler_bytes_and_one_newline ... ok
+test tests::sentinel_bounds_read_even_when_more_input_is_available ... ok
+test tests::exact_byte_boundary_and_multibyte_text ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/security_mapping_cli.rs (target/debug/deps/weft_security_mapping-2051b1559982398b)
+
+running 1 test
+test tests::original_utf8_bytes_and_exact_byte_ceiling ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/compatible_revisions.rs (target/debug/deps/compatible_revisions-3ed5844ccf1fe427)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/implicit_arithmetic_input.rs (target/debug/deps/implicit_arithmetic_input-32accaa279d2e6f6)
+
+running 2 tests
+test actual042_stdin_io_error_is_payload_free ... ok
+test actual042_stdin_preserves_suffix_after_sentinel ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running tests/input.rs (target/debug/deps/input-4c0215ac5eee2287)
+
+running 6 tests
+test malformed_utf8_refuses_at_transport_boundary ... ok
+test actual_stdin_read_error_is_safe_and_nonzero ... ok
+test output_failure_stays_nonzero_even_when_stderr_is_unwritable ... ok
+test actual_stdin_preserves_suffix_after_one_sentinel_byte ... ok
+test one_over_limit_refuses_without_artifact ... ok
+test exact_limit_reaches_normal_compilation ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+
+     Running tests/paths_cli.rs (target/debug/deps/paths_cli-41c9ee72fe58cc95)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/paths_keys_cli.rs (target/debug/deps/paths_keys_cli-7086f1aa12b63368)
+
+running 3 tests
+test compiler_refusals_are_closed04_and_old_route_stays_separate ... ok
+test produced_binary_preserves_original_collection_and_count_artifacts ... ok
+test native_transport_limits_utf8_before_conversion_and_emits_constant_errors ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.75s
+
+     Running tests/paths_keys_having.rs (target/debug/deps/paths_keys_having-f47b8887aab6a8b2)
+
+running 9 tests
+test oversized_valid_json_routes_to_original_bounded_refusal_before_version_parse ... ok
+test retired_distinct_source_is_explicitly_refused ... ok
+test retired_core_source_is_refused_without_rewriting_frozen_response ... ok
+test old_versions_and_mismatched_realizations_remain_closed ... ok
+test original_replay_preserves_grouped_count_and_pre_having_capacity ... ok
+test complete_group_bag_guard_expression_and_bound_slot_are_retained ... ok
+test original_model_binding_pins_and_cross_profile_refusals_are_explicit ... ok
+test joined_where_bag_and_expansion_guard_owners_remain_distinct ... ok
+test exact_threshold_boundaries_and_excluded_syntax ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.33s
+
+   Doc-tests weft_runtime
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

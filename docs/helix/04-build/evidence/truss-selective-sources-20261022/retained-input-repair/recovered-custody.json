@@ -1,0 +1,8 @@
+{
+  "scope": "Original historical evidence custody, not current compiler admission or new native execution",
+  "gitCommit": "3ad557b76d6b8239d6033b993cd564bea48c2dd1",
+  "gitPath": "tests/truss-postgresql/fixtures/application-cases.json",
+  "sha256": "86dbf599a2cb09381a1fcfc9f9d5ea9df94bf1e08f87d8c86fb2e70a806480e1",
+  "cases": 76,
+  "reason": "Current mutable fixture and harness now target UMF0.10, so cannot reconstruct original B007 inputs"
+}

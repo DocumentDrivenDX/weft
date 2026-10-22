@@ -1,0 +1,60 @@
+{
+  "scope": "Main integration retained-evidence verifier repair; compiler/build source and selected release770137be unchanged",
+  "retainedAudit": {
+    "components": 45,
+    "verifiedEvidenceReferences": 136,
+    "releaseQualified": false
+  },
+  "nativeSourceDifference": "Old Databricks native_profile bytes are independently verified from the original ancestor checkpoint; currentImplementationEquivalent is explicitly false",
+  "trussHistoricalInputs": "Original harness SHA anchored in immutable native summary; original76-case corpus recovered byte-exact from Git. Current UMF0.10 fixtures cannot stand in for these historical requests.",
+  "controls": {
+    "retainedCorpusAndProducer": {
+      "tests": 2,
+      "negativeControls": 2
+    },
+    "custody": {
+      "tests": 17,
+      "passed": true,
+      "correctedLocalInvocation": "Pinned Cargo and Rust PATH required; two initial local environment failures retained"
+    },
+    "freshHostFaults": {
+      "tests": 7,
+      "passed": true
+    },
+    "remainingRuntimeCommands": {
+      "commands": 10,
+      "passed": true
+    }
+  },
+  "files": {
+    "weft-051-custody-controls.log": "e06916a5c44df3af8da6d24bb24da73b0ea17b1a08ee037ebfa1428f4c7fc8f2",
+    "weft-051-retained-input-fix.py": "a9509cb5f3d2c830566d9f8240ac1a01a5512aef247558dd9562efa03924d473",
+    "weft-051-custody-controls-v3.log": "1708344c727c294a42a6a7d99aa6ef0f716a2b5e59ca55d9bed6966fbf3345b4",
+    "weft-051-licensed-source-controls-v2.log": "5b0e34b11f67ba73ab660189510646a17675e8c4540e374433805383c3d96621",
+    "weft-051-custody-controls-v2.log": "a91d13decc60af3437298e961097d21ad2465f8de3c1fd24465c54781c1187f3",
+    "weft-051-retained-output-controls.log": "5477521873b27e15ebdc6ee193b524290f5927e431e95ef3c4b3a7b5ae2ab5cf",
+    "weft-051-fresh-host-controls.log": "6e73b096cc477d9ab3158437209ba20a749eaa35273823206f214da1d207e2ce",
+    "weft-051-retained-source-recovery.py": "bdbb309755e3505625ad4f4a0a663b7a8c4421421669f996410a1941f8a1698b",
+    "weft-051-retained-source-recovery.log": "d3215c562c36043cf6ee8d70924ee86650698da6d76342f8a03a2ed5818bd6b0",
+    "weft-051-retained-evidence-controls-v4.log": "481c5e9dc6ac837d76045e27523bb13412e67d471c98fdde7bfd24c3f5a9486f",
+    "weft-051-retained-evidence-controls-v5.log": "f5010f9696a30947665298bdee931b7a3bdd8262c0a84a91caabd30f274741c3",
+    "weft-051-retained-evidence-controls-v2.log": "7e06607d5e539695fc3ebaceaac02972a2a70a0ec308c4a44798c166d3a4d4a8",
+    "recovered-custody.json": "2ced309a1e1fbabe14f4b472c1611811cb2052f479fcfa2446fd415d7fa8c2b1",
+    "weft-051-retained-evidence-controls-v3.log": "afb4140ef49984728bfb7e68d402ad5ff6b2c9e4e01c1b1e61ca3d3b1605297f",
+    "application-cases.original.json": "86dbf599a2cb09381a1fcfc9f9d5ea9df94bf1e08f87d8c86fb2e70a806480e1",
+    "weft-051-retained-evidence-controls.log": "528791f239eb32d1b98992cc1d49942d04744bf3c27041d62f37d9d833e6932a",
+    "source-custody-map.json": "5741002f0d2a9efe8c96cafcd933cda7060db02d4f7db764249a0db57c23b205",
+    "remaining-runtime-controls/09.log": "a326917a1f8501dab19916bf88648205c23f01417113650854d0cc21f0751855",
+    "remaining-runtime-controls/08.log": "9ed462df5feaf13437574f87e738e4fe373b84f46e4c1678d279ef3c2e932ae2",
+    "remaining-runtime-controls/00.log": "59d27c87a7519da391de6d4e276a0c3cc5c52e5fbc5118caa08b672690123cdd",
+    "remaining-runtime-controls/01.log": "8d6c0a10c47727fba39c0b677244b363a188f8da93050942f6543c39fe65f9f8",
+    "remaining-runtime-controls/03.log": "390ddf16bfed672539b40ab7314c2ea79993e648cca55a796777b3b3162e251f",
+    "remaining-runtime-controls/02.log": "d5229c259cbe0236373879a4cf1b5f607c036a2d7a20a1a77fad9a2921c1fdb6",
+    "remaining-runtime-controls/06.log": "f1d4ef2b2f05c54d8c853a238e73b004c2206cdc7cf843f855082934821fda81",
+    "remaining-runtime-controls/07.log": "fa74dd3923145e493ae5e1fc6f0287ddd2a6c180124d03e623c7431011c4bde9",
+    "remaining-runtime-controls/05.log": "9048d1654efc827b57adc9e3af3590a750b9090910d8042e9ef62eb58a1d6551",
+    "remaining-runtime-controls/04.log": "50d9015e17b6e2da0c065523ca97b4a8bfe0cf5e3d549bba348e3149ae4a2282",
+    "remaining-runtime-controls/receipt.json": "a14fdf0fe72a8d7b7836602873a6708cf9b967ec67eac108a3beffa50216048d",
+    "sources/ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a.rs": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a"
+  }
+}

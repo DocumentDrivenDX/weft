@@ -1,0 +1,155 @@
+{
+  "scope": "Local macOS ARM64 remaining hosted runtime command controls; no whole-workspace or native service claim",
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-j1",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-paths-keys,ashlar-databricks-implicit-arithmetic"
+      ],
+      "returncode": 0,
+      "seconds": 24.768924666044768
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "weft-runtime",
+        "--features",
+        "ashlar-databricks-count-distinct",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 1.685122000053525
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "weft-runtime",
+        "--features",
+        "ashlar-databricks-count-having",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 1.8509225000161678
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "weft-runtime",
+        "--features",
+        "ashlar-databricks-left-join",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 1.0864646249683574
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-runtime",
+        "--features",
+        "ashlar-databricks-paths",
+        "paths::tests",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 4.646857457992155
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-runtime",
+        "--features",
+        "ashlar-databricks-paths",
+        "--bin",
+        "weft-paths",
+        "--test",
+        "paths_cli",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 1.7925439170212485
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-paths-keys,ashlar-databricks-paths",
+        "--lib",
+        "paths",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 2.2310632499866188
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-databricks",
+        "--lib",
+        "related_keys::tests",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 4.048761999991257
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-paths-keys",
+        "--bin",
+        "weft-paths-keys",
+        "--test",
+        "paths_keys_cli",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 5.280833249969874
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-paths-keys",
+        "--test",
+        "paths_keys_having",
+        "--locked"
+      ],
+      "returncode": 0,
+      "seconds": 2.4489967499976046
+    }
+  ],
+  "complete": true,
+  "passed": true
+}

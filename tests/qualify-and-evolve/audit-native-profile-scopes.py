@@ -3,6 +3,7 @@
 import ast,gzip,hashlib,json,os
 from collections import Counter
 from pathlib import Path
+from licensed_source import retained_truss_application_inputs
 root=Path(__file__).resolve().parents[2]
 source=Path(os.environ.get('WEFT_SCOPE_REPORTS',str(root/'docs/helix/04-build/evidence/B-007-truss-application-native/reports.json.gz')))
 compressed=source.read_bytes();raw=gzip.decompress(compressed)
@@ -12,14 +13,14 @@ assert hashlib.sha256(compressed).hexdigest()==custody['gzipSha256'],'archive di
 assert hashlib.sha256(raw).hexdigest()==custody['uncompressedSha256'],'payload digest mismatch'
 assert len(raw)==custody['bytes'],'payload byte count mismatch'
 reports=json.loads(raw)
-harness=root/'tests/truss-postgresql/application-native.py'
+harness,corpus=retained_truss_application_inputs(root)
 # Evaluate trusted expectation definitions only; drop compiler-path/hash setup.
 # No compilation, database execution, or temporary binary is needed.
-namespace={'__file__':str(harness)}
+namespace={'__file__':str(harness),'ROOT':root,'cases':json.loads(corpus.read_text())}
 prefix=harness.read_text().split('reports=[]\n',1)[0]
 assert 'for c in cases:' not in prefix
 module=ast.parse(prefix,filename=str(harness))
-module.body=[node for node in module.body if not (isinstance(node,ast.Assign) and any(isinstance(target,ast.Name) and target.id in {'BINARY','BINARY_SHA'} for target in node.targets))]
+module.body=[node for node in module.body if not (isinstance(node,ast.Assign) and any(isinstance(target,ast.Name) and target.id in {'ROOT','cases','BINARY','BINARY_SHA'} for target in node.targets))]
 exec(compile(module,str(harness),'exec'),namespace)
 requests={c['id']:c['request'] for c in namespace['cases']}
 ordered=0

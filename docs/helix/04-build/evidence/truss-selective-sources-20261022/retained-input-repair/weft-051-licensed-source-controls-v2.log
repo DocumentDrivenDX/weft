@@ -1,0 +1,7 @@
+test_exact_source_and_one_explicit_annotation (test_licensed_source.HistoricalSourceCustody.test_exact_source_and_one_explicit_annotation) ... ok
+test_retained_original_corpus_and_harness_reject_changed_bytes (test_licensed_source.HistoricalSourceCustody.test_retained_original_corpus_and_harness_reject_changed_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.230s
+
+OK

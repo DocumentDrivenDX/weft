@@ -2981,3 +2981,20 @@ current WFT-INPUT/no SQL, never relabeling it as UMF0.10. Actual local candidate
 and qualified runtime configurations pass10 and11 tests respectively.
 [Failure and original checks](evidence/truss-selective-sources-20261022/retired-artifact-control/receipt.json)
 are retained. This changes main integration test expectations only.
+
+### Original retained evidence source custody — 2026-10-22
+
+Local rehearsal of the remaining full CI stages exposed two stale historical
+joins: B007 audits reconstructed old Truss requests from today's UMF0.10 fixtures,
+and an old native-profile reference was compared to a later managed-profile body.
+The original76-case corpus is recovered byte-exact from Git against its immutable
+native summary hash. Audits now use that corpus and the original archived
+producer; no old receipt or expected native result is rewritten. Historical
+source differences use exact original ancestor-checkpoint Git bytes and report
+currentImplementationEquivalent=false. Current tree qualification stays separate.
+[Original failures, custody and controls](evidence/truss-selective-sources-20261022/retained-input-repair/receipt.json)
+record45 passing retained audit components,136 verified references, two altered
+corpus/producer refusals,17 custody controls, seven fresh-host controls and ten
+remaining runtime feature commands. No native service execution or old-runtime
+support follows. Compiler/build source and selected release770137be are unchanged;
+clean hosted full conformance remains mandatory.
