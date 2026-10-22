@@ -140,12 +140,13 @@
     "history": "exact original per-entity journal group and immutable owning attempt/transition; historical root interpretation never falls back to a live root"
   },
   "execution": {
-    "snapshot": "STABLE data sources use the caller SQL statement snapshot, including own pending writes; current authority is checked again at final handoff",
+    "snapshot": "STABLE public data/fact shims and original STABLE sources use the caller SQL statement snapshot, including own pending writes. The separately invoked VOLATILE person guard observes current permissions; current authority is checked again at final handoff.",
     "binding": "queryAbi pin is exact; installation id, actual runtime release id+sha256, accepted document revisions+sha256, catalog revision and native mappings remain byte-bound by the original compiled artifact",
     "wrongRuntime": "execution refuses a different actual installation/runtime binding even when queryAbi is identical",
     "session": "authenticated original person on host-supplied PostgreSQL connection; caller owns transaction; generated SQL runs with pinned pg_catalog,pg_temp search_path",
     "limits": "maximumScanRows and maximumResultRows1..10000; maximumBytes1..16777216; legacy complete source bags retain pre-predicate scan bounds; compiler-selected exact string/boolean candidate sources validate every matched row within the same bounded candidate count/bytes before residual predicates; eligible complete single-string ordered keys seek at most pageSize+1 rows; unsupported or nonindexable inventory uses complete bounded fallback; native index traversal has statement/operation deadlines, not a claimed exact index-node bound",
     "refusals": "invalid binding/profile or unsupported meaning, unauthorized owner/root, stale catalog/observation, malformed exact value, or resource limit refuses the whole query; no partial rows",
-    "invocation": "Finite public person invocation shims check current native family enrollment, original function owner and fresh original caller EXECUTE; source/fact implementations recheck selected current owners; native42501 remains an installation execution failure"
+    "invocation": "Finite public person invocation shims check current native family enrollment, original function owner and fresh original caller EXECUTE; source/fact implementations recheck selected current owners; native42501 remains an installation execution failure",
+    "cursorDelivery": "Explicit backend0.4.44 caller-owned insensitive portal removes the SQL result LIMIT while retaining a complete bounded source. Exact indexed candidate filters retain their scan/byte budget; an unlimited portal never uses a finite seek slice as the whole source. Unfiltered/unsupported sources retain ordinary complete scan/byte refusal. Native SRFs may buffer complete bounded sources before portal fetch; host batch sizes are not strict total-process memory or latency guarantees."
   }
 }

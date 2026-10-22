@@ -132,6 +132,19 @@ no native-SQL passthrough or name/type semantics. Retain the original diagnostic
 span/message and the older compile profiles' codes; qualify named parameters and
 selected malformed/excluded forms in native/browser compiler parity.
 
+Engine catalog read/page adapters may admit the explicit0.2.8/43/ABI1.2 pair
+alongside their retained0.2.7/41 pair, without relabeling an original program.
+A new43 page program derives44 cursor delivery and the export0.2 target; older
+programs still derive42/export0.1. The new cursor compiler preserves complete
+bounded source selection from the typed plan. Exact indexed candidate filters
+remain admitted; an unlimited portal never substitutes a finite key-seek slice
+for its complete source. Unfiltered/unsupported sources retain their scan/byte
+refusal. Output retains the exact logical plan (except portal LIMIT removal),
+columns, native parameters with positions, and model/binding pins. Native SRFs
+may buffer their complete bounded source before FETCH; driver batch sizes do not
+establish strict process memory or latency bounds. Current native permissions
+remain independently rechecked for each fetch/closing handoff.
+
 Weft may lower admitted singular string/boolean equality conjuncts to the native
 indexed candidate source. Remaining predicates execute over the complete bounded
 candidate set; excessive candidates refuse before result LIMIT or aggregation.

@@ -20,7 +20,7 @@ impl Build<'_> {
         let native_type=self.mapping.record(&scan.record)?.type_id.clone();
         let alias=Identifier::new(&scan.occurrence)?.sql();
         let binding=self.binding_slot.clone();
-        if self.selective_sources && !cursor_delivery {
+        if self.selective_sources {
             // Every other filter remains outside this complete bounded candidate
             // source. Exceeding its budget refuses, never cuts a sparse page.
             for predicate in &self.plan.filters {
@@ -39,7 +39,7 @@ impl Build<'_> {
                     return Ok(format!("\"truss\".\"person_query_selected_objects\"({binding}::pg_catalog.jsonb,{native_type}::pg_catalog.int4,{slot}::pg_catalog.jsonb) AS {alias}"));
                 }
             }
-            if scan.occurrence==self.plan.source.occurrence && self.plan.joins.is_empty()
+            if !cursor_delivery && scan.occurrence==self.plan.source.occurrence && self.plan.joins.is_empty()
                 && self.plan.filters.len()==usize::from(continuation.is_some()) {
                 if let Some(key)=&self.plan.page_key {
                     if key.fields.len()==1 && key.types.len()==1 && key.types[0].family==Family::String
