@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "version": "0.4.51",
+  "wheel": "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+  "wheelSha256": "42f846d689ace027d6bb2951f27c587660d4e5151285fe911ce7a3006d0001de",
+  "nativeModuleSha256": "c1d973c1c8a40c99ce5ceb737708e511da7b07a63fe9dcbd8bef9357d3ac6ee5",
+  "python": "3.11.17 (main, Oct  1 2026, 14:33:38) [GCC 13.3.0]",
+  "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated",
+  "sourceCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3"
+}

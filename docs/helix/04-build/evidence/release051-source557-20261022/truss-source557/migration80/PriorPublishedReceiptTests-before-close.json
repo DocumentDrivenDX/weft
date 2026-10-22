@@ -1,0 +1,25 @@
+{
+  "source": "source44",
+  "class": "PriorPublishedReceiptTests",
+  "stage": "before-close",
+  "test": null,
+  "time": "2026-10-22T18:41:11.945522+00:00",
+  "dataDirectory": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-c123xgdq/data",
+  "files": {
+    "log": {
+      "bytes": 3688,
+      "truncated": false,
+      "tail": "2026-10-22 14:40:44.338 EDT [64851] LOG:  starting PostgreSQL 18.6 on aarch64-apple-darwin23.6.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit\n2026-10-22 14:40:44.339 EDT [64851] LOG:  listening on Unix socket \"/private/tmp/truss-pg18-501/c5ebadca120c784b124b19e9/.s.PGSQL.5432\"\n2026-10-22 14:40:44.399 EDT [64857] LOG:  database system was shut down at 2026-10-22 14:40:43 EDT\n2026-10-22 14:40:44.401 EDT [64851] LOG:  database system is ready to accept connections\n2026-10-22 14:40:59.395 EDT [65077] ERROR:  complete original load owner inventory required\n2026-10-22 14:40:59.395 EDT [65077] CONTEXT:  PL/pgSQL function truss.read_import_load_chunk(uuid,integer,integer,text,text) line 17 at RAISE\n\tPL/pgSQL function truss.person_read_import_load_chunk(uuid,integer,integer,text,text) line 4 at RETURN\n2026-10-22 14:40:59.395 EDT [65077] STATEMENT:  WITH truss_guard(pid,vxid,isolation,readonly,xid,timeout) AS MATERIALIZED (WITH truss_runtime_admission AS MATERIALIZED (SELECT pg_catalog.set_config('truss.runtime_digest','c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0',true)) SELECT pg_catalog.pg_backend_pid()::pg_catalog.text,\n\t l.virtualtransaction::pg_catalog.text,\n\t pg_catalog.current_setting('transaction_isolation')::pg_catalog.text,\n\t pg_catalog.current_setting('transaction_read_only')::pg_catalog.text,\n\t pg_catalog.pg_current_xact_id_if_assigned()::pg_catalog.text,\n\t (SELECT setting::pg_catalog.text FROM pg_catalog.pg_settings WHERE name OPERATOR(pg_catalog.=) 'statement_timeout'::pg_catalog.text)\n\t FROM pg_catalog.pg_locks l CROSS JOIN truss_runtime_admission WHERE l.locktype OPERATOR(pg_catalog.=) 'virtualxid'::pg_catalog.text\n\t AND l.pid OPERATOR(pg_catalog.=) pg_catalog.pg_backend_pid() AND l.granted AND l.mode OPERATOR(pg_catalog.=) 'ExclusiveLock'::pg_catalog.text\n\t LIMIT 2), truss_payload AS MATERIALIZED (SELECT truss.person_read_import_load_chunk($1::uuid,$2,$3,$4,$5) AS value FROM truss_guard WHERE (SELECT pg_catalog.count(*) FROM truss_guard) OPERATOR(pg_catalog.=) 1 AND pid OPERATOR(pg_catalog.=) $6 AND vxid OPERATOR(pg_catalog.=) $7 AND isolation OPERATOR(pg_catalog.=) $8 AND readonly OPERATOR(pg_catalog.=) $9 AND ($10::pg_catalog.text IS NULL OR xid OPERATOR(pg_catalog.=) $11) AND timeout OPERATOR(pg_catalog.=) $12) SELECT p.value,g.pid,g.vxid,g.isolation,g.readonly,g.xid,g.timeout,EXISTS(SELECT 1 FROM truss_payload)::pg_catalog.text FROM truss_guard g LEFT JOIN truss_payload p ON true\n2026-10-22 14:40:59.468 EDT [64855] LOG:  checkpoint starting: immediate force wait\n2026-10-22 14:41:01.372 EDT [64855] LOG:  checkpoint complete: wrote 1736 buffers (10.6%), wrote 4 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=1.806 s, sync=0.050 s, total=1.904 s; sync files=593, longest=0.015 s, average=0.001 s; distance=19812 kB, estimate=19812 kB; lsn=0/2A6AE38, redo lsn=0/2A6ADA8\n2026-10-22 14:41:06.015 EDT [64855] LOG:  checkpoint starting: immediate force wait\n2026-10-22 14:41:06.057 EDT [64855] LOG:  checkpoint complete: wrote 21 buffers (0.1%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.014 s, sync=0.011 s, total=0.042 s; sync files=8, longest=0.011 s, average=0.002 s; distance=10101 kB, estimate=18841 kB; lsn=0/34485E8, redo lsn=0/3448590\n2026-10-22 14:41:11.221 EDT [64855] LOG:  checkpoint starting: immediate force wait\n2026-10-22 14:41:11.347 EDT [64855] LOG:  checkpoint complete: wrote 20 buffers (0.1%), wrote 2 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.013 s, sync=0.083 s, total=0.126 s; sync files=8, longest=0.082 s, average=0.011 s; distance=10087 kB, estimate=17965 kB; lsn=0/3E222C8, redo lsn=0/3E22270\n"
+    },
+    "postmaster.pid": {
+      "bytes": 201,
+      "truncated": false,
+      "tail": "64851\n/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-c123xgdq/data\n1792694444\n5432\n/private/tmp/truss-pg18-501/c5ebadca120c784b124b19e9\n\n224211528   8192027\nready   \n"
+    },
+    "postmaster.opts": {
+      "bytes": 442,
+      "truncated": false,
+      "tail": "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/pgserver/pginstall/bin/postgres \"-D\" \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-c123xgdq/data\" \"-h\" \"\" \"-k\" \"/private/tmp/truss-pg18-501/c5ebadca120c784b124b19e9\" \"-p\" \"5432\" \"-c\" \"data_directory=/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-c123xgdq/data\" \"-c\" \"unix_socket_permissions=0700\"\n"
+    }
+  }
+}

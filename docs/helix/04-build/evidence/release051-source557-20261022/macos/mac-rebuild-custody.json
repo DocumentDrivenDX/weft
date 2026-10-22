@@ -1,0 +1,105 @@
+{
+  "format": "weft-selected-macos-rebuild-custody/1",
+  "scope": "Local selected source-F Mac ARM64 wheel build, package validation, new-module factual/entity native reports and exact-feature runtime library suite. No inherited functional claims from previous native module.",
+  "source": {
+    "freezeCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+    "fullSelectedSuiteCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7",
+    "workingTree": "clean",
+    "protectedInputDiffFromTestedSource": "none; Cargo.toml, Cargo.lock, crates, spec, vendor, toolchain pins, contracts and pyproject unchanged"
+  },
+  "toolchain": {
+    "platform": "macOS ARM64",
+    "python": "3.11.17",
+    "rustc": "1.90.0",
+    "cargo": "1.90.0",
+    "maturin": "1.9.6"
+  },
+  "build": {
+    "targetDir": "/private/tmp/weft-arras-051-final-target-55715373",
+    "incremental": false,
+    "jobsOnVerboseRepeat": 2,
+    "invalidCliAttempt": {
+      "command": "maturin --manifest-path crates/weft-python/Cargo.toml --release --locked --out /private/tmp/weft-arras-051-final-macos-55715373/dist",
+      "exit": 2,
+      "reason": "maturin required the `build` subcommand; this invocation did not run Cargo or produce qualification evidence.",
+      "log": "invalid-cli-attempt.log"
+    },
+    "successfulBuild": {
+      "command": "maturin build --manifest-path crates/weft-python/Cargo.toml --release --locked --out /private/tmp/weft-arras-051-final-macos-55715373/dist",
+      "exit": 0,
+      "log": "build.log"
+    },
+    "successfulVerboseRepeat": {
+      "command": "maturin build -v --manifest-path crates/weft-python/Cargo.toml --release --locked --out /private/tmp/weft-arras-051-final-macos-55715373/dist",
+      "environment": {
+        "CARGO_INCREMENTAL": "0",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_TERM_COLOR": "never",
+        "CARGO_TARGET_DIR": "/private/tmp/weft-arras-051-final-target-55715373"
+      },
+      "exit": 0,
+      "log": "build-retry.log"
+    }
+  },
+  "newWheel": {
+    "path": "/private/tmp/weft-arras-051-final-macos-55715373/dist/weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+    "nativeMember": "weft/weft.abi3.so",
+    "nativeSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+    "nativeBytes": 30007168,
+    "packagingVerifier": "passed"
+  },
+  "comparison": {
+    "oldWheelPath": "/private/tmp/weft-arras-051-final-wheels/weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+    "oldWheelSha256": "a21faed75304e730c7cc9782394001be2ba1772b429e587f0d1910c2269dabbe",
+    "oldNativeSha256": "93bee228350743286073a9400bdf5ec92e387c5e35431bbf34b0f81279c460a2",
+    "archiveBytesIdentical": false,
+    "memberOrderIdentical": true,
+    "oldAndNewMembers": 9,
+    "unchangedContentMembers": 7,
+    "changedContentMembers": [
+      "weft/weft.abi3.so",
+      "weft_sql-0.4.51.dist-info/RECORD"
+    ],
+    "addedMembers": [],
+    "removedMembers": [],
+    "nativeContentIdentical": false,
+    "zipMetadataTimestampChange": "All 9 common members: old 2026-10-22 13:22:32; new 2026-10-22 18:21:48."
+  },
+  "newModuleTests": {
+    "facts": {
+      "cases": 5,
+      "status": "passed",
+      "newRawSha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "originalRawSha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "rawReportsIdentical": true
+    },
+    "entitySelection": {
+      "cases": 33,
+      "status": "passed",
+      "newRawSha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "originalRawSha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "rawReportsIdentical": true
+    }
+  },
+  "rustRuntimeLibrary": {
+    "featureSource": "crates/weft-python/pyproject.toml [tool.maturin].features",
+    "features": [
+      "ashlar-sdk-ordered-page-candidate",
+      "raw-postgresql-reads",
+      "ashlar-databricks-qualified",
+      "truss-postgresql-pg18",
+      "current-postgresql-scalar-candidate",
+      "current-databricks-scalar-candidate",
+      "current-query-refinement-candidate",
+      "current-presence-graph-requirements-candidate"
+    ],
+    "command": "cargo test --locked --offline -j2 -p weft-runtime --features raw-postgresql-reads,truss-postgresql-pg18,ashlar-sdk-ordered-page-candidate,ashlar-databricks-qualified,current-postgresql-scalar-candidate,current-databricks-scalar-candidate,current-query-refinement-candidate,current-presence-graph-requirements-candidate --lib",
+    "result": "51 passed; 0 failed; 0 ignored"
+  },
+  "limits": [
+    "Does not transfer prior Mac wheel native functional claims because native module bytes changed.",
+    "Does not assert public1000, policy10, lineage80, or broader Truss qualification for source F.",
+    "No release publication, tag or push."
+  ]
+}

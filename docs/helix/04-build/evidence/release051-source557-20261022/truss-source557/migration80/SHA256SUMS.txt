@@ -1,0 +1,15 @@
+9d34cd8683de26072e15da2c93b9afb437bbc592ab8230dcc84403ab768fa860  /private/tmp/truss-048-arras-source557-migrations-escalated/PriorPublishedReceiptTests-before-close.json
+4a8814c11aa57f09ec7d63a2a050a7153f3b4454e92bc3daa57a40a6a448c8b6  /private/tmp/truss-048-arras-source557-migrations-escalated/command.txt
+9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  /private/tmp/truss-048-arras-source557-migrations-escalated/exit
+3f31e3a8f67f9c67077e91997624d37aa49b68fc73e63c8b9a1601a3029cdf2d  /private/tmp/truss-048-arras-source557-migrations-escalated/qualification.json
+966b0bbf71fa55ce7863f5b34617eb1370d905c83dda3b6d4c5006cc38bc4bfe  /private/tmp/truss-048-arras-source557-migrations-escalated/run-custody.json
+fb1137dc0be7907b4727547cf1a15b12327d2766e320bbfdf43e2faf699e219b  /private/tmp/truss-048-arras-source557-migrations-escalated/run.log
+6b1fb5be9e4ea557879e93021b9ec7fe9929a2596cc9ec908dac57f6a163bac3  /private/tmp/truss-048-arras-source557-migrations-escalated/source44-native-inventory.json
+8e5fb5a84254ef014cc46c10f6eed94f416ef21fc3705f58513da5a3ef5d748e  /private/tmp/truss-048-arras-source557-migrations-escalated/source44-original-evidence.json
+79a7ca06fb6fa02c0312d3e38c7945b6776e20a25e5b01e1bdc38f9885bea103  /private/tmp/truss-048-arras-source557-migrations-escalated/source44MigrationTests-before-close.json
+2885dab7aad39de0032ef34338df086204e7892fd80ba99844e5f2c91ce8b198  /private/tmp/truss-048-arras-source557-migrations-escalated/source46-native-inventory.json
+91a3bc9d71c6d8573cb86402b2ed211019c5dd29a7252d80aa4d074cffe3c362  /private/tmp/truss-048-arras-source557-migrations-escalated/source46-original-evidence.json
+04a1bd305c53cb456229dc5cead8d49747c017ae2381b379c99c746e26e6d282  /private/tmp/truss-048-arras-source557-migrations-escalated/source46MigrationTests-before-close.json
+ee822b3c7e21956faacf9ec9826386ab54c6791d410280df1136d1379bdeca92  /private/tmp/truss-048-arras-source557-migrations-escalated/source47-native-inventory.json
+514f40a3e7134be369eb5bc59eaa3d34f8322cc8567f124e0b42685972fe1671  /private/tmp/truss-048-arras-source557-migrations-escalated/source47-original-evidence.json
+81a7adcb81ea7028be6d6a28521b6856de295c9bdc0b6e502c07beba84676f5f  /private/tmp/truss-048-arras-source557-migrations-escalated/source47MigrationTests-before-close.json

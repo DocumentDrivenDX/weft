@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "version": "0.4.51",
+  "platform": "macos-arm64",
+  "functionalQualification": "local-only",
+  "postgresqlVersion": "18.6",
+  "sourceFreezeCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "wheel": {
+    "name": "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487"
+  },
+  "nativeModuleSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+  "localFunctionalChecks": [
+    {
+      "id": "selected-source-full-workspace-candidate-profile",
+      "status": "passed",
+      "tests": 1046,
+      "summaries": 62,
+      "failed": 0,
+      "ignored": 0,
+      "sourceCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7"
+    },
+    {
+      "id": "selected-source-full-workspace-qualified-profile",
+      "status": "passed",
+      "tests": 1047,
+      "summaries": 62,
+      "failed": 0,
+      "ignored": 0,
+      "sourceCommit": "56d5507c6b0169574277661dd85d8c5feb22e6a7"
+    },
+    {
+      "id": "selected-runtime-engine",
+      "status": "passed",
+      "tests": 51
+    },
+    {
+      "id": "selected-source-native-entity-and-facts-corpus",
+      "status": "passed",
+      "entityCases": 33,
+      "factsCases": 5,
+      "rawReportsMatchedIndependentExpectations": true,
+      "browserExecution": "not included in this Mac source-F check"
+    },
+    {
+      "id": "Truss-installed-independent-corpus",
+      "status": "passed",
+      "tests": 62,
+      "skipped": 0,
+      "archiveSha256": "519a893197409e277feca8b0a878287adebad5d64e4813e30cd3ffdc2cff1706"
+    },
+    {
+      "id": "Truss-installed-cohort-asset-cache",
+      "status": "passed",
+      "tests": 6,
+      "distinctTests": 6,
+      "skipped": 0
+    },
+    {
+      "id": "Truss-installed-policy-sourcecut-disclosure",
+      "status": "passed",
+      "tests": 14,
+      "distinctTests": 10,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0,
+      "scope": "14 executions across 10 distinct controls; four query tests were repeated imported tests. Fixed bounds: 2-second statement and 30-second operation timeout."
+    },
+    {
+      "id": "Truss-installed-migration-lineage",
+      "status": "passed",
+      "tests": 80,
+      "skipped": 0,
+      "scope": "Unprotected UMF0.10 native c433 on PostgreSQL 18.6"
+    },
+    {
+      "id": "Truss-original-public-workload",
+      "status": "passed",
+      "objects": 1000,
+      "edges": 1000,
+      "performanceLimits": "Latency budgets provisional; no nominal prior-run baseline"
+    }
+  ],
+  "evidence": "../evidence/release051-source557-20261022/README.md",
+  "otherPlatforms": "Source-F Linux x86_64 and aarch64 wheels passed packaging and independent archive/module verification only. Historical Linux parity run 39811016270 completed at source commit c5a4537db6ba54e52a988c0f05b5df69d09991dd; it supplied separate native and Chromium entity/facts reports, with browser checks on a Linux debug-profile WASM module (28,344,868 bytes; SHA-256 b1a573acb81e45e345357dc8b6820d6765479c17827b9d7a8b689957c141266f) distinct from the historical Mac release-profile WASM module (SHA-256 73012141c317c5eea4feabe81f448b8df832822267cd3ca83b4b1420fe875d30). That historical parity run is not a source-F Linux host qualification. No source-F Linux Truss host or database execution is claimed.",
+  "fullSuiteQualification": "Source-F selected workspace tests, exact-source Mac wheel/module tests, and the listed local Truss host gates passed. Truss scope is limited to the stated macOS ARM64, PostgreSQL 18.6, unprotected UMF 0.10 subset; public/tag and other-platform gates remain separate.",
+  "nativeSparkOrDatabricksExecution": "not claimed",
+  "trussSourceFQualification": {
+    "status": "passed-local-candidate",
+    "runtimeSourceCommit": "22ed333528a4f57a24edfca5d3df811269471faf",
+    "reviewedEvidenceCommit": "04856a6adf50b144cc4b555be4d7efa610828539",
+    "trussWheelSha256": "c69234212dd8cf31c48b8b7ddd498a2d6968c59318c85e9ae2ae5227d9cd6b45",
+    "trussWheelRuntimeFiles": 455,
+    "runtimePayloadCorrespondence": "Current Truss source, build wheel and sdist matched across all455 runtime files.",
+    "compilerSourceRevision": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+    "compilerWheelSha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+    "compilerNativeModuleSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+    "nativeManifestSha256": "c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0",
+    "migrationManifestSha256": "7d165e4a344ca66d41a32b32f6bcf20f1f8fe73e4ba1137e4ca65780dcee6243",
+    "independentArchiveSha256": "519a893197409e277feca8b0a878287adebad5d64e4813e30cd3ffdc2cff1706",
+    "independentCorpusSha256": "66632198c1e381ece398af272c8c850b243f70555485fbaf527c24b55d2b2bcf",
+    "platform": "macOS ARM64 with local PostgreSQL 18.6",
+    "policyAttempts": {
+      "qualifiedExecutions": 14,
+      "distinctControls": 10,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0,
+      "repeatedImportedQueryTests": 4,
+      "statementTimeoutMs": 2000,
+      "operationTimeoutMs": 30000,
+      "priorSkippedAttemptQualified": false,
+      "priorTimeoutAttemptQualified": false,
+      "finalSerializedRetryPassed": true
+    },
+    "priorMigrationSandboxRefusalQualified": false,
+    "evidenceDirectory": "../evidence/release051-source557-20261022/truss-source557"
+  }
+}

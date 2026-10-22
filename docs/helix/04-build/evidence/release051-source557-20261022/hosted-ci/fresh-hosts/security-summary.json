@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "resourceCases": 7,
+  "securityCases": 10,
+  "cases": 17,
+  "libraryByteParity": true,
+  "cliResponseParityCases": 16,
+  "cliInputLimitRefusals": 1,
+  "subprocessDisabled": true,
+  "extensionSha256": "a2e9fd4440366b8bcf0247814df167be53eb838c42c1774ccaae8359de3c493d",
+  "scope": "Fresh exact whole-response ABI parity for raw resource controls and blocked compat0.5 and dedicated security0.1/0.2 admission/refusals. No native security enforcement or database execution."
+}

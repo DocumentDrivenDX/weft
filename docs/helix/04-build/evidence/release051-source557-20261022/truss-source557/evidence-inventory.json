@@ -1,0 +1,298 @@
+{
+  "format": "weft-truss-source-f-evidence-inventory/1",
+  "sourceReceiptPath": "/private/tmp/truss-hf048-release/docs/helix/04-build/evidence/hohfeld-followup-20261021/installed-048-arras-source557/receipt.json",
+  "sourceReceiptSha256": "b9a07846315d73f6339f75c70981475555605cec7c2a88733e7cee80de62e58a",
+  "sourceReceiptStatus": "passed-local-candidate",
+  "reviewedSourceCommit": "04856a6adf50b144cc4b555be4d7efa610828539",
+  "runtimeBuildSourceCommit": "22ed333528a4f57a24edfca5d3df811269471faf",
+  "runtimePayloadCorrespondence": {
+    "files": 455,
+    "currentSourceMatchesOriginalBuildWheelAndSdist": true
+  },
+  "compilerSourceRevision": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "compilerNativeModuleSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+  "nativeManifestSha256": "c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0",
+  "migrationManifestSha256": "7d165e4a344ca66d41a32b32f6bcf20f1f8fe73e4ba1137e4ca65780dcee6243",
+  "independentArchiveSha256": "519a893197409e277feca8b0a878287adebad5d64e4813e30cd3ffdc2cff1706",
+  "corpusSha256": "66632198c1e381ece398af272c8c850b243f70555485fbaf527c24b55d2b2bcf",
+  "checks": {
+    "migration": 80,
+    "independent": 62,
+    "cohort": {
+      "executions": 6,
+      "distinctTests": 6,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0
+    },
+    "policySourcecutDisclosure": {
+      "executions": 14,
+      "distinctTests": 10,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0
+    },
+    "publicWorkloadObjects": 1000,
+    "publicWorkloadEdges": 1000,
+    "skipped": 0
+  },
+  "priorAttempts": {
+    "policyNativeSkips": "Not qualified; native flag absent.",
+    "policyStatementTimeout": "One of14 executions failed at activation with SQL57014 under the unchanged2s statement /30s operation limits. Cause unproven; final serialized retry passes the same bounds.",
+    "migrationSandboxRefusal": "Native initdb denied SysV shared memory; the same campaign passed with local PostgreSQL permission."
+  },
+  "limits": [
+    "Latest application runtime only; admitted UMF0.10 sources migrate forward without age-based expiry.",
+    "No pre0.10 or protected-profile migration, downgrade or old application runtime support.",
+    "Mac ARM64 only in this packet; no source-F Linux database claim before actual tag execution.",
+    "No Arras adapter, managed UC/Spark4.2, broader security acceptance or general p95 qualification."
+  ],
+  "copiedFiles": [
+    {
+      "file": "migration80/PriorPublishedReceiptTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/PriorPublishedReceiptTests-before-close.json",
+      "bytes": 4962,
+      "sha256": "9d34cd8683de26072e15da2c93b9afb437bbc592ab8230dcc84403ab768fa860"
+    },
+    {
+      "file": "migration80/SHA256SUMS.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/SHA256SUMS.txt",
+      "bytes": 2308,
+      "sha256": "187a726937fef53eb661fb3dd36e5c08b14efcf775446bef70c339e4b604086c"
+    },
+    {
+      "file": "migration80/command.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/command.txt",
+      "bytes": 306,
+      "sha256": "4a8814c11aa57f09ec7d63a2a050a7153f3b4454e92bc3daa57a40a6a448c8b6"
+    },
+    {
+      "file": "migration80/exit",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "migration80/qualification.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/qualification.json",
+      "bytes": 1714,
+      "sha256": "3f31e3a8f67f9c67077e91997624d37aa49b68fc73e63c8b9a1601a3029cdf2d"
+    },
+    {
+      "file": "migration80/run-custody.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/run-custody.json",
+      "bytes": 2525,
+      "sha256": "966b0bbf71fa55ce7863f5b34617eb1370d905c83dda3b6d4c5006cc38bc4bfe"
+    },
+    {
+      "file": "migration80/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/run.log",
+      "bytes": 15983,
+      "sha256": "fb1137dc0be7907b4727547cf1a15b12327d2766e320bbfdf43e2faf699e219b"
+    },
+    {
+      "file": "migration80/source44-native-inventory.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source44-native-inventory.json",
+      "bytes": 1667495,
+      "sha256": "6b1fb5be9e4ea557879e93021b9ec7fe9929a2596cc9ec908dac57f6a163bac3"
+    },
+    {
+      "file": "migration80/source44-original-evidence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source44-original-evidence.json",
+      "bytes": 451928,
+      "sha256": "8e5fb5a84254ef014cc46c10f6eed94f416ef21fc3705f58513da5a3ef5d748e"
+    },
+    {
+      "file": "migration80/source44MigrationTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source44MigrationTests-before-close.json",
+      "bytes": 16775,
+      "sha256": "79a7ca06fb6fa02c0312d3e38c7945b6776e20a25e5b01e1bdc38f9885bea103"
+    },
+    {
+      "file": "migration80/source46-native-inventory.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source46-native-inventory.json",
+      "bytes": 1676787,
+      "sha256": "2885dab7aad39de0032ef34338df086204e7892fd80ba99844e5f2c91ce8b198"
+    },
+    {
+      "file": "migration80/source46-original-evidence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source46-original-evidence.json",
+      "bytes": 451782,
+      "sha256": "91a3bc9d71c6d8573cb86402b2ed211019c5dd29a7252d80aa4d074cffe3c362"
+    },
+    {
+      "file": "migration80/source46MigrationTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source46MigrationTests-before-close.json",
+      "bytes": 16768,
+      "sha256": "04a1bd305c53cb456229dc5cead8d49747c017ae2381b379c99c746e26e6d282"
+    },
+    {
+      "file": "migration80/source47-native-inventory.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source47-native-inventory.json",
+      "bytes": 1686852,
+      "sha256": "ee822b3c7e21956faacf9ec9826386ab54c6791d410280df1136d1379bdeca92"
+    },
+    {
+      "file": "migration80/source47-original-evidence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source47-original-evidence.json",
+      "bytes": 449809,
+      "sha256": "514f40a3e7134be369eb5bc59eaa3d34f8322cc8567f124e0b42685972fe1671"
+    },
+    {
+      "file": "migration80/source47MigrationTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source47MigrationTests-before-close.json",
+      "bytes": 17025,
+      "sha256": "81a7adcb81ea7028be6d6a28521b6856de295c9bdc0b6e502c07beba84676f5f"
+    },
+    {
+      "file": "independent62/conformance.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-hf-evidence-refreshed/conformance.json",
+      "bytes": 14944,
+      "sha256": "5e9ce6087d0dd78451d90e554ee765502d224df55160481c46b56ab343469fef"
+    },
+    {
+      "file": "independent62/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-hf-evidence-refreshed/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "independent62/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-hf-evidence-refreshed/run.log",
+      "bytes": 13406,
+      "sha256": "e097b23336b4ebbea7cb45a8c6cf926dee832a6cc546e95b0b7dd4e27a99dd27"
+    },
+    {
+      "file": "cohort6/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-cohort-unit-final/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "cohort6/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-cohort-unit-final/run.log",
+      "bytes": 1303,
+      "sha256": "589ed885749c9924f5bca38ad38887bbe061ca6b311d2e1624a19452ae2e1db2"
+    },
+    {
+      "file": "policy14-final/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy14-native-retry/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "policy14-final/run-custody.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy14-native-retry/run-custody.json",
+      "bytes": 1257,
+      "sha256": "b70d23c258437f5eb6429fe462b683aa944c92dd5a22152b7a848d7fd96e643f"
+    },
+    {
+      "file": "policy14-final/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy14-native-retry/run.log",
+      "bytes": 2592,
+      "sha256": "098e9158b5358291744697237a1e4ee8eeaf908208a0f06d464e3fe31c94b47f"
+    },
+    {
+      "file": "prior-attempts/policy10-native-skipped/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy10/run.log",
+      "bytes": 2215,
+      "sha256": "403f545e9b7a863b1c380cdd3dfbb1bd7aedf9c1dd3c6dcc50b8fd8d1fcdd0c9"
+    },
+    {
+      "file": "prior-attempts/policy14-timeout/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy10-native/exit-status.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "file": "prior-attempts/policy14-timeout/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy10-native/run.log",
+      "bytes": 4058,
+      "sha256": "e101645b1c2ecb4dde544eb87dd12db4c62e4c95f00d7f9dcc2b068c5d359abb"
+    },
+    {
+      "file": "public-workload/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "public-workload/report.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/report.json",
+      "bytes": 791301,
+      "sha256": "db4b5e97f6f44b4f99a08fddef52d3233452098acc9c50306b6662301105d5ee"
+    },
+    {
+      "file": "public-workload/report.jsonl",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/report.jsonl",
+      "bytes": 454664,
+      "sha256": "d458fd2f88edc208de5a28885cfa46aab0536b1f12ba99bd0c2d572874f98376"
+    },
+    {
+      "file": "public-workload/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/run.log",
+      "bytes": 26715,
+      "sha256": "08a7153ac94dca46dc1328baeeb4e0e4d15756b76f9c2b14cab0096f97c28d18"
+    },
+    {
+      "file": "package/runtime-file-correspondence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/runtime-file-correspondence.json",
+      "bytes": 79619,
+      "sha256": "e52e1cc7e985687fc95b1be83522acf6029f31573bcb3f85b7aa2e8faf3effd5"
+    },
+    {
+      "file": "package/environment-check.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/environment-check.json",
+      "bytes": 665,
+      "sha256": "5539eb69a8c8d2bb6ea7645b8daf70bb52caae3affe49d0bd2400f5797887a82"
+    },
+    {
+      "file": "package/installed-truss-identity.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/installed-truss-identity.json",
+      "bytes": 471,
+      "sha256": "9c8d842ddb54e451c6aa509d4a7c6a00ce07eb12078610a4246b1b133dbf3cae"
+    },
+    {
+      "file": "package/build-truss-source-and-tools.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/build-truss-source-and-tools.txt",
+      "bytes": 137,
+      "sha256": "ac34f0d3023da2220366c3d72a143d8c822644bf98660d350c3a43cd36abfcb1"
+    },
+    {
+      "file": "package/build-truss-package.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/build-truss-package.log",
+      "bytes": 220225,
+      "sha256": "b985383eec687e722a1312536dd4c464b1bfd9ef9803c013102838a2e8322296"
+    },
+    {
+      "file": "package/build-truss-package.exit",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/build-truss-package.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "prior-attempts/migration-sandbox-refusal/command.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/command.txt",
+      "bytes": 296,
+      "sha256": "f2c2e07044281900014d3ad3520eca037f4031a033da3db49c9e69c63c2ee1ed"
+    },
+    {
+      "file": "prior-attempts/migration-sandbox-refusal/exit",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "file": "prior-attempts/migration-sandbox-refusal/qualification.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/qualification.json",
+      "bytes": 1714,
+      "sha256": "57b7006fd2b64573799d1e35b2d521270e668b9be0208f5b5d81965a6b7c5e17"
+    },
+    {
+      "file": "prior-attempts/migration-sandbox-refusal/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/run.log",
+      "bytes": 7319,
+      "sha256": "521d52d50cf2e5f3b503e6c022e8ac11bbb729df0cdf39cbadd0d5f3faed32ff"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "format": "weft-selected-source-conformance-run/0.1",
+  "release": "0.4.51",
+  "sourceFreezeCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "hostedRun": {
+    "runId": 39822650250,
+    "conclusion": "success",
+    "workflowHead": "cc694344 (abbreviated)",
+    "testedSyntheticSourceCommit": "b0808e8c (abbreviated testability source)",
+    "pullRequest": 27,
+    "mergedCommit": "3cd05d5389375b7d40622821d4788828135a2d6e",
+    "mergeTree": "d5d7986179223d703c431dc77c829f851ba1a524",
+    "sourceJobsAndSteps": "all passed",
+    "scope": "Hosted final source/conformance workflow only. Its fresh-host evidence retains retired UMF 0.7 refusals and host parity controls; it does not qualify the current Truss host campaign or transfer native evidence to the source-F Mac wheel."
+  },
+  "sourceFreezeVsTestabilitySource": "Freeze F remains the release compiler/build source. Synthetic source b0808e8c and workflow head cc694344 are recorded as the hosted testability/workflow revisions; PR 27 merged as the commit/tree above. No compiler source was changed by the workflow-only merge.",
+  "currentTrussHostQualification": "pending; no native-host success is claimed in this packet."
+}

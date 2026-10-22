@@ -1,0 +1,174 @@
+{
+  "format": "weft-public-051-closeout-evidence/1",
+  "publicReleaseUrl": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.51",
+  "publisherRunId": 39838369924,
+  "releaseTag": "v0.4.51",
+  "tagSourceCommit": "d4b0b98507ae15bd98180a2ea2030ea92ce11d96",
+  "sourceFreezeCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "assetCount": 9,
+  "wheelCount": 3,
+  "packagingReportCount": 3,
+  "publicVerificationPassed": true,
+  "cleanPublicMacInstall": {
+    "wheelPackaging": "passed",
+    "entityCases": 33,
+    "factsCases": 5,
+    "allExitStatusZero": true,
+    "wheelSha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+    "nativeModuleSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa"
+  },
+  "wheelPayloadsCopied": false,
+  "files": [
+    {
+      "file": "release/verification.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/verification.json",
+      "bytes": 2250,
+      "sha256": "9dbfbc7c674bfe1adb36ca8789ac939fe5a946a5422b1418a3e22e5846ec1606"
+    },
+    {
+      "file": "release/independent-verification.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/independent-verification.json",
+      "bytes": 1571,
+      "sha256": "fe4ef84c41d48b00912c123c4c81aa9044f367739b95f865d141085c557f67c6"
+    },
+    {
+      "file": "release/publisher-run.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/publisher-run.json",
+      "bytes": 1704,
+      "sha256": "5890c9466580a49fec558673b7327c1a94ff684e37d11b83781c477871318038"
+    },
+    {
+      "file": "release/release-metadata.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/release-metadata.json",
+      "bytes": 22414,
+      "sha256": "cd099bcf35a7c5ac83269e3096d0c4aa9644c8e5dedf9b396b99d123e3773c3b"
+    },
+    {
+      "file": "release/SHA256SUMS",
+      "originalPath": "/private/tmp/weft-public-051-verification/SHA256SUMS",
+      "bytes": 394,
+      "sha256": "62c9d8082eb2f446446d7b94ff7ef7f48769e3cd836e5641c2951069302a6c75"
+    },
+    {
+      "file": "release/assets/SHA256SUMS",
+      "originalPath": "/private/tmp/weft-public-051-verification/assets/SHA256SUMS",
+      "bytes": 394,
+      "sha256": "62c9d8082eb2f446446d7b94ff7ef7f48769e3cd836e5641c2951069302a6c75"
+    },
+    {
+      "file": "release/assets/local-macos-qualification.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/assets/local-macos-qualification.json",
+      "bytes": 5399,
+      "sha256": "6ee046368173604aac9b824e19a5443474432b23af6872ba835e896271c02293"
+    },
+    {
+      "file": "release/assets/packaging-aarch64-apple-darwin.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/assets/packaging-aarch64-apple-darwin.json",
+      "bytes": 476,
+      "sha256": "a15ae959b0e42840473bd58ce61e0752248e241b6b1c65c34e4c1a59b3907ff3"
+    },
+    {
+      "file": "release/assets/packaging-aarch64-unknown-linux-gnu.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/assets/packaging-aarch64-unknown-linux-gnu.json",
+      "bytes": 554,
+      "sha256": "0b41270a01cbfa60c3428ed84e99c1f601984746bb3988466a3bb62200c7e5eb"
+    },
+    {
+      "file": "release/assets/packaging-x86_64-unknown-linux-gnu.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/assets/packaging-x86_64-unknown-linux-gnu.json",
+      "bytes": 552,
+      "sha256": "0e2ecca911a768ff679fbe0a3ab4d387cae7b22b64a8c202d6db7c8c92506606"
+    },
+    {
+      "file": "release/assets/release-pins.json",
+      "originalPath": "/private/tmp/weft-public-051-verification/assets/release-pins.json",
+      "bytes": 8131,
+      "sha256": "aceaf8be26a0b652b88f048a89ea4ee9475a2e7e0c7c89b2a2a8fae071eff36d"
+    },
+    {
+      "file": "clean-macos-install/commands-and-results.json",
+      "originalPath": "/private/tmp/weft-public-051-native/commands-and-results.json",
+      "bytes": 3248,
+      "sha256": "f8fdce99b7d1183405f11f01668776e2454d836909f9721e14edaad7a3a02c4f"
+    },
+    {
+      "file": "clean-macos-install/install-exit.txt",
+      "originalPath": "/private/tmp/weft-public-051-native/install-exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "clean-macos-install/install.log",
+      "originalPath": "/private/tmp/weft-public-051-native/install.log",
+      "bytes": 459,
+      "sha256": "0dbc151a43d778bfbed06bf140e4073bac31f45e05959c028fbd8dafe451ee81"
+    },
+    {
+      "file": "clean-macos-install/provenance.json",
+      "originalPath": "/private/tmp/weft-public-051-native/provenance.json",
+      "bytes": 1125,
+      "sha256": "c320d589d3e0527ed86c5281227477d1a343b9a20d998e151ea2d5241667ca93"
+    },
+    {
+      "file": "clean-macos-install/SHA256SUMS.txt",
+      "originalPath": "/private/tmp/weft-public-051-native/SHA256SUMS.txt",
+      "bytes": 1152,
+      "sha256": "20635ca4492e493353dd9ff4d521f9c0f59de8207590b0543cc2b3523b33b558"
+    },
+    {
+      "file": "clean-macos-install/truss-entity-selection-exit.txt",
+      "originalPath": "/private/tmp/weft-public-051-native/truss-entity-selection-exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "clean-macos-install/truss-entity-selection-reports.json",
+      "originalPath": "/private/tmp/weft-public-051-native/truss-entity-selection-reports.json",
+      "bytes": 994279,
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+    },
+    {
+      "file": "clean-macos-install/truss-entity-selection.log",
+      "originalPath": "/private/tmp/weft-public-051-native/truss-entity-selection.log",
+      "bytes": 55,
+      "sha256": "af6b0494ec2d1fa683c6129bd32f3990c3a023150ea8a1f4d5a37bcfb35c6057"
+    },
+    {
+      "file": "clean-macos-install/truss-facts-exit.txt",
+      "originalPath": "/private/tmp/weft-public-051-native/truss-facts-exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "clean-macos-install/truss-facts-reports.json",
+      "originalPath": "/private/tmp/weft-public-051-native/truss-facts-reports.json",
+      "bytes": 186460,
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982"
+    },
+    {
+      "file": "clean-macos-install/truss-facts.log",
+      "originalPath": "/private/tmp/weft-public-051-native/truss-facts.log",
+      "bytes": 54,
+      "sha256": "cfed9737600395f596b5e32f8f927ff75c787522b03bae28d80ccd07a5f9624f"
+    },
+    {
+      "file": "clean-macos-install/wheel-packaging-exit.txt",
+      "originalPath": "/private/tmp/weft-public-051-native/wheel-packaging-exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "clean-macos-install/wheel-packaging.json",
+      "originalPath": "/private/tmp/weft-public-051-native/wheel-packaging.json",
+      "bytes": 468,
+      "sha256": "3104b927a2b0b6cdbcfb6e4bf3fbac2467ce0c1f431dd244b412a4e859e2f7db"
+    },
+    {
+      "file": "clean-macos-install/wheel-packaging.log",
+      "originalPath": "/private/tmp/weft-public-051-native/wheel-packaging.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "publisherRunUrl": "https://github.com/DocumentDrivenDX/weft/actions/runs/39838369924"
+}

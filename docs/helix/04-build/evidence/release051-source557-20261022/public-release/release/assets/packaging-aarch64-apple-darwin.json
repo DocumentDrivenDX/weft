@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "version": "0.4.51",
+  "wheel": "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+  "nativeModuleSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+  "sourceCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "scope": "local macOS exact installed archive, RECORD, metadata, ABI and notices checks; reused without another hosted run"
+}

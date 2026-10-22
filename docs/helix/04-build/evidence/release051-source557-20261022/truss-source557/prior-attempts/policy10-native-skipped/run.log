@@ -1,0 +1,15 @@
+test_all_denied_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_all_denied_population_returns_empty_rows) ... ok
+test_empty_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_empty_population_returns_empty_rows) ... ok
+test_protected_activation_closes_legacy_data_facades (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_protected_activation_closes_legacy_data_facades) ... ok
+test_public_masked_projection_with_authorized_exact_raw_predicate (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_public_masked_projection_with_authorized_exact_raw_predicate) ... ok
+test_source_key_edge_cuts_block_writers_until_caller_settlement (test_current_query_subject_cut_native.CurrentQuerySubjectCutNativeTests.test_source_key_edge_cuts_block_writers_until_caller_settlement) ... ok
+test_native_all_denied_disclosure (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_all_denied_disclosure) ... skipped 'requires serialized explicit native qualification window'
+test_native_changed_source_before_closing_guard_refuses_public_data (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_changed_source_before_closing_guard_refuses_public_data) ... skipped 'requires serialized explicit native qualification window'
+test_native_empty_disclosure (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_empty_disclosure) ... skipped 'requires serialized explicit native qualification window'
+test_native_masked_disclosure (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_masked_disclosure) ... skipped 'requires serialized explicit native qualification window'
+test_native_post_transport_whole_batch_refusal_never_releases (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_post_transport_whole_batch_refusal_never_releases) ... skipped 'requires serialized explicit native qualification window'
+
+----------------------------------------------------------------------
+Ran 10 tests in 92.113s
+
+OK (skipped=5)

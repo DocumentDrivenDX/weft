@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "observedAt": "2026-10-22T18:28:19.678276+00:00",
+  "sourceFreeze": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "packagingRun": 39830424802,
+  "checks": [
+    {
+      "report": "wheels-aarch64-unknown-linux-gnu/packaging-aarch64-unknown-linux-gnu.json",
+      "wheel": "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "sourceCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+      "wheelSha256": "42f846d689ace027d6bb2951f27c587660d4e5151285fe911ce7a3006d0001de",
+      "nativeModuleSha256": "c1d973c1c8a40c99ce5ceb737708e511da7b07a63fe9dcbd8bef9357d3ac6ee5",
+      "members": 9,
+      "archiveRecordAndNativeVerified": true
+    },
+    {
+      "report": "wheels-x86_64-unknown-linux-gnu/packaging-x86_64-unknown-linux-gnu.json",
+      "wheel": "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sourceCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+      "wheelSha256": "a23142f12b59444138b588a8a764666b025552a14036f62d83af022153f1a0a5",
+      "nativeModuleSha256": "ef293922003832fbd87041a28c6dbde33927fee573270f203aa51daf06bcd445",
+      "members": 9,
+      "archiveRecordAndNativeVerified": true
+    }
+  ],
+  "scope": "Independent archive/RECORD/native/source checks; no Truss Linux native execution credited"
+}

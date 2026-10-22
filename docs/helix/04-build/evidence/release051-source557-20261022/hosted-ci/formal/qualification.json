@@ -1,0 +1,333 @@
+{
+  "version": "weft-formal/1",
+  "solver": "z3-solver4.15.4.0",
+  "status": "passed",
+  "properties": {
+    "WFT-FM-002": {
+      "result": "unsat",
+      "witness": null
+    },
+    "WFT-FM-003": {
+      "result": "unsat",
+      "witness": null
+    },
+    "bounded_specification_correspondence": {
+      "result": "unsat",
+      "witness": null
+    },
+    "WFT-FM-004": {
+      "result": "unsat",
+      "witness": null
+    },
+    "disposition_order_0": {
+      "result": "unsat",
+      "witness": null
+    },
+    "disposition_order_1": {
+      "result": "unsat",
+      "witness": null
+    },
+    "disposition_order_2": {
+      "result": "unsat",
+      "witness": null
+    },
+    "disposition_order_3": {
+      "result": "unsat",
+      "witness": null
+    },
+    "disposition_order_4": {
+      "result": "unsat",
+      "witness": null
+    },
+    "disposition_order_5": {
+      "result": "unsat",
+      "witness": null
+    }
+  },
+  "witnesses": {
+    "allowed": {
+      "result": "sat",
+      "witness": {
+        "permit_truth": "0",
+        "require_truth": "0",
+        "forbid_truth": "1"
+      }
+    },
+    "denied": {
+      "result": "sat",
+      "witness": {
+        "permit_truth": "1",
+        "require_truth": "1",
+        "forbid_truth": "1"
+      }
+    },
+    "unknown": {
+      "result": "sat",
+      "witness": {
+        "permit_truth": "2",
+        "require_truth": "0",
+        "forbid_truth": "0"
+      }
+    },
+    "broken_permit_gate": {
+      "result": "sat",
+      "witness": {
+        "permit_truth": "1",
+        "require_truth": "0",
+        "forbid_truth": "1"
+      }
+    },
+    "withheld_dominates_conflict": {
+      "result": "sat",
+      "witness": {
+        "disposition_0": "2",
+        "disposition_1": "3",
+        "disposition_2": "4",
+        "protected": "False"
+      }
+    },
+    "transform_conflict": {
+      "result": "sat",
+      "witness": {
+        "disposition_0": "3",
+        "disposition_1": "4",
+        "disposition_2": "5",
+        "protected": "False"
+      }
+    },
+    "broken_withheld_precedence": {
+      "result": "sat",
+      "witness": {
+        "disposition_0": "3",
+        "disposition_1": "2",
+        "disposition_2": "1",
+        "protected": "True"
+      }
+    },
+    "missing_protected_disposition": {
+      "result": "sat",
+      "witness": {
+        "disposition_0": "0",
+        "disposition_1": "0",
+        "disposition_2": "0",
+        "protected": "True"
+      }
+    },
+    "unprotected_original": {
+      "result": "sat",
+      "witness": {
+        "disposition_0": "0",
+        "disposition_1": "0",
+        "disposition_2": "0",
+        "protected": "False"
+      }
+    },
+    "compatible_transform": {
+      "result": "sat",
+      "witness": {
+        "disposition_0": "3",
+        "disposition_1": "3",
+        "disposition_2": "3",
+        "protected": "False"
+      }
+    }
+  },
+  "oracleSha256": "78cd2edefebb73f4228756197c0e12509d77213fb3e0df7162baf05cb730a08e",
+  "oracleTuples": 27,
+  "dispositionOracleCases": 432,
+  "dispositionOracleSha256": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6",
+  "queryCounts": {
+    "unsat": 469,
+    "sat": 10
+  },
+  "dispositionPrecondition": "Truth gate already permits; slot0 is no selected-field disclosure from an active true permit, not an absent grant. Rust oracle uses3true permit rules and1true require.",
+  "limits": "One permit/require/forbid,27truth tuples; one selected field,three abstract disposition slots/three distinct exact normalized transform equivalence classes. Actual Rust correspondence is separately mandatory. No arbitrary AST/hash/arithmetic/native/liveness proof.",
+  "actualRustCorrespondence": {
+    "lib:security_composition::tests::all_permit_require_forbid_truths_and_rule_order": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 245228
+    },
+    "lib:security_composition::tests::bounded_disposition_oracle_correspondence": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 1843
+    },
+    "lib:security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 128
+    },
+    "lib:security_composition::tests::portable_typescript_truth_corpus_correspondence": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 123
+    },
+    "lib:security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 128
+    },
+    "security_admission:current010_source_custody_never_activates_uninterpreted_security": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 100655
+    },
+    "security_admission:invalid_source_digest_refuses_before_security_gate": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 138
+    },
+    "security_admission:rehashed_catalog_input_cannot_substitute_for_prepared_definitions": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 134
+    },
+    "security_admission:security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 149
+    },
+    "security_admission:security04_owner_refusals_never_dispatch_registration": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 139
+    },
+    "security_admission:separate_security_protocols_preserve_callback_and_blocked_response_boundaries": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 165
+    },
+    "security_admission:source_packet_cannot_be_reused_with_changed_model_bytes": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 135
+    },
+    "security_admission:unsupported_security_does_not_invoke_backend_factory": {
+      "exitCode": 0,
+      "selected": 1,
+      "passed": 1,
+      "durationMs": 136
+    }
+  },
+  "propertyTests": {
+    "WFT-FM-001": [
+      [
+        "security_admission",
+        "current010_source_custody_never_activates_uninterpreted_security"
+      ],
+      [
+        "security_admission",
+        "unsupported_security_does_not_invoke_backend_factory"
+      ],
+      [
+        "security_admission",
+        "separate_security_protocols_preserve_callback_and_blocked_response_boundaries"
+      ],
+      [
+        "security_admission",
+        "security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output"
+      ],
+      [
+        "security_admission",
+        "security04_owner_refusals_never_dispatch_registration"
+      ]
+    ],
+    "WFT-FM-002": [
+      [
+        "lib",
+        "security_composition::tests::all_permit_require_forbid_truths_and_rule_order"
+      ],
+      [
+        "lib",
+        "security_composition::tests::portable_typescript_truth_corpus_correspondence"
+      ]
+    ],
+    "WFT-FM-003": [
+      [
+        "lib",
+        "security_composition::tests::all_permit_require_forbid_truths_and_rule_order"
+      ]
+    ],
+    "WFT-FM-004": [
+      [
+        "lib",
+        "security_composition::tests::bounded_disposition_oracle_correspondence"
+      ],
+      [
+        "lib",
+        "security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict"
+      ],
+      [
+        "lib",
+        "security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain"
+      ]
+    ],
+    "WFT-FM-005": [
+      [
+        "security_admission",
+        "source_packet_cannot_be_reused_with_changed_model_bytes"
+      ],
+      [
+        "security_admission",
+        "rehashed_catalog_input_cannot_substitute_for_prepared_definitions"
+      ],
+      [
+        "security_admission",
+        "invalid_source_digest_refuses_before_security_gate"
+      ]
+    ]
+  },
+  "toolIdentity": {
+    "cargoVersion": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustcVersion": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargoExecutableSha256": "dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71",
+    "rustToolchainSha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+  },
+  "diagnosticRunId": "d7e84ad48c2a404d92d13ea3d063cfde",
+  "inputs": {
+    "crates/weft-core/src/compile.rs": "ddf164800dd409767acfc1cda972769cc8fdfeeea1cf81df65c15010bad9a74e",
+    "crates/weft-core/src/model.rs": "652468f5570c4f85ad172207975b3c44776f0fc73030e5509cd7648dbc4b110d",
+    "crates/weft-core/src/security_source.rs": "c0b54ea93c9d0b2d378b8104905f923c34ed6ed6b524e3c997ede4a76c8ef490",
+    "crates/weft-core/src/security_ir.rs": "be264ec1360181e6f1f93fd081bf151ea4e35b9fb98d8a1ef95091dde5c9846c",
+    "crates/weft-core/src/security_composition.rs": "65eba7702b75409c9630497704d62ed3d4a75b967ff81c90e3d72382b4b20c75",
+    "crates/weft-core/src/security_backend.rs": "6daa7d4cc70c084b40f74f07c39dd362c49250017183e07dbcd0736513d882c1",
+    "crates/weft-core/src/security_lowering.rs": "b5a1ce175f4887e4c24c535c0610864254357ecddcdbad794b65f3bf6dbbcc1e",
+    "crates/weft-core/src/security_requirements.rs": "65fc1f5b19c00d408614993f0a049e2f2dd4b15675225507db2e914712c4d970",
+    "crates/weft-core/src/security_budget.rs": "ce9fa32d092f8e7b6221b6f51231336158358e89f039cfd6c794465b7705937a",
+    "crates/weft-core/tests/security_admission.rs": "b5fdf4b8d7a5723c19f393a09c80e83c868fd3ec807f53c3ce522ab0812e485b",
+    "crates/weft-core/tests/security-source-fixture.json": "993718c144379e4ed227458971608b5efc001a60d2e21e8dd3471744382caa1c",
+    "crates/weft-core/tests/security-composition-oracle.json": "78cd2edefebb73f4228756197c0e12509d77213fb3e0df7162baf05cb730a08e",
+    "crates/weft-core/tests/security-disposition-oracle.json": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6",
+    "scripts/reliability/formal.py": "b35130de5b1429b8fa79aa134a95f8fc4fcdd64a2c132dd47b36f6daf7c49d6e",
+    "scripts/reliability/gate.py": "44a136a874d419c297159236d366560ee33b49959ab9b985c3f34b1243b9a475",
+    "scripts/reliability/requirements.txt": "0884383734d31e9dcdabe732d5de94b0cb6baf06f9269859b71568b4034e309f",
+    "docs/helix/02-design/contracts/CONTRACT-007-security-compilation.md": "a455a41c7bb25989aa84da6c8782a64c7db48ff5270fa72d76dd2bf2f1a118d0",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "bc80f7d092c7b6b8f82ec0cce2b02d70a8d4f5492b7cf1f699da5abe314afea2",
+    "docs/helix/02-design/contracts/security-compile-response-v0.1.schema.json": "01022aa9742bbc51e8004055845af50c194cffb469f7158d7461e94a70533787",
+    "docs/helix/02-design/contracts/security-compile-response-v0.2.schema.json": "2c43d00b93491713e6ffbbed8aa3c319ac3e0aed1e123811e1714bab6a7f468f",
+    "docs/helix/03-test/fixtures/cases.json": "582a694cde6acd9bdde28a5922f917347839f1cb5d3cc914be9203280a7c14d8",
+    "docs/helix/02-design/contracts/compile-response-v0.5.schema.json": "6dcbfa453b72ed92a8153873584425193311c0b99640bd31db82a26fda3dcfc8",
+    "docs/helix/02-design/technical-designs/TD-009-security-compilation.md": "34d460c6021a0b9bc7e13e78844bc30cbfd719eaf9230d445f324565fc608ee1",
+    "Cargo.toml": "c665649cd622f7422c96241231db69e454de4b5c69adfe4ddfb62576fea01928",
+    "Cargo.lock": "0bce49acd09fb11f2b4b2e72ccbb2479c59380f682215128675d48586ca08d78",
+    "rust-toolchain.toml": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+  },
+  "compilerAndHostRevision": {
+    "kind": "sha256",
+    "value": "f9eb712ed9a2708f31c6e5959285f42e3f303ada49a021e895e65cd9a6c9d4ff",
+    "scope": "compiler-and-host-source"
+  }
+}

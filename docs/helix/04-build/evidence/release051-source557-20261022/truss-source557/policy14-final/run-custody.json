@@ -1,0 +1,29 @@
+{
+  "cwd": "/private/tmp/truss-hf048-release",
+  "command": [
+    "/private/tmp/truss-048-arras-source557-venv/bin/python",
+    "-m",
+    "unittest",
+    "-v",
+    "test_current_query_runtime_native",
+    "test_current_query_subject_cut_native",
+    "test_current_disclosure_runtime_native"
+  ],
+  "environment": {
+    "PYTHONPATH": "packages/python/tests",
+    "TRUSS_DISCLOSURE_NATIVE_QUALIFICATION": "1",
+    "TRUSS_BUN_EXECUTABLE": null
+  },
+  "statementTimeoutMs": 2000,
+  "operationTimeoutMs": 30000,
+  "sourceHead": "0b6403e827e73b77425d50764a0c1b433ac8db2a",
+  "sourceStatus": [
+    " M docs/helix/04-build/evidence/arras-source557-producer-pin-repair-20261022/README.md",
+    " M docs/helix/04-build/evidence/arras-source557-producer-pin-repair-20261022/producer-custody.json",
+    "?? docs/helix/04-build/evidence/arras-source557-producer-pin-repair-20261022/refreshed/native-run/"
+  ],
+  "archivePinRepairCommit": "0b6403e827e73b77425d50764a0c1b433ac8db2a",
+  "testedTrussWheelSha256": "c69234212dd8cf31c48b8b7ddd498a2d6968c59318c85e9ae2ae5227d9cd6b45",
+  "testedWeftWheelSha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+  "testedWeftNativeSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa"
+}
