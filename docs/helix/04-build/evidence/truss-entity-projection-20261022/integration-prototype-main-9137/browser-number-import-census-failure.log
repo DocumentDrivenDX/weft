@@ -1,0 +1,8 @@
+file:///private/tmp/weft-truss-hf04/tests/compile/browser-check.mjs:109
+ if(results.imports.some(i=>i.module!=='wbg'||!(i.name==='__wbindgen_init_externref_table'||i.name==='__wbindgen_cast_2241b6af4c4b2941'||i.name.startsWith('__wbg___wbindgen_throw_')||stringInteropImports.has(i.name))||i.kind!=='function')) throw new Error('Unexpected WASM host imports '+JSON.stringify(results.imports));
+                                                                                                                                                                                                                                                      ^
+
+Error: Unexpected WASM host imports [{"module":"wbg","name":"__wbg_length_a95b69f903b746c4","kind":"function"},{"module":"wbg","name":"__wbg_charCodeAt_291b921e27833f8e","kind":"function"},{"module":"wbg","name":"__wbg___wbindgen_is_string_fbb76cb2940daafd","kind":"function"},{"module":"wbg","name":"__wbg___wbindgen_number_get_a20bf9b85341449d","kind":"function"},{"module":"wbg","name":"__wbg___wbindgen_string_get_e4f06c90489ad01b","kind":"function"},{"module":"wbg","name":"__wbg___wbindgen_throw_b855445ff6a94295","kind":"function"},{"module":"wbg","name":"__wbindgen_init_externref_table","kind":"function"},{"module":"wbg","name":"__wbindgen_cast_2241b6af4c4b2941","kind":"function"}]
+    at file:///private/tmp/weft-truss-hf04/tests/compile/browser-check.mjs:109:247
+
+Node.js v26.12.0

@@ -64,12 +64,23 @@ fn resolve_inner(
     if catalog.bounded_current_strings != bounded_current_strings {
         return Err(fail("WFT-VERSION", "Catalog requires its explicitly versioned bounded-string resolver"));
     }
-    let complete_entity = profile.as_ref().is_some_and(|p| p.subset == ir::Subset::CompleteEntity);
+    let complete_entity = profile.as_ref().is_some_and(|p| matches!(p.subset,ir::Subset::CompleteEntity|ir::Subset::CompleteEntityPage));
     if profile.as_ref().is_some_and(|p| match p.subset {
-        ir::Subset::CompleteEntity => !matches!(p.version.as_str(), "weft-truss-entity-read/0.1.0" | "weft-truss-entity-read/0.2.0" | "weft-truss-entity-read/0.3.0"),
+        ir::Subset::CompleteEntity => !matches!(p.version.as_str(), "weft-truss-entity-read/0.1.0" | "weft-truss-entity-read/0.2.0" | "weft-truss-entity-read/0.3.0"|"weft-truss-entity-read/0.4.0"),
+        ir::Subset::CompleteEntityPage => p.version!="weft-truss-entity-read/0.4.0",
         _ => p.version != "weft-application-read/0.2.0",
     }) {
         return Err(fail("WFT-VERSION", "Unsupported application recognizer profile version"));
+    }
+    if let Some(p)=&profile {
+        if (p.version=="weft-truss-entity-read/0.4.0")!=p.entity_projection.is_some() {
+            return Err(fail("WFT-PROFILE","Entity projection selection requires its explicit version"));
+        }
+        if let Some(selection)=&p.entity_projection {
+            if selection.facts.len()>8 || selection.facts.iter().enumerate().any(|(i,f)|selection.facts[..i].contains(f)) {
+                return Err(fail("WFT-PROFILE","Bounded unique native fact selection required"));
+            }
+        }
     }
     let mut normalized = BTreeMap::new();
     if parameters.len() > 1024 {
@@ -166,7 +177,7 @@ fn resolve_inner(
                 }
                 let (r, scan) = s.record(n)?;
                 let record_identity = r.identity.clone();
-                let relationships = if complete_entity { catalog.entity_relationships(r)? } else { vec![] };
+                let relationships = if complete_entity && profile.as_ref().and_then(|p|p.entity_projection.as_ref()).is_none_or(|p|p.relationships) { catalog.entity_relationships(r)? } else { vec![] };
                 let e = catalog.entity_descriptor(r)?;
                 s.descriptors(e.graph);
                 s.caps.insert("project.entity".into());
@@ -184,6 +195,25 @@ fn resolve_inner(
                     })
                     .collect::<Vec<_>>();
                 if complete_entity {
+                    if let Some(selection)=profile.as_ref().and_then(|p|p.entity_projection.as_ref()) {
+                        for metadata in &selection.facts {
+                            let (name,family,nullable)=match metadata {
+                                ir::NativeMetadata::Version=>("_version",Family::Integer,false),
+                                ir::NativeMetadata::CreatedBy=>("_created_by",Family::String,false),
+                                ir::NativeMetadata::CreatedAt=>("_created_at",Family::String,false),
+                                ir::NativeMetadata::UpdatedBy=>("_updated_by",Family::String,false),
+                                ir::NativeMetadata::UpdatedAt=>("_updated_at",Family::String,false),
+                                ir::NativeMetadata::OriginalAuthor=>("_original_author",Family::String,true),
+                                ir::NativeMetadata::OriginalAt=>("_original_at",Family::String,true),
+                                ir::NativeMetadata::LoadId=>("_load_id",Family::String,true),
+                            };
+                            if expressions.iter().any(|(label,_)|label.eq_ignore_ascii_case(name)) {
+                                return Err(fail("WFT-NAME-AMBIGUOUS","Authored member collides with selected native fact"));
+                            }
+                            expressions.push((name.into(),ir::Expression::NativeMetadata{scan:scan.clone(),record:record_identity.clone(),metadata:metadata.clone(),logical_type:LogicalType{family,facets:json!({}),nullable}}));
+                        }
+                        if !selection.facts.is_empty(){s.caps.insert("project.nativeMetadata".into());}
+                    } else {
                     for (name, metadata, family, nullable) in [
                         ("_version", ir::NativeMetadata::Version, Family::Integer, false),
                         ("_created_by", ir::NativeMetadata::CreatedBy, Family::String, false),
@@ -210,6 +240,7 @@ fn resolve_inner(
                         expressions.push(("_load_id".into(),ir::Expression::NativeMetadata{scan:scan.clone(),record:record_identity.clone(),metadata:ir::NativeMetadata::LoadId,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:true}}));
                     }
                     s.caps.insert("project.nativeMetadata".into());
+                    }
                     for (name, relationship) in relationships {
                         s.relationship_capabilities(&relationship);
                         if expressions.iter().any(|(label, _)| label.eq_ignore_ascii_case(&name)) {
@@ -428,12 +459,15 @@ fn resolve_inner(
                     ));
                 }
             }
-            ir::Subset::EntityPage | ir::Subset::RelatedEntityPage => {
+            ir::Subset::EntityPage | ir::Subset::RelatedEntityPage | ir::Subset::CompleteEntityPage => {
                 if aggregate || !joins.is_empty() {
                     return Err(fail(
                         "WFT-PROFILE",
                         "Entity-page profiles require a single nonaggregated source",
                     ));
+                }
+                if p.subset==ir::Subset::CompleteEntityPage && !q.outputs.iter().any(|o|matches!(o.output,ast::Output::Entity(_))) {
+                    return Err(fail("WFT-PROFILE","Entity projection page requires an entity projection"));
                 }
                 let related = filters
                     .iter()
@@ -533,17 +567,23 @@ pub fn resolve_page(
     page_size: u16,
     after: Option<&[String]>,
 ) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,false,ExactParameters::new(),false,false,false)
+    resolve_page_inner(catalog,query,parameters,page_size,after,false,ExactParameters::new(),false,false,false,None)
 }
 
 pub fn resolve_typed_page(catalog:&Catalog,query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,true,ExactParameters::new(),false,false,false)
+    resolve_page_inner(catalog,query,parameters,page_size,after,true,ExactParameters::new(),false,false,false,None)
 }
 
 pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,timestamp_equality:bool,decimal12:bool)->Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true,timestamp_equality,decimal12)
+    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true,timestamp_equality,decimal12,None)
 }
-fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool,timestamp_equality:bool,decimal12:bool) -> Result<PagePlan> {
+pub(crate) fn resolve_entity_page_with_exact(catalog:&Catalog,query:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,timestamp_equality:bool,decimal12:bool,profile:ir::ReadProfile)->Result<PagePlan>{
+    if profile.version!="weft-truss-entity-read/0.4.0" || profile.subset!=ir::Subset::CompleteEntityPage {
+        return Err(fail("WFT-PROFILE","Explicit entity projection page profile required"));
+    }
+    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true,timestamp_equality,decimal12,Some(profile))
+}
+fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool,timestamp_equality:bool,decimal12:bool,entity_profile:Option<ir::ReadProfile>) -> Result<PagePlan> {
     if query.order_nulls.len()!=query.order.len(){return Err(fail("WFT-PROFILE","Complete original page NULL placement inventory required"));}
     if !(1..=999).contains(&page_size) || query.limit.is_some()
         || !query.joins.is_empty() || !query.groups.is_empty()
@@ -589,7 +629,7 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
     query.limit = Some(page_size + 1);
     let related=query.outputs.iter().any(|o|matches!(o.output,ast::Output::Related{..}))||query.predicates.iter().any(|p|matches!(p,ast::Predicate::HasRelated{..}));
     let subset=if related{ir::Subset::RelatedEntityPage}else{ir::Subset::EntityPage};
-    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset }),exact_parameters,binary_equality,timestamp_equality,false)?;
+    let mut plan = resolve_inner(catalog, query, parameters, Some(entity_profile.unwrap_or(ir::ReadProfile { entity_projection: None, version: "weft-application-read/0.2.0".into(), subset })),exact_parameters,binary_equality,timestamp_equality,false)?;
     plan.ir_version = if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else { "weft-ir/0.2.2" }.into();
     let visible_outputs = plan.outputs.len() - key.fields.len();
     let key_outputs = (visible_outputs..plan.outputs.len()).collect();

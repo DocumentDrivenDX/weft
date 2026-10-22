@@ -42,6 +42,15 @@ Rust test runner plus a pinned property-testing library; Python pytest; browser 
 
 ## Test Data
 
+The selected Truss entity-projection increment requires independently expected
+empty/all-null/scalar/aggregate descriptors, ordered fact subsets including none,
+unknown/duplicate fact refusal, authored-name collisions, explicit bounded
+relationship projection, complete-list 100/101 refusal, facts with typed pages
+and continuation, and unchanged older profile output. Rust, installed Python and
+actual browser WASM must produce the same artifact or typed refusal. Native
+execution and current-person/owner disclosure checks belong to Truss; compiler
+parity alone cannot qualify them.
+
 The committed corpus contains 636 independently specified scenarios, including all signed and unsigned widths 1–64 at both valid boundaries and adjacent invalid values, decimal boundaries, syntax and semantic refusals, exact-string distinctions, module ambiguity and pin failures. It is input and expected behavior, not test execution evidence. Synthetic binding profiles are explicitly illustrative; production adapters require separately accepted storage mappings.
 
 Use independent arbitrary-precision arithmetic and a small bag-relational oracle that does not reuse compiler lowering. Native results use exact text transport for numbers. Compare unordered multisets, preserving duplicates; never sort numerically through floating point. Null is a tagged value. Include empty aggregates, high fanout, duplicate keys, negative cancellation, signed bounds, precision overflow, combining marks, emoji, trailing spaces and hostile identifiers/literals. Retain unknown extension content byte-for-byte while refusing unknown selected semantics.

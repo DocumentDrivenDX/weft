@@ -1,0 +1,187 @@
+{
+  "compilerVersion": "0.4.49",
+  "cases": [
+    {
+      "id": "no-facts-no-automatic-relationships",
+      "expected": "compiled",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "ordered-time-and-version",
+      "expected": "compiled",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "version-only",
+      "expected": "compiled",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "all-facts-explicit",
+      "expected": "compiled",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "explicit-bounded-relationship",
+      "expected": "compiled",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "fact-page",
+      "expected": "compiled",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "facts-free-page",
+      "expected": "compiled",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "unknown-fact",
+      "expected": "blocked",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-fact",
+      "expected": "blocked",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "old-profile-refuses-selection",
+      "expected": "blocked",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "missing-selection",
+      "expected": "blocked",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "facts-require-entity",
+      "expected": "blocked",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "id": "caller-limit-refused-by-page",
+      "expected": "blocked",
+      "actual": "blocked",
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Request violates its versioned envelope",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ]
+    }
+  ]
+}

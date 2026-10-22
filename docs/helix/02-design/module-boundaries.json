@@ -614,6 +614,10 @@
             "struct:ReadProfile",
             "field:version",
             "field:subset",
+            "field:entity_projection",
+            "struct:EntityProjection",
+            "field:facts",
+            "field:relationships",
             "struct:Field",
             "field:scan",
             "field:identity",
@@ -4393,6 +4397,7 @@
             "fn:compile_truss_postgresql_json",
             "fn:compile_truss_runtime_json",
             "fn:compile_truss_runtime_page_json",
+            "fn:compile_truss_runtime_page_transport_json",
             "use:weft_core : : mutation : : MutationRegistry",
             "fn:install_truss_mutation_backend",
             "fn:lower_mutation_selection_json",
@@ -4695,6 +4700,7 @@
             "fn:prepare_security_mapping_json",
             "fn:compile_json",
             "fn:compile_truss_runtime_json",
+            "fn:compile_truss_runtime_page_json",
             "fn:compile_json_with_conformance_configuration",
             "fn:compile_paths_keys_json",
             "fn:compile_implicit_arithmetic_json",
@@ -4993,7 +4999,8 @@
       "roots": [
         "scripts",
         "tests/qualify-and-evolve",
-        "tests/current-scalar-spark"
+        "tests/current-scalar-spark",
+        "tests/truss-entity-selection"
       ],
       "extensions": [
         ".py",
@@ -5157,7 +5164,8 @@
         "tests/qualify-and-evolve/truss-session-controls.py",
         "tests/qualify-and-evolve/unsigned-reconcile-controls.py",
         "tests/qualify-and-evolve/verify-qualified-registrations.py",
-        "tests/qualify-and-evolve/warehouse-capture-controls.py"
+        "tests/qualify-and-evolve/warehouse-capture-controls.py",
+        "tests/truss-entity-selection/check.py"
       ],
       "configs": [
         "scripts/reliability/requirements.txt"

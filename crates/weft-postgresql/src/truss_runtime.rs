@@ -1367,6 +1367,41 @@ fn compile_internal_navigation(request: &str, page: Option<(u16, Option<Vec<Stri
 }
 
 // Same tagged scalar interpretation as ordinary current runtime reads.
+#[cfg(test)]
+mod selected_entity_projection_tests {
+    use serde_json::Value;
+    #[test]
+    fn independently_expected_entity_projection_cases() {
+        let cases:Vec<Value>=serde_json::from_str(include_str!("../../../tests/truss-entity-selection/cases.json")).unwrap();
+        for case in cases {
+            let request=case["request"].to_string();
+            let after=case.get("after").map(|v|serde_json::from_value(v.clone()).unwrap());
+            let raw=match case["pageSize"].as_u64(){
+                Some(size)=>super::compile_page_json(&request,size as u16,after),
+                None=>super::compile_json(&request),
+            };
+            let result:Value=serde_json::from_str(&raw).unwrap();
+            assert_eq!(result["status"],case["expected"]["status"],"{}: {result}",case["id"]);
+            if result["status"]=="blocked"{assert!(result.get("sql").is_none());continue;}
+            let (artifact,visible)=if case["pageSize"].is_null(){(&result,result["columns"].as_array().unwrap().len())}
+                else{(&result["artifact"],result["page"]["visibleOutputs"].as_u64().unwrap() as usize)};
+            let columns=artifact["columns"].as_array().unwrap();
+            let labels:Vec<&Value>=columns[..visible].iter().map(|c|&c["outputName"]).collect();
+            assert_eq!(serde_json::to_value(labels).unwrap(),case["expected"]["visibleColumns"],"{}: {artifact}",case["id"]);
+            let facts:Vec<&Value>=columns.iter().filter_map(|c|c["representation"].get("metadata")).collect();
+            assert_eq!(serde_json::to_value(facts).unwrap(),case["expected"]["facts"],"{}",case["id"]);
+            assert_eq!(columns.iter().any(|c|c["representation"]["kind"]=="completeRelatedKeys"),case["expected"]["automaticRelationships"].as_bool().unwrap(),"{}",case["id"]);
+            if case["id"]=="no-facts-no-automatic-relationships" || case["id"]=="version-only" {
+                let sql=artifact["sql"].as_str().unwrap();
+                for helper in ["query_object_attribution","query_object_times","query_object_load_id"] {
+                    let expected=if case["id"]=="version-only" && helper=="query_object_attribution"{1}else{0};
+                    assert_eq!(sql.matches(&format!("\"{helper}\"(")).count(),expected,"{}: {sql}",case["id"]);
+                }
+            }
+        }
+    }
+}
+
 fn mutation_scalar_expression(cell:&str,logical:&LogicalType)->String {
  match logical.family {
  Family::String=>format!("({cell}->>'text') COLLATE pg_catalog.\"C\""),

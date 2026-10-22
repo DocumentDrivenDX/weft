@@ -364,6 +364,22 @@ index entry and trust boundary.
 
 ## Explicit Truss SQL page composition — 2026-10-13
 
+The selected entity-projection increment adds the corresponding WASM
+`compile_truss_runtime_page_json(request, pageSize, afterJson)` export and thin
+TypeScript `bindTrussPageCompiler(...).compilePageJson(request, pageSize, after)`.
+Both delegate to the same Rust page compiler used by Python. The new browser
+transport admits a numeric integer bound1–999; strings, booleans, fractions and
+nonfinite bounds refuse without coercion. Request scalar text is bounded at
+16MiB; continuation JSON at1MiB with at most1,024 components and64KiB per scalar
+component. UTF-16 surrogates refuse. The wrapper makes bounded temporary copies;
+it does not claim strict total-process allocation isolation.
+
+The selected wasm-bindgen0.2.105 primitive-number import performs only a
+`typeof value === 'number'` check and scalar memory transfer. It adds no system,
+clock, network or host callback capability. Actual Chromium invalid-type,
+one-over-bound, scalar-text and trap-retirement controls are required alongside
+the exact import census. Older generic compile wrappers retain their transport.
+
 The Python `compile_truss_runtime_page_json(request, page_size, after=None)` entrypoint selects the fixed runtime0.4.6 page composition. It takes an unchanged validated compile0.2.2 request plus a page size1–999 and an optional complete required-string key tuple (at most64KiB total). It refuses request readProfile/security, caller ordering/limits, joins/aggregates/relationship page predicates and unsupported key domains. Generic compile entrypoints are unchanged.
 
 Successful output is a separate `weft-sql-page/0.1` wrapper with status compiled, `artifact` (the unchanged closed compile0.2.2 response) and `page`. Page metadata contains visibleOutputs, trailing keyOutputs, pageSize, generatedContinuationFilter (null initially), generatedOutputPositions, generatedOrderPositions and generatedSpans=`diagnostic-anchors`. These positions explicitly identify compiler-derived nodes; their source spans anchor diagnostics and do not assert authored SQL syntax. Continuation parameter origins are `{kind:page-continuation,component:index}`, assigned by occurrence during lowering before normal emission validation. Existing blocked compile responses remain the refusal carrier.

@@ -13,12 +13,66 @@
       "maxItems": 32
     },
     "readProfile": {
-      "anyOf": [
+      "oneOf": [
         {
-          "$ref": "#/$defs/profile"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/profile"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         {
-          "type": "null"
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": "weft-truss-entity-read/0.4.0"
+            },
+            "subset": {
+              "enum": [
+                "complete-entity",
+                "complete-entity-page"
+              ]
+            },
+            "entityProjection": {
+              "type": "object",
+              "properties": {
+                "facts": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "version",
+                      "createdBy",
+                      "createdAt",
+                      "updatedBy",
+                      "updatedAt",
+                      "originalAuthor",
+                      "originalAt",
+                      "loadId"
+                    ]
+                  }
+                },
+                "relationships": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "facts",
+                "relationships"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "version",
+            "subset",
+            "entityProjection"
+          ],
+          "additionalProperties": false
         }
       ]
     },
@@ -1451,20 +1505,74 @@
       "then": {
         "properties": {
           "readProfile": {
-            "type": "object",
-            "properties": {
-              "version": {
-                "const": "weft-truss-entity-read/0.3.0"
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "const": "weft-truss-entity-read/0.3.0"
+                  },
+                  "subset": {
+                    "const": "complete-entity"
+                  }
+                },
+                "required": [
+                  "version",
+                  "subset"
+                ],
+                "additionalProperties": false
               },
-              "subset": {
-                "const": "complete-entity"
+              {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "const": "weft-truss-entity-read/0.4.0"
+                  },
+                  "subset": {
+                    "enum": [
+                      "complete-entity",
+                      "complete-entity-page"
+                    ]
+                  },
+                  "entityProjection": {
+                    "type": "object",
+                    "properties": {
+                      "facts": {
+                        "type": "array",
+                        "maxItems": 8,
+                        "uniqueItems": true,
+                        "items": {
+                          "enum": [
+                            "version",
+                            "createdBy",
+                            "createdAt",
+                            "updatedBy",
+                            "updatedAt",
+                            "originalAuthor",
+                            "originalAt",
+                            "loadId"
+                          ]
+                        }
+                      },
+                      "relationships": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "facts",
+                      "relationships"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "version",
+                  "subset",
+                  "entityProjection"
+                ],
+                "additionalProperties": false
               }
-            },
-            "required": [
-              "version",
-              "subset"
-            ],
-            "additionalProperties": false
+            ]
           }
         }
       }

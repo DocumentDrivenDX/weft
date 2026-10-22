@@ -460,7 +460,7 @@ mod tests {
                 &catalog,
                 application_syntax::parse(sql).unwrap(),
                 BTreeMap::new(),
-                Some(app::ReadProfile {
+                Some(app::ReadProfile { entity_projection: None,
                     version: "weft-application-read/0.2.0".into(),
                     subset: app::Subset::CountSummary,
                 }),

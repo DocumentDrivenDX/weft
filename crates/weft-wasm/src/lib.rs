@@ -30,6 +30,14 @@ pub fn compile_truss_runtime_json(request: &str) -> String {
     weft_runtime::compile_truss_runtime_json(request)
 }
 
+/// Typed page transport only; all page semantics remain in the shared compiler.
+#[cfg(feature = "truss-postgresql-pg18")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn compile_truss_runtime_page_json(request:&js_sys::JsString,page_size:&wasm_bindgen::JsValue,after_json:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue> {
+    Ok(weft_runtime::compile_truss_runtime_page_transport_json(
+        &strict_text(request,16_777_216)?,page_size.as_f64().unwrap_or(f64::NAN),&strict_text(after_json,1_048_576)?))
+}
+
 #[cfg(feature = "test-original")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_json_with_conformance_configuration(request: &str, configuration: &str) -> String {

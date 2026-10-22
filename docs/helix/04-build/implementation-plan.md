@@ -51,6 +51,40 @@ not extend native support claims or change the frozen compiler artifact.
 
 ## Scope
 
+The authorized Truss HF-04/05 follow-up consumes public Weft0.4.49 and evolves
+the shared compiler for selectable facts, explicit relationship expansion and
+facts with pages. Work starts at current main9137ca2c in an isolated checkout;
+the primary checkout is unchanged. Existing0.4.50 preparation is retained, and
+the next publication version will be selected against actual upstream release
+state. The Truss plan is
+`/Users/erik/Projects/truss/docs/helix/04-build/hohfeld-followup-plan-20261021.md`.
+This is a source reference, not an invented governed cross-flow edge.
+
+First implement the explicit entity-projection profile in CONTRACT-004 and
+consume compiler-owned descriptors. Then version bounded indexed source
+selection with the Truss backend, retaining existing pre-filter source limits
+until native plans on populations above10,000 qualify the new path. No second
+query parser or host-sampled type inference is admitted. Low-confidence estimate
+for the combined query slice is40,000–70,000 additional tokens including review
+and qualification; no overall ceiling or per-slice token meter is available.
+Record actual commands, cases and timings instead of invented token usage.
+
+The first integration prototype on main9137ca2c passes355 core tests,199 backend
+tests,15 installed candidate compiler cases and actual Chromium byte parity,
+plus seven Truss native descriptor/fact/page controls. Its development wheel is
+`0.4.51.dev1` (native module version `0.4.51-dev.1`); it is not published or a
+reserved final release number. The main branch also contains the separate,
+unqualified managed UC tranche reserved for0.4.50. Its required managed-native
+release proof is outside the authorized Truss follow-up and remains mandatory
+for that tranche. Do not promote it through a Truss-only qualification report.
+
+The release cohort will therefore use exact public0.4.49 source
+`6d12e657bed9bf8267e80b8cc7aebc50e57fc799` plus this Truss compiler increment.
+Carry the increment upstream while preserving the managed tranche's separate
+gates. Preserve the first prototype's artifacts as historical component evidence
+and rebuild/qualify the selected cohort from its own frozen source; a prototype
+wheel built from main cannot stand in for that release cohort.
+
 Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 now accepts the structural backend boundary; public contracts remain draft specifications with scoped executable evidence. No production storage compatibility is claimed.
 
 ## Shared Constraints

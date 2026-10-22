@@ -580,6 +580,44 @@ pub fn compile_truss_runtime_page_json(
     weft_postgresql::truss_runtime::compile_page_json(request, page_size, after)
 }
 
+/// Browser transport for the same typed page compiler. No SQL interpretation.
+#[cfg(feature = "truss-postgresql-pg18")]
+pub fn compile_truss_runtime_page_transport_json(request:&str,page_size:f64,after_json:&str)->String {
+    let refused=||serde_json::json!({"interfaceVersion":"weft-sql-page/0.2","status":"blocked",
+        "diagnostics":[{"code":"WFT-INPUT","message":"Bounded typed page transport required","phase":"input","severity":"error","recoverability":"correct-input"}]}).to_string();
+    if !page_size.is_finite() || page_size.fract()!=0.0 || !(1.0..=999.0).contains(&page_size)
+        || after_json.len()>1_048_576 {return refused();}
+    let value=match weft_core::json::checked_json(after_json){Ok(value)=>value,Err(_)=>return refused()};
+    let after:Option<Vec<String>>=match serde_json::from_value(value) {
+        Ok(value)=>value,Err(_)=>return refused(),
+    };
+    if after.as_ref().is_some_and(|a|a.len()>1024 || a.iter().any(|s|s.len()>65_536)) {return refused();}
+    compile_truss_runtime_page_json(request,page_size as u16,after)
+}
+
+#[cfg(all(test,feature="truss-postgresql-pg18"))]
+mod truss_page_transport_tests {
+    use super::*;
+    #[test]
+    fn typed_transport_matches_original_page_compiler_and_refuses_untyped_bounds() {
+        let cases:Vec<serde_json::Value>=serde_json::from_str(include_str!("../../../tests/truss-entity-selection/cases.json")).unwrap();
+        for case in cases.into_iter().filter(|c|c["pageSize"].is_number()) {
+            let request=case["request"].to_string();let size=case["pageSize"].as_u64().unwrap() as u16;
+            let after=case.get("after").map(|v|serde_json::from_value(v.clone()).unwrap());
+            assert_eq!(compile_truss_runtime_page_transport_json(&request,size as f64,&case["after"].to_string()),
+                compile_truss_runtime_page_json(&request,size,after),"{}",case["id"]);
+        }
+        for size in [0.0,1000.0,1.5,f64::NAN,f64::INFINITY,f64::NEG_INFINITY] {
+            let result:serde_json::Value=serde_json::from_str(&compile_truss_runtime_page_transport_json("{}",size,"null")).unwrap();
+            assert_eq!(result["diagnostics"][0]["code"],"WFT-INPUT");
+        }
+        for after in ["true","{}","[1]","[\"\\ud800\"]"] {
+            let result:serde_json::Value=serde_json::from_str(&compile_truss_runtime_page_transport_json("{}",1.0,after)).unwrap();
+            assert_eq!(result["diagnostics"][0]["code"],"WFT-INPUT");
+        }
+    }
+}
+
 /// Host-configured mutation compilation; no execution authority.
 pub use weft_core::mutation::MutationRegistry;
 
