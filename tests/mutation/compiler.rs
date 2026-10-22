@@ -47,7 +47,15 @@ fn original_local_preparation_compiles_without_crossing_native_producer() {
     let bytes = preparation.to_string();
     crossed["actions"][0]["preparation"]["utf8"] = bytes.clone().into();
     crossed["actions"][0]["preparation"]["sha256"] = weft_core::json::sha256(bytes.as_bytes()).into();
-    assert!(MutationRegistry::from_json(&crossed.to_string()).is_err());
+    // The owner id/version is unchanged. Build is descriptive provenance in
+    // the current owner contract; it cannot change local invocation authority.
+    assert!(MutationRegistry::from_json(&crossed.to_string()).is_ok());
+    let mut foreign=crossed.clone();
+    let mut foreign_preparation=preparation.clone();foreign_preparation["producer"]["id"]=serde_json::json!("foreign.producer");
+    let foreign_bytes=foreign_preparation.to_string();
+    foreign["actions"][0]["preparation"]["utf8"]=foreign_bytes.clone().into();
+    foreign["actions"][0]["preparation"]["sha256"]=weft_core::json::sha256(foreign_bytes.as_bytes()).into();
+    assert!(MutationRegistry::from_json(&foreign.to_string()).is_err());
     // A rewritten preparation cannot relabel unchanged local source as native.
     let native_invocation = serde_json::json!({"id":"umf.actions.tx","version":"1"});
     crossed["actions"][0]["pin"]["invocation"] = native_invocation.clone();
