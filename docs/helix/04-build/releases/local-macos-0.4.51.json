@@ -59,7 +59,7 @@
     }
   ],
   "evidence": "../evidence/truss-selective-sources-20261022/arras-source86c/receipt.json",
-  "otherPlatforms": "New final-source Linux wheels and packaging remain required; no other native execution qualification claimed",
-  "fullSuiteQualification": "Selected core/backend/runtime and actual Truss only; final integration fresh-host/Linux gates remain open",
+  "otherPlatforms": "Final-source Linux aarch64 and x86_64 wheels passed packaging and independent archive/module verification. Linux parity run 39811016270 completed scoped native and Chromium entity/facts reports; its browser evidence uses a debug-profile WASM binary distinct from this selected macOS release-profile binary. Table-operation evidence is candidate SQL/binding evidence only and does not qualify generated/runtime operation admission.",
+  "fullSuiteQualification": "Selected core/backend/runtime and actual Truss only; separate full-conformance run 39822650250 remains in progress",
   "nativeSparkOrDatabricksExecution": "not claimed"
 }

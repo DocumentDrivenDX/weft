@@ -1,0 +1,119 @@
+{
+  "interfaceVersion": "weft-release-evidence-custody/0.1",
+  "release": "0.4.51",
+  "selectedCompilerSourceFreeze": "86c092178bb8ca1a0d84edfebc175009d8862493",
+  "files": [
+    {
+      "file": "packaging-run-39811059843.json",
+      "source": "/private/tmp/weft-arras-051-linux-source616a/run.json",
+      "bytes": 4718,
+      "sha256": "3880bb5a1a33559f9bd3f6cae52e04ff670178b66716b4b1597a3eedd651b82b"
+    },
+    {
+      "file": "packaging-independent-verification.json",
+      "source": "/private/tmp/weft-arras-051-linux-source616a/independent-verification.json",
+      "bytes": 1409,
+      "sha256": "0d4348f92ce4d435c5339b8b42fc6ade4f997d4f1373d7d5d7b15732feecd877"
+    },
+    {
+      "file": "packaging-aarch64-unknown-linux-gnu.json",
+      "source": "/private/tmp/weft-arras-051-linux-source616a/wheels-aarch64-unknown-linux-gnu/packaging-aarch64-unknown-linux-gnu.json",
+      "bytes": 554,
+      "sha256": "af4673721552aa5a0f043bf6025d149eaf8c6bc9a79598fd6d03bcfcd9607a8b"
+    },
+    {
+      "file": "packaging-x86_64-unknown-linux-gnu.json",
+      "source": "/private/tmp/weft-arras-051-linux-source616a/wheels-x86_64-unknown-linux-gnu/packaging-x86_64-unknown-linux-gnu.json",
+      "bytes": 552,
+      "sha256": "65e628455550674b17314e0e00663decbaf34b13934fa6592d81521eba845efe"
+    },
+    {
+      "file": "linux-parity-run-39811016270-snapshot.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/run.json",
+      "bytes": 5406,
+      "sha256": "15020316307e9acfb75d69a6ce095205ee6d5973a2ed3b2b139a24fb68b26c10"
+    },
+    {
+      "file": "linux-facts-reports.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/reports.json",
+      "bytes": 186460,
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982"
+    },
+    {
+      "file": "linux-entity-reports.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/entity-reports.json",
+      "bytes": 994279,
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+    },
+    {
+      "file": "linux-facts-browser-summary.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/browser-summary.json",
+      "bytes": 1495,
+      "sha256": "5587b21eb36cbe76814e1b2c0e0640cd4d618e096bcc46846fff02dcb3af94e6"
+    },
+    {
+      "file": "linux-facts-browser-receipts.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/browser-receipts.json",
+      "bytes": 3226,
+      "sha256": "bc8a1804597818d8b8745f6105421533a2cf8d421faf80d16ef706fcd423548d"
+    },
+    {
+      "file": "linux-entity-browser-summary.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/entity-browser-summary.json",
+      "bytes": 1496,
+      "sha256": "b65902d96a4b24d4841e4eb340ed8d126ee6484d59b8c1e409eef721405bc2af"
+    },
+    {
+      "file": "linux-entity-browser-receipts.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/entity-browser-receipts.json",
+      "bytes": 12404,
+      "sha256": "8f4989b4ab9e4c70af09402128716ce85b9c4806dd1f30b9b3782955f1ca3584"
+    },
+    {
+      "file": "operations-bindings.json",
+      "source": "/private/tmp/weft-051-linux-selected-operations6636/operation-bindings.json",
+      "bytes": 6286,
+      "sha256": "d6b2d59e4ebde6d1fa65ddbbd341e1bb42e5c78e70713e8add9a19cf4bac6b9b"
+    },
+    {
+      "file": "operations-native-candidate-sql.json",
+      "source": "/private/tmp/weft-051-linux-selected-operations6636/operation-native.json",
+      "bytes": 4503,
+      "sha256": "fca64f88a31a356da6b8fca0a1c089ad3331a39b47b2e5305594e6bdac494800"
+    },
+    {
+      "file": "operations-browser-candidate.json",
+      "source": "/private/tmp/weft-051-linux-selected-operations6636/operation-browser.json",
+      "bytes": 12410,
+      "sha256": "8749f8938d5c583ede63c0414b80666171dc3790922609655ab23961497b83ca"
+    },
+    {
+      "file": "linux-parity-run-39811016270-completed.json",
+      "source": "/private/tmp/weft-051-linux-facts-c5/completed-run-39811016270.json",
+      "bytes": 5515,
+      "sha256": "3ae4b1d5e5143e1437f0968932068d1111cc7ab3e84def34c233c2e4f2fb15ae"
+    }
+  ],
+  "identities": {
+    "linuxPackaging": {
+      "runId": 39811059843,
+      "headSha": "616aa7b6b7fc7b45a53a2bf51751500935312e84",
+      "conclusion": "success"
+    },
+    "selectedTableOperations": {
+      "sourceCommit": "6636e8f60cc521810afbc71394ce8141666bdae9"
+    },
+    "macReleaseProfileWasmSha256": "73012141c317c5eea4feabe81f448b8df832822267cd3ca83b4b1420fe875d30",
+    "linuxIntegrationDebugWasmSha256": "b1a573acb81e45e345357dc8b6820d6765479c17827b9d7a8b689957c141266f",
+    "linuxParityRun": {
+      "runId": 39811016270,
+      "headSha": "c5a4537db6ba54e52a988c0f05b5df69d09991dd",
+      "conclusion": "success"
+    },
+    "fullIntegrationRun": {
+      "runId": 39822650250,
+      "status": "in_progress",
+      "evidence": "separate root-owned full-conformance workflow; not represented by parity-run snapshot"
+    }
+  }
+}
