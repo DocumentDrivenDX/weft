@@ -2958,3 +2958,15 @@ preexisting managed Rust surfaces and four managed release scripts now have
 explicit ownership inventory entries. This map repair changes no managed
 implementation or native-support claim. Main's merge tree and the selected
 release ancestor are deliberately distinct and must be named accurately.
+
+### Main workspace example feature boundary — 2026-10-22
+
+Hosted run39738802954 passed formal controls but failed candidate workspace
+compilation: the older generate_json example called two application-lineage
+APIs while that feature was disabled. Cargo now declares the example's exact
+existing feature requirement. Enabled-example check and candidate-only example
+compilation pass; these compilation controls contain zero behavioral tests.
+[Original failure and checks](evidence/truss-selective-sources-20261022/workspace-example-boundary/receipt.json)
+remain retained. This repairs the main integration only; selected release7dfb5e03
+and its f0039979 compiler/build inputs remain unchanged. A clean hosted rerun is
+mandatory before merge/publication.

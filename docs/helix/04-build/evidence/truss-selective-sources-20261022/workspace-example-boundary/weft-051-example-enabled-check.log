@@ -1,0 +1,242 @@
+    Checking memchr v2.8.3
+    Checking cfg-if v1.0.5
+    Checking serde_core v1.0.228
+   Compiling libc v0.2.190
+   Compiling zerocopy v0.8.59
+    Checking num-traits v0.2.19
+    Checking regex-syntax v0.8.11
+    Checking typenum v1.20.1
+    Checking itoa v1.0.18
+   Compiling ref-cast v1.0.27
+    Checking scopeguard v1.2.0
+    Checking once_cell v1.21.4
+    Checking smallvec v1.16.2
+    Checking ryu v1.0.23
+    Checking allocator-api2 v0.2.21
+    Checking lock_api v0.4.14
+    Checking aho-corasick v1.1.5
+    Checking bit-vec v0.8.0
+    Checking borrow-or-share v0.2.4
+    Checking foldhash v0.2.0
+    Checking equivalent v1.0.2
+    Checking zmij v1.0.23
+    Checking micromap v0.3.0
+    Checking outref v0.5.2
+   Compiling parking_lot_core v0.9.12
+    Checking num-cmp v0.1.0
+    Checking num-integer v0.1.47
+    Checking num-complex v0.4.6
+    Checking bit-set v0.8.0
+    Checking generic-array v0.14.7
+    Checking hashbrown v0.17.1
+    Checking vsimd v0.8.0
+    Checking bytecount v0.6.9
+    Checking percent-encoding v2.3.2
+    Checking cpufeatures v0.2.17
+   Compiling parking_lot v0.12.5
+    Checking unicode-general-category v1.1.0
+    Checking strum v0.28.0
+    Checking data-encoding v2.11.1
+    Checking num-bigint v0.4.8
+    Checking num-iter v0.1.46
+    Checking log v0.4.34
+    Checking base64 v0.22.1
+    Checking uuid-simd v0.8.0
+    Checking jsonschema-regex v0.56.0
+    Checking block-buffer v0.10.4
+    Checking crypto-common v0.1.7
+    Checking regex-automata v0.4.18
+    Checking sqlparser v0.63.0
+    Checking serde v1.0.228
+    Checking serde_json v1.0.145
+    Checking digest v0.10.7
+    Checking sha2 v0.10.9
+    Checking num-rational v0.4.2
+   Compiling fluent-uri v0.4.1
+    Checking email_address v0.2.9
+    Checking num v0.4.3
+    Checking fraction v0.17.0
+    Checking ahash v0.8.12 (/private/tmp/weft-truss-hf04/vendor/ahash)
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+    Checking referencing v0.56.0
+    Checking jsonschema-value v0.56.0
+    Checking fancy-regex v0.19.2
+    Checking regex v1.13.1
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling jsonschema-macros v0.56.0
+    Checking jsonschema v0.56.0
+    Checking weft-core v0.1.0 (/private/tmp/weft-truss-hf04/crates/weft-core)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:12:24
+   |
+12 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:4:25
+  |
+4 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+7 |     exact,
+  |     ^^^^^
+8 |     ir::{Family, Identity, LogicalType},
+9 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused variable: `sdk_read_parameters`
+   --> crates/weft-core/src/compile.rs:442:21
+    |
+442 |                 let sdk_read_parameters=req.parameters.clone().unwrap_or_default();
+    |                     ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/application_ir.rs:188:16
+    |
+185 | impl ReadOrder {
+    | -------------- associated function in this implementation
+...
+188 |  pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}
+    |                ^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:838:8
+    |
+838 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:62:15
+   |
+62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:246:19
+    |
+209 | impl Parser {
+    | ----------- method in this implementation
+...
+246 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 55 | impl PathRead {
+    | ------------- methods in this implementation
+...
+120 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:241:12
+    |
+240 | impl Plan {
+    | --------- associated function in this implementation
+241 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:24:9
+   |
+22 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+23 |         alias: Name,
+24 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:9:103
+  |
+9 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `canonical_name` is never used
+   --> crates/weft-core/src/table_query.rs:487:4
+    |
+487 | fn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {
+    |    ^^^^^^^^^^^^^^
+
+warning: `weft-core` (lib) generated 13 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+    Checking weft-runtime v0.1.0 (/private/tmp/weft-truss-hf04/crates/weft-runtime)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 20.35s
