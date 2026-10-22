@@ -1,0 +1,137 @@
+{
+  "release": "https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.48",
+  "sourceCommit": "8e89a068bcb68f1e631388ddc59bc97da748563d",
+  "tagWorkflow": "https://github.com/DocumentDrivenDX/truss/actions/runs/39838914360",
+  "checksumManifestUrl": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/SHA256SUMS",
+  "checksumManifestSha256": "4275c8e7fd2efd7d5ec2a8d25bad4dc9959aed5c2b94a707db1eb63a209b1427",
+  "checksumManifestText": "fc2617cbd710b34f30051b6936a57b47b535b2e9082300f2c2473e4a6fcbec50  catalog-key-backfill-report-v0.1.md\n14e3a6d1ee0e0334249b29913b78367dbfd94a90a88e386d507476f36b0da942  catalog-rebind-report-v0.2.md\n38fffeb0f864ae4e19cc265471b79f5e10bde738d1b9ef6cf4dcd94c1528cbf4  catalog-rebind-report-v0.4.md\n674575473324a81eae73ba2af1772ec4fea5f1643e5b76a808bb2ef5798b6945  catalog-registration-summary-v0.1.md\n41721077342c4fb4b7fddcd760c4c1ca5984984347c361bc74d85124a049ffa7  catalog-source-reference-v0.1.md\n5a73bc61d1b0e092b73600d1487cfab2167d161d39455df25b1f83c7f4acb486  hf-conformance-qualification.json\ncbc86dce6b1241d367798d37d5eebfab436b477b5e1c5bc27b12c1bbcdcf2889  isolated-runtime-constraints.txt\n8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96  logical-query-abi.json\n0d0345d906b9bc65193eda46fe94fb00bc3e89d1ecb6df4ce350aba080178ca5  migration-qualification-evidence.tar.gz\n087f4d448e653116f0a0e99a644d86d000a3f2e59ba6118fcd1eb03f41cf103a  migration-qualification.json\n02efd75bfa3cebe62637d84044c6b199292a3ab54743337a6b5b54262869aa60  release-pins.json\n519a893197409e277feca8b0a878287adebad5d64e4813e30cd3ffdc2cff1706  truss-hf-conformance-0.0.48.zip\n1aedf614ff3d3ff7a61bd4d91887ede650a7135d1239e8564c1c297c0ddc37c3  truss_toolkit-0.0.48-py3-none-any.whl\na7a746c7ce2978e451710a152f776592ea1a0b794c7982cbad4bca0d55a115c8  truss_toolkit-0.0.48.tar.gz\n",
+  "releasePins": {
+    "tag": "v0.0.48",
+    "commit": "8e89a068bcb68f1e631388ddc59bc97da748563d",
+    "distribution": "truss-toolkit",
+    "version": "0.0.48",
+    "runtime": "truss-catalog-runtime/0.74-candidate",
+    "runtimeManifestSha256": "c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0",
+    "layout": {
+      "identity": "truss-layout",
+      "version": "1.0",
+      "sha256": "cf417e0af5d37dd61fa5f39f818d2e7282a29e6c6c6ab7fc0b26dcdde99e7dec"
+    },
+    "weftRelease": "v0.4.51",
+    "weftBackend": "0.4.43",
+    "pgserver": "pgserver-pg18==18.6.1",
+    "pgserverRelease": "pg18.6-pgv0.8.6-r2",
+    "psycopg": "3.3.6",
+    "deploymentJavaScript": "embedded-v8",
+    "embeddedEngine": "mini-racer==0.14.1",
+    "externalJavaScriptRuntimeRequired": false,
+    "nativePlatforms": [
+      "linux-x86_64"
+    ],
+    "hfConformanceProfile": "truss-hf-conformance/0.1",
+    "hfConformanceCorpusSha256": "66632198c1e381ece398af272c8c850b243f70555485fbaf527c24b55d2b2bcf",
+    "hfConformanceArchive": "truss-hf-conformance-0.0.48.zip",
+    "hfConformanceTests": 62,
+    "weftSourceRevision": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+    "weftNativeModuleSha256": "ef293922003832fbd87041a28c6dbde33927fee573270f203aa51daf06bcd445",
+    "weftWheelSha256": "a23142f12b59444138b588a8a764666b025552a14036f62d83af022153f1a0a5",
+    "localRuntimeConstraintsAsset": "isolated-runtime-constraints.txt",
+    "localRuntimeConstraintsSha256": "cbc86dce6b1241d367798d37d5eebfab436b477b5e1c5bc27b12c1bbcdcf2889",
+    "catalogRegistrationReportInterface": "truss-catalog-registration-report/0.6",
+    "catalogPreparationInterface": "truss-registration-preparation/2.0",
+    "catalogAcceptanceInputInterface": "truss-acceptance-input/0.2.0",
+    "catalogViewInterface": "truss-catalog-view/0.2.0",
+    "mandatoryPreparationTranscript": false,
+    "supportedUmfVersions": [
+      "0.10.0"
+    ],
+    "installationUpgradesSupported": true,
+    "runtimeSupport": "latest-only",
+    "migrationInterface": "truss-runtime-migration/0.1",
+    "migrationManifestSha256": "7d165e4a344ca66d41a32b32f6bcf20f1f8fe73e4ba1137e4ca65780dcee6243",
+    "migrationSources": [
+      "9f6aab31802e9bebcd886f735ba9fe0bb405e69d3501a32f36cee8827b544d00",
+      "71c4c3d4c05a2229c4cdec1643cabe0da7055965f0b0d23195e83ad780042a2e",
+      "7ac989147f22d437b1ce0d814ebbfaa25aa868ab5495de125aa5e2bda7b963ea"
+    ],
+    "migrationTarget": "c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0",
+    "migrationProfile": "offline-administrative-unprotected-umf010",
+    "pre010MigrationSupported": false,
+    "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+    "umfExactInstantCommit": "cbb6fb87",
+    "umf010CatalogSupport": {
+      "identity": "truss-fresh-catalog-support",
+      "version": "0.20.0",
+      "sha256": "364335de9a0e6968106af189dcb11d5b4c86b2114361fcffd722c4154bf809cb"
+    },
+    "umf010CatalogReportInterface": "truss-catalog-registration-report/0.6",
+    "catalogSourceReferenceFormat": "truss-catalog-source-reference/0.1",
+    "catalogRebindReportInterface": "truss-catalog-registration-report/0.6",
+    "catalogRebindProfile": "truss-native-catalog-rebind/0.4",
+    "catalogRebindSupportedProfiles": [
+      "truss-native-catalog-rebind/0.1",
+      "truss-native-catalog-rebind/0.2",
+      "truss-native-catalog-rebind/0.3",
+      "truss-native-catalog-rebind/0.4"
+    ],
+    "catalogKeyBackfillReportInterface": "truss-catalog-registration-report/0.6",
+    "catalogKeyBackfillProfile": "truss-catalog-key-backfill/0.2",
+    "catalogKeyBackfillSupportedProfiles": [
+      "truss-catalog-key-backfill/0.1",
+      "truss-catalog-key-backfill/0.2"
+    ],
+    "currentQueryProfile": "truss-current-query-protection/0.1-candidate",
+    "currentQueryResultAbi": "weft.postgresql.current-values/0.2-candidate",
+    "currentQueryMode": "explicitly-activated-read-only",
+    "currentQueryPlatforms": [
+      "linux-x86_64"
+    ],
+    "currentQueryWeftSource": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+    "mutationProfile": {
+      "identity": "truss-owned-scalar-graph",
+      "version": "0.1",
+      "sha256": "5f5badaa3b0beb01fef08d48883395eabc8499155d4c31f7ef802e63d49a6dde"
+    },
+    "valueProfile": {
+      "identity": "truss-scalar-string-values",
+      "version": "0.6",
+      "sha256": "ca49b4e13a55be8e23d44d4b00ef07332b6249d4f5ae16e5b82c8881061e22ce"
+    },
+    "objectReadProfiles": [
+      "truss-python-scalar-object/0.4",
+      "truss-python-logical-object/0.1"
+    ],
+    "logicalQueryAbi": {
+      "identity": "truss-postgresql-logical-query",
+      "version": "1.2",
+      "sha256": "8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96"
+    },
+    "compiledQueryCapability": {
+      "identity": "truss-native-weft-runtime-query",
+      "version": "0.8",
+      "sha256": "bd0ec0d430233128aa2b79f9c49ca534660290f49ae3aa1fa258027e1ffdfcd6"
+    },
+    "catalogRegistrationSourceFormat": "truss-registration-summary/2.0",
+    "catalogPreparationSummaryInterface": "truss-registration-preparation/2.0"
+  },
+  "verificationPath": "/private/tmp/truss-public-048-verification/verification.json",
+  "linuxOriginalWorkloadPassed": true,
+  "publicMacQualification": "pending; root will run actual public package80/62, driver30 and isolated2-instance UVX checks",
+  "assetUrls": {
+    "SHA256SUMS": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/SHA256SUMS",
+    "catalog-key-backfill-report-v0.1.md": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/catalog-key-backfill-report-v0.1.md",
+    "catalog-rebind-report-v0.2.md": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/catalog-rebind-report-v0.2.md",
+    "catalog-rebind-report-v0.4.md": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/catalog-rebind-report-v0.4.md",
+    "catalog-registration-summary-v0.1.md": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/catalog-registration-summary-v0.1.md",
+    "catalog-source-reference-v0.1.md": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/catalog-source-reference-v0.1.md",
+    "hf-conformance-qualification.json": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/hf-conformance-qualification.json",
+    "isolated-runtime-constraints.txt": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/isolated-runtime-constraints.txt",
+    "logical-query-abi.json": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/logical-query-abi.json",
+    "migration-qualification-evidence.tar.gz": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/migration-qualification-evidence.tar.gz",
+    "migration-qualification.json": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/migration-qualification.json",
+    "release-pins.json": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/release-pins.json",
+    "truss-hf-conformance-0.0.48.zip": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/truss-hf-conformance-0.0.48.zip",
+    "truss_toolkit-0.0.48-py3-none-any.whl": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/truss_toolkit-0.0.48-py3-none-any.whl",
+    "truss_toolkit-0.0.48.tar.gz": "https://github.com/DocumentDrivenDX/truss/releases/download/v0.0.48/truss_toolkit-0.0.48.tar.gz"
+  }
+}

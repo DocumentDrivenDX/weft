@@ -58,8 +58,9 @@ retired UMF 0.7 inputs refused by the current envelope, plus resource/security
 and Python/WASM parity controls. It does not report successful current UMF 0.10
 Truss compilation or database execution. The separate current compiler corpus
 is 33 entity-selection and 5 facts cases, reported above against the new Mac
-module. The new Linux run contributes packaging evidence only; no source-F Linux
-runtime corpus result is claimed. Formal and mutation receipts are retained
+module. The source-F Linux packaging run alone contributes no runtime corpus
+qualification; public Linux Truss host evidence is recorded below. Formal and
+mutation receipts are retained
 with their stated scopes; mutation evidence does not claim native
 mutated-result qualification.
 
@@ -121,4 +122,19 @@ the copied source receipts or custody inventory where applicable.
 
 Weft 0.4.51 is published at [GitHub releases](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.51). The strict publisher run was [39838369924](https://github.com/DocumentDrivenDX/weft/actions/runs/39838369924), with tag source `d4b0b98507ae15bd98180a2ea2030ea92ce11d96` and frozen source F `557153731e9f5d0583193a1189a07c6ed485d3d3`. The independent verifier passed all nine release assets: three wheels, three packaging reports, the Mac qualification, SHA256SUMS and release pins. The public [SHA256SUMS manifest](https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.51/SHA256SUMS) is 394 bytes with SHA-256 `62c9d8082eb2f446446d7b94ff7ef7f48769e3cd836e5641c2951069302a6c75`; the copied manifest matches those exact bytes. It checked release metadata and asset sizes, all three wheel checksums, ZIP and RECORD membership/digests, native module bytes, Linux report correspondence, Mac report correspondence and release-pin identities.
 
-A fresh clean public macOS install passed wheel packaging verification plus all 33 entity and 5 facts cases. These reports match the source-F Mac evidence bytes. The Linux aarch64 wheel is present and packaging-verified; no Linux Truss host or database execution is claimed. The local Truss host results above remain limited to macOS ARM64 and PostgreSQL18.6. The public verification and fresh-install receipts are copied without wheel payloads under `public-release/`.
+A fresh clean public macOS install passed wheel packaging verification plus all 33 entity and 5 facts cases. These reports match the source-F Mac evidence bytes. The Linux aarch64 wheel is present and packaging-verified; no aarch64 Truss host or database execution is claimed. The local Truss host results above remain limited to macOS ARM64 and PostgreSQL18.6. The public verification and fresh-install receipts are copied without wheel payloads under `public-release/`.
+
+The public [Truss 0.0.48 release](https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.48)
+also completed its mandatory Linux x86_64 tag qualification against the public
+Weft 0.4.51 source-F runtime pair. Tag run
+[39838914360](https://github.com/DocumentDrivenDX/truss/actions/runs/39838914360)
+passed: 80 migration-lineage tests, 62 independent conformance cases and the
+1,000-object/1,000-edge workload. The public handoff verifies the exact Truss
+wheel and binds compiler source F, native module
+`ef293922003832fbd87041a28c6dbde33927fee573270f203aa51daf06bcd445`, and
+original Linux workflow evidence. This evidence qualifies the stated latest-only
+Linux x86_64 host scope; it does not qualify Linux aarch64 database execution.
+The three public verification receipts are preserved in the
+[Linux evidence inventory](public-release/truss-linux-x86_64/evidence-inventory.json), with
+original paths, byte lengths and SHA-256 values in its inventory. No wheel
+payload is duplicated.

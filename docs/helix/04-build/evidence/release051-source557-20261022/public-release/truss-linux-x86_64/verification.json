@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "observedAt": "2026-10-22T19:41:20.848374+00:00",
+  "release": "https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.48",
+  "sourceCommit": "8e89a068bcb68f1e631388ddc59bc97da748563d",
+  "assetsSha256": {
+    "catalog-key-backfill-report-v0.1.md": "fc2617cbd710b34f30051b6936a57b47b535b2e9082300f2c2473e4a6fcbec50",
+    "catalog-rebind-report-v0.2.md": "14e3a6d1ee0e0334249b29913b78367dbfd94a90a88e386d507476f36b0da942",
+    "catalog-rebind-report-v0.4.md": "38fffeb0f864ae4e19cc265471b79f5e10bde738d1b9ef6cf4dcd94c1528cbf4",
+    "catalog-registration-summary-v0.1.md": "674575473324a81eae73ba2af1772ec4fea5f1643e5b76a808bb2ef5798b6945",
+    "catalog-source-reference-v0.1.md": "41721077342c4fb4b7fddcd760c4c1ca5984984347c361bc74d85124a049ffa7",
+    "hf-conformance-qualification.json": "5a73bc61d1b0e092b73600d1487cfab2167d161d39455df25b1f83c7f4acb486",
+    "isolated-runtime-constraints.txt": "cbc86dce6b1241d367798d37d5eebfab436b477b5e1c5bc27b12c1bbcdcf2889",
+    "logical-query-abi.json": "8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96",
+    "migration-qualification-evidence.tar.gz": "0d0345d906b9bc65193eda46fe94fb00bc3e89d1ecb6df4ce350aba080178ca5",
+    "migration-qualification.json": "087f4d448e653116f0a0e99a644d86d000a3f2e59ba6118fcd1eb03f41cf103a",
+    "release-pins.json": "02efd75bfa3cebe62637d84044c6b199292a3ab54743337a6b5b54262869aa60",
+    "truss-hf-conformance-0.0.48.zip": "519a893197409e277feca8b0a878287adebad5d64e4813e30cd3ffdc2cff1706",
+    "truss_toolkit-0.0.48-py3-none-any.whl": "1aedf614ff3d3ff7a61bd4d91887ede650a7135d1239e8564c1c297c0ddc37c3",
+    "truss_toolkit-0.0.48.tar.gz": "a7a746c7ce2978e451710a152f776592ea1a0b794c7982cbad4bca0d55a115c8"
+  },
+  "runtimeFiles": 455,
+  "runtimeSupport": "latest-only",
+  "migrationTests": 80,
+  "independentTests": 62,
+  "compilerSource": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "compilerModuleSha256": "ef293922003832fbd87041a28c6dbde33927fee573270f203aa51daf06bcd445",
+  "originalHostedEvidenceMatched": true,
+  "conformanceManifestFiles": 410,
+  "scope": "Public assets, source payloads and original Linux workflow evidence; independent clean macOS native/public quickstart qualification follows"
+}

@@ -1,0 +1,26 @@
+{
+  "format": "weft-public-truss-linux-receipts/1",
+  "release": "https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.48",
+  "sourceCommit": "8e89a068bcb68f1e631388ddc59bc97da748563d",
+  "workflowRun": "https://github.com/DocumentDrivenDX/truss/actions/runs/39838914360",
+  "files": [
+    {
+      "path": "verification.json",
+      "originalPath": "/private/tmp/truss-public-048-verification/verification.json",
+      "bytes": 2225,
+      "sha256": "6f88a085737e5f08e2fae77dfb2f4f5466ec13b7754ed55eb4ed4ebcfec9a0b9"
+    },
+    {
+      "path": "handoff.json",
+      "originalPath": "/private/tmp/truss-public-048-verification/handoff.json",
+      "bytes": 9239,
+      "sha256": "07d9ebf49b5cd471e6a895764f22615578bf8596181a9d14cdf702fef2a88457"
+    },
+    {
+      "path": "tag-run.json",
+      "originalPath": "/private/tmp/truss-public-048-verification/tag-run.json",
+      "bytes": 17562,
+      "sha256": "cca15169edb175cc4603c57cb0095b6974a585e884758f152fd6b7c72b3caaed"
+    }
+  ]
+}
