@@ -238,7 +238,7 @@ fn prepare_native_document(binding: &Binding, doc: Json, operation:Option<&str>,
                 return Err("column absent/ambiguous in UMF");
             };
             let (field, member) = matches.unwrap()[0];
-            (if operation.is_some() || seed { crate::model::selected010_table_operation(&record.pin, field) } else { crate::model::selected010_raw_read(&record.pin, field) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
+            (if operation.is_some() || seed { crate::model::selected010_table_operation(&record.pin, field, &doc) } else { crate::model::selected010_raw_read(&record.pin, field, &doc) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
             let family = match c.carrier {
                 Carrier::Integer => "integer",
                 Carrier::Decimal => "decimal",
