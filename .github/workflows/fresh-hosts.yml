@@ -27,6 +27,157 @@ jobs:
       - name: Install actual Chromium and system dependencies
         shell: bash
         run: |
+          set -euo pipefail
+          sudo python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          uri_field = re.compile(r"^([A-Za-z][A-Za-z0-9-]*):[ \t]*(.*)$")
+          official_uri_token = re.compile(
+              r"(?<!\S)https?://(?:azure\.archive\.ubuntu\.com|archive\.ubuntu\.com|security\.ubuntu\.com)/ubuntu/?(?=\s|$)"
+          )
+          official_uri = re.compile(
+              r"^(https?)://(azure\.archive\.ubuntu\.com|archive\.ubuntu\.com|security\.ubuntu\.com)/ubuntu/?$"
+          )
+
+          def replace_uri(uri, suites):
+              match = official_uri.fullmatch(uri)
+              if not match:
+                  return uri, 0
+              scheme, host = match.groups()
+              if scheme == "https":
+                  return uri, 1
+              security_suite = bool(suites) and all(suite.endswith("-security") for suite in suites)
+              canonical_host = (
+                  "security.ubuntu.com"
+                  if host == "security.ubuntu.com" or security_suite
+                  else "archive.ubuntu.com"
+              )
+              return f"https://{canonical_host}/ubuntu", 1
+
+          def transform_sources(text):
+              lines = text.splitlines(keepends=True)
+              output = []
+              recognized = 0
+              block = []
+
+              def transform_block(block):
+                  fields = []
+                  suites = []
+                  current = None
+                  for index, line in enumerate(block):
+                      content = line.rstrip("\r\n")
+                      if not content.strip() or content.lstrip().startswith("#"):
+                          current = None
+                          continue
+                      field = uri_field.match(content)
+                      if field:
+                          current = field.group(1).lower()
+                          if current == "suites":
+                              suites.extend(field.group(2).split())
+                          elif current == "uris":
+                              fields.append((index, field.start(2), field.group(2)))
+                      elif content[:1].isspace() and current:
+                          if current == "suites":
+                              suites.extend(content.split())
+                          elif current == "uris":
+                              indent = len(content) - len(content.lstrip())
+                              fields.append((index, indent, content[indent:]))
+
+                  recognized = 0
+                  for index, start, value in fields:
+                      def rewrite(match):
+                          nonlocal recognized
+                          replacement, count = replace_uri(match.group(0), suites)
+                          recognized += count
+                          return replacement
+
+                      content = block[index].rstrip("\r\n")
+                      block[index] = content[:start] + official_uri_token.sub(rewrite, value) + block[index][len(content):]
+                  return block, recognized
+
+              for line in lines:
+                  if line.strip():
+                      block.append(line)
+                  else:
+                      transformed, count = transform_block(block)
+                      output.extend(transformed)
+                      output.append(line)
+                      recognized += count
+                      block = []
+              transformed, count = transform_block(block)
+              output.extend(transformed)
+              recognized += count
+              return "".join(output), recognized
+
+          def transform_list(text):
+              output = []
+              recognized = 0
+              entry = re.compile(r"^(\s*deb(?:-src)?\s+(?:\[[^]]*\]\s+)?)(\S+)(\s+)(\S+)(.*)$")
+              for line in text.splitlines(keepends=True):
+                  content = line.rstrip("\r\n")
+                  match = entry.match(content) if not content.lstrip().startswith("#") else None
+                  if match:
+                      prefix, uri, separator, suite, tail = match.groups()
+                      replacement, count = replace_uri(uri, [suite])
+                      recognized += count
+                      line = prefix + replacement + separator + suite + tail + line[len(content):]
+                  output.append(line)
+              return "".join(output), recognized
+
+          def rewrite(root):
+              source_dir = root / "sources.list.d"
+              paths = [root / "sources.list", *source_dir.glob("*.list"), *source_dir.glob("*.sources")]
+              recognized = 0
+              for path in paths:
+                  if not path.is_file():
+                      continue
+                  original = path.read_text()
+                  if path.suffix == ".sources":
+                      updated, count = transform_sources(original)
+                  else:
+                      updated, count = transform_list(original)
+                  recognized += count
+                  if updated != original:
+                      path.write_text(updated)
+              if not recognized:
+                  raise SystemExit("No official Ubuntu archive/security source URI was found")
+              return recognized
+
+          # Fixture controls: exact Ubuntu URIs change, Signed-By and unrelated sources remain,
+          # security suites use the security host, and a second pass is idempotent.
+          deb822 = (
+              "Types: deb\nURIs: http://azure.archive.ubuntu.com/ubuntu/\n"
+              "Suites: noble noble-updates\nComponents: main universe\n"
+              "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\n"
+              "Types: deb\nURIs: http://azure.archive.ubuntu.com/ubuntu/\n"
+              "Suites: noble-security\nComponents: main universe\n"
+              "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n"
+          )
+          changed, count = transform_sources(deb822)
+          assert count == 2
+          assert "URIs: https://archive.ubuntu.com/ubuntu" in changed
+          assert "URIs: https://security.ubuntu.com/ubuntu" in changed
+          assert "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg" in changed
+          assert transform_sources(changed) == (changed, 2)
+          deb_list = (
+              "deb [arch=amd64 signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] "
+              "http://azure.archive.ubuntu.com/ubuntu noble-security main\n"
+              "deb https://packages.example.test/ubuntu noble main\n"
+          )
+          changed_list, count = transform_list(deb_list)
+          assert count == 1 and "https://security.ubuntu.com/ubuntu noble-security" in changed_list
+          assert "https://packages.example.test/ubuntu" in changed_list
+          assert transform_list(changed_list) == (changed_list, 1)
+
+          print(f"Rewrote/verified {rewrite(Path('/etc/apt'))} official Ubuntu source URI(s)")
+          PY
+          sudo tee /etc/apt/apt.conf.d/99weft-network-bounds >/dev/null <<'APT'
+          Acquire::Retries "2";
+          Acquire::http::Timeout "20";
+          Acquire::https::Timeout "20";
+          APT
+          sudo timeout --signal=TERM --kill-after=30s 5m apt-get update
           playwright_dir="$RUNNER_TEMP/playwright"
           timeout --kill-after=30s 5m npm install --prefix "$playwright_dir" --ignore-scripts --no-package-lock playwright@1.62.1
           timeout --kill-after=30s 15m node "$playwright_dir/node_modules/playwright/cli.js" install --with-deps chromium
