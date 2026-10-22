@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-051-debug-fresh-hosts.py", line 5, in <module>
+    exec(compile(tree,str(source),'exec'),{'__name__':'__main__','__file__':str(source)})
+  File "/private/tmp/weft-truss-hf04/scripts/reliability/fresh_hosts.py", line 129, in <module>
+    if __name__=='__main__':sys.exit(main())
+                                     ^^^^^^
+  File "/private/tmp/weft-truss-hf04/scripts/reliability/fresh_hosts.py", line 83, in main
+    from reliability.diagnostics import Run,source_revision
+  File "/private/tmp/weft-truss-hf04/scripts/reliability/diagnostics.py", line 5, in <module>
+    from opentelemetry._logs import LogRecord,SeverityNumber
+ModuleNotFoundError: No module named 'opentelemetry'

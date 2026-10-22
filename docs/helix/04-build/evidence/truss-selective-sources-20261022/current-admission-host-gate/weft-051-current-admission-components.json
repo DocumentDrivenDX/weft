@@ -1,0 +1,126 @@
+{
+  "componentRehearsalPassed": true,
+  "builtArtifacts": {
+    "cli": "cd8b44327d27aa86483f7df9084dcdfdde278c029ce0bf07cc8c237515c8974a",
+    "batch": "5b83c38a6b44fa300e099d4109def1340425b76fc56fbbf485692cb47b5c8d5a",
+    "wheel": "e64acb5090e0b8680ecc939cf7303cb8dd92b89a395daa6227b95e8458681201",
+    "wasm": "5b09cf9fb61a19c64ba4fb6f8f912544cdebe38f756054f691cea6e80f13cd5b",
+    "glue": "418b69a33767b66971c69088c63fd5cb399b8c0dcfefa67ab819c633163eaa9e",
+    "wrapper": "f56f35bffcdc6e10b8807352bc9b3eea3f2f75271bdd34f9605ce7434fe9ac44"
+  },
+  "summaries": {
+    "cli-summary.json": {
+      "status": "passed",
+      "cases": 2181,
+      "historicalNativeArtifactSha256": "39039daf794bac5ff2bfd4761e72a605ed0f6f8be776e31673d661377f431763",
+      "mainBaselineSha256": "9b83f200ef0f4ef3652341b0e298916b821296b848f462ad8fa878102d0aa64e",
+      "mainCheckpoint": "2b29257475259d761f6b6cd6cba176cf4020a992",
+      "retiredInputRefusals": 2181,
+      "freshCompiledInputs": 0,
+      "currentCoreVersion": "0.10.0",
+      "compilerSha256": "5b83c38a6b44fa300e099d4109def1340425b76fc56fbbf485692cb47b5c8d5a",
+      "harnessSha256": "f435bfd60229f7a01b5efb7211c2939d18bd27b44310d95e5081e40a600b0e8d",
+      "scope": "Fresh CLI proves current envelope refusals for2181 original retired UMF0.7 requests. Original historical baseline remains separately reconciled, with no changed request bytes, native execution or support promotion. These are zero compiled current inputs; current UMF0.10 Truss compilation has a separate mandatory corpus gate."
+    },
+    "python-summary.json": {
+      "status": "passed",
+      "cases": 2181,
+      "byteParity": true,
+      "subprocessDisabled": true,
+      "extensionSha256": "c8fc9a3c7f6e849a135cefcf662599aaebd8e9a580805a8e42348f8d403f28fc",
+      "nativeModule": "/private/tmp/weft-051-full-gate-venv/lib/python3.11/site-packages/weft/weft.abi3.so",
+      "version": "0.4.51",
+      "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+      "scope": "Actual loaded Python ABI with both qualified backends. Byte parity to fresh public Rust runtime on2181 unchanged retired UMF0.7 fixture requests and their independently declared current envelope refusals; zero current compiled inputs and no inherited native qualification; no Python database executions or broader platform claims."
+    },
+    "browser-summary.json": {
+      "cases": 2181,
+      "batchSize": 64,
+      "streamingCorpus": true,
+      "browser": "151.0.7922.34",
+      "playwrightVersion": "1.62.1",
+      "wasmBytes": 30526784,
+      "wasmSha256": "5b09cf9fb61a19c64ba4fb6f8f912544cdebe38f756054f691cea6e80f13cd5b",
+      "jsGlueBytes": 12099,
+      "imports": [
+        {
+          "module": "wbg",
+          "name": "__wbg_length_a95b69f903b746c4",
+          "kind": "function"
+        },
+        {
+          "module": "wbg",
+          "name": "__wbg_charCodeAt_291b921e27833f8e",
+          "kind": "function"
+        },
+        {
+          "module": "wbg",
+          "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+          "kind": "function"
+        },
+        {
+          "module": "wbg",
+          "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+          "kind": "function"
+        },
+        {
+          "module": "wbg",
+          "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+          "kind": "function"
+        },
+        {
+          "module": "wbg",
+          "name": "__wbindgen_init_externref_table",
+          "kind": "function"
+        },
+        {
+          "module": "wbg",
+          "name": "__wbindgen_cast_2241b6af4c4b2941",
+          "kind": "function"
+        }
+      ],
+      "initialMemoryBytes": 2293760,
+      "finalMemoryBytes": 3473408,
+      "networkRequests": [
+        "http://weft.spike.test/",
+        "http://weft.spike.test/spike.wasm",
+        "http://weft.spike.test/spike.js",
+        "http://weft.spike.test/wrapper.js"
+      ],
+      "nodeGlobals": false,
+      "byteParity": true
+    },
+    "resource-summary.json": {
+      "status": "passed",
+      "cases": 7,
+      "binarySha256": "cd8b44327d27aa86483f7df9084dcdfdde278c029ce0bf07cc8c237515c8974a",
+      "extensionSha256": "c8fc9a3c7f6e849a135cefcf662599aaebd8e9a580805a8e42348f8d403f28fc",
+      "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+      "casesAndResponsesSha256": "06fd387a3078c6e387cecd285e8993d67c5dfc42b7caf9c6c2d8fe37f85af940",
+      "subprocessDisabled": true,
+      "scope": "Seven raw resource library refusals; six CLI whole-response parity controls and one CLI input-limit transport refusal with exit2/empty stdout. No native database execution."
+    },
+    "security-summary.json": {
+      "status": "passed",
+      "resourceCases": 7,
+      "securityCases": 10,
+      "cases": 17,
+      "libraryByteParity": true,
+      "cliResponseParityCases": 16,
+      "cliInputLimitRefusals": 1,
+      "subprocessDisabled": true,
+      "extensionSha256": "c8fc9a3c7f6e849a135cefcf662599aaebd8e9a580805a8e42348f8d403f28fc",
+      "scope": "Fresh exact whole-response ABI parity for raw resource controls and blocked compat0.5 and dedicated security0.1/0.2 admission/refusals. No native security enforcement or database execution."
+    },
+    "browser-resource-security-summary.json": {
+      "status": "passed",
+      "cases": 17,
+      "browser": "151.0.7922.34",
+      "byteParity": true,
+      "wasmSha256": "5b09cf9fb61a19c64ba4fb6f8f912544cdebe38f756054f691cea6e80f13cd5b",
+      "wrapperSha256": "f56f35bffcdc6e10b8807352bc9b3eea3f2f75271bdd34f9605ce7434fe9ac44",
+      "casesAndResponsesSha256": "8b83498becec7322c89f0cd461083d61fbbfe8d480cff9d27048299c13cd0e77",
+      "scope": "Fresh source-correct UMF0.10 blocked security and resource controls; no native security activation"
+    }
+  }
+}

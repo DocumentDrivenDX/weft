@@ -180,3 +180,15 @@ unchanged. Existing compiler factories and backend0.4.38 and earlier remain
 name-only, including their original unnamed-source refusals. This selection
 does not change protected security query naming, mutation resolution, relationship
 naming, namespace rules or the frozen browser compiler cohort.
+
+### Current-core qualification and retained inputs
+
+The current compiler admits UMF0.10 source. Historical native success artifacts
+remain immutable evidence of their original core/profile, not a promise that
+latest compilers execute retired UMF0.7/0.8 inputs. Fresh host qualification must
+preserve original requests and explicitly prove their current envelope refusals
+without relabeling or stripping them. Retired requests do not count as current
+compiled inputs or open native requalification obligations. Current compilation
+claims require separately authored UMF0.10 sources and exact native/browser
+results on that selected profile, including original extension-bearing source
+pins. Retained evidence and current functionality are separate gates.

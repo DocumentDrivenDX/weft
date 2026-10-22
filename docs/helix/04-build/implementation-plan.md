@@ -2998,3 +2998,24 @@ corpus/producer refusals,17 custody controls, seven fresh-host controls and ten
 remaining runtime feature commands. No native service execution or old-runtime
 support follows. Compiler/build source and selected release770137be are unchanged;
 clean hosted full conformance remains mandatory.
+
+### Current-core fresh-host gate — 2026-10-22
+
+The full fresh-host rehearsal exposed a later retirement gap: its2,181 unchanged
+archived requests are all UMF0.7, while current source already admits only0.10.
+The historical baseline remains byte-verified. The current gate now independently
+declares and verifies exact WFT-INPUT envelope refusals for those original inputs;
+it records zero current compiled inputs and no obligation to requalify retired
+semantics. No source is relabeled or stripped. Successful current compilation
+remains the separate mandatory31-case UMF0.10 native/Chromium Truss corpus.
+CONTRACT-001 now explicitly separates these qualification meanings.
+
+The fresh blocked-security fixture already contains original UMF0.10 source; its
+hardcoded0.8 pin was wrong and now follows that actual source version. Native CLI,
+Python and Chromium match all2,181 retired refusals, seven resource controls and
+17 combined resource/security controls. Eight host/corruption tests pass.
+[Original failures and component receipts](evidence/truss-selective-sources-20261022/current-admission-host-gate/receipt.json)
+retain setup failures and the stale-success failure. These component rehearsals
+do not close fresh input custody or publication. A clean full local and hosted
+run on committed source is required next. Compiler/build source and selected
+release770137be remain unchanged.

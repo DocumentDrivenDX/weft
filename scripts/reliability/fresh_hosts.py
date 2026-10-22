@@ -33,6 +33,23 @@ def load_main_baseline(root,historical_path,historical):
  differences=json.loads(gzip.decompress((base/'historical-to-main-differences.json.gz').read_bytes()))
  return reconcile_main_baseline(historical,records,receipt,differences)
 
+def retired_core_expectations(records):
+ """Normative current envelope refusal for the exact retained UMF0.7 corpus.
+
+ This does not derive expected outputs from a compiler, change original inputs,
+ or relabel historical native success as current compilation qualification.
+ """
+ expected=[]
+ for row in records:
+  request=row['request'];version=request.get('interfaceVersion')
+  if version not in ('weft-compile/0.1.0','weft-compile/0.2.0') or not request.get('modules'):raise RuntimeError()
+  for module in request['modules']:
+   if module['pin']['umfVersion']!='0.7.0' or json.loads(module['documentJson']).get('umf')!='0.7.0':raise RuntimeError()
+   if hashlib.sha256(module['documentJson'].encode()).hexdigest()!=module['pin']['sha256']:raise RuntimeError()
+  response={'interfaceVersion':version,'status':'blocked','diagnostics':[{'code':'WFT-INPUT','message':'Request violates its versioned envelope','phase':'input','recoverability':'correct-input','severity':'error'}]}
+  expected.append(dict(row,response=response))
+ return expected
+
 def validate_reports(out,wheel,built=None):
  summaries={name:json.loads((out/name).read_bytes()) for name in ('cli-summary.json','python-summary.json','browser-summary.json','resource-summary.json','security-summary.json','browser-resource-security-summary.json')}
  for name in ('cli-summary.json','python-summary.json','browser-summary.json'):
@@ -40,7 +57,7 @@ def validate_reports(out,wheel,built=None):
   if value.get('cases')!=2181 or (name!='browser-summary.json' and value.get('status')!='passed'):raise RuntimeError()
  baseline=json.loads((ROOT/BASELINE/'baseline.json').read_bytes())
  cli_summary=summaries['cli-summary.json']
- if cli_summary.get('historicalIdenticalOutputs')!=baseline['historicalIdenticalOutputs'] or cli_summary.get('nativeRequalificationOpen')!=baseline['changedOutputs'] or cli_summary.get('mainCheckpoint')!=baseline['checkpoint']:raise RuntimeError()
+ if cli_summary.get('retiredInputRefusals')!=2181 or cli_summary.get('freshCompiledInputs')!=0 or cli_summary.get('currentCoreVersion')!='0.10.0' or cli_summary.get('mainBaselineSha256')!=baseline['baselineSha256'] or cli_summary.get('mainCheckpoint')!=baseline['checkpoint']:raise RuntimeError()
  for name in ('python-summary.json','browser-summary.json','browser-resource-security-summary.json'):
   if summaries[name].get('byteParity') is not True:raise RuntimeError()
  security=summaries['security-summary.json']
@@ -122,8 +139,8 @@ def main():
   except Exception:diagnostics.close(failed=True);raise
   if diagnostics.close()!='passed':raise RuntimeError()
   sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181unchanged retained fixture requests against independently built pinned-main outputs;16resource/security CLI response-parity controls,1CLI input-limit refusal and17Python/WASM library-parity controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
+  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181 unchanged retired UMF0.7 inputs against independently declared current envelope refusals; successful current UMF0.10 Truss compilation is a separate mandatory shared-compiler/native/browser corpus gate;16resource/security CLI response-parity controls,1CLI input-limit refusal and17Python/WASM library-parity controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
   with open(diagnostics.directory/'qualification.json','x',opener=lambda name,flags:os.open(name,flags,0o600)) as f:json.dump(result,f,indent=2);f.write('\n')
-  print(json.dumps({'version':result['version'],'status':'passed','ordinaryCases':2181,'refusalCases':17,'inputFiles':len(inputs['files'])}));return 0
+  print(json.dumps({'version':result['version'],'status':'passed','retiredInputRefusals':2181,'refusalCases':17,'inputFiles':len(inputs['files'])}));return 0
  except Exception:print('weft-runner: fresh host qualification failed',file=sys.stderr);return 1
 if __name__=='__main__':sys.exit(main())

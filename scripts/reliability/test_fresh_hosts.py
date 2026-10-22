@@ -34,13 +34,13 @@ class FreshHostTests(unittest.TestCase):
    with zipfile.ZipFile(wheel,'w') as package:package.writestr('weft/weft.abi3.so',native.read_bytes())
    raw='{}';response_sha=hashlib.sha256(raw.encode()).hexdigest();rows=[{'id':str(i),'actualSha256':response_sha,'expectedSha256':response_sha} for i in range(2181)]
    baseline=json.loads((ROOT/BASELINE/'baseline.json').read_bytes())
-   values={'cli-summary.json':{'status':'passed','cases':2181,'historicalIdenticalOutputs':baseline['historicalIdenticalOutputs'],'nativeRequalificationOpen':baseline['changedOutputs'],'mainCheckpoint':baseline['checkpoint']},'python-summary.json':{'status':'passed','cases':2181,'byteParity':True,'subprocessDisabled':True,'nativeModule':str(native),'extensionSha256':digest},'browser-summary.json':{'cases':2181,'byteParity':True,'wasmSha256':'wasm'},'resource-summary.json':{'status':'passed','cases':7,'extensionSha256':digest},'security-summary.json':{'status':'passed','cases':17,'securityCases':10,'resourceCases':7,'libraryByteParity':True,'cliResponseParityCases':16,'cliInputLimitRefusals':1,'extensionSha256':digest},'browser-resource-security-summary.json':{'status':'passed','cases':17,'byteParity':True,'wasmSha256':'wasm'},'cli-reports.json':[{'id':str(i),'raw':raw} for i in range(2181)],'python-receipts.json':{'cases':copy.deepcopy(rows)},'browser-receipts.json':{'cases':copy.deepcopy(rows)}}
+   values={'cli-summary.json':{'status':'passed','cases':2181,'retiredInputRefusals':2181,'freshCompiledInputs':0,'currentCoreVersion':'0.10.0','mainBaselineSha256':baseline['baselineSha256'],'mainCheckpoint':baseline['checkpoint']},'python-summary.json':{'status':'passed','cases':2181,'byteParity':True,'subprocessDisabled':True,'nativeModule':str(native),'extensionSha256':digest},'browser-summary.json':{'cases':2181,'byteParity':True,'wasmSha256':'wasm'},'resource-summary.json':{'status':'passed','cases':7,'extensionSha256':digest},'security-summary.json':{'status':'passed','cases':17,'securityCases':10,'resourceCases':7,'libraryByteParity':True,'cliResponseParityCases':16,'cliInputLimitRefusals':1,'extensionSha256':digest},'browser-resource-security-summary.json':{'status':'passed','cases':17,'byteParity':True,'wasmSha256':'wasm'},'cli-reports.json':[{'id':str(i),'raw':raw} for i in range(2181)],'python-receipts.json':{'cases':copy.deepcopy(rows)},'browser-receipts.json':{'cases':copy.deepcopy(rows)}}
    def write(data):
     for name,value in data.items():(out/name).write_text(json.dumps(value))
    write(values)
    with patch.object(sys,'prefix',str(out)):
     self.assertEqual(validate_reports(out,wheel)['python-summary.json']['cases'],2181)
-    changes=[('cli-summary.json','nativeRequalificationOpen',0),('cli-summary.json','mainCheckpoint','wrong'),('python-summary.json','cases',0),('python-summary.json','byteParity',False),('security-summary.json','securityCases',0),('security-summary.json','cliInputLimitRefusals',0),('security-summary.json','libraryByteParity',False),('resource-summary.json','extensionSha256','stale'),('browser-summary.json','wasmSha256','stale')]
+    changes=[('cli-summary.json','retiredInputRefusals',0),('cli-summary.json','freshCompiledInputs',1),('cli-summary.json','mainCheckpoint','wrong'),('python-summary.json','cases',0),('python-summary.json','byteParity',False),('security-summary.json','securityCases',0),('security-summary.json','cliInputLimitRefusals',0),('security-summary.json','libraryByteParity',False),('resource-summary.json','extensionSha256','stale'),('browser-summary.json','wasmSha256','stale')]
     for name,key,value in changes:
      corrupt=copy.deepcopy(values);corrupt[name][key]=value;write(corrupt)
      with self.assertRaises(RuntimeError):validate_reports(out,wheel)
@@ -97,5 +97,22 @@ class DeclarationBaselineTests(unittest.TestCase):
   self.assertEqual(receipt['reviewedDeclarationCases'],964);self.assertFalse(receipt['independentlyBuiltReference'])
   reviewed=ROOT/BASELINE/'reviewed-declaration-differences.json.gz'
   self.assertEqual(hashlib.sha256(reviewed.read_bytes()).hexdigest(),receipt['reviewedDeclarationDifferencesSha256'])
+
+
+
+class CurrentCoreAdmissionTests(unittest.TestCase):
+ def test_original_retired_inputs_refuse_without_relabeling_or_native_promotion(self):
+  import gzip
+  from reliability.fresh_hosts import retired_core_expectations
+  path=ROOT/BASELINE/'main-reference-artifacts.jsonl.gz'
+  original=[json.loads(line) for line in gzip.decompress(path.read_bytes()).decode().splitlines()]
+  before=copy.deepcopy(original)
+  expected=retired_core_expectations(original)
+  self.assertEqual(original,before)
+  self.assertEqual(len(expected),2181)
+  self.assertTrue(all(r['response']['status']=='blocked' and r['response']['diagnostics'][0]['code']=='WFT-INPUT' and 'sql' not in r['response'] for r in expected))
+  self.assertEqual([r['request'] for r in expected],[r['request'] for r in original])
+  changed=copy.deepcopy(original[:1]);changed[0]['request']['modules'][0]['pin']['umfVersion']='0.10.0'
+  with self.assertRaises(RuntimeError):retired_core_expectations(changed)
 
 if __name__=='__main__':unittest.main()

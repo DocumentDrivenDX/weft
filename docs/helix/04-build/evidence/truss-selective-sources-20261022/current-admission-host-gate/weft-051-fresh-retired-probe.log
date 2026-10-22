@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-truss-hf04/tests/qualify-and-evolve/prepare-qualified-host-corpus.py", line 21, in <module>
+    for record,response in zip(records,raw,strict=True):assert canonical_json(json.loads(response))==canonical_json(record['response']),record['id']
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ashlar-scalar-exact
