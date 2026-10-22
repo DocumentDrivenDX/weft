@@ -79,3 +79,7 @@ required-features=["ashlar-databricks-implicit-arithmetic"]
 [[example]]
 name="compile_truss_query_abi"
 required-features=["truss-postgresql-pg18"]
+
+[[example]]
+name="generate_json"
+required-features=["application-lineage-candidate"]
