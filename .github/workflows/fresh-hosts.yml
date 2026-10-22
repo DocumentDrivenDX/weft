@@ -6,7 +6,7 @@ permissions:
 jobs:
   fresh-hosts:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,7 +25,19 @@ jobs:
           cargo install wasm-bindgen-cli --version 0.2.105 --locked
           cargo fetch --locked
       - name: Install actual Chromium and system dependencies
-        run: bunx --bun playwright@1.62.1 install --with-deps chromium
+        shell: bash
+        run: |
+          playwright_dir="$RUNNER_TEMP/playwright"
+          timeout --kill-after=30s 5m npm install --prefix "$playwright_dir" --ignore-scripts --no-package-lock playwright@1.62.1
+          timeout --kill-after=30s 15m node "$playwright_dir/node_modules/playwright/cli.js" install --with-deps chromium
+          WEFT_PLAYWRIGHT_MODULE="$playwright_dir/node_modules/playwright/index.mjs" \
+            timeout --kill-after=10s 60s node --input-type=module -e '
+              import { pathToFileURL } from "node:url";
+              const { chromium } = await import(pathToFileURL(process.env.WEFT_PLAYWRIGHT_MODULE));
+              const browser = await chromium.launch({ headless: true });
+              console.log(`Launched pinned Chromium at ${chromium.executablePath()}`);
+              await browser.close();
+            '
       - name: Install locked JavaScript dependencies
         run: bun install --frozen-lockfile
       - name: Install pinned host diagnostics dependencies
