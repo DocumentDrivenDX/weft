@@ -1,0 +1,300 @@
+{
+  "format": "weft-source-f-evidence-custody/0.1",
+  "sourceFreezeCommit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+  "sourceInputs": [
+    {
+      "file": "hosted-ci/formal/events.jsonl",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-formal-evidence/weft-run-d7e84ad48c2a404d92d13ea3d063cfde/events.jsonl",
+      "bytes": 2529,
+      "sha256": "1b7eb209cecfeae3c1569438cc30a8697359e112f3fc75b4a37bbcac715220f7",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/formal/manifest.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-formal-evidence/weft-run-d7e84ad48c2a404d92d13ea3d063cfde/manifest.json",
+      "bytes": 712,
+      "sha256": "6028f1ac29d35b959312cb61e058f936b8983a6a4d66c0a51cca2e2c4473659e",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/formal/qualification.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-formal-evidence/weft-run-d7e84ad48c2a404d92d13ea3d063cfde/qualification.json",
+      "bytes": 11629,
+      "sha256": "1cce7b261142660c93e9333bf86a49fb4a9f1fd5933b7911d985acdb8ea7d322",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/fresh-host/events.jsonl",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-host-evidence/weft-run-32ad88e063ce4b1998f15d9650978fd4/events.jsonl",
+      "bytes": 17493,
+      "sha256": "ecc8e10f95c3ba9c10b2f3e53352bee4ff6983f8e843a42073e77c0dec17e349",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/fresh-host/manifest.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-host-evidence/weft-run-32ad88e063ce4b1998f15d9650978fd4/manifest.json",
+      "bytes": 712,
+      "sha256": "dec1d79c6c8d031a6a308b333ba3bbd0a21265ad0cf0175926cd27c1b4ae4370",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/fresh-host/qualification.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-host-evidence/weft-run-32ad88e063ce4b1998f15d9650978fd4/qualification.json",
+      "bytes": 884123,
+      "sha256": "042044c4067322ea30d82902a865683bc95967c5a970066ce960bd1fbc1d5427",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/browser-receipts.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/browser-receipts.json",
+      "bytes": 729150,
+      "sha256": "4efd771cf76f7d3816887cc64d96968c482d6eec11a104c2b7dee1e60521249f",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/browser-resource-security-summary.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/browser-resource-security-summary.json",
+      "bytes": 588,
+      "sha256": "695bc8d25b2f70829278c264a6347b2c38d27212d13044c6d5f60fdee7d09cec",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/browser-summary.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/browser-summary.json",
+      "bytes": 1374,
+      "sha256": "b1b7b80763881c345400f3aed49308b93f62a75302f75d032f6f916cf092decd",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/cli-reports.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/cli-reports.json",
+      "bytes": 660020,
+      "sha256": "a1f008928fe42949f800ed31935b33fd316effbc141b1b866d96023afaad593e",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/cli-summary.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/cli-summary.json",
+      "bytes": 912,
+      "sha256": "ac876eb8130ccf92acea48d2b68674d1d1feb750e13c4b3e36dc226a17245eb5",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/python-receipts.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/python-receipts.json",
+      "bytes": 728425,
+      "sha256": "5a13a923349b7b5262330fffec44efe78903186a3fd7f7c3b579d15be42df06f",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/python-summary.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/python-summary.json",
+      "bytes": 725,
+      "sha256": "fb69680967e35d480287ea0845b25fcac43d700169ba6e60ce788ff89b8d6aff",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/resource-summary.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/resource-summary.json",
+      "bytes": 594,
+      "sha256": "d84e41f64f05d853c9ed8bc183610ae506f18c36b91b248d9ee25e17bdff2a90",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/fresh-hosts/security-summary.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/security-summary.json",
+      "bytes": 499,
+      "sha256": "ddb9210d627614088b2f4bdc7a66f7edbb39f5f96a711a8c99f9818662e66e5d",
+      "role": "Hosted final conformance public host receipt/summary"
+    },
+    {
+      "file": "hosted-ci/mutation/events.jsonl",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-mutation-evidence/weft-run-eb120d7699724ba8b29bd3629bf52b45/events.jsonl",
+      "bytes": 10812,
+      "sha256": "aae08060ccc965312caf8cb16720cae692cea6023db5f4eeff7f2b63bf5bd479",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/mutation/manifest.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-mutation-evidence/weft-run-eb120d7699724ba8b29bd3629bf52b45/manifest.json",
+      "bytes": 716,
+      "sha256": "2d3d2d9f45f3f1f996eb8dd387b6a90461f4ab387d3428ffaf12223de9f32349",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "hosted-ci/mutation/qualification.json",
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-mutation-evidence/weft-run-eb120d7699724ba8b29bd3629bf52b45/qualification.json",
+      "bytes": 5171,
+      "sha256": "1fae8a9c374d1f015f8f1cf7b9debaadfdac13dd0f565f6b25aafe2b0ff44078",
+      "role": "Hosted final conformance public receipt"
+    },
+    {
+      "file": "linux/independent-verification.json",
+      "originalPath": "/private/tmp/weft-arras-051-linux-source55715373/independent-verification.json",
+      "bytes": 1314,
+      "sha256": "a70f0ff7a3b5d9da153b96d57789635963f39be5742e532190e107069efb0327",
+      "role": "Linux source-F packaging provenance and independent verification"
+    },
+    {
+      "file": "linux/old-new-comparison-aarch64-unknown-linux-gnu.json",
+      "originalPath": "/private/tmp/weft-arras-051-linux-source55715373/wheels-aarch64-unknown-linux-gnu/old-new-comparison.json",
+      "bytes": 8421,
+      "sha256": "7ea84411531109ee7a4c4cecf7fc481566a9a41b6b97d38539ad6dfdabca0504",
+      "role": "Linux archive/member comparison report"
+    },
+    {
+      "file": "linux/old-new-comparison-x86_64-unknown-linux-gnu.json",
+      "originalPath": "/private/tmp/weft-arras-051-linux-source55715373/wheels-x86_64-unknown-linux-gnu/old-new-comparison.json",
+      "bytes": 8412,
+      "sha256": "5c9a260fcb14fc77fc1caf65f565b2910578afa219416408f7202b9e6a0ce8a9",
+      "role": "Linux archive/member comparison report"
+    },
+    {
+      "file": "linux/packaging-aarch64-unknown-linux-gnu.json",
+      "originalPath": "/private/tmp/weft-arras-051-linux-source55715373/wheels-aarch64-unknown-linux-gnu/packaging-aarch64-unknown-linux-gnu.json",
+      "bytes": 554,
+      "sha256": "0b41270a01cbfa60c3428ed84e99c1f601984746bb3988466a3bb62200c7e5eb",
+      "role": "Linux source-F exact wheel packaging report"
+    },
+    {
+      "file": "linux/packaging-x86_64-unknown-linux-gnu.json",
+      "originalPath": "/private/tmp/weft-arras-051-linux-source55715373/wheels-x86_64-unknown-linux-gnu/packaging-x86_64-unknown-linux-gnu.json",
+      "bytes": 552,
+      "sha256": "0e2ecca911a768ff679fbe0a3ab4d387cae7b22b64a8c202d6db7c8c92506606",
+      "role": "Linux source-F exact wheel packaging report"
+    },
+    {
+      "file": "linux/run.json",
+      "originalPath": "/private/tmp/weft-arras-051-linux-source55715373/run.json",
+      "bytes": 4817,
+      "sha256": "56f24f8b6cf56b8d0ff5c0e2883ecce004a335e7c58091228a109aa235e63186",
+      "role": "Linux source-F packaging provenance and independent verification"
+    },
+    {
+      "file": "macos/build-command.txt",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/build-command.txt",
+      "bytes": 142,
+      "sha256": "0ddf12c5c7c1b68d669fb95568477f73e1900832ba29e6aa286d1a55f56047d1",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/build-environment.txt",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/build-environment.txt",
+      "bytes": 370,
+      "sha256": "6e1b16c4056cfa10fbc7aaf5e781bfa6615348f340976deb26f5c6f10a57f8be",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/build-retry.log",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/build-retry.log",
+      "bytes": 11936,
+      "sha256": "f35514a7a7fb2ba1513814ff7050643a6950aa681b104c0116130396b1fc99ea",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/build.log",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/build.log",
+      "bytes": 11575,
+      "sha256": "fe5c4bd02557c25e6ccb8265920d3a254ff46e53d07f90b9e2d1c799f43c1f1d",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/entity-reports.json",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/entity-reports.json",
+      "bytes": 994279,
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/entity-test.log",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/entity-test.log",
+      "bytes": 55,
+      "sha256": "af6b0494ec2d1fa683c6129bd32f3990c3a023150ea8a1f4d5a37bcfb35c6057",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/facts-reports.json",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/facts-reports.json",
+      "bytes": 186460,
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/facts-test.log",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/facts-test.log",
+      "bytes": 54,
+      "sha256": "cfed9737600395f596b5e32f8f927ff75c787522b03bae28d80ccd07a5f9624f",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/mac-rebuild-custody.json",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/mac-rebuild-custody.json",
+      "bytes": 4862,
+      "sha256": "51dce450018b20d6102536758819c9cdd4d38fc40347575400a61d7c55d93379",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/runtime51.log",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/runtime51.log",
+      "bytes": 16449,
+      "sha256": "a6ea2304339c64c1fa7dcd66c8e9c9ffcac109e8c1f2892d634da3fc3a11e61b",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/source-identity.txt",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/source-identity.txt",
+      "bytes": 403,
+      "sha256": "f4a231df009d1825ab13c6b70b4536248d4d6e9253706ad64947e1a9c4ba7150",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/verify-wheel-packaging.json",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/verify-wheel-packaging.json",
+      "bytes": 468,
+      "sha256": "3104b927a2b0b6cdbcfb6e4bf3fbac2467ce0c1f431dd244b412a4e859e2f7db",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    },
+    {
+      "file": "macos/wheel-comparison.json",
+      "originalPath": "/private/tmp/weft-arras-051-final-macos-55715373/wheel-comparison.json",
+      "bytes": 8255,
+      "sha256": "ecbb3d9f8e066d8bd7f7f5f53305ebf5d7d8a7285284b24bba11ecb799f1c016",
+      "role": "Mac source-F package/build/native/compiler evidence"
+    }
+  ],
+  "excludedLargeHostedInputs": [
+    {
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/resource-cases.json",
+      "bytes": 38023035,
+      "sha256": "06fd387a3078c6e387cecd285e8993d67c5dfc42b7caf9c6c2d8fe37f85af940",
+      "reason": "Large generated case/response payload; exact summaries and public receipts are retained."
+    },
+    {
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/resource-security-cases.json",
+      "bytes": 38137945,
+      "sha256": "8b83498becec7322c89f0cd461083d61fbbfe8d480cff9d27048299c13cd0e77",
+      "reason": "Large generated case/response payload; exact summaries and public receipts are retained."
+    },
+    {
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/wheels/weft_sql-0.4.51-cp39-abi3-manylinux_2_34_x86_64.whl",
+      "bytes": 54038835,
+      "sha256": "c0d55bf129189c829b130d241e5e7c29ed5d203626d5d4a5803eeb949bfac992",
+      "reason": "Built hosted wheel is not duplicated; exact extension and wheel identities are retained by included qualification receipts."
+    },
+    {
+      "originalPath": "/private/tmp/weft-051-final-cc694-conformance-artifacts/weft-fresh-hosts/fresh-host-evidence/web/weft_wasm_bg.wasm",
+      "bytes": 30515714,
+      "sha256": "3067ab811c4cdc64e4b6da497a16cef55dc3a89a9b145c09bbbfe94611aa4fc4",
+      "reason": "Built hosted WASM is not duplicated; exact module identity/size are retained by included browser summaries."
+    }
+  ],
+  "secretsPolicy": "No cursor.key, privatekey, or other private-key file was read or copied.",
+  "derivedRecords": [
+    {
+      "file": "hosted-ci/conformance-run-39822650250.json",
+      "bytes": 1192,
+      "sha256": "e785daef49e3be9d5853a56cd9bfc7e9dad36883f3c9369b200c47ce380d6969",
+      "basis": "Run and PR metadata provided by the release owner; artifact-level source receipts are copied alongside."
+    }
+  ]
+}

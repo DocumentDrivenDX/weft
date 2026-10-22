@@ -1,0 +1,368 @@
+{
+  "format": "weft-wheel-content-comparison/1",
+  "oldArchive": {
+    "path": "/private/tmp/weft-arras-051-linux-source616a/wheels-aarch64-unknown-linux-gnu/weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+    "filename": "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+    "sha256": "5740eb637c0391c329b722be75d745f536b4487299162185c2dee7b03ece600f",
+    "size": 12376707
+  },
+  "newArchive": {
+    "path": "/private/tmp/weft-arras-051-linux-source55715373/wheels-aarch64-unknown-linux-gnu/weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+    "filename": "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+    "sha256": "42f846d689ace027d6bb2951f27c587660d4e5151285fe911ce7a3006d0001de",
+    "size": 12376342
+  },
+  "archiveBytesIdentical": false,
+  "archiveMemberOrderIdentical": true,
+  "archiveZipMetadataDifferences": [
+    {
+      "path": "weft/__init__.py",
+      "old": {
+        "compression": 8,
+        "compressedSize": 77,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 77,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft/weft.abi3.so",
+      "old": {
+        "compression": 8,
+        "compressedSize": 12334441,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2179792896,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 12334077,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2179792896,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft_sql-0.4.51.dist-info/METADATA",
+      "old": {
+        "compression": 8,
+        "compressedSize": 850,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 850,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft_sql-0.4.51.dist-info/RECORD",
+      "old": {
+        "compression": 8,
+        "compressedSize": 465,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 464,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft_sql-0.4.51.dist-info/WHEEL",
+      "old": {
+        "compression": 8,
+        "compressedSize": 114,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 114,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft_sql-0.4.51.dist-info/licenses/LICENSE-APACHE",
+      "old": {
+        "compression": 8,
+        "compressedSize": 3958,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 3958,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft_sql-0.4.51.dist-info/licenses/LICENSE-MIT",
+      "old": {
+        "compression": 8,
+        "compressedSize": 638,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 638,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft_sql-0.4.51.dist-info/licenses/LICENSE.md",
+      "old": {
+        "compression": 8,
+        "compressedSize": 4649,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 4649,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    },
+    {
+      "path": "weft_sql-0.4.51.dist-info/licenses/THIRD-PARTY-LICENSES.txt",
+      "old": {
+        "compression": 8,
+        "compressedSize": 30151,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          16,
+          11,
+          6
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      },
+      "new": {
+        "compression": 8,
+        "compressedSize": 30151,
+        "dateTime": [
+          2026,
+          10,
+          22,
+          18,
+          24,
+          22
+        ],
+        "externalAttributes": 2175008768,
+        "flagBits": 0,
+        "createSystem": 3
+      }
+    }
+  ],
+  "oldNativeModule": {
+    "path": "weft/weft.abi3.so",
+    "sha256": "c8543117ee2f32db4fc330c34d784bb0849eea3863d4d9ef72273b480b27f714",
+    "size": 38408768
+  },
+  "newNativeModule": {
+    "path": "weft/weft.abi3.so",
+    "sha256": "c1d973c1c8a40c99ce5ceb737708e511da7b07a63fe9dcbd8bef9357d3ac6ee5",
+    "size": 38408768
+  },
+  "nativeModuleContentIdentical": false,
+  "memberContent": {
+    "oldMemberCount": 9,
+    "newMemberCount": 9,
+    "unchangedMemberCount": 7,
+    "unchangedMembers": [
+      "weft/__init__.py",
+      "weft_sql-0.4.51.dist-info/METADATA",
+      "weft_sql-0.4.51.dist-info/WHEEL",
+      "weft_sql-0.4.51.dist-info/licenses/LICENSE-APACHE",
+      "weft_sql-0.4.51.dist-info/licenses/LICENSE-MIT",
+      "weft_sql-0.4.51.dist-info/licenses/LICENSE.md",
+      "weft_sql-0.4.51.dist-info/licenses/THIRD-PARTY-LICENSES.txt"
+    ],
+    "addedMembers": [],
+    "removedMembers": [],
+    "changedMembers": [
+      {
+        "path": "weft/weft.abi3.so",
+        "old": {
+          "sha256": "c8543117ee2f32db4fc330c34d784bb0849eea3863d4d9ef72273b480b27f714",
+          "size": 38408768
+        },
+        "new": {
+          "sha256": "c1d973c1c8a40c99ce5ceb737708e511da7b07a63fe9dcbd8bef9357d3ac6ee5",
+          "size": 38408768
+        }
+      },
+      {
+        "path": "weft_sql-0.4.51.dist-info/RECORD",
+        "old": {
+          "sha256": "1cffe350f9ac14e4919c0f15e97c9599079c293540024f093f10bd6f7b117043",
+          "size": 794
+        },
+        "new": {
+          "sha256": "138359c54bc658b78a98428953b9701fd234f9a2a897b4298d605df9deac6acb",
+          "size": 794
+        }
+      }
+    ],
+    "contentIdentical": false
+  }
+}

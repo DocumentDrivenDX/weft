@@ -1,0 +1,9 @@
+head=557153731e9f5d0583193a1189a07c6ed485d3d3
+status=clean
+tested=56d5507c6b0169574277661dd85d8c5feb22e6a7
+diff_frozen_inputs_vs_tested=none
+mac=Darwin SYN-5177 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:06:40 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T6050 arm64
+python=Python 3.11.17
+cargo=cargo 1.90.0 (840b83a10 2025-07-30)
+rustc=rustc 1.90.0 (1159e78c4 2025-09-14)
+maturin=maturin 1.9.6
