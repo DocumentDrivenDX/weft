@@ -2970,3 +2970,14 @@ compilation pass; these compilation controls contain zero behavioral tests.
 remain retained. This repairs the main integration only; selected release7dfb5e03
 and its f0039979 compiler/build inputs remain unchanged. A clean hosted rerun is
 mandatory before merge/publication.
+
+### Retired source regression control — 2026-10-22
+
+Hosted run39744341919 passed example compilation and found a stale B006 test
+assertion: its immutable UMF0.7 native success golden was expected from the
+current UMF0.10-only source envelope. The current code already refuses it.
+The test now preserves the original request and historical golden while asserting
+current WFT-INPUT/no SQL, never relabeling it as UMF0.10. Actual local candidate
+and qualified runtime configurations pass10 and11 tests respectively.
+[Failure and original checks](evidence/truss-selective-sources-20261022/retired-artifact-control/receipt.json)
+are retained. This changes main integration test expectations only.

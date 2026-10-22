@@ -1,0 +1,14 @@
+{
+  "scope": "Main integration regression correction, compiler semantics unchanged",
+  "failureRun": 39744341919,
+  "cause": "Retained B006 UMF0.7 success golden was asserted as current despite published49/current UMF0.10-only envelope",
+  "outcome": "Original request/golden retained; current refusal WFT-INPUT and absence of SQL explicitly asserted without relabeling source",
+  "candidateRuntimeTests": 10,
+  "qualifiedRuntimeTests": 11,
+  "selectedReleaseAncestor": "7dfb5e03",
+  "files": {
+    "weft-051-candidate-runtime-regressions.log": "e0dbe469105e1fe081a1bd50982aef932f6e9a971b698622e1f330ba59df6008",
+    "weft-051-qualified-runtime-regressions.log": "05e3b94ebebc3e307da3907950e325c2608669a9545429fd6c2cc8a513389455",
+    "weft-051-rerun-failure.log": "5aafdd7e161aba7f4b097d3573d1dda1bc7b44b1eb1c281a3836907bedc5c89f"
+  }
+}

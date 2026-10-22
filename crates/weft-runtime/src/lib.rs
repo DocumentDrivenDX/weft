@@ -460,7 +460,7 @@ mod supplied_configuration_tests {
 #[cfg(test)]
 mod ashlar_tests {
     #[test]
-    fn ashlar_feature_controls_registration_and_retains_public_artifact() {
+    fn retired_ashlar_input_refuses_without_rewriting_historical_artifact() {
         let case: serde_json::Value = serde_json::from_str(include_str!(
             "../../../docs/helix/04-build/evidence/B-006-cross-module-native/compile.json"
         ))
@@ -487,7 +487,14 @@ mod ashlar_tests {
                     weft_core::mutation::canonical(&case["request"]).as_bytes()
                 )
             );
-            assert_eq!(response, current["response"]);
+            // The retained B006 request is UMF0.7. The current source envelope
+            // admits UMF0.10 only; never relabel or strip the old input to make
+            // its historical native success a current support claim.
+            assert_eq!(case["request"]["modules"][0]["pin"]["umfVersion"], "0.7.0");
+            assert_eq!(current["response"]["status"], "compiled");
+            assert_eq!(response["status"], "blocked");
+            assert_eq!(response["diagnostics"][0]["code"], "WFT-INPUT");
+            assert!(response.get("sql").is_none());
         }
         #[cfg(not(feature = "ashlar-databricks-candidate"))]
         {
