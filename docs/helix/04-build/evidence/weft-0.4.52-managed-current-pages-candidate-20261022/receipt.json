@@ -1,0 +1,153 @@
+{
+  "candidate": {
+    "version": "0.4.52",
+    "source_commit": "76b4e72d65c649202a49a3171b2c8c995de3d232",
+    "source_parent": "3cd05d5389375b7d40622821d4788828135a2d6e",
+    "source_change": "version-only; Cargo.lock, crates/weft-python/Cargo.toml, crates/weft-python/pyproject.toml",
+    "published": false,
+    "tagged": false
+  },
+  "build": {
+    "platform": "macOS ARM64",
+    "rust": "1.90.0-aarch64-apple-darwin",
+    "maturin": "1.9.6",
+    "features": [
+      "ashlar-sdk-ordered-page-candidate",
+      "raw-postgresql-reads",
+      "ashlar-databricks-paths-keys",
+      "ashlar-databricks-qualified",
+      "truss-postgresql-pg18",
+      "current-postgresql-scalar-candidate",
+      "current-databricks-scalar-candidate",
+      "current-query-refinement-candidate",
+      "current-presence-graph-requirements-candidate"
+    ],
+    "command": "maturin build --manifest-path crates/weft-python/Cargo.toml --release --locked --out /private/tmp/weft-052-managed-pages-build-20261022/dist",
+    "environment": {
+      "CARGO_BUILD_JOBS": "2",
+      "CARGO_NET_OFFLINE": "true",
+      "CARGO_TARGET_DIR": "/private/tmp/ashlar-release-20261021-m3rde5p2/weft-0.4.50-integration/target"
+    },
+    "result": "success; release profile completed in 2m46s; maturin emitted selected wheel. Wrapper exited after build on zsh reserved-variable error in its post-build status-report line; no rebuild.",
+    "log_path": "/private/tmp/weft-052-managed-pages-build-20261022/maturin-build.log",
+    "log_sha256": "3753f4c32947d0a5e0348ef14b4b30a0aaf5326036d4921f7bd6f84b9da1e7cc"
+  },
+  "artifact": {
+    "path": "/private/tmp/weft-052-managed-pages-build-20261022/dist/weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "1f6c0ce742ab6e4e7d882e26f63bf62a274b6de989d8edb0b8e4ffdd63bc7705",
+    "wheel_tag": "cp39-abi3-macosx_11_0_arm64",
+    "native_extension": "weft/weft.abi3.so",
+    "native_extension_sha256": "21d23275db1d66955ac3819001db6aee7a0e71ff3d16a72d076f49c9ae097ffc",
+    "record_entries": 9,
+    "record_hash_failures": []
+  },
+  "umf_assets": {
+    "core_0.10.0_sha256": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9",
+    "access_0.1.0.dev6_sha256": "8f6e86ed94983d0156c2d6e9e1bf83fae186fe1d4a288a3846722e64aa365cf0"
+  },
+  "runtime_check": {
+    "environment": "/private/tmp/weft-052-ashlar-page-checks-20261022",
+    "python": "3.12.14",
+    "installed": "candidate wheel plus exact UMF core 0.10.0 and access 0.1.0.dev6 wheels, installed --no-deps",
+    "runtime_dependency_path": "Codex bundled Python 3.12 site-packages explicitly on PYTHONPATH; no Spark or database clients used"
+  },
+  "checks": [
+    {
+      "scope": "Ashlar managed `.3` and `.4` page target suite; actual compiler artifacts, legacy retention, wrong target fields, carrier/hash binding negatives",
+      "command": "python -m unittest test_managed_current_page_target -v",
+      "result": "4 passed in 0.344s"
+    },
+    {
+      "scope": "Ashlar current-read controls; these are separate from Truss Source-F regression controls.",
+      "command": "python -m unittest test_managed_current_query.ManagedCurrentQueryTests.test_read_owner_admits_exact_xxhash64_backend_tuple test_managed_current_query.ManagedCurrentQueryTests.test_real_weft_xxhash64_artifact_admits_exact_request_and_closed_native_requirement -v",
+      "result": "2 passed in 0.026s"
+    }
+  ],
+  "limits": [
+    "Compiler-only checks on this macOS ARM64 candidate.",
+    "No Spark, PostgreSQL, native table, cloud, or source-system execution.",
+    "No Linux/macOS matrix, CI, push, tag, or publication.",
+    "No native SQL backend or Unity Catalog execution was performed; these results do not qualify those execution surfaces or a release."
+  ],
+  "additional_truss_current_umf10_controls": {
+    "scope": "Additional generic current-Truss UMF 0.10/query ABI 1.2 controls against the retained public .51 report. These do not represent the new Arras Source-F acceptance pair.",
+    "input_fixture": "tests/truss-entity-selection/cases.json",
+    "input_fixture_sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+    "public_0_4_51_expected_output_receipt": "docs/helix/04-build/evidence/truss-selective-sources-20261022/original-model-admission/weft-051-entity31-reports-v2.json",
+    "public_0_4_51_receipt_sha256": "836f3ecc5d5663e57313790b8f5ce55915d00659c810c91dc76bf8bc3a81f6b5",
+    "baseline_receipt_context": {
+      "version": "0.4.51",
+      "cases": 31,
+      "evidence_receipt": "docs/helix/04-build/evidence/truss-selective-sources-20261022/original-model-admission/receipt.json"
+    },
+    "inputs": {
+      "UMF": "0.10.0",
+      "queryAbi": {
+        "identity": "truss-postgresql-logical-query",
+        "version": "1.2",
+        "sha256": "8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96"
+      },
+      "backendVersion": "0.4.43",
+      "targetProfile": "truss-runtime-pg18.6/0.6"
+    },
+    "invocation": "For each selected fixture: weft.compile_truss_runtime_json(json.dumps(case[\"request\"]))",
+    "results": [
+      {
+        "caseId": "no-facts-no-automatic-relationships",
+        "expectedStatus": "compiled",
+        "candidateStatus": "compiled",
+        "expectedHasSql": true,
+        "candidateHasSql": true,
+        "fullRawOutputParityWithPublic_0_4_51": true
+      },
+      {
+        "caseId": "selected-unknown-extension-explicit-refusal",
+        "expectedStatus": "blocked",
+        "expectedDiagnostic": "WFT-TYPE",
+        "candidateStatus": "blocked",
+        "candidateDiagnostic": "WFT-TYPE",
+        "expectedHasSql": false,
+        "candidateHasSql": false,
+        "fullRawOutputParityWithPublic_0_4_51": true
+      }
+    ],
+    "scopeLimit": "These two selected UMF 0.10/query ABI 1.2 fixture cases preserve named public 0.4.51 compiler outputs. They do not replace the 31-case corpus gate or qualify native Truss execution."
+  },
+  "owner_public_0_4_51_source_f_controls": {
+    "scope": "Exact two owner-selected Source-F compiler regressions on the installed .52 artifact; compare full raw compiler outputs to public .51 expected bytes; compile only, no database.",
+    "input_fixture": "/private/tmp/weft-arras-release/tests/truss-entity-selection/cases.json",
+    "input_fixture_sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+    "public_0_4_51_expected_output": "/private/tmp/weft-arras-release/docs/helix/04-build/evidence/release051-source557-20261022/macos/entity-reports.json",
+    "public_0_4_51_expected_output_sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+    "source_freeze_commit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+    "cases_total": 33,
+    "invocation": "For each named case: weft.compile_truss_runtime_json(json.dumps(case[\"request\"]))",
+    "results": [
+      {
+        "caseId": "arras-view-0.1.0-opaque-selected-payload",
+        "expectedStatus": "compiled",
+        "candidateStatus": "compiled",
+        "visibleColumns": [
+          "A-label",
+          "A-value",
+          "day"
+        ],
+        "expectedRawSha256": "e60798fce3bd8ef8126e91e556528fae6cd5074864e68f1d1af4c2247730631e",
+        "candidateRawSha256": "e60798fce3bd8ef8126e91e556528fae6cd5074864e68f1d1af4c2247730631e",
+        "fullRawOutputParity": true
+      },
+      {
+        "caseId": "arras-view-unsupported-version-refuses",
+        "expectedStatus": "blocked",
+        "expectedDiagnostic": "WFT-TYPE",
+        "candidateStatus": "blocked",
+        "candidateDiagnostic": "WFT-TYPE",
+        "sqlOmitted": true,
+        "expectedRawSha256": "acb21c14f990802a7022a2a2aa0ca320c50b6efd96868eb1dab53ea2f0773974",
+        "candidateRawSha256": "acb21c14f990802a7022a2a2aa0ca320c50b6efd96868eb1dab53ea2f0773974",
+        "fullRawOutputParity": true
+      }
+    ],
+    "scopeLimit": "Two selected public .51 outputs only; not the full 33-case corpus or native Truss qualification."
+  }
+}
