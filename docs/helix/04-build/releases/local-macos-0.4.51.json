@@ -4,42 +4,62 @@
   "platform": "macos-arm64",
   "functionalQualification": "local-only",
   "postgresqlVersion": "18.6",
-  "sourceFreezeCommit": "f003997997e1d1a84ff47df34d1dc181660f2827",
+  "sourceFreezeCommit": "86c092178bb8ca1a0d84edfebc175009d8862493",
   "wheel": {
     "name": "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
-    "sha256": "fc23ae27b687d49d3f2d495478ce9c55c43f7b9b20765f2967197c2e3afd6390"
+    "sha256": "a21faed75304e730c7cc9782394001be2ba1772b429e587f0d1910c2269dabbe"
   },
-  "nativeModuleSha256": "6d05fb7c27365cc1502117169c8113b93fcfa2db100ef4af4f45d3f5459d419c",
+  "nativeModuleSha256": "93bee228350743286073a9400bdf5ec92e387c5e35431bbf34b0f81279c460a2",
   "localFunctionalChecks": [
     {
       "id": "core-backend",
       "status": "passed",
-      "tests": 555
+      "tests": 874,
+      "coreUnitTests": 357,
+      "backendUnitTests": 200,
+      "ignored": 0
     },
     {
       "id": "selected-runtime-engine",
       "status": "passed",
-      "tests": 50
+      "tests": 51
     },
     {
       "id": "native-and-Chromium-expected-corpus",
       "status": "passed",
-      "cases": 31
+      "cases": 33,
+      "additionalFactsCases": 5,
+      "historicalCasesPreserved": 31
     },
     {
-      "id": "Truss-source-native-query",
+      "id": "Truss-installed-independent-corpus",
       "status": "passed",
-      "tests": 35
+      "tests": 62,
+      "skipped": 0
     },
     {
-      "id": "Truss-source-protected-native-query",
+      "id": "Truss-installed-policy-sourcecut-disclosure",
       "status": "passed",
-      "tests": 4
+      "tests": 10,
+      "scope": "Focused read-only component; no broader security acceptance or migration"
+    },
+    {
+      "id": "Truss-installed-migration-lineage",
+      "status": "passed",
+      "tests": 80,
+      "skipped": 0,
+      "scope": "Unprotected UMF0.10 nativec433 on PostgreSQL18.6"
+    },
+    {
+      "id": "Truss-original-public-workload",
+      "status": "passed",
+      "objects": 1000,
+      "edges": 1000,
+      "performanceLimits": "Latency budgets provisional; no nominal prior-run baseline"
     }
   ],
-  "evidence": "../evidence/truss-selective-sources-20261022/compiler-f003/receipt.json",
-  "otherPlatforms": "Hosted Linux build/packaging remains a separate release gate; no other native functional qualification claimed",
-  "fullSuiteQualification": "not claimed",
-  "nativeSparkOrDatabricksExecution": "not claimed",
-  "additionalEvidence": "../evidence/truss-selective-sources-20261022/original-model-admission/receipt.json"
+  "evidence": "../evidence/truss-selective-sources-20261022/arras-source86c/receipt.json",
+  "otherPlatforms": "New final-source Linux wheels and packaging remain required; no other native execution qualification claimed",
+  "fullSuiteQualification": "Selected core/backend/runtime and actual Truss only; final integration fresh-host/Linux gates remain open",
+  "nativeSparkOrDatabricksExecution": "not claimed"
 }

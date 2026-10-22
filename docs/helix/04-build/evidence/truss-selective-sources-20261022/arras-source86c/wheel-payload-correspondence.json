@@ -1,0 +1,7 @@
+{
+  "wheelPayloadCorrespondence": "passed",
+  "members": 9,
+  "compilerSourceFreeze": "86c092178bb8ca1a0d84edfebc175009d8862493",
+  "priorCompilerSource": "4f6b63185f057ae617dea0bc9d38d79ae90fab23",
+  "difference": "ZIP metadata only; example feature gate and contract corrections do not change native/module wheel payloads"
+}

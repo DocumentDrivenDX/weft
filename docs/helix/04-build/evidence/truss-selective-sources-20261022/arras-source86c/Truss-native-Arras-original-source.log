@@ -1,0 +1,6 @@
+test_arras_view_metadata_is_retained_and_current_weft_query_succeeds (test_arras_view_model_native.ArrasViewModelNativeTests.test_arras_view_metadata_is_retained_and_current_weft_query_succeeds) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 6.858s
+
+OK
