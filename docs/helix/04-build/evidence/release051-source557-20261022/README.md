@@ -4,8 +4,9 @@ This packet records the current selected compiler/build source freeze
 `557153731e9f5d0583193a1189a07c6ed485d3d3` (source F). It keeps local workspace,
 Mac wheel, Linux packaging and hosted conformance evidence distinct. The
 source-F Mac native module is different from the earlier `a21` candidate, so
-prior native functional results are not inherited. Original 86/616 packets and
-the existing `local-macos-0.4.51.json` remain unchanged historical evidence.
+prior native functional results are not inherited. Original 86/616 packets remain
+unchanged historical evidence. The prior source-86 macOS JSON is preserved in
+`superseded/`; `local-macos-0.4.51.json` now records source-F results only.
 
 ## Selected source tests
 
@@ -62,19 +63,35 @@ runtime corpus result is claimed. Formal and mutation receipts are retained
 with their stated scopes; mutation evidence does not claim native
 mutated-result qualification.
 
-## Still pending
+## Source-F Truss host qualification
 
-Source-F Truss host qualification is open. In particular, this packet does not
-claim the new installed-wheel host checks for 80 lineage cases, 62 independent
-cases, 10 policy controls or the 1,000-object workload. The first new-host
-attempt's PostgreSQL shared-memory permission failure is retained by the host
-campaign owner; its permission-correct rerun is still required. The previous
-`local-macos-0.4.51.json` has not been rewritten and must not be treated as the
-current source-F qualification. The exact original source-86 JSON is preserved
-as [`superseded/local-macos-0.4.51-source86-superseded.json`](superseded/local-macos-0.4.51-source86-superseded.json)
+The exact installed Truss0.0.48 / Weft0.4.51 ARM64 host gates passed on local
+macOS with PostgreSQL18.6: 80 migration-lineage tests, 62 independent archive
+cases, six cohort/asset-cache tests, 14 policy executions across 10 distinct
+controls, and the 1,000-object/1,000-edge public workload. Four policy
+executions repeat imported query tests; they are not four additional distinct
+controls. The final serialized policy retry passed with the same 2-second SQL
+statement and 30-second operation bounds. Earlier skipped and timeout attempts
+remain in the packet as unqualified history. The first migration attempt refused
+on the runner's shared-memory permission; only the permission-correct retry
+counts as evidence.
+
+The exact copied Truss reports, commands, package/environment correspondence
+and prior-attempt outputs are under [`truss-source557/`](truss-source557/);
+`evidence-inventory.json` records their original paths, lengths and SHA-256
+values. It binds runtime source `22ed333…`, its 455-file source/wheel/sdist
+correspondence, Weft source F, wheel/module hashes, native/migration manifests
+and the refreshed independent archive. The comprehensive Truss-owned packet is
+maintained separately.
+
+The exact original source-86 JSON is preserved as
+[`superseded/local-macos-0.4.51-source86-superseded.json`](superseded/local-macos-0.4.51-source86-superseded.json)
 with SHA-256 `29d71220bb593ecc85c89e8a9f2c7fa9967f97adf98dfa3e85c4c3988e9409d3`;
-its old counts and source identity are not relabeled as source-F results. No
-publication or release authorization is asserted here.
+its counts and source identity are historical only. Source-F local macOS
+qualification is recorded in the active
+[`local-macos-0.4.51.json`](../../releases/local-macos-0.4.51.json). Hosted release/tag
+gates remain separate, and this packet does not claim publication or release
+authorization.
 
 ## Included evidence
 
@@ -86,6 +103,9 @@ publication or release authorization is asserted here.
 - `linux/`: hosted packaging run, per-platform reports and independent checks.
 - `hosted-ci/`: run identity and the exact public formal, fresh-host, mutation
   manifests/events/qualifications and host parity receipts.
+- `truss-source557/`: exact local installed-host receipts for the five passing
+  Truss gate groups, source/environment correspondence and unqualified prior
+  attempts; the inventory binds each copied file to its original path and hash.
 
 The two large generated resource-control input files and built CI wheel/WASM
 payloads are not duplicated here; their exact sizes and hashes are retained in

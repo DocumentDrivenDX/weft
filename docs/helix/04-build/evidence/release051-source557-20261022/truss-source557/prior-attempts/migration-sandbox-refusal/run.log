@@ -1,0 +1,88 @@
+test_artifact_corruption_refuses_before_connection (test_runtime_migrations.MigrationRecipeTests.test_artifact_corruption_refuses_before_connection)
+@covers US-045-AC6 ... ok
+test_exact_packaged_target_and_predecessors (test_runtime_migrations.MigrationRecipeTests.test_exact_packaged_target_and_predecessors)
+@covers US-045-AC6 ... ok
+test_nondurable_recovery_refuses (test_runtime_migrations.MigrationRecipeTests.test_nondurable_recovery_refuses) ... ok
+test_only_exact_native_initialization_profiles_are_admitted_and_preserved (test_runtime_migrations.MigrationRecipeTests.test_only_exact_native_initialization_profiles_are_admitted_and_preserved)
+@covers US-045-AC6 @covers US-045-AC7 ... ok
+test_skipped_release_uses_only_latest_tool_and_cycles_refuse (test_runtime_migrations.MigrationRecipeTests.test_skipped_release_uses_only_latest_tool_and_cycles_refuse)
+@covers US-045-AC8: metadata planning only, not native chain qualification. ... ok
+test_latest_runtime_has_no_predecessor_application_import (test_runtime_migrations.RecoveryRegistryTests.test_latest_runtime_has_no_predecessor_application_import)
+@covers US-045-AC8 ... ok
+test_original_evidence_conflict_restart_and_observation_order (test_runtime_migrations.RecoveryRegistryTests.test_original_evidence_conflict_restart_and_observation_order)
+@covers US-045-AC7 ... ok
+test_previous_sources_target_and_published_bytes_cannot_be_dropped (test_runtime_migrations.ReleaseLineageTests.test_previous_sources_target_and_published_bytes_cannot_be_dropped)
+@covers US-045-AC8: release gate controls, not native chain proof. ... ok
+setUpClass (__main__.source44MigrationTests) ... ERROR
+setUpClass (__main__.source46MigrationTests) ... ERROR
+setUpClass (__main__.source47MigrationTests) ... ERROR
+setUpClass (__main__.PriorPublishedReceiptTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (__main__.source44MigrationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/truss-hf048-release/packages/python/tests/test_runtime_migrations_native.py", line 32, in setUpClass
+    cls.runtime=LocalPostgres(cls.root/'data');cls.runtime.__enter__()
+                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 203, in __enter__
+    self._run('initdb', '-D', str(self.directory), '--auth=trust',
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 146, in _run
+    raise LocalRuntimeError(f'{command} failed: {details or completed.returncode}')
+truss.local_runtime.LocalRuntimeError: initdb failed: 2026-10-22 14:35:30.652 EDT [61117] FATAL:  could not create shared memory segment: Operation not permitted
+2026-10-22 14:35:30.652 EDT [61117] DETAIL:  Failed system call was shmget(key=224155034, size=56, 03600).
+child process exited with exit code 1
+initdb: removing contents of data directory "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-04hqbf1a/data"
+
+======================================================================
+ERROR: setUpClass (__main__.source46MigrationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/truss-hf048-release/packages/python/tests/test_runtime_migrations_native.py", line 32, in setUpClass
+    cls.runtime=LocalPostgres(cls.root/'data');cls.runtime.__enter__()
+                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 203, in __enter__
+    self._run('initdb', '-D', str(self.directory), '--auth=trust',
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 146, in _run
+    raise LocalRuntimeError(f'{command} failed: {details or completed.returncode}')
+truss.local_runtime.LocalRuntimeError: initdb failed: 2026-10-22 14:35:32.332 EDT [61179] FATAL:  could not create shared memory segment: Operation not permitted
+2026-10-22 14:35:32.332 EDT [61179] DETAIL:  Failed system call was shmget(key=224155099, size=56, 03600).
+child process exited with exit code 1
+initdb: removing contents of data directory "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-vdwkx7et/data"
+
+======================================================================
+ERROR: setUpClass (__main__.source47MigrationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/truss-hf048-release/packages/python/tests/test_runtime_migrations_native.py", line 32, in setUpClass
+    cls.runtime=LocalPostgres(cls.root/'data');cls.runtime.__enter__()
+                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 203, in __enter__
+    self._run('initdb', '-D', str(self.directory), '--auth=trust',
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 146, in _run
+    raise LocalRuntimeError(f'{command} failed: {details or completed.returncode}')
+truss.local_runtime.LocalRuntimeError: initdb failed: 2026-10-22 14:35:34.537 EDT [61256] FATAL:  could not create shared memory segment: Operation not permitted
+2026-10-22 14:35:34.537 EDT [61256] DETAIL:  Failed system call was shmget(key=224155163, size=56, 03600).
+child process exited with exit code 1
+initdb: removing contents of data directory "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-yq_o7if2/data"
+
+======================================================================
+ERROR: setUpClass (__main__.PriorPublishedReceiptTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/truss-hf048-release/packages/python/tests/test_runtime_migrations_native.py", line 32, in setUpClass
+    cls.runtime=LocalPostgres(cls.root/'data');cls.runtime.__enter__()
+                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 203, in __enter__
+    self._run('initdb', '-D', str(self.directory), '--auth=trust',
+  File "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/local_runtime.py", line 146, in _run
+    raise LocalRuntimeError(f'{command} failed: {details or completed.returncode}')
+truss.local_runtime.LocalRuntimeError: initdb failed: 2026-10-22 14:35:36.298 EDT [61320] FATAL:  could not create shared memory segment: Operation not permitted
+2026-10-22 14:35:36.298 EDT [61320] DETAIL:  Failed system call was shmget(key=224155229, size=56, 03600).
+child process exited with exit code 1
+initdb: removing contents of data directory "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/truss-runtime-migrations-gbastfls/data"
+
+----------------------------------------------------------------------
+Ran 8 tests in 9.164s
+
+FAILED (errors=4)

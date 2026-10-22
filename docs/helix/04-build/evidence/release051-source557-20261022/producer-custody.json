@@ -267,6 +267,293 @@
       "bytes": 2434,
       "sha256": "29d71220bb593ecc85c89e8a9f2c7fa9967f97adf98dfa3e85c4c3988e9409d3",
       "role": "Exact unmodified historical local macOS qualification for compiler source 86c092178bb8ca1a0d84edfebc175009d8862493; superseded and not evidence for source F."
+    },
+    {
+      "file": "truss-source557/migration80/PriorPublishedReceiptTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/PriorPublishedReceiptTests-before-close.json",
+      "bytes": 4962,
+      "sha256": "9d34cd8683de26072e15da2c93b9afb437bbc592ab8230dcc84403ab768fa860",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/SHA256SUMS.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/SHA256SUMS.txt",
+      "bytes": 2308,
+      "sha256": "187a726937fef53eb661fb3dd36e5c08b14efcf775446bef70c339e4b604086c",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/command.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/command.txt",
+      "bytes": 306,
+      "sha256": "4a8814c11aa57f09ec7d63a2a050a7153f3b4454e92bc3daa57a40a6a448c8b6",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/exit",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/qualification.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/qualification.json",
+      "bytes": 1714,
+      "sha256": "3f31e3a8f67f9c67077e91997624d37aa49b68fc73e63c8b9a1601a3029cdf2d",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/run-custody.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/run-custody.json",
+      "bytes": 2525,
+      "sha256": "966b0bbf71fa55ce7863f5b34617eb1370d905c83dda3b6d4c5006cc38bc4bfe",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/run.log",
+      "bytes": 15983,
+      "sha256": "fb1137dc0be7907b4727547cf1a15b12327d2766e320bbfdf43e2faf699e219b",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source44-native-inventory.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source44-native-inventory.json",
+      "bytes": 1667495,
+      "sha256": "6b1fb5be9e4ea557879e93021b9ec7fe9929a2596cc9ec908dac57f6a163bac3",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source44-original-evidence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source44-original-evidence.json",
+      "bytes": 451928,
+      "sha256": "8e5fb5a84254ef014cc46c10f6eed94f416ef21fc3705f58513da5a3ef5d748e",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source44MigrationTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source44MigrationTests-before-close.json",
+      "bytes": 16775,
+      "sha256": "79a7ca06fb6fa02c0312d3e38c7945b6776e20a25e5b01e1bdc38f9885bea103",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source46-native-inventory.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source46-native-inventory.json",
+      "bytes": 1676787,
+      "sha256": "2885dab7aad39de0032ef34338df086204e7892fd80ba99844e5f2c91ce8b198",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source46-original-evidence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source46-original-evidence.json",
+      "bytes": 451782,
+      "sha256": "91a3bc9d71c6d8573cb86402b2ed211019c5dd29a7252d80aa4d074cffe3c362",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source46MigrationTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source46MigrationTests-before-close.json",
+      "bytes": 16768,
+      "sha256": "04a1bd305c53cb456229dc5cead8d49747c017ae2381b379c99c746e26e6d282",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source47-native-inventory.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source47-native-inventory.json",
+      "bytes": 1686852,
+      "sha256": "ee822b3c7e21956faacf9ec9826386ab54c6791d410280df1136d1379bdeca92",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source47-original-evidence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source47-original-evidence.json",
+      "bytes": 449809,
+      "sha256": "514f40a3e7134be369eb5bc59eaa3d34f8322cc8567f124e0b42685972fe1671",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/migration80/source47MigrationTests-before-close.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations-escalated/source47MigrationTests-before-close.json",
+      "bytes": 17025,
+      "sha256": "81a7adcb81ea7028be6d6a28521b6856de295c9bdc0b6e502c07beba84676f5f",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/independent62/conformance.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-hf-evidence-refreshed/conformance.json",
+      "bytes": 14944,
+      "sha256": "5e9ce6087d0dd78451d90e554ee765502d224df55160481c46b56ab343469fef",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/independent62/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-hf-evidence-refreshed/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/independent62/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-hf-evidence-refreshed/run.log",
+      "bytes": 13406,
+      "sha256": "e097b23336b4ebbea7cb45a8c6cf926dee832a6cc546e95b0b7dd4e27a99dd27",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/cohort6/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-cohort-unit-final/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/cohort6/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-cohort-unit-final/run.log",
+      "bytes": 1303,
+      "sha256": "589ed885749c9924f5bca38ad38887bbe061ca6b311d2e1624a19452ae2e1db2",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/policy14-final/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy14-native-retry/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/policy14-final/run-custody.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy14-native-retry/run-custody.json",
+      "bytes": 1257,
+      "sha256": "b70d23c258437f5eb6429fe462b683aa944c92dd5a22152b7a848d7fd96e643f",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/policy14-final/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy14-native-retry/run.log",
+      "bytes": 2592,
+      "sha256": "098e9158b5358291744697237a1e4ee8eeaf908208a0f06d464e3fe31c94b47f",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/prior-attempts/policy10-native-skipped/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy10/run.log",
+      "bytes": 2215,
+      "sha256": "403f545e9b7a863b1c380cdd3dfbb1bd7aedf9c1dd3c6dcc50b8fd8d1fcdd0c9",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/prior-attempts/policy14-timeout/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy10-native/exit-status.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/prior-attempts/policy14-timeout/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-policy10-native/run.log",
+      "bytes": 4058,
+      "sha256": "e101645b1c2ecb4dde544eb87dd12db4c62e4c95f00d7f9dcc2b068c5d359abb",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/public-workload/exit-status.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/exit-status.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/public-workload/report.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/report.json",
+      "bytes": 791301,
+      "sha256": "db4b5e97f6f44b4f99a08fddef52d3233452098acc9c50306b6662301105d5ee",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/public-workload/report.jsonl",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/report.jsonl",
+      "bytes": 454664,
+      "sha256": "d458fd2f88edc208de5a28885cfa46aab0536b1f12ba99bd0c2d572874f98376",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/public-workload/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-public-workload/run.log",
+      "bytes": 26715,
+      "sha256": "08a7153ac94dca46dc1328baeeb4e0e4d15756b76f9c2b14cab0096f97c28d18",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/package/runtime-file-correspondence.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/runtime-file-correspondence.json",
+      "bytes": 79619,
+      "sha256": "e52e1cc7e985687fc95b1be83522acf6029f31573bcb3f85b7aa2e8faf3effd5",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/package/environment-check.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/environment-check.json",
+      "bytes": 665,
+      "sha256": "5539eb69a8c8d2bb6ea7645b8daf70bb52caae3affe49d0bd2400f5797887a82",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/package/installed-truss-identity.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/installed-truss-identity.json",
+      "bytes": 471,
+      "sha256": "9c8d842ddb54e451c6aa509d4a7c6a00ce07eb12078610a4246b1b133dbf3cae",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/package/build-truss-source-and-tools.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/build-truss-source-and-tools.txt",
+      "bytes": 137,
+      "sha256": "ac34f0d3023da2220366c3d72a143d8c822644bf98660d350c3a43cd36abfcb1",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/package/build-truss-package.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/build-truss-package.log",
+      "bytes": 220225,
+      "sha256": "b985383eec687e722a1312536dd4c464b1bfd9ef9803c013102838a2e8322296",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/package/build-truss-package.exit",
+      "originalPath": "/private/tmp/truss-048-arras-source557-env-evidence/build-truss-package.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/prior-attempts/migration-sandbox-refusal/command.txt",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/command.txt",
+      "bytes": 296,
+      "sha256": "f2c2e07044281900014d3ad3520eca037f4031a033da3db49c9e69c63c2ee1ed",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/prior-attempts/migration-sandbox-refusal/exit",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/prior-attempts/migration-sandbox-refusal/qualification.json",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/qualification.json",
+      "bytes": 1714,
+      "sha256": "57b7006fd2b64573799d1e35b2d521270e668b9be0208f5b5d81965a6b7c5e17",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
+    },
+    {
+      "file": "truss-source557/prior-attempts/migration-sandbox-refusal/run.log",
+      "originalPath": "/private/tmp/truss-048-arras-source557-migrations/run.log",
+      "bytes": 7319,
+      "sha256": "521d52d50cf2e5f3b503e6c022e8ac11bbb729df0cdf39cbadd0d5f3faed32ff",
+      "role": "Exact source-F Truss installed-host receipt, environment/source correspondence, or preserved prior attempt"
     }
   ],
   "excludedLargeHostedInputs": [
@@ -302,6 +589,18 @@
       "bytes": 1192,
       "sha256": "e785daef49e3be9d5853a56cd9bfc7e9dad36883f3c9369b200c47ce380d6969",
       "basis": "Run and PR metadata provided by the release owner; artifact-level source receipts are copied alongside."
+    },
+    {
+      "file": "truss-source557/evidence-inventory.json",
+      "bytes": 13659,
+      "sha256": "b176fefe45e495b588b958acd4b88e0384cb35e63ca12c15e48b2349ca3e532e",
+      "basis": "Derived from the Truss-owned 41-file installed-048-arras-source557 receipt after copying and independently rechecking every original file length and SHA-256."
+    },
+    {
+      "file": "../../releases/local-macos-0.4.51.json",
+      "bytes": 5399,
+      "sha256": "6ee046368173604aac9b824e19a5443474432b23af6872ba835e896271c02293",
+      "basis": "Active local macOS source-F qualification summary derived from the copied build and host receipts in this packet."
     }
   ]
 }

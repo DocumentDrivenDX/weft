@@ -1,0 +1,158 @@
+test_artifact_corruption_refuses_before_connection (test_runtime_migrations.MigrationRecipeTests.test_artifact_corruption_refuses_before_connection)
+@covers US-045-AC6 ... ok
+test_exact_packaged_target_and_predecessors (test_runtime_migrations.MigrationRecipeTests.test_exact_packaged_target_and_predecessors)
+@covers US-045-AC6 ... ok
+test_nondurable_recovery_refuses (test_runtime_migrations.MigrationRecipeTests.test_nondurable_recovery_refuses) ... ok
+test_only_exact_native_initialization_profiles_are_admitted_and_preserved (test_runtime_migrations.MigrationRecipeTests.test_only_exact_native_initialization_profiles_are_admitted_and_preserved)
+@covers US-045-AC6 @covers US-045-AC7 ... ok
+test_skipped_release_uses_only_latest_tool_and_cycles_refuse (test_runtime_migrations.MigrationRecipeTests.test_skipped_release_uses_only_latest_tool_and_cycles_refuse)
+@covers US-045-AC8: metadata planning only, not native chain qualification. ... ok
+test_latest_runtime_has_no_predecessor_application_import (test_runtime_migrations.RecoveryRegistryTests.test_latest_runtime_has_no_predecessor_application_import)
+@covers US-045-AC8 ... ok
+test_original_evidence_conflict_restart_and_observation_order (test_runtime_migrations.RecoveryRegistryTests.test_original_evidence_conflict_restart_and_observation_order)
+@covers US-045-AC7 ... ok
+test_previous_sources_target_and_published_bytes_cannot_be_dropped (test_runtime_migrations.ReleaseLineageTests.test_previous_sources_target_and_published_bytes_cannot_be_dropped)
+@covers US-045-AC8: release gate controls, not native chain proof. ... ok
+test_active_caller_transaction_is_not_adopted_or_settled (__main__.source44MigrationTests.test_active_caller_transaction_is_not_adopted_or_settled)
+@covers US-045-AC7 ... ok
+test_busy_original_writer_preserves_source (__main__.source44MigrationTests.test_busy_original_writer_preserves_source)
+@covers US-045-AC7 ... ok
+test_census_exhaustion_preserves_original_installation (__main__.source44MigrationTests.test_census_exhaustion_preserves_original_installation)
+@covers US-045-AC7 ... ok
+test_changed_definition_and_unexpected_namespace_object_refuse (__main__.source44MigrationTests.test_changed_definition_and_unexpected_namespace_object_refuse)
+@covers US-045-AC6 ... ok
+test_clean_installed_cli_prepare_apply_verify_and_receipt (__main__.source44MigrationTests.test_clean_installed_cli_prepare_apply_verify_and_receipt)
+@covers US-045-AC8: separate CLI processes retain one original attempt. ... ok
+test_committed_receipt_does_not_override_current_native_drift (__main__.source44MigrationTests.test_committed_receipt_does_not_override_current_native_drift)
+@covers US-045-AC7 ... ok
+test_committed_verification_failure_is_not_rollback (__main__.source44MigrationTests.test_committed_verification_failure_is_not_rollback)
+@covers US-045-AC7 ... ok
+test_external_inheritance_parent_refuses_before_migration (__main__.source44MigrationTests.test_external_inheritance_parent_refuses_before_migration)
+@covers US-045-AC6: private rows cannot acquire an unqualified ancestor. ... ok
+test_fresh_latest_has_empty_ledger_and_requires_no_migration (__main__.source44MigrationTests.test_fresh_latest_has_empty_ledger_and_requires_no_migration)
+@covers US-045-AC6 @covers US-045-AC8 ... ok
+test_later_native_step_failure_rolls_back_initializer (__main__.source44MigrationTests.test_later_native_step_failure_rolls_back_initializer)
+@covers US-045-AC7 ... ok
+test_latest_application_refuses_source_without_automatic_migration (__main__.source44MigrationTests.test_latest_application_refuses_source_without_automatic_migration)
+@covers US-045-AC8 ... ok
+test_logical_backup_restore_then_migrate_without_old_application_runtime (__main__.source44MigrationTests.test_logical_backup_restore_then_migrate_without_old_application_runtime)
+@covers US-045-AC8: restore into a new database identity before any target writes. ... ok
+test_long_overload_acl_identity_cannot_be_satisfied_by_its_sibling (__main__.source44MigrationTests.test_long_overload_acl_identity_cannot_be_satisfied_by_its_sibling) ... ok
+test_no_receipt_does_not_prove_rollback_while_original_backend_lives (__main__.source44MigrationTests.test_no_receipt_does_not_prove_rollback_while_original_backend_lives)
+@covers US-045-AC7: cover the durable intent → BEGIN dispatch gap. ... ok
+test_observer_timezone_cannot_convert_native_partition_bounds (__main__.source44MigrationTests.test_observer_timezone_cannot_convert_native_partition_bounds)
+@covers US-045-AC6 @covers US-045-AC7 ... ok
+test_original_commit_reply_loss_recovers_after_restart (__main__.source44MigrationTests.test_original_commit_reply_loss_recovers_after_restart)
+@covers US-045-AC7 ... ok
+test_other_qualified_bounds_cannot_replace_original_initialization (__main__.source44MigrationTests.test_other_qualified_bounds_cannot_replace_original_initialization)
+@covers US-045-AC7: rollback even a separately qualified horizon change. ... ok
+test_populated_latest_read_preservation_replay_and_old_runtime_refusal (__main__.source44MigrationTests.test_populated_latest_read_preservation_replay_and_old_runtime_refusal)
+@covers US-045-AC6 @covers US-045-AC8 ... ok
+test_receipts_are_immutable_and_changed_request_cannot_repeat (__main__.source44MigrationTests.test_receipts_are_immutable_and_changed_request_cannot_repeat)
+@covers US-045-AC7 ... ok
+test_rollback_observation_waits_for_original_connection_close (__main__.source44MigrationTests.test_rollback_observation_waits_for_original_connection_close)
+@covers US-045-AC7: a rollback acknowledgment is not resource release. ... ok
+test_source_configuration_drift_is_not_relabelled_as_latest (__main__.source44MigrationTests.test_source_configuration_drift_is_not_relabelled_as_latest)
+@covers US-045-AC6 ... ok
+test_source_definition_and_grant_drift_refuse_without_effects (__main__.source44MigrationTests.test_source_definition_and_grant_drift_refuse_without_effects)
+@covers US-045-AC6 ... ok
+test_visible_commit_does_not_fabricate_original_resource_release (__main__.source44MigrationTests.test_visible_commit_does_not_fabricate_original_resource_release)
+@covers US-045-AC7 ... ok
+test_active_caller_transaction_is_not_adopted_or_settled (__main__.source46MigrationTests.test_active_caller_transaction_is_not_adopted_or_settled)
+@covers US-045-AC7 ... ok
+test_busy_original_writer_preserves_source (__main__.source46MigrationTests.test_busy_original_writer_preserves_source)
+@covers US-045-AC7 ... ok
+test_census_exhaustion_preserves_original_installation (__main__.source46MigrationTests.test_census_exhaustion_preserves_original_installation)
+@covers US-045-AC7 ... ok
+test_changed_definition_and_unexpected_namespace_object_refuse (__main__.source46MigrationTests.test_changed_definition_and_unexpected_namespace_object_refuse)
+@covers US-045-AC6 ... ok
+test_clean_installed_cli_prepare_apply_verify_and_receipt (__main__.source46MigrationTests.test_clean_installed_cli_prepare_apply_verify_and_receipt)
+@covers US-045-AC8: separate CLI processes retain one original attempt. ... ok
+test_committed_receipt_does_not_override_current_native_drift (__main__.source46MigrationTests.test_committed_receipt_does_not_override_current_native_drift)
+@covers US-045-AC7 ... ok
+test_committed_verification_failure_is_not_rollback (__main__.source46MigrationTests.test_committed_verification_failure_is_not_rollback)
+@covers US-045-AC7 ... ok
+test_external_inheritance_parent_refuses_before_migration (__main__.source46MigrationTests.test_external_inheritance_parent_refuses_before_migration)
+@covers US-045-AC6: private rows cannot acquire an unqualified ancestor. ... ok
+test_fresh_latest_has_empty_ledger_and_requires_no_migration (__main__.source46MigrationTests.test_fresh_latest_has_empty_ledger_and_requires_no_migration)
+@covers US-045-AC6 @covers US-045-AC8 ... ok
+test_later_native_step_failure_rolls_back_initializer (__main__.source46MigrationTests.test_later_native_step_failure_rolls_back_initializer)
+@covers US-045-AC7 ... ok
+test_latest_application_refuses_source_without_automatic_migration (__main__.source46MigrationTests.test_latest_application_refuses_source_without_automatic_migration)
+@covers US-045-AC8 ... ok
+test_logical_backup_restore_then_migrate_without_old_application_runtime (__main__.source46MigrationTests.test_logical_backup_restore_then_migrate_without_old_application_runtime)
+@covers US-045-AC8: restore into a new database identity before any target writes. ... ok
+test_long_overload_acl_identity_cannot_be_satisfied_by_its_sibling (__main__.source46MigrationTests.test_long_overload_acl_identity_cannot_be_satisfied_by_its_sibling) ... ok
+test_no_receipt_does_not_prove_rollback_while_original_backend_lives (__main__.source46MigrationTests.test_no_receipt_does_not_prove_rollback_while_original_backend_lives)
+@covers US-045-AC7: cover the durable intent → BEGIN dispatch gap. ... ok
+test_observer_timezone_cannot_convert_native_partition_bounds (__main__.source46MigrationTests.test_observer_timezone_cannot_convert_native_partition_bounds)
+@covers US-045-AC6 @covers US-045-AC7 ... ok
+test_original_commit_reply_loss_recovers_after_restart (__main__.source46MigrationTests.test_original_commit_reply_loss_recovers_after_restart)
+@covers US-045-AC7 ... ok
+test_other_qualified_bounds_cannot_replace_original_initialization (__main__.source46MigrationTests.test_other_qualified_bounds_cannot_replace_original_initialization)
+@covers US-045-AC7: rollback even a separately qualified horizon change. ... ok
+test_populated_latest_read_preservation_replay_and_old_runtime_refusal (__main__.source46MigrationTests.test_populated_latest_read_preservation_replay_and_old_runtime_refusal)
+@covers US-045-AC6 @covers US-045-AC8 ... ok
+test_receipts_are_immutable_and_changed_request_cannot_repeat (__main__.source46MigrationTests.test_receipts_are_immutable_and_changed_request_cannot_repeat)
+@covers US-045-AC7 ... ok
+test_rollback_observation_waits_for_original_connection_close (__main__.source46MigrationTests.test_rollback_observation_waits_for_original_connection_close)
+@covers US-045-AC7: a rollback acknowledgment is not resource release. ... ok
+test_source_configuration_drift_is_not_relabelled_as_latest (__main__.source46MigrationTests.test_source_configuration_drift_is_not_relabelled_as_latest)
+@covers US-045-AC6 ... ok
+test_source_definition_and_grant_drift_refuse_without_effects (__main__.source46MigrationTests.test_source_definition_and_grant_drift_refuse_without_effects)
+@covers US-045-AC6 ... ok
+test_visible_commit_does_not_fabricate_original_resource_release (__main__.source46MigrationTests.test_visible_commit_does_not_fabricate_original_resource_release)
+@covers US-045-AC7 ... ok
+test_active_caller_transaction_is_not_adopted_or_settled (__main__.source47MigrationTests.test_active_caller_transaction_is_not_adopted_or_settled)
+@covers US-045-AC7 ... ok
+test_busy_original_writer_preserves_source (__main__.source47MigrationTests.test_busy_original_writer_preserves_source)
+@covers US-045-AC7 ... ok
+test_census_exhaustion_preserves_original_installation (__main__.source47MigrationTests.test_census_exhaustion_preserves_original_installation)
+@covers US-045-AC7 ... ok
+test_changed_definition_and_unexpected_namespace_object_refuse (__main__.source47MigrationTests.test_changed_definition_and_unexpected_namespace_object_refuse)
+@covers US-045-AC6 ... ok
+test_clean_installed_cli_prepare_apply_verify_and_receipt (__main__.source47MigrationTests.test_clean_installed_cli_prepare_apply_verify_and_receipt)
+@covers US-045-AC8: separate CLI processes retain one original attempt. ... ok
+test_committed_receipt_does_not_override_current_native_drift (__main__.source47MigrationTests.test_committed_receipt_does_not_override_current_native_drift)
+@covers US-045-AC7 ... ok
+test_committed_verification_failure_is_not_rollback (__main__.source47MigrationTests.test_committed_verification_failure_is_not_rollback)
+@covers US-045-AC7 ... ok
+test_external_inheritance_parent_refuses_before_migration (__main__.source47MigrationTests.test_external_inheritance_parent_refuses_before_migration)
+@covers US-045-AC6: private rows cannot acquire an unqualified ancestor. ... ok
+test_fresh_latest_has_empty_ledger_and_requires_no_migration (__main__.source47MigrationTests.test_fresh_latest_has_empty_ledger_and_requires_no_migration)
+@covers US-045-AC6 @covers US-045-AC8 ... ok
+test_later_native_step_failure_rolls_back_initializer (__main__.source47MigrationTests.test_later_native_step_failure_rolls_back_initializer)
+@covers US-045-AC7 ... ok
+test_latest_application_refuses_source_without_automatic_migration (__main__.source47MigrationTests.test_latest_application_refuses_source_without_automatic_migration)
+@covers US-045-AC8 ... ok
+test_logical_backup_restore_then_migrate_without_old_application_runtime (__main__.source47MigrationTests.test_logical_backup_restore_then_migrate_without_old_application_runtime)
+@covers US-045-AC8: restore into a new database identity before any target writes. ... ok
+test_long_overload_acl_identity_cannot_be_satisfied_by_its_sibling (__main__.source47MigrationTests.test_long_overload_acl_identity_cannot_be_satisfied_by_its_sibling) ... ok
+test_no_receipt_does_not_prove_rollback_while_original_backend_lives (__main__.source47MigrationTests.test_no_receipt_does_not_prove_rollback_while_original_backend_lives)
+@covers US-045-AC7: cover the durable intent → BEGIN dispatch gap. ... ok
+test_observer_timezone_cannot_convert_native_partition_bounds (__main__.source47MigrationTests.test_observer_timezone_cannot_convert_native_partition_bounds)
+@covers US-045-AC6 @covers US-045-AC7 ... ok
+test_original_commit_reply_loss_recovers_after_restart (__main__.source47MigrationTests.test_original_commit_reply_loss_recovers_after_restart)
+@covers US-045-AC7 ... ok
+test_other_qualified_bounds_cannot_replace_original_initialization (__main__.source47MigrationTests.test_other_qualified_bounds_cannot_replace_original_initialization)
+@covers US-045-AC7: rollback even a separately qualified horizon change. ... ok
+test_populated_latest_read_preservation_replay_and_old_runtime_refusal (__main__.source47MigrationTests.test_populated_latest_read_preservation_replay_and_old_runtime_refusal)
+@covers US-045-AC6 @covers US-045-AC8 ... ok
+test_receipts_are_immutable_and_changed_request_cannot_repeat (__main__.source47MigrationTests.test_receipts_are_immutable_and_changed_request_cannot_repeat)
+@covers US-045-AC7 ... ok
+test_rollback_observation_waits_for_original_connection_close (__main__.source47MigrationTests.test_rollback_observation_waits_for_original_connection_close)
+@covers US-045-AC7: a rollback acknowledgment is not resource release. ... ok
+test_source_configuration_drift_is_not_relabelled_as_latest (__main__.source47MigrationTests.test_source_configuration_drift_is_not_relabelled_as_latest)
+@covers US-045-AC6 ... ok
+test_source_definition_and_grant_drift_refuse_without_effects (__main__.source47MigrationTests.test_source_definition_and_grant_drift_refuse_without_effects)
+@covers US-045-AC6 ... ok
+test_visible_commit_does_not_fabricate_original_resource_release (__main__.source47MigrationTests.test_visible_commit_does_not_fabricate_original_resource_release)
+@covers US-045-AC7 ... ok
+test_legacy_relationship_only_incomplete_owner_header_survives_without_fabricated_backfill (__main__.PriorPublishedReceiptTests.test_legacy_relationship_only_incomplete_owner_header_survives_without_fabricated_backfill) ... ok
+test_previous_receipt_survives_lost_latest_commit_response_and_reconciliation (__main__.PriorPublishedReceiptTests.test_previous_receipt_survives_lost_latest_commit_response_and_reconciliation) ... ok
+test_previously_upgraded47_keeps_original_receipt_and_publishes_one_new_head (__main__.PriorPublishedReceiptTests.test_previously_upgraded47_keeps_original_receipt_and_publishes_one_new_head) ... ok
+
+----------------------------------------------------------------------
+Ran 80 tests in 323.952s
+
+OK

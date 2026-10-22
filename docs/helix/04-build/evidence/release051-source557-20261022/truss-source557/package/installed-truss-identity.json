@@ -1,0 +1,9 @@
+{
+  "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+  "trussVersion": "0.0.48",
+  "trussPackage": "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss",
+  "weftVersion": "0.4.51",
+  "weftNativeSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+  "distributionPath": "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss_toolkit-0.0.48.dist-info",
+  "trussPathFiles": 666
+}

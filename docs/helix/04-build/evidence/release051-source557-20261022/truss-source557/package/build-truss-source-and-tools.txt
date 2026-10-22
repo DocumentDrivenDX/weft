@@ -1,0 +1,3 @@
+22ed333528a4f57a24edfca5d3df811269471faf
+build 1.3.0 (/private/tmp/truss-hf05-venv/lib/python3.11/site-packages/build)
+setuptools 79.0.1
