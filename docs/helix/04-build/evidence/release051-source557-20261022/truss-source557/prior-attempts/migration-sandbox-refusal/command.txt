@@ -1,0 +1,1 @@
+/private/tmp/truss-048-arras-source557-venv/bin/python /private/tmp/truss-hf048-release/scripts/qualify-runtime-migrations.py --installed-package --download --wheelhouse /private/tmp/truss-runtime-migration-wheelhouse --output /private/tmp/truss-048-arras-source557-migrations/qualification.json

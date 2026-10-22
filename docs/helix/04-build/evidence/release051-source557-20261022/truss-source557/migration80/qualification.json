@@ -1,0 +1,41 @@
+{
+  "scope": "Installed latest-only runtime migration gate; PostgreSQL18.6, unprotected UMF0.10 lineage",
+  "sourceCommit": null,
+  "workflowRunId": null,
+  "package": "0.0.48",
+  "loadedPackage": "/private/tmp/truss-048-arras-source557-venv/lib/python3.11/site-packages/truss/__init__.py",
+  "platform": "darwin",
+  "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+  "recipeSha256": "7d165e4a344ca66d41a32b32f6bcf20f1f8fe73e4ba1137e4ca65780dcee6243",
+  "targetManifestSha256": "c4339ac7f09ab5a004c272ab00962107a970938004c1765ec4163e4d5ca9b6f0",
+  "sources": [
+    "71c4c3d4c05a2229c4cdec1643cabe0da7055965f0b0d23195e83ad780042a2e",
+    "7ac989147f22d437b1ce0d814ebbfaa25aa868ab5495de125aa5e2bda7b963ea",
+    "9f6aab31802e9bebcd886f735ba9fe0bb405e69d3501a32f36cee8827b544d00"
+  ],
+  "originalWheels": {
+    "source44": {
+      "filename": "truss_toolkit-0.0.44-py3-none-any.whl",
+      "sha256": "7cdea3af955feb11bd3cb4ca58b2f0cd9f336412d64de14bcba272711f1638d8"
+    },
+    "source46": {
+      "filename": "truss_toolkit-0.0.46-py3-none-any.whl",
+      "sha256": "b2c09c8d9c4f8cc40330d2fab4b5ea7cfb26559d2231455c2b1658a92c0368dc"
+    },
+    "source47": {
+      "filename": "truss_toolkit-0.0.47-py3-none-any.whl",
+      "sha256": "d06e1c1d06d6be9c205f524fb81b26c19cdb3902677e47998c9a854ada0d609c"
+    }
+  },
+  "previousMigrationRelease": "v0.0.47",
+  "tests": 80,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true,
+  "limitations": [
+    "No pre-0.10 or protected-profile migration",
+    "Qualification applies only to the recorded platform and exact tuple",
+    "One final publication per complete route; actual multi-edge and prior published receipt controls are included"
+  ]
+}

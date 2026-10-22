@@ -1,0 +1,43 @@
+{
+  "checks": [
+    "SHA256SUMS match",
+    "ZIP CRC",
+    "METADATA name/version",
+    "ABI wheel tag",
+    "RECORD hashes and sizes",
+    "native payload size/hash"
+  ],
+  "sha256s_sha256": "62c9d8082eb2f446446d7b94ff7ef7f48769e3cd836e5641c2951069302a6c75",
+  "source": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.51/SHA256SUMS",
+  "status": "verified",
+  "wheels": [
+    {
+      "filename": "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl",
+      "metadata_name": "weft-sql",
+      "metadata_version": "0.4.51",
+      "native_member": "weft/weft.abi3.so",
+      "native_member_sha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+      "native_member_size": 30007168,
+      "platform": "macOS arm64",
+      "record_entries_verified": 8,
+      "wheel_sha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+      "wheel_tags": [
+        "cp39-abi3-macosx_11_0_arm64"
+      ]
+    },
+    {
+      "filename": "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_name": "weft-sql",
+      "metadata_version": "0.4.51",
+      "native_member": "weft/weft.abi3.so",
+      "native_member_sha256": "ef293922003832fbd87041a28c6dbde33927fee573270f203aa51daf06bcd445",
+      "native_member_size": 41383776,
+      "platform": "manylinux x86_64",
+      "record_entries_verified": 8,
+      "wheel_sha256": "a23142f12b59444138b588a8a764666b025552a14036f62d83af022153f1a0a5",
+      "wheel_tags": [
+        "cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64"
+      ]
+    }
+  ]
+}

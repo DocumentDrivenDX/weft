@@ -1,0 +1,33 @@
+test_all_denied_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_all_denied_population_returns_empty_rows) ... ok
+test_empty_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_empty_population_returns_empty_rows) ... ok
+test_protected_activation_closes_legacy_data_facades (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_protected_activation_closes_legacy_data_facades) ... ok
+test_public_masked_projection_with_authorized_exact_raw_predicate (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_public_masked_projection_with_authorized_exact_raw_predicate) ... ok
+test_source_key_edge_cuts_block_writers_until_caller_settlement (test_current_query_subject_cut_native.CurrentQuerySubjectCutNativeTests.test_source_key_edge_cuts_block_writers_until_caller_settlement) ... ok
+test_native_all_denied_disclosure (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_all_denied_disclosure) ... ok
+test_native_changed_source_before_closing_guard_refuses_public_data (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_changed_source_before_closing_guard_refuses_public_data) ... ok
+test_native_empty_disclosure (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_empty_disclosure) ... FAIL
+test_native_masked_disclosure (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_masked_disclosure) ... ok
+test_native_post_transport_whole_batch_refusal_never_releases (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_post_transport_whole_batch_refusal_never_releases) ... ok
+test_all_denied_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_all_denied_population_returns_empty_rows) ... ok
+test_empty_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_empty_population_returns_empty_rows) ... ok
+test_protected_activation_closes_legacy_data_facades (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_protected_activation_closes_legacy_data_facades) ... ok
+test_public_masked_projection_with_authorized_exact_raw_predicate (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_public_masked_projection_with_authorized_exact_raw_predicate) ... ok
+
+======================================================================
+FAIL: test_native_empty_disclosure (test_current_disclosure_runtime_native.CurrentDisclosureRuntimeNativeTests.test_native_empty_disclosure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/truss-hf048-release/packages/python/tests/test_current_disclosure_runtime_native.py", line 210, in test_native_empty_disclosure
+    def test_native_empty_disclosure(self):self.assert_native_disclosure(resources=False)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss-hf048-release/packages/python/tests/test_current_disclosure_runtime_native.py", line 189, in assert_native_disclosure
+    bun=self.create_query_graph(active=active,resources=resources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss-hf048-release/packages/python/tests/test_current_disclosure_runtime_native.py", line 184, in create_query_graph
+    self.assertIsInstance(activated,Ok,str(self.host._custody.last_attempt.error))
+AssertionError: Error(error=ExecutionFailure(code='cancelled', message='Original operation cancelled and locally contained', retry_scope='none', sql_state='57014', catalog_code=None), status='error') is not an instance of <class 'truss.execution.Ok'> : canceling statement due to statement timeout
+
+----------------------------------------------------------------------
+Ran 14 tests in 225.492s
+
+FAILED (failures=1)

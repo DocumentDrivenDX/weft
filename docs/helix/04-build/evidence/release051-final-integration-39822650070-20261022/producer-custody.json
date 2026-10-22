@@ -1,0 +1,62 @@
+{
+  "interfaceVersion": "weft-release-evidence-custody/0.1",
+  "release": "0.4.51",
+  "purpose": "final Linux entity/facts native and Chromium integration producers; separate from the earlier c5 parity run and full workspace conformance",
+  "files": [
+    {
+      "file": "run-39822650070.json",
+      "source": "/private/tmp/weft-051-linux-facts-cc694-run.json",
+      "bytes": 5515,
+      "sha256": "ad6e7161fae2d93ead993d4ff7967054c61582d9892ae0926d4eb871255d280d"
+    },
+    {
+      "file": "facts-reports.json",
+      "source": "/private/tmp/weft-051-linux-facts-cc694/reports.json",
+      "bytes": 186460,
+      "sha256": "c45b385d21c64d4abec74849a7cad50229a6eaa054b2a14a192b13c2566b8982"
+    },
+    {
+      "file": "entity-reports.json",
+      "source": "/private/tmp/weft-051-linux-facts-cc694/entity-reports.json",
+      "bytes": 994279,
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+    },
+    {
+      "file": "facts-browser-summary.json",
+      "source": "/private/tmp/weft-051-linux-facts-cc694/browser-summary.json",
+      "bytes": 1495,
+      "sha256": "5587b21eb36cbe76814e1b2c0e0640cd4d618e096bcc46846fff02dcb3af94e6"
+    },
+    {
+      "file": "facts-browser-receipts.json",
+      "source": "/private/tmp/weft-051-linux-facts-cc694/browser-receipts.json",
+      "bytes": 3226,
+      "sha256": "bc8a1804597818d8b8745f6105421533a2cf8d421faf80d16ef706fcd423548d"
+    },
+    {
+      "file": "entity-browser-summary.json",
+      "source": "/private/tmp/weft-051-linux-facts-cc694/entity-browser-summary.json",
+      "bytes": 1496,
+      "sha256": "b65902d96a4b24d4841e4eb340ed8d126ee6484d59b8c1e409eef721405bc2af"
+    },
+    {
+      "file": "entity-browser-receipts.json",
+      "source": "/private/tmp/weft-051-linux-facts-cc694/entity-browser-receipts.json",
+      "bytes": 12404,
+      "sha256": "8f4989b4ab9e4c70af09402128716ce85b9c4806dd1f30b9b3782955f1ca3584"
+    }
+  ],
+  "identities": {
+    "linuxIntegrationRun": {
+      "runId": 39822650070,
+      "headSha": "cc694344da31af76ef6b97e572d20a8347989bdd",
+      "conclusion": "success"
+    },
+    "fullWorkspaceConformanceRun": {
+      "runId": 39822650250,
+      "status": "in_progress"
+    },
+    "linuxDebugWasmSha256": "b1a573acb81e45e345357dc8b6820d6765479c17827b9d7a8b689957c141266f",
+    "macReleaseWasmSha256": "73012141c317c5eea4feabe81f448b8df832822267cd3ca83b4b1420fe875d30"
+  }
+}

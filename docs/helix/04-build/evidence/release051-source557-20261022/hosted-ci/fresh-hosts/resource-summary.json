@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 7,
+  "binarySha256": "b357d61cdfcf9ff4200c8d14d0d5e253526420cf45ccce632ed1c50c8e8c237f",
+  "extensionSha256": "a2e9fd4440366b8bcf0247814df167be53eb838c42c1774ccaae8359de3c493d",
+  "python": "3.12.15 (main, Oct  1 2026, 02:35:59) [GCC 13.3.0]",
+  "casesAndResponsesSha256": "06fd387a3078c6e387cecd285e8993d67c5dfc42b7caf9c6c2d8fe37f85af940",
+  "subprocessDisabled": true,
+  "scope": "Seven raw resource library refusals; six CLI whole-response parity controls and one CLI input-limit transport refusal with exit2/empty stdout. No native database execution."
+}

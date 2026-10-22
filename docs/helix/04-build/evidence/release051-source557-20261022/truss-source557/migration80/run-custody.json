@@ -1,0 +1,39 @@
+{
+  "format": "truss-source557-installed-migration-custody/1",
+  "sourceCommit": "22ed333528a4f57a24edfca5d3df811269471faf",
+  "trussWheelSha256": "c69234212dd8cf31c48b8b7ddd498a2d6968c59318c85e9ae2ae5227d9cd6b45",
+  "weftWheelSha256": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+  "weftNativeModuleSha256": "34691932af5b84a3e8629b318aa69e88a5e2df46e47ffc143b4950aa6defc5aa",
+  "runLogSha256": "fb1137dc0be7907b4727547cf1a15b12327d2766e320bbfdf43e2faf699e219b",
+  "qualificationSha256": "3f31e3a8f67f9c67077e91997624d37aa49b68fc73e63c8b9a1601a3029cdf2d",
+  "sandboxedAttempt": {
+    "exit": 1,
+    "scope": "unqualified attempt retained; native initdb denied by sandbox SysV shared memory; no pass credited",
+    "logSha256": "521d52d50cf2e5f3b503e6c022e8ac11bbb729df0cdf39cbadd0d5f3faed32ff"
+  },
+  "actualRun": {
+    "command": "/private/tmp/truss-048-arras-source557-venv/bin/python /private/tmp/truss-hf048-release/scripts/qualify-runtime-migrations.py --installed-package --download --wheelhouse /private/tmp/truss-runtime-migration-wheelhouse --output /private/tmp/truss-048-arras-source557-migrations-escalated/qualification.json",
+    "elevatedForLocalPostgreSQLSharedMemory": true,
+    "exit": 0,
+    "tests": 80,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true
+  },
+  "sourceReceipts": {
+    "source47MigrationTests-before-close.json": "81a7adcb81ea7028be6d6a28521b6856de295c9bdc0b6e502c07beba84676f5f",
+    "source46-original-evidence.json": "91a3bc9d71c6d8573cb86402b2ed211019c5dd29a7252d80aa4d074cffe3c362",
+    "source46-native-inventory.json": "2885dab7aad39de0032ef34338df086204e7892fd80ba99844e5f2c91ce8b198",
+    "source47-original-evidence.json": "514f40a3e7134be369eb5bc59eaa3d34f8322cc8567f124e0b42685972fe1671",
+    "source44MigrationTests-before-close.json": "79a7ca06fb6fa02c0312d3e38c7945b6776e20a25e5b01e1bdc38f9885bea103",
+    "source44-original-evidence.json": "8e5fb5a84254ef014cc46c10f6eed94f416ef21fc3705f58513da5a3ef5d748e",
+    "source44-native-inventory.json": "6b1fb5be9e4ea557879e93021b9ec7fe9929a2596cc9ec908dac57f6a163bac3",
+    "source47-native-inventory.json": "ee822b3c7e21956faacf9ec9826386ab54c6791d410280df1136d1379bdeca92",
+    "source46MigrationTests-before-close.json": "04a1bd305c53cb456229dc5cead8d49747c017ae2381b379c99c746e26e6d282"
+  },
+  "limits": [
+    "macOS ARM64/Python3.11; exact selected installed package and PostgreSQL18.6.1",
+    "unprotected UMF0.10 lineage only; no pre0.10 or protected-profile migration"
+  ]
+}
