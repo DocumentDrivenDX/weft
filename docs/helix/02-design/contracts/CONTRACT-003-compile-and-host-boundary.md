@@ -74,8 +74,11 @@ For example, `{"vocabularies":{"arras.view":{"version":"0.1.0"}}}` supplies that
 declaration; another document's declaration MUST NOT qualify the selected element.
 The complete original source and model pin MUST remain unchanged.
 
-Missing, malformed, null or unsupported version declarations, non-object payloads,
-wrong carriers and unknown selected namespaces MUST block with WFT-TYPE and no SQL.
+All unsupported cases MUST block without SQL. For a structurally valid owning UMF
+document, absent or unsupported selected vocabulary declarations, non-object
+payloads, wrong carriers and unknown selected namespaces report WFT-TYPE.
+Malformed owning document declarations retain pinned-envelope WFT-MODEL refusal;
+request, JSON and pin errors retain their existing earlier precedence.
 Failure to establish the exact owning pin MUST block with WFT-PIN. This profile
 MUST NOT strip source metadata, infer a declaration from `hohfeld.view`, interpret
 Arras view terms, or enable presentation metadata in default/security profiles.
