@@ -1,0 +1,18 @@
+{
+  "scope": "Exact f003 compiler native wheel and matching WASM; source/corpus-only extension of qualification, no new compiler implementation",
+  "cases": 31,
+  "nativeAndActualChromiumPassed": true,
+  "entrypoint": "compile_truss_runtime_json / compile_truss_runtime_entity_selection",
+  "sourceCustody": "Original documentJson including document future.document, Record umf.ddd and Field hohfeld.view payloads has its exact SHA retained in artifact modelPins; no extension stripping",
+  "unknownSelectedMeaning": "Selected future.selected Field extension refuses WFT-TYPE without SQL",
+  "genericEntrypoint": "Generic compile_json lacks this backend registration; it is not the selected Truss runtime profile",
+  "originalFailedBrowserInvocation": "First invocation omitted required environment and failed before browser qualification; retained separately",
+  "files": {
+    "weft-051-entity31-reports-v2.json": "836f3ecc5d5663e57313790b8f5ce55915d00659c810c91dc76bf8bc3a81f6b5",
+    "weft-051-entity31-browser-receipts.json": "a0197c886ee5c810eb86fb41b3032d0d2f541c4513090278a38883fda22518f0",
+    "weft-051-entity31-browser-summary.json": "1aa0c7b8ef035dfdd2725efd6d7ce4da7fd9b47fdced99a6e2156a9189d7f31a",
+    "weft-051-entity31-browser-v2.log": "1aa0c7b8ef035dfdd2725efd6d7ce4da7fd9b47fdced99a6e2156a9189d7f31a",
+    "weft-051-entity31-browser.log": "d6cc4db24864adfa84a63a3b489b773236001e5b164c281951352390d489d625",
+    "weft-051-entity31-v2.log": "662c1588777e3b42b6fd179be6dd2e277d70036e9596ff40720085c20472d096"
+  }
+}

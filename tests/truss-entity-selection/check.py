@@ -2,6 +2,7 @@
 """Check independently expected column/fact/profile outcomes in an installed wheel."""
 import argparse
 import json
+import hashlib
 from pathlib import Path
 import weft
 
@@ -17,6 +18,11 @@ for case in cases:
         artifact=result if case['pageSize'] is None else result['artifact']
         if 'sourceFunction' in expected:
             assert '"'+expected['sourceFunction']+'"(' in artifact['sql'],(case['id'],artifact)
+        # Source custody is independent of selected read semantics: compile the
+        # original extension-bearing bytes and retain their exact admitted pins.
+        assert artifact['modelPins']==[m['pin'] for m in case['request']['modules']]
+        for module in case['request']['modules']:
+            assert hashlib.sha256(module['documentJson'].encode()).hexdigest()==module['pin']['sha256']
         columns=artifact['columns'];visible=len(columns) if case['pageSize'] is None else result['page']['visibleOutputs']
         assert [c['outputName'] for c in columns[:visible]]==expected['visibleColumns'],(case['id'],columns)
         assert [c['position'] for c in columns]==list(range(1,len(columns)+1))

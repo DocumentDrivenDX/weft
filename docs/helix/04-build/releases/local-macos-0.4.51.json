@@ -24,7 +24,7 @@
     {
       "id": "native-and-Chromium-expected-corpus",
       "status": "passed",
-      "cases": 29
+      "cases": 31
     },
     {
       "id": "Truss-source-native-query",
@@ -40,5 +40,6 @@
   "evidence": "../evidence/truss-selective-sources-20261022/compiler-f003/receipt.json",
   "otherPlatforms": "Hosted Linux build/packaging remains a separate release gate; no other native functional qualification claimed",
   "fullSuiteQualification": "not claimed",
-  "nativeSparkOrDatabricksExecution": "not claimed"
+  "nativeSparkOrDatabricksExecution": "not claimed",
+  "additionalEvidence": "../evidence/truss-selective-sources-20261022/original-model-admission/receipt.json"
 }
