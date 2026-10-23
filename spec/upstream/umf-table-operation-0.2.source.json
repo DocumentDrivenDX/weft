@@ -1,0 +1,8 @@
+{
+  "repository": "DocumentDrivenDX/umf",
+  "revision": "8a79d269e648f17ae1e24841ebc02b5f17020973",
+  "path": "spec/extensions/tables/operation-0.2.schema.json",
+  "license": "MIT OR Apache-2.0",
+  "scope": "exact declaration schema; native host source/ledger admission remains required",
+  "sha256": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e"
+}

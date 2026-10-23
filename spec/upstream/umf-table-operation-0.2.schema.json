@@ -1,0 +1,413 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-operation:0.2",
+  "title": "UMF typed same-row table operation 0.2",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "umf.table-operation/0.2"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "parameters": {
+      "const": []
+    },
+    "body": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "update"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "$ref": "#/$defs/ref"
+              },
+              "value": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "rowExpression"
+                  },
+                  "expression": {
+                    "$ref": "#/$defs/rowExpression"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "expression"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "field",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "isNull"
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            }
+          },
+          "required": [
+            "op",
+            "field"
+          ],
+          "additionalProperties": false
+        },
+        "returning": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "maxRows": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "kind",
+        "table",
+        "values",
+        "where",
+        "returning",
+        "maxRows"
+      ],
+      "additionalProperties": false
+    },
+    "consistency": {
+      "const": "transaction"
+    },
+    "replay": {
+      "const": "caller-key-required"
+    }
+  },
+  "required": [
+    "version",
+    "id",
+    "parameters",
+    "body",
+    "consistency",
+    "replay"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "rowExpression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "field"
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            }
+          },
+          "required": [
+            "op",
+            "field"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "literal"
+            },
+            "value": {
+              "$ref": "urn:umf:tables:0.1.0#/$defs/literal"
+            }
+          },
+          "required": [
+            "op",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "coalesce",
+                "concat"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/rowExpression"
+              },
+              "minItems": 2,
+              "maxItems": 32
+            }
+          },
+          "required": [
+            "op",
+            "args"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "add"
+            },
+            "left": {
+              "$ref": "#/$defs/rowExpression"
+            },
+            "right": {
+              "$ref": "#/$defs/rowExpression"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "subtract"
+            },
+            "left": {
+              "$ref": "#/$defs/rowExpression"
+            },
+            "right": {
+              "$ref": "#/$defs/rowExpression"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "multiply"
+            },
+            "left": {
+              "$ref": "#/$defs/rowExpression"
+            },
+            "right": {
+              "$ref": "#/$defs/rowExpression"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "conditional"
+            },
+            "when": {
+              "$ref": "#/$defs/predicate"
+            },
+            "then": {
+              "$ref": "#/$defs/rowExpression"
+            },
+            "else": {
+              "$ref": "#/$defs/rowExpression"
+            }
+          },
+          "required": [
+            "op",
+            "when",
+            "then",
+            "else"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "predicate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "all"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "and",
+                "or"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/predicate"
+              },
+              "minItems": 1,
+              "maxItems": 32
+            }
+          },
+          "required": [
+            "op",
+            "args"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "not"
+            },
+            "arg": {
+              "$ref": "#/$defs/predicate"
+            }
+          },
+          "required": [
+            "op",
+            "arg"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "isNull"
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            }
+          },
+          "required": [
+            "op",
+            "field"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "in"
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/rowPredicateValue"
+              },
+              "minItems": 1,
+              "maxItems": 32
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "values"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "eq",
+                "ne",
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "startsWith"
+              ]
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "value": {
+              "$ref": "#/$defs/rowPredicateValue"
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "rowPredicateValue": {
+      "type": "object",
+      "properties": {
+        "kind": { "const": "literal" },
+        "value": { "$ref": "urn:umf:tables:0.1.0#/$defs/literal" }
+      },
+      "required": ["kind", "value"],
+      "additionalProperties": false
+    },
+    "ref": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "schema": "weft-local-macos-selected-assets/0.1",
+  "status": "passed",
+  "version": "0.4.53",
+  "sourceFreezeCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "platform": "macos-arm64",
+  "functionalQualification": "local-only",
+  "wheel": {
+    "name": "weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c",
+    "nativeModule": "weft/weft.abi3.so",
+    "nativeModuleSha256": "1c7692578ff60ec4f6d243c9356609c042cd749f407ed8f47640081a7e93fdbc",
+    "recordSha256": "c5bd86af842c796448d44bf8b2b4cc55420c5f655e296cb94865baaa255d5478",
+    "packagingReport": {
+      "path": "/private/tmp/umf-g02-candidate-008-artifacts/packaging-aarch64-apple-darwin-008.json",
+      "sha256": "d7890192fcf96220e84495a4531479a3cae998c03ad6809b40e41ae7843a76c4"
+    },
+    "sourceBuildManifest": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-008/weft-mac-packaging-source-manifest-008.json",
+      "sha256": "fdc5f19c29120f9fd4c08ab2b3071ede9acc7af0a01d36d52af667ebc2f0508f"
+    }
+  },
+  "functionalReceipt": {
+    "scope": "Weft compiler and SQL guard exercised locally on PostgreSQL through the UMF host; installed-wheel browser/compiler parity controls and declared synthetic PostgreSQL SQL-oracle regression. This is local-only; no private consumer, production executor, or Linux execution claim.",
+    "postgresql": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0",
+    "compiledProgramAndBrowser": {
+      "report": {
+        "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-008/g02-browser-report-valid-model-008.json",
+        "sha256": "5231300eae50ad6ada53388d903e20aabb07d44d531fad8a339416f409b14ce0"
+      },
+      "cases": 47,
+      "nativeWasmParity": true,
+      "browser": "Chromium 153.0.8010.12",
+      "triImplementationParity": {
+        "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-008/predicate-umf-weft-parity-valid-model-008.json",
+        "sha256": "28889d1481fa852c866be265632d96c0ad8753cdd7f55372a3e8a41de0fba1f0",
+        "cases": 47,
+        "allStatusesMatch": true
+      },
+      "prepareBind": {
+        "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-008/predicate-domain-prepare-bind-valid-model-008.json",
+        "sha256": "2d98389b8a8154e6ec09b8f8f1c9333b634f662a755c5f7e5f10aab629c02de9",
+        "varchar3ComparedWithAbcd": "prepare passed; bind compiled",
+        "int2ComparedWith200000": "prepare passed; bind compiled"
+      }
+    },
+    "postgresqlBase": {
+      "fixture": {
+        "path": "/private/tmp/umf-g02-native-008/base-fixture.json",
+        "sha256": "09173dd6294e84e5e6a6416e675a17110b831339b450de8cb597b9bfa2a798cc"
+      },
+      "report": {
+        "path": "/private/tmp/umf-g02-native-008/base-report.json",
+        "sha256": "c11efed13cbe1f050b639b410f430ea132d604216e632da49863d7812cceeb44"
+      },
+      "cases": 2,
+      "checks": 10,
+      "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit"
+    },
+    "postgresqlNullSemantics": {
+      "fixture": {
+        "path": "/private/tmp/umf-g02-native-008/null-fixture.json",
+        "sha256": "a554938c4adb4e4b4d864682321643de5b9f5adfad7400dd0afd17ac6bf05417"
+      },
+      "report": {
+        "path": "/private/tmp/umf-g02-native-008/null-report.json",
+        "sha256": "09a420787bd65deb12b48a201c81ba3b6c3637fc4bae8816d964db609d254cea"
+      },
+      "cases": 18,
+      "checks": 108,
+      "compileOnlyControls": [
+        {
+          "id": "add-null-null-wrong-text-target",
+          "expected": "domain-refusal",
+          "observed": "blocked"
+        },
+        {
+          "id": "concat-null-null-wrong-integer-target",
+          "expected": "domain-refusal",
+          "observed": "blocked"
+        },
+        {
+          "id": "valid-text-concat-target",
+          "expected": "compiled",
+          "observed": "compiled"
+        },
+        {
+          "id": "valid-integer-add-target",
+          "expected": "compiled",
+          "observed": "compiled"
+        }
+      ],
+      "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit"
+    },
+    "legacyNativeRegression": {
+      "inputs": {
+        "path": "/private/tmp/umf-g02-candidate-008-artifacts/weft-v01-native-regression-inputs.json",
+        "sha256": "11a8bb1108d41da2850bfaed0c09a0f7c7158f8de3784d28cd4141ab9ae34f2d"
+      },
+      "report": {
+        "path": "/private/tmp/umf-g02-candidate-008-artifacts/weft-v01-native-regression.json",
+        "sha256": "571ddcfa068c2331376a22cc871fe759f7f8cc14b4efb69906f36969778cdcdb"
+      },
+      "nativeAssertions": 50,
+      "scope": "synthetic PostgreSQL SQL-oracle regression; not generated/runtime operation admission"
+    },
+    "sourceTests": {
+      "command": "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH cargo test --locked --offline -p weft-postgresql --test table_operation",
+      "sourceCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+      "summary": {
+        "passed": 25,
+        "failed": 0,
+        "ignored": 0
+      },
+      "log": {
+        "path": "/private/tmp/umf-g02-candidate-008-artifacts/weft-table-operation-25.log",
+        "sha256": "c99a10b0d157cfe3d558ed5706c92c90d61ef5cf66e602d60400705468a68338"
+      }
+    },
+    "faultInjection": {
+      "summary": {
+        "path": "/private/tmp/umf-g02-faults-008/evidence-summary.json",
+        "sha256": "e274df659d935a688ea922ba0f2fa2fb17620f55d8230e4cc79a6810c31968a6",
+        "candidateManifestSha256": "51d8f62a1e0cca768221ba2e8938058a09d10753ef31f48df7b4e9a60b71450c",
+        "inputPins": {
+          "/private/tmp/umf-g02-native-008/inputs.json": "d50cea7cff6f66be4037ce036c51cc0d43b90bd68e7f1cba7b4d4b4acb30b61a",
+          "/private/tmp/umf-g02-faults-008/inputs.json": "f939aab07eaa8a86cd802fc9026e7f312d466b8332c80eda955e603772bfb133"
+        }
+      },
+      "reports": {
+        "fenced-resume": {
+          "path": "/private/tmp/umf-g02-faults-008/fenced-resume-report.json",
+          "sha256": "fa506ce89b94a7344aeaebbae921860f9f758e3a763c077062b1e60127c6908d",
+          "checks": 33,
+          "cleanup": {
+            "databaseExists": false,
+            "remainingRoles": [],
+            "droppedDatabase": true,
+            "droppedRoles": 5
+          },
+          "updateDispatches": {
+            "total": 2,
+            "afterRollbackBaseline": 1,
+            "statementSha256": [
+              "a0dae7f0752711820e805d368e9ae92378e28b0843f0006f4ffe260bd91eddcf",
+              "a0dae7f0752711820e805d368e9ae92378e28b0843f0006f4ffe260bd91eddcf"
+            ],
+            "statementPrefixes": [
+              "WITH umf_effects AS (UPDATE \"g02fs_2895ce6d9\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal",
+              "WITH umf_effects AS (UPDATE \"g02fs_2895ce6d9\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal"
+            ]
+          }
+        },
+        "backfill-commit-lost": {
+          "path": "/private/tmp/umf-g02-faults-008/backfill-commit-lost-report.json",
+          "sha256": "a3706addc1aa9f34f08001bc7738b4ac65022a3eefada74b59330538e62b3e5b",
+          "checks": 27,
+          "cleanup": {
+            "databaseExists": false,
+            "remainingRoles": [],
+            "droppedDatabase": true,
+            "droppedRoles": 5
+          },
+          "updateDispatches": {
+            "total": 2,
+            "afterRollbackBaseline": 1,
+            "statementSha256": [
+              "220dc2f3b8ddc818d7fc59bd01add981ab8329369be4511f703a0b254377e8ba",
+              "220dc2f3b8ddc818d7fc59bd01add981ab8329369be4511f703a0b254377e8ba"
+            ],
+            "statementPrefixes": [
+              "WITH umf_effects AS (UPDATE \"g02fs_8c3706b55\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal",
+              "WITH umf_effects AS (UPDATE \"g02fs_8c3706b55\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal"
+            ]
+          }
+        },
+        "existing-target-commit-lost": {
+          "path": "/private/tmp/umf-g02-faults-008/existing-target-commit-lost-report.json",
+          "sha256": "08f41ce979849db7b416d6587e4247326d1b31fdd01ade22a7345b8eb2c46249",
+          "checks": 27,
+          "cleanup": {
+            "databaseExists": false,
+            "remainingRoles": [],
+            "droppedDatabase": true,
+            "droppedRoles": 5
+          },
+          "updateDispatches": {
+            "total": 2,
+            "afterRollbackBaseline": 1,
+            "statementSha256": [
+              "9b21d12dd63772f4ae99cf58e7e552c467553c196592941bb4fc694294841772",
+              "9b21d12dd63772f4ae99cf58e7e552c467553c196592941bb4fc694294841772"
+            ],
+            "statementPrefixes": [
+              "WITH umf_effects AS (UPDATE \"g02fs_40b49fec7\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal",
+              "WITH umf_effects AS (UPDATE \"g02fs_40b49fec7\".\"notes\" AS t SET \"total\" = ((t.\"amount\")::pg_catal"
+            ]
+          }
+        }
+      },
+      "interpretation": "Three local fault-injection / interrupted-publication scenarios passed their recorded assertions and disposed of their temporary database and roles. This is local UMF-host composition evidence for the declared synthetic PostgreSQL fixture."
+    }
+  },
+  "installedArtifacts": {
+    "manifest": {
+      "path": "/private/tmp/umf-g02-candidate-008-artifacts/manifest.json",
+      "sha256": "51d8f62a1e0cca768221ba2e8938058a09d10753ef31f48df7b4e9a60b71450c"
+    },
+    "umfCore": {
+      "version": "0.10.0",
+      "artifactNote": "not listed as a standalone asset in candidate manifest"
+    },
+    "umfAccess": {
+      "version": "0.1.0.dev8",
+      "wheelSha256": "b6bd9cf9fabff535194a293b87f497c843a444b90677e37c3f23d5da1954d1b8"
+    },
+    "umfCodegen": {
+      "version": "0.1.0a5",
+      "wheelSha256": "307b0bb4df34ed11e903f222f7d6507eb3bff55778145b01ed1753c8c74f42cc"
+    },
+    "umfSdk": {
+      "version": "0.5.6",
+      "sha256": "3f33611a51846a2af7eac3b50888c5844dd02d9570b9f2cc8f0886cc04e8335b"
+    }
+  },
+  "sourceOwnershipMetadata": {
+    "path": "docs/helix/02-design/module-boundaries.json",
+    "scope": "documentation-only correction; no frozen compiler input changed",
+    "workingTreeStatusAtReceiptDraft": "the metadata file is the sole outstanding Weft worktree change; checked Cargo/crates/spec/vendor/.cargo/rust-toolchain/contracts inputs match source freeze"
+  },
+  "unqualified": [
+    "production-target acceptance and production application-operation durable replay",
+    "Linux native functional execution",
+    "release approval or publication"
+  ],
+  "separateAssessments": [
+    "Final-head CI and independent source/native/asset review are assessed separately; this local-functional receipt does not certify those approvals.",
+    "UMF host composition qualification for no-default append and paired create-command refusal is a separate task and is not claimed here.",
+    "No private-consumer execution, Linux functional execution, production host executor, or release/publication approval is claimed."
+  ],
+  "nativeModuleSha256": "1c7692578ff60ec4f6d243c9356609c042cd749f407ed8f47640081a7e93fdbc",
+  "postgresqlVersion": "18.6"
+}
