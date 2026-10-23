@@ -1,0 +1,78 @@
+name: Build selected Weft 0.4.52 Linux wheel
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact reviewed source commit to build
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: selected-weft-0.4.52-linux-${{ inputs.source_sha }}
+  cancel-in-progress: false
+jobs:
+  linux-x86_64:
+    if: inputs.source_sha != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.source_sha }}
+      - name: Require the exact reviewed 0.4.52 source
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ inputs.source_sha }}
+          WORKFLOW_SHA: ${{ github.sha }}
+          BUILD_RUN_ID: ${{ github.run_id }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+        run: |
+          test "$(printf '%s' "$EXPECTED_SHA" | wc -c | tr -d ' ')" = 40
+          case "$EXPECTED_SHA" in *[!0-9a-f]*) exit 1;; esac
+          test "$GITHUB_REF" = refs/heads/main
+          test "$WORKFLOW_SHA" = "$EXPECTED_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          python - <<'PYTHON'
+          import tomllib
+          assert tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']=='0.4.52'
+          assert tomllib.load(open('crates/weft-python/Cargo.toml','rb'))['package']['version']=='0.4.52'
+          PYTHON
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: PyO3/maturin-action@v1
+        with:
+          maturin-version: '1.9.6'
+          rust-toolchain: '1.90.0'
+          target: x86_64-unknown-linux-gnu
+          manylinux: '2014'
+          args: --manifest-path crates/weft-python/Cargo.toml --release --locked --out dist
+      - name: Check exact wheel and record source lineage
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ inputs.source_sha }}
+          BUILD_RUN_ID: ${{ github.run_id }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+        run: |
+          python -m venv /tmp/weft-wheel-check
+          test "$(find dist -maxdepth 1 -name '*.whl' | wc -l | tr -d ' ')" = 1
+          /tmp/weft-wheel-check/bin/python -m pip install --no-deps dist/*.whl
+          /tmp/weft-wheel-check/bin/python scripts/release/verify-wheel-packaging.py --wheel dist/*.whl --version 0.4.52 --output dist/packaging-linux-x86_64.json
+          python scripts/release/enrich-selected-wheel-report.py \
+            --wheel "$(find dist -maxdepth 1 -name '*.whl' -print -quit)" \
+            --packaging-report dist/packaging-linux-x86_64.json \
+            --build-report dist/selected-linux-build-0.4.52.json \
+            --source-commit "$EXPECTED_SHA" --target x86_64-unknown-linux-gnu \
+            --version 0.4.52 \
+            --build-run-id "$BUILD_RUN_ID" --workflow-name "$WORKFLOW_NAME"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weft-0.4.52-linux-x86_64-${{ inputs.source_sha }}
+          path: |
+            dist/*.whl
+            dist/packaging-linux-x86_64.json
+            dist/selected-linux-build-0.4.52.json
+          if-no-files-found: error
+          retention-days: 90
