@@ -49,7 +49,14 @@ fn merge(a: &Type, b: &Type) -> Result<Type> {
 
 fn predicate_types_compatible(op: &str, field: &Type, literal: &Type) -> bool {
     if literal == &Type::Null {
-        return true;
+        return match op {
+            "startsWith" => matches!(field, Type::Text),
+            "lt" | "le" | "gt" | "ge" => {
+                matches!(field, Type::Text | Type::Numeric { .. })
+                    || matches!(field,Type::Exact(t) if t=="date"||t=="timestamptz")
+            }
+            _ => true,
+        };
     }
     let compatible = field == literal
         || matches!(
@@ -230,18 +237,51 @@ fn literal_payload_bytes(value: &Value) -> Option<usize> {
 }
 
 fn decimal_budget(token: &str) -> Result<(u32, u32)> {
+    let (integral, fractional, _) = effective_numeric(token)?;
+    Ok((integral, fractional))
+}
+
+fn canonical_numeric_token(token: &str) -> Result<String> {
+    let (integral, fractional, coefficient) = effective_numeric(token)?;
+    if integral + fractional > 1000 {
+        return Err("row expression numeric budget exceeded");
+    }
+    let mut digits = coefficient.to_string();
+    let negative = digits.starts_with('-');
+    if negative {
+        digits.remove(0);
+    }
+    if fractional == 0 {
+        return Ok(if negative {
+            format!("-{digits}")
+        } else {
+            digits
+        });
+    }
+    let scale = fractional as usize;
+    let (integer, fraction) = if digits.len() <= scale {
+        (
+            "0".to_owned(),
+            format!("{}{}", "0".repeat(scale - digits.len()), digits),
+        )
+    } else {
+        let split = digits.len() - scale;
+        (digits[..split].to_owned(), digits[split..].to_owned())
+    };
+    let sign = if negative { "-" } else { "" };
+    Ok(format!("{sign}{integer}.{fraction}"))
+}
+
+fn effective_numeric(token: &str) -> Result<(u32, u32, num_bigint::BigInt)> {
     if token.is_empty() || token.len() > 1_048_576 {
         return Err("row expression decimal token unsupported");
     }
-    let unsigned = token
-        .strip_prefix('-')
-        .or_else(|| token.strip_prefix('+'))
-        .unwrap_or(token);
+    let unsigned = token.strip_prefix('-').unwrap_or(token);
     let mut exponent_parts = unsigned.split(['e', 'E']);
     let mantissa = exponent_parts.next().unwrap_or("");
     let exponent_token = exponent_parts.next();
     if exponent_parts.next().is_some() {
-        return Err("row expression exponent outside bounds");
+        return Err("row expression exponent invalid");
     }
     if let Some(exponent) = exponent_token {
         let digits = exponent.strip_prefix(['+', '-']).unwrap_or(exponent);
@@ -249,115 +289,60 @@ fn decimal_budget(token: &str) -> Result<(u32, u32)> {
             return Err("row expression exponent invalid");
         }
     }
-    let mut p = mantissa.split('.');
-    let whole = p.next().unwrap_or("");
-    let frac = p.next().unwrap_or("");
-    if p.next().is_some()
-        || whole.is_empty() && frac.is_empty()
-        || !whole.bytes().all(|b| b.is_ascii_digit())
-        || !frac.bytes().all(|b| b.is_ascii_digit())
+    let (whole, fraction) = mantissa.split_once('.').unwrap_or((mantissa, ""));
+    if whole.is_empty()
+        || mantissa.contains('.') && fraction.is_empty()
+        || !whole.bytes().all(|byte| byte.is_ascii_digit())
+        || !fraction.bytes().all(|byte| byte.is_ascii_digit())
+        || whole.len() > 1 && whole.starts_with('0')
     {
         return Err("row expression decimal token invalid");
     }
-    let mut digits = format!("{whole}{frac}");
-    if digits.bytes().all(|byte| byte == b'0') {
-        return Ok((1, 0));
-    }
-    let exponent = exponent_token
-        .map(|s| {
-            s.parse::<i32>()
-                .map_err(|_| "row expression exponent invalid")
-        })
-        .transpose()?
-        .unwrap_or(0);
-    if exponent.unsigned_abs() > 2000 {
-        return Err("row expression exponent outside bounds");
-    }
-    let scale = frac.len() as i32 - exponent;
-    let first = digits.find(|c: char| c != '0');
-    if let Some(first) = first {
-        digits.drain(..first);
-    } else {
-        return Ok((1, 0));
-    }
-    let (mut integral, mut fractional) = if scale <= 0 {
-        (((digits.len() as i32 - scale).max(1) as u32), 0)
-    } else {
-        (((digits.len() as i32 - scale).max(0) as u32), scale as u32)
-    };
-    if fractional > 0 {
-        let fractional_start = digits.len().saturating_sub(fractional as usize);
-        let trailing = digits[fractional_start..]
-            .bytes()
-            .rev()
-            .take_while(|b| *b == b'0')
-            .count() as u32;
-        fractional -= trailing;
-    }
-    if integral == 0 && fractional == 0 {
-        integral = 1;
-    }
-    Ok((integral, fractional))
-}
-
-fn canonical_numeric_token(token: &str) -> Result<String> {
-    let unsigned = token.strip_prefix('-').unwrap_or(token);
-    let mut parts = unsigned.split(['e', 'E']);
-    let mantissa = parts
-        .next()
-        .ok_or("row expression numeric literal invalid")?;
-    let exponent_token = parts.next();
-    if parts.next().is_some() {
-        return Err("row expression exponent outside bounds");
-    }
-    if let Some(exponent) = exponent_token {
-        let exponent_digits = exponent.strip_prefix(['+', '-']).unwrap_or(exponent);
-        if exponent_digits.is_empty() || !exponent_digits.bytes().all(|byte| byte.is_ascii_digit())
-        {
-            return Err("row expression exponent invalid");
-        }
-    }
-    let (whole, fraction) = mantissa.split_once('.').unwrap_or((mantissa, ""));
     let mut digits = format!("{whole}{fraction}");
-    if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) {
-        return Err("row expression numeric literal invalid");
-    }
-    if digits.bytes().all(|byte| byte == b'0') {
-        return Ok("0".into());
+    let first_nonzero = digits.find(|byte: char| byte != '0');
+    let Some(first_nonzero) = first_nonzero else {
+        let coefficient = crate::security_literals::coefficient(token, 0, Some(1000))
+            .map_err(|_| "row expression numeric literal invalid")?;
+        return Ok((1, 0, coefficient));
+    };
+    digits.drain(..first_nonzero);
+    if exponent_token.is_some_and(|exponent| exponent.len() > 32) {
+        return Err("row expression exponent invalid");
     }
     let exponent = exponent_token
         .map(|value| {
             value
-                .parse::<i32>()
+                .parse::<i128>()
                 .map_err(|_| "row expression exponent invalid")
         })
         .transpose()?
         .unwrap_or(0);
-    if exponent.unsigned_abs() > 2000 {
-        return Err("row expression exponent outside bounds");
-    }
-    let point = whole.len() as i32 + exponent;
-    let (integer, fractional) = if point <= 0 {
-        (
-            "0".to_owned(),
-            format!("{}{}", "0".repeat((-point) as usize), digits),
-        )
-    } else if point as usize >= digits.len() {
-        digits.push_str(&"0".repeat(point as usize - digits.len()));
-        (digits, String::new())
+    let mut shift = exponent
+        .checked_sub(fraction.len() as i128)
+        .ok_or("row expression exponent outside bounds")?;
+    let significant_len = digits.trim_end_matches('0').len();
+    let trailing_zeros = digits.len() - significant_len;
+    digits.truncate(significant_len);
+    shift = shift
+        .checked_add(trailing_zeros as i128)
+        .ok_or("row expression exponent outside bounds")?;
+    let (integral, fractional) = if shift < 0 {
+        let scale = shift
+            .checked_neg()
+            .ok_or("row expression exponent outside bounds")?;
+        ((digits.len() as i128 + shift).max(0), scale)
     } else {
-        let remainder = digits.split_off(point as usize);
-        (digits, remainder)
+        ((digits.len() as i128 + shift).max(1), 0)
     };
-    let integer = integer.trim_start_matches('0');
-    let integer = if integer.is_empty() { "0" } else { integer };
-    let fractional = fractional.trim_end_matches('0');
-    let sign = if token.starts_with('-') { "-" } else { "" };
-    Ok(if fractional.is_empty() {
-        format!("{sign}{integer}")
-    } else {
-        format!("{sign}{integer}.{fractional}")
-    })
+    if integral + fractional > 1000 {
+        return Err("row expression numeric budget exceeded");
+    }
+    let integral = u32::try_from(integral).map_err(|_| "row expression numeric budget exceeded")?;
+    let fractional =
+        u32::try_from(fractional).map_err(|_| "row expression numeric budget exceeded")?;
+    let coefficient = crate::security_literals::coefficient(token, fractional as u64, Some(1000))
+        .map_err(|_| "row expression numeric literal outside effective bounds")?;
+    Ok((integral, fractional, coefficient))
 }
 
 impl State<'_> {
@@ -495,39 +480,55 @@ impl State<'_> {
                     let next = self.expression(child, depth + 1)?;
                     acc = merge(&acc, &next)?;
                 }
-                if op == "concat" && !matches!(acc, Type::Text | Type::Null) {
-                    return Err("row expression concat requires text");
+                if op == "concat" {
+                    if !matches!(acc, Type::Text | Type::Null) {
+                        return Err("row expression concat requires text");
+                    }
+                    if acc == Type::Null {
+                        Type::Text
+                    } else {
+                        acc
+                    }
+                } else {
+                    acc
                 }
-                acc
             }
             "add" | "subtract" | "multiply" => {
                 let left = self.expression(&node["left"], depth + 1)?;
                 let right = self.expression(&node["right"], depth + 1)?;
-                if left == Type::Null || right == Type::Null {
-                    if matches!(left, Type::Numeric { .. } | Type::Null)
-                        && matches!(right, Type::Numeric { .. } | Type::Null)
-                    {
-                        Type::Null
-                    } else {
+                let left_null = left == Type::Null;
+                let right_null = right == Type::Null;
+                if left_null && right_null {
+                    return Ok(Type::Numeric {
+                        integral: 0,
+                        fractional: 0,
+                        integral_only: true,
+                    });
+                }
+                if left_null || right_null {
+                    let other = if left_null { &right } else { &left };
+                    if !matches!(other, Type::Numeric { .. }) {
                         return Err("row expression arithmetic requires numeric operands");
                     }
-                } else {
-                    let (i1, s1, x1) = match left {
-                        Type::Numeric {
-                            integral,
-                            fractional,
-                            integral_only,
-                        } => (integral, fractional, integral_only),
-                        _ => return Err("row expression arithmetic requires numeric operands"),
-                    };
-                    let (i2, s2, x2) = match right {
-                        Type::Numeric {
-                            integral,
-                            fractional,
-                            integral_only,
-                        } => (integral, fractional, integral_only),
-                        _ => return Err("row expression arithmetic requires numeric operands"),
-                    };
+                    return Ok(other.clone());
+                }
+                let (i1, s1, x1) = match left {
+                    Type::Numeric {
+                        integral,
+                        fractional,
+                        integral_only,
+                    } => (integral, fractional, integral_only),
+                    _ => return Err("row expression arithmetic requires numeric operands"),
+                };
+                let (i2, s2, x2) = match right {
+                    Type::Numeric {
+                        integral,
+                        fractional,
+                        integral_only,
+                    } => (integral, fractional, integral_only),
+                    _ => return Err("row expression arithmetic requires numeric operands"),
+                };
+                {
                     let (i, s) = match op {
                         "add" | "subtract" => (i1.max(i2).saturating_add(1), s1.max(s2)),
                         _ => (i1.saturating_add(i2), s1.saturating_add(s2)),
@@ -700,7 +701,10 @@ pub fn numeric_input_fields(operation: &AdmittedOperation) -> Result<Vec<Value>>
 
 #[cfg(test)]
 mod literal_budget_tests {
-    use super::literal_payload_bytes;
+    use super::{
+        canonical_numeric_token, decimal_budget, literal_payload_bytes, predicate_types_compatible,
+        Type,
+    };
     use serde_json::json;
 
     #[test]
@@ -718,5 +722,61 @@ mod literal_budget_tests {
             literal_payload_bytes(&json!({"decimalToken": "1e2"})),
             Some(3)
         );
+    }
+
+    #[test]
+    fn effective_decimal_budget_handles_exponent_cancellation_without_expansion() {
+        let integral = format!("0.{}99999e2005", "0".repeat(2000));
+        assert_eq!(decimal_budget(&integral).unwrap(), (5, 0));
+        assert_eq!(canonical_numeric_token(&integral).unwrap(), "99999");
+
+        let fractional = format!("0.{}99999e2004", "0".repeat(2000));
+        assert_eq!(decimal_budget(&fractional).unwrap(), (4, 1));
+        assert_eq!(canonical_numeric_token(&fractional).unwrap(), "9999.9");
+
+        assert_eq!(decimal_budget("1e-1000").unwrap(), (0, 1000));
+        assert_eq!(
+            canonical_numeric_token("1e-1000").unwrap(),
+            format!("0.{}1", "0".repeat(999))
+        );
+
+        let long_zero = "0e9999999999999999999999999999";
+        assert_eq!(decimal_budget(long_zero).unwrap(), (1, 0));
+        assert_eq!(canonical_numeric_token(long_zero).unwrap(), "0");
+        let zero_with_unbounded_exponent = format!("0e{}", "9".repeat(64));
+        assert_eq!(
+            decimal_budget(&zero_with_unbounded_exponent).unwrap(),
+            (1, 0)
+        );
+        assert_eq!(
+            canonical_numeric_token(&zero_with_unbounded_exponent).unwrap(),
+            "0"
+        );
+        assert!(decimal_budget("1e1001").is_err());
+    }
+
+    #[test]
+    fn null_comparison_support_tracks_operator_type_support() {
+        let null = Type::Null;
+        assert!(predicate_types_compatible(
+            "eq",
+            &Type::Exact("uuid".into()),
+            &null
+        ));
+        assert!(predicate_types_compatible(
+            "ne",
+            &Type::Exact("boolean".into()),
+            &null
+        ));
+        assert!(!predicate_types_compatible(
+            "lt",
+            &Type::Exact("boolean".into()),
+            &null
+        ));
+        assert!(!predicate_types_compatible(
+            "startsWith",
+            &Type::Exact("uuid".into()),
+            &null
+        ));
     }
 }

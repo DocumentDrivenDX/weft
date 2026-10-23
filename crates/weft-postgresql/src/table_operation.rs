@@ -304,7 +304,18 @@ impl<'a> Lower<'a> {
                     "gt" => ">",
                     _ => ">=",
                 };
-                format!("({column} OPERATOR(pg_catalog.{operator}) {value})")
+                if op == "eq" || op == "ne" {
+                    let equal = format!(
+                        "(({column} OPERATOR(pg_catalog.=) {value}) IS TRUE OR ({column} IS NULL AND {value} IS NULL))"
+                    );
+                    if op == "eq" {
+                        equal
+                    } else {
+                        format!("(NOT {equal})")
+                    }
+                } else {
+                    format!("({column} OPERATOR(pg_catalog.{operator}) {value})")
+                }
             }
             _ => return Err("row expression condition operator unsupported"),
         })

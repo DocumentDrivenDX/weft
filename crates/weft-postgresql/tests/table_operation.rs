@@ -1063,6 +1063,43 @@ fn g02_numeric_and_conditional_algebra_uses_unconstrained_qualified_intermediate
             "integral integerToken {token} must type-check for integer targets: {p}"
         );
     }
+    let cancelled_integral = format!("0.{}99999e2005", "0".repeat(2000));
+    for tag in ["integerToken", "decimalToken"] {
+        let mut value = serde_json::Map::new();
+        value.insert(tag.to_owned(), json!(cancelled_integral));
+        let expression = json!({"op":"literal","value":Value::Object(value)});
+        for operation in ["backfill_amount", "backfill_integer"] {
+            let mut request = g02_numeric_request(expression.clone());
+            request["operation"] = json!(operation);
+            let program = compile(request);
+            assert_eq!(
+                program["status"], "compiled",
+                "{tag} {operation}: {program}"
+            );
+            assert_eq!(
+                program["parameterSources"][0]["source"]["nativeValue"],
+                "99999"
+            );
+        }
+    }
+    let cancelled_fraction = format!("0.{}99999e2004", "0".repeat(2000));
+    let mut decimal = serde_json::Map::new();
+    decimal.insert("decimalToken".to_owned(), json!(cancelled_fraction));
+    let mut request = g02_numeric_request(json!({"op":"literal","value":Value::Object(decimal)}));
+    request["operation"] = json!("backfill_amount");
+    let program = compile(request);
+    assert_eq!(program["status"], "compiled", "{program}");
+    assert_eq!(
+        program["parameterSources"][0]["source"]["nativeValue"],
+        "9999.9"
+    );
+
+    let mut decimal = serde_json::Map::new();
+    decimal.insert("decimalToken".to_owned(), json!(cancelled_fraction));
+    let mut request = g02_numeric_request(json!({"op":"literal","value":Value::Object(decimal)}));
+    request["operation"] = json!("backfill_integer");
+    assert_eq!(compile(request)["status"], "blocked");
+
     for token in ["1.2", "1e1000"] {
         let mut r = g02_numeric_request(numeric_literal(token));
         r["operation"] = json!("backfill_amount");
@@ -1123,4 +1160,67 @@ fn g02_numeric_and_conditional_algebra_uses_unconstrained_qualified_intermediate
         "compiled",
         "positive exponent should be admitted with bounded numeric precision"
     );
+}
+
+#[test]
+fn g02_intrinsic_null_types_and_null_safe_comparisons_remain_closed() {
+    let null_literal = json!({"op":"literal","value":null});
+    let text_concat =
+        g02_request(json!({"op":"concat","args":[null_literal.clone(),null_literal.clone()]}));
+    let compiled = compile(text_concat);
+    assert_eq!(compiled["status"], "compiled", "{compiled}");
+    assert!(compiled["sql"]
+        .as_str()
+        .unwrap()
+        .contains("OPERATOR(pg_catalog.||)"));
+
+    let numeric_add = json!({"op":"add","left":null_literal.clone(),"right":null_literal.clone()});
+    let mut request = g02_numeric_request(numeric_add.clone());
+    request["operation"] = json!("backfill_amount");
+    let compiled = compile(request);
+    assert_eq!(compiled["status"], "compiled", "{compiled}");
+    assert!(compiled["sql"]
+        .as_str()
+        .unwrap()
+        .contains("OPERATOR(pg_catalog.+)"));
+
+    let large_numeric = json!({"op":"literal","value":{"decimalToken":"1e999"}});
+    let null_plus_large = json!({"op":"add","left":null_literal.clone(),"right":large_numeric});
+    let mut request = g02_numeric_request(null_plus_large);
+    request["operation"] = json!("backfill_amount");
+    let compiled = compile(request);
+    assert_eq!(
+        compiled["status"], "compiled",
+        "NULL preserves the other numeric operand bound: {compiled}"
+    );
+
+    let mut wrong_concat_target = g02_numeric_request(
+        json!({"op":"concat","args":[null_literal.clone(),null_literal.clone()]}),
+    );
+    wrong_concat_target["operation"] = json!("backfill_amount");
+    assert_eq!(compile(wrong_concat_target)["status"], "blocked");
+    assert_eq!(compile(g02_request(numeric_add))["status"], "blocked");
+
+    let predicate = |op: &str| json!({"op":op,"field":{"module":"demo","element":"sourceAmount"},"value":{"kind":"literal","value":null}});
+    for (op, not_wrapped) in [("eq", false), ("ne", false), ("eq", true), ("ne", true)] {
+        let condition = if not_wrapped {
+            json!({"op":"not","arg":predicate(op)})
+        } else {
+            predicate(op)
+        };
+        let expression = json!({"op":"conditional","when":condition,"then":{"op":"field","field":{"module":"demo","element":"sourceAmount"}},"else":{"op":"literal","value":{"decimalToken":"0"}}});
+        let mut request = g02_numeric_request(expression);
+        request["operation"] = json!("backfill_amount");
+        let compiled = compile(request);
+        assert_eq!(compiled["status"], "compiled", "{compiled}");
+        let sql = compiled["sql"].as_str().unwrap();
+        assert!(sql.contains("OPERATOR(pg_catalog.=)"), "{sql}");
+        assert!(
+            sql.contains("IS TRUE OR (") && sql.contains(" IS NULL AND "),
+            "{sql}"
+        );
+        if op == "ne" || not_wrapped {
+            assert!(sql.contains("NOT (("), "{sql}");
+        }
+    }
 }
