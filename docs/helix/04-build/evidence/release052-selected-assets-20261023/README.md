@@ -18,9 +18,11 @@ selected wheels, including the live run identity from GitHub Actions. Linux
 functional/compiler execution is outside that result: the Linux run only checked
 archive, RECORD, metadata, ABI tag and notices.
 
-The release publisher expects the macOS evidence staged as
-`mac-functional-evidence-0.4.52.tar.gz`, with the top-level folder
-`runtime-32ec02f/` preserved. It validates the receipt against every referenced
-file before using the selected wheel pair. The Linux artifact run is independently
-looked up through the GitHub Actions API by the promotion workflow; the selected
-artifact report here is not treated as authentication of that run.
+The publisher expects each macOS evidence file as a separately named versioned
+draft asset, then reconstructs the receipt's relative paths before validation.
+It compares every existing draft asset byte-for-byte with the expected local
+asset, skips identical files, refuses mismatches, and uploads only absent files.
+The Linux artifact run is independently looked up through the GitHub Actions
+API; the selected artifact report here is not treated as authentication of that
+run. The publisher verifies the exact final asset set and bytes while the
+release remains a draft, then promotes it in a separate step.

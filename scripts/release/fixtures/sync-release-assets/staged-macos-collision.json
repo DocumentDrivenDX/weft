@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "packaging-macos-arm64-0.4.52.json": "staged-macos-packaging-bytes",
+    "linux-wheel.whl": "selected-linux-wheel-bytes"
+  },
+  "remote": {
+    "packaging-macos-arm64-0.4.52.json": "staged-macos-packaging-bytes"
+  },
+  "uploads": ["linux-wheel.whl"]
+}

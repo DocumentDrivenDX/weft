@@ -56,12 +56,22 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p selected/macos selected/functional
+          mkdir -p selected/macos selected/functional/incoming selected/functional/runtime-32ec02f/source-f-assets
           gh release download v0.4.52 --pattern 'weft_sql-0.4.52-*-macosx_*_arm64.whl' --dir selected/macos
           gh release download v0.4.52 --pattern 'build-receipt-macos-arm64-0.4.52.json' --dir selected/macos
           gh release download v0.4.52 --pattern 'packaging-macos-arm64-0.4.52.json' --dir selected/macos
-          gh release download v0.4.52 --pattern 'mac-functional-evidence-0.4.52.tar.gz' --dir selected/functional
-          tar -xzf selected/functional/mac-functional-evidence-0.4.52.tar.gz -C selected/functional
+          gh release download v0.4.52 --pattern 'mac-functional-receipt-0.4.52.json' --dir selected/functional/incoming
+          gh release download v0.4.52 --pattern 'ashlar-page-tests-0.4.52.log' --dir selected/functional/incoming
+          gh release download v0.4.52 --pattern 'ashlar-current-read-tests-0.4.52.log' --dir selected/functional/incoming
+          gh release download v0.4.52 --pattern 'source-f-results-0.4.52.json' --dir selected/functional/incoming
+          gh release download v0.4.52 --pattern 'source-f-cases-0.4.52.json' --dir selected/functional/incoming
+          gh release download v0.4.52 --pattern 'source-f-entity-reports-0.4.52.json' --dir selected/functional/incoming
+          cp selected/functional/incoming/mac-functional-receipt-0.4.52.json selected/functional/runtime-32ec02f/mac-functional-receipt.json
+          cp selected/functional/incoming/ashlar-page-tests-0.4.52.log selected/functional/runtime-32ec02f/ashlar-page-tests.log
+          cp selected/functional/incoming/ashlar-current-read-tests-0.4.52.log selected/functional/runtime-32ec02f/ashlar-current-read-tests.log
+          cp selected/functional/incoming/source-f-results-0.4.52.json selected/functional/runtime-32ec02f/source-f-results.json
+          cp selected/functional/incoming/source-f-cases-0.4.52.json selected/functional/runtime-32ec02f/source-f-assets/cases.json
+          cp selected/functional/incoming/source-f-entity-reports-0.4.52.json selected/functional/runtime-32ec02f/source-f-assets/entity-reports.json
       - name: Verify selected Linux artifact run identity
         env:
           GH_TOKEN: ${{ github.token }}
@@ -96,28 +106,42 @@ jobs:
             --mac-build-receipt selected/macos/build-receipt-macos-arm64-0.4.52.json \
             --mac-packaging-report selected/macos/packaging-macos-arm64-0.4.52.json \
             --mac-functional-receipt selected/functional/runtime-32ec02f/mac-functional-receipt.json \
-            --output selected/release-pins-0.4.52.json
+            --output selected/selected-assets-verification-0.4.52.json
+          mkdir -p selected/assets
+          cp "$macos_wheel" selected/assets/
+          cp selected/macos/build-receipt-macos-arm64-0.4.52.json selected/assets/
+          cp selected/macos/packaging-macos-arm64-0.4.52.json selected/assets/
+          cp selected/functional/incoming/* selected/assets/
+          cp "$linux_wheel" selected/assets/
+          cp selected/linux/packaging-linux-x86_64.json selected/assets/packaging-linux-x86_64-0.4.52.json
+          cp selected/selected-assets-verification-0.4.52.json selected/assets/
+          (cd selected/assets && sha256sum weft_sql-0.4.52-*-manylinux_2_17_x86_64.manylinux2014_x86_64.whl weft_sql-0.4.52-*-macosx_*_arm64.whl > SHA256SUMS)
           python - <<'PYTHON'
-          import json,os,pathlib
-          path=pathlib.Path('selected/release-pins-0.4.52.json')
-          pins=json.loads(path.read_text())
+          import hashlib,json,os,pathlib
+          path=pathlib.Path('selected/assets/release-pins-0.4.52.json')
+          pins=json.loads(pathlib.Path('selected/selected-assets-verification-0.4.52.json').read_text())
+          candidate=json.loads(pathlib.Path('docs/helix/04-build/releases/release-pins-0.4.52.json').read_text())
           pins['tag']='v0.4.52'
           pins['releaseMetadataCommit']=os.environ['RELEASE_SHA']
+          actual=[
+              {'name':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+              for p in sorted(pathlib.Path('selected/assets').iterdir()) if p.is_file()
+          ]
+          expected=candidate['expectedReleaseAssetDigests']
+          if actual != expected:raise SystemExit('candidate release asset digests differ from the pinned manifest')
+          pins['releaseAssetDigests']=actual
+          pins['expectedReleaseAssetDigests']=expected
+          pins['publisherGeneratedAssets']=candidate['publisherGeneratedAssets']
           path.write_text(json.dumps(pins,indent=2)+'\n')
           PYTHON
-          cp "$linux_wheel" selected/
-          cp "$macos_wheel" selected/
-          cp selected/linux/packaging-linux-x86_64.json selected/
-          cp selected/macos/packaging-macos-arm64-0.4.52.json selected/
-          (cd selected && sha256sum weft_sql-0.4.52-*-manylinux_2_17_x86_64.manylinux2014_x86_64.whl weft_sql-0.4.52-*-macosx_*_arm64.whl > SHA256SUMS)
-      - name: Add selected Linux bytes and promote the qualified draft
+      - name: Reconcile exact release assets while the release remains draft
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload v0.4.52 \
-            selected/weft_sql-0.4.52-*-manylinux_2_17_x86_64.manylinux2014_x86_64.whl \
-            selected/packaging-linux-x86_64.json \
-            selected/packaging-macos-arm64-0.4.52.json \
-            selected/release-pins-0.4.52.json \
-            selected/SHA256SUMS
+          python scripts/release/sync_release_assets.py --tag v0.4.52 --asset-dir selected/assets
+      - name: Promote the fully verified draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(gh release view v0.4.52 --json isDraft --jq .isDraft)" = true
           gh release edit v0.4.52 --draft=false --latest

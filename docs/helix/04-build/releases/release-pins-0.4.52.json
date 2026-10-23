@@ -46,9 +46,66 @@
     "path": "../evidence/release052-selected-assets-20261023/selected-assets-verification.json",
     "sha256": "d67731fce3edcf6a833c52c59dd24f12f800a9f955b97ca3d6f98107ce53c6fc"
   },
+  "publisherGeneratedAssets": [
+    "release-pins-0.4.52.json"
+  ],
   "limits": [
-    "No combined selected-assets promotion receipt yet.",
+    "No promotion receipt exists; the release remains unpublished.",
     "No Linux compiler-only execution against the selected wheel and UMF pins is claimed.",
     "No native SQL backend or Unity Catalog execution is qualified."
+  ],
+  "expectedReleaseAssetDigests": [
+    {
+      "name": "SHA256SUMS",
+      "sha256": "b2b90c2b401a09ba0cc6267f50a01f57ff4a25b7b869da39cf65ff668bb88f46"
+    },
+    {
+      "name": "ashlar-current-read-tests-0.4.52.log",
+      "sha256": "9c455508c75c90f7e4895f20264fd8a873c3710abfca5faf257a04b65974fd12"
+    },
+    {
+      "name": "ashlar-page-tests-0.4.52.log",
+      "sha256": "71363faaf57d36b3c82e52bcac545bf23472b9eb866ca8bdabc30f0bf64602ec"
+    },
+    {
+      "name": "build-receipt-macos-arm64-0.4.52.json",
+      "sha256": "1396c4fc2b50ac34eb413fd40e59d54b3bea3e678c563d8edc0b743a15ffcf05"
+    },
+    {
+      "name": "mac-functional-receipt-0.4.52.json",
+      "sha256": "16b987ebb2e0ad5e419676e5a63cd827ca3eb94716fd75d3afff31374c10e441"
+    },
+    {
+      "name": "packaging-linux-x86_64-0.4.52.json",
+      "sha256": "1a82eebc8458e137d9101471aa5d69b950974a13321db310223a737495c5acc2"
+    },
+    {
+      "name": "packaging-macos-arm64-0.4.52.json",
+      "sha256": "3bf22976c0921461ad56f5aa9cffda9b3f73521558d29c6df36a2979246a3447"
+    },
+    {
+      "name": "selected-assets-verification-0.4.52.json",
+      "sha256": "d67731fce3edcf6a833c52c59dd24f12f800a9f955b97ca3d6f98107ce53c6fc"
+    },
+    {
+      "name": "source-f-cases-0.4.52.json",
+      "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537"
+    },
+    {
+      "name": "source-f-entity-reports-0.4.52.json",
+      "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+    },
+    {
+      "name": "source-f-results-0.4.52.json",
+      "sha256": "03cb9bd451481b655d8b0cc69f71628932ce95507c1bd761d2e8836cbd976857"
+    },
+    {
+      "name": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46"
+    },
+    {
+      "name": "weft_sql-0.4.52-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "9145b7f683dc84325cfe3ab7c4b885685db05be814a4d554a4b739ae43d5cbdc"
+    }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "expected": {
+    "mac-wheel.whl": "selected-macos-wheel-bytes",
+    "linux-wheel.whl": "selected-linux-wheel-bytes",
+    "functional-receipt.json": "selected-functional-receipt-bytes",
+    "release-pins.json": "generated-pins-bytes"
+  },
+  "first_remote": {
+    "mac-wheel.whl": "selected-macos-wheel-bytes",
+    "linux-wheel.whl": "selected-linux-wheel-bytes"
+  },
+  "first_uploads": ["functional-receipt.json", "release-pins.json"],
+  "partial_successes": ["functional-receipt.json"],
+  "retry_uploads": ["release-pins.json"]
+}
