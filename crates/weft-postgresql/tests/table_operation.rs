@@ -959,6 +959,101 @@ fn g02_numeric_request(expression: Value) -> Value {
     r
 }
 
+fn g02_id_predicate_request(predicate: Value, field_change: impl FnOnce(&mut Value)) -> Value {
+    let expression = json!({"op":"conditional","when":predicate,"then":{"op":"field","field":{"module":"demo","element":"id"}},"else":{"op":"field","field":{"module":"demo","element":"id"}}});
+    let mut request = g02_request(expression);
+    let mut model: Value = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+    field_change(&mut model["modules"][0]["elements"][0]);
+    repin(&mut request, model);
+    request
+}
+
+#[test]
+fn g02_predicate_literals_obey_source_field_nullability_and_refinements() {
+    let id = json!({"module":"demo","element":"id"});
+    let comparison = |value| json!({"op":"eq","field":id,"value":{"kind":"literal","value":value}});
+    let in_values = |values: Vec<Value>| json!({"op":"in","field":id,"values":values.into_iter().map(|value| json!({"kind":"literal","value":value})).collect::<Vec<_>>()});
+    assert_eq!(compile(g02_id_predicate_request(comparison(Value::Null), |_| {}))["status"], "blocked", "required fields reject NULL predicate literals");
+    let mut optional_null = g02_id_predicate_request(comparison(Value::Null), |field| field["nullability"] = json!("absent-allowed"));
+    let mut model: Value = serde_json::from_str(optional_null["binding"]["modelJson"].as_str().unwrap()).unwrap();
+    optional_null["binding"]["tables"][0]["columns"][0]["nullable"] = json!(true);
+    repin(&mut optional_null, model.take());
+    assert_eq!(compile(optional_null)["status"], "compiled");
+
+    let enum_change = |field: &mut Value| field["allowedValues"] = json!([{"string":"alice"},{"string":"bob"}]);
+    assert_eq!(compile(g02_id_predicate_request(comparison(json!({"string":"alice"})), enum_change))["status"], "compiled");
+    assert_eq!(compile(g02_id_predicate_request(comparison(json!({"string":"outside"})), enum_change))["status"], "blocked", "comparison literals outside allowedValues refuse");
+    assert_eq!(compile(g02_id_predicate_request(in_values(vec![json!({"string":"bob"}), json!({"string":"outside"})]), enum_change))["status"], "blocked", "every IN literal is checked against allowedValues");
+    assert_eq!(compile(g02_id_predicate_request(in_values(vec![json!({"string":"alice"}), json!({"string":"bob"})]), enum_change))["status"], "compiled");
+
+    let length_change = |field: &mut Value| field["facets"] = json!({"length":{"unit":"unicode-scalar","max":5}});
+    assert_eq!(compile(g02_id_predicate_request(comparison(json!({"string":"longer"})), length_change))["status"], "blocked");
+    assert_eq!(compile(g02_id_predicate_request(comparison(json!({"string":"short"})), length_change))["status"], "compiled");
+
+    let mut long_native = g02_id_predicate_request(comparison(json!({"string":"abcd"})), |_| {});
+    let mut native_model: Value = serde_json::from_str(long_native["binding"]["modelJson"].as_str().unwrap()).unwrap();
+    native_model["modules"][0]["extensions"]["umf.tables"]["tables"][0]["columns"][0]["nativeType"] = json!({"kind":"varchar","length":3});
+    repin(&mut long_native, native_model);
+    assert_eq!(compile(long_native)["status"], "compiled", "varchar width is native assignment capacity, not logical Field semantics");
+}
+
+#[test]
+fn g02_predicate_numeric_literals_obey_wrappers_ranges_enums_and_native_width() {
+    let predicate = |value| json!({"op":"eq","field":{"module":"demo","element":"sourceAmount"},"value":{"kind":"literal","value":value}});
+    let expression = |value| json!({"op":"conditional","when":predicate(value),"then":{"op":"field","field":{"module":"demo","element":"sourceAmount"}},"else":{"op":"literal","value":{"decimalToken":"0"}}});
+    let mut valid = g02_numeric_request(expression(json!({"decimalToken":"1.00"})));
+    valid["operation"] = json!("backfill_amount");
+    assert_eq!(compile(valid)["status"], "compiled");
+    let mut wrong_wrapper = g02_numeric_request(expression(json!({"integerToken":"1"})));
+    wrong_wrapper["operation"] = json!("backfill_amount");
+    assert_eq!(compile(wrong_wrapper)["status"], "blocked", "decimal fields require the decimalToken wrapper");
+
+    let range = json!({"min":{"decimalToken":"0.25"},"minInclusive":true,"max":{"decimalToken":"8.00"},"maxInclusive":true});
+    let make_with_range = |value| {
+        let mut request = g02_numeric_request(expression(value));
+        request["operation"] = json!("backfill_amount");
+        let mut model: Value = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        let source_amount = model["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|field| field["id"] == "sourceAmount").unwrap();
+        source_amount["facets"]["range"] = range.clone();
+        repin(&mut request, model);
+        request
+    };
+    let within_range = compile(make_with_range(json!({"decimalToken":"2.50"})));
+    assert_eq!(within_range["status"], "compiled");
+    let outside_range = compile(make_with_range(json!({"decimalToken":"9.00"})));
+    assert_eq!(outside_range["status"], "blocked", "numeric range refinements apply to predicate literals");
+
+    let mut in_valid = g02_numeric_request(json!({"op":"conditional","when":{"op":"in","field":{"module":"demo","element":"sourceAmount"},"values":[{"kind":"literal","value":{"decimalToken":"2.00"}}]},"then":{"op":"field","field":{"module":"demo","element":"sourceAmount"}},"else":{"op":"literal","value":{"decimalToken":"0"}}}));
+    in_valid["operation"] = json!("backfill_amount");
+    let mut model: Value = serde_json::from_str(in_valid["binding"]["modelJson"].as_str().unwrap()).unwrap();
+    let source_amount = model["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|field| field["id"] == "sourceAmount").unwrap();
+    source_amount["allowedValues"] = json!([{"decimalToken":"2.00"}]);
+    repin(&mut in_valid, model);
+    assert_eq!(compile(in_valid)["status"], "compiled");
+    let mut in_outside = g02_numeric_request(json!({"op":"conditional","when":{"op":"in","field":{"module":"demo","element":"sourceAmount"},"values":[{"kind":"literal","value":{"decimalToken":"3.00"}}]},"then":{"op":"field","field":{"module":"demo","element":"sourceAmount"}},"else":{"op":"literal","value":{"decimalToken":"0"}}}));
+    in_outside["operation"] = json!("backfill_amount");
+    let mut model: Value = serde_json::from_str(in_outside["binding"]["modelJson"].as_str().unwrap()).unwrap();
+    let source_amount = model["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|field| field["id"] == "sourceAmount").unwrap();
+    source_amount["allowedValues"] = json!([{"decimalToken":"2.00"}]);
+    repin(&mut in_outside, model);
+    assert_eq!(compile(in_outside)["status"], "blocked", "IN rejects literals outside the enum");
+
+    let integer_predicate = |value| json!({"op":"eq","field":{"module":"demo","element":"integerTarget"},"value":{"kind":"literal","value":value}});
+    let integer_expression = |value| json!({"op":"conditional","when":integer_predicate(value),"then":{"op":"field","field":{"module":"demo","element":"integerTarget"}},"else":{"op":"literal","value":{"integerToken":"0"}}});
+    let mut integer_ok = g02_numeric_request(integer_expression(json!({"integerToken":"1"})));
+    integer_ok["operation"] = json!("backfill_narrow");
+    assert_eq!(compile(integer_ok)["status"], "compiled");
+    let mut integer_wrong_wrapper = g02_numeric_request(integer_expression(json!({"decimalToken":"1.0"})));
+    integer_wrong_wrapper["operation"] = json!("backfill_narrow");
+    assert_eq!(compile(integer_wrong_wrapper)["status"], "blocked", "integer fields reject decimalToken wrappers");
+
+    let large_integer_predicate = json!({"op":"eq","field":{"module":"demo","element":"narrowInteger"},"value":{"kind":"literal","value":{"integerToken":"200000"}}});
+    let large_integer_expression = json!({"op":"conditional","when":large_integer_predicate,"then":{"op":"field","field":{"module":"demo","element":"narrowInteger"}},"else":{"op":"literal","value":{"integerToken":"0"}}});
+    let mut beyond_native_width = g02_numeric_request(large_integer_expression);
+    beyond_native_width["operation"] = json!("backfill_integer");
+    assert_eq!(compile(beyond_native_width)["status"], "compiled", "int2 width is native assignment capacity, not logical Field semantics");
+}
+
 #[test]
 fn g02_numeric_and_conditional_algebra_uses_unconstrained_qualified_intermediates() {
     let source_field = json!({"op":"field","field":{"module":"demo","element":"sourceAmount"}});
@@ -1131,7 +1226,7 @@ fn g02_numeric_and_conditional_algebra_uses_unconstrained_qualified_intermediate
     );
 
     let deep_condition = |not_count: usize| {
-        let mut condition = json!({"op":"eq","field":{"module":"demo","element":"sourceAmount"},"value":{"kind":"literal","value":{"integerToken":"1"}}});
+        let mut condition = json!({"op":"eq","field":{"module":"demo","element":"sourceAmount"},"value":{"kind":"literal","value":{"decimalToken":"1"}}});
         for _ in 0..not_count {
             condition = json!({"op":"not","arg":condition});
         }
@@ -1211,6 +1306,10 @@ fn g02_intrinsic_null_types_and_null_safe_comparisons_remain_closed() {
         let expression = json!({"op":"conditional","when":condition,"then":{"op":"field","field":{"module":"demo","element":"sourceAmount"}},"else":{"op":"literal","value":{"decimalToken":"0"}}});
         let mut request = g02_numeric_request(expression);
         request["operation"] = json!("backfill_amount");
+        let mut model: Value = serde_json::from_str(request["binding"]["modelJson"].as_str().unwrap()).unwrap();
+        model["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|field| field["id"] == "sourceAmount").unwrap()["nullability"] = json!("absent-allowed");
+        request["binding"]["tables"][0]["columns"].as_array_mut().unwrap().iter_mut().find(|column| column["logical"] == "sourceAmount").unwrap()["nullable"] = json!(true);
+        repin(&mut request, model);
         let compiled = compile(request);
         assert_eq!(compiled["status"], "compiled", "{compiled}");
         let sql = compiled["sql"].as_str().unwrap();

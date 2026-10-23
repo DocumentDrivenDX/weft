@@ -221,7 +221,7 @@ fn literal_type(value: &Value, target: &OperationField) -> Result<Type> {
 
 // The source bound applies to the literal payload itself, not its JSON wrapper
 // or the extra escaping introduced by serializing an already parsed value.
-fn literal_payload_bytes(value: &Value) -> Option<usize> {
+pub(super) fn literal_payload_bytes(value: &Value) -> Option<usize> {
     let object = value.as_object()?;
     if object.len() != 1 {
         return None;
@@ -394,6 +394,7 @@ impl State<'_> {
                     return Err("row expression resource limit exceeded");
                 }
                 let ty = literal_type(&value["value"], f)?;
+                super::values::row_predicate_literal(f, &value["value"])?;
                 let ft = field_type(f)?;
                 if !predicate_types_compatible(op, &ft, &ty) {
                     return Err("row expression condition operand type differs");
@@ -423,6 +424,7 @@ impl State<'_> {
                         return Err("row expression condition requires literal operand");
                     }
                     let ty = literal_type(&value["value"], f)?;
+                    super::values::row_predicate_literal(f, &value["value"])?;
                     if !predicate_types_compatible("eq", &ft, &ty) {
                         return Err("row expression condition operand type differs");
                     }

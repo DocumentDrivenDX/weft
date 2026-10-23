@@ -120,6 +120,49 @@ pub(super) fn literal(field: &OperationField, value: &Value) -> Result<()> {
     Ok(())
 }
 
+/// Admit a decoded CoreLiteral against its source Field without applying
+/// native assignment width/precision constraints to a predicate operand.
+pub(super) fn row_predicate_literal(field: &OperationField, value: &Value) -> Result<()> {
+    let payload_bytes = if value.is_null() {
+        Some(0)
+    } else {
+        super::row_expression::literal_payload_bytes(value)
+    };
+    if payload_bytes.is_none_or(|length| length > 1_048_576) {
+        return Err("operation value capacity exceeded");
+    }
+    if matches!(field.carrier, Carrier::Date | Carrier::Timestamp) {
+        if value.is_null() { return if field.nullable { Ok(()) } else { Err("required operation value is null") }; }
+        let key = if field.carrier == Carrier::Date { "date" } else { "timestamp" };
+        if value.as_object().is_none_or(|m| m.len() != 1) { return Err("exact temporal wrapper required"); }
+        let text = value[key].as_str().ok_or("temporal token absent")?;
+        if field.carrier == Carrier::Date { temporal::date(text)?; } else { temporal::instant(text)?; }
+        return Ok(());
+    }
+    if matches!(field.carrier, Carrier::Uuid | Carrier::Bits128) {
+        if value.is_null() {
+            return if field.nullable { Ok(()) } else { Err("required operation value is null") };
+        }
+        if value.as_object().is_none_or(|m| m.len() != 1) { return Err("exact 128-bit wrapper required"); }
+        let key = if field.carrier == Carrier::Uuid { "uuid" } else { "bits128Hex" };
+        let token = value[key].as_str().ok_or("128-bit value absent")?;
+        let bytes = token.as_bytes();
+        let valid = if key == "uuid" {
+            bytes.len() == 36 && bytes.iter().enumerate().all(|(i, b)| if [8, 13, 18, 23].contains(&i) { *b == b'-' } else { b.is_ascii_hexdigit() })
+        } else {
+            bytes.len() == 32 && bytes.iter().all(u8::is_ascii_hexdigit)
+        };
+        return if valid { Ok(()) } else { Err("128-bit lexical value differs") };
+    }
+    if let Some(prepared)=&field.prepared_literal {
+        prepared.check(value).map_err(|_| "operation literal violates original Field")?;
+    } else {
+        crate::security_literals::check_literal(&field.declaration, value)
+            .map_err(|_| "operation literal violates original Field")?;
+    }
+    Ok(())
+}
+
 /// Convert a value that has already passed source-aware call admission into a driver value.
 /// Original CoreLiteral tokens remain in the original request/source for custody.
 pub(super) fn native_value(field: &OperationField, value: &Value) -> Result<Value> {
