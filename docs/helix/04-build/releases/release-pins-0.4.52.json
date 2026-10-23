@@ -1,0 +1,54 @@
+{
+  "schema": "weft-selected-release-pins/0.1",
+  "status": "candidate",
+  "tag": "v0.4.52",
+  "distribution": "weft-sql",
+  "version": "0.4.52",
+  "sourceCommit": "32ec02f0c3fd24a97b7726500dc5992c6475908d",
+  "linuxRun": {
+    "id": "39981671006",
+    "workflowName": "Build selected Weft 0.4.52 Linux wheel",
+    "event": "workflow_dispatch",
+    "target": "x86_64-unknown-linux-gnu",
+    "manylinux": "2014"
+  },
+  "wheels": [
+    {
+      "platform": "linux-x86_64",
+      "filename": "weft_sql-0.4.52-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "9145b7f683dc84325cfe3ab7c4b885685db05be814a4d554a4b739ae43d5cbdc",
+      "nativeModuleSha256": "a326a607898e4cbcf9f4801785059d096e8bdb0557f46818951c70db0d7a7956",
+      "recordSha256": "cb79ac7803b4b3b1fd61814f24c0e175d95515df383a7a05c893615ed33f6401",
+      "functionalQualification": "not-claimed"
+    },
+    {
+      "platform": "macos-arm64",
+      "filename": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46",
+      "nativeModuleSha256": "f4be63caaacedeaa3d8af1b1f0587c561a2ff1ae0a279f4f8f7dcf836f6bb24f",
+      "recordSha256": "fe41d8bbad202b17d783a91786cea493b813fc5f3f14dac182cadc6b6dba912d",
+      "functionalReceiptSha256": "16b987ebb2e0ad5e419676e5a63cd827ca3eb94716fd75d3afff31374c10e441",
+      "functionalQualification": "compiler-only-local"
+    }
+  ],
+  "umf": {
+    "core": {
+      "version": "0.10.0",
+      "sha256": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9"
+    },
+    "access": {
+      "version": "0.1.0.dev6",
+      "sha256": "8f6e86ed94983d0156c2d6e9e1bf83fae186fe1d4a288a3846722e64aa365cf0"
+    }
+  },
+  "selectedAssetsVerification": {
+    "status": "passed",
+    "path": "../evidence/release052-selected-assets-20261023/selected-assets-verification.json",
+    "sha256": "d67731fce3edcf6a833c52c59dd24f12f800a9f955b97ca3d6f98107ce53c6fc"
+  },
+  "limits": [
+    "No combined selected-assets promotion receipt yet.",
+    "No Linux compiler-only execution against the selected wheel and UMF pins is claimed.",
+    "No native SQL backend or Unity Catalog execution is qualified."
+  ]
+}

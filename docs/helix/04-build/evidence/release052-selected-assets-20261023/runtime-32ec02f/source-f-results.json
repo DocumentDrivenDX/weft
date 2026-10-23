@@ -1,0 +1,26 @@
+{
+  "schema": "weft-source-f-selected-pair/0.1",
+  "status": "passed",
+  "weftVersion": "0.4.52",
+  "fixtureSha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+  "publicExpectedOutputSha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+  "cases": [
+    {
+      "caseId": "arras-view-0.1.0-opaque-selected-payload",
+      "expectedStatus": "compiled",
+      "candidateStatus": "compiled",
+      "expectedRawSha256": "e60798fce3bd8ef8126e91e556528fae6cd5074864e68f1d1af4c2247730631e",
+      "candidateRawSha256": "e60798fce3bd8ef8126e91e556528fae6cd5074864e68f1d1af4c2247730631e",
+      "fullRawOutputParity": true
+    },
+    {
+      "caseId": "arras-view-unsupported-version-refuses",
+      "expectedStatus": "blocked",
+      "candidateStatus": "blocked",
+      "expectedRawSha256": "acb21c14f990802a7022a2a2aa0ca320c50b6efd96868eb1dab53ea2f0773974",
+      "candidateRawSha256": "acb21c14f990802a7022a2a2aa0ca320c50b6efd96868eb1dab53ea2f0773974",
+      "fullRawOutputParity": true
+    }
+  ],
+  "scope": "Two selected compiler-only cases; no database or native SQL execution."
+}

@@ -1,0 +1,9 @@
+test_actual_compiler_page_artifact_accepts_exact_xxhash64_target (test_managed_current_page_target.ManagedCurrentPageTargetTests.test_actual_compiler_page_artifact_accepts_exact_xxhash64_target) ... ok
+test_actual_compiler_page_artifact_keeps_legacy_managed_target (test_managed_current_page_target.ManagedCurrentPageTargetTests.test_actual_compiler_page_artifact_keeps_legacy_managed_target) ... ok
+test_carrier_and_hash_binding_must_match_target_profile (test_managed_current_page_target.ManagedCurrentPageTargetTests.test_carrier_and_hash_binding_must_match_target_profile) ... ok
+test_wrong_managed_target_identity_fields_refuse (test_managed_current_page_target.ManagedCurrentPageTargetTests.test_wrong_managed_target_identity_fields_refuse) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.038s
+
+OK

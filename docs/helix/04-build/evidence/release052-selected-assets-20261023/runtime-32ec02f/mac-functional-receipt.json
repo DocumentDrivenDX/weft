@@ -1,0 +1,84 @@
+{
+  "schema": "weft-macos-selected-compiler-functional-evidence/0.1",
+  "candidate": {
+    "version": "0.4.52",
+    "source_commit": "32ec02f0c3fd24a97b7726500dc5992c6475908d"
+  },
+  "ashlar_source_commit": "404794c3beca869bd08660e0836b8441c04f9463",
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "macOS ARM64",
+    "weft_wheel": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+    "weft_wheel_sha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46",
+    "weft_native_extension_sha256": "f4be63caaacedeaa3d8af1b1f0587c561a2ff1ae0a279f4f8f7dcf836f6bb24f",
+    "weft_overlay": "/private/tmp/weft-052-selected-handoff-20261022/runtime-32ec02f/overlay",
+    "runtime_preflight_receipt_sha256": "bbc590badfa88ea7c950a40f867ddd62f409df078aa461575a3b7db6c7288b7b"
+  },
+  "checks": [
+    {
+      "command": "python -m unittest test_managed_current_page_target -v",
+      "result": "Ran 4 tests in 0.038s; OK",
+      "log": "ashlar-page-tests.log",
+      "log_sha256": "71363faaf57d36b3c82e52bcac545bf23472b9eb866ca8bdabc30f0bf64602ec"
+    },
+    {
+      "command": "python -m unittest test_managed_current_query.ManagedCurrentQueryTests.test_read_owner_admits_exact_xxhash64_backend_tuple test_managed_current_query.ManagedCurrentQueryTests.test_real_weft_xxhash64_artifact_admits_exact_request_and_closed_native_requirement -v",
+      "result": "Ran 2 tests in 0.020s; OK",
+      "log": "ashlar-current-read-tests.log",
+      "log_sha256": "9c455508c75c90f7e4895f20264fd8a873c3710abfca5faf257a04b65974fd12"
+    },
+    {
+      "command": "python /private/tmp/weft-052-selected-handoff-20261022/run_source_f_pair.py",
+      "result": "2 selected compiler-only cases matched exact public .51 raw outputs",
+      "log": "source-f-results.json",
+      "log_sha256": "03cb9bd451481b655d8b0cc69f71628932ce95507c1bd761d2e8836cbd976857"
+    }
+  ],
+  "owner_public_0_4_51_source_f_controls": {
+    "source_freeze_commit": "557153731e9f5d0583193a1189a07c6ed485d3d3",
+    "input_fixture_sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537",
+    "public_0_4_51_expected_output_sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf",
+    "raw_case_assets": [
+      {
+        "path": "source-f-assets/cases.json",
+        "sha256": "cdddb2454b033c5753177cdedb447efbf45f5131c42beb17aeb6d319eac71537"
+      },
+      {
+        "path": "source-f-assets/entity-reports.json",
+        "sha256": "ff8803dda03a4ef376e44984c1a010ead8065b817a002d6178dba8b0343256bf"
+      }
+    ],
+    "results": [
+      {
+        "caseId": "arras-view-0.1.0-opaque-selected-payload",
+        "expectedStatus": "compiled",
+        "candidateStatus": "compiled",
+        "expectedRawSha256": "e60798fce3bd8ef8126e91e556528fae6cd5074864e68f1d1af4c2247730631e",
+        "candidateRawSha256": "e60798fce3bd8ef8126e91e556528fae6cd5074864e68f1d1af4c2247730631e",
+        "fullRawOutputParity": true
+      },
+      {
+        "caseId": "arras-view-unsupported-version-refuses",
+        "expectedStatus": "blocked",
+        "candidateStatus": "blocked",
+        "expectedRawSha256": "acb21c14f990802a7022a2a2aa0ca320c50b6efd96868eb1dab53ea2f0773974",
+        "candidateRawSha256": "acb21c14f990802a7022a2a2aa0ca320c50b6efd96868eb1dab53ea2f0773974",
+        "fullRawOutputParity": true
+      }
+    ]
+  },
+  "limits": [
+    "Selected compiler-only checks: four managed-page target cases, two managed current-read controls, and two public .51 Source-F compiler cases.",
+    "No native SQL backend or Unity Catalog execution was performed or qualified.",
+    "No Linux wheel or full selected-assets pair is claimed."
+  ],
+  "umf_assets": {
+    "core_0.10.0_sha256": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9",
+    "access_0.1.0.dev6_sha256": "8f6e86ed94983d0156c2d6e9e1bf83fae186fe1d4a288a3846722e64aa365cf0"
+  },
+  "artifact": {
+    "filename": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46",
+    "native_extension_sha256": "f4be63caaacedeaa3d8af1b1f0587c561a2ff1ae0a279f4f8f7dcf836f6bb24f"
+  }
+}

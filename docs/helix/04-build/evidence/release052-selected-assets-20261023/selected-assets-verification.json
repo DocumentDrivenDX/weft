@@ -1,0 +1,51 @@
+{
+  "schema": "weft-selected-assets-0.4.52/0.1",
+  "status": "passed",
+  "version": "0.4.52",
+  "sourceCommit": "32ec02f0c3fd24a97b7726500dc5992c6475908d",
+  "linuxRun": {
+    "id": "39981671006",
+    "workflowName": "Build selected Weft 0.4.52 Linux wheel",
+    "event": "workflow_dispatch",
+    "headSha": "32ec02f0c3fd24a97b7726500dc5992c6475908d"
+  },
+  "linux": {
+    "wheel": "weft_sql-0.4.52-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "wheelSha256": "9145b7f683dc84325cfe3ab7c4b885685db05be814a4d554a4b739ae43d5cbdc",
+    "nativeModule": "weft/weft.abi3.so",
+    "nativeModuleSha256": "a326a607898e4cbcf9f4801785059d096e8bdb0557f46818951c70db0d7a7956",
+    "recordSha256": "cb79ac7803b4b3b1fd61814f24c0e175d95515df383a7a05c893615ed33f6401"
+  },
+  "macos": {
+    "wheel": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+    "wheelSha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46",
+    "nativeModule": "weft/weft.abi3.so",
+    "nativeModuleSha256": "f4be63caaacedeaa3d8af1b1f0587c561a2ff1ae0a279f4f8f7dcf836f6bb24f",
+    "recordSha256": "fe41d8bbad202b17d783a91786cea493b813fc5f3f14dac182cadc6b6dba912d"
+  },
+  "macBuildReceiptSha256": "1396c4fc2b50ac34eb413fd40e59d54b3bea3e678c563d8edc0b743a15ffcf05",
+  "macPackagingReportSha256": "3bf22976c0921461ad56f5aa9cffda9b3f73521558d29c6df36a2979246a3447",
+  "compilerOnlyFunctionalEvidence": {
+    "pageCompilerTests": 4,
+    "currentReadCompilerControls": 2,
+    "sourceFCompilerControls": [
+      "arras-view-0.1.0-opaque-selected-payload",
+      "arras-view-unsupported-version-refuses"
+    ],
+    "nativeExecution": "not-qualified"
+  },
+  "umf": {
+    "core": {
+      "version": "0.10.0",
+      "sha256": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9"
+    },
+    "access": {
+      "version": "0.1.0.dev6",
+      "sha256": "8f6e86ed94983d0156c2d6e9e1bf83fae186fe1d4a288a3846722e64aa365cf0"
+    }
+  },
+  "limits": [
+    "No publication or release action is performed by this verifier.",
+    "Compiler-only evidence does not qualify native SQL backend or Unity Catalog execution."
+  ]
+}

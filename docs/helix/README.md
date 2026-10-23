@@ -1,5 +1,7 @@
 # Weft specification index
 
+Python 0.4.52 is prepared as a selected-assets release candidate from source `32ec02f0c3fd24a97b7726500dc5992c6475908d`, with Linux x86_64 and macOS ARM64 wheel pins and compiler-only macOS evidence. The draft has no tag, publication, Linux compiler-only run, or native execution qualification. See [candidate release scope](04-build/releases/v0.4.52.md), [candidate pins](04-build/releases/release-pins-0.4.52.json), and [checksums](04-build/releases/SHA256SUMS-0.4.52).
+
 The unpublished [Praxis DBAPI transport candidate](04-build/evidence/praxis-dbapi/README.md)
 adds compiler-owned positional transport to raw PostgreSQL reads and related
 composition. Scoped local native/generated-client evidence passes; full lifecycle

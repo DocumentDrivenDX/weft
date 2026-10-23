@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "version": "0.4.52",
+  "wheel": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46",
+  "nativeModuleSha256": "f4be63caaacedeaa3d8af1b1f0587c561a2ff1ae0a279f4f8f7dcf836f6bb24f",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated"
+}

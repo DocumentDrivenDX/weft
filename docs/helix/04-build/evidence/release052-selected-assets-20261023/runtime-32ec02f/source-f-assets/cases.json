@@ -1,0 +1,1739 @@
+[
+  {
+    "id": "no-facts-no-automatic-relationships",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "ordered-time-and-version",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [
+            "updatedAt",
+            "version"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day",
+        "_updated_at",
+        "_version"
+      ],
+      "facts": [
+        "updatedAt",
+        "version"
+      ],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "version-only",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [
+            "version"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day",
+        "_version"
+      ],
+      "facts": [
+        "version"
+      ],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "all-facts-explicit",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [
+            "version",
+            "createdBy",
+            "createdAt",
+            "updatedBy",
+            "updatedAt",
+            "originalAuthor",
+            "originalAt",
+            "loadId"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day",
+        "_version",
+        "_created_by",
+        "_created_at",
+        "_updated_by",
+        "_updated_at",
+        "_original_author",
+        "_original_at",
+        "_load_id"
+      ],
+      "facts": [
+        "version",
+        "createdBy",
+        "createdAt",
+        "updatedBy",
+        "updatedAt",
+        "originalAuthor",
+        "originalAt",
+        "loadId"
+      ],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "explicit-bounded-relationship",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.*, RELATED_KEYS(a.\"A-B\", 1) AS links FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day",
+        "links"
+      ],
+      "facts": [],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "fact-page",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity-page",
+        "entityProjection": {
+          "facts": [
+            "version",
+            "loadId"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": 1,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day",
+        "_version",
+        "_load_id"
+      ],
+      "facts": [
+        "version",
+        "loadId"
+      ],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "facts-free-page",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity-page",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": 1,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "unknown-fact",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [
+            "version",
+            "invented"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "duplicate-fact",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [
+            "version",
+            "version"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "old-profile-refuses-selection",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.3.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "missing-selection",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "facts-require-entity",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.\"A-label\" FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [
+            "version"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "caller-limit-refused-by-page",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a LIMIT 1",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity-page",
+        "entityProjection": {
+          "facts": [
+            "version"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": 1,
+    "expected": {
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "explicit-complete-relationships",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": true
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day",
+        "A-B"
+      ],
+      "facts": [],
+      "automaticRelationships": true
+    }
+  },
+  {
+    "id": "fact-page-continuation",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity-page",
+        "entityProjection": {
+          "facts": [
+            "version",
+            "loadId"
+          ],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": 1,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day",
+        "_version",
+        "_load_id"
+      ],
+      "facts": [
+        "version",
+        "loadId"
+      ],
+      "automaticRelationships": false
+    },
+    "after": [
+      "value",
+      "a"
+    ]
+  },
+  {
+    "id": "indexed-string-literal",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a WHERE a.\"A-label\"='needle'",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_selected_objects"
+    }
+  },
+  {
+    "id": "indexed-string-parameter-with-residual",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a WHERE a.\"A-label\"=:label AND a.\"A-value\"='sparse'",
+      "parameters": {
+        "label": {
+          "family": "string",
+          "value": "needle"
+        }
+      },
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_selected_objects"
+    }
+  },
+  {
+    "id": "indexed-boolean-parameter",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "6879368c5709e9c523694a6d8dd910d9c1745e1afd7d5de279f177687e13b2b3",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a WHERE a.\"A-value\"=:wanted",
+      "parameters": {
+        "wanted": {
+          "family": "boolean",
+          "value": "true"
+        }
+      },
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"6879368c5709e9c523694a6d8dd910d9c1745e1afd7d5de279f177687e13b2b3\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "0ef494b0a3ed1fc99f0a36bc88a01a7697f2dda025590a235a8b618829df14ee"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_selected_objects"
+    }
+  },
+  {
+    "id": "ordered-string-first",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "472bbbc4fe477245925d762af46ae345a48c9184ec73afbf5b6e9a004159ad8e",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"472bbbc4fe477245925d762af46ae345a48c9184ec73afbf5b6e9a004159ad8e\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "89fa146663ed43c9077da95d631b4744dc52620e56e6818022b4c80c399309fc"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity-page",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": 1,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_seek_objects"
+    }
+  },
+  {
+    "id": "ordered-string-next",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "472bbbc4fe477245925d762af46ae345a48c9184ec73afbf5b6e9a004159ad8e",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"472bbbc4fe477245925d762af46ae345a48c9184ec73afbf5b6e9a004159ad8e\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "89fa146663ed43c9077da95d631b4744dc52620e56e6818022b4c80c399309fc"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity-page",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": 1,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_seek_objects"
+    },
+    "after": [
+      "a"
+    ]
+  },
+  {
+    "id": "ordered-string-filtered-sparse",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "472bbbc4fe477245925d762af46ae345a48c9184ec73afbf5b6e9a004159ad8e",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a WHERE a.\"A-value\"='sparse'",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"472bbbc4fe477245925d762af46ae345a48c9184ec73afbf5b6e9a004159ad8e\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "89fa146663ed43c9077da95d631b4744dc52620e56e6818022b4c80c399309fc"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity-page",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": 1,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_selected_objects"
+    }
+  },
+  {
+    "id": "unknown-authorized-column",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.missing FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked",
+      "diagnosticCode": "WFT-COLUMN-MISSING"
+    }
+  },
+  {
+    "id": "unavailable-source",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"unsupplied\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked",
+      "diagnosticCode": "WFT-SOURCE-UNAVAILABLE"
+    }
+  },
+  {
+    "id": "malformed-sql",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELEC a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked",
+      "diagnosticCode": "WFT-SYNTAX"
+    }
+  },
+  {
+    "id": "wellformed-excluded-order",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.\"A-label\" FROM \"A\" a ORDER BY a.\"A-label\" DESC",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked",
+      "diagnosticCode": "WFT-UNSUPPORTED"
+    }
+  },
+  {
+    "id": "wellformed-excluded-with-parameter",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.\"A-label\" FROM \"A\" a WHERE a.\"A-label\"=:label ORDER BY a.\"A-label\" DESC",
+      "parameters": {
+        "label": {
+          "family": "string",
+          "value": "needle"
+        }
+      },
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"bb5e976878f164c4765c60bcd9b6412cd33fb112610307ee76f9c233a48e311f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "b4330a8576619ecb9d923fbc96ca36c8ee8858562bfc8e383333e8f91d5ed246"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked",
+      "diagnosticCode": "WFT-UNSUPPORTED"
+    }
+  },
+  {
+    "id": "exact-binary-parameter-v028",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "f06d7757da808fe2e0eac1b5018b5c933634131ce0fc137b013acab327eef296",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"binary\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.\"A-value\" FROM \"A\" a WHERE a.\"A-value\"=:wanted",
+      "parameters": {},
+      "exactParameters": {
+        "wanted": {
+          "scalarType": "binary",
+          "value": "AP8="
+        }
+      },
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"f06d7757da808fe2e0eac1b5018b5c933634131ce0fc137b013acab327eef296\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "eec6386e5d8d3eb5a4d8593558cac5679f46bdc57ae241f66040d280103a3e0f"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-value"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_objects"
+    }
+  },
+  {
+    "id": "exact-timestamp-parameter-v028",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "31076763d2512a7d30b81bf82bb418ea160a6c82607ffab0456f48f3335f7ea7",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.\"A-value\" FROM \"A\" a WHERE a.\"A-value\"=:wanted",
+      "parameters": {},
+      "exactParameters": {
+        "wanted": {
+          "scalarType": "timestamp",
+          "value": "2026-10-22T00:00:00.000000Z"
+        }
+      },
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"31076763d2512a7d30b81bf82bb418ea160a6c82607ffab0456f48f3335f7ea7\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "1e51c0c8f56f5cef9997aa25dcd4f8d7f07985f38615654339cc37a3fc476a31"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-value"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_objects"
+    }
+  },
+  {
+    "id": "exact-date-parameter-v028",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "5b6d80f90c1ab76c7550d5f918f0935b83e300d69a5f76232c260f255436d773",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.\"A-value\" FROM \"A\" a WHERE a.\"A-value\"=:wanted",
+      "parameters": {},
+      "exactParameters": {
+        "wanted": {
+          "scalarType": "date",
+          "value": "0001-01-01"
+        }
+      },
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"5b6d80f90c1ab76c7550d5f918f0935b83e300d69a5f76232c260f255436d773\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "46b463f1d53bdda433f1285105ec4b7ca027114ab0fc0f61529ff621ba213549"
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-value"
+      ],
+      "facts": [],
+      "automaticRelationships": false,
+      "sourceFunction": "person_query_objects"
+    }
+  },
+  {
+    "id": "original-extension-bearing-model",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "9cd4b65abd0e9084ce29115d857b5787badf1d8afdf90efdbf19cd24f4d97d92",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{\"umf.ddd\":{\"version\":\"0.1.0\"},\"hohfeld.view\":{\"version\":\"0.1.0\"},\"future.document\":{\"version\":\"1.0.0\"}},\"extensions\":{\"future.document\":{\"unknown\":[null,{\"exact\":\"0001\"}]}},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{\"umf.ddd\":{\"kind\":\"entity\",\"opaque\":{\"future\":[null,\"x\"]}}},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{\"hohfeld.view\":{\"caption\":\"Display name\",\"unknown\":{\"retain\":null}}}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"9cd4b65abd0e9084ce29115d857b5787badf1d8afdf90efdbf19cd24f4d97d92\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "9debbc4b14385371ef7a6dd6bb05d96b9ac33f46a6afa6756abf4b4894bc516c"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "selected-unknown-extension-explicit-refusal",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "5b89c726c48d60e72c7ba29ad9073bf30b7c8e9f54e80227b358927d22d7fecf",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{\"umf.ddd\":{\"version\":\"0.1.0\"},\"hohfeld.view\":{\"version\":\"0.1.0\"},\"future.document\":{\"version\":\"1.0.0\"},\"future.selected\":{\"version\":\"1.0.0\"}},\"extensions\":{\"future.document\":{\"unknown\":[null,{\"exact\":\"0001\"}]}},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{\"umf.ddd\":{\"kind\":\"entity\",\"opaque\":{\"future\":[null,\"x\"]}}},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{\"hohfeld.view\":{\"caption\":\"Display name\",\"unknown\":{\"retain\":null}},\"future.selected\":{\"payload\":[null,\"retain\"]}}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.\"A-label\" AS label FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"5b89c726c48d60e72c7ba29ad9073bf30b7c8e9f54e80227b358927d22d7fecf\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "83b47e09f8907884df401a611baac7c398e8d629382ef26363d6c3ef5c686b65"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked",
+      "diagnosticCode": "WFT-TYPE"
+    }
+  },
+  {
+    "id": "arras-view-0.1.0-opaque-selected-payload",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "00062dcae3aed0cb406d45dbe6d85ff89319a9a300ef7e1661a05a64f730387f",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{\"arras.view\":{\"version\":\"0.1.0\"}},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{\"arras.view\":{\"label\":\"Label\",\"opaqueFutureTerm\":{\"retained\":[null,\"source\"]}}}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"00062dcae3aed0cb406d45dbe6d85ff89319a9a300ef7e1661a05a64f730387f\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "de05de509b1090d60fa0fefec27956b1ddc1212cc9df04ee9985b97247417c52"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "compiled",
+      "visibleColumns": [
+        "A-label",
+        "A-value",
+        "day"
+      ],
+      "facts": [],
+      "automaticRelationships": false
+    }
+  },
+  {
+    "id": "arras-view-unsupported-version-refuses",
+    "request": {
+      "interfaceVersion": "weft-compile/0.2.8",
+      "dialect": "weft-sql/0.2.0",
+      "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+      "modules": [
+        {
+          "pin": {
+            "sha256": "9e4e7d70cbcd1bfb8b9f62fefe6d473f88816edcfa081fa8cc2add2ef11135bd",
+            "revision": "r1",
+            "documentId": "adoc",
+            "umfVersion": "0.10.0"
+          },
+          "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"adoc\",\"vocabularies\":{\"arras.view\":{\"version\":\"0.2.0\"}},\"extensions\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"m\",\"extensions\":{},\"elements\":[{\"id\":\"A\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"A-label\"},{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"day\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"A-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"A-value\"},{\"module\":\"m\",\"element\":\"A-label\"}]}],\"extensions\":{},\"name\":\"A\"},{\"id\":\"B\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"B-label\"},{\"module\":\"m\",\"element\":\"B-value\"}],\"keys\":[{\"id\":\"z-alt\",\"name\":\"alt\",\"fields\":[{\"module\":\"m\",\"element\":\"B-label\"}]},{\"id\":\"a-primary\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"B-value\"},{\"module\":\"m\",\"element\":\"B-label\"}]}],\"extensions\":{},\"name\":\"B\"},{\"id\":\"A-label\",\"name\":\"A-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{\"arras.view\":{\"label\":\"Label\",\"opaqueFutureTerm\":{\"retained\":[null,\"source\"]}}}},{\"id\":\"A-value\",\"name\":\"A-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-label\",\"name\":\"B-label\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"B-value\",\"name\":\"B-value\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"nullability\":\"absent-allowed\",\"cardinality\":\"one\",\"extensions\":{}}],\"relationships\":[{\"id\":\"A-B\",\"name\":\"A-B\",\"source\":[{\"module\":\"m\",\"element\":\"A\"}],\"target\":[{\"module\":\"m\",\"element\":\"B\",\"key\":\"a-primary\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":1},\"targetMultiplicity\":{\"min\":0,\"max\":2},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "sql": "SELECT a.* FROM \"A\" a",
+      "parameters": {},
+      "exactParameters": {},
+      "options": {
+        "allowCandidate": true
+      },
+      "target": {
+        "backendId": "truss.postgresql.runtime",
+        "backendVersion": "0.4.43",
+        "targetProfile": "truss-runtime-pg18.6/0.6",
+        "bindingJson": "{\"schema\":\"truss\",\"records\":[{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"2\",\"1\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"1\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"A-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"A-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"3\"}],\"typeId\":\"1\",\"identity\":{\"module\":\"m\",\"element\":\"A\",\"revision\":\"r1\",\"documentId\":\"adoc\"}},{\"keys\":[{\"keyId\":\"a-primary\",\"propertyIds\":[\"5\",\"4\"]},{\"keyId\":\"z-alt\",\"propertyIds\":[\"4\"]}],\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"B-label\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"B-value\",\"revision\":\"r1\",\"documentId\":\"adoc\"},\"propertyId\":\"5\"}],\"typeId\":\"2\",\"identity\":{\"module\":\"m\",\"element\":\"B\",\"revision\":\"r1\",\"documentId\":\"adoc\"}}],\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.2\",\"sha256\":\"8266c19d6f1bc4e816d5981cd594b224f09bafd4975e1c851610fa94d1f75f96\"},\"documents\":[{\"sha256\":\"9e4e7d70cbcd1bfb8b9f62fefe6d473f88816edcfa081fa8cc2add2ef11135bd\",\"revision\":\"r1\",\"documentId\":\"adoc\"}],\"releaseId\":\"truss-catalog-runtime/0.71-candidate\",\"maximumBytes\":4194304,\"relationships\":[{\"identity\":{\"module\":\"m\",\"revision\":\"r1\",\"documentId\":\"adoc\",\"relationship\":\"A-B\"},\"sourceTypeId\":\"1\",\"targetTypeId\":\"2\",\"relationshipTypeId\":\"1\"}],\"releaseSha256\":\"b71bda9e1ff92424a5e0b300f593f5a9ce98dc0361cb225f71739848516ab835\",\"installationId\":\"6ae6b183-cc72-4c92-b207-dda47585af47\",\"catalogRevision\":1,\"maximumScanRows\":100,\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"maximumResultRows\":100}",
+        "bindingSha256": "f1d2438e644c95555fd49ee33e99c388c3f856e4082663e2a9a55dadcb5cc99d"
+      },
+      "readProfile": {
+        "version": "weft-truss-entity-read/0.4.0",
+        "subset": "complete-entity",
+        "entityProjection": {
+          "facts": [],
+          "relationships": false
+        }
+      }
+    },
+    "pageSize": null,
+    "expected": {
+      "status": "blocked",
+      "diagnosticCode": "WFT-TYPE"
+    }
+  }
+]

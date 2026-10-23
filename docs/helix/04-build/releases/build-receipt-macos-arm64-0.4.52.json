@@ -1,0 +1,48 @@
+{
+  "artifact": {
+    "filename": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+    "native_module_sha256": "f4be63caaacedeaa3d8af1b1f0587c561a2ff1ae0a279f4f8f7dcf836f6bb24f",
+    "path": "/private/tmp/weft-052-linux-artifact-readiness-b4198b/mac-build-32ec02f/dist/weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46",
+    "wheel_tag": "cp39-abi3-macosx_11_0_arm64"
+  },
+  "build": {
+    "build_duration": "2m35s",
+    "command": "maturin build --manifest-path crates/weft-python/Cargo.toml --release --locked --out <private dist>",
+    "environment": {
+      "cargo_offline": true,
+      "jobs": 2,
+      "machine": "arm64",
+      "maturin": "1.9.6",
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python_packaging_check": "3.12.14",
+      "rust": "1.90.0 aarch64-apple-darwin"
+    },
+    "profile": "release",
+    "result": "success"
+  },
+  "check": {
+    "command": "scripts/release/verify-wheel-packaging.py --version 0.4.52",
+    "receipt_path": "/private/tmp/weft-052-linux-artifact-readiness-b4198b/mac-build-32ec02f/packaging-macos-arm64.json",
+    "receipt_sha256": "3bf22976c0921461ad56f5aa9cffda9b3f73521558d29c6df36a2979246a3447",
+    "result": "passed",
+    "scope": "Installed-wheel archive entries, RECORD integrity, package metadata/version, ABI tag, native module and bundled notices."
+  },
+  "limitations": [
+    "macOS ARM64 artifact only; this does not constitute Linux x86_64 wheel evidence.",
+    "No native compiler semantics, PostgreSQL, Databricks, CI, tag, release, or upstream push was performed."
+  ],
+  "profile": "weft-0.4.52-local-macos-wheel-build/0.1",
+  "source": {
+    "cargo_lock_sha256": "7e2d6274017f716cbe55f6446082b03f9c078df6bb90aaf6fba2e149ab84f181",
+    "commit": "32ec02f0c3fd24a97b7726500dc5992c6475908d",
+    "committed_files": [
+      ".github/workflows/release-selected-linux-0.4.52.yml"
+    ],
+    "git_archive_sha256": "cd5a649cf7e51b45f7723368609db9388f8e6652337b543099ebe8a39dad63b2",
+    "linux_workflow_sha256": "512fb86ced73f93b0717cd5af3b95b8cfd49f8db170748da80da2c2ad234239c",
+    "python_crate_manifest_sha256": "1ea665c34591d9fe3764651fa45f3c1e44baa242ebdc9f746879a4fc9430419b",
+    "python_project_manifest_sha256": "53d13e44a08d7fdd654d014db7433b71ec5baf1060e8dc3770c7f4158aee5544",
+    "worktree_clean": true
+  }
+}

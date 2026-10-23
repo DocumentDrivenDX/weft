@@ -1,0 +1,38 @@
+{
+  "schema": "weft-local-macos-selected-assets/0.1",
+  "status": "passed",
+  "version": "0.4.52",
+  "sourceFreezeCommit": "32ec02f0c3fd24a97b7726500dc5992c6475908d",
+  "platform": "macos-arm64",
+  "functionalQualification": "compiler-only-local",
+  "wheel": {
+    "name": "weft_sql-0.4.52-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "598509e981e3238961d33d430c711b481e430adc945e692a1784ab758f7b6d46",
+    "nativeModule": "weft/weft.abi3.so",
+    "nativeModuleSha256": "f4be63caaacedeaa3d8af1b1f0587c561a2ff1ae0a279f4f8f7dcf836f6bb24f",
+    "recordSha256": "fe41d8bbad202b17d783a91786cea493b813fc5f3f14dac182cadc6b6dba912d"
+  },
+  "functionalReceipt": {
+    "path": "../evidence/release052-selected-assets-20261023/runtime-32ec02f/mac-functional-receipt.json",
+    "sha256": "16b987ebb2e0ad5e419676e5a63cd827ca3eb94716fd75d3afff31374c10e441",
+    "scope": [
+      "four managed-page compiler tests",
+      "two managed current-read compiler controls",
+      "two selected public 0.4.51 Source-F compiler cases"
+    ]
+  },
+  "umf": {
+    "core": {
+      "version": "0.10.0",
+      "sha256": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9"
+    },
+    "access": {
+      "version": "0.1.0.dev6",
+      "sha256": "8f6e86ed94983d0156c2d6e9e1bf83fae186fe1d4a288a3846722e64aa365cf0"
+    }
+  },
+  "limits": [
+    "No Linux compiler-only execution against the selected Linux wheel is claimed.",
+    "No native SQL backend or Unity Catalog execution was performed or qualified."
+  ]
+}

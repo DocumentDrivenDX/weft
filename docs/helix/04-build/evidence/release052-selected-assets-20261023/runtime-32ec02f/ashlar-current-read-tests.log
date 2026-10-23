@@ -1,0 +1,7 @@
+test_read_owner_admits_exact_xxhash64_backend_tuple (test_managed_current_query.ManagedCurrentQueryTests.test_read_owner_admits_exact_xxhash64_backend_tuple) ... ok
+test_real_weft_xxhash64_artifact_admits_exact_request_and_closed_native_requirement (test_managed_current_query.ManagedCurrentQueryTests.test_real_weft_xxhash64_artifact_admits_exact_request_and_closed_native_requirement) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.020s
+
+OK

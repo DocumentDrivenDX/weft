@@ -1,0 +1,123 @@
+name: Publish selected Weft 0.4.52 assets
+on:
+  workflow_dispatch:
+    inputs:
+      release_sha:
+        description: Exact reviewed release-metadata commit targeted by v0.4.52
+        required: true
+        type: string
+      source_sha:
+        description: Exact compiler source commit used for both selected wheels
+        required: true
+        type: string
+      linux_run_id:
+        description: Completed selected Linux artifact-only build run
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: selected-weft-0.4.52-publish
+  cancel-in-progress: false
+jobs:
+  publish-selected-assets:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ inputs.release_sha }}
+      - name: Require matching source and draft tag
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          RELEASE_SHA: ${{ inputs.release_sha }}
+          WORKFLOW_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$WORKFLOW_SHA" = "$RELEASE_SHA"
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          test "$(git rev-parse 'refs/tags/v0.4.52^{commit}')" = "$RELEASE_SHA"
+          git merge-base --is-ancestor "$SOURCE_SHA" "$RELEASE_SHA"
+          git diff --exit-code "$SOURCE_SHA" "$RELEASE_SHA" -- Cargo.toml Cargo.lock crates spec vendor .cargo rust-toolchain rust-toolchain.toml docs/helix/02-design/contracts
+          test "$(gh release view v0.4.52 --json isDraft --jq .isDraft)" = true
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.linux_run_id }}
+          github-token: ${{ github.token }}
+          name: weft-0.4.52-linux-x86_64-${{ inputs.source_sha }}
+          path: selected/linux
+      - name: Download staged macOS wheel and compiler evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p selected/macos selected/functional
+          gh release download v0.4.52 --pattern 'weft_sql-0.4.52-*-macosx_*_arm64.whl' --dir selected/macos
+          gh release download v0.4.52 --pattern 'build-receipt-macos-arm64-0.4.52.json' --dir selected/macos
+          gh release download v0.4.52 --pattern 'packaging-macos-arm64-0.4.52.json' --dir selected/macos
+          gh release download v0.4.52 --pattern 'mac-functional-evidence-0.4.52.tar.gz' --dir selected/functional
+          tar -xzf selected/functional/mac-functional-evidence-0.4.52.tar.gz -C selected/functional
+      - name: Verify selected Linux artifact run identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LINUX_RUN_ID: ${{ inputs.linux_run_id }}
+        run: |
+          case "$LINUX_RUN_ID" in ''|*[!0-9]*) exit 1;; esac
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$LINUX_RUN_ID" > selected/linux-run-raw.json
+          python - <<'PYTHON'
+          import json,pathlib
+          run=json.loads(pathlib.Path('selected/linux-run-raw.json').read_text())
+          report={"id":run["id"],"workflowName":run["name"],"conclusion":run["conclusion"],"event":run["event"],"headSha":run["head_sha"]}
+          pathlib.Path('selected/linux-run.json').write_text(json.dumps(report,indent=2)+'\n')
+          PYTHON
+      - name: Verify exact selected wheels and compiler evidence
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          RELEASE_SHA: ${{ inputs.release_sha }}
+          LINUX_RUN_ID: ${{ inputs.linux_run_id }}
+        run: |
+          linux_wheel="$(find selected/linux -maxdepth 1 -name 'weft_sql-0.4.52-*-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' -print -quit)"
+          macos_wheel="$(find selected/macos -maxdepth 1 -name 'weft_sql-0.4.52-*-macosx_*_arm64.whl' -print -quit)"
+          test "$(find selected/linux -maxdepth 1 -name '*.whl' | wc -l | tr -d ' ')" = 1
+          test "$(find selected/macos -maxdepth 1 -name '*.whl' | wc -l | tr -d ' ')" = 1
+          python scripts/release/verify-selected-assets-0.4.52.py \
+            --source-commit "$SOURCE_SHA" \
+            --linux-run-id "$LINUX_RUN_ID" --linux-run-report selected/linux-run.json \
+            --linux-wheel "$linux_wheel" \
+            --linux-build-report selected/linux/selected-linux-build-0.4.52.json \
+            --linux-packaging-report selected/linux/packaging-linux-x86_64.json \
+            --mac-wheel "$macos_wheel" \
+            --mac-build-receipt selected/macos/build-receipt-macos-arm64-0.4.52.json \
+            --mac-packaging-report selected/macos/packaging-macos-arm64-0.4.52.json \
+            --mac-functional-receipt selected/functional/runtime-32ec02f/mac-functional-receipt.json \
+            --output selected/release-pins-0.4.52.json
+          python - <<'PYTHON'
+          import json,os,pathlib
+          path=pathlib.Path('selected/release-pins-0.4.52.json')
+          pins=json.loads(path.read_text())
+          pins['tag']='v0.4.52'
+          pins['releaseMetadataCommit']=os.environ['RELEASE_SHA']
+          path.write_text(json.dumps(pins,indent=2)+'\n')
+          PYTHON
+          cp "$linux_wheel" selected/
+          cp "$macos_wheel" selected/
+          cp selected/linux/packaging-linux-x86_64.json selected/
+          cp selected/macos/packaging-macos-arm64-0.4.52.json selected/
+          (cd selected && sha256sum weft_sql-0.4.52-*-manylinux_2_17_x86_64.manylinux2014_x86_64.whl weft_sql-0.4.52-*-macosx_*_arm64.whl > SHA256SUMS)
+      - name: Add selected Linux bytes and promote the qualified draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v0.4.52 \
+            selected/weft_sql-0.4.52-*-manylinux_2_17_x86_64.manylinux2014_x86_64.whl \
+            selected/packaging-linux-x86_64.json \
+            selected/packaging-macos-arm64-0.4.52.json \
+            selected/release-pins-0.4.52.json \
+            selected/SHA256SUMS
+          gh release edit v0.4.52 --draft=false --latest
