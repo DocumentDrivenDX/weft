@@ -445,3 +445,54 @@ name. Incorrect target types, extra parameters and unknown selected qualifiers
 refuse. The same value may participate in typed assignments or predicates. Stable
 keyset continuation still promises no cross-page snapshot. Durable replay and
 actual identity/privilege/RLS/installation admission remain host obligations.
+
+### G02 guarded same-row derived operation
+
+UMF CONTRACT-081's G02 successor owns the canonical closed source declaration
+`umf.table-operation/0.2` and RowExpression algebra. Import its exact successor
+schema separately under `spec/upstream/`; retain the 0.1 snapshot unchanged.
+The supported source is one parameter-free, nonbatch UPDATE of one target whose
+predicate is exactly target IS NULL, maxRows 1–10000 and no business RETURNING.
+It does not expand ordinary operation 0.1 or introduce executable plugins.
+
+Shared Weft Rust admission MUST validate every expression/conditional node,
+stable same-table Field reference, native/logical carrier, NULL behavior and
+resource bound before PostgreSQL lowering. Accept only field/literal, coalesce,
+strict C text concatenation, exact add/subtract/multiply and conditional forms.
+Exclude target self-reference, new/dependent inputs, joins, callbacks, native SQL,
+ambient clock/principal, floats, casts and locale/date conversion. The selected
+UMF migration host additionally proves unchanged input closure across sources.
+
+Numeric arithmetic uses unconstrained numeric intermediates and statically
+bounded integral/fractional digits with I+S <= 1000 at every node. Integer results
+must be statically integral. Decimal leaves require finite precision and
+nonnegative scale. Input typmods alone do not exclude NaN: the complete referenced
+numeric input closure, including unused branches, and final numeric result MUST
+be finite for every matched row. Intermediate constraints do not silently apply
+the final target's enum/length refinements to separator or arithmetic operands.
+
+Emit `weft.table-operation/0.2`, retaining original source/declaration/model pins,
+parameterized transport and source-aware program recompilation. Its result adds
+the exact `nativeExactValueGuard` descriptor from UMF CONTRACT-081:
+
+```json
+{"profile":"pg18-row-expression-exact/0.1","sqlstate":"22012","scope":"all-direct-target-rows","nullResult":"statement-error-and-transaction-rollback","nonfiniteInput":"statement-error-and-transaction-rollback","lossyAssignment":"statement-error-and-transaction-rollback","privateResults":true}
+```
+
+Weft's PostgreSQL adapter privately compares actual stored target values with
+the pure expression reevaluated from unchanged inputs in UPDATE RETURNING.
+Numeric comparison is exact; text/C comparison preserves significant trailing
+spaces. The full effects aggregate combines this validity/non-NULL/finite-input
+test with count/frame bounds and raises SQLSTATE 22012 on any invalid row. No
+LIMIT, filtering, truncated output or omitted invalid row may satisfy the guard.
+Zero rows pass. Public output exposes only `umf_affected`; private booleans and
+row values never become diagnostics or business results. Native constraint and
+overflow errors remain errors; the whole statement rolls back.
+
+Qualify built-in operators, functions, types and C collation explicitly to avoid
+ambient search_path semantics. There is no host-side row loop or preflight CTID
+join. Hosts MUST reject a missing/altered guard or incompatible program version
+before execution and retain native authority/constraint/writer exclusion plus
+atomic migration data/DDL/progress. This compiler program remains
+`nativeExecutionQualified:false`; storage qualification belongs to the exact
+installed native cohort. No managed, online or other-backend claim follows.

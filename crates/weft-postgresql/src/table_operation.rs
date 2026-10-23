@@ -16,17 +16,31 @@ struct Lower<'a> {
     slots: Vec<Value>,
     identities: BTreeMap<String, usize>,
     source_scope: bool,
-    related_scope: Option<(String,String)>,
+    related_scope: Option<(String, String)>,
     next_alias: usize,
 }
 impl<'a> Lower<'a> {
     fn field(&self, reference: &Value) -> Result<&'a OperationField> {
-        if let Some((id,_))=&self.related_scope { self.operation.related_field(id,reference) } else if self.source_scope { self.operation.source_field(reference) } else { self.operation.field(reference) }
+        if let Some((id, _)) = &self.related_scope {
+            self.operation.related_field(id, reference)
+        } else if self.source_scope {
+            self.operation.source_field(reference)
+        } else {
+            self.operation.field(reference)
+        }
     }
     fn column(&self, reference: &Value, alias: bool) -> Result<String> {
         Ok(format!(
             "{}{}",
-            if !alias { String::new() } else if let Some((_,name))=&self.related_scope { format!("{name}.") } else if self.source_scope { "s.".to_owned() } else { "t.".to_owned() },
+            if !alias {
+                String::new()
+            } else if let Some((_, name)) = &self.related_scope {
+                format!("{name}.")
+            } else if self.source_scope {
+                "s.".to_owned()
+            } else {
+                "t.".to_owned()
+            },
             q(&self.field(reference)?.native)?
         ))
     }
@@ -53,9 +67,18 @@ impl<'a> Lower<'a> {
     }
     fn value(&mut self, value: &Value, reference: &Value) -> Result<String> {
         let field = self.field(reference)?;
-        if value["kind"] == "currentPrincipal" { return Ok("(CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")".into()); }
-        if value["kind"] == "sourceField" { return Ok(format!("s.{}",q(&self.operation.source_field(&value["field"])?.native)?)); }
-        if value["kind"]=="currentTimestamp" { return Ok("CURRENT_TIMESTAMP".into()); }
+        if value["kind"] == "currentPrincipal" {
+            return Ok("(CURRENT_USER::pg_catalog.text COLLATE pg_catalog.\"C\")".into());
+        }
+        if value["kind"] == "sourceField" {
+            return Ok(format!(
+                "s.{}",
+                q(&self.operation.source_field(&value["field"])?.native)?
+            ));
+        }
+        if value["kind"] == "currentTimestamp" {
+            return Ok("CURRENT_TIMESTAMP".into());
+        }
         Ok(self.slot(
             if value["kind"] == "parameter" {
                 json!({"kind":"input","parameter":value["parameter"]})
@@ -83,21 +106,38 @@ impl<'a> Lower<'a> {
             }
             "not" => format!("(NOT {})", self.predicate(&node["arg"])?),
             "related" => {
-                let id=node["table"].as_str().ok_or("related table identity absent")?;
-                let table=self.operation.related_table(id)?;
-                let alias=format!("umf_related_{}",self.next_alias);self.next_alias+=1;
-                let relation=format!("{}.{}",q(self.operation.request().binding.schema.as_deref().ok_or("native schema absent")?)?,q(&table.native)?);
-                let mut parts=vec![];
+                let id = node["table"]
+                    .as_str()
+                    .ok_or("related table identity absent")?;
+                let table = self.operation.related_table(id)?;
+                let alias = format!("umf_related_{}", self.next_alias);
+                self.next_alias += 1;
+                let relation = format!(
+                    "{}.{}",
+                    q(self
+                        .operation
+                        .request()
+                        .binding
+                        .schema
+                        .as_deref()
+                        .ok_or("native schema absent")?)?,
+                    q(&table.native)?
+                );
+                let mut parts = vec![];
                 for pair in node["matches"].as_array().ok_or("related matches absent")? {
-                    let source=self.column(&pair["source"],true)?;
-                    let target=self.operation.related_field(id,&pair["target"])?;
-                    let target=format!("{alias}.{}",q(&target.native)?);
+                    let source = self.column(&pair["source"], true)?;
+                    let target = self.operation.related_field(id, &pair["target"])?;
+                    let target = format!("{alias}.{}", q(&target.native)?);
                     parts.push(format!("{source} = {target}"));
                 }
-                let previous=self.related_scope.replace((id.to_owned(),alias.clone()));
-                let inner=self.predicate(&node["where"]);self.related_scope=previous;
+                let previous = self.related_scope.replace((id.to_owned(), alias.clone()));
+                let inner = self.predicate(&node["where"]);
+                self.related_scope = previous;
                 parts.push(inner?);
-                format!("EXISTS (SELECT 1 FROM {relation} AS {alias} WHERE {})",parts.join(" AND "))
+                format!(
+                    "EXISTS (SELECT 1 FROM {relation} AS {alias} WHERE {})",
+                    parts.join(" AND ")
+                )
             }
 
             "isNull" => format!("({} IS NULL)", self.column(&node["field"], true)?),
@@ -131,6 +171,144 @@ impl<'a> Lower<'a> {
             }
         })
     }
+    fn row_expression(&mut self, node: &Value, literal_field: &Value) -> Result<String> {
+        let op = node["op"]
+            .as_str()
+            .ok_or("row expression operator absent")?;
+        Ok(match op {
+            "field" => {
+                let field = self.operation.field(&node["field"])?;
+                let column = self.column(&node["field"], true)?;
+                match field.carrier {
+                    Carrier::Integer | Carrier::Decimal => {
+                        format!("({column})::pg_catalog.numeric")
+                    }
+                    Carrier::String => format!("({column} COLLATE pg_catalog.\"C\")"),
+                    _ => column,
+                }
+            }
+            "literal" => {
+                let field = self.operation.field(literal_field)?;
+                let value = &node["value"];
+                let native = weft_core::table_operation::row_expression::native_literal(value)?;
+                self.slot(
+                    json!({"kind":"literal","value":value,"nativeValue":native}),
+                    field,
+                )
+            }
+            "coalesce" => {
+                let args = node["args"]
+                    .as_array()
+                    .ok_or("row expression arguments absent")?
+                    .iter()
+                    .map(|n| self.row_expression(n, literal_field))
+                    .collect::<Result<Vec<_>>>()?;
+                format!("COALESCE({})", args.join(", "))
+            }
+            "concat" => {
+                let args = node["args"]
+                    .as_array()
+                    .ok_or("row expression arguments absent")?
+                    .iter()
+                    .map(|n| self.row_expression(n, literal_field))
+                    .collect::<Result<Vec<_>>>()?;
+                let mut it = args.into_iter();
+                let mut result = it.next().ok_or("row expression arguments absent")?;
+                for rhs in it {
+                    result = format!("({result} OPERATOR(pg_catalog.||) {rhs})");
+                }
+                result
+            }
+            "add" | "subtract" | "multiply" => {
+                let left = self.row_expression(&node["left"], literal_field)?;
+                let right = self.row_expression(&node["right"], literal_field)?;
+                let operator = match op {
+                    "add" => "+",
+                    "subtract" => "-",
+                    _ => "*",
+                };
+                format!("({left} OPERATOR(pg_catalog.{operator}) {right})")
+            }
+            "conditional" => {
+                let condition = self.row_predicate(&node["when"])?;
+                let then = self.row_expression(&node["then"], literal_field)?;
+                let otherwise = self.row_expression(&node["else"], literal_field)?;
+                format!("CASE WHEN ({condition}) IS TRUE THEN {then} ELSE {otherwise} END")
+            }
+            _ => return Err("row expression operator unsupported"),
+        })
+    }
+    fn row_predicate_value(&mut self, value: &Value, reference: &Value) -> Result<String> {
+        if value["kind"] != "literal" {
+            return Err("row expression predicate value is not a literal");
+        }
+        let field = self.field(reference)?;
+        let native = weft_core::table_operation::row_expression::native_literal(&value["value"])?;
+        Ok(self.slot(
+            json!({"kind":"literal","value":value["value"],"nativeValue":native}),
+            field,
+        ))
+    }
+    fn row_predicate(&mut self, node: &Value) -> Result<String> {
+        let op = node["op"]
+            .as_str()
+            .ok_or("row expression condition operator absent")?;
+        Ok(match op {
+            "all" => "TRUE".into(),
+            "and" | "or" => {
+                let terms = node["args"]
+                    .as_array()
+                    .ok_or("row expression condition args absent")?
+                    .iter()
+                    .map(|n| self.row_predicate(n))
+                    .collect::<Result<Vec<_>>>()?;
+                format!(
+                    "({})",
+                    terms.join(if op == "and" { " AND " } else { " OR " })
+                )
+            }
+            "not" => format!("(NOT {})", self.row_predicate(&node["arg"])?),
+            "isNull" => format!("({} IS NULL)", self.column(&node["field"], true)?),
+            "in" => {
+                let column = self.column(&node["field"], true)?;
+                let vals = node["values"]
+                    .as_array()
+                    .ok_or("row expression condition values absent")?
+                    .iter()
+                    .map(|v| self.row_predicate_value(v, &node["field"]))
+                    .collect::<Result<Vec<_>>>()?;
+                format!(
+                    "({})",
+                    vals.into_iter()
+                        .map(|value| format!("({column} OPERATOR(pg_catalog.=) {value})"))
+                        .collect::<Vec<_>>()
+                        .join(" OR ")
+                )
+            }
+            "startsWith" => {
+                let column = self.column(&node["field"], true)?;
+                let value = self.row_predicate_value(&node["value"], &node["field"])?;
+                format!("pg_catalog.starts_with(({column} COLLATE pg_catalog.\"C\"), {value})")
+            }
+            "eq" | "ne" | "lt" | "le" | "gt" | "ge" => {
+                let mut column = self.column(&node["field"], true)?;
+                if self.field(&node["field"])?.carrier == Carrier::String {
+                    column = format!("({column} COLLATE pg_catalog.\"C\")");
+                }
+                let value = self.row_predicate_value(&node["value"], &node["field"])?;
+                let operator = match op {
+                    "eq" => "=",
+                    "ne" => "<>",
+                    "lt" => "<",
+                    "le" => "<=",
+                    "gt" => ">",
+                    _ => ">=",
+                };
+                format!("({column} OPERATOR(pg_catalog.{operator}) {value})")
+            }
+            _ => return Err("row expression condition operator unsupported"),
+        })
+    }
     fn projection(&self, reference: &Value, index: usize) -> Result<(String, Value)> {
         let field = self.operation.field(reference)?;
         let column = self.column(reference, true)?;
@@ -155,10 +333,15 @@ fn compile(raw: &str) -> Result<Value> {
     program["requestSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
     program["binding"] = json!(operation.request().binding.as_ref());
     program["declaration"] = operation.declaration().clone();
-    program["structuralDigest"] = json!(weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes()));
+    program["structuralDigest"] = json!(weft_core::json::sha256(
+        weft_core::mutation::canonical(&program).as_bytes()
+    ));
     Ok(program)
 }
-pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact: bool) -> Result<Value> {
+pub fn compile_admitted(
+    operation: &table_operation::AdmittedOperation,
+    compact: bool,
+) -> Result<Value> {
     let request = operation.request();
     let body = &operation.declaration()["body"];
     let kind = body["kind"].as_str().unwrap();
@@ -202,7 +385,10 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
             let order = body["orderBy"].as_array().unwrap();
             let fields = order.iter().map(|o| o["field"].clone()).collect::<Vec<_>>();
             cursor = json!({"key":body["cursorKey"],"fields":fields,"ordering":"declared-lexicographic-order","directions":order.iter().map(|o|o["direction"].clone()).collect::<Vec<_>>(),"requiresSourceAndPrincipalBinding":true});
-            if matches!(operation.call(), OperationCall::Single { after: Some(_), .. }) {
+            if matches!(
+                operation.call(),
+                OperationCall::Single { after: Some(_), .. }
+            ) {
                 let columns = fields
                     .iter()
                     .map(|f| lower.column(f, true))
@@ -221,16 +407,37 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
                 let descending = order.iter().all(|o| o["direction"] == "desc");
                 let compare = if ascending || descending {
                     let operator = if ascending { ">" } else { "<" };
-                    if fields.len() == 1 { format!("{} {operator} {}", columns[0], values[0]) }
-                    else { format!("({}) {operator} ({})", columns.join(", "), values.join(", ")) }
+                    if fields.len() == 1 {
+                        format!("{} {operator} {}", columns[0], values[0])
+                    } else {
+                        format!(
+                            "({}) {operator} ({})",
+                            columns.join(", "),
+                            values.join(", ")
+                        )
+                    }
                 } else {
                     // Mixed directions require a lexicographic disjunction. Bind
                     // each scalar once; no sign flips, casts or precision loss.
-                    (0..fields.len()).map(|i| {
-                        let mut terms = (0..i).map(|j| format!("{} = {}", columns[j], values[j])).collect::<Vec<_>>();
-                        terms.push(format!("{} {} {}", columns[i], if order[i]["direction"] == "asc" { ">" } else { "<" }, values[i]));
-                        format!("({})", terms.join(" AND "))
-                    }).collect::<Vec<_>>().join(" OR ")
+                    (0..fields.len())
+                        .map(|i| {
+                            let mut terms = (0..i)
+                                .map(|j| format!("{} = {}", columns[j], values[j]))
+                                .collect::<Vec<_>>();
+                            terms.push(format!(
+                                "{} {} {}",
+                                columns[i],
+                                if order[i]["direction"] == "asc" {
+                                    ">"
+                                } else {
+                                    "<"
+                                },
+                                values[i]
+                            ));
+                            format!("({})", terms.join(" AND "))
+                        })
+                        .collect::<Vec<_>>()
+                        .join(" OR ")
                 };
                 predicate = format!("({predicate}) AND ({compare})");
             }
@@ -327,16 +534,25 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
                 )
             }
             "insertFrom" => {
-                let mut columns=vec![];let mut values=vec![];
+                let mut columns = vec![];
+                let mut values = vec![];
                 for assignment in body["values"].as_array().unwrap() {
-                    columns.push(lower.column(&assignment["field"],false)?);
-                    values.push(lower.value(&assignment["value"],&assignment["field"])?);
+                    columns.push(lower.column(&assignment["field"], false)?);
+                    values.push(lower.value(&assignment["value"], &assignment["field"])?);
                 }
-                lower.source_scope=true;
-                let predicate=lower.predicate(&body["source"]["where"])?;
-                lower.source_scope=false;
-                let source=operation.source_table().ok_or("source relation absent")?;
-                let source_relation=format!("{}.{}",q(request.binding.schema.as_deref().ok_or("source schema absent")?)?,q(&source.native)?);
+                lower.source_scope = true;
+                let predicate = lower.predicate(&body["source"]["where"])?;
+                lower.source_scope = false;
+                let source = operation.source_table().ok_or("source relation absent")?;
+                let source_relation = format!(
+                    "{}.{}",
+                    q(request
+                        .binding
+                        .schema
+                        .as_deref()
+                        .ok_or("source schema absent")?)?,
+                    q(&source.native)?
+                );
                 format!("INSERT INTO {relation} AS t ({}) SELECT {} FROM {source_relation} AS s WHERE {predicate} RETURNING {returning}",columns.join(", "),values.join(", "))
             }
             "update" => {
@@ -345,6 +561,12 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
                     .unwrap()
                     .iter()
                     .map(|a| {
+                        if a["value"]["kind"] == "rowExpression" {
+                            let column = lower.column(&a["field"], false)?;
+                            let expression =
+                                lower.row_expression(&a["value"]["expression"], &a["field"])?;
+                            return Ok(format!("{column} = {expression}"));
+                        }
                         Ok(format!(
                             "{} = {}",
                             lower.column(&a["field"], false)?,
@@ -353,10 +575,46 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
                     })
                     .collect::<Result<Vec<_>>>()?;
                 let predicate = lower.predicate(&body["where"])?;
-                format!(
-                    "UPDATE {relation} AS t SET {} WHERE {predicate} RETURNING {returning}",
-                    assignments.join(", ")
-                )
+                if operation.request().version == "weft.table-operation/0.2" {
+                    let target = &body["values"][0]["field"];
+                    let target_col = lower.column(target, true)?;
+                    let exact =
+                        lower.row_expression(&body["values"][0]["value"]["expression"], target)?;
+                    let finite=weft_core::table_operation::row_expression::numeric_input_fields(operation)?.iter().map(|reference| {
+                        let field=operation.field(reference)?;
+                        if field.native_type["kind"]!="numeric" { return Ok("TRUE".to_owned()); }
+                        let col=lower.column(reference,true)?;
+                        Ok(format!("({col} IS NULL OR ({col} OPERATOR(pg_catalog.<>) 'NaN'::pg_catalog.numeric AND {col} OPERATOR(pg_catalog.<>) 'Infinity'::pg_catalog.numeric AND {col} OPERATOR(pg_catalog.<>) '-Infinity'::pg_catalog.numeric))"))
+                    }).collect::<Result<Vec<_>>>()?;
+                    let finite = if finite.is_empty() {
+                        "TRUE".to_owned()
+                    } else {
+                        finite.join(" AND ")
+                    };
+                    let target_type = operation.field(target)?;
+                    let stored = match target_type.carrier {
+                        Carrier::Integer | Carrier::Decimal => {
+                            format!("({target_col})::pg_catalog.numeric")
+                        }
+                        Carrier::String => format!("({target_col} COLLATE pg_catalog.\"C\")"),
+                        _ => target_col.clone(),
+                    };
+                    let output_finite = if matches!(
+                        target_type.carrier,
+                        Carrier::Integer | Carrier::Decimal
+                    ) && target_type.native_type["kind"] == "numeric"
+                    {
+                        format!(" AND ({target_col} OPERATOR(pg_catalog.<>) 'NaN'::pg_catalog.numeric AND {target_col} OPERATOR(pg_catalog.<>) 'Infinity'::pg_catalog.numeric AND {target_col} OPERATOR(pg_catalog.<>) '-Infinity'::pg_catalog.numeric)")
+                    } else {
+                        String::new()
+                    };
+                    format!("UPDATE {relation} AS t SET {} WHERE {predicate} RETURNING 1 AS umf_affected, (({stored} OPERATOR(pg_catalog.=) {exact}) IS TRUE) AS umf_native_exact, ({target_col} IS NOT NULL) AS umf_native_nonnull, (({finite}){output_finite}) AS umf_native_finite",assignments.join(", "))
+                } else {
+                    format!(
+                        "UPDATE {relation} AS t SET {} WHERE {predicate} RETURNING {returning}",
+                        assignments.join(", ")
+                    )
+                }
             }
             "delete" => {
                 let predicate = lower.predicate(&body["where"])?;
@@ -404,12 +662,17 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
         sizes.push(
             "pg_catalog.octet_length(e.umf_affected::pg_catalog.text)::pg_catalog.int8".into(),
         );
-        format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) <= {} AND COALESCE(pg_catalog.sum({}),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.* FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok = 1",operation.max_rows(),sizes.join(" + "))
+        if operation.request().version == "weft.table-operation/0.2" {
+            format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) OPERATOR(pg_catalog.<=) {} AND COALESCE(pg_catalog.sum({}),0) OPERATOR(pg_catalog.<=) 8388608 AND COALESCE(pg_catalog.bool_and(e.umf_native_exact AND e.umf_native_nonnull AND e.umf_native_finite),TRUE) THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 OPERATOR(pg_catalog./) (pg_catalog.count(*) OPERATOR(pg_catalog.-) pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.umf_affected FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok OPERATOR(pg_catalog.=) 1",operation.max_rows(),sizes.join(" OPERATOR(pg_catalog.+) "))
+        } else {
+            format!("WITH umf_effects AS ({sql}), umf_bound AS MATERIALIZED (SELECT CASE WHEN pg_catalog.count(*) <= {} AND COALESCE(pg_catalog.sum({}),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM umf_effects AS e) SELECT e.* FROM umf_bound AS b CROSS JOIN umf_effects AS e WHERE b.ok = 1",operation.max_rows(),sizes.join(" + "))
+        }
     };
     let native_inputs = operation.native_inputs()?;
-    let native_batch = insert_batch::compile(operation, &lower, &outputs, &projections, &native_inputs)?;
+    let native_batch =
+        insert_batch::compile(operation, &lower, &outputs, &projections, &native_inputs)?;
     let batch = matches!(operation.call(), OperationCall::Batch { .. });
-    let mut program = json!({"version":"weft.table-operation/0.1","status":"compiled","target":request.target,
+    let mut program = json!({"version":request.version,"status":"compiled","target":request.target,
   "binding":{"modelSha256":request.binding.model_sha256},
   "module":request.module,"operation":request.operation,"callKind":if batch {"batch"} else {"single"},"idempotencyKey":operation.idempotency_key(),
   "nativeInputs":native_inputs,"nativeAfter":operation.native_after()?,
@@ -421,6 +684,9 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
    "transaction":{"batch":batch,"atomic":"entire-invocation","commitResponsibility":"host-caller-contract","onBoundExceeded":"rollback-entire-operation-or-batch","writeLimitClipping":false},
    "replay":{"mode":operation.declaration()["replay"],"durableOutcomeRequired":!read,"automaticRetry":false,"scope":["module","operation","source","deployment","ledger-head","verified-principal","ordered-exact-inputs","caller-key"]},
    "cursorScope":["operation","exact-inputs","source","deployment","ledger-head","principal","role-policy-scope"]}});
+    if request.version == "weft.table-operation/0.2" {
+        program["result"]["nativeExactValueGuard"] = json!({"profile":"pg18-row-expression-exact/0.1","sqlstate":"22012","scope":"all-direct-target-rows","nullResult":"statement-error-and-transaction-rollback","nonfiniteInput":"statement-error-and-transaction-rollback","lossyAssignment":"statement-error-and-transaction-rollback","privateResults":true});
+    }
     crate::dbapi::attach(&mut program)?;
     if let Some(native_batch) = native_batch {
         program["nativeBatch"] = native_batch;
@@ -428,25 +694,37 @@ pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact:
     if !compact {
         program["binding"] = json!(request.binding.as_ref());
         program["declaration"] = operation.declaration().clone();
-        program["structuralDigest"] = json!(weft_core::json::sha256(weft_core::mutation::canonical(&program).as_bytes()));
+        program["structuralDigest"] = json!(weft_core::json::sha256(
+            weft_core::mutation::canonical(&program).as_bytes()
+        ));
     }
     Ok(program)
 }
 pub struct PreparedOperationModule {
     inner: weft_core::table_operation::PreparedOperationModule,
-    query_module: std::sync::OnceLock<std::result::Result<super::table_query::PreparedQueryModule, &'static str>>,
+    query_module: std::sync::OnceLock<
+        std::result::Result<super::table_query::PreparedQueryModule, &'static str>,
+    >,
 }
-pub struct PreparedOperation { inner: weft_core::table_operation::PreparedOperation }
+pub struct PreparedOperation {
+    inner: weft_core::table_operation::PreparedOperation,
+}
 impl PreparedOperationModule {
     pub fn prepare(source: &str) -> Result<Self> {
-        weft_core::table_operation::prepare_module_json(source).map(|inner| Self { inner, query_module: std::sync::OnceLock::new() })
+        weft_core::table_operation::prepare_module_json(source).map(|inner| Self {
+            inner,
+            query_module: std::sync::OnceLock::new(),
+        })
     }
     pub fn prepare_operation(&self, operation: &str) -> Result<PreparedOperation> {
-        self.inner.prepare_operation(operation).map(|inner| PreparedOperation { inner })
+        self.inner
+            .prepare_operation(operation)
+            .map(|inner| PreparedOperation { inner })
     }
     pub fn prepare_query(&self, operation: &str) -> Result<super::table_query::PreparedQuery> {
         let module = self.query_module.get_or_init(|| {
-            self.inner.prepare_query_module()
+            self.inner
+                .prepare_query_module()
                 .map(super::table_query::PreparedQueryModule::from_admitted)
         });
         let module = module.as_ref().map_err(|error| *error)?;
@@ -455,10 +733,18 @@ impl PreparedOperationModule {
 }
 impl PreparedOperation {
     pub fn bind_json(&self, call: &str) -> String {
-        match self.inner.bind_json(call).and_then(|operation| compile_admitted(&operation, true)) {
+        match self
+            .inner
+            .bind_json(call)
+            .and_then(|operation| compile_admitted(&operation, true))
+        {
             Ok(program) => {
                 let output = program.to_string();
-                if output.len() > 33_554_432 { blocked("operation program capacity exceeded") } else { output }
+                if output.len() > 33_554_432 {
+                    blocked("operation program capacity exceeded")
+                } else {
+                    output
+                }
             }
             Err(reason) => blocked(reason),
         }
