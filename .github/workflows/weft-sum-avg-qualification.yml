@@ -68,7 +68,9 @@ jobs:
           } > "$evidence/receipt.tsv"
 
           cat > "$evidence/expected-source.sha256" <<'PINS'
-          e5a3030d12396fe71dd552431bcc24e1131395f56737f4d17f8601e029993f6b  crates/weft-core/src/raw_read.rs
+          20f9426ec152e1ea69d3f3c94c9305f02668b40270ec428a55c33a6332e5fb96  crates/weft-core/src/raw_read.rs
+          753ac19eade3839a2ece49c2cd933ac40ed3d72beba922b2c47d32fac8bea791  crates/weft-core/src/table_lifecycle.rs
+          6f17accccbcfcaad8cff7c1bd432e8132137b86c03d2c46ea98b602768c6c16c  crates/weft-core/src/table_operation/values.rs
           516ee0ae72af65729ac74eb3e3526c4690bc0ebb8cdc8fbe4be5e1c85b0dd5fd  crates/weft-databricks/src/raw_read.rs
           22101061832ac2aba458902c1f1316ac3db3a7d58691a97a716f85ff310aae80  crates/weft-databricks/src/unity_current_predicate.rs
           62d4a4b77cf7d632c6868a6f8496e02cbfbaf33b23f42428594bb9781755efca  crates/weft-databricks/src/unity_current_summary.rs
