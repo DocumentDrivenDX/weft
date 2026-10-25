@@ -17,7 +17,7 @@ fn exact(v: &Value, required: &[&str], optional: &[&str]) -> Result<()> {
     unity_current_predicate::exact(v, required, optional)
 }
 fn key(module: &str, element: &str) -> String { format!("{module}\0{element}") }
-fn ident(s: &str) -> Result<String> { crate::raw_read::ident(s) }
+fn ident(s: &str) -> Result<String> { unity_current_predicate::logical_ident(s) }
 fn json_digest(value: &Value) -> String {
     weft_core::json::sha256(weft_core::mutation::canonical(value).as_bytes())
 }

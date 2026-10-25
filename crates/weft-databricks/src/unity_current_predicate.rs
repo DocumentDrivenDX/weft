@@ -19,7 +19,7 @@ pub(super) fn exact(v: &Value, required: &[&str], optional: &[&str]) -> Result<(
     { return Err("unknown or missing member"); }
     Ok(())
 }
-fn ident(s: &str) -> Result<String> {
+pub(super) fn logical_ident(s: &str) -> Result<String> {
     if s.is_empty() || s.len() > 255 || s.contains('\0') { return Err("bounded source identifier required"); }
     Ok(format!("\"{}\"", s.replace('"', "\"\"")))
 }
@@ -76,7 +76,7 @@ impl Source {
     }
     pub(super) fn sql_field(&self, r: &Value) -> Result<(String, String, bool)> {
         let (name,carrier,nullable)=self.field(r)?;
-        Ok((format!("r.{}",ident(&name)?),carrier,nullable))
+        Ok((format!("r.{}",logical_ident(&name)?),carrier,nullable))
     }
 }
 
@@ -273,9 +273,9 @@ fn compile(raw:&str)->Result<Value>{
         let native=if carrier=="string"{"STRING"}else{"BOOLEAN"};let native_name=column["nativeName"].as_str().filter(|s|!s.is_empty()&&s.len()<=255&&!s.contains('\0')).ok_or("bounded native column name required")?;if column["nativeType"]!=native || column["nullable"]!=nullable || !native_names.insert(native_name.to_owned()) || columns.insert(k.clone(),(native_name.to_owned(),carrier,nullable,logical)).is_some(){return Err("target native ColumnSet differs from source Field");}
         if !bound.contains(&k){return Err("unselected target Field refused");}
     }
-    let relation=format!("{}.{}",ident(&source.table_module)?,ident(&source.record_name)?);
+    let relation=format!("{}.{}",logical_ident(&source.table_module)?,logical_ident(&source.record_name)?);
     let mut selects=Vec::new();let mut raw_columns=Vec::new();let mut outputs=Vec::new();
-    for (ordinal,(rf,n,c,nullable,k)) in projections.iter().enumerate(){let(native,_,_,_)=columns.get(k).ok_or("projection native binding absent")?;selects.push(format!("r.{} AS __weft_out_{ordinal}",ident(n)?));outputs.push(json!({"fieldRef":rf,"nativeName":native,"carrier":c,"nullable":nullable}));}
+    for (ordinal,(rf,n,c,nullable,k)) in projections.iter().enumerate(){let(native,_,_,_)=columns.get(k).ok_or("projection native binding absent")?;selects.push(format!("r.{} AS __weft_out_{ordinal}",logical_ident(n)?));outputs.push(json!({"fieldRef":rf,"nativeName":native,"carrier":c,"nullable":nullable}));}
     for (k,(native,c,nullable,logical)) in &columns {raw_columns.push(json!({"logical":logical,"native":native,"carrier":c,"nullable":nullable}));let _=k;}
     let mut raw_parameters=Vec::new();for p in descriptors{raw_parameters.push(json!({"name":p["name"],"carrier":p["carrier"],"nullable":p["nullable"]}));}
     let sql=format!("SELECT {} FROM {relation} AS r WHERE {predicate_sql}",selects.join(", "));
@@ -326,6 +326,27 @@ mod tests {
         let source=model.to_string();
         request["source"]["utf8"]=json!(source);
         request["source"]["sha256"]=json!(weft_core::json::sha256(source.as_bytes()));
+    }
+
+    #[test]
+    fn parser_logical_quoting_stays_separate_from_physical_databricks_quoting() {
+        let mut req = request(
+            eq_parameter("id", "p"),
+            json!([{"name":"p","carrier":"string","nullable":false,"maxUtf8Bytes":64}]),
+        );
+        let mut model: Value = serde_json::from_str(req["source"]["utf8"].as_str().unwrap()).unwrap();
+        model["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|field| field["id"] == "Customer").unwrap()["name"] = json!(r#"Customer "quoted`name"#);
+        model["modules"][0]["elements"].as_array_mut().unwrap()
+            .iter_mut().find(|field| field["id"] == "id").unwrap()["name"] = json!(r#"customer "id`value"#);
+        req["expectedTarget"]["columns"][0]["nativeName"] = json!("physical`customer");
+        reseal_source(&mut req, &model);
+
+        assert_eq!(logical_ident(r#"customer "id`value"#).unwrap(), r#""customer ""id`value""#);
+        assert_eq!(crate::raw_read::ident("physical`customer").unwrap(), "`physical``customer`");
+        let out = response(req);
+        assert_eq!(out["status"], "compiled", "{out}");
+        assert!(out["sql"].as_str().unwrap().contains("`r`.`physical``customer`"));
     }
     fn eq_parameter(field: &str, parameter: &str) -> Value { json!({"kind":"comparison","op":"eq","fieldRef":{"module":"sales","element":field},"operand":{"parameter":parameter}}) }
     #[test]

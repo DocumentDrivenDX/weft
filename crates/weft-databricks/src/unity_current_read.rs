@@ -6,6 +6,7 @@
 use serde::Deserialize;
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
+use super::unity_current_predicate;
 use weft_core::raw_read;
 
 type Result<T> = std::result::Result<T, &'static str>;
@@ -107,10 +108,7 @@ fn valid_identifier(value: &str) -> bool {
 }
 
 fn quote_logical(value: &str) -> Result<String> {
-    if !valid_identifier(value) {
-        return Err("bounded source identifier required");
-    }
-    Ok(format!("\"{}\"", value.replace('"', "\"\"")))
+    unity_current_predicate::logical_ident(value)
 }
 
 fn ref_value(reference: &FieldRef) -> Value {
