@@ -1,0 +1,10 @@
+{
+  "profile": "weft.host-browser-source-adoption/1",
+  "base": "6604bb6b3530d0b2d48cf98f252fd3701f593617",
+  "path": "/Users/erik/.codex/worktrees/weft-compiler-integration/weft/tests/current-unity-aggregate/browser-bridge.ts",
+  "preimage": "98433cfe9e15b529403c7ecefaa38bdb5b44c0c0c0774f8f4c0bd59bbb54da16",
+  "postimage": "e1b7424f1a3524b54d42e73480729f82047733c4203416e02862c89b40220c6d",
+  "sourceReview": "/private/tmp/weft-host-parity-sol-review002.json",
+  "execution": "UNRUN",
+  "scope": "hash-selected-executable-before-explicit-launch; truthful-browser-version-check; same9publicJSONvectors"
+}

@@ -1,0 +1,16 @@
+format	weft.python-wasm-host-parity-receipt/1
+needs_rust_sum_avg	success
+event_name	push
+ref	refs/heads/codex/weft-sum-avg-qualification
+sha	d436026479ba9176839bfe98364fdd263ee4af47
+workflow	Weft SUM-AVG source qualification
+job	host-parity
+run_id	40233236164
+run_attempt	1
+runner_os	Linux
+runner_arch	X64
+image_os	ubuntu24
+image_version	20261023.334.3
+commit	d436026479ba9176839bfe98364fdd263ee4af47
+tree	d250bb7df84172c9f27602048e7e722dedd6cdf4
+monotonic_deadline_seconds	1368.92

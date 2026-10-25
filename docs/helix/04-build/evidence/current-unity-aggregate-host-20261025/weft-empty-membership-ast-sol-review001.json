@@ -1,0 +1,15 @@
+{
+  "profile": "weft.affected-test-source-review/1",
+  "disposition": "SOURCE_ACCEPT_BOUNDED",
+  "source": "/Users/erik/.codex/worktrees/weft-compiler-integration/weft/crates/weft-databricks/src/unity_current_predicate.rs",
+  "sha256": "51be3621e05f0f90a301310eb28380dc454bc6b0be0b05763025cc39adbb10ca",
+  "scope": "Only membership_null_and_empty_truth_table_is_wr_s8 test at lines392-455; no production/wrapper/host review.",
+  "facts": [
+    "Existing sqlparser workspace dependency is exactly0.63.0 and already a weft-databricks dependency. Local pinned source confirms Statement::Query, SetExpr::Select, selection:Option<Expr>, Expr::Nested(Box<Expr>), Expr::Value(ValueWithSpan), public ValueWithSpan.value and Value::Boolean(bool). GenericDialect accepts backtick-delimited identifiers.",
+    "where_expression returns an owned clone of selection. Each caller retains that owned expression in a named local before borrowing through unwrap_nested; no borrowed temporary escapes.",
+    "Frontend empty IN emits in_empty(field); empty NOT IN emits NOT(in_empty(field)). Backend validates the field then lowers in_empty to FALSE, preserves existing Nested wrappers and adds UnaryOperator::Not. The new AST assertions prove exactly Boolean false and unaryNot(Boolean false) after recursively removing only redundant Nested nodes.",
+    "Original explicit NULL-member/S8 response and SQL checks remain; new parse/shape/assertion failures report actual emitted SQL. No guessed parenthesis string or changed NULL semantics."
+  ],
+  "findings": [],
+  "runtime": "UNRUN. Only source/metadata reads; no imports, Cargo, SQL, tests, AST execution or Git operations. Compilation and actual emitted-SQL parsing remain for the next hosted gate."
+}

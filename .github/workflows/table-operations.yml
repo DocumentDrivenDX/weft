@@ -2,6 +2,9 @@
 name: Declared table operation candidate
 on:
   push:
+    branches-ignore:
+      - codex/weft-main-aggregate-qualification
+    tags: ["**"]
   pull_request:
 permissions:
   contents: read

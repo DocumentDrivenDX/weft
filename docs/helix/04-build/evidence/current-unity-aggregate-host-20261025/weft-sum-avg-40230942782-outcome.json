@@ -1,0 +1,53 @@
+{
+  "run": 40230942782,
+  "head": "6604bb6b3530d0b2d48cf98f252fd3701f593617",
+  "artifact": 12612847350,
+  "zipSha256": "42c47cb85c0323c3ef3e1e7d98d71b3746aed8ad77c46a0c3543c7a7f584260b",
+  "compile": "PASS",
+  "groups": [
+    {
+      "log": "focused-avg.log",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "log": "focused-core-read.log",
+      "passed": 4,
+      "failed": 0
+    },
+    {
+      "log": "focused-dispatch.log",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "log": "focused-predicate-quoting.log",
+      "passed": 11,
+      "failed": 1
+    },
+    {
+      "log": "focused-runtime-public-route.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "log": "focused-pg-local-wire.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "log": "focused-backend-public-route.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "log": "focused-sum.log",
+      "passed": 10,
+      "failed": 0
+    }
+  ],
+  "passed": 57,
+  "failed": 1,
+  "status": "FAILURE_RETAINED_NO_UNCHANGED_RERUN",
+  "scope": "8selectedRustgroups; noPython/WASM/native qualification"
+}

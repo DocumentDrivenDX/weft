@@ -50,6 +50,10 @@ pub(crate) fn wire_projection(expr: Expr, carrier: &str) -> Result<(Expr, Option
             let utc = Expr::AtTimeZone { timestamp: Box::new(expr), time_zone: Box::new(literal("UTC")) };
             (pg_call("to_char", vec![utc, literal("YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"")]), None)
         }
+        "localTimestamp" => (
+            pg_call("to_char", vec![expr, literal("YYYY-MM-DD\"T\"HH24:MI:SS.US")]),
+            None,
+        ),
         "float" => (
             pg_call("encode", vec![pg_call("float8send", vec![expr]), literal("hex")]),
             Some("ieee754-binary64-hex"),
@@ -191,6 +195,32 @@ mod tests {
         assert!(rendered.contains("0.1"), "finite input disappeared: {rendered}");
         assert_eq!(wire_projection(expression("t.x"), "boolean").unwrap().1, None);
         assert!(wire_projection(expression("t.x"), "opaque").is_err());
+    }
+
+    #[test]
+    fn local_timestamp_wire_projection_stays_distinct_from_instant_and_preserves_null_input() {
+        let (local, encoding) = wire_projection(expression("t.local_time"), "localTimestamp").unwrap();
+        assert_eq!(encoding, None);
+        let local = local.to_string();
+        assert!(local.contains("to_char"), "{local}");
+        assert!(local.contains("t.local_time"), "{local}");
+        assert!(local.contains("HH24:MI:SS.US"), "{local}");
+        assert!(!local.contains("AT TIME ZONE"), "{local}");
+        assert!(!local.contains("Z"), "{local}");
+        assert!(!local.to_ascii_lowercase().contains("coalesce"), "{local}");
+
+        let (instant, encoding) = wire_projection(expression("t.instant"), "timestamp").unwrap();
+        assert_eq!(encoding, None);
+        let instant = instant.to_string();
+        assert!(instant.contains("AT TIME ZONE 'UTC'"), "{instant}");
+        assert!(instant.contains("HH24:MI:SS.US\"Z\""), "{instant}");
+
+        let (null_local, _) = wire_projection(expression("NULL::timestamp"), "localTimestamp").unwrap();
+        let null_local = null_local.to_string();
+        assert!(null_local.contains("NULL"), "{null_local}");
+        assert!(null_local.contains("to_char"), "{null_local}");
+        assert!(!null_local.to_ascii_lowercase().contains("coalesce"), "{null_local}");
+        assert!(wire_projection(expression("t.local_time"), "local-time-zone").is_err());
     }
 
     #[test]

@@ -14,6 +14,7 @@ fn cast_json_scalar(expression: &str, carrier: &Carrier) -> String {
         Carrier::Bits128 => format!("pg_catalog.decode(({expression})::pg_catalog.text,'hex')"),
         Carrier::Date => format!("({expression})::pg_catalog.date"),
         Carrier::Timestamp => format!("({expression})::pg_catalog.timestamptz"),
+        Carrier::LocalTimestamp => format!("({expression})::pg_catalog.timestamp"),
         Carrier::Uuid => format!("({expression})::pg_catalog.uuid"),
         Carrier::Boolean => format!("({expression})::pg_catalog.bool"),
         Carrier::Integer | Carrier::Decimal => format!("({expression})::pg_catalog.numeric"),

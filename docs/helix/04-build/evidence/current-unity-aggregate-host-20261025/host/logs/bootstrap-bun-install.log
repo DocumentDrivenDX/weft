@@ -1,0 +1,8 @@
+bun install v1.4.2 (744846f84)
+
++ ajv@8.17.1
++ playwright@1.62.1
++ typescript@5.9.3
++ yaml@2.8.1
+
+9 packages installed [98.00ms]

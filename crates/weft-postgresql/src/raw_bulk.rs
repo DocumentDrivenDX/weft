@@ -26,6 +26,7 @@ fn native(c: &Carrier) -> &'static str {
         Carrier::Bits128 => "bytea",
         Carrier::Date => "date",
         Carrier::Timestamp => "timestamptz",
+        Carrier::LocalTimestamp => "timestamp",
     }
 }
 fn compile(raw: &str) -> Result<Value> {

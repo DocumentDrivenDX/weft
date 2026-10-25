@@ -1,0 +1,58 @@
+{
+  "disposition": "BROWSER_SOURCE_ACCEPT_WORKFLOW_CORRECTION_REQUIRED",
+  "mode": "SOURCE_ONLY_ONE_HOST_CHECKPOINT",
+  "inputs": [
+    {
+      "path": "/private/tmp/weft-host-parity-proposal002/weft-sum-avg-qualification.proposed.yml",
+      "sha256": "a483308fbd8f8a9d25e53c83e339898f71ae3cffb8ef3f3d0f75d4591ad203a3",
+      "bytes": 23867
+    },
+    {
+      "path": "/private/tmp/weft-host-parity-proposal002/browser-bridge.proposed.ts",
+      "sha256": "e1b7424f1a3524b54d42e73480729f82047733c4203416e02862c89b40220c6d",
+      "bytes": 4094
+    }
+  ],
+  "confirmed": [
+    "Existing Rust job prefix is byte-identical to active reviewed workflow",
+    "Browser selected executable is read/hashed before explicit exact executablePath launch; version compared to locked package Chromium metadata; actual nine parsed-JSON public Rust/WASM parity and external-origin refusal retained",
+    "Wheel built from committed pyproject without feature overrides; exact one wheel, fresh --no-deps consumer, actual loaded extension/wheel byte comparison; selected Maturin binary acquisition exact SHA",
+    "Host needs Rust success in same isolated push; no DB/services/cache/secrets/publish commands added"
+  ],
+  "findings": [
+    {
+      "id": "HP2-F1",
+      "priority": "P1",
+      "problem": "Host preflight records observed source hashes but never verifies refreshed expected source/lock/tool input pins before installation. Config substring greps do not establish complete reviewed source correspondence.",
+      "fix": "Verify the exact refreshed expected manifest terminally before any acquisition; bind original commit/tree and new browser bytes, not historicalff094 pins."
+    },
+    {
+      "id": "HP2-F2",
+      "priority": "P1",
+      "problem": "Always cap step exits on >8MiB but unconditional upload still points at oversized evidence. Log truncation also lacks explicit original-size/truncation evidence.",
+      "fix": "Build a distinct bounded upload assembly or withhold oversized data on ALL exits; retain omission/hash/original-size/truncation markers and original command/step failure. No raw unbounded upload fallback."
+    },
+    {
+      "id": "HP2-F3",
+      "priority": "P1",
+      "problem": "Shared deadline is wall-clock date, not monotonic; setup actions each7minutes are unbound to420s bootstrap remaining; metadata/version commands run outside bounded helper. Per-stage remaining does not subtract10s termination grace.",
+      "fix": "Use one original monotonic budget before acquisition across all stages/setup; clamp each action/command to actual stage/global remaining and reserve grace inside both caps. Refuse before exhausted dispatch; bound metadata invocations too. Keep1200/25min/420/300/360 intent, no renewed window."
+    },
+    {
+      "id": "HP2-F4",
+      "priority": "P2",
+      "problem": "Most actual tool versions are only printed. The plan selects Python3.12/Bun1.4.2/Maturin1.9.6/wasm-bindgen0.2.105, but wrong observed versions would not themselves stop builds.",
+      "fix": "Assert declared actual versions before builds while retaining resolved Python micro and executable hashes; no invented micro or browser archive pin."
+    }
+  ],
+  "conditions": [
+    "Apply only after root accepts corrected workflow; no new local/runtime authority from this receipt",
+    "Refresh Rust-job/browser/host expected pins coherently after adoption",
+    "One same-run Rust gate followed by dependent host gate is sufficient; no separate unchanged retry required"
+  ],
+  "limitations": [
+    "No imports/runtime/compiler/test/browser/native execution",
+    "Parsed JSON parity is not raw serialized-byte parity or native SQL/authorization qualification",
+    "Actual host builds/timings and full Rust source gate remain to execute"
+  ]
+}

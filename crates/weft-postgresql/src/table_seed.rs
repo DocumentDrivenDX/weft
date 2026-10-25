@@ -10,6 +10,7 @@ fn scalar(index:usize,carrier:&Carrier)->String {
   Carrier::Bits128=>format!("pg_catalog.decode({text},'hex')"),
   Carrier::Date=>format!("{text}::pg_catalog.date"),
   Carrier::Timestamp=>format!("{text}::pg_catalog.timestamptz"),
+  Carrier::LocalTimestamp=>format!("{text}::pg_catalog.timestamp"),
   Carrier::Uuid=>format!("{text}::pg_catalog.uuid"),
   Carrier::Boolean=>format!("{text}::pg_catalog.bool"),
   Carrier::Integer|Carrier::Decimal=>format!("{text}::pg_catalog.numeric"),

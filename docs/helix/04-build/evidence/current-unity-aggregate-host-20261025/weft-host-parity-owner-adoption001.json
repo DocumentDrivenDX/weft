@@ -1,0 +1,22 @@
+{
+  "profile": "weft.host-parity-owner-adoption/1",
+  "base": "6604bb6b3530d0b2d48cf98f252fd3701f593617",
+  "browserReview": "/private/tmp/weft-host-parity-sol-review002.json",
+  "workflowReview": "/private/tmp/weft-host-parity-sol-review003/receipt.json",
+  "finiteClosure": [
+    "two YAML block scalars",
+    "wheel-hash deadline category",
+    "ready output gates upload after final8MiBcheck/removesoversizeassembly"
+  ],
+  "workflowSha256": "e9ba6c4a9df8378edaa74954c1587a2655a239583e5d8768b9ea830aea364684",
+  "hostSourcePins": 43,
+  "hostPinSha256": "63bcba0a54bc2581723a382a12e1c4c83da8ad9048e8d227add64070611658ab",
+  "rustPinUpdatesOnly": {
+    "crates/weft-databricks/src/unity_current_predicate.rs": "adb0e331cb238db20f7207d7a73ee2b3870a547f7ca5294a25ea0a387d5ba49d",
+    "tests/current-unity-aggregate/browser-bridge.ts": "e1b7424f1a3524b54d42e73480729f82047733c4203416e02862c89b40220c6d"
+  },
+  "nonsemanticCleanup": "trailing whitespace removed",
+  "dataflow": "public-source hosted Ubuntu tools/builds; sameRustcore Pythonwheel and browserWASM9vectors; bounded public receipts only",
+  "limits": "no native database/authorization, services, cache, publication or release claim",
+  "runtime": "UNRUN"
+}
