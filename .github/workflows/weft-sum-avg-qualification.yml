@@ -209,14 +209,19 @@ jobs:
     env:
       CARGO_TERM_COLOR: never
       CARGO_INCREMENTAL: '0'
-      PARITY_ROOT: ${{ runner.temp }}/weft-host-parity
-      PARITY_DEADLINE_FILE: ${{ runner.temp }}/weft-host-parity-deadline
     steps:
       - name: Checkout the triggering commit
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # approved UMF checkout action pin
         with:
           persist-credentials: false
           fetch-depth: 1
+
+      - name: Initialize host-parity paths
+        if: always()
+        shell: bash
+        run: |
+          printf 'PARITY_ROOT=%s\n' "$RUNNER_TEMP/weft-host-parity" >> "$GITHUB_ENV"
+          printf 'PARITY_DEADLINE_FILE=%s\n' "$RUNNER_TEMP/weft-host-parity-deadline" >> "$GITHUB_ENV"
 
       - name: Fail-closed source preflight and start monotonic deadline
         id: preflight
