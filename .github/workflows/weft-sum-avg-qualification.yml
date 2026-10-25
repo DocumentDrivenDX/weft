@@ -1,0 +1,180 @@
+name: Weft SUM-AVG source qualification
+
+on:
+  push:
+    branches:
+      - codex/weft-sum-avg-qualification
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weft-sum-avg-qualification-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  rust-sum-avg:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/weft-sum-avg-qualification'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CARGO_TERM_COLOR: never
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - name: Checkout the triggering commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # approved UMF checkout action pin
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Install the repository Rust toolchain without optional components
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustup toolchain install 1.90.0 --profile minimal --no-self-update
+          rustup run 1.90.0 rustc --version --verbose
+          rustup run 1.90.0 cargo --version --verbose
+
+      - name: Capture and verify source, toolchain, event, and job identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/weft-sum-avg-evidence/logs"
+          evidence="$RUNNER_TEMP/weft-sum-avg-evidence"
+          {
+            printf 'format\tweft.sum-avg-hosted-receipt/1\n'
+            printf 'event_name\t%s\n' "$GITHUB_EVENT_NAME"
+            printf 'ref\t%s\n' "$GITHUB_REF"
+            printf 'sha\t%s\n' "$GITHUB_SHA"
+            printf 'workflow\t%s\n' "$GITHUB_WORKFLOW"
+            printf 'job\t%s\n' "$GITHUB_JOB"
+            printf 'run_id\t%s\n' "$GITHUB_RUN_ID"
+            printf 'run_attempt\t%s\n' "$GITHUB_RUN_ATTEMPT"
+            printf 'runner_os\t%s\n' "$RUNNER_OS"
+            printf 'runner_arch\t%s\n' "$RUNNER_ARCH"
+            printf 'image_os\t%s\n' "${ImageOS:-unknown}"
+            printf 'image_version\t%s\n' "${ImageVersion:-unknown}"
+            printf 'commit\t%s\n' "$(git rev-parse HEAD)"
+            printf 'tree\t%s\n' "$(git rev-parse HEAD^{tree})"
+            printf 'workflow_file\t.github/workflows/weft-sum-avg-qualification.yml\n'
+            printf 'toolchain_channel\t1.90.0\n'
+            printf 'rustc_version_begin\n'
+            rustup run 1.90.0 rustc --version --verbose
+            printf 'cargo_version_begin\n'
+            rustup run 1.90.0 cargo --version --verbose
+            printf 'rustc_path\t%s\n' "$(rustup which rustc --toolchain 1.90.0)"
+            printf 'cargo_path\t%s\n' "$(rustup which cargo --toolchain 1.90.0)"
+            sha256sum "$(rustup which rustc --toolchain 1.90.0)" "$(rustup which cargo --toolchain 1.90.0)"
+          } > "$evidence/receipt.tsv"
+
+          cat > "$evidence/expected-source.sha256" <<'PINS'
+          e5a3030d12396fe71dd552431bcc24e1131395f56737f4d17f8601e029993f6b  crates/weft-core/src/raw_read.rs
+          516ee0ae72af65729ac74eb3e3526c4690bc0ebb8cdc8fbe4be5e1c85b0dd5fd  crates/weft-databricks/src/raw_read.rs
+          22101061832ac2aba458902c1f1316ac3db3a7d58691a97a716f85ff310aae80  crates/weft-databricks/src/unity_current_predicate.rs
+          62d4a4b77cf7d632c6868a6f8496e02cbfbaf33b23f42428594bb9781755efca  crates/weft-databricks/src/unity_current_summary.rs
+          f51d486f9aea9f6003c8956b628ecf19f1800dcf62dda287794fe46cbb0b9d39  crates/weft-databricks/src/unity_current_summary_lowering.rs
+          d725ad742533543f0746372a31006071ff82ff3c244fde70e601751a2561e2da  crates/weft-databricks/src/unity_current_sum.rs
+          ee3c0441b961b2e46fd87679a1669df3fb1d87185774c6838558a4ddde10e992  crates/weft-databricks/src/unity_current_sum_lowering.rs
+          a7b42f8989b7b5bde625f3b74d8a228fc355a57c5284d64090743f006ce030de  crates/weft-databricks/src/unity_current_avg.rs
+          bf6efc6998d708d9125b67c7af6a70ee3b4477581e45730b4084915775e0e84e  crates/weft-databricks/src/unity_current_avg_lowering.rs
+          0791c20fed7e126ac067b23521482315718118a392bb2ef797d3fb7300f9acf6  crates/weft-databricks/src/unity_current_read.rs
+          2b2ba9b7ee890ba8cd97d28e310ca1e799272778d5822f5ffd4cbdd24720e6f1  crates/weft-databricks/src/lib.rs
+          c77e339db207d859adf20dfaca3044ead8d16a12898529f1a3ef171345372c81  crates/weft-databricks/tests/fixtures/original-unity-model.json
+          979e823b0d4855efcdd83c583fe0bc698f734efb093e6ad1a695fc80c5572234  crates/weft-databricks/tests/fixtures/original-unity-binding.json
+          PINS
+          sha256sum -c "$evidence/expected-source.sha256" > "$evidence/source-check.txt"
+          printf '%s  Cargo.lock\n' b2a1df3a23b1f403fb9a2ee3570ef63b1a71d4a6fbfbc0004c861d2aca76f0e8 > "$evidence/expected-lock.sha256"
+          sha256sum -c "$evidence/expected-lock.sha256" >> "$evidence/source-check.txt"
+          printf '%s  rust-toolchain.toml\n' 41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14 > "$evidence/expected-toolchain.sha256"
+          sha256sum -c "$evidence/expected-toolchain.sha256" >> "$evidence/source-check.txt"
+          sha256sum .github/workflows/weft-sum-avg-qualification.yml >> "$evidence/source-check.txt"
+          cat "$evidence/source-check.txt" >> "$evidence/receipt.tsv"
+
+      - name: Check selected Rust crates (10 minute aggregate bound)
+        id: cargo-gate
+        shell: bash
+        run: |
+          set -uo pipefail
+          evidence="$RUNNER_TEMP/weft-sum-avg-evidence"
+          deadline=$(( $(date +%s) + 600 ))
+          failed=0
+          run_one() {
+            local name="$1" expected_tests="$2"; shift 2
+            local started ended remaining limit code cargo_code log begin elapsed passed
+            started=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+            begin=$SECONDS
+            remaining=$(( deadline - $(date +%s) ))
+            limit=$(( remaining - 10 ))
+            if (( limit <= 0 )); then
+              printf 'command\t%s\t%s\t%s\tduration_s=0\tlimit_s=0\tcargo_exit=not-started\tgate_exit=124\trefused=termination-grace-reserved\n' "$name" "$started" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$evidence/commands.tsv"
+              failed=1
+              return
+            fi
+            (( limit > 240 )) && limit=240
+            log="$evidence/logs/$name.log"
+            set +e
+            timeout --signal=TERM --kill-after=10s "${limit}s" rustup run 1.90.0 cargo "$@" >"$log" 2>&1
+            cargo_code=$?
+            code=$cargo_code
+            set -e
+            if (( expected_tests == 1 && cargo_code == 0 )); then
+              passed=$(sed -nE 's/^test result: ok\. ([0-9]+) passed;.*/\1/p' "$log" | awk '{ total += $1 } END { print total + 0 }')
+              if (( passed == 0 )); then
+                code=125
+                printf 'nonzero_test_count_required\t%s\tobserved=%s\n' "$name" "$passed" >> "$evidence/receipt.tsv"
+              fi
+            else
+              passed=not-applicable
+            fi
+            ended=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+            elapsed=$(( SECONDS - begin ))
+            printf 'command\t%s\t%s\t%s\tduration_s=%s\tlimit_s=%s\tcargo_exit=%s\tgate_exit=%s\ttests_passed=%s\targv=cargo %s\n' "$name" "$started" "$ended" "$elapsed" "$limit" "$cargo_code" "$code" "$passed" "$*" >> "$evidence/commands.tsv"
+            if (( $(wc -c < "$log") > 1048576 )); then
+              tail -c 1048576 "$log" > "$log.bounded"
+              mv "$log.bounded" "$log"
+              printf 'log_truncated_to_1MiB\t%s\n' "$name" >> "$evidence/receipt.tsv"
+            fi
+            printf '\n== %s (exit %s) ==\n' "$name" "$code"
+            tail -n 80 "$log"
+            (( code == 0 )) || failed=1
+          }
+          : > "$evidence/commands.tsv"
+          run_one compile-tests 0 check --locked --tests -p weft-core -p weft-databricks
+          run_one focused-core-read 1 test --locked --lib -p weft-core raw_read::
+          run_one focused-dispatch 1 test --locked --lib -p weft-databricks unity_current_read::
+          run_one focused-sum 1 test --locked --lib -p weft-databricks unity_current_sum
+          run_one focused-avg 1 test --locked --lib -p weft-databricks unity_current_avg
+          cat "$evidence/commands.tsv" >> "$evidence/receipt.tsv"
+          if (( failed != 0 )); then exit 1; fi
+
+      - name: Enforce public artifact bound and retain receipt/logs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/weft-sum-avg-evidence"
+          if [ ! -d "$evidence" ]; then
+            mkdir -p "$evidence/logs"
+            printf 'receipt_unavailable\tprior_step_failed_before_capture\n' > "$evidence/receipt.tsv"
+          fi
+          while IFS= read -r -d '' file; do
+            size=$(wc -c < "$file")
+            if (( size > 1048576 )); then
+              tail -c 1048576 "$file" > "$file.bounded"
+              mv "$file.bounded" "$file"
+            fi
+          done < <(find "$evidence" -type f -print0)
+          total=$(du -sk "$evidence" | awk '{print $1}')
+          if (( total > 8192 )); then
+            printf 'artifact_bound_exceeded_kib\t%s\n' "$total" >> "$evidence/receipt.tsv"
+            exit 1
+          fi
+
+      - name: Upload public source receipt and bounded Cargo logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # actions/upload-artifact v4.6.2
+        with:
+          name: weft-sum-avg-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/weft-sum-avg-evidence/
+          if-no-files-found: error
+          retention-days: 14
