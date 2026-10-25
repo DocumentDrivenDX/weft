@@ -72,7 +72,7 @@ jobs:
           753ac19eade3839a2ece49c2cd933ac40ed3d72beba922b2c47d32fac8bea791  crates/weft-core/src/table_lifecycle.rs
           6f17accccbcfcaad8cff7c1bd432e8132137b86c03d2c46ea98b602768c6c16c  crates/weft-core/src/table_operation/values.rs
           9cd4cb3c193d22d9db46cfddb0e86b9214476377fb798eec494fb80769c23dec  crates/weft-databricks/src/raw_read.rs
-          fd6c3b9e4c08871254b8719a10f43913b1548dbb81c0389bb0937cd59963d443  crates/weft-databricks/src/unity_current_predicate.rs
+          adb0e331cb238db20f7207d7a73ee2b3870a547f7ca5294a25ea0a387d5ba49d  crates/weft-databricks/src/unity_current_predicate.rs
           167eaf5f10b3d5b6d25e829b927e35134f86ad55ca1a6465d45710ce54e2aa9b  crates/weft-databricks/src/unity_current_summary.rs
           f51d486f9aea9f6003c8956b628ecf19f1800dcf62dda287794fe46cbb0b9d39  crates/weft-databricks/src/unity_current_summary_lowering.rs
           9892eb36097aefa5c5583e4b2ddb68a5d09a934f32d9da9f7643684b63371a9e  crates/weft-databricks/src/unity_current_sum.rs
@@ -86,7 +86,7 @@ jobs:
           b1af07e2e34e78954097340add6518dfd847b232881f89c6209015023f8c5346  crates/weft-databricks/src/raw_pages.rs
           dec998654eb28313d23ebb3dd07776dffb55950cf464cf64b6eda8850a18fc54  crates/weft-runtime/src/lib.rs
           5257cbd395c7d3ed86c5d8645068599f6d6368c75eca75526cd4978ee148140d  tests/current-unity-aggregate/python-bridge.py
-          98433cfe9e15b529403c7ecefaa38bdb5b44c0c0c0774f8f4c0bd59bbb54da16  tests/current-unity-aggregate/browser-bridge.ts
+          e1b7424f1a3524b54d42e73480729f82047733c4203416e02862c89b40220c6d  tests/current-unity-aggregate/browser-bridge.ts
           601e08d3f41c1a68c4a892ad62aae869b233161d51305d996137c9eb56ac62b1  tests/spark-pages/read-request.json
           1afaabe42c92d027ed853975f8fb84690c343493148e4c938760ba3d01893fcb  crates/weft-core/src/model.rs
           fa273b06106fe939e86614712ecc88a2bb0ab8a4de0252df079baef38c280f89  crates/weft-postgresql/src/query_wire.rs
@@ -196,5 +196,239 @@ jobs:
         with:
           name: weft-sum-avg-${{ github.sha }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/weft-sum-avg-evidence/
+          if-no-files-found: error
+          retention-days: 14
+
+  host-parity:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/weft-sum-avg-qualification'
+    needs: rust-sum-avg
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    env:
+      CARGO_TERM_COLOR: never
+      CARGO_INCREMENTAL: '0'
+      PARITY_ROOT: ${{ runner.temp }}/weft-host-parity
+      PARITY_DEADLINE_FILE: ${{ runner.temp }}/weft-host-parity-deadline
+    steps:
+      - name: Checkout the triggering commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # approved UMF checkout action pin
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Fail-closed source preflight and start monotonic deadline
+        id: preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$PARITY_ROOT/evidence/logs" "$RUNNER_TEMP/weft-parity-tools"
+          mono=$(awk '{print $1}' /proc/uptime)
+          awk -v n="$mono" 'BEGIN {printf "%.2f\n", n+1200}' > "$PARITY_DEADLINE_FILE"
+          awk -v n="$mono" 'BEGIN {printf "%.2f\n", n+420}' > "$RUNNER_TEMP/weft-parity-bootstrap-deadline"
+          awk -v n="$mono" 'BEGIN {printf "%.2f\n", n+720}' > "$RUNNER_TEMP/weft-parity-wheel-deadline"
+          awk -v n="$mono" 'BEGIN {printf "%.2f\n", n+1080}' > "$RUNNER_TEMP/weft-parity-wasm-deadline"
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_REF" = refs/heads/codex/weft-sum-avg-qualification
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test -z "$(git status --porcelain)"
+          test -n "$(git rev-parse 'HEAD^{tree}')"
+          test "$(grep -F 'maturin==1.9.6' crates/weft-python/pyproject.toml)" = 'requires=["maturin==1.9.6"]'
+          grep -Fq '"playwright": "1.62.1"' package.json
+          grep -Fq '"packageManager": "bun@1.4.2"' package.json
+          grep -Fq 'wasm-bindgen="=0.2.105"' crates/weft-wasm/Cargo.toml
+          test -f Cargo.lock -a -f bun.lock -a -f rust-toolchain.toml
+          cp .github/workflows/expected-host-source.sha256 "$PARITY_ROOT/expected-source.sha256"
+          timeout --signal=TERM --kill-after=2s 30s sha256sum -c "$PARITY_ROOT/expected-source.sha256" > "$PARITY_ROOT/evidence/source-check.txt"
+          {
+            printf 'format\tweft.python-wasm-host-parity-receipt/1\n'
+            printf 'needs_rust_sum_avg\t%s\n' '${{ needs.rust-sum-avg.result }}'
+            printf 'event_name\t%s\nref\t%s\nsha\t%s\nworkflow\t%s\njob\t%s\nrun_id\t%s\nrun_attempt\t%s\n' "$GITHUB_EVENT_NAME" "$GITHUB_REF" "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$GITHUB_JOB" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
+            printf 'runner_os\t%s\nrunner_arch\t%s\nimage_os\t%s\nimage_version\t%s\ncommit\t%s\ntree\t%s\n' "$RUNNER_OS" "$RUNNER_ARCH" "${ImageOS:-unknown}" "${ImageVersion:-unknown}" "$(git rev-parse HEAD)" "$(git rev-parse 'HEAD^{tree}')"
+            printf 'monotonic_deadline_seconds\t%s\n' "$(cat "$PARITY_DEADLINE_FILE")"
+          } > "$PARITY_ROOT/evidence/receipt.tsv"
+          timeout --signal=TERM --kill-after=2s 30s bash -c 'sha256sum "$1" "$2"' _ .github/workflows/weft-sum-avg-qualification.yml "$PARITY_ROOT/expected-source.sha256" >> "$PARITY_ROOT/evidence/source-check.txt"
+          cat > "$RUNNER_TEMP/weft-parity-tools/run-bounded" <<'RUNNER'
+          #!/usr/bin/env bash
+          set -uo pipefail
+          name="$1"; stage_cap="$2"; shift 2
+          root="$PARITY_ROOT/evidence"; global_deadline="$(cat "$PARITY_DEADLINE_FILE")"
+          category="$RUNNER_TEMP/weft-parity-bootstrap-deadline"
+          case "$name" in python-wheel-*|python-consumer-*|python-vectors|wheel-hash) category="$RUNNER_TEMP/weft-parity-wheel-deadline";; wasm-*|chromium-parity) category="$RUNNER_TEMP/weft-parity-wasm-deadline";; esac
+          stage_deadline="$(cat "$category")"; now="$(awk '{print $1}' /proc/uptime)"
+          remain=$(awk -v d="$global_deadline" -v n="$now" 'BEGIN {x=int(d-n-10); if(x<0)x=0; print x}')
+          stage_remain=$(awk -v d="$stage_deadline" -v n="$now" 'BEGIN {x=int(d-n-10); if(x<0)x=0; print x}')
+          (( stage_remain < remain )) && remain=$stage_remain
+          limit="$stage_cap"; (( remain < limit )) && limit="$remain"
+          started="$(date -u +%Y-%m-%dT%H:%M:%SZ)"; begin="$(awk '{print $1}' /proc/uptime)"; log="$root/logs/$name.log"
+          if (( limit <= 0 )); then printf 'stage\t%s\tstart_utc=%s\tlimit_s=0\traw_exit=not-started\tgate_exit=124\n' "$name" "$started" >> "$root/commands.tsv"; exit 124; fi
+          printf 'argv\t%s' "$name" >> "$root/commands.tsv"; printf '\t%q' "$@" >> "$root/commands.tsv"; printf '\n' >> "$root/commands.tsv"
+          timeout --signal=TERM --kill-after=10s "${limit}s" "$@" > "$log" 2>&1
+          raw=$?; ended="$(date -u +%Y-%m-%dT%H:%M:%SZ)"; endmono="$(awk '{print $1}' /proc/uptime)"
+          elapsed=$(awk -v a="$begin" -v b="$endmono" 'BEGIN {printf "%.2f", b-a}')
+          original_bytes=$(wc -c < "$log"); truncated=no
+          if (( original_bytes > 1048576 )); then tail -c 1048576 "$log" > "$log.tmp" && mv "$log.tmp" "$log"; truncated=yes; fi
+          printf 'stage\t%s\tstart_utc=%s\tend_utc=%s\tduration_monotonic_s=%s\tlimit_s=%s\traw_exit=%s\tlog_original_bytes=%s\tlog_truncated=%s\tlog_sha256=%s\n' "$name" "$started" "$ended" "$elapsed" "$limit" "$raw" "$original_bytes" "$truncated" "$(sha256sum "$log" | cut -d' ' -f1)" >> "$root/commands.tsv"
+          cat "$log"; exit "$raw"
+          RUNNER
+          chmod 700 "$RUNNER_TEMP/weft-parity-tools/run-bounded"
+          cat > "$RUNNER_TEMP/weft-parity-tools/budget-gate" <<'GATE'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          out="$1"; stage="$2"; global="$(cat "$PARITY_DEADLINE_FILE")"; stage_deadline="$(cat "$stage")"
+          now="$(awk '{print $1}' /proc/uptime)"
+          minutes=$(awk -v g="$global" -v s="$stage_deadline" -v n="$now" 'BEGIN {x=g-n-10; y=s-n-10; if(y<x)x=y; print int(x/60)}')
+          if (( minutes < 1 )); then echo "remaining budget is below one safely bounded minute" >&2; exit 124; fi
+          printf 'timeout_minutes=%s\n' "$minutes" >> "$GITHUB_OUTPUT"
+          printf 'started_monotonic=%s\n' "$now" >> "$GITHUB_OUTPUT"
+          GATE
+          chmod 700 "$RUNNER_TEMP/weft-parity-tools/budget-gate"
+          timeout --signal=TERM --kill-after=2s 30s sha256sum "$PARITY_ROOT/expected-source.sha256" > "$PARITY_ROOT/evidence/expected-source-hash.txt"
+
+      - name: Compute Python setup action budget
+        id: python-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-parity-tools/budget-gate" "$GITHUB_OUTPUT" "$RUNNER_TEMP/weft-parity-bootstrap-deadline"
+      - name: Set up Python 3.12
+        id: setup-python
+        timeout-minutes: ${{ steps.python-budget.outputs.timeout_minutes }}
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # reviewed immutable setup-python pin
+        with:
+          python-version: '3.12'
+          check-latest: false
+
+      - name: Record Python setup action timing
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          end=$(awk '{print $1}' /proc/uptime)
+          start='${{ steps.python-budget.outputs.started_monotonic }}'
+          if [ -n "$start" ]; then duration=$(awk -v a="$start" -v b="$end" 'BEGIN {printf "%.2f", b-a}'); else duration=not-started; fi
+          printf 'action\tsetup-python@ece7cb06caefa5fff74198d8649806c4678c61a1\tstep_outcome=%s\tduration_monotonic_s=%s\ttimeout_minutes=%s\n' '${{ steps.setup-python.outcome }}' "$duration" '${{ steps.python-budget.outputs.timeout_minutes }}' >> "$PARITY_ROOT/evidence/commands.tsv"
+
+      - name: Compute Bun setup action budget
+        id: bun-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-parity-tools/budget-gate" "$GITHUB_OUTPUT" "$RUNNER_TEMP/weft-parity-bootstrap-deadline"
+      - name: Set up Bun 1.4.2
+        id: setup-bun
+        timeout-minutes: ${{ steps.bun-budget.outputs.timeout_minutes }}
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # reviewed immutable setup-bun pin
+        with:
+          bun-version: '1.4.2'
+
+      - name: Record Bun setup action timing
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          end=$(awk '{print $1}' /proc/uptime)
+          start='${{ steps.bun-budget.outputs.started_monotonic }}'
+          if [ -n "$start" ]; then duration=$(awk -v a="$start" -v b="$end" 'BEGIN {printf "%.2f", b-a}'); else duration=not-started; fi
+          printf 'action\tsetup-bun@0c5077e51419868618aeaa5fe8019c62421857d6\tstep_outcome=%s\tduration_monotonic_s=%s\ttimeout_minutes=%s\n' '${{ steps.setup-bun.outcome }}' "$duration" '${{ steps.bun-budget.outputs.timeout_minutes }}' >> "$PARITY_ROOT/evidence/commands.tsv"
+
+      - name: Acquire and assert toolchains, package lock, and Chromium (420-second shared budget)
+        shell: bash
+        run: |
+          set -euo pipefail
+          bounded="$RUNNER_TEMP/weft-parity-tools/run-bounded"
+          "$bounded" bootstrap-rust 180 rustup toolchain install 1.90.0 --profile minimal --target wasm32-unknown-unknown --no-self-update
+          "$bounded" bootstrap-python-tools 120 bash -c 'set -euo pipefail; python -m venv "$1"; "$1/bin/python" -m pip install --only-binary=:all: --no-deps --require-hashes "maturin @ https://files.pythonhosted.org/packages/58/1f/a2047ddf2230e700d5f8a13dd4b9af5ce806ad380c32e58105888205926e/maturin-1.9.6-py3-none-manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64.whl#sha256=0246202377c49449315305209f45c8ecef6e2d6bd27a04b5b6f1ab3e4ea47238"' _ "$RUNNER_TEMP/weft-parity-builder"
+          "$bounded" bootstrap-wasm-bindgen 180 cargo install wasm-bindgen-cli --version 0.2.105 --locked --root "$RUNNER_TEMP/weft-parity-tools"
+          "$bounded" bootstrap-bun-install 120 bun install --frozen-lockfile
+          "$bounded" bootstrap-chromium 300 bunx --bun playwright@1.62.1 install --with-deps chromium
+          "$bounded" verify-rust 60 bash -c 'set -euo pipefail; rustup run 1.90.0 rustc --version --verbose | tee "$1/evidence/rustc-version.txt"; rustup run 1.90.0 cargo --version --verbose | tee "$1/evidence/cargo-version.txt"; grep -q "release: 1.90.0" "$1/evidence/rustc-version.txt"; grep -q "cargo 1.90.0" "$1/evidence/cargo-version.txt"' _ "$PARITY_ROOT"
+          "$bounded" verify-python 60 bash -c 'set -euo pipefail; "$1/bin/python" -c '\''import sys; print(sys.executable); print(sys.version); assert sys.version_info[:2] == (3,12)'\'' | tee "$2/evidence/python-version.txt"' _ "$RUNNER_TEMP/weft-parity-builder" "$PARITY_ROOT"
+          "$bounded" verify-bun 60 bash -c 'set -euo pipefail; bun --version | tee "$1/evidence/bun-version.txt"; test "$(cat "$1/evidence/bun-version.txt")" = 1.4.2' _ "$PARITY_ROOT"
+          "$bounded" verify-maturin 60 bash -c 'set -euo pipefail; "$1/bin/maturin" --version | tee "$2/evidence/maturin-version.txt"; grep -q "1.9.6" "$2/evidence/maturin-version.txt"' _ "$RUNNER_TEMP/weft-parity-builder" "$PARITY_ROOT"
+          "$bounded" verify-wasm-bindgen 60 bash -c 'set -euo pipefail; "$1/bin/wasm-bindgen" --version | tee "$2/evidence/wasm-bindgen-version.txt"; grep -q "0.2.105" "$2/evidence/wasm-bindgen-version.txt"' _ "$RUNNER_TEMP/weft-parity-tools" "$PARITY_ROOT"
+          "$bounded" verify-playwright 60 bun -e 'const p=require("playwright/package.json"),c=require("playwright-core/package.json");if(p.version!=="1.62.1"||c.version!=="1.62.1")process.exit(1);console.log(JSON.stringify({playwright:p.version,core:c.version}))' > "$PARITY_ROOT/evidence/playwright-version.json"
+          "$bounded" hash-tools 60 bash -c 'set -euo pipefail; sha256sum "$(rustup which rustc --toolchain 1.90.0)" "$(rustup which cargo --toolchain 1.90.0)" "$1/bin/python" "$2/bin/maturin" "$3/bin/wasm-bindgen" "$(command -v bun)" > "$4/evidence/tool-hashes.sha256"' _ "$RUNNER_TEMP/weft-parity-builder" "$RUNNER_TEMP/weft-parity-builder" "$RUNNER_TEMP/weft-parity-tools" "$PARITY_ROOT"
+
+      - name: Build wheel and run installed Python vectors (300-second shared budget)
+        shell: bash
+        run: |
+          set -euo pipefail
+          bounded="$RUNNER_TEMP/weft-parity-tools/run-bounded"
+          mkdir -p "$PARITY_ROOT/wheels" "$PARITY_ROOT/consumer"
+          "$bounded" python-wheel-build 240 bash -c 'cd crates/weft-python && "$1/bin/maturin" build --locked --profile dev --manifest-path Cargo.toml --out "$2"' _ "$RUNNER_TEMP/weft-parity-builder" "$PARITY_ROOT/wheels"
+          mapfile -t wheels < <(find "$PARITY_ROOT/wheels" -maxdepth 1 -type f -name '*.whl' -print)
+          test "${#wheels[@]}" -eq 1
+          wheel="${wheels[0]}"
+          "$bounded" wheel-hash 30 sha256sum "$wheel" > "$PARITY_ROOT/evidence/wheel.sha256"
+          "$bounded" python-consumer-venv 90 python -m venv "$PARITY_ROOT/consumer"
+          "$bounded" python-wheel-install 120 "$PARITY_ROOT/consumer/bin/python" -m pip install --no-deps "$wheel"
+          "$bounded" python-vectors 120 "$PARITY_ROOT/consumer/bin/python" tests/current-unity-aggregate/python-bridge.py --wheel "$wheel" --output "$PARITY_ROOT/evidence/parity.json"
+
+      - name: Build WASM and run Chromium parity (360-second shared budget)
+        shell: bash
+        run: |
+          set -euo pipefail
+          bounded="$RUNNER_TEMP/weft-parity-tools/run-bounded"
+          mkdir -p "$PARITY_ROOT/web"
+          "$bounded" wasm-build 240 rustup run 1.90.0 cargo build --locked -p weft-wasm --manifest-path crates/weft-wasm/Cargo.toml --target wasm32-unknown-unknown --no-default-features --features raw-postgresql-reads
+          "$bounded" wasm-bindgen 90 "$RUNNER_TEMP/weft-parity-tools/bin/wasm-bindgen" target/wasm32-unknown-unknown/debug/weft_wasm.wasm --target web --out-dir "$PARITY_ROOT/web"
+          "$bounded" wasm-hash 30 sha256sum "$PARITY_ROOT/web/weft_wasm.js" "$PARITY_ROOT/web/weft_wasm_bg.wasm" > "$PARITY_ROOT/evidence/wasm-hashes.sha256"
+          "$bounded" chromium-parity 300 bun tests/current-unity-aggregate/browser-bridge.ts "$PARITY_ROOT/web" "$PARITY_ROOT/evidence/parity.json" "$PWD/node_modules/playwright/index.mjs" "$PARITY_ROOT/evidence/browser.json"
+
+      - name: Always build fresh bounded public upload directory
+        if: always()
+        timeout-minutes: 1
+        id: evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$PARITY_ROOT/evidence"
+          upload="$RUNNER_TEMP/weft-host-parity-upload"
+          mkdir -p "$evidence/logs"
+          rm -rf "$upload"
+          mkdir -p "$upload"
+          if [ ! -f "$evidence/receipt.tsv" ]; then printf 'receipt_unavailable\tprior_failure_before_preflight\n' > "$evidence/receipt.tsv"; fi
+          if [ ! -f "$evidence/commands.tsv" ]; then printf 'commands_unavailable\tno_commands_recorded\n' > "$evidence/commands.tsv"; fi
+          : > "$evidence/limits.tsv"
+          cap=1048576
+          while IFS= read -r -d '' file; do
+            size=$(wc -c < "$file")
+            if (( size > cap )); then
+              case "$file" in *parity.json|*browser.json)
+                timeout --signal=TERM --kill-after=2s 30s sha256sum "$file" >> "$evidence/oversize-omissions.sha256"
+                rm -f "$file"
+                printf 'omitted_packet\t%s\toriginal_bytes=%s\treason=per_file_cap\n' "${file##*/}" "$size" >> "$evidence/limits.tsv"
+                ;; *) tail -c "$cap" "$file" > "$file.bounded"; mv "$file.bounded" "$file"; printf 'truncated_file\t%s\toriginal_bytes=%s\tretained_bytes=%s\n' "${file##*/}" "$size" "$cap" >> "$evidence/limits.tsv";;
+              esac
+            fi
+          done < <(find "$evidence" -type f -print0)
+          cp -R "$evidence/." "$upload/"
+          total=$(du -sb "$upload" | awk '{print $1}')
+          if (( total > 8388608 )); then
+            find "$upload/logs" -type f -print0 | sort -zr | while IFS= read -r -d '' file; do
+              [ -f "$file" ] || continue
+              size=$(wc -c < "$file")
+              rm -f "$file"
+              printf 'omitted_log\t%s\toriginal_bytes=%s\treason=aggregate_8MiB_cap\n' "${file##*/}" "$size" >> "$upload/limits.tsv"
+              total=$(du -sb "$upload" | awk '{print $1}')
+              (( total <= 8388608 )) && break
+            done
+          fi
+          printf 'aggregate_upload_cap_bytes\t8388608\n' >> "$upload/limits.tsv"
+          total=$(du -sb "$upload" | awk '{print $1}')
+          if (( total > 8388608 )); then
+            printf 'upload withheld: aggregate assembly is %s bytes (cap 8388608)\n' "$total"
+            rm -rf "$upload"
+            exit 1
+          fi
+          if [ -f "$upload/oversize-omissions.sha256" ]; then exit 1; fi
+          printf 'ready=true\n' >> "$GITHUB_OUTPUT"
+
+      - name: Upload bounded public host-parity evidence
+        if: always() && steps.evidence.outputs.ready == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # actions/upload-artifact v4.6.2
+        with:
+          name: weft-host-parity-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/weft-host-parity-upload/
           if-no-files-found: error
           retention-days: 14

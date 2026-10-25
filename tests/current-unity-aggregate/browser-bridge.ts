@@ -3,16 +3,24 @@
  * This is source-object compilation only; it performs no database admission.
  */
 import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
 const [web,packetPath,playwrightPath,output]=Bun.argv.slice(2);
 if(!web||!packetPath||!playwrightPath||!output)throw Error('web, parity packet, Playwright and output required');
 const {chromium}=await import(playwrightPath);
+const packageMeta=JSON.parse(readFileSync('node_modules/playwright-core/browsers.json','utf8'));
+const chromiumMeta=packageMeta.browsers.find((item:any)=>item.name==='chromium');
+if(!chromiumMeta||!chromiumMeta.revision||!chromiumMeta.browserVersion)throw Error('integrity-locked Chromium metadata unavailable');
+const executablePath=chromium.executablePath();
+const executableBytes=readFileSync(executablePath);
+const executableSha256=createHash('sha256').update(executableBytes).digest('hex');
 const packet=JSON.parse(await Bun.file(packetPath).text());
 if(packet.profile!=='weft.unity-current-sum-avg-host-parity/0.1'||!Array.isArray(packet.vectors)||packet.vectors.length!==9)throw Error('closed SUM/AVG parity packet required');
 const js=await Bun.file(web+'/weft_wasm.js').arrayBuffer();
 const wasm=await Bun.file(web+'/weft_wasm_bg.wasm').arrayBuffer();
-const browser=await chromium.launch({headless:true});
+const browser=await chromium.launch({headless:true,executablePath});
 let receipt;
 try{
+ if(browser.version()!==chromiumMeta.browserVersion)throw Error('launched Chromium version differs from locked Playwright metadata');
  const page=await browser.newPage(),origin='http://weft.unity-sum-avg.test',errors:string[]=[],requests:string[]=[];
  page.on('pageerror',(error:any)=>errors.push(String(error)));
  page.on('request',(request:any)=>requests.push(request.url()));
@@ -41,7 +49,7 @@ try{
   return checks;
  },{origin,vectors:packet.vectors});
  if(errors.length||requests.some(url=>!url.startsWith(origin+'/')))throw Error('browser host boundary violation');
- receipt={profile:'weft.unity-current-sum-avg-wasm-parity/0.1',scope:'Actual Chromium initialized WASM through compile_raw_read_json; no database, native authority or release qualification.',browser:browser.version(),packetSha256:createHash('sha256').update(await Bun.file(packetPath).text()).digest('hex'),wasmSha256:createHash('sha256').update(new Uint8Array(wasm)).digest('hex'),jsSha256:createHash('sha256').update(new Uint8Array(js)).digest('hex'),checks,requests,pageErrors:errors,nativeDatabase:false,nativeAuthority:false};
+ receipt={profile:'weft.unity-current-sum-avg-wasm-parity/0.1',scope:'Actual Chromium initialized WASM through compile_raw_read_json; no database, native authority or release qualification.',browser:{version:browser.version(),revision:chromiumMeta.revision,executablePath,executableSha256},packetSha256:createHash('sha256').update(await Bun.file(packetPath).text()).digest('hex'),wasmSha256:createHash('sha256').update(new Uint8Array(wasm)).digest('hex'),jsSha256:createHash('sha256').update(new Uint8Array(js)).digest('hex'),checks,requests,pageErrors:errors,nativeDatabase:false,nativeAuthority:false};
  await Bun.write(output,JSON.stringify(receipt,null,2)+'\n');
  console.log(JSON.stringify({vectors:checks.length,browser:browser.version()}));
 }finally{await browser.close();}

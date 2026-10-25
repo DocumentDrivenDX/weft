@@ -405,7 +405,7 @@ mod tests {
         let empty_not_in=response(request(json!({"kind":"not-in","fieldRef":{"module":"sales","element":"note"},"values":[]}),json!([])));
         assert_eq!(empty_in["status"],"compiled");assert_eq!(empty_not_in["status"],"compiled");
         assert!(empty_in["sql"].as_str().unwrap().contains("FALSE"));
-        assert!(empty_not_in["sql"].as_str().unwrap().contains("TRUE"));
+        assert!(empty_not_in["sql"].as_str().unwrap().contains("NOT (FALSE)"));
     }
     #[test]
     fn membership_literals_are_data_and_empty_membership_is_constant() {
