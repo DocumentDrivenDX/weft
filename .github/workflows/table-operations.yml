@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - codex/weft-main-aggregate-qualification
       - codex/weft-main-aggregate-integration
+      - codex/weft-owned-surface-diagnostic
     tags: ["**"]
   pull_request:
 permissions:

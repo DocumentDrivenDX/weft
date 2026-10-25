@@ -1,0 +1,241 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Weft owned-surface diagnostic (disposable)
+on:
+  push:
+    branches:
+      - codex/weft-owned-surface-diagnostic
+permissions:
+  contents: read
+jobs:
+  owned-surface-diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Start original monotonic deadline and initialize evidence
+        id: initialize
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/weft-owned-surface-diagnostic"
+          mkdir -p "$root/logs"
+          start=$(awk '{print $1}' /proc/uptime)
+          awk -v n="$start" 'BEGIN {printf "%.2f\n", n+180}' > "$root/deadline"
+          printf 'DIAG_ROOT=%s\nDIAG_DEADLINE_FILE=%s/deadline\n' "$root" "$root" >> "$GITHUB_ENV"
+          printf 'format\tweft.owned-surface-diagnostic/1\nevent_name\t%s\nref\t%s\nsha\t%s\nworkflow\t%s\njob\t%s\nrun_id\t%s\nrun_attempt\t%s\nrunner_os\t%s\nrunner_arch\t%s\nmonotonic_deadline\t%s\nstart_utc\t%s\nstart_monotonic\t%s\n' "$GITHUB_EVENT_NAME" "$GITHUB_REF" "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$GITHUB_JOB" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$RUNNER_OS" "$RUNNER_ARCH" "$(cat "$root/deadline")" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$start" > "$root/receipt.tsv"
+          : > "$root/commands.tsv"
+          cat > "$root/gate" <<'GATE'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          reserve="$1"; cap="$2"; out="$3"
+          now=$(awk '{print $1}' /proc/uptime); end=$(cat "$DIAG_DEADLINE_FILE")
+          minutes=$(awk -v n="$now" -v e="$end" -v r="$reserve" -v c="$cap" 'BEGIN {m=int((e-n-r)/60); if(m>c)m=c; print m}')
+          if (( minutes < 1 )); then printf 'refused\tremaining_safe_minutes=0\n' >> "$DIAG_ROOT/commands.tsv"; exit 124; fi
+          printf 'timeout_minutes=%s\nstarted_monotonic=%s\nstarted_utc=%s\n' "$minutes" "$now" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$out"
+          GATE
+          chmod 700 "$root/gate"
+      - name: Budget exact repository checkout
+        id: checkout-budget
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$DIAG_ROOT/gate" 115 1 "$GITHUB_OUTPUT"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # approved immutable checkout pin
+        id: checkout
+        timeout-minutes: ${{ steps.checkout-budget.outputs.timeout_minutes }}
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Record checkout outcome
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'action\tcheckout\toutcome=%s\tstarted_monotonic=%s\tstarted_utc=%s\tended_monotonic=%s\tended_utc=%s\n' '${{ steps.checkout.outcome }}' '${{ steps.checkout-budget.outputs.started_monotonic }}' '${{ steps.checkout-budget.outputs.started_utc }}' "$(awk '{print $1}' /proc/uptime)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$DIAG_ROOT/commands.tsv"
+      - name: Verify exact triggering source and all expected hashes before setup
+        id: preflight
+        if: always() && steps.checkout.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_REF" = refs/heads/codex/weft-owned-surface-diagnostic
+          test "$GITHUB_SHA" = "$(git rev-parse HEAD)"
+          test -z "$(git status --porcelain --untracked-files=all)"
+          sha256sum --check .github/workflows/weft-owned-surface-diagnostic.sha256
+          expected_rs=$(awk 'NF == 2 && $2 ~ /\.rs$/ {print $2}' .github/workflows/weft-owned-surface-diagnostic.sha256 | LC_ALL=C sort)
+          actual_rs=$(find crates/weft-databricks/src crates/weft-core/src crates/weft-postgresql/src crates/weft-runtime/src tests/register-backend/probe/src crates/weft-python/src crates/weft-wasm/src tests/frontend/wasm-probe/src spikes/b001/core/src spikes/b001/python/src spikes/b001/wasm/src -name '*.rs' -print | LC_ALL=C sort)
+          test -z "$(find crates/weft-databricks/src crates/weft-core/src crates/weft-postgresql/src crates/weft-runtime/src tests/register-backend/probe/src crates/weft-python/src crates/weft-wasm/src tests/frontend/wasm-probe/src spikes/b001/core/src spikes/b001/python/src spikes/b001/wasm/src -type l -name '*.rs' -print -quit)"
+          test "$expected_rs" = "$actual_rs"
+          test "$(printf '%s\n' "$actual_rs" | wc -l)" -eq 261
+          tree=$(git rev-parse 'HEAD^{tree}')
+          printf 'preflight\tpass\tsha=%s\ttree=%s\trust_source_files=%s\tref=%s\n' "$GITHUB_SHA" "$tree" "$(printf '%s\n' "$actual_rs" | wc -l)" "$GITHUB_REF" >> "$DIAG_ROOT/commands.tsv"
+      - name: Budget pinned Bun setup
+        id: bun-budget
+        if: steps.preflight.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$DIAG_ROOT/gate" 105 1 "$GITHUB_OUTPUT"
+      - name: Set up Bun 1.4.2
+        id: bun-setup
+        if: steps.preflight.outcome == 'success'
+        timeout-minutes: ${{ steps.bun-budget.outputs.timeout_minutes }}
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # immutable reviewed setup-bun identity
+        with:
+          bun-version: '1.4.2'
+      - name: Verify Bun version and record its binary identity
+        id: bun-verify
+        if: steps.bun-setup.outcome == 'success'
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(timeout --signal=TERM --kill-after=1s 5s bun --version)
+          test "$version" = 1.4.2
+          printf 'bun_version\t%s\n' "$version" >> "$DIAG_ROOT/receipt.tsv"
+          printf 'bun_sha256\t%s\n' "$(sha256sum "$(command -v bun)" | awk '{print $1}')" >> "$DIAG_ROOT/receipt.tsv"
+          printf 'tool_verify\targv=bun --version\toutcome=pass\n' >> "$DIAG_ROOT/commands.tsv"
+      - name: Record Bun setup outcome
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'action\tsetup-bun\toutcome=%s\tstarted_monotonic=%s\tstarted_utc=%s\tended_monotonic=%s\tended_utc=%s\n' '${{ steps.bun-setup.outcome }}' '${{ steps.bun-budget.outputs.started_monotonic }}' '${{ steps.bun-budget.outputs.started_utc }}' "$(awk '{print $1}' /proc/uptime)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$DIAG_ROOT/commands.tsv"
+      - name: Budget diagnostic command
+        id: diagnostic-budget
+        if: steps.bun-verify.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          now=$(awk '{print $1}' /proc/uptime); end=$(cat "$DIAG_DEADLINE_FILE")
+          seconds=$(awk -v n="$now" -v e="$end" 'BEGIN {s=int(e-n-85); if(s>25)s=25; if(s<0)s=0; print s}')
+          if (( seconds < 1 )); then printf 'diagnostic\trefused\tdeadline_reserve\n' >> "$DIAG_ROOT/commands.tsv"; exit 124; fi
+          printf 'ready=true\nstarted_monotonic=%s\nstarted_utc=%s\n' "$now" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+      - name: Compare all eleven package surfaces exactly once
+        id: diagnostic
+        if: steps.diagnostic-budget.outcome == 'success'
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -uo pipefail
+          driver="$RUNNER_TEMP/weft-owned-surface-diagnostic-driver.ts"
+          cat > "$driver" <<'DRIVER'
+          import {readFile, writeFile} from 'node:fs/promises';
+          import {resolve} from 'node:path';
+          const root=process.env.GITHUB_WORKSPACE!;
+          const {scanSurface,checkSurface}=await import(resolve(root,'scripts/module-boundaries.ts'));
+          const map=JSON.parse(await readFile(resolve(root,'docs/helix/02-design/module-boundaries.json'),'utf8'));
+          const packages=Array.isArray(map.packages)?map.packages:[];
+          const report:any={format:'weft.owned-surface-diagnostic-report/1',expectedPackageCount:11,packageCount:packages.length,complete:false,failed:false,omittedDiscrepancyCount:0,diagnosticsTruncated:false,packages:[] as any[]};
+          let remaining=32, failed=false;
+          const hash=(v:any)=>new Bun.CryptoHasher('sha256').update(JSON.stringify(v)).digest('hex');
+          const add=(p:any,x:any)=>{if(remaining>0){p.discrepancies.push(x);remaining--;}else{report.omittedDiscrepancyCount++;report.diagnosticsTruncated=true;}};
+          const first=(a:any[],b:any[])=>{const n=Math.min(a.length,b.length);for(let i=0;i<n;i++)if(JSON.stringify(a[i])!==JSON.stringify(b[i]))return i;return a.length===b.length?-1:n;};
+          const bounded=(x:any)=>JSON.stringify(x).slice(0,256);
+          const safeError=(e:any)=>{const m=e instanceof Error?e.message:'';return /^(?:Unclosed Rust comment|Unclosed raw literal|Unclosed literal|Malformed visibility|Unclosed public reexport|Unsupported public declaration|Unsupported public surface|Malformed Rust attribute|Unsupported module path|Unsupported path escape|Unowned symlink directory|Unowned symlink entry|Unowned symlink source|Unowned module path)$/.test(m)?m:'scanner-infrastructure-error';};
+          const validPackages=packages.length===11&&packages.every((p:any)=>p&&typeof p.name==='string'&&p.name.length>0&&typeof p.manifest==='string'&&p.manifest.length>0)&&new Set(packages.map((p:any)=>p.name)).size===11&&new Set(packages.map((p:any)=>p.manifest)).size===11;
+          if(!validPackages){report.failed=true;report.diagnosticsNotRun=true;report.reason='expected_exactly_eleven_unique_package_names_and_manifest_paths';await writeFile(resolve(process.env.DIAG_ROOT!,'report.json'),JSON.stringify(report)+'\n');console.error('owned-surface precondition failed: eleven unique package names and manifests required');process.exitCode=1;}
+          else for(const pkg of packages){
+            const p:any={name:pkg.name,manifest:pkg.manifest,status:'pending',expectedEntryCount:pkg.sources.length,expectedSha256:hash(pkg.sources),actualEntryCount:null,actualSha256:null,duplicateExpectedPathCount:0,duplicateActualPathCount:null,missingPathCount:null,stalePathCount:null,firstOrderedDifference:null,discrepancies:[]};report.packages.push(p);
+            try{
+              const actual=await scanSurface(root,pkg.manifest);p.actualEntryCount=actual.length;p.actualSha256=hash(actual);
+              const em=new Map(pkg.sources.map((x:any,i:number)=>[x.path,{x,i}])),am=new Map(actual.map((x:any,i:number)=>[x.path,{x,i}]));
+              p.duplicateExpectedPathCount=pkg.sources.length-em.size;p.duplicateActualPathCount=actual.length-am.size;
+              p.missingPathCount=[...em.keys()].filter(x=>!am.has(x)).length;p.stalePathCount=[...am.keys()].filter(x=>!em.has(x)).length;p.firstOrderedDifference=first(actual,pkg.sources);
+              try{checkSurface(actual,pkg.sources);p.status='pass';}catch(e){failed=true;p.status='mismatch';p.checkSurfaceError=e instanceof Error?e.message.slice(0,256):'unknown';}
+              if(p.firstOrderedDifference>=0)add(p,{kind:'ordered-array',index:p.firstOrderedDifference,expectedIndex:p.firstOrderedDifference<pkg.sources.length?p.firstOrderedDifference:null,actualIndex:p.firstOrderedDifference<actual.length?p.firstOrderedDifference:null,expected:p.firstOrderedDifference<pkg.sources.length?bounded(pkg.sources[p.firstOrderedDifference]):null,actual:p.firstOrderedDifference<actual.length?bounded(actual[p.firstOrderedDifference]):null});
+              for(const [path,{x:e,i:ei}] of em){const a=am.get(path);if(!a){add(p,{kind:'missing-path',path:path.slice(0,256),expectedIndex:ei});continue;}const {x:v,i:ai}=a;if(ei!==ai)add(p,{kind:'path-roster-order',path:path.slice(0,256),expectedIndex:ei,actualIndex:ai});
+                for(const field of ['publicDeclarations','pathReferences'])if(JSON.stringify(e[field])!==JSON.stringify(v[field])){const d=first(e[field],v[field]);add(p,{kind:field,path:path.slice(0,256),expectedIndex:ei,actualIndex:ai,firstDifference:d,expectedValue:d<e[field].length?bounded(e[field][d]):null,actualValue:d<v[field].length?bounded(v[field][d]):null,expected:bounded(e[field]),actual:bounded(v[field])});}
+                const ek=Object.keys(e),ak=Object.keys(v);if(JSON.stringify(ek)!==JSON.stringify(ak))add(p,{kind:'row-key-order-or-membership',path:path.slice(0,256),expectedIndex:ei,actualIndex:ai,missingKeys:ek.filter((x:string)=>!ak.includes(x)),extraKeys:ak.filter((x:string)=>!ek.includes(x)),orderDiff:JSON.stringify(ek.filter((x:string)=>ak.includes(x)))!==JSON.stringify(ak.filter((x:string)=>ek.includes(x))),expected:bounded(ek),actual:bounded(ak)});
+              }
+              for(const [path,{i}] of am)if(!em.has(path))add(p,{kind:'stale-path',path:path.slice(0,256),actualIndex:i});
+            }catch(e){failed=true;p.status='error';p.errorClass=safeError(e);}
+          }
+          if(validPackages){report.complete=report.packages.length===11&&report.packages.every((p:any)=>['pass','mismatch'].includes(p.status));report.failed=failed||!report.complete;await writeFile(resolve(process.env.DIAG_ROOT!,'report.json'),JSON.stringify(report)+'\n');console.log(`packages=${report.packages.length} complete=${report.complete} failed=${report.failed} retained=${32-remaining} omitted=${report.omittedDiscrepancyCount}`);process.exitCode=report.failed?1:0;}
+          DRIVER
+          log="$DIAG_ROOT/logs/diagnostic.log"
+          now=$(awk '{print $1}' /proc/uptime); end=$(cat "$DIAG_DEADLINE_FILE")
+          runtime=$(awk -v n="$now" -v e="$end" 'BEGIN {s=int(e-n-85); if(s>25)s=25; if(s<0)s=0; print s}')
+          if (( runtime < 1 )); then printf 'diagnostic\trefused\tremaining_after_85s_downstream_reserve=0\n' >> "$DIAG_ROOT/commands.tsv"; exit 124; fi
+          printf '{"format":"weft.owned-surface-diagnostic-report/1","complete":false,"failed":true,"diagnosticsStarted":true,"reason":"diagnostic_not_completed"}\n' > "$DIAG_ROOT/report.json"
+          set +e
+          timeout --signal=TERM --kill-after=5s "${runtime}s" bun "$driver" > "$log" 2>&1
+          code=$?
+          set -e
+          bytes=$(wc -c < "$log"); if (( bytes > 262144 )); then tail -c 262144 "$log" > "$log.tmp" && mv "$log.tmp" "$log"; truncated=yes; else truncated=no; fi
+          printf 'diagnostic\traw_exit=%s\targv=' "$code" >> "$DIAG_ROOT/commands.tsv"
+          printf '%q ' bun "$driver" >> "$DIAG_ROOT/commands.tsv"
+          printf '\tlog_original_bytes=%s\tlog_truncated=%s\truntime_s=%s\tgrace_s=5\n' "$bytes" "$truncated" "$runtime" >> "$DIAG_ROOT/commands.tsv"
+          exit "$code"
+      - name: Assemble bounded allowlisted evidence
+        id: evidence
+        if: always()
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'ready=false' >> "$GITHUB_OUTPUT"
+          now=$(awk '{print $1}' /proc/uptime); end=$(cat "$DIAG_DEADLINE_FILE")
+          seconds=$(awk -v n="$now" -v e="$end" 'BEGIN {s=int(e-n-65); if(s>8)s=8; if(s<1)s=0; print s}')
+          if (( seconds < 1 )); then printf 'evidence\trefused\tdeadline_exhausted\n' >> "$DIAG_ROOT/commands.tsv"; exit 124; fi
+          set +e
+          timeout --signal=TERM --kill-after=2s "${seconds}s" bash -s <<'ASSEMBLE'
+          set -euo pipefail
+          root="$DIAG_ROOT"; now=$(awk '{print $1}' /proc/uptime)
+          if [ ! -f "$root/report.json" ]; then
+            if [ '${{ steps.bun-verify.outcome }}' = success ]; then reason=diagnostic_budget_or_command_not_started; else reason=checkout_preflight_or_bun_setup_failed; fi
+            printf '{"format":"weft.owned-surface-diagnostic-report/1","complete":false,"failed":true,"diagnosticsNotRun":true,"reason":"%s"}\n' "$reason" > "$root/report.json"
+          fi
+          printf 'end_utc\t%s\nend_monotonic\t%s\ncheckout_outcome\t%s\npreflight_outcome\t%s\nbun_setup_outcome\t%s\nbun_verify_outcome\t%s\ndiagnostic_outcome\t%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$now" '${{ steps.checkout.outcome }}' '${{ steps.preflight.outcome }}' '${{ steps.bun-setup.outcome }}' '${{ steps.bun-verify.outcome }}' '${{ steps.diagnostic.outcome }}' >> "$root/receipt.tsv"
+          report_bytes=$(wc -c < "$root/report.json")
+          log_bytes=0; [ ! -f "$root/logs/diagnostic.log" ] || log_bytes=$(wc -c < "$root/logs/diagnostic.log")
+          payload_bytes=$(wc -c < "$root/receipt.tsv"); payload_bytes=$((payload_bytes + $(wc -c < "$root/commands.tsv") + report_bytes + log_bytes))
+          failed_payload=no; reason=none
+          if (( report_bytes > 524288 )); then failed_payload=yes; reason=report_over_512KiB; fi
+          if (( payload_bytes > 1047552 )); then failed_payload=yes; reason=aggregate_over_1MiB; fi
+          printf 'payload_original_bytes\treceipt=%s\tcommands=%s\treport=%s\tlog=%s\taggregate=%s\n' "$(wc -c < "$root/receipt.tsv")" "$(wc -c < "$root/commands.tsv")" "$report_bytes" "$log_bytes" "$payload_bytes" >> "$root/commands.tsv"
+          if [ "$failed_payload" = yes ]; then
+            printf 'evidence_outcome\tfailed_payload_withheld\nwithheld_reason\t%s\n' "$reason" >> "$root/receipt.tsv"
+            printf 'evidence_outcome\tfailed_payload_withheld\twithheld_reason=%s\n' "$reason" >> "$root/commands.tsv"
+            echo "::error::Diagnostic evidence payload withheld: $reason (report_bytes=$report_bytes log_bytes=$log_bytes aggregate_bytes=$payload_bytes). Uploading only the bounded failure receipt."
+          else
+            printf 'evidence_outcome\tfull_artifact_ready\n' >> "$root/receipt.tsv"
+            printf 'evidence_outcome\tfull_artifact_ready\n' >> "$root/commands.tsv"
+          fi
+          printf 'evidence_final\tstatus=%s\tstep_exit=%s\n' "$([ "$failed_payload" = yes ] && echo failed || echo pass)" "$([ "$failed_payload" = yes ] && echo 1 || echo 0)" >> "$root/receipt.tsv"
+          mkdir -p "$root/artifact"
+          cp "$root/receipt.tsv" "$root/commands.tsv" "$root/artifact/"
+          if [ "$failed_payload" = no ]; then
+            [ ! -f "$root/report.json" ] || cp "$root/report.json" "$root/artifact/"
+            [ ! -f "$root/logs/diagnostic.log" ] || cp "$root/logs/diagnostic.log" "$root/artifact/"
+          fi
+          artifact_bytes=$(du -sb "$root/artifact" | awk '{print $1}')
+          if (( artifact_bytes > 1048576 )); then
+            printf 'evidence_outcome\tfailed_receipt_over_1MiB\tbytes=%s\n' "$artifact_bytes" >> "$root/receipt.tsv"
+            echo "::error::Even the bounded failure receipt exceeds the 1 MiB artifact limit ($artifact_bytes bytes)."
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          echo 'ready=true' >> "$GITHUB_OUTPUT"
+          if [ "$failed_payload" = yes ]; then exit 1; fi
+          ASSEMBLE
+          code=$?
+          set -e
+          printf 'evidence\traw_exit=%s\tlimit_s=%s\tgrace_s=2\n' "$code" "$seconds" >> "$DIAG_ROOT/commands.tsv"
+          exit "$code"
+      - name: Budget artifact upload
+        id: upload-budget
+        if: always() && steps.evidence.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$DIAG_ROOT/gate" 0 1 "$GITHUB_OUTPUT"
+      - name: Upload diagnostic receipt
+        if: always() && steps.evidence.outputs.ready == 'true' && steps.upload-budget.outcome == 'success'
+        timeout-minutes: ${{ steps.upload-budget.outputs.timeout_minutes }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # immutable upload-artifact v4.6.2 identity
+        with:
+          name: weft-owned-surface-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/weft-owned-surface-diagnostic/artifact/
+          if-no-files-found: error
+          retention-days: 3
