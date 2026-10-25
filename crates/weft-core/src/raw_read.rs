@@ -270,6 +270,8 @@ fn prepare_native_document(
     }
     let catalog = if operation.is_some() || seed {
         crate::model::Catalog::prepare_table_operation010(vec![input])
+    } else if matches!(mode, NativeDocumentMode::FiniteUnityCurrentSummary | NativeDocumentMode::FiniteUnityCurrentSum | NativeDocumentMode::FiniteUnityCurrentAvg) {
+        crate::model::Catalog::prepare_raw_read010_finite_current_aggregate(vec![input])
     } else {
         crate::model::Catalog::prepare_raw_read010(vec![input])
     }

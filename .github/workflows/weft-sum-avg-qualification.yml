@@ -68,7 +68,7 @@ jobs:
           } > "$evidence/receipt.tsv"
 
           cat > "$evidence/expected-source.sha256" <<'PINS'
-          20f9426ec152e1ea69d3f3c94c9305f02668b40270ec428a55c33a6332e5fb96  crates/weft-core/src/raw_read.rs
+          14ef5c9893a5c7b623ffe169ea02810d2c31b22035b2380c29e07f8c9b43263a  crates/weft-core/src/raw_read.rs
           753ac19eade3839a2ece49c2cd933ac40ed3d72beba922b2c47d32fac8bea791  crates/weft-core/src/table_lifecycle.rs
           6f17accccbcfcaad8cff7c1bd432e8132137b86c03d2c46ea98b602768c6c16c  crates/weft-core/src/table_operation/values.rs
           9cd4cb3c193d22d9db46cfddb0e86b9214476377fb798eec494fb80769c23dec  crates/weft-databricks/src/raw_read.rs
@@ -76,8 +76,8 @@ jobs:
           62d4a4b77cf7d632c6868a6f8496e02cbfbaf33b23f42428594bb9781755efca  crates/weft-databricks/src/unity_current_summary.rs
           f51d486f9aea9f6003c8956b628ecf19f1800dcf62dda287794fe46cbb0b9d39  crates/weft-databricks/src/unity_current_summary_lowering.rs
           b77626b1fcd41fb06998d0f6e339d8b6513ebcd3937b134d98e2728ac01be97f  crates/weft-databricks/src/unity_current_sum.rs
-          9b8498cdbe49d0b1700be1297d6ca1cfeb9e5b99d25a94bf745d3582bc943df8  crates/weft-databricks/src/unity_current_sum_lowering.rs
-          d1be0cbf208bd81018ef0df1c8bd3b064392a25470835c2f45c424341c5dbf00  crates/weft-databricks/src/unity_current_avg.rs
+          ab3589763d0cf564067c9a7fe65cdf107b8da920bf69819176270434433c4696  crates/weft-databricks/src/unity_current_sum_lowering.rs
+          0fd48acc9a9ffc4a3e7cf33b73736edaf85222f64318e38e7bf8a7554b429ca4  crates/weft-databricks/src/unity_current_avg.rs
           929e087cf0cd8b2b3a1df672a5429e6fa604184e5277c1a440deb128cfdddca6  crates/weft-databricks/src/unity_current_avg_lowering.rs
           0791c20fed7e126ac067b23521482315718118a392bb2ef797d3fb7300f9acf6  crates/weft-databricks/src/unity_current_read.rs
           2b2ba9b7ee890ba8cd97d28e310ca1e799272778d5822f5ffd4cbdd24720e6f1  crates/weft-databricks/src/lib.rs
@@ -88,6 +88,15 @@ jobs:
           5257cbd395c7d3ed86c5d8645068599f6d6368c75eca75526cd4978ee148140d  tests/current-unity-aggregate/python-bridge.py
           98433cfe9e15b529403c7ecefaa38bdb5b44c0c0c0774f8f4c0bd59bbb54da16  tests/current-unity-aggregate/browser-bridge.ts
           601e08d3f41c1a68c4a892ad62aae869b233161d51305d996137c9eb56ac62b1  tests/spark-pages/read-request.json
+          1afaabe42c92d027ed853975f8fb84690c343493148e4c938760ba3d01893fcb  crates/weft-core/src/model.rs
+          fa273b06106fe939e86614712ecc88a2bb0ab8a4de0252df079baef38c280f89  crates/weft-postgresql/src/query_wire.rs
+          e1f0115e8a8ca85ac19d0667d94182523afe313ea153a9743b46f13ad260995d  crates/weft-postgresql/src/raw_action.rs
+          4ce8ee91f9a8a9166ab574c467394713be159ba188166c437463d322ea2de97f  crates/weft-postgresql/src/raw_bulk.rs
+          81f8cf605859f2dc679a9149787bd9a63cfc057db71d11660f119157538da6ce  crates/weft-postgresql/src/raw_read.rs
+          0d7c9226eb5dc944ca2e41c3001661d607631a380ba291444ea7a3a1d0070dbe  crates/weft-postgresql/src/search.rs
+          ae43cee60e888a1e8100de07e79e2b26e8a8abfb07c6b91cab43434173f4c199  crates/weft-postgresql/src/table_operation.rs
+          9b88059cc93b3cebce57fe6a774864f3ea203e6d7c3d7bf05695f20f4c6f10b5  crates/weft-postgresql/src/table_operation/insert_batch.rs
+          537533d0aacd25a1a8c086a58d87fe64df8253994ef18df429bfbd9c043cd21c  crates/weft-postgresql/src/table_seed.rs
           PINS
           sha256sum -c "$evidence/expected-source.sha256" > "$evidence/source-check.txt"
           printf '%s  Cargo.lock\n' b2a1df3a23b1f403fb9a2ee3570ef63b1a71d4a6fbfbc0004c861d2aca76f0e8 > "$evidence/expected-lock.sha256"
@@ -153,6 +162,7 @@ jobs:
           run_one focused-avg 1 test --locked --lib -p weft-databricks unity_current_avg
           run_one focused-backend-public-route 1 test --locked --lib -p weft-databricks raw_read::tests::current_sum_and_avg_keep_closed_requests_and_route_by_version
           run_one focused-runtime-public-route 1 test --locked --lib -p weft-runtime --features raw-postgresql-reads current_unity_raw_dispatch_tests::
+          run_one focused-pg-local-wire 1 test --locked --lib -p weft-postgresql query_wire::tests::local_timestamp_wire_projection_stays_distinct_from_instant_and_preserves_null_input
           cat "$evidence/commands.tsv" >> "$evidence/receipt.tsv"
           if (( failed != 0 )); then exit 1; fi
 

@@ -793,6 +793,7 @@ mod tests {
     fn exported_current_read_authors_one_and_eight_scale_1000_bounded_programs() {
         let mut one=original_unity_request();
         one["read"]["summary"]["measures"].as_array_mut().unwrap().truncate(1);
+        one["expectedTarget"]["columns"].as_array_mut().unwrap().truncate(1);
         one["read"]["summary"]["measures"][0]["scale"]=json!(1000);
         let mut eight=maximum_bound_request(31,false);
         for measure in eight["read"]["summary"]["measures"].as_array_mut().unwrap() {

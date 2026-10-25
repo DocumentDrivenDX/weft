@@ -451,9 +451,11 @@ mod tests {
     #[test]
     fn maximum_decimal_coefficient_and_corrupt_state() {
         let max38: u128 = 10_u128.pow(38) - 1;
-        let twice_max38 = max38 * 2;
-        let high = twice_max38 / BASE;
-        let low = twice_max38 % BASE;
+        let term_high = max38 / BASE;
+        let term_low = max38 % BASE;
+        assert_eq!((term_high, term_low), (BASE - 1, BASE - 1));
+        let high = 2 * term_high;
+        let low = 2 * term_low;
         // Two non-null maximum coefficients are represented by the true
         // aggregate limb totals; `nonnull_count` validates population and is
         // never used as an implicit multiplier.

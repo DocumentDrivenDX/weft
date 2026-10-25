@@ -23,6 +23,7 @@ impl PgCarrier for Carrier {
             Self::Bits128 => "bytea",
             Self::Date => "date",
             Self::Timestamp => "timestamptz",
+            Self::LocalTimestamp => "timestamp",
         }
     }
 }
