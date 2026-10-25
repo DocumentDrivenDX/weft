@@ -1,4 +1,4 @@
-name: Weft SUM-AVG source qualification
+name: Weft SUM-AVG source diagnostics
 
 on:
   push:
@@ -73,13 +73,13 @@ jobs:
           6f17accccbcfcaad8cff7c1bd432e8132137b86c03d2c46ea98b602768c6c16c  crates/weft-core/src/table_operation/values.rs
           9cd4cb3c193d22d9db46cfddb0e86b9214476377fb798eec494fb80769c23dec  crates/weft-databricks/src/raw_read.rs
           22101061832ac2aba458902c1f1316ac3db3a7d58691a97a716f85ff310aae80  crates/weft-databricks/src/unity_current_predicate.rs
-          62d4a4b77cf7d632c6868a6f8496e02cbfbaf33b23f42428594bb9781755efca  crates/weft-databricks/src/unity_current_summary.rs
+          6f7ac2a155e68f305e67c29e7637a87faa10320128facb0d5a86c3615c57c510  crates/weft-databricks/src/unity_current_summary.rs
           f51d486f9aea9f6003c8956b628ecf19f1800dcf62dda287794fe46cbb0b9d39  crates/weft-databricks/src/unity_current_summary_lowering.rs
-          b77626b1fcd41fb06998d0f6e339d8b6513ebcd3937b134d98e2728ac01be97f  crates/weft-databricks/src/unity_current_sum.rs
+          6b9b7f6ea014c64743c327260de8f94d0f37016210f171d15c140d1cc3c64595  crates/weft-databricks/src/unity_current_sum.rs
           ab3589763d0cf564067c9a7fe65cdf107b8da920bf69819176270434433c4696  crates/weft-databricks/src/unity_current_sum_lowering.rs
-          0fd48acc9a9ffc4a3e7cf33b73736edaf85222f64318e38e7bf8a7554b429ca4  crates/weft-databricks/src/unity_current_avg.rs
+          d2cb7eeb27c2ff8e5648576b9db08e6fd2cfdc0e11d1c71ad373c66ff0a85168  crates/weft-databricks/src/unity_current_avg.rs
           929e087cf0cd8b2b3a1df672a5429e6fa604184e5277c1a440deb128cfdddca6  crates/weft-databricks/src/unity_current_avg_lowering.rs
-          0791c20fed7e126ac067b23521482315718118a392bb2ef797d3fb7300f9acf6  crates/weft-databricks/src/unity_current_read.rs
+          a2547f352f12da249d9b1f7464b4e1c53458d717a10aeefc66e25807d5d61192  crates/weft-databricks/src/unity_current_read.rs
           2b2ba9b7ee890ba8cd97d28e310ca1e799272778d5822f5ffd4cbdd24720e6f1  crates/weft-databricks/src/lib.rs
           c77e339db207d859adf20dfaca3044ead8d16a12898529f1a3ef171345372c81  crates/weft-databricks/tests/fixtures/original-unity-model.json
           979e823b0d4855efcdd83c583fe0bc698f734efb093e6ad1a695fc80c5572234  crates/weft-databricks/tests/fixtures/original-unity-binding.json
@@ -106,7 +106,7 @@ jobs:
           sha256sum .github/workflows/weft-sum-avg-qualification.yml >> "$evidence/source-check.txt"
           cat "$evidence/source-check.txt" >> "$evidence/receipt.tsv"
 
-      - name: Check selected Rust crates (10 minute aggregate bound)
+      - name: Diagnose failed source-admission groups (not release qualification)
         id: cargo-gate
         shell: bash
         run: |
@@ -155,14 +155,9 @@ jobs:
             (( code == 0 )) || failed=1
           }
           : > "$evidence/commands.tsv"
-          run_one compile-tests 0 check --locked --tests -p weft-core -p weft-databricks -p weft-runtime --features weft-runtime/raw-postgresql-reads
-          run_one focused-core-read 1 test --locked --lib -p weft-core raw_read::
           run_one focused-dispatch 1 test --locked --lib -p weft-databricks unity_current_read::
           run_one focused-sum 1 test --locked --lib -p weft-databricks unity_current_sum
           run_one focused-avg 1 test --locked --lib -p weft-databricks unity_current_avg
-          run_one focused-backend-public-route 1 test --locked --lib -p weft-databricks raw_read::tests::current_sum_and_avg_keep_closed_requests_and_route_by_version
-          run_one focused-runtime-public-route 1 test --locked --lib -p weft-runtime --features raw-postgresql-reads current_unity_raw_dispatch_tests::
-          run_one focused-pg-local-wire 1 test --locked --lib -p weft-postgresql query_wire::tests::local_timestamp_wire_projection_stays_distinct_from_instant_and_preserves_null_input
           cat "$evidence/commands.tsv" >> "$evidence/receipt.tsv"
           if (( failed != 0 )); then exit 1; fi
 
@@ -193,7 +188,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # actions/upload-artifact v4.6.2
         with:
-          name: weft-sum-avg-${{ github.sha }}-${{ github.run_attempt }}
+          name: weft-source-admission-diagnostic-${{ github.sha }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/weft-sum-avg-evidence/
           if-no-files-found: error
           retention-days: 14

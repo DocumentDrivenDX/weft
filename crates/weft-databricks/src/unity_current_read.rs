@@ -343,7 +343,11 @@ fn compile(raw: &str) -> Result<Value> {
         }
     });
     let admitted = raw_read::admit_finite_current_keyless_json(&internal.to_string())
-        .map_err(|_| "derived finite current selection failed shared source admission")?;
+        .map_err(|error| {
+            #[cfg(test)]
+            eprintln!("finite-current source admission rejection: {error}");
+            "derived finite current selection failed shared source admission"
+        })?;
     let lowered = super::raw_read::lower_current_finite_keyless_shaped(&admitted, &target.catalog)
         .map_err(|_| "derived finite current selection failed shared lowering")?;
     if lowered["status"] != "compiled"

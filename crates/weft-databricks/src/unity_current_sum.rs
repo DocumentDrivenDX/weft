@@ -219,7 +219,11 @@ fn compile(raw: &str) -> Result<Value> {
     let internal = json!({"version":"weft.raw-read/0.1","target":"unity-catalog-current","sql":sql,
         "parameters":internal_params.clone(),"rowCap":row_cap,"keyset":false,
         "binding":{"version":"umf.raw-read-binding/0.1","schema":target["schema"],"tables":[{"logical":[source.table_module,source.record_name],"native":target["table"],"columns":raw_columns,"key":[]}],"relationships":[],"modelSha256":request["source"]["sha256"],"modelJson":request["source"]["utf8"],"nativeColumns":request["nativeColumns"]}});
-    let admitted = raw_read::admit_finite_current_sum_json(&internal.to_string()).map_err(|_| "derived SUM request failed shared source admission")?;
+    let admitted = raw_read::admit_finite_current_sum_json(&internal.to_string()).map_err(|error| {
+        #[cfg(test)]
+        eprintln!("finite-current SUM source admission rejection: {error}");
+        "derived SUM request failed shared source admission"
+    })?;
     verify_original_column_custody(&admitted, &source_doc, target, &request["nativeColumns"], &target_columns)?;
     let lowered = super::raw_read::lower_current_finite_sum_shaped(&admitted, target["catalog"].as_str().unwrap()).map_err(|_| "exact SUM lowering refused")?;
     let expected_lowered_columns = columns.iter().map(|(_, (native, carrier, nullable, logical))|

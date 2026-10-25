@@ -175,7 +175,11 @@ fn compile(raw: &str) -> Result<Value> {
     let internal = json!({"version":"weft.raw-read/0.1","target":"unity-catalog-current","sql":sql,
         "parameters":internal_params,"rowCap":row_cap,"keyset":false,
         "binding":{"version":"umf.raw-read-binding/0.1","schema":target["schema"],"tables":[{"logical":[source.table_module,source.record_name],"native":target["table"],"columns":raw_columns,"key":[]}],"relationships":[],"modelSha256":request["source"]["sha256"],"modelJson":request["source"]["utf8"]}});
-    let admitted = raw_read::admit_finite_current_summary_json(&internal.to_string()).map_err(|_| "derived summary request failed shared source admission")?;
+    let admitted = raw_read::admit_finite_current_summary_json(&internal.to_string()).map_err(|error| {
+        #[cfg(test)]
+        eprintln!("finite-current summary source admission rejection: {error}");
+        "derived summary request failed shared source admission"
+    })?;
     let lowered = super::raw_read::lower_current_finite_summary_shaped(&admitted, target["catalog"].as_str().unwrap()).map_err(|_| "exact summary lowering refused")?;
     let expected_lowered_columns = columns.iter().map(|(_, (native, carrier, nullable, logical))|
         json!({"logical":logical,"native":native,"carrier":carrier,"nullable":nullable})
