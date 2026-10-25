@@ -2140,6 +2140,7 @@
             "field:max_items",
             "struct:Request",
             "field:version",
+            "field:temporal_profile",
             "field:target",
             "field:sql",
             "field:binding",
@@ -2158,7 +2159,13 @@
             "fn:original_document",
             "fn:original_record",
             "fn:original_field_ref",
-            "fn:admit_json"
+            "fn:admit_json",
+            "fn:admit_finite_current_keyless_json",
+            "fn:admit_finite_current_predicate_json",
+            "fn:admit_finite_current_summary_json",
+            "fn:admit_finite_current_sum_json",
+            "fn:admit_finite_current_avg_json",
+            "fn:authored_temporal_meaning"
           ],
           "pathReferences": []
         },
