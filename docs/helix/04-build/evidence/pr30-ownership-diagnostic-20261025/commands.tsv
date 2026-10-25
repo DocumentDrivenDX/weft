@@ -1,0 +1,7 @@
+action	checkout	outcome=success	started_monotonic=30.98	started_utc=2026-10-25T23:03:20Z	ended_monotonic=40.02	ended_utc=2026-10-25T23:03:29Z
+preflight	pass	sha=1b035f0d97783e13dc028921588316687199af86	tree=fae6054f28241f999bcb9c16e4b54abf26cd1e7c	rust_source_files=261	ref=refs/heads/codex/weft-owned-surface-diagnostic
+tool_verify	argv=bun --version	outcome=pass
+action	setup-bun	outcome=success	started_monotonic=40.96	started_utc=2026-10-25T23:03:30Z	ended_monotonic=41.80	ended_utc=2026-10-25T23:03:31Z
+diagnostic	raw_exit=1	argv=bun /home/runner/work/_temp/weft-owned-surface-diagnostic-driver.ts 	log_original_bytes=59	log_truncated=no	runtime_s=25	grace_s=5
+payload_original_bytes	receipt=650	commands=666	report=6622	log=59	aggregate=7997
+evidence_outcome	full_artifact_ready
