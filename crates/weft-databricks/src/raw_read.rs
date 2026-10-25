@@ -974,6 +974,16 @@ fn lower_inner(
     Ok(out)
 }
 pub fn compile_json(raw: &str) -> String {
+    let unity_version = weft_core::json::checked_json(raw)
+        .ok()
+        .and_then(|request| request.get("version").and_then(J::as_str).map(str::to_owned));
+    if matches!(
+        unity_version.as_deref(),
+        Some("weft.unity-current-read-request/0.4")
+            | Some("weft.unity-current-read-request/0.5")
+    ) {
+        return crate::unity_current_read::compile_json(raw);
+    }
     weft_core::raw_read::admit_json(raw).and_then(|a|lower(&a)).unwrap_or_else(|reason|json!({"version":"weft.raw-read/0.1","status":"blocked","diagnostics":[{"code":"WFT-RAW-SPARK","message":reason}]})).to_string()
 }
 #[cfg(test)]
@@ -990,6 +1000,24 @@ mod tests {
     }
     fn output(r: J) -> J {
         serde_json::from_str(&compile_json(&r.to_string())).unwrap()
+    }
+    #[test]
+    fn current_sum_and_avg_keep_closed_requests_and_route_by_version() {
+        for (version, response, code) in [
+            ("weft.unity-current-read-request/0.4", "weft.unity-current-selection/0.5", "WFT-UNITY-CURRENT-SUM"),
+            ("weft.unity-current-read-request/0.5", "weft.unity-current-selection/0.6", "WFT-UNITY-CURRENT-AVG"),
+        ] {
+            let actual = output(json!({"version":version}));
+            assert_eq!(actual["version"], response);
+            assert_eq!(actual["status"], "blocked");
+            assert_eq!(actual["diagnostics"][0]["code"], code);
+            // A generic raw-read target is not stripped to manufacture a valid
+            // owner request; the exact SUM/AVG grammar rejects the extra key.
+            let extra = output(json!({"version":version,"target":"spark-delta4"}));
+            assert_eq!(extra["version"], response);
+            assert_eq!(extra["status"], "blocked");
+            assert_eq!(extra["diagnostics"][0]["code"], code);
+        }
     }
     #[test]
     fn original_hll_projection_preserves_algorithm_guarantee_and_group_scope() {

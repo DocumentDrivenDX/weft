@@ -148,11 +148,10 @@ pub(crate) fn lower_current_exact(a: &AdmittedRead, catalog: &str) -> JsonResult
         || !q.locks.is_empty() || q.for_clause.is_some() || q.settings.is_some()
         || q.format_clause.is_some() || !q.pipe_operators.is_empty()
     { return Err("SUM source query modifiers refused"); }
-    if q.offset.is_some() || !q.limit_by.is_empty() { return Err("SUM offset or limit-by refused"); }
     let limit = q.limit_clause.as_ref().ok_or("derived aggregate output cap required")?;
     if !matches!(limit, LimitClause::LimitOffset {
         limit: Some(Expr::Value(v)), offset: None, limit_by,
-    } if limit_by.is_empty() && matches!(&v.value, AstValue::Number(n, false) if n.parse::<u64>().ok() == Some(r.row_cap))) {
+    } if limit_by.is_empty() && matches!(&v.value, AstValue::Number(n, false) if n.parse::<u64>().ok() == Some(u64::from(r.row_cap)))) {
         return Err("derived aggregate output cap differs from admitted rowCap");
     }
     let SetExpr::Select(select) = q.body.as_ref() else { return Err("SUM SELECT required"); };
@@ -333,11 +332,14 @@ pub(crate) fn lower_current_exact(a: &AdmittedRead, catalog: &str) -> JsonResult
     let mut order_parts=Vec::new();
     let valid_group_aliases=(0..group_specs.len()).map(|i|format!("__weft_out_{i}")).collect::<BTreeSet<_>>();
     if let Some(order)=&q.order_by {
-        for item in &order.exprs {
+        if order.interpolate.is_some() { return Err("SUM order interpolation refused"); }
+        let OrderByKind::Expressions(items)=&order.kind else { return Err("SUM order ALL refused"); };
+        for item in items {
+            if item.with_fill.is_some() { return Err("SUM order fill refused"); }
             let Expr::Identifier(identifier)=&item.expr else { return Err("SUM order must reference output alias"); };
-            let output=name(identifier);
-            let direction=if item.asc==Some(false){"DESC"}else{"ASC"};
-            let nulls=if item.nulls_first==Some(true){"FIRST"}else if item.nulls_first==Some(false){"LAST"}else{"LAST"};
+            let output=name(&identifier);
+            let direction=match &item.options.sort { Some(OrderBySort::Desc)=>"DESC",Some(OrderBySort::Using(_))=>return Err("SUM order USING refused"),_=>"ASC" };
+            let nulls=if item.options.nulls_first==Some(true){"FIRST"}else{"LAST"};
             if let Some((sign,high,low))=sort_keys.get(&output) {
                 let null_rank=if nulls=="FIRST" {format!("CASE WHEN {sign} IS NULL THEN 0 ELSE 1 END ASC")} else {format!("CASE WHEN {sign} IS NULL THEN 1 ELSE 0 END ASC")};
                 let native_dir=direction;

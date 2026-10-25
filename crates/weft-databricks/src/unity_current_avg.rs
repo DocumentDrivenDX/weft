@@ -169,7 +169,7 @@ fn compile(raw: &str) -> Result<Value> {
         let identity = identity.as_ref().ok_or("AVG Field identity required")?;
         let (native, carrier, nullable, logical) = columns.get(identity).ok_or("AVG target Field binding absent")?;
         let facets = &source_field.facets;
-        let result_scale = summary["measures"].as_array().and_then(|items| items.iter().find(|item| item["id"] == measure_id)).and_then(|item| item["scale"].as_u64()).ok_or("AVG result scale absent")?;
+        let result_scale = summary["measures"].as_array().and_then(|items| items.iter().find(|item| item["id"].as_str() == Some(measure_id.as_str()))).and_then(|item| item["scale"].as_u64()).ok_or("AVG result scale absent")?;
         if carrier != &source_field.carrier || logical != &source_field.name || nullable != &source_field.nullable {
             return Err("AVG source and target Field crosswalk differs");
         }
@@ -179,7 +179,7 @@ fn compile(raw: &str) -> Result<Value> {
         } else {
             (json!({"kind":"canonical-fixed-scale-decimal-text","scale":facets["scale"],"maximumCoefficientDigits":1038}), facets.clone())
         };
-        let result_scale = summary["measures"].as_array().and_then(|items| items.iter().find(|item| item["id"] == measure_id)).and_then(|item| item["scale"].as_u64()).ok_or("AVG result scale absent")?;
+        let result_scale = summary["measures"].as_array().and_then(|items| items.iter().find(|item| item["id"].as_str() == Some(measure_id.as_str()))).and_then(|item| item["scale"].as_u64()).ok_or("AVG result scale absent")?;
         let output = json!({"id":measure_id,"name":alias,"role":"measure","function":"avg","fieldRef":rf,
             "nativeName":native,"carrier":"decimal","nullable":true,"sourceFacets":source_facets,
             "decoder":{"kind":"canonical-fixed-scale-decimal-text","scale":result_scale,"maximumCoefficientDigits":1038}});
@@ -320,7 +320,7 @@ fn verify_original_column_custody(
             (true, Some("stored-expression"), true, false) => (),
             _ => return Err("generated/create/native-generation policies disagree or are outside AVG profile"),
         }
-        if selected_column["nativeName"] != name || expected_type != *native_type
+        if selected_column["nativeName"].as_str() != Some(name.as_str()) || expected_type != *native_type
             || selected_column["nullable"] != row_nullable || row_nullable == *not_null
             || field_view["row"]["missing"] != false || field_view["row"]["null"] != row_nullable
             || (create_null && !row_nullable)
@@ -509,13 +509,10 @@ mod tests {
             measure_refs.push(id);
         }
         let access = &mut module["extensions"]["umf.access"];
-        let view_fields = access["views"][0]["fields"].as_array_mut().unwrap();
-        let set_columns = access["columns"][0]["columns"].as_array_mut().unwrap();
-        let binding_fields = binding["extensions"]["umf.binding"]["fields"].as_array_mut().unwrap();
         let mut append_field = |id: &str, native_type: &str| {
-            view_fields.push(json!({"field":{"module":"search","element":id},"row":{"missing":false,"null":false},"create":{"missing":false,"null":false},"mutable":true,"generated":false}));
-            set_columns.push(json!({"field":{"module":"search","element":id},"type":native_type,"notNull":true,"generation":null}));
-            binding_fields.push(json!({"module":"search","element":id,"storage":"column","column":id}));
+            access["views"][0]["fields"].as_array_mut().unwrap().push(json!({"field":{"module":"search","element":id},"row":{"missing":false,"null":false},"create":{"missing":false,"null":false},"mutable":true,"generated":false}));
+            access["columns"][0]["columns"].as_array_mut().unwrap().push(json!({"field":{"module":"search","element":id},"type":native_type,"notNull":true,"generation":null}));
+            binding["extensions"]["umf.binding"]["fields"].as_array_mut().unwrap().push(json!({"module":"search","element":id,"storage":"column","column":id}));
         };
         for id in predicate_refs.iter().skip(2) { append_field(id, "STRING"); }
         for id in measure_refs.iter().skip(2) { append_field(id, "int"); }

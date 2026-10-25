@@ -60,14 +60,14 @@ fn lower_mode(a:&AdmittedRead,snapshot:bool)->Result<Value>{
   let relationship=r.binding.relationships.iter().find(|rel|rel.to_one&&rel.source==source.logical&&rel.target==next.table.logical&&rel.pairs.iter().cloned().collect::<BTreeSet<_>>()==observed).ok_or("page join is not an original declared to-one relationship")?;
   if relationship.id.is_empty()||relationship.pairs.iter().map(|p|p[1].clone()).collect::<Vec<_>>()!=next.table.key{return Err("page relationship must cover target unique Key")};
   let native=next.native.clone();scans.insert(alias.clone(),next);
-  let mut predicate=Lower{request:r,table:root_table,alias:root_alias.clone(),scans:Some(scans.iter().map(|(alias,scan)|(alias.clone(),(scan.table,scan.nullable))).collect()),slots:vec![],used:BTreeSet::new()};
+  let mut predicate=Lower{request:r,table:root_table,alias:root_alias.clone(),scans:Some(scans.iter().map(|(alias,scan)|(alias.clone(),(scan.table,scan.nullable))).collect()),slots:vec![],used:BTreeSet::new(),unity_current_binary_strings:false};
   let condition=predicate.predicate(on)?;if !predicate.slots.is_empty(){return Err("join parameters not admitted")};
   from+=&format!(" {} JOIN {} AS {} ON {}",if left{"LEFT"}else{"INNER"},native,ident(&alias)?,condition);
  }
  let mut relations=BTreeMap::new();for scan in scans.values(){if let Some(previous)=relations.insert(scan.table.native.clone(),scan){if previous.table.logical!=scan.table.logical{return Err("ambiguous page native source alias")}}}
  if let Some(versions)=&r.snapshots{if versions.len()!=relations.len()||relations.keys().any(|name|!versions.contains_key(name)){return Err("exact complete page snapshot inventory required")}}
  let shapes=if r.binding.native_columns.is_some(){Some(scans.iter().map(|(alias,scan)|Ok((alias.clone(),crate::spark_shapes::columns(a,scan.table)?))).collect::<Result<BTreeMap<_,_>>>()?)}else{None};
- let mut l=Lower{request:r,table:root_table,alias:root_alias.clone(),scans:Some(scans.iter().map(|(alias,scan)|(alias.clone(),(scan.table,scan.nullable))).collect()),slots:vec![],used:BTreeSet::new()};
+ let mut l=Lower{request:r,table:root_table,alias:root_alias.clone(),scans:Some(scans.iter().map(|(alias,scan)|(alias.clone(),(scan.table,scan.nullable))).collect()),slots:vec![],used:BTreeSet::new(),unity_current_binary_strings:false};
  let mut outputs=vec![];let mut projection=vec![];let mut names=BTreeSet::new();
  for item in &s.projection{
   let(expr,alias)=match item{SelectItem::ExprWithAlias{expr,alias}=>(expr,name(alias)),SelectItem::UnnamedExpr(expr)=>{let(_,name)=field(expr)?;(expr,name)},_=>return Err("explicit scalar page projection required")};

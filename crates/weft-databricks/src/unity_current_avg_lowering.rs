@@ -144,11 +144,10 @@ pub(crate) fn lower_current_exact(a: &AdmittedRead, catalog: &str) -> JsonResult
         || !q.locks.is_empty() || q.for_clause.is_some() || q.settings.is_some()
         || q.format_clause.is_some() || !q.pipe_operators.is_empty()
     { return Err("AVG source query modifiers refused"); }
-    if q.offset.is_some() || !q.limit_by.is_empty() { return Err("AVG offset or limit-by refused"); }
     let limit = q.limit_clause.as_ref().ok_or("derived aggregate output cap required")?;
     if !matches!(limit, LimitClause::LimitOffset {
         limit: Some(Expr::Value(v)), offset: None, limit_by,
-    } if limit_by.is_empty() && matches!(&v.value, AstValue::Number(n, false) if n.parse::<u64>().ok() == Some(r.row_cap))) {
+    } if limit_by.is_empty() && matches!(&v.value, AstValue::Number(n, false) if n.parse::<u64>().ok() == Some(u64::from(r.row_cap)))) {
         return Err("derived aggregate output cap differs from admitted rowCap");
     }
     let SetExpr::Select(select) = q.body.as_ref() else { return Err("AVG SELECT required"); };
@@ -300,16 +299,16 @@ pub(crate) fn lower_current_exact(a: &AdmittedRead, catalog: &str) -> JsonResult
     let stream="CASE WHEN __result_scale >= __source_scale THEN CONCAT(__safe_digits, REPEAT('0', __result_scale - __source_scale)) ELSE __safe_digits END";
     let division=long_division_sql(stream,"__safe_n");
     sql.push_str(&format!(", __weft_avg_division AS (SELECT __weft_avg_pre.*, {division} AS __division FROM __weft_avg_pre)"));
-    let q="__division.q";
+    let quotient="__division.q";
     let delta="(__source_scale - __result_scale)";
-    let padded_q=format!("CASE WHEN __result_scale < __source_scale AND LENGTH({q}) <= {delta} THEN LPAD({q},{delta}+1,'0') ELSE {q} END");
+    let padded_q=format!("CASE WHEN __result_scale < __source_scale AND LENGTH({quotient}) <= {delta} THEN LPAD({quotient},{delta}+1,'0') ELSE {quotient} END");
     let prefix=format!("SUBSTRING({padded_q},1,LENGTH({padded_q})-{delta})");
     let discarded=format!("SUBSTRING({padded_q},LENGTH({padded_q})-{delta}+1,{delta})");
     let guard=format!("CAST(SUBSTRING({discarded},1,1) AS INT)");
     let sticky=format!("(REGEXP_REPLACE(SUBSTRING({discarded},2,{delta}),'0','')<>'' OR __division.r<>0)");
-    let odd_q=format!("CAST(SUBSTRING({q},LENGTH({q}),1) AS INT)%2=1");
+    let odd_q=format!("CAST(SUBSTRING({quotient},LENGTH({quotient}),1) AS INT)%2=1");
     let odd_prefix=format!("CAST(SUBSTRING({prefix},LENGTH({prefix}),1) AS INT)%2=1");
-    let kept=format!("CASE WHEN __result_scale >= __source_scale THEN {q} ELSE {prefix} END");
+    let kept=format!("CASE WHEN __result_scale >= __source_scale THEN {quotient} ELSE {prefix} END");
     let round_up=format!("CASE WHEN __result_scale >= __source_scale THEN (2*__division.r>__safe_n OR (2*__division.r=__safe_n AND {odd_q})) ELSE ({guard}>5 OR ({guard}=5 AND ({sticky} OR {odd_prefix}))) END");
     sql.push_str(&format!(", __weft_avg_round AS (SELECT __weft_avg_division.*, {kept} AS __kept, {round_up} AS __round_up FROM __weft_avg_division)"));
     let increment="aggregate(sequence(1,LENGTH(__kept)),named_struct('v',CAST('' AS STRING),'c',1),(st,i)->named_struct('v',CONCAT(CASE WHEN st.c=1 THEN CASE WHEN SUBSTRING(__kept,LENGTH(__kept)-i+1,1)='9' THEN '0' ELSE CAST(CAST(SUBSTRING(__kept,LENGTH(__kept)-i+1,1) AS INT)+1 AS STRING) END ELSE SUBSTRING(__kept,LENGTH(__kept)-i+1,1) END,st.v),'c',CASE WHEN st.c=1 AND SUBSTRING(__kept,LENGTH(__kept)-i+1,1)='9' THEN 1 ELSE 0 END))";
@@ -359,11 +358,14 @@ pub(crate) fn lower_current_exact(a: &AdmittedRead, catalog: &str) -> JsonResult
     let mut order_parts=Vec::new();
     let valid_group_aliases=(0..group_specs.len()).map(|i|format!("__weft_out_{i}")).collect::<BTreeSet<_>>();
     if let Some(order)=&q.order_by {
-        for item in &order.exprs {
+        if order.interpolate.is_some() { return Err("AVG order interpolation refused"); }
+        let OrderByKind::Expressions(items)=&order.kind else { return Err("AVG order ALL refused"); };
+        for item in items {
+            if item.with_fill.is_some() { return Err("AVG order fill refused"); }
             let Expr::Identifier(identifier)=&item.expr else { return Err("AVG order must reference output alias"); };
-            let output=name(identifier);
-            let direction=if item.asc==Some(false){"DESC"}else{"ASC"};
-            let nulls=if item.nulls_first==Some(true){"FIRST"}else{"LAST"};
+            let output=name(&identifier);
+            let direction=match &item.options.sort { Some(OrderBySort::Desc)=>"DESC",Some(OrderBySort::Using(_))=>return Err("AVG order USING refused"),_=>"ASC" };
+            let nulls=if item.options.nulls_first==Some(true){"FIRST"}else{"LAST"};
             if let Some((sign,length,magnitude))=sort_keys.get(&output) {
                 let null_rank=if nulls=="FIRST" {format!("CASE WHEN {sign} IS NULL THEN 0 ELSE 1 END ASC")} else {format!("CASE WHEN {sign} IS NULL THEN 1 ELSE 0 END ASC")};
                 order_parts.push(null_rank);

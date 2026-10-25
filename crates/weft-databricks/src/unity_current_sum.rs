@@ -290,7 +290,7 @@ fn verify_original_column_custody(
         let (name, native_type, not_null) = original.get(&key).ok_or("selected Field absent from original ColumnSet")?;
         let expected_type = weft_core::column_custody::native_type(selected_column["nativeType"].as_str().ok_or("native type spelling required")?)
             .map_err(|_| "target native type spelling refused")?;
-        if selected_column["nativeName"] != name || expected_type != *native_type
+        if selected_column["nativeName"].as_str() != Some(name.as_str()) || expected_type != *native_type
             || weft_core::column_custody::row_null(doc, &record, reference, &original).map_err(|_| "original RowView nullability custody refused")? == *not_null
         { return Err("target selected column differs from exact original ColumnSet/RowView"); }
     }
