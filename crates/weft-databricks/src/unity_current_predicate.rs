@@ -390,22 +390,68 @@ mod tests {
     }
     #[test]
     fn membership_null_and_empty_truth_table_is_wr_s8() {
+        use sqlparser::{
+            ast::{Expr as SqlExpr, SetExpr, Statement, UnaryOperator},
+            dialect::GenericDialect,
+            parser::Parser,
+        };
+
+        fn where_expression(sql: &str) -> SqlExpr {
+            let statements = Parser::parse_sql(&GenericDialect {}, sql)
+                .unwrap_or_else(|error| panic!("could not parse emitted SQL: {error}; SQL: {sql}"));
+            assert_eq!(statements.len(), 1, "expected one statement; SQL: {sql}");
+            let Statement::Query(query) = &statements[0] else {
+                panic!("expected emitted SELECT query; SQL: {sql}");
+            };
+            let SetExpr::Select(select) = query.body.as_ref() else {
+                panic!("expected emitted SELECT body; SQL: {sql}");
+            };
+            select
+                .selection
+                .clone()
+                .unwrap_or_else(|| panic!("expected emitted WHERE expression; SQL: {sql}"))
+        }
+
+        fn unwrap_nested(expr: &SqlExpr) -> &SqlExpr {
+            match expr {
+                SqlExpr::Nested(inner) => unwrap_nested(inner),
+                other => other,
+            }
+        }
+
         let all_null = json!([{"carrier":"string","value":null}]);
         let in_sql=response(request(json!({"kind":"in","fieldRef":{"module":"sales","element":"id"},"values":all_null}),json!([])));
         let not_in_sql=response(request(json!({"kind":"not-in","fieldRef":{"module":"sales","element":"id"},"values":[{"carrier":"string","value":null}]}),json!([])));
-        assert_eq!(in_sql["status"],"compiled");assert_eq!(not_in_sql["status"],"compiled");
+        assert_eq!(in_sql["status"],"compiled", "response: {in_sql}");
+        assert_eq!(not_in_sql["status"],"compiled", "response: {not_in_sql}");
         let in_text=in_sql["sql"].as_str().unwrap();let not_in_text=not_in_sql["sql"].as_str().unwrap();
-        assert!(in_text.contains("WHEN `r`.`customer_id` IS NULL THEN CAST(NULL AS BOOLEAN)"));
-        assert!(in_text.contains("WHEN FALSE THEN TRUE ELSE FALSE END"));
+        assert!(in_text.contains("WHEN `r`.`customer_id` IS NULL THEN CAST(NULL AS BOOLEAN)"), "SQL: {in_text}");
+        assert!(in_text.contains("WHEN FALSE THEN TRUE ELSE FALSE END"), "SQL: {in_text}");
         // S8 deliberately treats explicit NULL elements as non-matching:
         // non-null LHS is FALSE for IN and TRUE after NOT; null LHS stays UNKNOWN.
-        assert!(not_in_text.contains("NOT ((CASE WHEN `r`.`customer_id` IS NULL THEN CAST(NULL AS BOOLEAN)"));
-        assert!(not_in_text.contains("WHEN FALSE THEN TRUE ELSE FALSE END"));
+        assert!(not_in_text.contains("NOT ((CASE WHEN `r`.`customer_id` IS NULL THEN CAST(NULL AS BOOLEAN)"), "SQL: {not_in_text}");
+        assert!(not_in_text.contains("WHEN FALSE THEN TRUE ELSE FALSE END"), "SQL: {not_in_text}");
         let empty_in=response(request(json!({"kind":"in","fieldRef":{"module":"sales","element":"note"},"values":[]}),json!([])));
         let empty_not_in=response(request(json!({"kind":"not-in","fieldRef":{"module":"sales","element":"note"},"values":[]}),json!([])));
-        assert_eq!(empty_in["status"],"compiled");assert_eq!(empty_not_in["status"],"compiled");
-        assert!(empty_in["sql"].as_str().unwrap().contains("FALSE"));
-        assert!(empty_not_in["sql"].as_str().unwrap().contains("NOT (FALSE)"));
+        assert_eq!(empty_in["status"],"compiled", "response: {empty_in}");
+        assert_eq!(empty_not_in["status"],"compiled", "response: {empty_not_in}");
+        let empty_in_sql=empty_in["sql"].as_str().unwrap();
+        let empty_not_in_sql=empty_not_in["sql"].as_str().unwrap();
+        let empty_in_expression=where_expression(empty_in_sql);
+        let empty_in_predicate=unwrap_nested(&empty_in_expression);
+        assert!(
+            matches!(empty_in_predicate, SqlExpr::Value(value) if matches!(&value.value, sqlparser::ast::Value::Boolean(false))),
+            "empty IN must be Boolean FALSE; SQL: {empty_in_sql}"
+        );
+        let empty_not_in_expression=where_expression(empty_not_in_sql);
+        let empty_not_in_predicate=unwrap_nested(&empty_not_in_expression);
+        let SqlExpr::UnaryOp { op: UnaryOperator::Not, expr } = empty_not_in_predicate else {
+            panic!("empty NOT IN must be unary NOT; SQL: {empty_not_in_sql}");
+        };
+        assert!(
+            matches!(unwrap_nested(expr), SqlExpr::Value(value) if matches!(&value.value, sqlparser::ast::Value::Boolean(false))),
+            "empty NOT IN must be NOT(Boolean FALSE); SQL: {empty_not_in_sql}"
+        );
     }
     #[test]
     fn membership_literals_are_data_and_empty_membership_is_constant() {
