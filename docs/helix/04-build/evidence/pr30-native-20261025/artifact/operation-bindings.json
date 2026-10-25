@@ -1,0 +1,287 @@
+{
+  "cases": [
+    {
+      "name": "read_many",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "read_one",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "read_optional",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "read_page",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "read_count",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "create",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "rename",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "remove",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "put_ignore",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "put_update",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "create_batch",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "page-after",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "quoted-data",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "lakebase-compilation-only",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "forged-module",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "forged-operation",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "forged-version",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "forged-target",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "missing-input",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "surplus-input",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "missing-replay",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "untyped-sql",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "wrong-input-carrier",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-member-[]",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-member-['body']",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-member-['body', 'values', 0]",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-member-['parameters', 0]",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "exact-native-temporal",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "temporal-rounding",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "temporal-unknown-offset",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "temporal-UTC-overflow",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "date-1900-02-29",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "date-infinity",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "date-0000-01-01",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "source-domain-enumeration",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "source-domain-rejects",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "source-transaction-clock",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-direct",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-direct-unknown-pair-refuses",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-nested",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-nested-unknown-pair-refuses",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "atomic-source-snapshot",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "typed-related-delete",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-delete-table-escape",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-delete-wrong-target-field",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-delete-capacity-mismatch",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "related-delete-unknown-match",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "mixed-direction-exact-cursor",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "mixed-direction-incomplete-cursor",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "mixed-direction-missing-key-suffix",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "atomic-source-overflow-declaration",
+      "status": "compiled",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "source-field-outside-source",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "source-predicate-cannot-read-copy",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "identity-cannot-be-time",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "unknown-source-meaning",
+      "status": "blocked",
+      "nativePythonEqual": true
+    },
+    {
+      "name": "batch-native-principal",
+      "status": "compiled",
+      "nativePythonEqual": true
+    }
+  ],
+  "selfRehashedProgramControls": 10,
+  "nativeExecutionQualified": false,
+  "browserExecutionQualified": false
+}

@@ -168,6 +168,14 @@ impl Catalog {
         catalog.raw_read_opaque_extensions = true;
         Ok(catalog)
     }
+    /// Finite Unity aggregate admission retains the raw-read checks while
+    /// permitting source facets that its bounded aggregate owners validate.
+    pub(crate) fn prepare_raw_read010_finite_current_aggregate(inputs: Vec<ModuleInput>) -> Result<Self> {
+        let mut catalog = Self::prepare_raw_read010(inputs)?;
+        catalog.exact_numbers = true;
+        catalog.field_projection_decimal38 = true;
+        Ok(catalog)
+    }
     pub(crate) fn prepare_table_operation010(inputs: Vec<ModuleInput>) -> Result<Self> {
         let mut catalog=Self::prepare_raw_read010(inputs)?;
         catalog.native_operation_domains=true;

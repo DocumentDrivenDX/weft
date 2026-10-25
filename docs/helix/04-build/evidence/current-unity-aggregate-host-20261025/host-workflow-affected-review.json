@@ -1,0 +1,50 @@
+{
+  "profile": "weft.host-parity-source-review/1",
+  "disposition": "CORRECTION_REQUIRED",
+  "scope": "Only four correction families against source review002 c7cf95b008cf717f4c53530d43c62e9a6d1c459142898c19fd0ed47bb9eb6159; unchanged Rust semantics, wrapper/vector source and browser acceptance reused.",
+  "inputs": {
+    "workflow": "19a3af7618ed80d4a61cead377c9504db94eb34ac4bc532aa3811a446b50ee45",
+    "expectedHostSource": "9047e14e6ad936a9a6ffb42c20815c49340d23a298a1f3664aecfcbb2a3dd223",
+    "browser": "e1b7424f1a3524b54d42e73480729f82047733c4203416e02862c89b40220c6d"
+  },
+  "findings": [
+    {
+      "id": "HP3-F1",
+      "priority": "P1",
+      "lines": [
+        292,
+        314
+      ],
+      "problem": "Each run scalar starts a YAML quoted string then adds two more shell tokens outside the scalar. The proposed workflow is not valid YAML.",
+      "repair": "Use run: | with the complete shell command on its indented body line. Numeric timeout-minutes may use fromJSON on the known decimal output."
+    },
+    {
+      "id": "HP3-F2",
+      "priority": "P1",
+      "lines": [
+        415,
+        425
+      ],
+      "problem": "The oversize-after-bounding branch leaves its oversized upload directory intact. The always upload step still uploads it despite the failure; writing upload_withheld is not withholding. Final receipt/limit additions also occur after the measured total.",
+      "repair": "On final aggregate overflow withhold the directory or gate upload on explicit bounded-assembly-ready output. Measure after final metadata writes. An oversize packet omission must fail qualification but may still upload the separately verified bounded diagnostic assembly."
+    },
+    {
+      "id": "HP3-F3",
+      "priority": "P2",
+      "lines": [
+        259,
+        360
+      ],
+      "problem": "wheel-hash does not match python-wheel-*, python-consumer-* or python-vectors, so it uses bootstrap deadline rather than the wheel deadline. A valid wheel build completing after original420s can consequently fail its next hash step before the original wheel/global deadline.",
+      "repair": "Include exact wheel-hash in the wheel-stage classifier, or rename the command consistently."
+    }
+  ],
+  "closedFacts": [
+    "Fail-closed expected source sha256sum-c now precedes network/tool acquisition. Root must refresh/adopt the exact current source pins before execution; this review does not label historical pins current.",
+    "One original /proc/uptime deadline is minted before acquisition; action budgets floor remaining stage/global time minus10s; run-bounded clamps each command with original remaining time and inside10s TERM/KILL grace.",
+    "Python/Bun/Rust/Maturin/wasm-bindgen/Playwright versions are asserted, with exact acquisition/source pins and bounded hash observations.",
+    "Command evidence includes original log bytes and explicit truncation status; assembly is fresh and bounded per file, subject to the aggregate-withholding correction.",
+    "Browser proposal remains byte-identical to prior accepted source and validates exact executable/version/hash before launch."
+  ],
+  "runtime": "UNRUN. No imports, workflow execution, installation, tests, build, process probes, push or dispatch. Host execution remains dependent on same-run Rust success and an exactly adopted bounded workflow."
+}

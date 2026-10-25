@@ -1,0 +1,72 @@
+{
+  "profile": "weft.main-aggregate-integration-affected-source-review/1",
+  "disposition": "SOURCE_ACCEPT_BOUNDED",
+  "main": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+  "donor": "5fcbf59ff618eaeab8d4d50e1faa408796b75b58",
+  "planSha256": "1510afd696dff2558d8398ad676b829f23d49b716318dc78d58b24a4640b4b5b",
+  "handoffSha256": "79e86b719b0787a1cc364da7ad3c5f7ff1359688baa88c68a81acc74ac7f6238",
+  "scope": "Only six overlap resolutions and affected qualification source/config/pin/trigger wiring. No whole repository audit.",
+  "facts": [
+    "Five automatic overlap outputs match independently inspected three-way text merge exactly: core model, values, Databricks registrations, PostgreSQL table operations and runtime.",
+    "Raw-read file differs from donor only by main document-aware selected010_table_operation/raw_read(...,&doc) call resolution and formatting; donor NativeDocumentMode and complete surrounding admission remain.",
+    "Main owning-document opaque Arras semantics and diagnostic distinctions coexist with narrowly selected finite aggregate Catalog constructor. Main G02 row_predicate_literal/refinement/native-assignment distinctions and full typed row-expression/private exact target guard remain; donor LocalTimestamp cast/read-codec and explicit unsupported value route remain.",
+    "Runtime/main Truss/typed-page/retired-source additions and exact Unity.4/.5 dispatch coexist; generic fallback, logical/physical identifier distinction and S8 semantics are unchanged.",
+    "Cargo.toml, Cargo.lock, Python pyproject/Cargo config, WASM config, package.json, bun.lock and rust-toolchain.toml are byte-identical to main. Python version0.4.53 and complete main project features remain; no release bump/publication is included.",
+    "Workflow retargets exact new branch consistently, adds PostgreSQL compile-only package and the five real named G02 integration tests with nonzero-test requirement; inherited600s aggregate, per-command240s maximum and10s grace remain. Host is dependent on Rust success and retains actual committed complete Python feature build plus Rust WASM public wrapper parity.",
+    "All declared Rust pin rows(40rows/39unique paths) and host pin rows(52rows/44unique paths) match actual bytes. Duplicate rows are redundant, not extra coverage; these are selected source/config pins, not an exhaustive crate import inventory. Exact merged commit/tree freeze must still bind the whole source before push.",
+    "Main table-operations workflow changes only push.branches-ignore exact codex/weft-main-aggregate-qualification plus explicit all-tags preservation. PR/jobs/services remain untouched. Existing conformance/Truss/main/PR/release obligations from plan remain unsuppressed."
+  ],
+  "findings": [],
+  "paths": [
+    {
+      "path": ".github/workflows/expected-host-source.sha256",
+      "bytes": 5375,
+      "sha256": "a12bba7a0da46567aa6cac542cf99001c932360ac25cfd1c5237e66dee1f9207"
+    },
+    {
+      "path": ".github/workflows/table-operations.yml",
+      "bytes": 3630,
+      "sha256": "2b9ff7db943400082f40b7945bdea6ff31be4510d8d466a872f85563fb779e5e"
+    },
+    {
+      "path": ".github/workflows/weft-sum-avg-qualification.yml",
+      "bytes": 31521,
+      "sha256": "53e6b82e7bf6e66409f313156e12b0ee16ff9d659f6f58101f8bb1818af89b69"
+    },
+    {
+      "path": "crates/weft-core/src/model.rs",
+      "bytes": 40441,
+      "sha256": "1beb63e03c52a6787e3cc83500d10f3be67b322ca1b6a0c51615abd2aca2385f"
+    },
+    {
+      "path": "crates/weft-core/src/raw_read.rs",
+      "bytes": 66021,
+      "sha256": "9127d4f5d2b9efcf5627045a2f815ca7a42569cfbc35e15b429fb74b3952beeb"
+    },
+    {
+      "path": "crates/weft-core/src/table_operation/values.rs",
+      "bytes": 9297,
+      "sha256": "3cb53096548c7210021e6bd948880248a04c81704b221e3239460576b3559b6c"
+    },
+    {
+      "path": "crates/weft-databricks/src/lib.rs",
+      "bytes": 2109,
+      "sha256": "ae2b4cd7402572ff112aaef1ea081447305204e7330096ec0f5f8141267ffefd"
+    },
+    {
+      "path": "crates/weft-postgresql/src/table_operation.rs",
+      "bytes": 38622,
+      "sha256": "8c8058eadcb33639fd5e8c5f17aeef728e4d409644b825046cfd5d3e01bb9a2d"
+    },
+    {
+      "path": "crates/weft-runtime/src/lib.rs",
+      "bytes": 77313,
+      "sha256": "b245af2a47a26128b04f98304855769b4d403ab2e4f10bc3f615134f5df385c2"
+    }
+  ],
+  "runtime": "UNRUN. Source/hash/Git text-merge inspection only; no candidate imports/builds/tests/native SQL/Python/WASM/browser or workflow execution.",
+  "conditions": [
+    "Parent must commit/freeze exact reviewed merge and current pins, verify remote/ref/event correspondence, then authorize one normal isolated hosted run. Source acceptance itself performs no push/dispatch.",
+    "Donor58Rust/9host passes remain historical d436026479ba9176839bfe98364fdd263ee4af47 evidence. The merged candidate needs renewed selected plus G02 gate and required full PR/main/platform/package/native/release checks; no release or native authorization support is inferred."
+  ]
+}

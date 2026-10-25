@@ -1,0 +1,93 @@
+{
+  "disposition": "SOURCE_ACCEPT_BOUNDED",
+  "scope": "Eight exact Databricks source ownership additions only; not whole-source or semantic requalification.",
+  "reportedBase": "482c584f",
+  "metadata": {
+    "path": "docs/helix/02-design/module-boundaries.json",
+    "bytes": 170749,
+    "sha256": "935766c44129ec55aa16b9a149b3ea2307c41e09a4764717dcbc202a9b27c509",
+    "preimageSha256": "cadd387406117e761fd0d214dfe1215d107f6a50ba0d81301798b1bea45d2cfc"
+  },
+  "addedSources": [
+    {
+      "path": "crates/weft-databricks/src/unity_current_avg.rs",
+      "bytes": 60569,
+      "sha256": "73a9d2886c469e8c02423af2da898f0126c2cf006063bcfbf0d22ba22bafed57",
+      "publicDeclarations": [],
+      "pathReferences": []
+    },
+    {
+      "path": "crates/weft-databricks/src/unity_current_avg_lowering.rs",
+      "bytes": 38194,
+      "sha256": "929e087cf0cd8b2b3a1df672a5429e6fa604184e5277c1a440deb128cfdddca6",
+      "publicDeclarations": [],
+      "pathReferences": []
+    },
+    {
+      "path": "crates/weft-databricks/src/unity_current_predicate.rs",
+      "bytes": 42256,
+      "sha256": "51be3621e05f0f90a301310eb28380dc454bc6b0be0b05763025cc39adbb10ca",
+      "publicDeclarations": [],
+      "pathReferences": []
+    },
+    {
+      "path": "crates/weft-databricks/src/unity_current_read.rs",
+      "bytes": 29000,
+      "sha256": "1124fc19fb6ae7f20b4bd1db3622940db071c5cdfd717f32ecc0f1ab4e8af803",
+      "publicDeclarations": [
+        "fn:compile_json"
+      ],
+      "pathReferences": []
+    },
+    {
+      "path": "crates/weft-databricks/src/unity_current_sum.rs",
+      "bytes": 37103,
+      "sha256": "9892eb36097aefa5c5583e4b2ddb68a5d09a934f32d9da9f7643684b63371a9e",
+      "publicDeclarations": [],
+      "pathReferences": []
+    },
+    {
+      "path": "crates/weft-databricks/src/unity_current_sum_lowering.rs",
+      "bytes": 33526,
+      "sha256": "ab3589763d0cf564067c9a7fe65cdf107b8da920bf69819176270434433c4696",
+      "publicDeclarations": [
+        "field:positive_high",
+        "field:positive_low",
+        "field:negative_high",
+        "field:negative_low",
+        "field:nonnull_count",
+        "field:has_nonnull",
+        "field:malformed"
+      ],
+      "pathReferences": []
+    },
+    {
+      "path": "crates/weft-databricks/src/unity_current_summary.rs",
+      "bytes": 22163,
+      "sha256": "167eaf5f10b3d5b6d25e829b927e35134f86ad55ca1a6465d45710ce54e2aa9b",
+      "publicDeclarations": [],
+      "pathReferences": []
+    },
+    {
+      "path": "crates/weft-databricks/src/unity_current_summary_lowering.rs",
+      "bytes": 5618,
+      "sha256": "f51d486f9aea9f6003c8956b628ecf19f1800dcf62dda287794fe46cbb0b9d39",
+      "publicDeclarations": [],
+      "pathReferences": []
+    }
+  ],
+  "metadataSourceEntryCounts": {
+    "before": 253,
+    "after": 261,
+    "note": "Parent reported246/254; actual parsed metadata count is253/261. No complete filesystem re-inventory was performed."
+  },
+  "conclusions": [
+    "Removing precisely the eight entries reproduces the full original parsed metadata; IDs, ownership text, edges and all previous entries unchanged.",
+    "Actual unrestricted pub declarations match read compile_json plus seven SignedLimbs fields. Existing scanner excludes pub(crate)/pub(super); no checker visibility policy changed.",
+    "No path/cfg_attr module-path attributes in the eight source files; test fixture include_str calls are not module paths under the existing scanner.",
+    "Actual sources perform candidate compilation, lowering, exact arithmetic and owner dispatch using existing backend/core helpers. This metadata addition moves no UMF/host/native execution authority.",
+    "The observed generic unowned-source diagnostic is consistent with the eight previously missing entries; actual checker/PR outcomes remain future evidence."
+  ],
+  "findings": [],
+  "execution": "Only source/metadata/checker-definition reads and hashes. No checker/import/test/native/process execution, product edits or PR actions."
+}

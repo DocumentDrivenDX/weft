@@ -1,0 +1,23 @@
+{
+  "profile": "weft.main-aggregate-hosted-owner-adoption/1",
+  "commit": "10a8965bdef565dbaf0730a13c2e1913db6bd3f6",
+  "tree": "4d3e41d6c5883ee45b689290cc975f7b35ab671b",
+  "remoteMain": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+  "remoteQualificationBranch": "absent",
+  "openPullRequests": [],
+  "reviewReceiptSha256": "f6cb1c1fb4ca1a820f7f6c74131d4b7770b8c9d16b26e80bf1e736210f74a341",
+  "branch": "codex/weft-main-aggregate-qualification",
+  "action": "normal push exact commit to isolated public branch",
+  "dataflow": "Public reviewed source plus acquired pinned public build tools to GitHub hosted runner; bounded source-derived logs/receipts and temporary candidate binaries in runner; bounded public artifact upload. No credentials, production data, native database/services, PR/tag/dispatch/publication.",
+  "limits": {
+    "rustAggregateSeconds": 600,
+    "rustCommandMaxSeconds": 240,
+    "hostAggregateSeconds": 1200,
+    "rustJobMinutes": 15,
+    "hostJobMinutes": 25,
+    "rustLogCapBytes": 1048576,
+    "rustArtifactCapBytes": 8388608
+  },
+  "triggerReview": "Exact selected branch only; table-operations push exclusion exact; main/PR/tag/manual triggers unchanged. No matching other push workflow.",
+  "qualification": "UNRUN merged source; historical donor58/9 not transferred; candidate version0.4.53 unpublished"
+}

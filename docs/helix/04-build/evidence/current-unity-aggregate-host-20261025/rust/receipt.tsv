@@ -1,0 +1,79 @@
+format	weft.sum-avg-hosted-receipt/1
+event_name	push
+ref	refs/heads/codex/weft-sum-avg-qualification
+sha	d436026479ba9176839bfe98364fdd263ee4af47
+workflow	Weft SUM-AVG source qualification
+job	rust-sum-avg
+run_id	40233236164
+run_attempt	1
+runner_os	Linux
+runner_arch	X64
+image_os	ubuntu24
+image_version	20261023.334.3
+commit	d436026479ba9176839bfe98364fdd263ee4af47
+tree	d250bb7df84172c9f27602048e7e722dedd6cdf4
+workflow_file	.github/workflows/weft-sum-avg-qualification.yml
+toolchain_channel	1.90.0
+rustc_version_begin
+rustc 1.90.0 (1159e78c4 2025-09-14)
+binary: rustc
+commit-hash: 1159e78c4747b02ef996e55082b704c09b970588
+commit-date: 2025-09-14
+host: x86_64-unknown-linux-gnu
+release: 1.90.0
+LLVM version: 20.1.8
+cargo_version_begin
+cargo 1.90.0 (840b83a10 2025-07-30)
+release: 1.90.0
+commit-hash: 840b83a10fb0e039a83f4d70ad032892c287570a
+commit-date: 2025-07-30
+host: x86_64-unknown-linux-gnu
+libgit2: 1.9.1 (sys:0.20.2 vendored)
+libcurl: 8.14.1-DEV (sys:0.4.82+curl-8.14.1 vendored ssl:OpenSSL/3.5.0)
+ssl: OpenSSL 3.5.0 8 Apr 2025
+os: Ubuntu 24.4.0 (noble) [64-bit]
+rustc_path	/home/runner/.rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/rustc
+cargo_path	/home/runner/.rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/cargo
+e6abf55ab1859e7c990be77fd593f51661ea99fb2fde626ae9f4108aaa34e7fa  /home/runner/.rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/rustc
+51de284e8bb0d03dcee595a0fb1cb3a952fe9e7e4b953a8b1467b7f71725b561  /home/runner/.rustup/toolchains/1.90.0-x86_64-unknown-linux-gnu/bin/cargo
+crates/weft-core/src/raw_read.rs: OK
+crates/weft-core/src/table_lifecycle.rs: OK
+crates/weft-core/src/table_operation/values.rs: OK
+crates/weft-databricks/src/raw_read.rs: OK
+crates/weft-databricks/src/unity_current_predicate.rs: OK
+crates/weft-databricks/src/unity_current_summary.rs: OK
+crates/weft-databricks/src/unity_current_summary_lowering.rs: OK
+crates/weft-databricks/src/unity_current_sum.rs: OK
+crates/weft-databricks/src/unity_current_sum_lowering.rs: OK
+crates/weft-databricks/src/unity_current_avg.rs: OK
+crates/weft-databricks/src/unity_current_avg_lowering.rs: OK
+crates/weft-databricks/src/unity_current_read.rs: OK
+crates/weft-databricks/src/lib.rs: OK
+crates/weft-databricks/tests/fixtures/original-unity-model.json: OK
+crates/weft-databricks/tests/fixtures/original-unity-binding.json: OK
+crates/weft-databricks/src/raw_pages.rs: OK
+crates/weft-runtime/src/lib.rs: OK
+tests/current-unity-aggregate/python-bridge.py: OK
+tests/current-unity-aggregate/browser-bridge.ts: OK
+tests/spark-pages/read-request.json: OK
+crates/weft-core/src/model.rs: OK
+crates/weft-postgresql/src/query_wire.rs: OK
+crates/weft-postgresql/src/raw_action.rs: OK
+crates/weft-postgresql/src/raw_bulk.rs: OK
+crates/weft-postgresql/src/raw_read.rs: OK
+crates/weft-postgresql/src/search.rs: OK
+crates/weft-postgresql/src/table_operation.rs: OK
+crates/weft-postgresql/src/table_operation/insert_batch.rs: OK
+crates/weft-postgresql/src/table_seed.rs: OK
+Cargo.lock: OK
+rust-toolchain.toml: OK
+ad7077d76cc8fa2c349591580283c439a42956505631872004d136f23db2746d  .github/workflows/weft-sum-avg-qualification.yml
+command	compile-tests	2026-10-25T20:58:34Z	2026-10-25T20:59:23Z	duration_s=49	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=not-applicable	argv=cargo check --locked --tests -p weft-core -p weft-databricks -p weft-runtime --features weft-runtime/raw-postgresql-reads
+command	focused-core-read	2026-10-25T20:59:23Z	2026-10-25T21:00:21Z	duration_s=58	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=4	argv=cargo test --locked --lib -p weft-core raw_read::
+command	focused-dispatch	2026-10-25T21:00:21Z	2026-10-25T21:00:55Z	duration_s=34	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=9	argv=cargo test --locked --lib -p weft-databricks unity_current_read::
+command	focused-sum	2026-10-25T21:00:55Z	2026-10-25T21:00:55Z	duration_s=0	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=10	argv=cargo test --locked --lib -p weft-databricks unity_current_sum
+command	focused-avg	2026-10-25T21:00:55Z	2026-10-25T21:00:56Z	duration_s=1	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=20	argv=cargo test --locked --lib -p weft-databricks unity_current_avg
+command	focused-backend-public-route	2026-10-25T21:00:56Z	2026-10-25T21:00:56Z	duration_s=0	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=1	argv=cargo test --locked --lib -p weft-databricks raw_read::tests::current_sum_and_avg_keep_closed_requests_and_route_by_version
+command	focused-runtime-public-route	2026-10-25T21:00:56Z	2026-10-25T21:01:07Z	duration_s=11	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=1	argv=cargo test --locked --lib -p weft-runtime --features raw-postgresql-reads current_unity_raw_dispatch_tests::
+command	focused-pg-local-wire	2026-10-25T21:01:07Z	2026-10-25T21:01:22Z	duration_s=15	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=1	argv=cargo test --locked --lib -p weft-postgresql query_wire::tests::local_timestamp_wire_projection_stays_distinct_from_instant_and_preserves_null_input
+command	focused-predicate-quoting	2026-10-25T21:01:22Z	2026-10-25T21:01:23Z	duration_s=1	limit_s=240	cargo_exit=0	gate_exit=0	tests_passed=12	argv=cargo test --locked --lib -p weft-databricks unity_current_predicate::

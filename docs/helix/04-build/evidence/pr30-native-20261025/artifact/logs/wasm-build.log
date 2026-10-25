@@ -1,0 +1,411 @@
+[1m[32m   Compiling[0m ahash v0.8.12 (/home/runner/work/weft/weft/vendor/ahash)
+[0m[1m[33mwarning[0m[0m[1m: unexpected `cfg` condition value: `128`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/fallback_hash.rs:164:11[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m164[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    #[cfg(target_pointer_width = "128")][0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m           [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: expected values for `target_pointer_width` are: `16`, `32`, and `64`[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unexpected_cfgs)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unexpected `cfg` condition name: `fuzzing`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/random_state.rs:48:58[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m48[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                                                          [0m[0m[1m[33m^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: consider using a Cargo feature instead[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:[0m
+[0m            [lints.rust][0m
+[0m            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unexpected `cfg` condition name: `fuzzing`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/random_state.rs:68:54[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m68[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                                                      [0m[0m[1m[33m^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: consider using a Cargo feature instead[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:[0m
+[0m            [lints.rust][0m
+[0m            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration[0m
+
+[0m[1m[33mwarning[0m[0m[1m: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/convert.rs:69:8[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m64[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) trait ReadFromSlice {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[38;5;12m-------------[0m[0m [0m[0m[1m[38;5;12mmethods in this trait[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m69[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_u128x2(&self) -> ([u128; 2], &[u8]);[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^[0m
+[0m[1m[38;5;12m70[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_u128x4(&self) -> ([u128; 4], &[u8]);[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^[0m
+[0m[1m[38;5;12m71[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_last_u16(&self) -> u16;[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m75[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_last_u128x2(&self) -> [u128; 2];[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m76[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_last_u128x4(&self) -> [u128; 4];[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[1m[32m   Compiling[0m referencing v0.56.0
+[1m[32m   Compiling[0m jsonschema-value v0.56.0
+[1m[33mwarning[0m[1m:[0m `ahash` (lib) generated 4 warnings
+[1m[33mwarning[0m[1m:[0m `ahash` (lib) generated 4 warnings (4 duplicates)
+[1m[32m   Compiling[0m jsonschema-macros-core v0.56.0
+[1m[32m   Compiling[0m jsonschema-macros v0.56.0
+[1m[32m   Compiling[0m jsonschema v0.56.0
+[1m[32m   Compiling[0m weft-core v0.1.0 (/home/runner/work/weft/weft/crates/weft-core)
+[0m[1m[33mwarning[0m[0m[1m: unused import: `Value`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_lineage.rs:12:24[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m12[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0muse serde_json::{json, Value};[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                        [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_imports)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`[0m
+[0m [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_resolve.rs:4:25[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m4[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    application_model::{Descriptor, Shape},[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                         [0m[0m[1m[33m^^^^^^^^^^[0m[0m  [0m[0m[1m[33m^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m7[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    exact,[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^[0m
+[0m[1m[38;5;12m8[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    ir::{Family, Identity, LogicalType},[0m
+[0m[1m[38;5;12m9[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    model::{Catalog, Record},[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                      [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused import: `Identity`[0m
+[0m [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_scope.rs:9:18[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m9[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    ir::{Family, Identity, LogicalType},[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33m^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `sdk_read_parameters`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/compile.rs:442:21[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m442[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m                let sdk_read_parameters=req.parameters.clone().unwrap_or_default();[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_variables)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: associated function `new` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_ir.rs:188:16[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m185[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl ReadOrder {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m--------------[0m[0m [0m[0m[1m[38;5;12massociated function in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m188[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                [0m[0m[1m[33m^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: struct `PlanSchema03` is never constructed[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/arithmetic_application_resolve.rs:838:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m838[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct PlanSchema03;[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `derive` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/security_scan_obligations.rs:62:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m62[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_[0m[0m[1m[38;5;12m...[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: method `finish` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/syntax.rs:246:19[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m209[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl Parser {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m-----------[0m[0m [0m[0m[1m[38;5;12mmethod in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m246[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub(crate) fn finish(&mut self) -> Result<()> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: methods `terminal_record` and `terminal_key` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/path_ir.rs:120:12[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m55[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl PathRead {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m-------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m120[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn terminal_record(&self) -> &Identity {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m            [0m[0m[1m[33m^^^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m123[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn terminal_key(&self) -> &AuthoredKey {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m            [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: associated function `new` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/path_ir.rs:241:12[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m240[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl Plan {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------[0m[0m [0m[0m[1m[38;5;12massociated function in this implementation[0m
+[0m[1m[38;5;12m241[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn new(p: PlanParts) -> Result<Self> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m            [0m[0m[1m[33m^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: field `span` is never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/path_query.rs:24:9[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m22[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    CountDistinctPathTargets {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[38;5;12m------------------------[0m[0m [0m[0m[1m[38;5;12mfield in this variant[0m
+[0m[1m[38;5;12m23[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        alias: Name,[0m
+[0m[1m[38;5;12m24[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        span: Span,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[33m^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+
+[0m[1m[33mwarning[0m[0m[1m: field `field` is never read[0m
+[0m [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/security_rule_occurrences.rs:9:103[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m9[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&[0m[0m[1m[38;5;12m...[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[38;5;12m----------[0m[0m [0m[0m[1m[33m^^^^^[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[38;5;12m|[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[38;5;12mfield in this variant[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `prepare_administrative_seed_model` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/raw_read.rs:201:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m201[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn prepare_administrative_seed_model(binding: &Binding) -> Result<AdmittedModel> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `prepare_administrative_operation_document` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/raw_read.rs:225:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m225[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn prepare_administrative_operation_document([0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `canonical_name` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/table_query.rs:487:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m487[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^[0m
+
+[1m[32m   Compiling[0m weft-postgresql v0.1.0 (/home/runner/work/weft/weft/crates/weft-postgresql)
+[1m[32m   Compiling[0m weft-databricks v0.1.0 (/home/runner/work/weft/weft/crates/weft-databricks)
+[0m[1m[33mwarning[0m[0m[1m: unused import: `Value`[0m
+[0m [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_summary_lowering.rs:5:24[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m5[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0muse serde_json::{json, Value};[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                        [0m[0m[1m[33m^^^^^[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_imports)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `ordered`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/candidate/application.rs:201:5[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m201[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    ordered:Option<&OrderedPage>,[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_ordered`[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_variables)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: variable does not need to be mutable[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/candidate/navigation.rs:55:9[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m55[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12m----[0m[0m[1m[33m^^^^^^^^^^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12mhelp: remove this `mut`[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_mut)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: variable does not need to be mutable[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/candidate/navigation.rs:80:9[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m80[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut order = source[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12m----[0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12mhelp: remove this `mut`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: variable does not need to be mutable[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/candidate/navigation.rs:143:9[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m143[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut obligations=admitted.obligations;[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12m----[0m[0m[1m[33m^^^^^^^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[38;5;12mhelp: remove this `mut`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `error`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_read.rs:344:19[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m344[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        .map_err(|error| {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_error`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `kind`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_summary.rs:49:9[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m49[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let kind = summary["kind"].as_str().ok_or("summary kind required")?;[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[33m^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_kind`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `error`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_summary.rs:178:96[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m178[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let admitted = raw_read::admit_finite_current_summary_json(&internal.to_string()).map_err(|error| {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                                                                                [0m[0m[1m[33m^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_error`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `kind`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum.rs:57:9[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m57[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let kind = summary["kind"].as_str().ok_or("summary kind required")?;[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[33m^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_kind`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `error`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum.rs:222:92[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m222[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let admitted = raw_read::admit_finite_current_sum_json(&internal.to_string()).map_err(|error| {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[33m^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_error`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `string`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:201:17[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m201[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let string=carrier==Carrier::String;[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_string`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `output_name`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:290:13[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m290[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    for (i,(output_name,_column,_value_alias,logical,carrier,nullable,precision,scale)) in measure_specs.iter().enumerate() {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m             [0m[0m[1m[33m^^^^^^^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_output_name`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `field`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:376:21[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m376[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m...[0m[0m   if let Some(field)=owner["elements"].as_array().unwrap().iter().find(|f|f["id"]==member["element"]&&f["kind"]=="field"&&(f["name"].[0m[0m[1m[38;5;12m...[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_field`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `kind`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg.rs:57:9[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m57[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let kind = summary["kind"].as_str().ok_or("summary kind required")?;[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[33m^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_kind`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `decoder`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg.rs:177:14[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m177[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        let (decoder, source_facets) = if carrier == "integer" {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m              [0m[0m[1m[33m^^^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_decoder`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `error`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg.rs:226:92[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m226[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let admitted = raw_read::admit_finite_current_avg_json(&internal.to_string()).map_err(|error| {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[33m^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_error`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `string`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg_lowering.rs:197:17[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m197[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            let string=carrier==Carrier::String;[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_string`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `field`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg_lowering.rs:401:21[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m401[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m...[0m[0m   if let Some(field)=owner["elements"].as_array().unwrap().iter().find(|f|f["id"]==member["element"]&&f["kind"]=="field"&&(f["name"].[0m[0m[1m[38;5;12m...[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_field`[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `lower_current` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/raw_read.rs:455:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m455[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn lower_current(a: &AdmittedRead, catalog: &str) -> Result<J> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: field `record_id` is never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_predicate.rs:50:16[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m48[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(super) struct Source {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[38;5;12m------[0m[0m [0m[0m[1m[38;5;12mfield in this struct[0m
+[0m[1m[38;5;12m49[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub(super) table_module: String,[0m
+[0m[1m[38;5;12m50[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub(super) record_id: String,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: fields `create_missing`, `create_null`, and `generated` are never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_predicate.rs:66:5[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m61[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct SourceField {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[38;5;12m-----------[0m[0m [0m[0m[1m[38;5;12mfields in this struct[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m66[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    create_missing: bool,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m67[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    create_null: bool,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^^^[0m
+[0m[1m[38;5;12m68[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    generated: bool,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: struct `SignedLimbs` is never constructed[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:17:19[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) struct SignedLimbs {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: struct `Magnitude` is never constructed[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:28:8[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m28[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct Magnitude {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `coefficient` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:35:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m35[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn coefficient(state: SignedLimbs) -> Result<Option<String>, &'static str> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `normalize` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:75:4[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m75[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn normalize(high: u128, low_total: u128, n: u64) -> Result<Magnitude, &'static str> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `fixed_scale_decimal` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:95:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m95[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn fixed_scale_decimal(coefficient: &str, scale: u8) -> Result<String, &'static str> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `subtract` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_sum_lowering.rs:118:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m118[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn subtract(larger: Magnitude, smaller: Magnitude) -> Result<Magnitude, &'static str> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `exact_average_text` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg_lowering.rs:18:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m18[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn exact_average_text([0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `long_divide` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg_lowering.rs:63:4[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m63[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn long_divide(digits: &str, denominator: u128) -> Result<(String, u128), &'static str> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `increment_digits` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-databricks/src/unity_current_avg_lowering.rs:82:4[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m82[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn increment_digits(digits: &str) -> Result<String, &'static str> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `holes` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-postgresql/src/native_privilege_probes.rs:36:4[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m36[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn holes(sql: &str) -> Result<Vec<Hole>> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[1m[33mwarning[0m[1m:[0m `weft-databricks` (lib) generated 30 warnings (run `cargo fix --lib -p weft-databricks` to apply 4 suggestions)
+[1m[32m   Compiling[0m weft-runtime v0.1.0 (/home/runner/work/weft/weft/crates/weft-runtime)
+[1m[33mwarning[0m[1m:[0m `weft-core` (lib) generated 15 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+[1m[33mwarning[0m[1m:[0m `weft-postgresql` (lib) generated 1 warning
+[1m[32m   Compiling[0m weft-wasm v0.1.0 (/home/runner/work/weft/weft/crates/weft-wasm)
+[1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 46.58s

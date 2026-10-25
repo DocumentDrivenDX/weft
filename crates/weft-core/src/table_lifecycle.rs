@@ -242,6 +242,10 @@ fn admit_profile(binding:&Binding,doc:&Value,records:&BTreeMap<Vec<String>,crate
                 Carrier::Bits128 => "bits128",
                 Carrier::Date => "date",
                 Carrier::Timestamp => "timestamp",
+                // The lifecycle backend currently has no lossless local-time
+                // carrier mapping; keep it distinct so the native compatibility
+                // check below refuses it instead of treating it as an instant.
+                Carrier::LocalTimestamp => "localTimestamp",
             };
             let compatible = matches!(
                 (family, column["nativeType"]["kind"].as_str()),

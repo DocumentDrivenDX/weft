@@ -330,6 +330,7 @@
             "mod:raw_bulk",
             "mod:authored_pages",
             "mod:unity_search",
+            "mod:unity_current_read",
             "mod:local_spark4_sdk",
             "mod:local_spark4_sdk_pages"
           ],
@@ -548,6 +549,56 @@
             "field:native",
             "field:metadata"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_avg.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_avg_lowering.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_predicate.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_sum.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_sum_lowering.rs",
+          "publicDeclarations": [
+            "field:positive_high",
+            "field:positive_low",
+            "field:negative_high",
+            "field:negative_low",
+            "field:nonnull_count",
+            "field:has_nonnull",
+            "field:malformed"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_summary.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_summary_lowering.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
@@ -2090,6 +2141,7 @@
             "field:max_items",
             "struct:Request",
             "field:version",
+            "field:temporal_profile",
             "field:target",
             "field:sql",
             "field:binding",
@@ -2108,7 +2160,13 @@
             "fn:original_document",
             "fn:original_record",
             "fn:original_field_ref",
-            "fn:admit_json"
+            "fn:admit_json",
+            "fn:admit_finite_current_keyless_json",
+            "fn:admit_finite_current_predicate_json",
+            "fn:admit_finite_current_summary_json",
+            "fn:admit_finite_current_sum_json",
+            "fn:admit_finite_current_avg_json",
+            "fn:authored_temporal_meaning"
           ],
           "pathReferences": []
         },

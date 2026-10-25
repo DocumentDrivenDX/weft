@@ -1,0 +1,573 @@
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded lock_api v0.4.14
+  Downloaded fraction v0.17.0
+  Downloaded num-iter v0.1.46
+  Downloaded zerocopy-derive v0.8.59
+  Downloaded zmij v1.0.23
+  Downloaded itoa v1.0.18
+  Downloaded bit-set v0.8.0
+  Downloaded num-cmp v0.1.0
+  Downloaded jsonschema-regex v0.56.0
+  Downloaded hashbrown v0.17.1
+  Downloaded sha2 v0.10.9
+  Downloaded bytecount v0.6.9
+  Downloaded toml_datetime v1.1.1+spec-1.1.0
+  Downloaded strum v0.28.0
+  Downloaded num v0.4.3
+  Downloaded cpufeatures v0.2.17
+  Downloaded pyo3-macros v0.27.1
+  Downloaded jsonschema-macros v0.56.0
+  Downloaded uuid-simd v0.8.0
+  Downloaded wasm-bindgen-macro v0.2.105
+  Downloaded unindent v0.2.4
+  Downloaded num-complex v0.4.6
+  Downloaded outref v0.5.2
+  Downloaded cfg-if v1.0.5
+  Downloaded foldhash v0.2.0
+  Downloaded scopeguard v1.2.0
+  Downloaded vsimd v0.8.0
+  Downloaded windows-link v0.2.1
+  Downloaded toml_parser v1.1.3+spec-1.1.0
+  Downloaded smallvec v1.16.2
+  Downloaded wasm-bindgen v0.2.105
+  Downloaded unicode-general-category v1.1.0
+  Downloaded wasm-bindgen-macro-support v0.2.105
+  Downloaded wit-bindgen v0.57.1
+  Downloaded unicode-ident v1.0.26
+  Downloaded pyo3-macros-backend v0.27.1
+  Downloaded rand v0.9.5
+  Downloaded indexmap v2.14.2
+  Downloaded pyo3-ffi v0.27.1
+  Downloaded wasip2 v1.0.4+wasi-0.2.12
+  Downloaded regex v1.13.1
+  Downloaded winnow v1.0.4
+  Downloaded fancy-regex v0.19.2
+  Downloaded syn v3.0.6
+  Downloaded portable-atomic v1.15.0
+  Downloaded proptest v1.11.0
+  Downloaded zerocopy v0.8.59
+  Downloaded typenum v1.20.1
+  Downloaded syn v2.0.119
+  Downloaded toml_edit v0.25.15+spec-1.1.0
+  Downloaded referencing v0.56.0
+  Downloaded regex-syntax v0.8.11
+  Downloaded num-bigint v0.4.8
+  Downloaded js-sys v0.3.82
+  Downloaded ryu v1.0.23
+  Downloaded r-efi v5.3.0
+  Downloaded sqlparser v0.63.0
+  Downloaded proc-macro2 v1.0.107
+  Downloaded parking_lot v0.12.5
+  Downloaded rand_chacha v0.9.0
+  Downloaded quote v1.0.47
+  Downloaded pyo3-build-config v0.27.1
+  Downloaded once_cell v1.21.4
+  Downloaded jsonschema-macros-core v0.56.0
+  Downloaded jsonschema v0.56.0
+  Downloaded regex-automata v0.4.18
+  Downloaded rustversion v1.0.23
+  Downloaded parking_lot_core v0.9.12
+  Downloaded num-rational v0.4.2
+  Downloaded target-lexicon v0.13.5
+  Downloaded sqlparser_derive v0.6.0
+  Downloaded ref-cast-impl v1.0.27
+  Downloaded rand_xorshift v0.4.0
+  Downloaded rand_core v0.9.5
+  Downloaded strum_macros v0.28.0
+  Downloaded libc v0.2.190
+  Downloaded ref-cast v1.0.27
+  Downloaded redox_syscall v0.5.18
+  Downloaded borrow-or-share v0.2.4
+  Downloaded proc-macro-crate v3.5.0
+  Downloaded micromap v0.3.0
+  Downloaded jsonschema-value v0.56.0
+  Downloaded bit-vec v0.8.0
+  Downloaded bitflags v2.13.2
+  Downloaded unarray v0.1.4
+  Downloaded data-encoding v2.11.1
+  Downloaded block-buffer v0.10.4
+  Downloaded num-integer v0.1.47
+  Downloaded memoffset v0.9.1
+  Downloaded email_address v0.2.9
+  Downloaded crypto-common v0.1.7
+  Downloaded autocfg v1.5.1
+  Downloaded memchr v2.8.3
+  Downloaded log v0.4.34
+  Downloaded generic-array v0.14.7
+  Downloaded fluent-uri v0.4.1
+  Downloaded pyo3 v0.27.1
+  Downloaded digest v0.10.7
+  Downloaded allocator-api2 v0.2.21
+  Downloaded bumpalo v3.20.3
+  Downloaded aho-corasick v1.1.5
+  Downloaded indoc v2.0.7
+🔗 Found pyo3 bindings with abi3 support
+🐍 Not using a specific python interpreter
+📡 Using build options features, bindings from pyproject.toml
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.26
+   Compiling serde_core v1.0.228
+   Compiling version_check v0.9.5
+   Compiling autocfg v1.5.1
+   Compiling memchr v2.8.3
+   Compiling num-traits v0.2.19
+   Compiling cfg-if v1.0.5
+   Compiling target-lexicon v0.13.5
+   Compiling libc v0.2.190
+   Compiling syn v2.0.119
+   Compiling syn v3.0.6
+   Compiling zerocopy v0.8.59
+   Compiling ahash v0.8.12 (/home/runner/work/weft/weft/vendor/ahash)
+   Compiling foldhash v0.2.0
+   Compiling equivalent v1.0.2
+   Compiling ref-cast v1.0.27
+   Compiling allocator-api2 v0.2.21
+   Compiling hashbrown v0.17.1
+   Compiling pyo3-build-config v0.27.1
+   Compiling serde v1.0.228
+   Compiling ryu v1.0.23
+   Compiling parking_lot_core v0.9.12
+   Compiling itoa v1.0.18
+   Compiling num-integer v0.1.47
+   Compiling ref-cast-impl v1.0.27
+   Compiling regex-syntax v0.8.11
+   Compiling scopeguard v1.2.0
+   Compiling smallvec v1.16.2
+   Compiling borrow-or-share v0.2.4
+   Compiling lock_api v0.4.14
+   Compiling serde_derive v1.0.228
+   Compiling aho-corasick v1.1.5
+   Compiling generic-array v0.14.7
+   Compiling winnow v1.0.4
+   Compiling serde_json v1.0.145
+   Compiling heck v0.5.0
+   Compiling regex-automata v0.4.18
+   Compiling toml_parser v1.1.3+spec-1.1.0
+   Compiling parking_lot v0.12.5
+   Compiling num-bigint v0.4.8
+   Compiling indexmap v2.14.2
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+   Compiling percent-encoding v2.3.2
+   Compiling bit-vec v0.8.0
+   Compiling micromap v0.3.0
+   Compiling once_cell v1.21.4
+   Compiling typenum v1.20.1
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+   Compiling num-rational v0.4.2
+   Compiling toml_edit v0.25.15+spec-1.1.0
+   Compiling bit-set v0.8.0
+   Compiling fluent-uri v0.4.1
+   Compiling num-iter v0.1.46
+   Compiling num-complex v0.4.6
+   Compiling zmij v1.0.23
+   Compiling num v0.4.3
+   Compiling referencing v0.56.0
+   Compiling proc-macro-crate v3.5.0
+   Compiling fancy-regex v0.19.2
+   Compiling regex v1.13.1
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling jsonschema-regex v0.56.0
+   Compiling unicode-general-category v1.1.0
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling fraction v0.17.0
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling strum_macros v0.28.0
+   Compiling outref v0.5.2
+   Compiling bytecount v0.6.9
+   Compiling num-cmp v0.1.0
+   Compiling vsimd v0.8.0
+   Compiling jsonschema-value v0.56.0
+   Compiling uuid-simd v0.8.0
+   Compiling digest v0.10.7
+   Compiling email_address v0.2.9
+   Compiling strum v0.28.0
+   Compiling sqlparser_derive v0.6.0
+   Compiling data-encoding v2.11.1
+   Compiling cpufeatures v0.2.17
+   Compiling log v0.4.34
+   Compiling sqlparser v0.63.0
+   Compiling sha2 v0.10.9
+   Compiling pyo3-macros-backend v0.27.1
+   Compiling pyo3-ffi v0.27.1
+   Compiling base64 v0.22.1
+   Compiling memoffset v0.9.1
+   Compiling jsonschema-macros v0.56.0
+   Compiling pyo3 v0.27.1
+   Compiling jsonschema v0.56.0
+   Compiling indoc v2.0.7
+   Compiling unindent v0.2.4
+   Compiling pyo3-macros v0.27.1
+   Compiling weft-core v0.1.0 (/home/runner/work/weft/weft/crates/weft-core)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:12:24
+   |
+12 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:4:25
+  |
+4 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+7 |     exact,
+  |     ^^^^^
+8 |     ir::{Family, Identity, LogicalType},
+9 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:9:18
+  |
+9 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused import: `Value`
+ --> crates/weft-core/src/current_presence.rs:5:23
+  |
+5 | use serde_json::{json,Value};
+  |                       ^^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:838:8
+    |
+838 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:62:15
+   |
+62 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:246:19
+    |
+209 | impl Parser {
+    | ----------- method in this implementation
+...
+246 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 55 | impl PathRead {
+    | ------------- methods in this implementation
+...
+120 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+123 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:241:12
+    |
+240 | impl Plan {
+    | --------- associated function in this implementation
+241 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:24:9
+   |
+22 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+23 |         alias: Name,
+24 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:9:103
+  |
+9 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `prepare_administrative_seed_model` is never used
+   --> crates/weft-core/src/raw_read.rs:201:15
+    |
+201 | pub(crate) fn prepare_administrative_seed_model(binding: &Binding) -> Result<AdmittedModel> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `prepare_administrative_operation_document` is never used
+   --> crates/weft-core/src/raw_read.rs:225:15
+    |
+225 | pub(crate) fn prepare_administrative_operation_document(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `canonical_name` is never used
+   --> crates/weft-core/src/table_query.rs:487:4
+    |
+487 | fn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {
+    |    ^^^^^^^^^^^^^^
+
+   Compiling weft-databricks v0.1.0 (/home/runner/work/weft/weft/crates/weft-databricks)
+   Compiling weft-postgresql v0.1.0 (/home/runner/work/weft/weft/crates/weft-postgresql)
+warning: unused import: `Value`
+ --> crates/weft-databricks/src/unity_current_summary_lowering.rs:5:24
+  |
+5 | use serde_json::{json, Value};
+  |                        ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: variable does not need to be mutable
+  --> crates/weft-databricks/src/candidate/navigation.rs:55:9
+   |
+55 |     let mut source_relations = relationships::Traversals::collect(&mut source_lower, source)?;
+   |         ----^^^^^^^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: unused variable: `error`
+   --> crates/weft-databricks/src/unity_current_read.rs:344:19
+    |
+344 |         .map_err(|error| {
+    |                   ^^^^^ help: if this is intentional, prefix it with an underscore: `_error`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `kind`
+  --> crates/weft-databricks/src/unity_current_summary.rs:49:9
+   |
+49 |     let kind = summary["kind"].as_str().ok_or("summary kind required")?;
+   |         ^^^^ help: if this is intentional, prefix it with an underscore: `_kind`
+
+warning: unused variable: `error`
+   --> crates/weft-databricks/src/unity_current_summary.rs:178:96
+    |
+178 |     let admitted = raw_read::admit_finite_current_summary_json(&internal.to_string()).map_err(|error| {
+    |                                                                                                ^^^^^ help: if this is intentional, prefix it with an underscore: `_error`
+
+warning: unused variable: `kind`
+  --> crates/weft-databricks/src/unity_current_sum.rs:57:9
+   |
+57 |     let kind = summary["kind"].as_str().ok_or("summary kind required")?;
+   |         ^^^^ help: if this is intentional, prefix it with an underscore: `_kind`
+
+warning: unused variable: `error`
+   --> crates/weft-databricks/src/unity_current_sum.rs:222:92
+    |
+222 |     let admitted = raw_read::admit_finite_current_sum_json(&internal.to_string()).map_err(|error| {
+    |                                                                                            ^^^^^ help: if this is intentional, prefix it with an underscore: `_error`
+
+warning: unused variable: `string`
+   --> crates/weft-databricks/src/unity_current_sum_lowering.rs:201:17
+    |
+201 |             let string=carrier==Carrier::String;
+    |                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_string`
+
+warning: unused variable: `output_name`
+   --> crates/weft-databricks/src/unity_current_sum_lowering.rs:290:13
+    |
+290 |     for (i,(output_name,_column,_value_alias,logical,carrier,nullable,precision,scale)) in measure_specs.iter().enumerate() {
+    |             ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_output_name`
+
+warning: unused variable: `field`
+   --> crates/weft-databricks/src/unity_current_sum_lowering.rs:376:21
+    |
+376 | ...   if let Some(field)=owner["elements"].as_array().unwrap().iter().find(|f|f["id"]==member["element"]&&f["kind"]=="field"&&(f["name"]....
+    |                   ^^^^^ help: if this is intentional, prefix it with an underscore: `_field`
+
+warning: unused variable: `kind`
+  --> crates/weft-databricks/src/unity_current_avg.rs:57:9
+   |
+57 |     let kind = summary["kind"].as_str().ok_or("summary kind required")?;
+   |         ^^^^ help: if this is intentional, prefix it with an underscore: `_kind`
+
+warning: unused variable: `decoder`
+   --> crates/weft-databricks/src/unity_current_avg.rs:177:14
+    |
+177 |         let (decoder, source_facets) = if carrier == "integer" {
+    |              ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_decoder`
+
+warning: unused variable: `error`
+   --> crates/weft-databricks/src/unity_current_avg.rs:226:92
+    |
+226 |     let admitted = raw_read::admit_finite_current_avg_json(&internal.to_string()).map_err(|error| {
+    |                                                                                            ^^^^^ help: if this is intentional, prefix it with an underscore: `_error`
+
+warning: unused variable: `string`
+   --> crates/weft-databricks/src/unity_current_avg_lowering.rs:197:17
+    |
+197 |             let string=carrier==Carrier::String;
+    |                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_string`
+
+warning: unused variable: `field`
+   --> crates/weft-databricks/src/unity_current_avg_lowering.rs:401:21
+    |
+401 | ...   if let Some(field)=owner["elements"].as_array().unwrap().iter().find(|f|f["id"]==member["element"]&&f["kind"]=="field"&&(f["name"]....
+    |                   ^^^^^ help: if this is intentional, prefix it with an underscore: `_field`
+
+warning: function `lower_current` is never used
+   --> crates/weft-databricks/src/raw_read.rs:455:15
+    |
+455 | pub(crate) fn lower_current(a: &AdmittedRead, catalog: &str) -> Result<J> {
+    |               ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: field `record_id` is never read
+  --> crates/weft-databricks/src/unity_current_predicate.rs:50:16
+   |
+48 | pub(super) struct Source {
+   |                   ------ field in this struct
+49 |     pub(super) table_module: String,
+50 |     pub(super) record_id: String,
+   |                ^^^^^^^^^
+
+warning: fields `create_missing`, `create_null`, and `generated` are never read
+  --> crates/weft-databricks/src/unity_current_predicate.rs:66:5
+   |
+61 | struct SourceField {
+   |        ----------- fields in this struct
+...
+66 |     create_missing: bool,
+   |     ^^^^^^^^^^^^^^
+67 |     create_null: bool,
+   |     ^^^^^^^^^^^
+68 |     generated: bool,
+   |     ^^^^^^^^^
+
+warning: struct `SignedLimbs` is never constructed
+  --> crates/weft-databricks/src/unity_current_sum_lowering.rs:17:19
+   |
+17 | pub(crate) struct SignedLimbs {
+   |                   ^^^^^^^^^^^
+
+warning: struct `Magnitude` is never constructed
+  --> crates/weft-databricks/src/unity_current_sum_lowering.rs:28:8
+   |
+28 | struct Magnitude {
+   |        ^^^^^^^^^
+
+warning: function `coefficient` is never used
+  --> crates/weft-databricks/src/unity_current_sum_lowering.rs:35:15
+   |
+35 | pub(crate) fn coefficient(state: SignedLimbs) -> Result<Option<String>, &'static str> {
+   |               ^^^^^^^^^^^
+
+warning: function `normalize` is never used
+  --> crates/weft-databricks/src/unity_current_sum_lowering.rs:75:4
+   |
+75 | fn normalize(high: u128, low_total: u128, n: u64) -> Result<Magnitude, &'static str> {
+   |    ^^^^^^^^^
+
+warning: function `fixed_scale_decimal` is never used
+  --> crates/weft-databricks/src/unity_current_sum_lowering.rs:95:15
+   |
+95 | pub(crate) fn fixed_scale_decimal(coefficient: &str, scale: u8) -> Result<String, &'static str> {
+   |               ^^^^^^^^^^^^^^^^^^^
+
+warning: function `subtract` is never used
+   --> crates/weft-databricks/src/unity_current_sum_lowering.rs:118:4
+    |
+118 | fn subtract(larger: Magnitude, smaller: Magnitude) -> Result<Magnitude, &'static str> {
+    |    ^^^^^^^^
+
+warning: function `exact_average_text` is never used
+  --> crates/weft-databricks/src/unity_current_avg_lowering.rs:18:15
+   |
+18 | pub(crate) fn exact_average_text(
+   |               ^^^^^^^^^^^^^^^^^^
+
+warning: function `long_divide` is never used
+  --> crates/weft-databricks/src/unity_current_avg_lowering.rs:63:4
+   |
+63 | fn long_divide(digits: &str, denominator: u128) -> Result<(String, u128), &'static str> {
+   |    ^^^^^^^^^^^
+
+warning: function `increment_digits` is never used
+  --> crates/weft-databricks/src/unity_current_avg_lowering.rs:82:4
+   |
+82 | fn increment_digits(digits: &str) -> Result<String, &'static str> {
+   |    ^^^^^^^^^^^^^^^^
+
+warning: function `holes` is never used
+  --> crates/weft-postgresql/src/native_privilege_probes.rs:36:4
+   |
+36 | fn holes(sql: &str) -> Result<Vec<Hole>> {
+   |    ^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+   Compiling weft-runtime v0.1.0 (/home/runner/work/weft/weft/crates/weft-runtime)
+warning: `weft-databricks` (lib) generated 27 warnings (run `cargo fix --lib -p weft-databricks` to apply 2 suggestions)
+warning: `weft-core` (lib) generated 14 warnings (run `cargo fix --lib -p weft-core` to apply 4 suggestions)
+warning: `weft-postgresql` (lib) generated 1 warning
+   Compiling weft-python v0.4.53 (/home/runner/work/weft/weft/crates/weft-python)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 21s
+📦 Built wheel for abi3 Python ≥ 3.9 to /home/runner/work/_temp/weft-host-parity/wheels/weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl

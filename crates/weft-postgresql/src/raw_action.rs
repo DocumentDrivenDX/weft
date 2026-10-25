@@ -23,6 +23,7 @@ fn native_type(c: &Carrier) -> &'static str {
         Carrier::Bits128 => "bytea",
         Carrier::Date => "date",
         Carrier::Timestamp => "timestamptz",
+        Carrier::LocalTimestamp => "timestamp",
     }
 }
 fn field_id(f: &ActionField) -> String {

@@ -1,0 +1,37 @@
+{
+  "head": "10a8965bdef565dbaf0730a13c2e1913db6bd3f6",
+  "tree": "4d3e41d6c5883ee45b689290cc975f7b35ab671b",
+  "run": 40236125346,
+  "rust": {
+    "tests": 63,
+    "groups": 13,
+    "failures": 0,
+    "artifact": 12614888440,
+    "zipSha256": "ffe0746a839d8daba458985c78d70b278f54ba1989bc7ea616795e92721210cd"
+  },
+  "host": {
+    "vectors": 9,
+    "positive": 3,
+    "refused": 6,
+    "commands": 21,
+    "allExitZero": true,
+    "artifact": 12615491555,
+    "zipSha256": "be7197731b81be74c39686aa5686843704d93fefc204a63b85ba1dabacf847df",
+    "wheelSha256": "5d92a710aac8bb42d8df718c21bf09601821d3521805e306f4e56fdde5e1553d",
+    "browser": {
+      "version": "151.0.7922.34",
+      "revision": "1234",
+      "executablePath": "/home/runner/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+      "executableSha256": "0b20b130e7edd9dd51873be867761295fe0cfad490c2b9a64f95bd3cfc08fa71"
+    },
+    "wasmSha256": "274765768df3c7060fdaa30e30d46db29e2df09e92beb7ffe7142651ccce5a0a",
+    "jsSha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+    "pageErrors": [],
+    "externalRequests": 0,
+    "nativeModuleSha256": "8b05b4e9f2df20f14565b07d57e2e75242a3964b9b9f98248ac925cd30f3cf2a",
+    "packetSha256": "03f8fb752aabef9a569ef337e081e73df22dff49518e6e8571025b3318c81622"
+  },
+  "candidateVersion": "0.4.53 unpublished merged candidate; no immutable release replacement",
+  "nativeDatabase": "UNRUN",
+  "releaseQualified": false
+}

@@ -1334,13 +1334,67 @@ mod current_query_object_tests {
 
 #[cfg(feature = "raw-postgresql-reads")]
 pub fn compile_raw_read_json(request: &str) -> String {
-    if serde_json::from_str::<serde_json::Value>(request)
+    let parsed = weft_core::json::checked_json(request).ok();
+    let version = parsed
+        .as_ref()
+        .and_then(|r| r.get("version").and_then(serde_json::Value::as_str));
+    if matches!(
+        version,
+        Some("weft.unity-current-read-request/0.4")
+            | Some("weft.unity-current-read-request/0.5")
+    ) {
+        // These closed owner requests intentionally have no generic `target`
+        // key. Dispatch by their exact request version before legacy routing.
+        weft_databricks::unity_current_read::compile_json(request)
+    } else if serde_json::from_str::<serde_json::Value>(request)
         .ok()
         .is_some_and(|r| r["target"] == "spark-delta4")
     {
         weft_databricks::raw_read::compile_json(request)
     } else {
         weft_postgresql::raw_read::compile_json(request)
+    }
+}
+
+#[cfg(all(test, feature = "raw-postgresql-reads"))]
+mod current_unity_raw_dispatch_tests {
+    #[test]
+    fn exact_sum_avg_versions_route_without_changing_legacy_target_routing() {
+        for (version, response_version, code) in [
+            ("weft.unity-current-read-request/0.4", "weft.unity-current-selection/0.5", "WFT-UNITY-CURRENT-SUM"),
+            ("weft.unity-current-read-request/0.5", "weft.unity-current-selection/0.6", "WFT-UNITY-CURRENT-AVG"),
+        ] {
+            let response: serde_json::Value = serde_json::from_str(&super::compile_raw_read_json(
+                &serde_json::json!({"version":version}).to_string(),
+            )).unwrap();
+            assert_eq!(response["version"], response_version);
+            assert_eq!(response["status"], "blocked");
+            assert_eq!(response["diagnostics"][0]["code"], code);
+            let extra_target: serde_json::Value = serde_json::from_str(&super::compile_raw_read_json(
+                &serde_json::json!({"version":version,"target":"spark-delta4"}).to_string(),
+            )).unwrap();
+            assert_eq!(extra_target["version"], response_version);
+            assert_eq!(extra_target["status"], "blocked");
+            assert_eq!(extra_target["diagnostics"][0]["code"], code);
+        }
+        let legacy_refusal: serde_json::Value = serde_json::from_str(&super::compile_raw_read_json(
+            &serde_json::json!({"version":"weft.raw-read/0.1","target":"spark-delta4"}).to_string(),
+        )).unwrap();
+        assert_eq!(legacy_refusal["version"], "weft.raw-read/0.1");
+        assert_eq!(legacy_refusal["diagnostics"][0]["code"], "WFT-RAW-SPARK");
+        let duplicate_target: serde_json::Value = serde_json::from_str(&super::compile_raw_read_json(
+            r#"{"version":"weft.raw-read/0.1","target":"postgresql","target":"spark-delta4"}"#,
+        )).unwrap();
+        assert_eq!(duplicate_target["diagnostics"][0]["code"], "WFT-RAW-SPARK");
+
+        let valid_legacy = include_str!("../../../tests/spark-pages/read-request.json");
+        let compiled: serde_json::Value =
+            serde_json::from_str(&super::compile_raw_read_json(valid_legacy)).unwrap();
+        assert_eq!(compiled["version"], "weft.raw-read/0.1");
+        assert_eq!(compiled["status"], "compiled", "{compiled}");
+        assert!(compiled["sql"].as_str().is_some_and(|sql| !sql.is_empty()));
+        assert_eq!(compiled["sourceSql"], "SELECT o.id AS id, c.name AS customer FROM \"commerce\".\"Order\" AS o LEFT JOIN \"commerce\".\"Customer\" AS c ON o.customer_id = c.id ORDER BY c.name ASC NULLS LAST, o.id DESC NULLS FIRST LIMIT 50");
+        assert_eq!(compiled["outputs"].as_array().map(Vec::len), Some(2));
     }
 }
 

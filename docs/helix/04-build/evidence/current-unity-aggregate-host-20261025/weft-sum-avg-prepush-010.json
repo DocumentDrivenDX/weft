@@ -1,0 +1,9 @@
+{
+  "head": "d436026479ba9176839bfe98364fdd263ee4af47",
+  "tree": "d250bb7df84172c9f27602048e7e722dedd6cdf4",
+  "remoteBefore": "9e99e2f0db43cae50270c4a0e5e967ee231bd65b",
+  "reviewSha256": "89e087bcdda964039fe0d794e9cabcb36dd13322f9cfed318333cc01fc1c97a3",
+  "workflowSha256": "ad7077d76cc8fa2c349591580283c439a42956505631872004d136f23db2746d",
+  "scope": "same600s Rust8groups and dependent1200s Python/WASM parity; one existing test uses semantic AST instead of parentheses literal; no production code change",
+  "openMatchingPrs": 0
+}

@@ -172,6 +172,7 @@ pub(super) fn native_value(field: &OperationField, value: &Value) -> Result<Valu
     Ok(match field.carrier {
         Carrier::Date => json!(temporal::date(value["date"].as_str().unwrap())?),
         Carrier::Timestamp => json!(temporal::instant(value["timestamp"].as_str().unwrap())?),
+        Carrier::LocalTimestamp => return Err("local timestamp value codec unsupported"),
         Carrier::String => value["string"].clone(),
         Carrier::Boolean => value["boolean"].clone(),
         Carrier::Uuid => json!(value["uuid"].as_str().unwrap().to_ascii_lowercase()),

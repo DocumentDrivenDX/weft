@@ -59,6 +59,7 @@ impl<'a> Lower<'a> {
             Carrier::Bits128 => format!("pg_catalog.decode({slot}::pg_catalog.text,'hex')"),
             Carrier::Date => format!("{slot}::pg_catalog.date"),
             Carrier::Timestamp => format!("{slot}::pg_catalog.timestamptz"),
+            Carrier::LocalTimestamp => format!("{slot}::pg_catalog.timestamp"),
             Carrier::Uuid => format!("{slot}::pg_catalog.uuid"),
             Carrier::Boolean => format!("{slot}::pg_catalog.bool"),
             Carrier::Integer | Carrier::Decimal => format!("{slot}::pg_catalog.numeric"),
@@ -326,6 +327,7 @@ impl<'a> Lower<'a> {
         let expression = match field.carrier {
             Carrier::Date => format!("pg_catalog.to_char({column}::pg_catalog.timestamp, 'YYYY-MM-DD')"),
             Carrier::Timestamp => format!("pg_catalog.to_char({column} AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"')"),
+            Carrier::LocalTimestamp => format!("pg_catalog.to_char({column}, 'YYYY-MM-DD\"T\"HH24:MI:SS.US')"),
             Carrier::Boolean => column,
             Carrier::Bits128 => format!("pg_catalog.encode({column},'hex')"),
             _ => format!("({column})::pg_catalog.text"),

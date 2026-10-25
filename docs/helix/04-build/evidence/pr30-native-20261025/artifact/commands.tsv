@@ -1,0 +1,42 @@
+action	checkout	step_outcome=success	start_utc=2026-10-25T22:07:35Z	end_utc=2026-10-25T22:07:44Z	start_monotonic=99.90	duration_monotonic_s=9.14
+action	umf-checkout	step_outcome=success	start_utc=2026-10-25T22:07:44Z	end_utc=2026-10-25T22:08:32Z	start_monotonic=109.06	duration_monotonic_s=48.19
+action	rust-setup	step_outcome=success	start_utc=2026-10-25T22:08:33Z	end_utc=2026-10-25T22:08:44Z	start_monotonic=157.54	duration_monotonic_s=11.24
+action	rust-cache	step_outcome=success	start_utc=2026-10-25T22:08:44Z	end_utc=2026-10-25T22:08:54Z	start_monotonic=168.86	duration_monotonic_s=10.22
+action	node-setup	step_outcome=success	start_utc=2026-10-25T22:08:54Z	end_utc=2026-10-25T22:08:58Z	start_monotonic=179.15	duration_monotonic_s=3.83
+action	python-setup	step_outcome=success	start_utc=2026-10-25T22:08:58Z	end_utc=2026-10-25T22:08:58Z	start_monotonic=183.01	duration_monotonic_s=0.21
+argv	dependencies	python	-m	pip	install	maturin==1.9.6	build==1.3.0
+stage	dependencies	start_utc=2026-10-25T22:08:58Z	end_utc=2026-10-25T22:09:02Z	duration_monotonic_s=3.29	cap_with_grace_s=719	raw_exit=0	log_original_bytes=1163	log_redacted=no	log_truncated=no
+argv	candidate-wheel	maturin	build	--locked	--profile	dev	--manifest-path	crates/weft-python/Cargo.toml	--out	/tmp/operation-wheels
+stage	candidate-wheel	start_utc=2026-10-25T22:09:02Z	end_utc=2026-10-25T22:10:09Z	duration_monotonic_s=67.63	cap_with_grace_s=716	raw_exit=0	log_original_bytes=31785	log_redacted=no	log_truncated=no
+argv	umf-access-wheel	python	-m	build	--wheel	--outdir	/tmp/operation-wheels	upstream-umf/python/umf_access
+stage	umf-access-wheel	start_utc=2026-10-25T22:10:09Z	end_utc=2026-10-25T22:10:11Z	duration_monotonic_s=1.76	cap_with_grace_s=648	raw_exit=0	log_original_bytes=234	log_redacted=no	log_truncated=no
+argv	umf-codegen-wheel	python	-m	build	--wheel	--outdir	/tmp/operation-wheels	upstream-umf/python/umf_codegen
+stage	umf-codegen-wheel	start_utc=2026-10-25T22:10:11Z	end_utc=2026-10-25T22:10:12Z	duration_monotonic_s=0.82	cap_with_grace_s=647	raw_exit=0	log_original_bytes=232	log_redacted=no	log_truncated=no
+argv	install-host-dependencies	python	-m	pip	install	/tmp/operation-wheels/umf_access-0.1.0.dev4-py3-none-any.whl	/tmp/operation-wheels/umf_codegen-0.1.0a1-py3-none-any.whl	/tmp/operation-wheels/weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl	psycopg\[binary\]==3.2.13	pydantic==2.13.5
+stage	install-host-dependencies	start_utc=2026-10-25T22:10:12Z	end_utc=2026-10-25T22:10:16Z	duration_monotonic_s=3.99	cap_with_grace_s=646	raw_exit=0	log_original_bytes=2905	log_redacted=no	log_truncated=no
+argv	tool-identity	bash	-c	set\ -euo\ pipefail\;\ rustc\ --version\ --verbose\;\ cargo\ --version\ --verbose\;\ python\ --version\;\ node\ --version\;\ npm\ --version\;\ maturin\ --version\;\ python\ -I\ -c\ \"import\ importlib.metadata\ as\ m\;\ print\(\\\"psycopg\\\"\,m.version\(\\\"psycopg\\\"\)\)\;\ print\(\\\"pydantic\\\"\,m.version\(\\\"pydantic\\\"\)\)\;\ print\(\\\"umf-access\\\"\,m.version\(\\\"umf-access\\\"\)\)\;\ print\(\\\"umf-codegen\\\"\,m.version\(\\\"umf-codegen\\\"\)\)\"\;\ sha256sum\ \"\$\(rustc\ --print\ sysroot\)/bin/rustc\"\ \"\$\(command\ -v\ python\)\"\ \"\$\(command\ -v\ node\)\"\ \"\$\(command\ -v\ maturin\)\"
+stage	tool-identity	start_utc=2026-10-25T22:10:16Z	end_utc=2026-10-25T22:10:16Z	duration_monotonic_s=0.40	cap_with_grace_s=30	raw_exit=0	log_original_bytes=1140	log_redacted=no	log_truncated=no
+argv	rust-tests	cargo	test	--locked	-p	weft-postgresql	--test	table_operation	--test	table_lifecycle
+stage	rust-tests	start_utc=2026-10-25T22:10:16Z	end_utc=2026-10-25T22:11:04Z	duration_monotonic_s=47.90	cap_with_grace_s=479	raw_exit=0	log_original_bytes=20040	log_redacted=no	log_truncated=no
+argv	native-compiler	cargo	build	--locked	-p	weft-postgresql	--example	compile_table_operation
+stage	native-compiler	start_utc=2026-10-25T22:11:04Z	end_utc=2026-10-25T22:11:05Z	duration_monotonic_s=0.58	cap_with_grace_s=431	raw_exit=0	log_original_bytes=16329	log_redacted=no	log_truncated=no
+argv	installed-bindings	python	-I	tests/raw-postgresql/table-operation-bindings.py	target/debug/examples/compile_table_operation	/home/runner/work/_temp/operation-bindings.json	/home/runner/work/_temp/operation-browser-cases.json
+stage	installed-bindings	start_utc=2026-10-25T22:11:05Z	end_utc=2026-10-25T22:11:09Z	duration_monotonic_s=3.96	cap_with_grace_s=431	raw_exit=0	log_original_bytes=48	log_redacted=no	log_truncated=no
+argv	native-oracle	python	-I	tests/raw-postgresql/table-operation-native.py	--dsn-env	WEFT_NATIVE_DSN	--report	/home/runner/work/_temp/weft-table-operations/native.json
+stage	native-oracle	start_utc=2026-10-25T22:11:09Z	end_utc=2026-10-25T22:11:17Z	duration_monotonic_s=8.03	cap_with_grace_s=299	raw_exit=0	log_original_bytes=78	log_redacted=yes	log_truncated=no
+argv	wasm-build	cargo	build	--locked	-p	weft-wasm	--target	wasm32-unknown-unknown	--features	raw-postgresql-reads
+stage	wasm-build	start_utc=2026-10-25T22:11:17Z	end_utc=2026-10-25T22:12:04Z	duration_monotonic_s=46.64	cap_with_grace_s=599	raw_exit=0	log_original_bytes=33999	log_redacted=no	log_truncated=no
+argv	wasm-bindgen-install	cargo	install	wasm-bindgen-cli	--version	0.2.105	--locked	--root	/tmp/operation-wasm-tools
+stage	wasm-bindgen-install	start_utc=2026-10-25T22:12:04Z	end_utc=2026-10-25T22:13:16Z	duration_monotonic_s=72.34	cap_with_grace_s=553	raw_exit=0	log_original_bytes=14502	log_redacted=no	log_truncated=no
+argv	wasm-bindgen	/tmp/operation-wasm-tools/bin/wasm-bindgen	--target	web	--out-dir	/tmp/operation-web	target/wasm32-unknown-unknown/debug/weft_wasm.wasm
+stage	wasm-bindgen	start_utc=2026-10-25T22:13:16Z	end_utc=2026-10-25T22:13:20Z	duration_monotonic_s=4.40	cap_with_grace_s=480	raw_exit=0	log_original_bytes=0	log_redacted=no	log_truncated=no
+argv	playwright-install	npm	install	--prefix	/tmp/operation-browser	--ignore-scripts	--no-package-lock	playwright@1.62.1
+stage	playwright-install	start_utc=2026-10-25T22:13:20Z	end_utc=2026-10-25T22:13:22Z	duration_monotonic_s=1.73	cap_with_grace_s=476	raw_exit=0	log_original_bytes=24	log_redacted=no	log_truncated=no
+argv	chromium-install	node	/tmp/operation-browser/node_modules/playwright/cli.js	install	--with-deps	chromium
+stage	chromium-install	start_utc=2026-10-25T22:13:22Z	end_utc=2026-10-25T22:13:43Z	duration_monotonic_s=20.46	cap_with_grace_s=474	raw_exit=0	log_original_bytes=17543	log_redacted=no	log_truncated=no
+argv	wasm-bindgen-identity	sha256sum	/tmp/operation-wasm-tools/bin/wasm-bindgen
+stage	wasm-bindgen-identity	start_utc=2026-10-25T22:13:43Z	end_utc=2026-10-25T22:13:43Z	duration_monotonic_s=0.02	cap_with_grace_s=30	raw_exit=0	log_original_bytes=109	log_redacted=no	log_truncated=no
+argv	browser-parity	node	tests/raw-postgresql/table-operation-browser.mjs	/home/runner/work/_temp/operation-browser-cases.json	/tmp/operation-web	/home/runner/work/_temp/weft-table-operations/browser.json
+stage	browser-parity	start_utc=2026-10-25T22:13:43Z	end_utc=2026-10-25T22:13:48Z	duration_monotonic_s=5.15	cap_with_grace_s=454	raw_exit=0	log_original_bytes=78	log_redacted=no	log_truncated=no
+argv	postgres-image-identity	docker	inspect	--format	\{\{.Image\}\}	[SERVICE_CONTAINER_ID]
+stage	postgres-image-identity	start_utc=2026-10-25T22:13:48Z	end_utc=2026-10-25T22:13:48Z	duration_monotonic_s=0.02	cap_with_grace_s=20	raw_exit=0	log_original_bytes=72	log_redacted=no	log_truncated=no

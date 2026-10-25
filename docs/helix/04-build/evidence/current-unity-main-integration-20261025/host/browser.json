@@ -1,0 +1,77 @@
+{
+  "profile": "weft.unity-current-sum-avg-wasm-parity/0.1",
+  "scope": "Actual Chromium initialized WASM through compile_raw_read_json; no database, native authority or release qualification.",
+  "browser": {
+    "version": "151.0.7922.34",
+    "revision": "1234",
+    "executablePath": "/home/runner/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+    "executableSha256": "0b20b130e7edd9dd51873be867761295fe0cfad490c2b9a64f95bd3cfc08fa71"
+  },
+  "packetSha256": "03f8fb752aabef9a569ef337e081e73df22dff49518e6e8571025b3318c81622",
+  "wasmSha256": "274765768df3c7060fdaa30e30d46db29e2df09e92beb7ffe7142651ccce5a0a",
+  "jsSha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+  "checks": [
+    {
+      "id": "sum04",
+      "matched": true,
+      "status": "compiled",
+      "version": "weft.unity-current-selection/0.5"
+    },
+    {
+      "id": "sum04-missing-native-columnset",
+      "matched": true,
+      "status": "blocked",
+      "version": "weft.unity-current-selection/0.5"
+    },
+    {
+      "id": "avg05",
+      "matched": true,
+      "status": "compiled",
+      "version": "weft.unity-current-selection/0.6"
+    },
+    {
+      "id": "avg05-missing-native-columnset",
+      "matched": true,
+      "status": "blocked",
+      "version": "weft.unity-current-selection/0.6"
+    },
+    {
+      "id": "legacy-generic-spark-0.1-compiled",
+      "matched": true,
+      "status": "compiled",
+      "version": "weft.raw-read/0.1"
+    },
+    {
+      "id": "legacy-generic-route-refusal-weft.raw-read-0.1",
+      "matched": true,
+      "status": "blocked",
+      "version": "weft.raw-read/0.1"
+    },
+    {
+      "id": "legacy-generic-route-refusal-weft.unity-current-read-request-0.1",
+      "matched": true,
+      "status": "blocked",
+      "version": "weft.raw-read/0.1"
+    },
+    {
+      "id": "legacy-generic-route-refusal-weft.unity-current-read-request-0.2",
+      "matched": true,
+      "status": "blocked",
+      "version": "weft.raw-read/0.1"
+    },
+    {
+      "id": "legacy-generic-route-refusal-weft.unity-current-read-request-0.3",
+      "matched": true,
+      "status": "blocked",
+      "version": "weft.raw-read/0.1"
+    }
+  ],
+  "requests": [
+    "http://weft.unity-sum-avg.test/",
+    "http://weft.unity-sum-avg.test/weft.js",
+    "http://weft.unity-sum-avg.test/weft_wasm_bg.wasm"
+  ],
+  "pageErrors": [],
+  "nativeDatabase": false,
+  "nativeAuthority": false
+}

@@ -1,0 +1,8 @@
+Collecting maturin@ https://files.pythonhosted.org/packages/58/1f/a2047ddf2230e700d5f8a13dd4b9af5ce806ad380c32e58105888205926e/maturin-1.9.6-py3-none-manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64.whl#sha256=0246202377c49449315305209f45c8ecef6e2d6bd27a04b5b6f1ab3e4ea47238
+  Downloading maturin-1.9.6-py3-none-manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64.whl (8.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.6/8.6 MB 39.0 MB/s eta 0:00:00
+Installing collected packages: maturin
+Successfully installed maturin-1.9.6
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.2
+[notice] To update, run: python -m pip install --upgrade pip
