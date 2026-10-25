@@ -330,6 +330,7 @@
             "mod:raw_bulk",
             "mod:authored_pages",
             "mod:unity_search",
+            "mod:unity_current_read",
             "mod:local_spark4_sdk",
             "mod:local_spark4_sdk_pages"
           ],

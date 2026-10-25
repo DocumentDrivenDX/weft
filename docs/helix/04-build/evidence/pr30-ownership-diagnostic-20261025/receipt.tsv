@@ -1,0 +1,24 @@
+format	weft.owned-surface-diagnostic/1
+event_name	push
+ref	refs/heads/codex/weft-owned-surface-diagnostic
+sha	1b035f0d97783e13dc028921588316687199af86
+workflow	Weft owned-surface diagnostic (disposable)
+job	owned-surface-diagnostic
+run_id	40242991838
+run_attempt	1
+runner_os	Linux
+runner_arch	X64
+monotonic_deadline	210.94
+start_utc	2026-10-25T23:03:20Z
+start_monotonic	30.94
+bun_version	1.4.2
+bun_sha256	a83d263767d839e4d2649ca8e35d07159c7afc99afdc96d731ced29e056dda0c
+end_utc	2026-10-25T23:03:32Z
+end_monotonic	42.45
+checkout_outcome	success
+preflight_outcome	success
+bun_setup_outcome	success
+bun_verify_outcome	success
+diagnostic_outcome	failure
+evidence_outcome	full_artifact_ready
+evidence_final	status=pass	step_exit=0
