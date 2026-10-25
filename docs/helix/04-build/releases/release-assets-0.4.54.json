@@ -13,6 +13,9 @@
     "installed-python-wheel-9-vectors",
     "chromium-wasm-9-vectors"
   ],
+  "macosRunnerLabel": "macos-14",
+  "macosRunnerArchitecture": "arm64 (M1), per the GitHub-hosted runners reference; runtime architecture assertion remains required",
+  "macosRunnerArchitectureReference": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
   "expectedWheelCount": 3,
   "expectedFixedAssetNames": [
     "packaging-linux-x86_64-0.4.54.json",
@@ -22,6 +25,7 @@
     "mac-runner-preflight-0.4.54.json",
     "mac-tool-binary-sha256-0.4.54.txt",
     "compiler-roster-0.4.54.json",
+    "rust-compiler-reports-0.4.54.json",
     "python-compiler-parity-0.4.54.json",
     "browser-compiler-parity-0.4.54.json",
     "browser-compiler-receipts-0.4.54.json",
@@ -31,7 +35,7 @@
     "release-pins-0.4.54.json",
     "SHA256SUMS"
   ],
-  "assetPolicy": "Exactly three versioned wheels with one package report per target, one hosted macOS producer receipt and its selected compiler receipts, this release note, this policy, generated release pins and SHA256SUMS. No local-macos-0.4.54.json receipt is eligible.",
+  "assetPolicy": "Exactly three versioned wheels with one package report per target, one hosted macOS producer receipt and its Rust/Python/Chromium selected compiler reports, this release note, this policy, generated release pins and SHA256SUMS. No local-macos-0.4.54.json receipt is eligible.",
   "sourceCommit": null,
   "releaseMetadataCommit": null,
   "wheelSha256": null,

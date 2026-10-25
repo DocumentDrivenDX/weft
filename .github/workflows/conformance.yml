@@ -86,6 +86,7 @@ jobs:
           python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-count-star-boundaries -q
           python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-count-star-assembly -q
           python3 -I -B -S -W error::ResourceWarning -m unittest discover -s tests/distribution-implicit-arithmetic-corpus -q
+          python3 -S -B -m unittest discover -s scripts/release -p test_selected_assets_0454.py -q
       - name: Enforce module boundaries and negative controls
         run: WEFT_CARGO="$(command -v cargo)" bun run modules:check
       - name: Install pinned browser binding builder

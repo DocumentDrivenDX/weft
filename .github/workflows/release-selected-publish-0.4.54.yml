@@ -53,19 +53,17 @@ jobs:
           test "$GITHUB_REF" = refs/heads/main
           test "$GITHUB_SHA" = "$METADATA_SHA"
           test "$(git rev-parse HEAD)" = "$METADATA_SHA"
+          test "${#SOURCE_SHA}" = 40
+          test "${#METADATA_SHA}" = 40
+          case "$SOURCE_SHA$METADATA_SHA" in *[!0-9a-f]*) exit 1;; esac
           test "$(git rev-parse "refs/tags/$TAG^{commit}")" = "$METADATA_SHA"
           git merge-base --is-ancestor "$SOURCE_SHA" "$METADATA_SHA"
           git diff --exit-code "$SOURCE_SHA" "$METADATA_SHA" -- Cargo.toml Cargo.lock crates spec vendor .cargo rust-toolchain rust-toolchain.toml docs/helix/02-design/contracts packages/weft-browser tests/compile/fixtures/cases.json scripts/release/verify-wheel-packaging.py
-          python3 - <<'PY'
-          import subprocess
-          old=subprocess.check_output(['git','show',f"{__import__('os').environ['SOURCE_SHA']}:.github/workflows/release.yml"],text=True)
-          new=open('.github/workflows/release.yml').read()
-          exact=" && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54'"
-          if new.count(exact)!=2:raise SystemExit('legacy release exclusions are not present in both jobs')
-          if new.replace(exact,'',2)!=old:raise SystemExit('legacy release workflow changed beyond the two exact v0.4.54 exclusions')
-          PY
-          test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true
           mkdir -p selected/linux selected/macos selected/assets
+          git show "$SOURCE_SHA:.github/workflows/release.yml" > selected/source-release.yml
+          cp .github/workflows/release.yml selected/metadata-release.yml
+          git show "$SOURCE_SHA:crates/weft-python/pyproject.toml" > selected/source-pyproject.toml
+          test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true
       - name: Read and verify producer run identities
         env:
           GH_TOKEN: ${{ github.token }}
@@ -100,6 +98,9 @@ jobs:
           set -euo pipefail
           python scripts/release/verify_selected_assets_0454.py \
             --source-sha "$SOURCE_SHA" --metadata-sha "$METADATA_SHA" \
+            --linux-run-id "${{ inputs.linux_run_id }}" --macos-run-id "${{ inputs.macos_run_id }}" \
+            --source-pyproject selected/source-pyproject.toml \
+            --source-release-workflow selected/source-release.yml --metadata-release-workflow selected/metadata-release.yml \
             --linux-run selected/linux-run.json --linux-jobs selected/linux-jobs.json \
             --macos-run selected/macos-run.json \
             --linux-dir selected/linux --macos-dir selected/macos \
@@ -114,6 +115,7 @@ jobs:
           cp selected/macos/runner-preflight.json selected/assets/mac-runner-preflight-0.4.54.json
           cp selected/macos/tool-binary-sha256.txt selected/assets/mac-tool-binary-sha256-0.4.54.txt
           cp selected/macos/compiler-roster.json selected/assets/compiler-roster-0.4.54.json
+          cp selected/macos/compiler-reports.json selected/assets/rust-compiler-reports-0.4.54.json
           cp selected/macos/python-compiler-parity.json selected/assets/python-compiler-parity-0.4.54.json
           cp selected/macos/browser-compiler-parity.json selected/assets/browser-compiler-parity-0.4.54.json
           cp selected/macos/browser-compiler-receipts.json selected/assets/browser-compiler-receipts-0.4.54.json
@@ -126,14 +128,14 @@ jobs:
           policy=json.loads(pathlib.Path('docs/helix/04-build/releases/release-assets-0.4.54.json').read_text())
           verification=json.loads(pathlib.Path('selected/selected-assets-verification-0.4.54.json').read_text())
           files=sorted(p for p in root.iterdir() if p.is_file())
-          pins={'schema':'weft-selected-release-pins/1','tag':'v0.4.54','sourceCommit':os.environ['SOURCE_SHA'],'releaseMetadataCommit':os.environ['METADATA_SHA'],'policy':policy,'verification':verification,'candidateAssets':[{'name':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in files]}
+          pins={'schema':'weft-selected-release-pins/1','tag':'v0.4.54','sourceCommit':os.environ['SOURCE_SHA'],'releaseMetadataCommit':os.environ['METADATA_SHA'],'macosMaturinFeatures':verification['macosMaturinFeatures'],'policy':policy,'verification':verification,'candidateAssets':[{'name':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in files]}
           (root/'release-pins-0.4.54.json').write_text(json.dumps(pins,indent=2)+'\n')
           files=sorted(p for p in root.iterdir() if p.is_file())
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in files))
           names={p.name for p in root.iterdir() if p.is_file()}
-          fixed={'packaging-linux-x86_64-0.4.54.json','packaging-linux-aarch64-0.4.54.json','packaging-macos-arm64-0.4.54.json','mac-hosted-producer-receipt-0.4.54.json','mac-runner-preflight-0.4.54.json','mac-tool-binary-sha256-0.4.54.txt','compiler-roster-0.4.54.json','python-compiler-parity-0.4.54.json','browser-compiler-parity-0.4.54.json','browser-compiler-receipts-0.4.54.json','selected-assets-verification-0.4.54.json','v0.4.54.md','release-assets-0.4.54.json','release-pins-0.4.54.json','SHA256SUMS'}
+          fixed={'packaging-linux-x86_64-0.4.54.json','packaging-linux-aarch64-0.4.54.json','packaging-macos-arm64-0.4.54.json','mac-hosted-producer-receipt-0.4.54.json','mac-runner-preflight-0.4.54.json','mac-tool-binary-sha256-0.4.54.txt','compiler-roster-0.4.54.json','rust-compiler-reports-0.4.54.json','python-compiler-parity-0.4.54.json','browser-compiler-parity-0.4.54.json','browser-compiler-receipts-0.4.54.json','selected-assets-verification-0.4.54.json','v0.4.54.md','release-assets-0.4.54.json','release-pins-0.4.54.json','SHA256SUMS'}
           wheel_names={n for n in names if n.endswith('.whl')}
-          if fixed!=set(policy['expectedFixedAssetNames']) or len(wheel_names)!=policy['expectedWheelCount'] or names-fixed!=wheel_names or len(names)!=18:raise SystemExit('candidate release asset set has missing or unexpected files')
+          if fixed!=set(policy['expectedFixedAssetNames']) or len(wheel_names)!=policy['expectedWheelCount'] or names-fixed!=wheel_names or len(names)!=19:raise SystemExit('candidate release asset set has missing or unexpected files')
           PY
       - name: Reconcile exact candidate bytes to the draft and verify read-back
         env:
