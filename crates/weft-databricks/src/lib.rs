@@ -54,6 +54,16 @@ pub mod authored_pages;
 
 pub mod unity_search;
 
+/// Source-pinned finite Unity Catalog current-read compilation.
+pub mod unity_current_read;
+mod unity_current_predicate;
+mod unity_current_summary;
+mod unity_current_summary_lowering;
+mod unity_current_sum;
+mod unity_current_sum_lowering;
+mod unity_current_avg;
+mod unity_current_avg_lowering;
+
 mod raw_pages;
 mod spark_shapes;
 
