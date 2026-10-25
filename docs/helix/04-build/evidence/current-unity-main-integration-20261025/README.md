@@ -1,0 +1,9 @@
+# Released-main aggregate compiler integration evidence
+
+[Run 40236125346](https://github.com/DocumentDrivenDX/weft/actions/runs/40236125346) qualified exact commit `10a8965bdef565dbaf0730a13c2e1913db6bd3f6`, tree `4d3e41d6c5883ee45b689290cc975f7b35ab671b`. It merges released main `726a840e956e25217d6aeea2674fdfcf3f342a24` with the selected aggregate donor `5fcbf59ff618eaeab8d4d50e1faa408796b75b58`, preserving main's G02 semantics, package configuration and full wheel features.
+
+The bounded Rust job passed 63 tests across 13 groups, including five affected G02 source-compiler controls. The dependent job built and installed a fresh Python wheel, asserted its loaded native-module bytes match the wheel member, and matched nine parsed-JSON compiler responses against actual Chromium/WASM: three positives and six refusals. All 21 host commands exited zero without log truncation. Chromium 151.0.7922.34/revision 1234 was hashed before launch; browser page errors and external requests were zero. Exact wheel/module/WASM/browser hashes and tool identities are retained in the outcome and raw artifact files.
+
+The Rust ZIP matched GitHub digest `ffe0746a839d8daba458985c78d70b278f54ba1989bc7ea616795e92721210cd`; the host ZIP matched `be7197731b81be74c39686aa5686843704d93fefc204a63b85ba1dabacf847df`. Raw artifact files are preserved byte-for-byte, including terminal whitespace in logs. These are compiler and binding results, with no database or Unity authorization claim.
+
+The candidate wheel is labelled 0.4.53 and remains unpublished. It must never replace an immutable release. A fresh release version, required PR/main checks, native qualification and postpublication verification remain open. Later native-helper/workflow changes require their own evidence; this packet qualifies only its exact source and selected scope.

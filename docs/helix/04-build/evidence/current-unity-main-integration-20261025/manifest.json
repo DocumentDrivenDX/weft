@@ -1,0 +1,326 @@
+{
+  "profile": "weft.main-aggregate-source-evidence/1",
+  "source": "10a8965bdef565dbaf0730a13c2e1913db6bd3f6",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1835,
+      "sha256": "3bd9d72ea084841f2a055f6f2b86b64307d38294476e159b7adff5df9f3d96fc"
+    },
+    {
+      "path": "commit.json",
+      "bytes": 371,
+      "sha256": "0ecb104a2fa0d54e99615ae639c575c7c2c77abe9e99094d75d9a3c00c8730b2"
+    },
+    {
+      "path": "host/browser.json",
+      "bytes": 2412,
+      "sha256": "08961633f4921a200b4c32830901b1878d3449730eb5a4b9a4d1046a24e2b409"
+    },
+    {
+      "path": "host/bun-version.txt",
+      "bytes": 6,
+      "sha256": "b99b4c7cdf236f59bc9f65d963deaecae3b16a7dad87939cacb9057f7664daee"
+    },
+    {
+      "path": "host/cargo-version.txt",
+      "bytes": 335,
+      "sha256": "28bb2fcded0f1a512f704e36723fb25e78333d454a95d52232c77f9b55a92892"
+    },
+    {
+      "path": "host/commands.tsv",
+      "bytes": 10442,
+      "sha256": "f8ec6616f7f2c16259f9479717828ddb6088c7b23ee7c59f33008d48d20c6d8b"
+    },
+    {
+      "path": "host/expected-source-hash.txt",
+      "bytes": 130,
+      "sha256": "4a28125692aece9a049609d6290537d00dcce24d1ab4a3505e09ea3d3ebe8850"
+    },
+    {
+      "path": "host/limits.tsv",
+      "bytes": 35,
+      "sha256": "a408aafb292690b01d848fc64cf05d1b31150cfdb9bc74cf9d320f8503c39c7e"
+    },
+    {
+      "path": "host/logs/bootstrap-bun-install.log",
+      "bytes": 130,
+      "sha256": "d5fb4d5ef4792e6ec8c09b25775e068d0ea075c83717a1bf67c396cda024f916"
+    },
+    {
+      "path": "host/logs/bootstrap-chromium.log",
+      "bytes": 19248,
+      "sha256": "c3972f6d63d55a97e4e3b0eb59f15f565d25590b5a2bb574899104e091bee68f"
+    },
+    {
+      "path": "host/logs/bootstrap-python-tools.log",
+      "bytes": 762,
+      "sha256": "3574bb63d92455e626727a60e8a7d70c98d1b409fc1bc82a2f39dd75efc9dde6"
+    },
+    {
+      "path": "host/logs/bootstrap-rust.log",
+      "bytes": 257,
+      "sha256": "8248a40a963c6814e5ddc61cf0721b1e9a0180742a9e6d866b0279f4a6bc6c11"
+    },
+    {
+      "path": "host/logs/bootstrap-wasm-bindgen.log",
+      "bytes": 11079,
+      "sha256": "0ef0ef5abb4f89f62302fdc3d1d398b511f16dc70089c4d252639e9e6ec8aba1"
+    },
+    {
+      "path": "host/logs/chromium-parity.log",
+      "bytes": 40,
+      "sha256": "39b78c936abf733b66625c0cf00970d6f8434e97e21940161e782f69532f9d82"
+    },
+    {
+      "path": "host/logs/hash-tools.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "host/logs/python-consumer-venv.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "host/logs/python-vectors.log",
+      "bytes": 66,
+      "sha256": "feef3cff51036537bc8c3ec5cfa1f0016c32992f1db041e91f25394091d176ea"
+    },
+    {
+      "path": "host/logs/python-wheel-build.log",
+      "bytes": 22334,
+      "sha256": "51bba7e5586f081a6933f340339685b1236639eb66ee5d2973186aa9b827bd7f"
+    },
+    {
+      "path": "host/logs/python-wheel-install.log",
+      "bytes": 313,
+      "sha256": "61ba84c46fd2e9240e5922dceccec4351df450ee0d8d370e7f707c2e9723f5bc"
+    },
+    {
+      "path": "host/logs/verify-bun.log",
+      "bytes": 6,
+      "sha256": "b99b4c7cdf236f59bc9f65d963deaecae3b16a7dad87939cacb9057f7664daee"
+    },
+    {
+      "path": "host/logs/verify-maturin.log",
+      "bytes": 14,
+      "sha256": "787cb487318bb4be21596ee0dc7ba11f4ba3255927452a9b84ea5fab640afadb"
+    },
+    {
+      "path": "host/logs/verify-playwright.log",
+      "bytes": 40,
+      "sha256": "d8315cadbfbca9b9f048b7ef0a1ad2dbdc1af6de33a373fcfa297dbc07fb9826"
+    },
+    {
+      "path": "host/logs/verify-python.log",
+      "bytes": 106,
+      "sha256": "3d95b8546ddd027f2ebec4e17ccaa7aea23ee04ba7c3bfa148a50ce5351557ae"
+    },
+    {
+      "path": "host/logs/verify-rust.log",
+      "bytes": 531,
+      "sha256": "69f976de0553ef3ae12f0c91ee35166e50e4f34b221dd50c04748632d4d3deed"
+    },
+    {
+      "path": "host/logs/verify-wasm-bindgen.log",
+      "bytes": 21,
+      "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276"
+    },
+    {
+      "path": "host/logs/wasm-bindgen.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "host/logs/wasm-build.log",
+      "bytes": 19974,
+      "sha256": "4b29204c906b48c9c41b62b9f44af243505068a9bda5b76ab833ee09afc51605"
+    },
+    {
+      "path": "host/logs/wasm-hash.log",
+      "bytes": 253,
+      "sha256": "1dc25c9fc09ec8a8f9a7ece3bd93a6c65246476abe57fb42c46379ff1b8190ee"
+    },
+    {
+      "path": "host/logs/wheel-hash.log",
+      "bytes": 166,
+      "sha256": "8a66f58e96cf54252fa47aca89dc41e0026d8abb2f2c72cb1e4950b44a15ee51"
+    },
+    {
+      "path": "host/maturin-version.txt",
+      "bytes": 14,
+      "sha256": "787cb487318bb4be21596ee0dc7ba11f4ba3255927452a9b84ea5fab640afadb"
+    },
+    {
+      "path": "host/parity.json",
+      "bytes": 121350,
+      "sha256": "03f8fb752aabef9a569ef337e081e73df22dff49518e6e8571025b3318c81622"
+    },
+    {
+      "path": "host/playwright-version.json",
+      "bytes": 40,
+      "sha256": "d8315cadbfbca9b9f048b7ef0a1ad2dbdc1af6de33a373fcfa297dbc07fb9826"
+    },
+    {
+      "path": "host/python-version.txt",
+      "bytes": 106,
+      "sha256": "3d95b8546ddd027f2ebec4e17ccaa7aea23ee04ba7c3bfa148a50ce5351557ae"
+    },
+    {
+      "path": "host/receipt.tsv",
+      "bytes": 496,
+      "sha256": "5d3288d99674bfa2b3f5013396dec9d75fe077fb83b56c81856ff81a969a26d1"
+    },
+    {
+      "path": "host/rustc-version.txt",
+      "bytes": 196,
+      "sha256": "938db28b83089ab88301ca425f99fa1d8b61ee66e0371babe1db6373ae9810a3"
+    },
+    {
+      "path": "host/source-check.txt",
+      "bytes": 2396,
+      "sha256": "19d7c8635a8e88e5cd9047b4516acf0ff3b5a7a1b1a93605634d97739fffb97e"
+    },
+    {
+      "path": "host/tool-hashes.sha256",
+      "bytes": 740,
+      "sha256": "00c3519d6a34d31ca16a596c4abc5404a6053d5dee7825182eaefe36bd25c8e0"
+    },
+    {
+      "path": "host/wasm-bindgen-version.txt",
+      "bytes": 21,
+      "sha256": "77e9a14fc88e7434ec823340ac27538312be174451c3548fd84ec08f1beb8276"
+    },
+    {
+      "path": "host/wasm-hashes.sha256",
+      "bytes": 253,
+      "sha256": "1dc25c9fc09ec8a8f9a7ece3bd93a6c65246476abe57fb42c46379ff1b8190ee"
+    },
+    {
+      "path": "host/wheel.sha256",
+      "bytes": 166,
+      "sha256": "8a66f58e96cf54252fa47aca89dc41e0026d8abb2f2c72cb1e4950b44a15ee51"
+    },
+    {
+      "path": "integration-plan.md",
+      "bytes": 5523,
+      "sha256": "1510afd696dff2558d8398ad676b829f23d49b716318dc78d58b24a4640b4b5b"
+    },
+    {
+      "path": "outcome.json",
+      "bytes": 1462,
+      "sha256": "603d811a2c2a0b5c6ec6965b1febc6dfcc02a9191e44362b2f5ccd5280539680"
+    },
+    {
+      "path": "owner-adoption.json",
+      "bytes": 1338,
+      "sha256": "3a955d12cd8f4ef11c777997c728e906376b05cf585b50c2d9315d60beb6830d"
+    },
+    {
+      "path": "rust/commands.tsv",
+      "bytes": 3511,
+      "sha256": "eaf76efc7193826653452c465cb9933d9c57d5bc2dd1994434efacd13668d68f"
+    },
+    {
+      "path": "rust/expected-lock.sha256",
+      "bytes": 77,
+      "sha256": "3ec39f525869b3fa5cef66b592aa573a53daccfd6344b9066237f2c01093fe6d"
+    },
+    {
+      "path": "rust/expected-source.sha256",
+      "bytes": 4304,
+      "sha256": "b2f3ef744b35d6db980c0bc54f1a0cb625b88e789715bd2522169e71ec381939"
+    },
+    {
+      "path": "rust/expected-toolchain.sha256",
+      "bytes": 86,
+      "sha256": "deffc0c43651d5dd43d3e10ab9aa47d1182160d926a4bb6b8205271929b78b5c"
+    },
+    {
+      "path": "rust/logs/compile-tests.log",
+      "bytes": 29414,
+      "sha256": "8f71aa150295d67a4038548d70e36d06534ea2161abb1da0d2d8042a1697f9c8"
+    },
+    {
+      "path": "rust/logs/focused-avg.log",
+      "bytes": 15858,
+      "sha256": "e20c3cf40ae7f6231beb0479049f63f00a95cd92c855e18e4769200e00c5945c"
+    },
+    {
+      "path": "rust/logs/focused-backend-public-route.log",
+      "bytes": 13710,
+      "sha256": "7011b46ee01b6dfc1fad5c3be06927708f5d00c13be2c9c4714829b354f96823"
+    },
+    {
+      "path": "rust/logs/focused-core-read.log",
+      "bytes": 8934,
+      "sha256": "c0700087f20db345e9c0b0afcc21ff55e0858364e65f0f5aec3bbcb511b0bae9"
+    },
+    {
+      "path": "rust/logs/focused-dispatch.log",
+      "bytes": 14641,
+      "sha256": "378923efb597733420add03132005727dbcb26c2b1a9b6515bd40a8972c3000a"
+    },
+    {
+      "path": "rust/logs/focused-pg-local-wire.log",
+      "bytes": 9348,
+      "sha256": "c52dac381baeb25746992097490a157cd678848519f29ab911070e423d27a248"
+    },
+    {
+      "path": "rust/logs/focused-predicate-quoting.log",
+      "bytes": 14863,
+      "sha256": "de584da1a7546325ec571f2393b27649acb1e9a80a88d31a7ee3d15362aad17f"
+    },
+    {
+      "path": "rust/logs/focused-runtime-public-route.log",
+      "bytes": 17171,
+      "sha256": "f53335d5527879d3977f3d6d0d3ada46af39c4ef8f9833d460a989ed9ef5b724"
+    },
+    {
+      "path": "rust/logs/focused-sum.log",
+      "bytes": 14665,
+      "sha256": "ea20506f82f8468fa49052523bba6f12a8875a898aac5f73f13c37a2fca58093"
+    },
+    {
+      "path": "rust/logs/g02-closed-ast.log",
+      "bytes": 8474,
+      "sha256": "739992acc2f1dab721f6e23ba50c3d15d7edd79106722f71f8dd6df5b905a94d"
+    },
+    {
+      "path": "rust/logs/g02-intrinsic-null-types.log",
+      "bytes": 8379,
+      "sha256": "e27b982a9f595fa4b2c2ff83edba6f8dc68959b20d3a4195e5891ae263b163fd"
+    },
+    {
+      "path": "rust/logs/g02-numeric-conditional-algebra.log",
+      "bytes": 8393,
+      "sha256": "92e7d9ce86462385aaf7b77a98e5e038028145bb03344069bf01f8297dd0a6d2"
+    },
+    {
+      "path": "rust/logs/g02-predicate-literals.log",
+      "bytes": 8383,
+      "sha256": "9b7220192b35966440f42938348224bf26d9ca49917d26a701befde09606f39b"
+    },
+    {
+      "path": "rust/logs/g02-predicate-numeric-literals.log",
+      "bytes": 8389,
+      "sha256": "232bf4782a5d8248f4b11a942b9121b479bf2a609e38869ce2680d789c0c6a76"
+    },
+    {
+      "path": "rust/receipt.tsv",
+      "bytes": 7024,
+      "sha256": "d745b5282634a3dc9235ec677f9713786ad10910dcdc545f8e6856232286dfee"
+    },
+    {
+      "path": "rust/source-check.txt",
+      "bytes": 1978,
+      "sha256": "4009589025e2538d75aba4063b77f5281b57d1e03fb995ddfc51cfbc4a52ec98"
+    },
+    {
+      "path": "source-review.json",
+      "bytes": 5005,
+      "sha256": "f6cb1c1fb4ca1a820f7f6c74131d4b7770b8c9d16b26e80bf1e736210f74a341"
+    }
+  ]
+}

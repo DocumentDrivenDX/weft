@@ -13,10 +13,15 @@ from contextlib import contextmanager, asynccontextmanager
 import hashlib
 import importlib.metadata
 import json
+import os
 from pathlib import Path
+import re
+import sys
+import time
 import uuid
 
 import psycopg
+from psycopg.conninfo import conninfo_to_dict, make_conninfo
 from psycopg import sql
 import weft
 from umf_codegen import compile_table_deployment, compile_table_migration
@@ -24,9 +29,107 @@ from umf_access.lifecycle import apply_table_migration, inspect_table_history
 from umf_access.unified import SyncSession, AsyncSession, SessionIdentity, SessionPolicy
 
 parser=argparse.ArgumentParser()
-parser.add_argument('--dsn',required=True)
+parser.add_argument('--dsn')
+parser.add_argument('--dsn-env')
 parser.add_argument('--report',required=True,type=Path)
 args=parser.parse_args()
+if bool(args.dsn) == bool(args.dsn_env): parser.error('provide exactly one of --dsn or --dsn-env')
+if args.dsn_env:
+    args.dsn=os.environ.get(args.dsn_env)
+    if not args.dsn: parser.error('DSN environment variable is empty')
+native_deadline=time.monotonic()+max(0,int(os.environ.get('WEFT_NATIVE_TIMEOUT_SECONDS','300'))-5)
+def _bounded_timeout_ms(value,cap_ms,name):
+    match=re.fullmatch(r'([0-9]+)(ms|s|min|h|d)?',value.strip(),re.IGNORECASE)
+    if match is None:raise ValueError(f'unsupported preconfigured {name} value; refusing connection')
+    amount=int(match.group(1));unit=(match.group(2) or 'ms').lower()
+    scale={'ms':1,'s':1000,'min':60000,'h':3600000,'d':86400000}[unit]
+    existing_ms=amount*scale
+    # PostgreSQL zero means unlimited; retain the finite host-side cap.
+    return min(existing_ms,cap_ms) if existing_ms>0 else cap_ms
+
+def _split_pg_startup_options(options):
+    """Match PostgreSQL 18 pg_split_opts: ASCII whitespace and backslash escapes."""
+    whitespace=' \t\n\v\f\r';tokens=[];index=0
+    while index<len(options):
+        while index<len(options) and options[index] in whitespace:index+=1
+        if index==len(options):break
+        token=[];escaped=False
+        while index<len(options):
+            char=options[index]
+            if char in whitespace and not escaped:break
+            if not escaped and char=='\\':escaped=True
+            else:
+                token.append(char);escaped=False
+            index+=1
+        tokens.append(''.join(token))
+    return tokens
+
+def conninfo(statement_ms=30000,lock_ms=15000,with_limits=False):
+    settings=conninfo_to_dict(args.dsn)
+    connect=settings.get('connect_timeout')
+    if connect is None:connect_seconds=5
+    elif re.fullmatch(r'[0-9]+',connect.strip()) is None:
+        raise ValueError('unsupported preconfigured connect_timeout; refusing connection')
+    else:connect_seconds=min(int(connect),5) if int(connect)>0 else 5
+    settings['connect_timeout']=str(connect_seconds)
+
+    options=settings.get('options','')
+    caps={'statement_timeout':statement_ms,'lock_timeout':lock_ms}
+    index=0
+    tokens=_split_pg_startup_options(options)
+    while index<len(tokens):
+        token=tokens[index]
+        if token=='-c':
+            if index+1>=len(tokens):raise ValueError('unsupported incomplete PostgreSQL -c option; refusing connection')
+            assignment=tokens[index+1]
+            if '=' not in assignment:
+                if assignment.strip().lower() in caps:raise ValueError(f'unsupported preconfigured {assignment}; refusing connection')
+                index+=2;continue
+            key,value=assignment.split('=',1);normalized=key.strip().lower()
+            if normalized in caps:
+                timeout_ms=_bounded_timeout_ms(value,caps[normalized],normalized)
+                caps[normalized]=min(caps[normalized],timeout_ms)
+            index+=2;continue
+        if token[:2].lower()=='-c' and len(token)>2:
+            assignment=token[2:]
+            if '=' not in assignment:
+                if assignment.strip().lower() in caps:raise ValueError(f'unsupported attached {assignment}; refusing connection')
+            else:
+                key,value=assignment.split('=',1);normalized=key.strip().lower()
+                if normalized in caps:
+                    timeout_ms=_bounded_timeout_ms(value,caps[normalized],normalized)
+                    caps[normalized]=min(caps[normalized],timeout_ms)
+            index+=1;continue
+        # Do not silently retain an alternate or malformed spelling that may
+        # override one of the two host-bounded PostgreSQL timeouts.
+        if re.search(r'(?:^|[-=])(?:statement_timeout|lock_timeout)(?:=|$)',token,re.IGNORECASE):
+            raise ValueError('unsupported PostgreSQL timeout option spelling; refusing connection')
+        index+=1
+    # Keep the original option bytes intact: PostgreSQL does not use shell
+    # quoting here. Appended -c entries safely take precedence over originals.
+    suffix=f'-c statement_timeout={caps["statement_timeout"]}ms -c lock_timeout={caps["lock_timeout"]}ms'
+    trailing_backslashes=len(options)-len(options.rstrip('\\'))
+    if trailing_backslashes%2:raise ValueError('unsupported dangling PostgreSQL options escape; refusing connection')
+    separator=' ' if options else ''
+    settings['options']=options+separator+suffix
+    result=make_conninfo(**settings)
+    return (result,caps) if with_limits else result
+def cleanup_timeout(maximum=5):
+    return max(0,min(maximum,native_deadline-time.monotonic()-2))
+async def bounded_async_wait(awaitables,maximum=5):
+    budget=cleanup_timeout(maximum)
+    if budget<=0: raise TimeoutError('no host cleanup budget remains')
+    done,pending=await asyncio.wait(awaitables,timeout=budget)
+    if pending: raise TimeoutError('async cleanup did not finish within the remaining host budget')
+    return done
+async def bounded_async_close(connection):
+    task=asyncio.create_task(connection.close())
+    try:
+        await bounded_async_wait({task})
+    except BaseException:
+        task.cancel()
+        raise
+    task.result()
 root=Path(__file__).resolve().parent
 source=json.loads((root/'table-operation-model.json').read_text())
 payload=source['modules'][0]['extensions']['umf.tables']
@@ -65,12 +168,50 @@ binding['nativeLifecycle'].update(configurationDigest=bundle['configurationDiges
 observations=[]
 program_hashes={}
 leases={"acquired":0,"released":0}
+server_details={'versionInteger':None,'version':None}
+async_lease_details=None
+failed_assertion=None
+cleanup_status='pending'
+cleanup_failure_type=None
 session_policy=SessionPolicy(people={"alice":alice,"bob":bob},batches={"scheduled":cfg["batchRole"]},schema=cfg["schema"])
 
 
+def write_partial_report(status='running',failure_type=None):
+    args.report.parent.mkdir(parents=True,exist_ok=True)
+    report={'status':status,'scope':'candidate SQL native behavior under source-installed PG18 RLS; not generated/runtime operation admission',
+            'postgresql':server_details['versionInteger'],'postgresqlVersion':server_details['version'],
+            'weft':importlib.metadata.version('weft-sql'),'sourceDigest':bundle['sourceDigest'],'bundleDigest':bundle['bundleDigest'],
+            'observations':observations,'perCallLeases':leases,'asyncLeases':async_lease_details,
+            'programDigests':program_hashes,'cleanupStatus':cleanup_status,
+            'cleanupFailureType':cleanup_failure_type,'nativeExecutionQualified':False}
+    if failed_assertion is not None:report['failedAssertion']=failed_assertion
+    if failure_type is not None:report['failureType']=failure_type
+    temporary=args.report.with_suffix(args.report.suffix+'.tmp')
+    temporary.write_text(json.dumps(report,indent=2)+'\n')
+    temporary.replace(args.report)
+
+def record_unhandled(exc_type,exc,tb):
+    try:write_partial_report('failed',exc_type.__name__)
+    except BaseException:pass
+    sys.__excepthook__(exc_type,exc,tb)
+
+sys.excepthook=record_unhandled
+
+def set_cleanup_limits(connection,startup_limits):
+    remaining_ms=int(max(0,native_deadline-time.monotonic()-2)*1000)
+    if remaining_ms<=0:raise TimeoutError('no host cleanup budget remains for database teardown')
+    statement_ms=min(startup_limits['statement_timeout'],remaining_ms)
+    lock_ms=min(startup_limits['lock_timeout'],statement_ms,remaining_ms)
+    connection.execute("SELECT pg_catalog.set_config('statement_timeout',%s,false),pg_catalog.set_config('lock_timeout',%s,false)",(f'{statement_ms}ms',f'{lock_ms}ms'))
+
 def check(name,value):
-    assert value,name
+    global failed_assertion
+    if not value:
+        failed_assertion=name
+        write_partial_report('failed','AssertionError')
+        raise AssertionError(name)
     observations.append(name)
+    write_partial_report()
 
 
 def scalar(value):
@@ -154,8 +295,10 @@ def refuses(connection,role,name,inputs=None,items=None,error=psycopg.errors.Ins
 
 
 async def async_oracle(admin):
-    connection=await psycopg.AsyncConnection.connect(args.dsn,autocommit=True)
+    global async_lease_details
+    connection=await psycopg.AsyncConnection.connect(conninfo(),autocommit=True)
     counters={'acquired':0,'released':0}
+    async_lease_details=counters
     task=None
     async def invoke(role,name,inputs,transaction_owner='adapter'):
         artifact,call=program(name,inputs)
@@ -189,9 +332,9 @@ async def async_oracle(admin):
         with admin.transaction():
             admin.execute(sql.SQL('SELECT id FROM {} WHERE id=%s FOR UPDATE').format(sql.Identifier(cfg['schema'],'notes')),('a1',))
             task=asyncio.create_task(invoke(cfg['batchRole'],'rename',create_input('a1',bob)))
-            deadline=asyncio.get_running_loop().time()+5
             observed=False
-            with psycopg.connect(args.dsn,autocommit=True) as monitor:
+            with psycopg.connect(conninfo(1000,1000),autocommit=True) as monitor:
+                deadline=asyncio.get_running_loop().time()+5
                 while asyncio.get_running_loop().time()<deadline:
                     state=monitor.execute('SELECT wait_event_type FROM pg_catalog.pg_stat_activity WHERE pid=%s',(connection.info.backend_pid,)).fetchone()
                     if state==('Lock',):observed=True;break
@@ -199,12 +342,14 @@ async def async_oracle(admin):
                     await asyncio.sleep(.01)
             check('async-cancellation-observes-real-native-lock-wait',observed)
             task.cancel();task.cancel()
-            try:await task
+            done=await bounded_async_wait({task})
+            if task not in done:raise AssertionError('cancelled write did not finish within host cleanup budget')
+            try:task.result()
             except asyncio.CancelledError:pass
             else:raise AssertionError('cancelled write returned a result')
             check('repeated-async-cancellation-propagates-after-cleanup',task.cancelled() and counters['acquired']==counters['released'])
         discarded=connection.closed
-        if discarded:connection=await psycopg.AsyncConnection.connect(args.dsn,autocommit=True)
+        if discarded:connection=await psycopg.AsyncConnection.connect(conninfo(),autocommit=True)
         cursor=await connection.execute("SELECT current_user,pg_catalog.current_setting('role')")
         restored=await cursor.fetchone()
         check('async-cancelled-lease-is-restored-or-discarded',int(connection.info.transaction_status)==0 and restored[0] not in roles and restored[1]=='none')
@@ -213,14 +358,26 @@ async def async_oracle(admin):
         counters['cancelledConnectionDisposition']='discarded' if discarded else 'restored-and-reused'
         return counters
     finally:
+        cleanup_failed=False
         if task is not None and not task.done():
             task.cancel()
-            try:await task
+            try:await bounded_async_wait({task})
+            except TimeoutError:cleanup_failed=True
+            if task.done():
+                try:task.result()
+                except BaseException:pass
+        if cleanup_failed:
+            try:await bounded_async_close(connection)
             except BaseException:pass
-        await connection.close()
+            raise TimeoutError('native operation task did not stop within the remaining host cleanup budget')
+        if task is None or task.done():
+            await bounded_async_close(connection)
 
 
-with psycopg.connect(args.dsn,autocommit=True) as admin:
+admin_conninfo,admin_startup_limits=conninfo(with_limits=True)
+with psycopg.connect(admin_conninfo,autocommit=True) as admin:
+    server_details['versionInteger']=admin.info.server_version
+    server_details['version']=admin.execute('SELECT version()').fetchone()[0]
     created=[]
     schema_created=False
     try:
@@ -287,13 +444,31 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
             history=inspect_table_history(admin,bundle,person_roles=(alice,bob))
             check('data-effects-do-not-rewrite-source-generation',history['headDigest']==installed['entryDigest'])
         check('every-per-call-lease-released-including-refusals',leases['acquired']==leases['released'] and leases['acquired']>30)
-        report={'scope':'candidate SQL native behavior under source-installed PG18 RLS; not generated/runtime operation admission',
-                'postgresql':admin.info.server_version,'weft':importlib.metadata.version('weft-sql'),
+        report={'status':'passed','scope':'candidate SQL native behavior under source-installed PG18 RLS; not generated/runtime operation admission',
+                'postgresql':server_details['versionInteger'],'postgresqlVersion':server_details['version'],'weft':importlib.metadata.version('weft-sql'),
                 'weftModule':Path(weft.__file__).name,'sourceDigest':bundle['sourceDigest'],'bundleDigest':bundle['bundleDigest'],
                 'observations':observations,'perCallLeases':leases,'asyncLeases':async_leases,'sessionAdapter':'installed public SyncSession/AsyncSession and Psycopg3; adapter-owned/caller-savepoint transactions plus repeated cancellation','programDigests':program_hashes,'nativeExecutionQualified':False,
                 'unqualified':['production host executor','durable data replay','authenticated opaque cursors','generated table methods','Psycopg2/SQLAlchemy operation composition and real-pool/fork parity','managed Lakebase','release']}
     finally:
-        if schema_created:admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(cfg['schema'])))
-        for role in reversed(created):admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))
+        cleanup_status='complete'
+        active_error=sys.exc_info()[0] is not None
+        cleanup_error=None
+        if schema_created:
+            try:
+                set_cleanup_limits(admin,admin_startup_limits)
+                admin.execute(sql.SQL('DROP SCHEMA {} CASCADE').format(sql.Identifier(cfg['schema'])))
+            except BaseException as exc:
+                cleanup_status='failed';cleanup_failure_type=type(exc).__name__;cleanup_error=exc
+        for role in reversed(created):
+            try:
+                set_cleanup_limits(admin,admin_startup_limits)
+                admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))
+            except BaseException as exc:
+                cleanup_status='failed'
+                if cleanup_failure_type is None:cleanup_failure_type=type(exc).__name__
+                if cleanup_error is None:cleanup_error=exc
+        if cleanup_error is not None and not active_error:raise cleanup_error
+    report['cleanupStatus']=cleanup_status
+    report['cleanupFailureType']=cleanup_failure_type
 args.report.write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'nativeAssertions':len(observations),'weft':report['weft'],'nativeExecutionQualified':False}))

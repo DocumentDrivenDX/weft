@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - codex/weft-main-aggregate-qualification
+      - codex/weft-main-aggregate-integration
     tags: ["**"]
   pull_request:
 permissions:
@@ -11,6 +12,7 @@ permissions:
 jobs:
   native-table-operations:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     services:
       postgres:
         image: postgres:18.6
@@ -22,54 +24,335 @@ jobs:
           --health-cmd "pg_isready -U postgres"
           --health-interval 5s --health-timeout 5s --health-retries 12
     steps:
+      - name: Start the single monotonic job deadline and initialize evidence
+        id: initialize
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/weft-table-operations"
+          mkdir -p "$root/logs" "$RUNNER_TEMP/weft-table-operations-tools"
+          start=$(awk '{print $1}' /proc/uptime)
+          awk -v n="$start" 'BEGIN {printf "%.2f\n", n+2700}' > "$root/deadline"
+          for item in 'setup 180' 'build 900' 'bindings 1380' 'native 1680' 'browser 2280' 'evidence 2400' 'upload 2520'; do
+            read -r stage offset <<< "$item"
+            awk -v n="$start" -v o="$offset" 'BEGIN {printf "%.2f\n", n+o}' > "$root/$stage.deadline"
+          done
+          printf 'WEFT_TABLE_ROOT=%s\n' "$root" >> "$GITHUB_ENV"
+          printf 'WEFT_TABLE_DEADLINE_FILE=%s/deadline\n' "$root" >> "$GITHUB_ENV"
+          cat > "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" <<'GATE'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          stage="$1"; cap="$2"; root="$WEFT_TABLE_ROOT"
+          global=$(cat "$WEFT_TABLE_DEADLINE_FILE"); stage_deadline=$(cat "$root/$stage.deadline")
+          now=$(awk '{print $1}' /proc/uptime)
+          minutes=$(awk -v g="$global" -v s="$stage_deadline" -v n="$now" -v c="$cap" 'BEGIN {x=g-n-10; y=s-n-10; if(y<x)x=y; m=int(x/60); if(m>c)m=c; print m}')
+          if (( minutes < 1 )); then
+            printf 'budget_refused\tstage=%s\tmonotonic=%s\treason=less_than_one_safe_minute\n' "$stage" "$now" >> "$root/commands.tsv"
+            exit 124
+          fi
+          printf 'timeout_minutes=%s\nstarted_monotonic=%s\nstarted_utc=%s\n' "$minutes" "$now" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          GATE
+          cat > "$RUNNER_TEMP/weft-table-operations-tools/run-bounded" <<'RUNNER'
+          #!/usr/bin/env bash
+          set -uo pipefail
+          stage="$1"; name="$2"; cap="$3"; shift 3
+          root="$WEFT_TABLE_ROOT"; global=$(cat "$WEFT_TABLE_DEADLINE_FILE"); stage_deadline=$(cat "$root/$stage.deadline")
+          now=$(awk '{print $1}' /proc/uptime)
+          step_remaining=$(awk -v m="${WEFT_STEP_TIMEOUT_MINUTES:-45}" -v s="${WEFT_STEP_START_MONOTONIC:-$now}" -v n="$now" 'BEGIN {x=int(m*60-(n-s)); if(x<0)x=0; print x}')
+          available=$(awk -v g="$global" -v s="$stage_deadline" -v n="$now" -v c="$cap" -v r="$step_remaining" 'BEGIN {x=g-n; y=s-n; if(y<x)x=y; if(r<x)x=r; if(x>c)x=c; print int(x)}')
+          runtime=$((available-10)); started=$(date -u +%Y-%m-%dT%H:%M:%SZ); begin="$now"; log="$root/logs/$name.log"
+          if (( runtime <= 0 )); then printf 'stage\t%s\tstart_utc=%s\tlimit_s=0\traw_exit=not-started\tgate_exit=124\n' "$name" "$started" >> "$root/commands.tsv"; exit 124; fi
+          printf 'argv\t%s' "$name" >> "$root/commands.tsv"
+          redact_next=no
+          for arg in "$@"; do
+            if [ "$redact_next" = yes ]; then printf '\t%s' '[REDACTED_DSN]' >> "$root/commands.tsv"; redact_next=no; continue; fi
+            if [ "$name" = postgres-image-identity ] && [ "$arg" = "${POSTGRES_SERVICE_ID:-}" ]; then printf '\t%s' '[SERVICE_CONTAINER_ID]' >> "$root/commands.tsv"; continue; fi
+            printf '\t%q' "$arg" >> "$root/commands.tsv"
+            [ "$arg" = --dsn ] && redact_next=yes
+          done
+          printf '\n' >> "$root/commands.tsv"
+          export WEFT_NATIVE_TIMEOUT_SECONDS="$runtime"
+          set +e
+          timeout --signal=TERM --kill-after=10s "${runtime}s" "$@" > "$log" 2>&1
+          raw=$?
+          set -e
+          end=$(awk '{print $1}' /proc/uptime); ended=$(date -u +%Y-%m-%dT%H:%M:%SZ); bytes=$(wc -c < "$log"); truncated=no; redacted=no
+          if [ -n "${WEFT_NATIVE_DSN:-}" ]; then sed -i "s|$WEFT_NATIVE_DSN|[REDACTED_DSN]|g" "$log"; redacted=yes; fi
+          if (( $(wc -c < "$log") > 1048576 )); then tail -c 1048576 "$log" > "$log.tmp" && mv "$log.tmp" "$log"; truncated=yes; fi
+          duration=$(awk -v a="$begin" -v b="$end" 'BEGIN {printf "%.2f", b-a}')
+          printf 'stage\t%s\tstart_utc=%s\tend_utc=%s\tduration_monotonic_s=%s\tcap_with_grace_s=%s\traw_exit=%s\tlog_original_bytes=%s\tlog_redacted=%s\tlog_truncated=%s\n' "$name" "$started" "$ended" "$duration" "$available" "$raw" "$bytes" "$redacted" "$truncated" >> "$root/commands.tsv"
+          exit "$raw"
+          RUNNER
+          cat > "$RUNNER_TEMP/weft-table-operations-tools/record-action" <<'RECORD'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          name="$1"; outcome="$2"; started="$3"; started_utc="$4"; root="$WEFT_TABLE_ROOT"
+          end=$(awk '{print $1}' /proc/uptime); utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          if [ -n "$started" ]; then duration=$(awk -v a="$started" -v b="$end" 'BEGIN {printf "%.2f", b-a}'); else duration=not-started; fi
+          printf 'action\t%s\tstep_outcome=%s\tstart_utc=%s\tend_utc=%s\tstart_monotonic=%s\tduration_monotonic_s=%s\n' "$name" "$outcome" "$started_utc" "$utc" "$started" "$duration" >> "$root/commands.tsv"
+          RECORD
+          chmod 700 "$RUNNER_TEMP/weft-table-operations-tools/"*
+          printf 'format\tweft.table-operations-hosted-receipt/1\nevent_name\t%s\nref\t%s\nsha\t%s\nworkflow\t%s\njob\t%s\nrun_id\t%s\nrun_attempt\t%s\nrunner_os\t%s\nrunner_arch\t%s\nimage_os\t%s\nimage_version\t%s\nmonotonic_deadline_seconds\t%s\n' "$GITHUB_EVENT_NAME" "$GITHUB_REF" "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$GITHUB_JOB" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$RUNNER_OS" "$RUNNER_ARCH" "${ImageOS:-unknown}" "${ImageVersion:-unknown}" "$(cat "$root/deadline")" > "$root/receipt.tsv"
+      - name: Budget repository checkout
+        id: repo-checkout-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/checkout@v4
+        id: repo-checkout
+        timeout-minutes: ${{ steps.repo-checkout-budget.outputs.timeout_minutes }}
+      - name: Record repository checkout
+        if: always()
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/record-action" checkout '${{ steps.repo-checkout.outcome }}' '${{ steps.repo-checkout-budget.outputs.started_monotonic }}' '${{ steps.repo-checkout-budget.outputs.started_utc }}'
+      - name: Budget exact UMF checkout
+        id: umf-checkout-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/checkout@v4
+        id: umf-checkout
+        timeout-minutes: ${{ steps.umf-checkout-budget.outputs.timeout_minutes }}
         with:
           repository: DocumentDrivenDX/umf
           ref: 8133eaa1d07d363d075a8eed68d2be8a26d22c2d
           path: upstream-umf
+      - name: Record exact UMF checkout
+        if: always()
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/record-action" umf-checkout '${{ steps.umf-checkout.outcome }}' '${{ steps.umf-checkout-budget.outputs.started_monotonic }}' '${{ steps.umf-checkout-budget.outputs.started_utc }}'
+      - name: Budget Rust toolchain setup
+        id: rust-setup-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: dtolnay/rust-toolchain@1.90.0
+        id: rust-setup
+        timeout-minutes: ${{ steps.rust-setup-budget.outputs.timeout_minutes }}
         with:
           targets: wasm32-unknown-unknown
+      - name: Record Rust toolchain setup
+        if: always()
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/record-action" rust-setup '${{ steps.rust-setup.outcome }}' '${{ steps.rust-setup-budget.outputs.started_monotonic }}' '${{ steps.rust-setup-budget.outputs.started_utc }}'
+      - name: Budget Rust cache setup
+        id: cache-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: Swatinem/rust-cache@v2
+        id: rust-cache
+        timeout-minutes: ${{ steps.cache-budget.outputs.timeout_minutes }}
+      - name: Record Rust cache setup
+        if: always()
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/record-action" rust-cache '${{ steps.rust-cache.outcome }}' '${{ steps.cache-budget.outputs.started_monotonic }}' '${{ steps.cache-budget.outputs.started_utc }}'
+      - name: Budget Node setup
+        id: node-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/setup-node@v4
+        id: node-setup
+        timeout-minutes: ${{ steps.node-budget.outputs.timeout_minutes }}
         with:
           node-version: '20'
+      - name: Record Node setup
+        if: always()
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/record-action" node-setup '${{ steps.node-setup.outcome }}' '${{ steps.node-budget.outputs.started_monotonic }}' '${{ steps.node-budget.outputs.started_utc }}'
+      - name: Budget Python setup
+        id: python-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/setup-python@v5
+        id: python-setup
+        timeout-minutes: ${{ steps.python-budget.outputs.timeout_minutes }}
         with:
           python-version: '3.11'
-      - name: Build the candidate compiler and exact upstream host dependencies
-        run: |
-          python -m pip install maturin==1.9.6 build==1.3.0
-          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out /tmp/operation-wheels
-          python -m build --wheel --outdir /tmp/operation-wheels upstream-umf/python/umf_access
-          python -m build --wheel --outdir /tmp/operation-wheels upstream-umf/python/umf_codegen
-          python -m pip install /tmp/operation-wheels/*.whl 'psycopg[binary]==3.2.13' 'pydantic==2.13.5'
-      - name: Check closed declarations, source custody and shared native bindings
-        run: |
-          cargo test --locked -p weft-postgresql --test table_operation --test table_lifecycle
-          cargo build --locked -p weft-postgresql --example compile_table_operation
-          python -I tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation /tmp/operation-bindings.json /tmp/operation-browser-cases.json
-      - name: Native RLS, bounds, keyset, upsert and atomic rollback oracle
-        env:
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
-        run: >-
-          python -I tests/raw-postgresql/table-operation-native.py
-          --dsn "host=127.0.0.1 port=$POSTGRES_PORT dbname=postgres user=postgres"
-          --report /tmp/operation-native.json
-      - name: Real Chromium shared native and WASM compiler parity
-        run: |
-          cargo build --locked -p weft-wasm --target wasm32-unknown-unknown --features raw-postgresql-reads
-          cargo install wasm-bindgen-cli --version 0.2.105 --locked --root /tmp/operation-wasm-tools
-          /tmp/operation-wasm-tools/bin/wasm-bindgen --target web --out-dir /tmp/operation-web target/wasm32-unknown-unknown/debug/weft_wasm.wasm
-          npm install --prefix /tmp/operation-browser --ignore-scripts --no-package-lock playwright@1.62.1
-          node /tmp/operation-browser/node_modules/playwright/cli.js install --with-deps chromium
-          WEFT_PLAYWRIGHT_MODULE=/tmp/operation-browser/node_modules/playwright/index.mjs node tests/raw-postgresql/table-operation-browser.mjs /tmp/operation-browser-cases.json /tmp/operation-web /tmp/operation-browser.json
-      - uses: actions/upload-artifact@v4
+      - name: Record Python setup
         if: always()
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/record-action" python-setup '${{ steps.python-setup.outcome }}' '${{ steps.python-budget.outputs.started_monotonic }}' '${{ steps.python-budget.outputs.started_utc }}'
+      - name: Budget dependencies and wheel build
+        id: dependencies-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" build 12
+      - name: Build the candidate compiler and exact upstream host dependencies
+        id: dependencies-build
+        timeout-minutes: ${{ steps.dependencies-budget.outputs.timeout_minutes }}
+        env:
+          WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.dependencies-budget.outputs.timeout_minutes }}
+          WEFT_STEP_START_MONOTONIC: ${{ steps.dependencies-budget.outputs.started_monotonic }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/operation-wheels
+          bounded="$RUNNER_TEMP/weft-table-operations-tools/run-bounded"
+          "$bounded" build dependencies 720 python -m pip install maturin==1.9.6 build==1.3.0
+          "$bounded" build candidate-wheel 720 maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out /tmp/operation-wheels
+          "$bounded" build umf-access-wheel 720 python -m build --wheel --outdir /tmp/operation-wheels upstream-umf/python/umf_access
+          "$bounded" build umf-codegen-wheel 720 python -m build --wheel --outdir /tmp/operation-wheels upstream-umf/python/umf_codegen
+          "$bounded" build install-host-dependencies 720 python -m pip install /tmp/operation-wheels/*.whl 'psycopg[binary]==3.2.13' 'pydantic==2.13.5'
+      - name: Budget Rust and bindings checks
+        id: bindings-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" bindings 8
+      - name: Check closed declarations, source custody and shared native bindings
+        id: bindings
+        timeout-minutes: ${{ steps.bindings-budget.outputs.timeout_minutes }}
+        env:
+          WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.bindings-budget.outputs.timeout_minutes }}
+          WEFT_STEP_START_MONOTONIC: ${{ steps.bindings-budget.outputs.started_monotonic }}
+        run: |
+          set -euo pipefail
+          bounded="$RUNNER_TEMP/weft-table-operations-tools/run-bounded"
+          "$bounded" bindings tool-identity 30 bash -c 'set -euo pipefail; rustc --version --verbose; cargo --version --verbose; python --version; node --version; npm --version; maturin --version; python -I -c "import importlib.metadata as m; print(\"psycopg\",m.version(\"psycopg\")); print(\"pydantic\",m.version(\"pydantic\")); print(\"umf-access\",m.version(\"umf-access\")); print(\"umf-codegen\",m.version(\"umf-codegen\"))"; sha256sum "$(rustc --print sysroot)/bin/rustc" "$(command -v python)" "$(command -v node)" "$(command -v maturin)"'
+          "$bounded" bindings rust-tests 480 cargo test --locked -p weft-postgresql --test table_operation --test table_lifecycle
+          "$bounded" bindings native-compiler 480 cargo build --locked -p weft-postgresql --example compile_table_operation
+          "$bounded" bindings installed-bindings 480 python -I tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation "$RUNNER_TEMP/operation-bindings.json" "$RUNNER_TEMP/operation-browser-cases.json"
+      - name: Budget native oracle
+        id: native-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" native 5
+      - name: Native RLS, bounds, keyset, upsert and atomic rollback oracle
+        id: native
+        timeout-minutes: ${{ steps.native-budget.outputs.timeout_minutes }}
+        env:
+          WEFT_NATIVE_DSN: host=127.0.0.1 port=${{ job.services.postgres.ports[5432] }} dbname=postgres user=postgres
+          WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.native-budget.outputs.timeout_minutes }}
+          WEFT_STEP_START_MONOTONIC: ${{ steps.native-budget.outputs.started_monotonic }}
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/weft-table-operations-tools/run-bounded" native native-oracle 300 python -I tests/raw-postgresql/table-operation-native.py --dsn-env WEFT_NATIVE_DSN --report "$WEFT_TABLE_ROOT/native.json"
+      - name: Budget WASM and Chromium parity
+        id: browser-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" browser 10
+      - name: Real Chromium shared native and WASM compiler parity
+        id: browser
+        timeout-minutes: ${{ steps.browser-budget.outputs.timeout_minutes }}
+        env:
+          WEFT_PLAYWRIGHT_MODULE: /tmp/operation-browser/node_modules/playwright/index.mjs
+          WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.browser-budget.outputs.timeout_minutes }}
+          WEFT_STEP_START_MONOTONIC: ${{ steps.browser-budget.outputs.started_monotonic }}
+        run: |
+          set -euo pipefail
+          bounded="$RUNNER_TEMP/weft-table-operations-tools/run-bounded"
+          mkdir -p /tmp/operation-wasm-tools /tmp/operation-web /tmp/operation-browser
+          "$bounded" browser wasm-build 600 cargo build --locked -p weft-wasm --target wasm32-unknown-unknown --features raw-postgresql-reads
+          "$bounded" browser wasm-bindgen-install 600 cargo install wasm-bindgen-cli --version 0.2.105 --locked --root /tmp/operation-wasm-tools
+          "$bounded" browser wasm-bindgen 600 /tmp/operation-wasm-tools/bin/wasm-bindgen --target web --out-dir /tmp/operation-web target/wasm32-unknown-unknown/debug/weft_wasm.wasm
+          "$bounded" browser playwright-install 600 npm install --prefix /tmp/operation-browser --ignore-scripts --no-package-lock playwright@1.62.1
+          "$bounded" browser chromium-install 600 node /tmp/operation-browser/node_modules/playwright/cli.js install --with-deps chromium
+          "$bounded" browser wasm-bindgen-identity 30 sha256sum /tmp/operation-wasm-tools/bin/wasm-bindgen
+          "$bounded" browser browser-parity 600 node tests/raw-postgresql/table-operation-browser.mjs "$RUNNER_TEMP/operation-browser-cases.json" /tmp/operation-web "$WEFT_TABLE_ROOT/browser.json"
+      - name: Budget public evidence assembly
+        if: always()
+        id: evidence-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" evidence 2
+      - name: Assemble fresh bounded public evidence
+        if: always() && steps.evidence-budget.outputs.timeout_minutes != ''
+        id: evidence
+        timeout-minutes: ${{ steps.evidence-budget.outputs.timeout_minutes }}
+        env:
+          POSTGRES_SERVICE_ID: ${{ job.services.postgres.id }}
+          WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.evidence-budget.outputs.timeout_minutes }}
+          WEFT_STEP_START_MONOTONIC: ${{ steps.evidence-budget.outputs.started_monotonic }}
+          CHECKOUT_RESULT: ${{ steps.repo-checkout.outcome }}
+          UMF_CHECKOUT_RESULT: ${{ steps.umf-checkout.outcome }}
+          RUST_SETUP_RESULT: ${{ steps.rust-setup.outcome }}
+          CACHE_SETUP_RESULT: ${{ steps.rust-cache.outcome }}
+          NODE_SETUP_RESULT: ${{ steps.node-setup.outcome }}
+          PYTHON_SETUP_RESULT: ${{ steps.python-setup.outcome }}
+          BUILD_RESULT: ${{ steps.dependencies-build.outcome }}
+          BINDINGS_RESULT: ${{ steps.bindings.outcome }}
+          NATIVE_RESULT: ${{ steps.native.outcome }}
+          BROWSER_RESULT: ${{ steps.browser.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$WEFT_TABLE_ROOT"; upload="$RUNNER_TEMP/weft-table-operations-upload"
+          rm -rf "$upload"; mkdir -p "$upload"
+          if source_commit=$(git rev-parse HEAD 2>/dev/null); then :; else source_commit=checkout-unavailable; fi
+          printf 'source_commit\t%s\nupstream_umf_commit\t8133eaa1d07d363d075a8eed68d2be8a26d22c2d\n' "$source_commit" >> "$root/receipt.tsv"
+          printf 'postgres_configured_image\tpostgres:18.6\n' >> "$root/receipt.tsv"
+          identity_ok=no
+          if [ -n "${POSTGRES_SERVICE_ID:-}" ]; then
+            if "$RUNNER_TEMP/weft-table-operations-tools/run-bounded" evidence postgres-image-identity 20 docker inspect --format '{{.Image}}' "$POSTGRES_SERVICE_ID"; then
+              image_id=$(tail -n 1 "$root/logs/postgres-image-identity.log")
+              if [[ "$image_id" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+                printf 'postgres_resolved_image_id\t%s\n' "$image_id" >> "$root/receipt.tsv"
+                identity_ok=yes
+              else
+                printf 'postgres_resolved_image_id\tunavailable_or_unrecognized\n' >> "$root/receipt.tsv"
+              fi
+            else
+              printf 'postgres_resolved_image_id\tunavailable\n' >> "$root/receipt.tsv"
+            fi
+          else
+            printf 'postgres_resolved_image_id\tunavailable\n' >> "$root/receipt.tsv"
+          fi
+          for pair in "checkout:$CHECKOUT_RESULT" "umf-checkout:$UMF_CHECKOUT_RESULT" "rust-setup:$RUST_SETUP_RESULT" "cache-setup:$CACHE_SETUP_RESULT" "node-setup:$NODE_SETUP_RESULT" "python-setup:$PYTHON_SETUP_RESULT" "dependencies-build:$BUILD_RESULT" "bindings:$BINDINGS_RESULT" "native:$NATIVE_RESULT" "browser:$BROWSER_RESULT"; do
+            name=${pair%%:*}; outcome=${pair#*:}; [ -n "$outcome" ] || outcome=not-run
+            [ "$outcome" != skipped ] || outcome=not-run
+            printf 'stage_result\t%s\t%s\n' "$name" "$outcome" >> "$root/receipt.tsv"
+          done
+          : > "$root/limits.tsv"
+          for file in "$root/receipt.tsv" "$root/commands.tsv" "$root/native.json" "$root/browser.json" "$RUNNER_TEMP/operation-bindings.json"; do
+            [ -f "$file" ] || continue
+            size=$(wc -c < "$file")
+            if (( size > 1048576 )); then
+              printf 'oversized_public_file\t%s\toriginal_bytes=%s\tcap=1048576\n' "${file##*/}" "$size" >> "$root/limits.tsv"
+              printf 'Public evidence withheld: %s is %s bytes, above the 1048576-byte per-file cap.\n' "${file##*/}" "$size"
+              rm -rf "$upload"
+              exit 1
+            fi
+            cp "$file" "$upload/"
+          done
+          if [ -d "$root/logs" ]; then cp -R "$root/logs" "$upload/logs"; fi
+          total=$(du -sb "$upload" | awk '{print $1}')
+          if (( total > 8388608 )); then
+            printf 'upload_withheld\toriginal_bytes=%s\tcap=8388608\n' "$total" >> "$root/limits.tsv"
+            printf 'Public evidence withheld: assembled upload is %s bytes, above the 8388608-byte cap.\n' "$total"
+            rm -rf "$upload"
+            exit 1
+          fi
+          cp "$root/receipt.tsv" "$upload/receipt.tsv"
+          if [ -f "$root/limits.tsv" ]; then cp "$root/limits.tsv" "$upload/limits.tsv"; fi
+          total=$(du -sb "$upload" | awk '{print $1}')
+          if (( total > 8388608 )); then
+            printf 'upload_withheld_after_receipt_additions\toriginal_bytes=%s\tcap=8388608\n' "$total" >> "$root/limits.tsv"
+            printf 'Public evidence withheld: final upload is %s bytes after receipt additions, above the 8388608-byte cap.\n' "$total"
+            rm -rf "$upload"
+            exit 1
+          fi
+          printf 'ready=true\n' >> "$GITHUB_OUTPUT"
+          [ "$identity_ok" = yes ] || exit 1
+      - name: Budget bounded artifact upload
+        if: always() && steps.evidence.outputs.ready == 'true'
+        id: upload-budget
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" upload 2
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.evidence.outputs.ready == 'true' && steps.upload-budget.outputs.timeout_minutes != ''
+        timeout-minutes: ${{ steps.upload-budget.outputs.timeout_minutes }}
         with:
           name: declared-table-operation-candidate
-          path: |
-            /tmp/operation-bindings.json
-            /tmp/operation-native.json
-            /tmp/operation-browser.json
+          path: ${{ runner.temp }}/weft-table-operations-upload/
+          if-no-files-found: error
+          retention-days: 14
