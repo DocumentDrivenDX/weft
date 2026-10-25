@@ -1,0 +1,36 @@
+Processing /tmp/operation-wheels/umf_access-0.1.0.dev4-py3-none-any.whl
+Processing /tmp/operation-wheels/umf_codegen-0.1.0a1-py3-none-any.whl
+Processing /tmp/operation-wheels/weft_sql-0.4.53-cp39-abi3-manylinux_2_34_x86_64.whl
+Collecting psycopg==3.2.13 (from psycopg[binary]==3.2.13)
+  Downloading psycopg-3.2.13-py3-none-any.whl.metadata (4.5 kB)
+Collecting pydantic==2.13.5
+  Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+Collecting typing-extensions==4.16.0 (from umf-access==0.1.0.dev4)
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting mini-racer==0.14.1 (from umf-codegen==0.1.0a1)
+  Downloading mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl.metadata (22 kB)
+Collecting annotated-types>=0.6.0 (from pydantic==2.13.5)
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.46.5 (from pydantic==2.13.5)
+  Downloading pydantic_core-2.46.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting typing-inspection>=0.4.2 (from pydantic==2.13.5)
+  Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting psycopg-binary==3.2.13 (from psycopg[binary]==3.2.13)
+  Downloading psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.9 kB)
+Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+Downloading psycopg-3.2.13-py3-none-any.whl (206 kB)
+Downloading mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl (22.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 22.2/22.2 MB 88.4 MB/s  0:00:00
+Downloading psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.4/4.4 MB 85.7 MB/s  0:00:00
+Downloading pydantic_core-2.46.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 119.9 MB/s  0:00:00
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+Installing collected packages: weft-sql, typing-extensions, psycopg-binary, mini-racer, annotated-types, umf-codegen, typing-inspection, pydantic-core, psycopg, pydantic, umf-access
+
+Successfully installed annotated-types-0.8.0 mini-racer-0.14.1 psycopg-3.2.13 psycopg-binary-3.2.13 pydantic-2.13.5 pydantic-core-2.46.5 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-access-0.1.0.dev4 umf-codegen-0.1.0a1 weft-sql-0.4.53
+
+[notice] A new release of pip is available: 26.2.1 -> 26.2.2
+[notice] To update, run: pip install --upgrade pip

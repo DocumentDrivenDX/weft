@@ -1,0 +1,250 @@
+[1m[32m   Compiling[0m ahash v0.8.12 (/home/runner/work/weft/weft/vendor/ahash)
+[0m[1m[33mwarning[0m[0m[1m: unexpected `cfg` condition value: `128`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/fallback_hash.rs:164:11[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m164[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    #[cfg(target_pointer_width = "128")][0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m           [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: expected values for `target_pointer_width` are: `16`, `32`, and `64`[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unexpected_cfgs)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unexpected `cfg` condition name: `fuzzing`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/random_state.rs:48:58[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m48[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                                                          [0m[0m[1m[33m^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: consider using a Cargo feature instead[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:[0m
+[0m            [lints.rust][0m
+[0m            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unexpected `cfg` condition name: `fuzzing`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/random_state.rs:68:54[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m68[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                                                      [0m[0m[1m[33m^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: consider using a Cargo feature instead[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:[0m
+[0m            [lints.rust][0m
+[0m            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration[0m
+
+[0m[1m[33mwarning[0m[0m[1m: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mvendor/ahash/src/convert.rs:69:8[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m64[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) trait ReadFromSlice {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[38;5;12m-------------[0m[0m [0m[0m[1m[38;5;12mmethods in this trait[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m69[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_u128x2(&self) -> ([u128; 2], &[u8]);[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^[0m
+[0m[1m[38;5;12m70[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_u128x4(&self) -> ([u128; 4], &[u8]);[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^[0m
+[0m[1m[38;5;12m71[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_last_u16(&self) -> u16;[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m75[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_last_u128x2(&self) -> [u128; 2];[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m76[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn read_last_u128x4(&self) -> [u128; 4];[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[1m[32m   Compiling[0m referencing v0.56.0
+[1m[33mwarning[0m[1m:[0m `ahash` (lib) generated 4 warnings (2 duplicates)
+[1m[32m   Compiling[0m jsonschema-value v0.56.0
+[1m[33mwarning[0m[1m:[0m `ahash` (lib) generated 4 warnings (2 duplicates)
+[1m[32m   Compiling[0m jsonschema-macros-core v0.56.0
+[1m[32m   Compiling[0m jsonschema-macros v0.56.0
+[1m[32m   Compiling[0m jsonschema v0.56.0
+[1m[32m   Compiling[0m weft-core v0.1.0 (/home/runner/work/weft/weft/crates/weft-core)
+[0m[1m[33mwarning[0m[0m[1m: unused import: `Value`[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_lineage.rs:12:24[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m12[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0muse serde_json::{json, Value};[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                        [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_imports)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`[0m
+[0m [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_resolve.rs:4:25[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m4[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    application_model::{Descriptor, Shape},[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                         [0m[0m[1m[33m^^^^^^^^^^[0m[0m  [0m[0m[1m[33m^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m7[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    exact,[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^[0m
+[0m[1m[38;5;12m8[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    ir::{Family, Identity, LogicalType},[0m
+[0m[1m[38;5;12m9[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    model::{Catalog, Record},[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                      [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused import: `Identity`[0m
+[0m [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_scope.rs:9:18[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m9[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    ir::{Family, Identity, LogicalType},[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33m^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: unused variable: `sdk_read_parameters`[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/compile.rs:442:21[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m442[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m                let sdk_read_parameters=req.parameters.clone().unwrap_or_default();[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[33mhelp: if this is intentional, prefix it with an underscore: `_sdk_read_parameters`[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(unused_variables)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: associated function `new` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/application_ir.rs:188:16[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m185[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl ReadOrder {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m--------------[0m[0m [0m[0m[1m[38;5;12massociated function in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m188[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m pub(crate) fn new(selected_key:crate::application_model::AuthoredKey,sort_slots:Vec<ReadSortSlot>)->Self{Self{selected_key,sort_slots}}[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                [0m[0m[1m[33m^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[0m[1m[33mwarning[0m[0m[1m: struct `PlanSchema03` is never constructed[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/arithmetic_application_resolve.rs:838:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m838[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct PlanSchema03;[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `derive` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/security_scan_obligations.rs:62:15[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m62[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_[0m[0m[1m[38;5;12m...[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: method `finish` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/syntax.rs:246:19[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m209[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl Parser {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m-----------[0m[0m [0m[0m[1m[38;5;12mmethod in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m246[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub(crate) fn finish(&mut self) -> Result<()> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: methods `terminal_record` and `terminal_key` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/path_ir.rs:120:12[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m55[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl PathRead {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m-------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m120[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn terminal_record(&self) -> &Identity {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m            [0m[0m[1m[33m^^^^^^^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m123[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn terminal_key(&self) -> &AuthoredKey {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m            [0m[0m[1m[33m^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: associated function `new` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/path_ir.rs:241:12[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m240[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl Plan {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------[0m[0m [0m[0m[1m[38;5;12massociated function in this implementation[0m
+[0m[1m[38;5;12m241[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn new(p: PlanParts) -> Result<Self> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m            [0m[0m[1m[33m^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: field `span` is never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/path_query.rs:24:9[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m22[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    CountDistinctPathTargets {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[38;5;12m------------------------[0m[0m [0m[0m[1m[38;5;12mfield in this variant[0m
+[0m[1m[38;5;12m23[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        alias: Name,[0m
+[0m[1m[38;5;12m24[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        span: Span,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m         [0m[0m[1m[33m^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+
+[0m[1m[33mwarning[0m[0m[1m: field `field` is never read[0m
+[0m [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/security_rule_occurrences.rs:9:103[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m9[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&[0m[0m[1m[38;5;12m...[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[38;5;12m----------[0m[0m [0m[0m[1m[33m^^^^^[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[38;5;12m|[0m
+[0m  [0m[0m[1m[38;5;12m|[0m[0m                                                                                            [0m[0m[1m[38;5;12mfield in this variant[0m
+[0m  [0m[0m[1m[38;5;12m|[0m
+[0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `prepare_administrative_seed_model` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/raw_read.rs:201:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m201[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn prepare_administrative_seed_model(binding: &Binding) -> Result<AdmittedModel> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `prepare_administrative_operation_document` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/raw_read.rs:225:15[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m225[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn prepare_administrative_operation_document([0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+[0m[1m[33mwarning[0m[0m[1m: function `canonical_name` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-core/src/table_query.rs:487:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m487[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn canonical_name(part: &sqlparser::ast::ObjectNamePart) -> Result<String> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^^^^^^^^^^[0m
+
+[1m[32m   Compiling[0m weft-postgresql v0.1.0 (/home/runner/work/weft/weft/crates/weft-postgresql)
+[0m[1m[33mwarning[0m[0m[1m: function `holes` is never used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0mcrates/weft-postgresql/src/native_privilege_probes.rs:36:4[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m36[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn holes(sql: &str) -> Result<Vec<Hole>> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+[1m[33mwarning[0m[1m:[0m `weft-core` (lib) generated 15 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+[1m[33mwarning[0m[1m:[0m `weft-postgresql` (lib) generated 1 warning
+[1m[32m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 46.23s
+[1m[32m     Running[0m tests/table_lifecycle.rs (target/debug/deps/table_lifecycle-17962473dbff76c9)
+
+running 10 tests
+test native_table_read_retains_source_and_explicit_unqualified_host_obligations ... ok
+test changed_native_policy_remains_in_source_and_changes_custody_without_sql_reinterpretation ... ok
+test native_count_keeps_table_obligations_and_requires_complete_module_inventory ... ok
+test native_context_and_mapping_tampering_refuses ... ok
+test original_source_whitespace_is_preserved_and_pinned ... ok
+test selected_table_policy_cannot_silently_use_a_legacy_profile ... ok
+test unknown_selected_table_content_and_opaque_commands_refuse ... ok
+test unselected_native_extension_is_retained_without_granting_or_requiring_its_profile ... ok
+test preserved_unknown_members_cannot_be_selected_as_known_table_meaning ... ok
+test original_fk_custody_is_required_for_native_relationship_bindings ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+[1m[32m     Running[0m tests/table_operation.rs (target/debug/deps/table_operation-ae6d21aa15c576fd)
+
+running 25 tests
+test batch_principal_is_native_and_has_no_caller_slot ... ok
+test declared_domains_enforce_original_enumerations_ranges_and_literal_inputs ... ok
+test bulk_is_one_declared_operation_with_explicit_atomic_bounds_and_no_hidden_write_limit ... ok
+test driver_numeric_values_are_canonical_without_losing_original_tokens ... ok
+test exact_integer_decimal_and_noncanonical_json_integer_bounds_never_round_or_panic ... ok
+test g02_intrinsic_null_types_and_null_safe_comparisons_remain_closed ... ok
+test g02_predicate_literals_obey_source_field_nullability_and_refinements ... ok
+test g02_refuses_target_self_reference_old_dispatch_and_bad_ast_shapes ... ok
+test g02_predicate_numeric_literals_obey_wrappers_ranges_enums_and_native_width ... ok
+test g02_row_expression_compiles_closed_ast_with_private_full_effects_guard ... ok
+test literals_and_user_data_are_only_bound_values_and_native_text_capacity_is_exact ... ok
+test all_declared_read_write_conflict_and_batch_shapes_compile_without_native_authority ... ok
+test keyset_continuation_uses_exact_original_key_tuple_and_lookahead ... ok
+test mixed_direction_cursor_carries_complete_order_with_original_key_suffix ... ok
+test plain_insert_batch_emits_ordered_insert_only_merge_with_source_ordinals ... ok
+test module_operation_mapping_inputs_and_replay_are_source_checked ... ok
+test prepared_operation_module_reuses_source_and_returns_compact_call_programs ... ok
+test mutation_frames_bound_returning_octets_and_effects_atomically ... ok
+test g02_numeric_and_conditional_algebra_uses_unconstrained_qualified_intermediates ... ok
+test source_original_sql_is_not_a_request_surface_and_legacy_guards_stay_closed ... ok
+test read_frames_bound_uncompressed_bytes_and_preserve_unprojected_order ... ok
+test requested_read_size_can_only_lower_a_declared_many_or_page_bound ... ok
+test transaction_clock_values_are_typed_and_never_become_input_slots ... ok
+test temporal_operations_are_exact_and_do_not_expand_raw_read_admission ... ok
+test source_command_tampering_and_self_rehashed_programs_refuse ... ok
+
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.55s
+

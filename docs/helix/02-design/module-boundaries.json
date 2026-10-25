@@ -551,6 +551,56 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/unity_current_avg.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_avg_lowering.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_predicate.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_read.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_sum.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_sum_lowering.rs",
+          "publicDeclarations": [
+            "field:positive_high",
+            "field:positive_low",
+            "field:negative_high",
+            "field:negative_low",
+            "field:nonnull_count",
+            "field:has_nonnull",
+            "field:malformed"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_summary.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/unity_current_summary_lowering.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/unity_search.rs",
           "publicDeclarations": [
             "fn:compile_json"

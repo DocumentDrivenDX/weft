@@ -1,0 +1,27 @@
+format	weft.table-operations-hosted-receipt/1
+event_name	pull_request
+ref	refs/pull/30/merge
+sha	046f0d9924d40bef684a5d13a2b3c06dc4d48182
+workflow	Declared table operation candidate
+job	native-table-operations
+run_id	40238688567
+run_attempt	1
+runner_os	Linux
+runner_arch	X64
+image_os	ubuntu26
+image_version	20261023.163.3
+monotonic_deadline_seconds	2799.85
+source_commit	046f0d9924d40bef684a5d13a2b3c06dc4d48182
+upstream_umf_commit	8133eaa1d07d363d075a8eed68d2be8a26d22c2d
+postgres_configured_image	postgres:18.6
+postgres_resolved_image_id	sha256:edb0c08dc33befd0262ab3b5cf1c4f3f8cfd8b09e88c05b45adee29d6761ddb6
+stage_result	checkout	success
+stage_result	umf-checkout	success
+stage_result	rust-setup	success
+stage_result	cache-setup	success
+stage_result	node-setup	success
+stage_result	python-setup	success
+stage_result	dependencies-build	success
+stage_result	bindings	success
+stage_result	native	success
+stage_result	browser	success

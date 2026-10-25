@@ -1,0 +1,28 @@
+{
+  "pr": 30,
+  "head": "482c584f0ade3de9d19ef5f3470984cd2ce4b2ff",
+  "run": 40238688567,
+  "job": 121305622660,
+  "status": "success",
+  "artifact": 12616650554,
+  "zipSha256": "250e7480ea4fdb469c7a13aa23197208a4b96db4401baacb6731ca204ee83019",
+  "nativeScope": "candidate SQL native behavior under source-installed PG18 RLS; not generated/runtime operation admission",
+  "postgresql": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "observations": 50,
+  "cleanupStatus": "complete",
+  "browserCases": 56,
+  "browserTamperControls": 1,
+  "browserInvalidUnicodeControls": 2,
+  "nativeExecutionQualified": false,
+  "unqualified": [
+    "production host executor",
+    "durable data replay",
+    "authenticated opaque cursors",
+    "generated table methods",
+    "Psycopg2/SQLAlchemy operation composition and real-pool/fork parity",
+    "managed Lakebase",
+    "release"
+  ],
+  "fullPRConformance": "FAIL module ownership registry; independent jobs pending",
+  "releaseQualified": false
+}

@@ -1,0 +1,140 @@
+{
+  "profile": "weft.pr30-native-evidence/1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1196,
+      "sha256": "5632cc7652d414460228a20b15ccaa7680d9dd76ade2b3b57bd861830f6458ff"
+    },
+    {
+      "path": "artifact/browser.json",
+      "bytes": 12410,
+      "sha256": "f962f4cc7633177f3452aa27ebd371c494b836e329bb1c9b8eedd525c15fae3a"
+    },
+    {
+      "path": "artifact/commands.tsv",
+      "bytes": 7388,
+      "sha256": "f5b37eac61918d8f42f14cba8a72b7386c3337fdabf3a6c3ba8b322e0211aa27"
+    },
+    {
+      "path": "artifact/limits.tsv",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifact/logs/browser-parity.log",
+      "bytes": 78,
+      "sha256": "f73f872ca206f4ffa752adcc67590b557dba07bcbca0f6f0febd4e08cd38f52e"
+    },
+    {
+      "path": "artifact/logs/candidate-wheel.log",
+      "bytes": 31785,
+      "sha256": "97c8349de2bf498a32942c6aace6c862c1dbbcfd31e92578f53a0c130d9288a8"
+    },
+    {
+      "path": "artifact/logs/chromium-install.log",
+      "bytes": 17543,
+      "sha256": "b9ac9a0c2ce71d2d5a31761a35b6dc0d45daea2f6480125b29fbc1df7448335f"
+    },
+    {
+      "path": "artifact/logs/dependencies.log",
+      "bytes": 1163,
+      "sha256": "d330d9f4529bd7a88c1fec656d43c37502fc90c8147068c36eebc5d0ff64ccf3"
+    },
+    {
+      "path": "artifact/logs/install-host-dependencies.log",
+      "bytes": 2905,
+      "sha256": "cfbe90df6872aae4de7efed3e0b3865fb5859a76b9c0a58c1f746a58f612c32f"
+    },
+    {
+      "path": "artifact/logs/installed-bindings.log",
+      "bytes": 48,
+      "sha256": "81489843a10f7a322ba5387553550171e3ad36b51bddc819ca7fdeea9630c404"
+    },
+    {
+      "path": "artifact/logs/native-compiler.log",
+      "bytes": 16329,
+      "sha256": "8ce51bcb14425e2a1bfdf7adf8899cc5a0eef8070a5a91b32f510005e76db676"
+    },
+    {
+      "path": "artifact/logs/native-oracle.log",
+      "bytes": 78,
+      "sha256": "d7184be307ccded58851fe05d63485a24228e5642c5fa2260498f25715aa5a56"
+    },
+    {
+      "path": "artifact/logs/playwright-install.log",
+      "bytes": 24,
+      "sha256": "65c731cd02e19c79f6f5a3e84a4dd64a49acd6c47d2ee551d7cc9da191e8c96c"
+    },
+    {
+      "path": "artifact/logs/postgres-image-identity.log",
+      "bytes": 72,
+      "sha256": "431cc43004a73cf209ffd0605a3e6a120e71f80dc3ee3624e29d8dfc48a16de5"
+    },
+    {
+      "path": "artifact/logs/rust-tests.log",
+      "bytes": 20040,
+      "sha256": "b50dd04d8450a1296e060e9784b7262fac48cc6acf980d167495713679fd20ba"
+    },
+    {
+      "path": "artifact/logs/tool-identity.log",
+      "bytes": 1140,
+      "sha256": "abca66ceb6329f388f52c5efac6fff28665d9a8d948b03ceb0026b376e552243"
+    },
+    {
+      "path": "artifact/logs/umf-access-wheel.log",
+      "bytes": 234,
+      "sha256": "84b8eb0893027449d214e4b3c2087ef3f543ec48b9df131d7af101d09e8b0b99"
+    },
+    {
+      "path": "artifact/logs/umf-codegen-wheel.log",
+      "bytes": 232,
+      "sha256": "def406559c3aa3d6a905834c4befa0785721e0f954aaeb2bc8de50935de294ce"
+    },
+    {
+      "path": "artifact/logs/wasm-bindgen-identity.log",
+      "bytes": 109,
+      "sha256": "a1e87de76cef5ce1fec1f9d2170b4228daf59cb7dbddcc9a07daf29b97d4e2d1"
+    },
+    {
+      "path": "artifact/logs/wasm-bindgen-install.log",
+      "bytes": 14502,
+      "sha256": "439ee677ae5402eee46857cf845c6488b3c11d124c2892fd57b49e4a3dd8d028"
+    },
+    {
+      "path": "artifact/logs/wasm-bindgen.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifact/logs/wasm-build.log",
+      "bytes": 33999,
+      "sha256": "4da5423554a76e1ae984a6fb8de17b184978f4a79b38fab8bf35e014e47dc104"
+    },
+    {
+      "path": "artifact/native.json",
+      "bytes": 4727,
+      "sha256": "86329888cc73132727de6efaf03804e109918f9dd68360a54076fb077f26138a"
+    },
+    {
+      "path": "artifact/operation-bindings.json",
+      "bytes": 6286,
+      "sha256": "d6b2d59e4ebde6d1fa65ddbbd341e1bb42e5c78e70713e8add9a19cf4bac6b9b"
+    },
+    {
+      "path": "artifact/receipt.tsv",
+      "bytes": 934,
+      "sha256": "2629851fcc9d9f52687b41293ffcbda52b62627e78f1040f2d40d13427a474ba"
+    },
+    {
+      "path": "module-ownership-review.json",
+      "bytes": 3979,
+      "sha256": "a8929324927e095c07635b807343eb36e4afa8ad9f03f4b8015365877175e289"
+    },
+    {
+      "path": "outcome.json",
+      "bytes": 1061,
+      "sha256": "2c698ec856172347024b9639eaebb24cd8b77d8acc722ae342ca6add276f4932"
+    }
+  ]
+}
