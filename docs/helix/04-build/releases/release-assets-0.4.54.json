@@ -1,0 +1,40 @@
+{
+  "schema": "weft-release-asset-policy/1",
+  "version": "0.4.54",
+  "status": "draft",
+  "tag": "v0.4.54",
+  "expectedWheelTargets": [
+    "x86_64-unknown-linux-gnu/manylinux2014",
+    "aarch64-unknown-linux-gnu/manylinux2014",
+    "aarch64-apple-darwin/macos-14"
+  ],
+  "expectedMacCompilerChecks": [
+    "rust-comparator-9-vectors",
+    "installed-python-wheel-9-vectors",
+    "chromium-wasm-9-vectors"
+  ],
+  "expectedWheelCount": 3,
+  "expectedFixedAssetNames": [
+    "packaging-linux-x86_64-0.4.54.json",
+    "packaging-linux-aarch64-0.4.54.json",
+    "packaging-macos-arm64-0.4.54.json",
+    "mac-hosted-producer-receipt-0.4.54.json",
+    "mac-runner-preflight-0.4.54.json",
+    "mac-tool-binary-sha256-0.4.54.txt",
+    "compiler-roster-0.4.54.json",
+    "python-compiler-parity-0.4.54.json",
+    "browser-compiler-parity-0.4.54.json",
+    "browser-compiler-receipts-0.4.54.json",
+    "selected-assets-verification-0.4.54.json",
+    "v0.4.54.md",
+    "release-assets-0.4.54.json",
+    "release-pins-0.4.54.json",
+    "SHA256SUMS"
+  ],
+  "assetPolicy": "Exactly three versioned wheels with one package report per target, one hosted macOS producer receipt and its selected compiler receipts, this release note, this policy, generated release pins and SHA256SUMS. No local-macos-0.4.54.json receipt is eligible.",
+  "sourceCommit": null,
+  "releaseMetadataCommit": null,
+  "wheelSha256": null,
+  "nativeModuleSha256": null,
+  "qualification": "No build run, wheel digest, tag, draft, upload or publication is claimed by this preparation."
+}
