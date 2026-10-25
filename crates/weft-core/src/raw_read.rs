@@ -333,9 +333,9 @@ fn prepare_native_document(
             };
             let (field, member) = matches.unwrap()[0];
             (if operation.is_some() || seed {
-                crate::model::selected010_table_operation(&record.pin, field, &doc)
+                crate::model::selected010_table_operation(&record.pin, field)
             } else {
-                crate::model::selected010_raw_read(&record.pin, field, &doc)
+                crate::model::selected010_raw_read(&record.pin, field)
             })
             .map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
             let family = match c.carrier {
