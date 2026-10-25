@@ -72,12 +72,12 @@ jobs:
           753ac19eade3839a2ece49c2cd933ac40ed3d72beba922b2c47d32fac8bea791  crates/weft-core/src/table_lifecycle.rs
           6f17accccbcfcaad8cff7c1bd432e8132137b86c03d2c46ea98b602768c6c16c  crates/weft-core/src/table_operation/values.rs
           9cd4cb3c193d22d9db46cfddb0e86b9214476377fb798eec494fb80769c23dec  crates/weft-databricks/src/raw_read.rs
-          80b96bf2a7e94f09e21b3087bef594ee648679b55f75844879feace47d333da0  crates/weft-databricks/src/unity_current_predicate.rs
+          fd6c3b9e4c08871254b8719a10f43913b1548dbb81c0389bb0937cd59963d443  crates/weft-databricks/src/unity_current_predicate.rs
           167eaf5f10b3d5b6d25e829b927e35134f86ad55ca1a6465d45710ce54e2aa9b  crates/weft-databricks/src/unity_current_summary.rs
           f51d486f9aea9f6003c8956b628ecf19f1800dcf62dda287794fe46cbb0b9d39  crates/weft-databricks/src/unity_current_summary_lowering.rs
-          0f0750ba446b10ebb2ad852177347373e2dc7482bb7cc05a9e6307745c5c8b46  crates/weft-databricks/src/unity_current_sum.rs
+          9892eb36097aefa5c5583e4b2ddb68a5d09a934f32d9da9f7643684b63371a9e  crates/weft-databricks/src/unity_current_sum.rs
           ab3589763d0cf564067c9a7fe65cdf107b8da920bf69819176270434433c4696  crates/weft-databricks/src/unity_current_sum_lowering.rs
-          98873fa8b55b1d958f51ca48486427d799fc9b48e052ec1351264277b412cfb8  crates/weft-databricks/src/unity_current_avg.rs
+          73a9d2886c469e8c02423af2da898f0126c2cf006063bcfbf0d22ba22bafed57  crates/weft-databricks/src/unity_current_avg.rs
           929e087cf0cd8b2b3a1df672a5429e6fa604184e5277c1a440deb128cfdddca6  crates/weft-databricks/src/unity_current_avg_lowering.rs
           1124fc19fb6ae7f20b4bd1db3622940db071c5cdfd717f32ecc0f1ab4e8af803  crates/weft-databricks/src/unity_current_read.rs
           2b2ba9b7ee890ba8cd97d28e310ca1e799272778d5822f5ffd4cbdd24720e6f1  crates/weft-databricks/src/lib.rs

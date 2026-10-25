@@ -396,8 +396,11 @@ mod tests {
         assert_eq!(in_sql["status"],"compiled");assert_eq!(not_in_sql["status"],"compiled");
         let in_text=in_sql["sql"].as_str().unwrap();let not_in_text=not_in_sql["sql"].as_str().unwrap();
         assert!(in_text.contains("WHEN `r`.`customer_id` IS NULL THEN CAST(NULL AS BOOLEAN)"));
-        assert!(in_text.contains("ELSE FALSE END"));
-        assert!(not_in_text.contains("NOT (CASE WHEN `r`.`customer_id` IS NULL THEN CAST(NULL AS BOOLEAN)"));
+        assert!(in_text.contains("WHEN FALSE THEN TRUE ELSE FALSE END"));
+        // S8 deliberately treats explicit NULL elements as non-matching:
+        // non-null LHS is FALSE for IN and TRUE after NOT; null LHS stays UNKNOWN.
+        assert!(not_in_text.contains("NOT ((CASE WHEN `r`.`customer_id` IS NULL THEN CAST(NULL AS BOOLEAN)"));
+        assert!(not_in_text.contains("WHEN FALSE THEN TRUE ELSE FALSE END"));
         let empty_in=response(request(json!({"kind":"in","fieldRef":{"module":"sales","element":"note"},"values":[]}),json!([])));
         let empty_not_in=response(request(json!({"kind":"not-in","fieldRef":{"module":"sales","element":"note"},"values":[]}),json!([])));
         assert_eq!(empty_in["status"],"compiled");assert_eq!(empty_not_in["status"],"compiled");

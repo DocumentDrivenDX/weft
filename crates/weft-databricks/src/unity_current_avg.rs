@@ -650,7 +650,11 @@ mod tests {
         assert_eq!(response["parameterOrder"], json!(["p1"]));
         assert_eq!(response["summary"]["groupOutputIds"], json!(["body_group"]));
         assert!(response["sql"].as_str().unwrap().contains("ORDER BY"));
-        assert!(response["sql"].as_str().unwrap().contains("NULLS FIRST"));
+        // Exact AVG ordering lowers decimal NULL placement to a rank expression
+        // before sign/length/magnitude ordering; it need not emit SQL NULLS FIRST.
+        assert!(response["sql"].as_str().unwrap().contains(
+            "CASE WHEN __weft_sort_0_sign IS NULL THEN 0 ELSE 1 END ASC"
+        ));
     }
 
     #[test]
@@ -684,7 +688,13 @@ mod tests {
         assert_eq!(request["read"]["predicate"]["terms"].as_array().unwrap().len() + 1, 32);
         assert_eq!(response["status"], "compiled", "{response}");
         assert_eq!(response["outputs"].as_array().unwrap().len(), 8);
-        assert_eq!(response["sql"].as_str().unwrap().matches(" IS NOT NULL").count(), 31);
+        let sql = response["sql"].as_str().unwrap();
+        for field in std::iter::once("id".to_owned())
+            .chain(std::iter::once("body".to_owned()))
+            .chain((0..29).map(|i| format!("filter_{i:02}")))
+        {
+            assert!(sql.contains(&format!("`r`.`{field}` IS NOT NULL")), "predicate field {field} missing from bounded SQL");
+        }
     }
 
     #[test]

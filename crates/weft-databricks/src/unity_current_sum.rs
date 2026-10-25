@@ -462,7 +462,8 @@ mod tests {
         assert_eq!(response["arithmetic"]["algorithm"], "signed-coefficient-base10^19/1");
         assert!(response["sql"].as_str().unwrap().contains("TRY_SUM"));
         assert!(!response["sql"].as_str().unwrap().contains("SUM(r."));
-        assert!(response["nativeChecks"].as_array().unwrap().is_empty());
+        // Current Unity responses omit internal raw-lowerer checks entirely.
+        assert!(response.get("nativeChecks").is_none());
     }
 
     #[test]
