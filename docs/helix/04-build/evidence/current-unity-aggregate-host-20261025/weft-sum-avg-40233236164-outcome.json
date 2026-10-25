@@ -1,0 +1,55 @@
+{
+  "run": 40233236164,
+  "job": 121289260248,
+  "head": "d436026479ba9176839bfe98364fdd263ee4af47",
+  "artifact": 12613953772,
+  "zipSha256": "3f903bc0b41dbd865ec2bd85c9e9e8f998edbe3aef0b4d313e08bf0f84f799e2",
+  "compile": "PASS",
+  "groups": [
+    {
+      "log": "focused-avg.log",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "log": "focused-core-read.log",
+      "passed": 4,
+      "failed": 0
+    },
+    {
+      "log": "focused-dispatch.log",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "log": "focused-predicate-quoting.log",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "log": "focused-runtime-public-route.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "log": "focused-pg-local-wire.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "log": "focused-backend-public-route.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "log": "focused-sum.log",
+      "passed": 10,
+      "failed": 0
+    }
+  ],
+  "passed": 58,
+  "failed": 0,
+  "status": "PASS_SELECTED_RUST_GATE",
+  "hostParity": "SEPARATE_JOB_IN_PROGRESS",
+  "scope": "8selected Rust library groups; no nativeDB/authorization/publication qualification"
+}

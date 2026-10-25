@@ -1,0 +1,13 @@
+{
+  "run": 40232518249,
+  "head": "9e99e2f0db43cae50270c4a0e5e967ee231bd65b",
+  "artifact": 12612823435,
+  "zipSha256": "e3e9d7b84b4333e504732a4f55ef849047fd2af20f20f85152ec7b71a8bdf5b2",
+  "compile": "PASS",
+  "passed": 57,
+  "failed": 1,
+  "hostParity": "SKIPPED_RUST_PREREQUISITE_FAILED",
+  "failure": "empty NOT-IN assertion literal parentheses mismatch; production unchanged",
+  "status": "FAILURE_RETAINED_NO_UNCHANGED_RERUN",
+  "scope": "Rust8groups only; no host/native/publication qualification"
+}

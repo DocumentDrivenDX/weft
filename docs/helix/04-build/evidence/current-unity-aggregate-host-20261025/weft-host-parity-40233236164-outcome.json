@@ -1,0 +1,136 @@
+{
+  "run": 40233236164,
+  "job": 121290040833,
+  "head": "d436026479ba9176839bfe98364fdd263ee4af47",
+  "artifact": 12613194201,
+  "zipSha256": "023f4edb8c3b92fc70fb0082347d9d14583125b938aada515d913d2e0ab62d90",
+  "status": "PASS_INSTALLED_PYTHON_BROWSER_WASM_COMPILER_PARITY",
+  "vectors": 9,
+  "allMatched": true,
+  "pageErrors": [],
+  "externalRequests": 0,
+  "python": "3.12.15",
+  "wheelSha256": "b48595d4950ee4e347d0b5f17a0d9cfd72f2c4158a93b6f407acef419af91385",
+  "nativeModuleSha256": "f3d41d6d28d6c28800cc209f94c5d5c55a051a0ca87d4b6d7ceeffb211feaf62",
+  "browser": {
+    "version": "151.0.7922.34",
+    "revision": "1234",
+    "executablePath": "/home/runner/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+    "executableSha256": "0b20b130e7edd9dd51873be867761295fe0cfad490c2b9a64f95bd3cfc08fa71"
+  },
+  "wasmSha256": "6a672ce09df00efdc4771f576e7050025e2c8b368ad9433106f806d1d719f6f6",
+  "jsSha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+  "stages": [
+    {
+      "name": "bootstrap-rust",
+      "durationSeconds": "8.86",
+      "limitSeconds": "180"
+    },
+    {
+      "name": "bootstrap-python-tools",
+      "durationSeconds": "4.31",
+      "limitSeconds": "120"
+    },
+    {
+      "name": "bootstrap-wasm-bindgen",
+      "durationSeconds": "92.55",
+      "limitSeconds": "180"
+    },
+    {
+      "name": "bootstrap-bun-install",
+      "durationSeconds": "0.11",
+      "limitSeconds": "120"
+    },
+    {
+      "name": "bootstrap-chromium",
+      "durationSeconds": "21.25",
+      "limitSeconds": "300"
+    },
+    {
+      "name": "verify-rust",
+      "durationSeconds": "0.04",
+      "limitSeconds": "60"
+    },
+    {
+      "name": "verify-python",
+      "durationSeconds": "0.01",
+      "limitSeconds": "60"
+    },
+    {
+      "name": "verify-bun",
+      "durationSeconds": "0.01",
+      "limitSeconds": "60"
+    },
+    {
+      "name": "verify-maturin",
+      "durationSeconds": "0.01",
+      "limitSeconds": "60"
+    },
+    {
+      "name": "verify-wasm-bindgen",
+      "durationSeconds": "0.01",
+      "limitSeconds": "60"
+    },
+    {
+      "name": "verify-playwright",
+      "durationSeconds": "0.01",
+      "limitSeconds": "60"
+    },
+    {
+      "name": "hash-tools",
+      "durationSeconds": "0.12",
+      "limitSeconds": "60"
+    },
+    {
+      "name": "python-wheel-build",
+      "durationSeconds": "90.92",
+      "limitSeconds": "240"
+    },
+    {
+      "name": "wheel-hash",
+      "durationSeconds": "0.05",
+      "limitSeconds": "30"
+    },
+    {
+      "name": "python-consumer-venv",
+      "durationSeconds": "2.40",
+      "limitSeconds": "90"
+    },
+    {
+      "name": "python-wheel-install",
+      "durationSeconds": "1.44",
+      "limitSeconds": "120"
+    },
+    {
+      "name": "python-vectors",
+      "durationSeconds": "1.05",
+      "limitSeconds": "120"
+    },
+    {
+      "name": "wasm-build",
+      "durationSeconds": "75.82",
+      "limitSeconds": "240"
+    },
+    {
+      "name": "wasm-bindgen",
+      "durationSeconds": "4.77",
+      "limitSeconds": "90"
+    },
+    {
+      "name": "wasm-hash",
+      "durationSeconds": "0.05",
+      "limitSeconds": "30"
+    },
+    {
+      "name": "chromium-parity",
+      "durationSeconds": "2.83",
+      "limitSeconds": "300"
+    }
+  ],
+  "limitations": [
+    "Candidate wheel has historical source version0.4.48; never published or replacement for immutable release",
+    "JSON structural parity, not serialized-byte parity",
+    "No native database/Unity authorization/release qualification",
+    "Rust58-test prerequisite separately verified"
+  ]
+}

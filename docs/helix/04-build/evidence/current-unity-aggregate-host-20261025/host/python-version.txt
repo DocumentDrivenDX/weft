@@ -1,0 +1,2 @@
+/home/runner/work/_temp/weft-parity-builder/bin/python
+3.12.15 (main, Oct  1 2026, 02:35:59) [GCC 13.3.0]
