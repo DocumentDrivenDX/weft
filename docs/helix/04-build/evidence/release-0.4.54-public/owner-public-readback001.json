@@ -1,0 +1,37 @@
+{
+  "profile": "weft.public-release-readback/1",
+  "releaseId": 423836925,
+  "tag": "v0.4.54",
+  "publishedAt": "2026-10-26T03:41:27Z",
+  "source": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2",
+  "metadata": "1c246b903038908bb4b5db08d5db20da309dd096",
+  "publisherRun": 40265243280,
+  "status": "ALL_19_PUBLIC_ASSET_BYTES_MATCH",
+  "assetSha256": {
+    "browser-compiler-receipts-0.4.54.json": "5ca3deceedc1e42a27affa825d19615fe351c4876898501d9072a625b04e4dd4",
+    "compiler-roster-0.4.54.json": "5c5e49e1fb2814cc259f70c532431c4cdcaabe944a960f594ff51de4e5ff0b7a",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "38d995ed3b55cb92403f64798c8f93b0d30ac9035d5d74784aa292b372ee8219",
+    "mac-runner-preflight-0.4.54.json": "93a592d3fb5de959749d2fed03428b31c3a180dc71791c2cb2d1a5beed113b19",
+    "rust-compiler-reports-0.4.54.json": "26cdc9e854b8e3b4dc057976984e2702746a5b52dd60b139e5425d107980d453",
+    "python-compiler-parity-0.4.54.json": "3ffbb078380d65bfa8fd4d1b9f35926cb563549ca0014a7fbecb5707f891873d",
+    "weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl": "0ef0628143e71a6d7e7dfe53c79034307260075c78a64e92c5b19e8684cf628d",
+    "mac-hosted-producer-receipt-0.4.54.json": "5573a19eb5f5c835239807bbe3f7b595a0c34377597f3478eb99abab5fe87563",
+    "packaging-linux-aarch64-0.4.54.json": "b60aa668804f1b27913a46ba862475955ff603e12be874d5689f2fd63f843ccd",
+    "selected-assets-verification-0.4.54.json": "3c2ad5517de469340171c4486f39d1e2aa19bf1280c0618708c8b207d0385559",
+    "packaging-linux-x86_64-0.4.54.json": "a715b8251937fbc1d4480572683cb14b94932184230b5a89e34264851ec64b1a",
+    "release-assets-0.4.54.json": "c72d6455d97dda8b2043a0e602adc0f539cd343b8b11089d4b217d0de22814d0",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "662a46d0675ef2b59a007b1d49eeb8bc04c46384ac957c0579629e1e755da6eb",
+    "mac-tool-binary-sha256-0.4.54.txt": "d5fc869d0275dc26694de5cbcf37f1ceb3f05bf3b8ca299b47d67a76cd1578bc",
+    "packaging-macos-arm64-0.4.54.json": "44771435ab4e32eb633f980891f725c9ef36d83d5a7396183d02aaaab365d8a3",
+    "browser-compiler-parity-0.4.54.json": "8c69b2b3c79f75a5e83eba21671c9db3d36ced6a3a5182954644bcb72dcec4ce",
+    "SHA256SUMS": "d40c3352db555918f9e6e713c653de89973e6163c33cd7315eb2b58834a8debb",
+    "v0.4.54.md": "09234ad8023757fc5f025f969cf5b699a06e91e823e2eecc6eac1db6526d8751",
+    "release-pins-0.4.54.json": "8ee0f51aac254525e61e799e1508fc58ef9826fd744f8f74903ba704f6d23e91"
+  },
+  "embeddedNativeSha256": {
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "580ac96a318679c2b4ce59b2bbb3c589f14441d920026cf06b911d7ea2aa9149",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "bc2de44d1ba2e66a7d57967dfeeffa6b8010c681458626cad5392f8577ec4673",
+    "weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl": "9d33d503ad5e1a2c8234f43d8b9cf7b43288089ad17ee7d2648583e1ac5df715"
+  },
+  "scope": "Fresh public downloads, SHA256SUMS, API digest, pinned wheel/native bytes verified. Earlier hosted installed Mac9refusal parity applies to these identical bytes; no fresh postpublication runtime, positive Mac query compilation, native DB or PyPI claim."
+}
