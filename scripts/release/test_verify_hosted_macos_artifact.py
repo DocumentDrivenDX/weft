@@ -12,6 +12,7 @@ import zipfile
 
 sys.path.insert(0, str(Path(__file__).parent))
 from verify_hosted_macos_artifact import VerificationError, verify_archive
+from finalize_hosted_macos import validate_refusal_rows
 
 SOURCE = '1' * 40
 VERSION = '0.4.55'
@@ -41,7 +42,7 @@ def fixture(root: Path, *, profile: str = 'nine-frozen-refusal-responses-rust-py
         wheel.writestr(module_name, module)
     wheel = wheel_bytes.getvalue()
     cases = [{'id': case_id, 'expected': {'status': 'blocked', 'code': 'WFT-BACKEND-MISSING'}} for case_id in CASE_IDS]
-    rust_rows = [{'id': case_id, 'raw': json.dumps({'status': 'blocked', 'diagnosticCodes': ['WFT-BACKEND-MISSING']})} for case_id in CASE_IDS]
+    rust_rows = [{'id': case_id, 'raw': json.dumps({'status': 'blocked', 'diagnostics': [{'code': 'WFT-BACKEND-VERSION' if case_id.endswith('ashlar.databricks') else 'WFT-BACKEND-MISSING'}]})} for case_id in CASE_IDS]
     features = ['weft-runtime/serde']
     output = {
         wheel_name: wheel,
@@ -118,6 +119,19 @@ class HostedMacArtifactTests(unittest.TestCase):
         self.assertEqual(result['status'], 'passed')
         self.assertEqual(result['compilerProfile'], 'nine-frozen-refusal-responses-rust-python-chromium/1')
         self.assertTrue((self.root / 'extracted/umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl').is_file())
+
+    def test_profile_reads_real_response_contract_and_retained_predecessor_expectations(self):
+        rows = json.loads(Path('docs/helix/04-build/evidence/release-0.4.54-s2/compiler-reports.json').read_bytes())
+        corpus = {row['id']: row for row in json.loads(Path('tests/compile/fixtures/cases.json').read_bytes())}
+        cases = [corpus[case_id] for case_id in CASE_IDS]
+        validate_refusal_rows(cases, rows)
+        changed = json.loads(json.dumps(rows))
+        changed[3]['raw'] = json.dumps({'status': 'blocked', 'diagnostics': [{'code': 'WFT-BACKEND-MISSING'}]})
+        with self.assertRaisesRegex(ValueError, 'selected refusal'):
+            validate_refusal_rows(cases, changed)
+        changed[3]['raw'] = json.dumps({'status': 'compiled', 'sql': 'SELECT 1', 'diagnostics': []})
+        with self.assertRaisesRegex(ValueError, 'selected refusal'):
+            validate_refusal_rows(cases, changed)
 
     def test_wrong_source_or_run_identity_refuses(self):
         with self.assertRaisesRegex(VerificationError, 'head SHA|producer source SHA'):

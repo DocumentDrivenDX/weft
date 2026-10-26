@@ -14,6 +14,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
+from finalize_hosted_macos import validate_refusal_rows
 
 MAX_ARCHIVE = 70 * 1024 * 1024
 MAX_FILES = 160
@@ -197,6 +198,10 @@ def verify_archive(*, archive_path: pathlib.Path, run: dict, artifact_response: 
     require([item.get('id') for item in py.get('cases', [])] == CASE_IDS, 'Python parity roster differs')
     require(browser.get('byteParity') is True and browser.get('cases') == 9, 'Chromium parity did not pass')
     require(len(rust) == 9 and [item.get('id') for item in rust] == CASE_IDS, 'Rust parity roster differs')
+    try:
+        validate_refusal_rows(cases, rust)
+    except (ValueError, KeyError, TypeError) as error:
+        raise VerificationError('Rust refusal response differs from selected profile') from error
     output_dir.mkdir(parents=True, exist_ok=True)
     for name, payload in members.items():
         destination = output_dir / pathlib.PurePosixPath(name)

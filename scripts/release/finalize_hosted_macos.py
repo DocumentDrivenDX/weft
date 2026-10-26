@@ -22,6 +22,23 @@ CASE_IDS = [
 ]
 
 
+def validate_refusal_rows(cases, rows):
+    """Check the selected wheel-feature profile, not the corpus's default registry.
+
+    These older Databricks requests select an unavailable backend version in the
+    wheel composition; the generic corpus instead expects an absent backend.
+    Retain the source fixtures and assert the qualified composition explicitly.
+    """
+    if [case.get('id') for case in cases] != CASE_IDS or [row.get('id') for row in rows] != CASE_IDS:
+        raise ValueError('Rust comparator response roster is incomplete')
+    for case, row in zip(cases, rows, strict=True):
+        response = json.loads(row['raw'])
+        code = 'WFT-BACKEND-VERSION' if case['id'].endswith('ashlar.databricks') else 'WFT-BACKEND-MISSING'
+        codes = [diagnostic.get('code') for diagnostic in response.get('diagnostics', [])]
+        if response.get('status') != 'blocked' or codes != [code] or any(key in response for key in ('sql', 'parameters', 'logicalPlan')):
+            raise ValueError('Rust comparator did not preserve selected refusal: ' + case['id'])
+
+
 def sha(path: pathlib.Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -95,12 +112,7 @@ def main() -> None:
             expected = case.get('expected', {})
             if expected.get('status') != 'blocked' or expected.get('code') not in {'WFT-BACKEND-MISSING', 'WFT-BACKEND-VERSION'}:
                 raise ValueError('compiler vector is outside the refusal-only profile')
-        if len(rust_rows) != 9 or [row.get('id') for row in rust_rows] != CASE_IDS:
-            raise ValueError('Rust comparator response roster is incomplete')
-        for case, row in zip(cases, rust_rows, strict=True):
-            raw = json.loads(row['raw'])
-            if raw.get('status') != case['expected']['status'] or case['expected']['code'] not in raw.get('diagnosticCodes', []):
-                raise ValueError('Rust comparator did not preserve expected refusal: ' + case['id'])
+        validate_refusal_rows(cases, rust_rows)
         if python_result.get('status') != 'passed' or [row.get('id') for row in python_result.get('cases', [])] != CASE_IDS:
             raise ValueError('installed Python wheel parity did not pass')
         if python_result.get('distribution') != args.distribution or python_result.get('distributionVersion') != args.version:

@@ -5,6 +5,7 @@ on:
       - scripts/**publish_pypi_release.py
       - scripts/**publish_hosted_release.py
       - scripts/**verify_hosted_macos_artifact.py
+      - scripts/**finalize_hosted_macos.py
       - scripts/**test_publish_hosted_release.py
       - scripts/**test_verify_hosted_macos_artifact.py
       - .github/workflows/*pypi*.yml
@@ -15,6 +16,7 @@ on:
       - scripts/**publish_pypi_release.py
       - scripts/**publish_hosted_release.py
       - scripts/**verify_hosted_macos_artifact.py
+      - scripts/**finalize_hosted_macos.py
       - scripts/**test_publish_hosted_release.py
       - scripts/**test_verify_hosted_macos_artifact.py
       - .github/workflows/*pypi*.yml
