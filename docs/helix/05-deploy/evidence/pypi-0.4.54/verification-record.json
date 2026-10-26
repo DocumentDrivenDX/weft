@@ -1,0 +1,34 @@
+{
+  "all_three_jobs_passed": true,
+  "artifact_receipts": [
+    {
+      "id": 12669030468,
+      "name": "weft-pypi-publication-0.4.54",
+      "sha256": "558b44ecdbd36412a25d22f55951a64112e2083e74a1ce3648f0e245a8b1f0f3"
+    },
+    {
+      "id": 12668017207,
+      "name": "weft-pypi-consumer-0.4.54",
+      "sha256": "d98edaae32501ff365c19126db54138d3b9bc9cf074b3fddc561c7564ac11ab8"
+    }
+  ],
+  "artifact_zip_digests_verified": true,
+  "distribution": "weft-sql",
+  "files": {
+    "weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl": "0ef0628143e71a6d7e7dfe53c79034307260075c78a64e92c5b19e8684cf628d",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "38d995ed3b55cb92403f64798c8f93b0d30ac9035d5d74784aa292b372ee8219",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "662a46d0675ef2b59a007b1d49eeb8bc04c46384ac957c0579629e1e755da6eb"
+  },
+  "publication_mode": "oidc_upload",
+  "registry": "pypi",
+  "schema": "registry-release-verification.v1",
+  "scope": "Registry distribution and fresh public-index import of the existing qualified release. Existing platform and semantic qualification limits apply.",
+  "status": "passed",
+  "tag": "v0.4.54",
+  "tag_source_sha": "1c246b903038908bb4b5db08d5db20da309dd096",
+  "version": "0.4.54",
+  "workflow_driver_sha": "8ada03f606fda2ee9121e084f3eb3fbd4fc275ff",
+  "workflow_event": "workflow_dispatch",
+  "workflow_run_id": 40361089495,
+  "workflow_url": "https://github.com/DocumentDrivenDX/weft/actions/runs/40361089495"
+}
