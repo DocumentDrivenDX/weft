@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import tempfile
 import textwrap
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 import zipfile
 
 workflow=Path('.github/workflows/release.yml').read_text()
@@ -21,7 +21,8 @@ with tempfile.TemporaryDirectory() as environment:
         exec(identity_source,{})
     recorded=(Path(environment)/'github-env').read_text()
     assert 'DISTRIBUTION=umf-weft\n' in recorded and 'WHEEL_PREFIX=umf_weft-0.4.55-\n' in recorded
-    with patch('pathlib.Path.glob',return_value=iter([Path('dist/exact.whl')])),patch('pathlib.Path.read_text',return_value='{}'),patch('pathlib.Path.write_text'),patch('subprocess.run')as invoke,patch('subprocess.check_output',return_value='a'*40),patch.dict(os.environ,{'DISTRIBUTION':'umf-weft'}):
+    fake_archive=MagicMock();fake_archive.__enter__.return_value.namelist.return_value=['weft/fixture.so']
+    with patch('pathlib.Path.glob',return_value=iter([Path('dist/exact.whl')])),patch('pathlib.Path.read_text',return_value='{}'),patch('pathlib.Path.write_text'),patch('zipfile.ZipFile',return_value=fake_archive),patch('subprocess.run')as invoke,patch('subprocess.check_output',return_value='a'*40),patch.dict(os.environ,{'DISTRIBUTION':'umf-weft'}):
         exec(source,{});assert invoke.call_count==1
     assert 'scripts/release/verify-wheel-packaging.py'in invoke.call_args.args[0]
     assert '--distribution' in invoke.call_args.args[0]

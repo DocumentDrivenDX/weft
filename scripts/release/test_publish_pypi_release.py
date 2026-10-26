@@ -13,6 +13,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
 import publish_pypi_release as publisher
+import publish_hosted_release as hosted_publisher
 
 
 def wheel(metadata: bytes) -> bytes:
@@ -273,9 +274,7 @@ class PublishPypiReleaseTests(unittest.TestCase):
         producer_run_id = 456
         pins = {
             "tag": "v0.0.50",
-            "commit": "a" * 40,
-            "workflowCommit": workflow_commit,
-            "workflowRunId": producer_run_id,
+            **hosted_publisher.producer_intent("a" * 40, workflow_commit, producer_run_id),
             "version": "0.0.50",
             "distribution": "truss-toolkit",
         }

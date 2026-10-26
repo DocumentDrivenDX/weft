@@ -1,9 +1,25 @@
 name: PyPI publisher validation
 on:
   pull_request:
-    paths: ['scripts/**publish_pypi_release.py', '.github/workflows/*pypi*.yml']
+    paths:
+      - scripts/**publish_pypi_release.py
+      - scripts/**publish_hosted_release.py
+      - scripts/**verify_hosted_macos_artifact.py
+      - scripts/**test_publish_hosted_release.py
+      - scripts/**test_verify_hosted_macos_artifact.py
+      - .github/workflows/*pypi*.yml
+      - .github/workflows/release.yml
+      - .github/workflows/release-hosted-macos.yml
   push:
-    paths: ['scripts/**publish_pypi_release.py', '.github/workflows/*pypi*.yml']
+    paths:
+      - scripts/**publish_pypi_release.py
+      - scripts/**publish_hosted_release.py
+      - scripts/**verify_hosted_macos_artifact.py
+      - scripts/**test_publish_hosted_release.py
+      - scripts/**test_verify_hosted_macos_artifact.py
+      - .github/workflows/*pypi*.yml
+      - .github/workflows/release.yml
+      - .github/workflows/release-hosted-macos.yml
 permissions:
   contents: read
 jobs:
@@ -17,4 +33,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python scripts/release/test_publish_pypi_release.py
+      - run: |
+          python scripts/release/test_publish_pypi_release.py
+          python scripts/release/test_publish_hosted_release.py
+          python scripts/release/test_verify_hosted_macos_artifact.py

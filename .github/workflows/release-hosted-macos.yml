@@ -1,0 +1,184 @@
+name: Build Weft hosted macOS ARM64 wheel and refusal-parity profile
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact reviewed default-branch commit to build
+        required: true
+        type: string
+      version:
+        description: Exact project version from that source commit
+        required: true
+        type: string
+      distribution:
+        description: Exact Python distribution name from that source commit
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: weft-hosted-macos-${{ inputs.version }}-${{ inputs.source_sha }}
+  cancel-in-progress: false
+jobs:
+  macos-arm64:
+    if: inputs.source_sha != '' && inputs.version != '' && inputs.distribution != ''
+    runs-on: macos-14
+    timeout-minutes: 60
+    env:
+      SOURCE_SHA: ${{ inputs.source_sha }}
+      SOURCE_VERSION: ${{ inputs.version }}
+      DISTRIBUTION: ${{ inputs.distribution }}
+    steps:
+      - name: Initialize bounded producer evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/weft-macos-evidence" "$RUNNER_TEMP/weft-macos-dist" "$RUNNER_TEMP/weft-macos-upload"
+          deadline="$(python3 -c 'import time; print(time.monotonic()+3600)')"
+          {
+            echo "EVIDENCE_ROOT=$RUNNER_TEMP/weft-macos-evidence"
+            echo "DIST_ROOT=$RUNNER_TEMP/weft-macos-dist"
+            echo "UPLOAD_ROOT=$RUNNER_TEMP/weft-macos-upload"
+            echo "WEFT_RELEASE_DEADLINE_MONOTONIC=$deadline"
+          } >> "$GITHUB_ENV"
+          printf '{"schema":"weft-hosted-macos-arm64-producer/1","status":"failed","version":"%s","distribution":"%s","sourceCommit":"%s","workflowCommit":"%s","workflowRunId":"%s","checks":{},"failure":"producer did not reach final receipt step","limits":["No native PostgreSQL execution or publication."]}\n' \
+            "$SOURCE_VERSION" "$DISTRIBUTION" "$SOURCE_SHA" "$GITHUB_SHA" "$GITHUB_RUN_ID" > "$RUNNER_TEMP/weft-macos-evidence/producer-receipt.json"
+          cp "$RUNNER_TEMP/weft-macos-evidence/producer-receipt.json" "$RUNNER_TEMP/weft-macos-upload/producer-receipt.json"
+      - uses: actions/checkout@v6
+        timeout-minutes: 5
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ inputs.source_sha }}
+      - name: Require exact reviewed main source and ARM64 runner
+        id: preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${#SOURCE_SHA}" = 40
+          case "$SOURCE_SHA" in *[!0-9a-f]*) exit 1;; esac
+          test "$GITHUB_REF" = refs/heads/main
+          test "$GITHUB_SHA" = "$SOURCE_SHA"
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(uname -s)" = Darwin
+          test "$(uname -m)" = arm64
+          python3 - <<'PY'
+          import os,sys,tomllib
+          sys.path.insert(0,'scripts/release')
+          from publish_pypi_release import distribution_for_version
+          project=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']
+          crate=tomllib.load(open('crates/weft-python/Cargo.toml','rb'))['package']
+          assert project['version']==crate['version']==os.environ['SOURCE_VERSION']
+          assert project['name']==os.environ['DISTRIBUTION']==distribution_for_version(project['version'])
+          PY
+      - uses: actions/setup-python@v6
+        timeout-minutes: 5
+        with:
+          python-version: '3.12'
+      - uses: oven-sh/setup-bun@v2
+        timeout-minutes: 5
+        with:
+          bun-version: '1.4.2'
+      - uses: actions/setup-node@v4
+        timeout-minutes: 5
+        with:
+          node-version: '24'
+      - name: Record selected ARM64 runner and release inputs
+        id: runner_preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/release/run_bounded_0454.py --stage runner-preflight --seconds 45 --log "$EVIDENCE_ROOT/runner-preflight.log" --receipt "$EVIDENCE_ROOT/runner-preflight-command.json" -- python3 scripts/release/record_preflight_0454.py
+          SOURCE_SHA="$SOURCE_SHA" SOURCE_VERSION="$SOURCE_VERSION" DISTRIBUTION="$DISTRIBUTION" python3 - <<'PY'
+          import json,os,pathlib,tomllib
+          p=pathlib.Path(os.environ['EVIDENCE_ROOT'],'runner-preflight.json');d=json.loads(p.read_text())
+          d['distribution']=os.environ['DISTRIBUTION'];d['sourceCommit']=os.environ['SOURCE_SHA'];d['version']=os.environ['SOURCE_VERSION']
+          p.write_text(json.dumps(d,indent=2)+'\n')
+          PY
+      - name: Install bounded Rust and Python build tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/release/run_bounded_0454.py --stage rust-toolchain --seconds 480 --grace-seconds 30 --log "$EVIDENCE_ROOT/rust-toolchain.log" --receipt "$EVIDENCE_ROOT/rust-toolchain-command.json" -- rustup toolchain install 1.90.0 --profile minimal --target aarch64-apple-darwin --target wasm32-unknown-unknown --component rustfmt
+          python3 scripts/release/run_bounded_0454.py --stage maturin-install --seconds 300 --grace-seconds 30 --log "$EVIDENCE_ROOT/maturin-install.log" --receipt "$EVIDENCE_ROOT/maturin-install-command.json" -- python3 -m pip install --no-deps 'maturin==1.9.6'
+          python3 scripts/release/run_bounded_0454.py --stage wasm-bindgen-install --seconds 480 --grace-seconds 30 --log "$EVIDENCE_ROOT/wasm-bindgen-install.log" --receipt "$EVIDENCE_ROOT/wasm-bindgen-install-command.json" -- cargo +1.90.0 install wasm-bindgen-cli --version 0.2.105 --locked
+          python3 scripts/release/run_bounded_0454.py --stage verify-toolchain --seconds 45 --log "$EVIDENCE_ROOT/verify-toolchain.log" --receipt "$EVIDENCE_ROOT/verify-toolchain-command.json" -- python3 scripts/release/verify_toolchain_0454.py
+      - name: Build and check exact installed ARM64 wheel
+        id: wheel
+        shell: bash
+        working-directory: crates/weft-python
+        run: |
+          set -euo pipefail
+          mkdir -p "$DIST_ROOT"
+          PYO3_PYTHON="$(command -v python3)" python3 "$GITHUB_WORKSPACE/scripts/release/run_bounded_0454.py" --stage macos-wheel-build --seconds 900 --grace-seconds 30 --log "$EVIDENCE_ROOT/macos-wheel-build.log" --receipt "$EVIDENCE_ROOT/macos-wheel-build-command.json" -- maturin build --release --locked --target aarch64-apple-darwin --out "$DIST_ROOT"
+          prefix="$(python3 -c 'import os,sys;sys.path.insert(0,os.path.join(os.environ["GITHUB_WORKSPACE"],"scripts/release"));from publish_pypi_release import wheel_prefix_for_version;print(wheel_prefix_for_version(sys.argv[1]))' "$SOURCE_VERSION")"
+          test "$(find "$DIST_ROOT" -maxdepth 1 -name '*.whl' | wc -l | tr -d ' ')" = 1
+          wheel="$(find "$DIST_ROOT" -maxdepth 1 -name "${prefix}*-macosx_*_arm64.whl" -print -quit)"
+          test -n "$wheel"
+          python3 "$GITHUB_WORKSPACE/scripts/release/run_bounded_0454.py" --stage macos-wheel-venv --seconds 30 --log "$EVIDENCE_ROOT/macos-wheel-venv.log" --receipt "$EVIDENCE_ROOT/macos-wheel-venv-command.json" -- python3 -m venv "$RUNNER_TEMP/weft-wheel-venv"
+          python3 "$GITHUB_WORKSPACE/scripts/release/run_bounded_0454.py" --stage macos-wheel-install --seconds 180 --log "$EVIDENCE_ROOT/macos-wheel-install.log" --receipt "$EVIDENCE_ROOT/macos-wheel-install-command.json" -- "$RUNNER_TEMP/weft-wheel-venv/bin/python" -m pip install --no-deps "$wheel"
+          python3 "$GITHUB_WORKSPACE/scripts/release/run_bounded_0454.py" --stage macos-wheel-check --seconds 30 --log "$EVIDENCE_ROOT/macos-wheel-check.log" --receipt "$EVIDENCE_ROOT/macos-wheel-check-command.json" -- "$RUNNER_TEMP/weft-wheel-venv/bin/python" "$GITHUB_WORKSPACE/scripts/release/verify-wheel-packaging.py" --wheel "$wheel" --version "$SOURCE_VERSION" --distribution "$DISTRIBUTION" --output "$DIST_ROOT/packaging-macos-arm64.json"
+          SOURCE_SHA="$SOURCE_SHA" SOURCE_VERSION="$SOURCE_VERSION" DISTRIBUTION="$DISTRIBUTION" python3 - <<'PY'
+          import json,os,pathlib,zipfile
+          p=pathlib.Path(os.environ['DIST_ROOT'],'packaging-macos-arm64.json');d=json.loads(p.read_text())
+          wheel=next(pathlib.Path(os.environ['DIST_ROOT']).glob('*.whl'))
+          with zipfile.ZipFile(wheel) as archive:
+           modules=[name for name in archive.namelist() if name.endswith(('.so','.dylib','.pyd'))]
+          if len(modules)!=1:raise SystemExit('ARM64 wheel native module inventory is not unique')
+          d.update({'sourceCommit':os.environ['SOURCE_SHA'],'distribution':os.environ['DISTRIBUTION'],'target':'aarch64-apple-darwin','nativeModule':modules[0]})
+          p.write_text(json.dumps(d,indent=2)+'\n')
+          PY
+      - name: Freeze nine refusal-response compiler vectors
+        id: vectors
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['GITHUB_WORKSPACE']);out=pathlib.Path(os.environ['DIST_ROOT'])
+          corpus=root/'tests/compile/fixtures/cases.json'
+          ids=['original-sales-join-truss.postgresql','original-empty-global-truss.postgresql','original-empty-grouped-truss.postgresql','original-sales-join-ashlar.databricks','original-empty-global-ashlar.databricks','original-empty-grouped-ashlar.databricks','original-string-exact-0','original-string-exact-1','original-string-exact-2']
+          cases=json.loads(corpus.read_bytes());by_id={c['id']:c for c in cases}
+          if len(by_id)!=len(cases) or any(i not in by_id for i in ids):raise SystemExit('frozen compiler vector roster is incomplete or non-unique')
+          chosen=[by_id[i] for i in ids]
+          if any(c['expected'].get('status')!='blocked' for c in chosen):raise SystemExit('frozen profile must remain refusal-only')
+          (out/'compiler-cases.json').write_text(json.dumps(chosen,ensure_ascii=False)+'\n')
+          (out/'compiler-roster.json').write_text(json.dumps({'profile':'nine-frozen-refusal-responses/1','cases':ids,'corpus':'tests/compile/fixtures/cases.json','corpusSha256':hashlib.sha256(corpus.read_bytes()).hexdigest(),'selectedCasesSha256':hashlib.sha256((out/'compiler-cases.json').read_bytes()).hexdigest(),'expected':'exact Rust comparator response bytes; installed Python wheel and Chromium must match all nine ordered refusal responses','positiveQueryQualification':False,'nativeDatabaseExecution':False},indent=2)+'\n')
+          PY
+      - name: Build Rust comparator and browser WASM using exact wheel features
+        id: parity
+        shell: bash
+        run: |
+          set -euo pipefail
+          features="$(python3 -c 'import tomllib; print(",".join(tomllib.load(open("crates/weft-python/pyproject.toml","rb"))["tool"]["maturin"]["features"]))')"
+          python3 scripts/release/run_bounded_0454.py --stage rust-comparator --seconds 600 --grace-seconds 30 --log "$EVIDENCE_ROOT/rust-comparator.log" --receipt "$EVIDENCE_ROOT/rust-comparator-command.json" -- cargo +1.90.0 build -p weft-runtime --example compile_public_batch --features "$features" --locked
+          wasm_features="$(printf '%s' "$features" | sed 's/[^,]*/weft-runtime\/&/g')"
+          python3 scripts/release/run_bounded_0454.py --stage wasm-build --seconds 720 --grace-seconds 30 --log "$EVIDENCE_ROOT/wasm-build.log" --receipt "$EVIDENCE_ROOT/wasm-build-command.json" -- cargo +1.90.0 build -p weft-wasm --features "$wasm_features" --target wasm32-unknown-unknown --locked --release
+          python3 scripts/release/run_bounded_0454.py --stage wasm-bindgen --seconds 60 --log "$EVIDENCE_ROOT/wasm-bindgen.log" --receipt "$EVIDENCE_ROOT/wasm-bindgen-command.json" -- wasm-bindgen target/wasm32-unknown-unknown/release/weft_wasm.wasm --target web --out-dir "$DIST_ROOT/web"
+          python3 scripts/release/run_bounded_0454.py --stage bun-install --seconds 120 --log "$EVIDENCE_ROOT/bun-install.log" --receipt "$EVIDENCE_ROOT/bun-install-command.json" -- bun install --frozen-lockfile
+          python3 scripts/release/run_bounded_0454.py --stage browser-build --seconds 120 --log "$EVIDENCE_ROOT/browser-build.log" --receipt "$EVIDENCE_ROOT/browser-build-command.json" -- bun run browser:build
+          python3 scripts/release/run_bounded_0454.py --stage rust-compiler-vectors --seconds 60 --log "$EVIDENCE_ROOT/rust-vectors.log" --receipt "$EVIDENCE_ROOT/rust-vectors-command.json" -- python3 scripts/release/compare_selected_rust_0454.py --cases "$DIST_ROOT/compiler-cases.json" --executable target/debug/examples/compile_public_batch --output "$DIST_ROOT/compiler-reports.json"
+          python3 scripts/release/run_bounded_0454.py --stage python-wheel-vectors --seconds 120 --log "$EVIDENCE_ROOT/python-vectors.log" --receipt "$EVIDENCE_ROOT/python-vectors-command.json" -- "$RUNNER_TEMP/weft-wheel-venv/bin/python" scripts/release/compare_selected_python.py --cases "$DIST_ROOT/compiler-cases.json" --reports "$DIST_ROOT/compiler-reports.json" --output "$DIST_ROOT/python-compiler-parity.json" --source-root "$GITHUB_WORKSPACE" --version "$SOURCE_VERSION" --distribution "$DISTRIBUTION"
+          python3 scripts/release/run_bounded_0454.py --stage playwright-install --seconds 300 --log "$EVIDENCE_ROOT/playwright-install.log" --receipt "$EVIDENCE_ROOT/playwright-install-command.json" -- npm install --prefix "$RUNNER_TEMP/weft-playwright" --ignore-scripts --no-package-lock playwright@1.62.1
+          python3 scripts/release/run_bounded_0454.py --stage chromium-install --seconds 600 --log "$EVIDENCE_ROOT/chromium-install.log" --receipt "$EVIDENCE_ROOT/chromium-install-command.json" -- node "$RUNNER_TEMP/weft-playwright/node_modules/playwright/cli.js" install chromium
+          WEFT_PLAYWRIGHT_MODULE="$RUNNER_TEMP/weft-playwright/node_modules/playwright/index.mjs" WEFT_PROBE_API=compile_json WEFT_PROBE_JS="$DIST_ROOT/web/weft_wasm.js" WEFT_PROBE_WASM="$DIST_ROOT/web/weft_wasm_bg.wasm" WEFT_BROWSER_WRAPPER="$GITHUB_WORKSPACE/packages/weft-browser/dist/index.js" WEFT_FRONTEND_CORPUS="$DIST_ROOT/compiler-cases.json" WEFT_FRONTEND_REPORTS="$DIST_ROOT/compiler-reports.json" WEFT_FRONTEND_BROWSER_SUMMARY="$DIST_ROOT/browser-compiler-parity.json" WEFT_BROWSER_RECEIPTS="$DIST_ROOT/browser-compiler-receipts.json" python3 scripts/release/run_bounded_0454.py --stage browser-parity --seconds 300 --log "$EVIDENCE_ROOT/browser-parity.log" --receipt "$EVIDENCE_ROOT/browser-parity-command.json" -- bun tests/compile/browser-check.mjs
+      - name: Finalize producer receipt
+        if: always()
+        shell: bash
+        env:
+          PREFLIGHT_OUTCOME: ${{ steps.runner_preflight.outcome }}
+          WHEEL_OUTCOME: ${{ steps.wheel.outcome }}
+          VECTORS_OUTCOME: ${{ steps.vectors.outcome }}
+          PARITY_OUTCOME: ${{ steps.parity.outcome }}
+          JOB_OUTCOME: ${{ job.status }}
+        run: |
+          python3 scripts/release/run_bounded_0454.py --stage finalize-macos-evidence --seconds 240 --reserve-seconds 60 --grace-seconds 10 --log "$UPLOAD_ROOT/finalize.log" --receipt "$UPLOAD_ROOT/finalize-command.json" -- python3 scripts/release/finalize_hosted_macos.py --version "$SOURCE_VERSION" --distribution "$DISTRIBUTION"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        timeout-minutes: 1
+        with:
+          name: weft-hosted-${{ inputs.version }}-macos-arm64-${{ inputs.source_sha }}
+          path: ${{ runner.temp }}/weft-macos-upload/**
+          if-no-files-found: error
+          retention-days: 90

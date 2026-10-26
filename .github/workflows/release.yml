@@ -14,6 +14,21 @@ on:
         required: false
         default: ''
         type: string
+      macos_run_id:
+        description: Successful release-hosted-macos.yml run that produced the exact ARM64 artifact
+        required: false
+        default: ''
+        type: string
+      macos_source_sha:
+        description: Exact reviewed main source SHA recorded by that ARM64 producer
+        required: false
+        default: ''
+        type: string
+      source_sha:
+        description: Exact reviewed main commit for a new hosted three-platform release
+        required: false
+        default: ''
+        type: string
 env:
   RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
   RELEASE_REQUESTED: ${{ github.ref_type == 'tag' || inputs.tag != '' }}
@@ -23,6 +38,40 @@ concurrency:
   group: python-release-${{ inputs.tag || github.ref_name }}
   cancel-in-progress: false
 jobs:
+  route:
+    runs-on: ubuntu-24.04
+    outputs:
+      hosted_macos: ${{ steps.profile.outputs.hosted_macos }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ inputs.source_sha || (inputs.tag && format('refs/tags/{0}', inputs.tag)) || github.sha }}
+      - uses: actions/setup-python@v6
+        timeout-minutes: 5
+        with:
+          python-version: '3.12'
+      - id: profile
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          MACOS_RUN_ID: ${{ inputs.macos_run_id }}
+          MACOS_SOURCE_SHA: ${{ inputs.macos_source_sha }}
+        run: |
+          python - <<'PY'
+          import os,sys,tomllib
+          sys.path.insert(0,'scripts/release')
+          from publish_pypi_release import distribution_for_version
+          project=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']
+          assert project['name']==distribution_for_version(project['version'])
+          hosted='true' if project['name']=='umf-weft' else 'false'
+          if hosted=='true' and os.environ['MACOS_RUN_ID']:
+              assert os.environ['SOURCE_SHA']==os.environ['GITHUB_SHA']
+              assert os.environ['MACOS_SOURCE_SHA']==os.environ['SOURCE_SHA']
+              assert os.environ['GITHUB_REF']=='refs/heads/main'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as output: output.write(f'hosted_macos={hosted}\n')
+          PY
   wheels:
     # v0.4.50 and v0.4.52 have separate selected-assets paths. Never start the
     # legacy platform matrix for those tags; their promotion workflows consume
@@ -45,7 +94,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-          ref: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.sha }}
+          ref: ${{ inputs.source_sha || (inputs.tag && format('refs/tags/{0}', inputs.tag)) || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -74,20 +123,24 @@ jobs:
           target: ${{ matrix.target }}
           manylinux: ${{ matrix.manylinux }}
           args: --manifest-path crates/weft-python/Cargo.toml --release --locked --out dist
-      # Functional qualification is performed once locally on macOS. Hosted
-      # targets build their native artifacts and check installed packaging only.
+      # Legacy releases retain their existing macOS qualification process.
+      # The renamed umf-weft cohort uses release-hosted-macos.yml for its
+      # bounded hosted ARM64 refusal-parity profile.
       - name: Check the exact installed wheel and notices
         shell: bash
         run: |
           python -m pip install --no-deps dist/*.whl
           python - <<'PYTHON'
-          import json,os,pathlib,subprocess,sys,tomllib
+          import json,os,pathlib,subprocess,sys,tomllib,zipfile
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
           root=pathlib.Path('dist');wheels=list(root.glob('*.whl'));assert len(wheels)==1
           report=root/'packaging-${{ matrix.target }}.json'
           subprocess.run([sys.executable,'scripts/release/verify-wheel-packaging.py','--wheel',str(wheels[0]),'--version',version,'--distribution',os.environ['DISTRIBUTION'],'--output',str(report)],check=True)
           evidence=json.loads(report.read_text())
-          evidence['sourceCommit']=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          with zipfile.ZipFile(wheels[0]) as archive:
+              modules=[name for name in archive.namelist() if name.endswith(('.so','.pyd'))]
+          assert len(modules)==1
+          evidence.update({'sourceCommit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'distribution':os.environ['DISTRIBUTION'],'target':'${{ matrix.target }}','nativeModule':modules[0]})
           report.write_text(json.dumps(evidence,indent=2)+'\n')
           PYTHON
       - uses: actions/upload-artifact@v4
@@ -98,9 +151,10 @@ jobs:
             dist/packaging-*.json
           if-no-files-found: error
   publish:
-    if: always() && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54' && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != ''))
-    needs: wheels
+    if: always() && needs.route.result == 'success' && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54' && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != '')) && (needs.route.outputs.hosted_macos != 'true' || (inputs.macos_run_id != '' && inputs.macos_source_sha != ''))
+    needs: [wheels, route]
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     permissions:
       contents: write
       actions: read
@@ -109,7 +163,11 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-          ref: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.sha }}
+          ref: ${{ inputs.source_sha || (inputs.tag && format('refs/tags/{0}', inputs.tag)) || github.sha }}
+      - uses: actions/setup-python@v6
+        timeout-minutes: 5
+        with:
+          python-version: '3.12'
       - uses: actions/download-artifact@v4
         with:
           run-id: ${{ inputs.packaging_run_id || github.run_id }}
@@ -117,7 +175,29 @@ jobs:
           pattern: wheels-*
           merge-multiple: true
           path: dist
+      - name: Verify hosted ARM64 producer and publish exact three-platform release
+        if: inputs.macos_run_id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PACKAGING_RUN_ID: ${{ inputs.packaging_run_id }}
+          MACOS_RUN_ID: ${{ inputs.macos_run_id }}
+          MACOS_SOURCE_SHA: ${{ inputs.macos_source_sha }}
+          GH_REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$MACOS_RUN_ID" in *[!0-9]*|'') exit 1;; esac
+          test "${#MACOS_SOURCE_SHA}" = 40
+          case "$MACOS_SOURCE_SHA" in *[!0-9a-f]*) exit 1;; esac
+          python scripts/release/verify_hosted_macos_artifact.py \
+            --run-id "$MACOS_RUN_ID" --source-sha "$MACOS_SOURCE_SHA" \
+            --version "$(python -c 'import tomllib;print(tomllib.load(open("crates/weft-python/pyproject.toml","rb"))["project"]["version"])')" \
+            --distribution "$(python -c 'import tomllib;print(tomllib.load(open("crates/weft-python/pyproject.toml","rb"))["project"]["name"])')" \
+            --repository "$GH_REPOSITORY" --output-dir dist/macos \
+            --receipt dist/macos-artifact-verification.json
+          SOURCE_SHA="$MACOS_SOURCE_SHA" MACOS_RUN_ID="$MACOS_RUN_ID" PACKAGING_RUN_ID="$PACKAGING_RUN_ID" RELEASE_TAG="$RELEASE_TAG" GH_REPOSITORY="$GH_REPOSITORY" GH_TOKEN="$GH_TOKEN" python scripts/release/publish_hosted_release.py --dist dist
       - name: Record exact artifacts and publish
+        if: inputs.macos_run_id == ''
         env:
           GH_TOKEN: ${{ github.token }}
           PACKAGING_RUN_ID: ${{ inputs.packaging_run_id }}
@@ -210,5 +290,6 @@ jobs:
           path: |
             dist/release-pins.json
             dist/SHA256SUMS
+            dist/release-api-assets.json
           if-no-files-found: error
           retention-days: 90
