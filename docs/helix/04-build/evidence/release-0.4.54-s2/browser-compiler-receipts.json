@@ -1,0 +1,115 @@
+{
+  "summary": {
+    "cases": 9,
+    "batchSize": 64,
+    "streamingCorpus": false,
+    "browser": "151.0.7922.34",
+    "playwrightVersion": "1.62.1",
+    "wasmBytes": 10047275,
+    "wasmSha256": "e76c1d20ab458204e11c521072618cc8640feea894a543cf4bbcf891420dcb04",
+    "jsGlueBytes": 12099,
+    "imports": [
+      {
+        "module": "wbg",
+        "name": "__wbg_length_a95b69f903b746c4",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg_charCodeAt_291b921e27833f8e",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_string_get_e4f06c90489ad01b",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_is_string_fbb76cb2940daafd",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_init_externref_table",
+        "kind": "function"
+      },
+      {
+        "module": "wbg",
+        "name": "__wbindgen_cast_2241b6af4c4b2941",
+        "kind": "function"
+      }
+    ],
+    "initialMemoryBytes": 1966080,
+    "finalMemoryBytes": 2228224,
+    "networkRequests": [
+      "http://weft.spike.test/",
+      "http://weft.spike.test/spike.wasm",
+      "http://weft.spike.test/spike.js",
+      "http://weft.spike.test/wrapper.js"
+    ],
+    "nodeGlobals": false,
+    "byteParity": true
+  },
+  "cases": [
+    {
+      "id": "original-sales-join-truss.postgresql",
+      "requestSha256": "4413e42896c5dcb118e8d4f04940b19d1dd7111a8df78514e21552a1d88ca739",
+      "actualSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "expectedSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-empty-global-truss.postgresql",
+      "requestSha256": "7cb8c5dcc0b4671540b104f802fc4536f57ab68cf4d6b82ca16b3983d17e213d",
+      "actualSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "expectedSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-empty-grouped-truss.postgresql",
+      "requestSha256": "884e599b1d64cbbb624eb039649f4b36e74745f6b0ff3e9e943e79e9b4d19bc6",
+      "actualSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "expectedSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-sales-join-ashlar.databricks",
+      "requestSha256": "3e83a49e6835faf3035b085ddbdb86378f27f7b3dcd7c0b6cb975acbc0326b88",
+      "actualSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65",
+      "expectedSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65"
+    },
+    {
+      "id": "original-empty-global-ashlar.databricks",
+      "requestSha256": "fc4828412f4152cc93995c853d092eaa75741166c1d3a5e3ef9d31f329df21e4",
+      "actualSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65",
+      "expectedSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65"
+    },
+    {
+      "id": "original-empty-grouped-ashlar.databricks",
+      "requestSha256": "1c94d7c7eb6e27843336c23021578c764c4c854613a7c5fae29fc7208a420793",
+      "actualSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65",
+      "expectedSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65"
+    },
+    {
+      "id": "original-string-exact-0",
+      "requestSha256": "a712ec8b8db7362b94b633648d37bef74b132bdfbc032fdebe2ee8ffdce259ff",
+      "actualSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "expectedSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-string-exact-1",
+      "requestSha256": "c8b7a2e2cb05ef100edfe22569830fda0d46e9187804654cd55f724e7d3ddcfd",
+      "actualSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "expectedSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-string-exact-2",
+      "requestSha256": "38fa7c0f33e0ba25cf556d12702b76e835b076744858bc8a2b8a85092b8c3d06",
+      "actualSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "expectedSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    }
+  ]
+}

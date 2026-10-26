@@ -1,0 +1,28 @@
+{
+  "runId": 40258052788,
+  "status": "PASS_LINUX_PACKAGING_IDENTITY_ONLY_PUBLICATION_SKIPPED",
+  "targets": [
+    {
+      "arch": "aarch64",
+      "artifactZipSha256": "a9064d8c18de4262da0af9e91f1dc8e79a1519839edd929cfe50cc707d02bfce",
+      "wheelName": "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "wheelSha256": "38d995ed3b55cb92403f64798c8f93b0d30ac9035d5d74784aa292b372ee8219",
+      "nativeModule": "weft/weft.abi3.so",
+      "nativeSha256": "580ac96a318679c2b4ce59b2bbb3c589f14441d920026cf06b911d7ea2aa9149",
+      "packagingReport": "/private/tmp/weft-0454-linux-aarch64-S2/packaging-aarch64-unknown-linux-gnu.json",
+      "packagingReportSha256": "b60aa668804f1b27913a46ba862475955ff603e12be874d5689f2fd63f843ccd",
+      "sourceCommit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2"
+    },
+    {
+      "arch": "x86_64",
+      "artifactZipSha256": "911b2aac3d69fb2d9529486e8acc303a60e75a448ebce997c5077218e005024c",
+      "wheelName": "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "wheelSha256": "662a46d0675ef2b59a007b1d49eeb8bc04c46384ac957c0579629e1e755da6eb",
+      "nativeModule": "weft/weft.abi3.so",
+      "nativeSha256": "bc2de44d1ba2e66a7d57967dfeeffa6b8010c681458626cad5392f8577ec4673",
+      "packagingReport": "/private/tmp/weft-0454-linux-x86_64-S2/packaging-x86_64-unknown-linux-gnu.json",
+      "packagingReportSha256": "a715b8251937fbc1d4480572683cb14b94932184230b5a89e34264851ec64b1a",
+      "sourceCommit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2"
+    }
+  ]
+}

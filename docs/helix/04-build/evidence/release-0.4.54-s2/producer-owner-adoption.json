@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2",
+  "sourceTree": "a44206e0d51b2b109be42fb9c7d4b08d47fa5a18",
+  "reviewedHead": "3ba37110e53c1a493e8e115a65ac8095bc3cae0a",
+  "normalMergePR": 32,
+  "requiredChecks": "all5 checks successful on reviewed head, source tree identical at normal merge",
+  "freshRemote": "main at S2, no existing artifact-producer run at S2, release v0.4.54 absent",
+  "delta": "Only macOS WASM cargo --release and release output path; exactcaps/features/9vectors unchanged",
+  "workflowHashes": {
+    "macos": "5c484973915fcd1e007e4e4f229ea688fd239800994abbbfaef71c8a93646abc",
+    "linux": "1380642ad955222f15abfc018c31cd5e494864d963297c9743d225fd1af32635"
+  },
+  "dataflow": "Public frozen source into finite read-only hosted Linux packaging and actual macOSARM64 installedwheel/Rust/Chromium selected9vector checks. EmptyLinux tag, publication skipped. Original2x30minLinux/60minMac deadlines/log/artifact20MiBcap unchanged. No private database/local runtime. Old S receipts historical only."
+}

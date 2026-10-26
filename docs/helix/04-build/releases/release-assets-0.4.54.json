@@ -1,7 +1,7 @@
 {
   "schema": "weft-release-asset-policy/1",
   "version": "0.4.54",
-  "status": "draft",
+  "status": "candidate-verified-pending-publication",
   "tag": "v0.4.54",
   "expectedWheelTargets": [
     "x86_64-unknown-linux-gnu/manylinux2014",
@@ -36,9 +36,93 @@
     "SHA256SUMS"
   ],
   "assetPolicy": "Exactly three versioned wheels with one package report per target, one hosted macOS producer receipt and its Rust/Python/Chromium selected compiler reports, this release note, this policy, generated release pins and SHA256SUMS. No local-macos-0.4.54.json receipt is eligible.",
-  "sourceCommit": null,
+  "sourceCommit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2",
   "releaseMetadataCommit": null,
-  "wheelSha256": null,
-  "nativeModuleSha256": null,
-  "qualification": "No build run, wheel digest, tag, draft, upload or publication is claimed by this preparation."
+  "wheelSha256": {
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "38d995ed3b55cb92403f64798c8f93b0d30ac9035d5d74784aa292b372ee8219",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "662a46d0675ef2b59a007b1d49eeb8bc04c46384ac957c0579629e1e755da6eb",
+    "weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl": "0ef0628143e71a6d7e7dfe53c79034307260075c78a64e92c5b19e8684cf628d"
+  },
+  "nativeModuleSha256": {
+    "aarch64-unknown-linux-gnu": "580ac96a318679c2b4ce59b2bbb3c589f14441d920026cf06b911d7ea2aa9149",
+    "x86_64-unknown-linux-gnu": "bc2de44d1ba2e66a7d57967dfeeffa6b8010c681458626cad5392f8577ec4673",
+    "aarch64-apple-darwin": "9d33d503ad5e1a2c8234f43d8b9cf7b43288089ad17ee7d2648583e1ac5df715"
+  },
+  "qualification": "All three exact wheels passed packaging at S. Hosted macOS ARM64 installed-wheel/Python/Rust/Chromium byte parity covers nine legacy backend refusal responses, not positive query compilation or native database execution. Linux producer scope is packaging only. Existing source/compiler/native evidence remains separately scoped. Publication and public-byte readback remain required.",
+  "releaseMetadataCommitResolution": "The exact v0.4.54 tag commit M and publisher workflow commit must agree; generated release-pins-0.4.54.json records M after the normal metadata merge. This document cannot embed its own commit hash.",
+  "producerRuns": {
+    "linux": 40258052788,
+    "macos": 40258058816
+  },
+  "producerArtifactZipSha256": {
+    "linux-aarch64": "a9064d8c18de4262da0af9e91f1dc8e79a1519839edd929cfe50cc707d02bfce",
+    "linux-x86_64": "911b2aac3d69fb2d9529486e8acc303a60e75a448ebce997c5077218e005024c",
+    "macos-arm64": "45981b007c065db457e49446011cde5319196ae5fbecfa33d9ced793109b71a6"
+  },
+  "macosWasmBytes": 10047275,
+  "macosSelectedResponseStatuses": [
+    {
+      "id": "original-sales-join-truss.postgresql",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-empty-global-truss.postgresql",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-empty-grouped-truss.postgresql",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-sales-join-ashlar.databricks",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ]
+    },
+    {
+      "id": "original-empty-global-ashlar.databricks",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ]
+    },
+    {
+      "id": "original-empty-grouped-ashlar.databricks",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ]
+    },
+    {
+      "id": "original-string-exact-0",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-string-exact-1",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-string-exact-2",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    }
+  ]
 }

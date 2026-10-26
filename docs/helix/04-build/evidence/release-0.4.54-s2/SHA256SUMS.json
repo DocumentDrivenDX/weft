@@ -1,0 +1,50 @@
+[
+  {
+    "path": "browser-compiler-parity.json",
+    "sha256": "8c69b2b3c79f75a5e83eba21671c9db3d36ced6a3a5182954644bcb72dcec4ce"
+  },
+  {
+    "path": "browser-compiler-receipts.json",
+    "sha256": "5ca3deceedc1e42a27affa825d19615fe351c4876898501d9072a625b04e4dd4"
+  },
+  {
+    "path": "compiler-reports.json",
+    "sha256": "26cdc9e854b8e3b4dc057976984e2702746a5b52dd60b139e5425d107980d453"
+  },
+  {
+    "path": "compiler-roster.json",
+    "sha256": "5c5e49e1fb2814cc259f70c532431c4cdcaabe944a960f594ff51de4e5ff0b7a"
+  },
+  {
+    "path": "linux-owner-receipt.json",
+    "sha256": "ae68eb0d5eb9459041e9be27702315117169777502452dea80a2f5b8901688b0"
+  },
+  {
+    "path": "owner-artifact-verification.json",
+    "sha256": "2d26749a605b26fcc5f3d3529464340918df59997701127c3a13ab77bbff5c70"
+  },
+  {
+    "path": "packaging-macos-arm64.json",
+    "sha256": "44771435ab4e32eb633f980891f725c9ef36d83d5a7396183d02aaaab365d8a3"
+  },
+  {
+    "path": "producer-owner-adoption.json",
+    "sha256": "82bc99a957de922f3adf5da5b40225436eebef5ef2f6f56089811c0c592b45f3"
+  },
+  {
+    "path": "producer-receipt.json",
+    "sha256": "5573a19eb5f5c835239807bbe3f7b595a0c34377597f3478eb99abab5fe87563"
+  },
+  {
+    "path": "python-compiler-parity.json",
+    "sha256": "3ffbb078380d65bfa8fd4d1b9f35926cb563549ca0014a7fbecb5707f891873d"
+  },
+  {
+    "path": "runner-preflight.json",
+    "sha256": "93a592d3fb5de959749d2fed03428b31c3a180dc71791c2cb2d1a5beed113b19"
+  },
+  {
+    "path": "tool-binary-sha256.txt",
+    "sha256": "d5fc869d0275dc26694de5cbcf37f1ceb3f05bf3b8ca299b47d67a76cd1578bc"
+  }
+]
