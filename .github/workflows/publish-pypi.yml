@@ -253,13 +253,13 @@ jobs:
       - name: Stage only the verified wheels
         if: steps.preflight.outputs.status == 'absent'
         run: |
-          mkdir packages
-          cp dist/weft_sql-*.whl packages/
+          mkdir .verified-pypi-packages
+          cp dist/weft_sql-*.whl .verified-pypi-packages/
       - uses: pypa/gh-action-pypi-publish@release/v1
         id: pypi-upload
         if: steps.preflight.outputs.status == 'absent'
         with:
-          packages-dir: packages/
+          packages-dir: .verified-pypi-packages/
       - name: Verify PyPI-served bytes after publication
         id: postflight
         run: python scripts/release/publish_pypi_release.py check-pypi --receipt dist/source-receipt.json --dist-dir dist --wait --timeout 300
