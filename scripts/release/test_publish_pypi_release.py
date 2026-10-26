@@ -360,5 +360,21 @@ class PublishPypiReleaseTests(unittest.TestCase):
                 publisher.wait_for_pypi("truss-toolkit", "0.0.50", {}, timeout=300)
 
 
+class ExistingWorkflowBoundsTests(unittest.TestCase):
+    def test_browser_mirror_fix_keeps_existing_job_and_stage_bounds(self) -> None:
+        workflow = (
+            Path(__file__).parents[2] / ".github/workflows/table-operations.yml"
+        ).read_text()
+        self.assertIn("timeout-minutes: 45", workflow)
+        self.assertIn('budget-gate" browser 10', workflow)
+        self.assertEqual(workflow.count("timeout-minutes: ${{ fromJSON(steps."), 12)
+        self.assertIn(
+            "apt-sources 30 sudo python3 .github/scripts/configure_ubuntu_apt_sources.py --apply",
+            workflow,
+        )
+        self.assertIn("apt-refresh 90 sudo apt-get update", workflow)
+        self.assertNotIn("install --with-deps chromium", workflow)
+
+
 if __name__ == "__main__":
     unittest.main()

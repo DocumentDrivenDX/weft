@@ -103,7 +103,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/checkout@v4
         id: repo-checkout
-        timeout-minutes: ${{ steps.repo-checkout-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.repo-checkout-budget.outputs.timeout_minutes) }}
       - name: Record repository checkout
         if: always()
         shell: bash
@@ -116,7 +116,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/checkout@v4
         id: umf-checkout
-        timeout-minutes: ${{ steps.umf-checkout-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.umf-checkout-budget.outputs.timeout_minutes) }}
         with:
           repository: DocumentDrivenDX/umf
           ref: 8133eaa1d07d363d075a8eed68d2be8a26d22c2d
@@ -133,7 +133,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: dtolnay/rust-toolchain@1.90.0
         id: rust-setup
-        timeout-minutes: ${{ steps.rust-setup-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.rust-setup-budget.outputs.timeout_minutes) }}
         with:
           targets: wasm32-unknown-unknown
       - name: Record Rust toolchain setup
@@ -148,7 +148,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: Swatinem/rust-cache@v2
         id: rust-cache
-        timeout-minutes: ${{ steps.cache-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.cache-budget.outputs.timeout_minutes) }}
       - name: Record Rust cache setup
         if: always()
         shell: bash
@@ -161,7 +161,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/setup-node@v4
         id: node-setup
-        timeout-minutes: ${{ steps.node-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.node-budget.outputs.timeout_minutes) }}
         with:
           node-version: '20'
       - name: Record Node setup
@@ -176,7 +176,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" setup 3
       - uses: actions/setup-python@v5
         id: python-setup
-        timeout-minutes: ${{ steps.python-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.python-budget.outputs.timeout_minutes) }}
         with:
           python-version: '3.11'
       - name: Record Python setup
@@ -191,7 +191,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" build 12
       - name: Build the candidate compiler and exact upstream host dependencies
         id: dependencies-build
-        timeout-minutes: ${{ steps.dependencies-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.dependencies-budget.outputs.timeout_minutes) }}
         env:
           WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.dependencies-budget.outputs.timeout_minutes }}
           WEFT_STEP_START_MONOTONIC: ${{ steps.dependencies-budget.outputs.started_monotonic }}
@@ -211,7 +211,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" bindings 8
       - name: Check closed declarations, source custody and shared native bindings
         id: bindings
-        timeout-minutes: ${{ steps.bindings-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.bindings-budget.outputs.timeout_minutes) }}
         env:
           WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.bindings-budget.outputs.timeout_minutes }}
           WEFT_STEP_START_MONOTONIC: ${{ steps.bindings-budget.outputs.started_monotonic }}
@@ -229,7 +229,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" native 5
       - name: Native RLS, bounds, keyset, upsert and atomic rollback oracle
         id: native
-        timeout-minutes: ${{ steps.native-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.native-budget.outputs.timeout_minutes) }}
         env:
           WEFT_NATIVE_DSN: host=127.0.0.1 port=${{ job.services.postgres.ports[5432] }} dbname=postgres user=postgres
           WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.native-budget.outputs.timeout_minutes }}
@@ -244,7 +244,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" browser 10
       - name: Real Chromium shared native and WASM compiler parity
         id: browser
-        timeout-minutes: ${{ steps.browser-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.browser-budget.outputs.timeout_minutes) }}
         env:
           WEFT_PLAYWRIGHT_MODULE: /tmp/operation-browser/node_modules/playwright/index.mjs
           WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.browser-budget.outputs.timeout_minutes }}
@@ -257,7 +257,15 @@ jobs:
           "$bounded" browser wasm-bindgen-install 600 cargo install wasm-bindgen-cli --version 0.2.105 --locked --root /tmp/operation-wasm-tools
           "$bounded" browser wasm-bindgen 600 /tmp/operation-wasm-tools/bin/wasm-bindgen --target web --out-dir /tmp/operation-web target/wasm32-unknown-unknown/debug/weft_wasm.wasm
           "$bounded" browser playwright-install 600 npm install --prefix /tmp/operation-browser --ignore-scripts --no-package-lock playwright@1.62.1
-          "$bounded" browser chromium-install 600 node /tmp/operation-browser/node_modules/playwright/cli.js install --with-deps chromium
+          # Keep the existing browser/job deadlines; avoid unbounded HTTP mirror retries.
+          "$bounded" browser apt-sources 30 sudo python3 .github/scripts/configure_ubuntu_apt_sources.py --apply
+          sudo tee -a /etc/apt/apt.conf >/dev/null <<'APT'
+          Acquire { Retries "2"; http::Timeout "20"; https::Timeout "20"; };
+          Binary::apt-get::Acquire { Retries "2"; http::Timeout "20"; https::Timeout "20"; };
+          APT
+          "$bounded" browser apt-refresh 90 sudo apt-get update
+          "$bounded" browser chromium-dependencies 180 node /tmp/operation-browser/node_modules/playwright/cli.js install-deps chromium
+          "$bounded" browser chromium-install 180 node /tmp/operation-browser/node_modules/playwright/cli.js install chromium
           "$bounded" browser wasm-bindgen-identity 30 sha256sum /tmp/operation-wasm-tools/bin/wasm-bindgen
           "$bounded" browser browser-parity 600 node tests/raw-postgresql/table-operation-browser.mjs "$RUNNER_TEMP/operation-browser-cases.json" /tmp/operation-web "$WEFT_TABLE_ROOT/browser.json"
       - name: Budget public evidence assembly
@@ -269,7 +277,7 @@ jobs:
       - name: Assemble fresh bounded public evidence
         if: always() && steps.evidence-budget.outputs.timeout_minutes != ''
         id: evidence
-        timeout-minutes: ${{ steps.evidence-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.evidence-budget.outputs.timeout_minutes) }}
         env:
           POSTGRES_SERVICE_ID: ${{ job.services.postgres.id }}
           WEFT_STEP_TIMEOUT_MINUTES: ${{ steps.evidence-budget.outputs.timeout_minutes }}
@@ -352,7 +360,7 @@ jobs:
           "$RUNNER_TEMP/weft-table-operations-tools/budget-gate" upload 2
       - uses: actions/upload-artifact@v4
         if: always() && steps.evidence.outputs.ready == 'true' && steps.upload-budget.outputs.timeout_minutes != ''
-        timeout-minutes: ${{ steps.upload-budget.outputs.timeout_minutes }}
+        timeout-minutes: ${{ fromJSON(steps.upload-budget.outputs.timeout_minutes) }}
         with:
           name: declared-table-operation-candidate
           path: ${{ runner.temp }}/weft-table-operations-upload/

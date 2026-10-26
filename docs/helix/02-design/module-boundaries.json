@@ -5156,6 +5156,7 @@
         ".sh"
       ],
       "sources": [
+        ".github/workflows/publish-pypi.yml",
         "scripts/build-site.mjs",
         "scripts/check-native-sdk-browser.ts",
         "scripts/check-security-relational-sql-native.py",
@@ -5195,6 +5196,7 @@
         "scripts/release/compare_selected_rust_0454.py",
         "scripts/release/enrich-selected-wheel-report.py",
         "scripts/release/finalize_selected_macos_0454.py",
+        "scripts/release/publish_pypi_release.py",
         "scripts/release/record_preflight_0454.py",
         "scripts/release/run_bounded_0454.py",
         "scripts/release/sync_release_assets.py",
@@ -5205,6 +5207,7 @@
         "scripts/release/test-sdk-smoke-gate.py",
         "scripts/release/test-selected-0.4.50-release-gates.py",
         "scripts/release/test-wheel-packaging-version-gate.py",
+        "scripts/release/test_publish_pypi_release.py",
         "scripts/release/test_selected_assets_0454.py",
         "scripts/release/test_sync_release_assets.py",
         "scripts/release/test_verify_promotion.py",
@@ -5330,6 +5333,7 @@
         "tests/truss-entity-selection/check.py"
       ],
       "configs": [
+        ".github/workflows/publish-pypi.yml",
         "scripts/reliability/requirements.txt"
       ]
     }
