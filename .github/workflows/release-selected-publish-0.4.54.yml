@@ -1,0 +1,154 @@
+name: Publish selected Weft 0.4.54 three-wheel assets
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing reviewed v0.4.54 draft tag
+        required: true
+        type: string
+      source_sha:
+        description: Exact compiler source commit S used for all three wheels
+        required: true
+        type: string
+      metadata_sha:
+        description: Exact release metadata commit M targeted by the draft tag
+        required: true
+        type: string
+      linux_run_id:
+        description: Successful empty-tag Linux artifact-only run at S
+        required: true
+        type: string
+      macos_run_id:
+        description: Successful hosted macOS ARM64 producer run bound to S
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: selected-weft-0.4.54-publish
+  cancel-in-progress: false
+jobs:
+  publish-selected-assets:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ inputs.metadata_sha }}
+      - name: Require exact metadata commit, draft tag and frozen build inputs
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          METADATA_SHA: ${{ inputs.metadata_sha }}
+          TAG: ${{ inputs.tag }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$TAG" = v0.4.54
+          test "$GITHUB_REF" = refs/heads/main
+          test "$GITHUB_SHA" = "$METADATA_SHA"
+          test "$(git rev-parse HEAD)" = "$METADATA_SHA"
+          test "${#SOURCE_SHA}" = 40
+          test "${#METADATA_SHA}" = 40
+          case "$SOURCE_SHA$METADATA_SHA" in *[!0-9a-f]*) exit 1;; esac
+          test "$(git rev-parse "refs/tags/$TAG^{commit}")" = "$METADATA_SHA"
+          git merge-base --is-ancestor "$SOURCE_SHA" "$METADATA_SHA"
+          git diff --exit-code "$SOURCE_SHA" "$METADATA_SHA" -- Cargo.toml Cargo.lock crates spec vendor .cargo rust-toolchain rust-toolchain.toml docs/helix/02-design/contracts packages/weft-browser tests/compile/fixtures/cases.json scripts/release/verify-wheel-packaging.py
+          mkdir -p selected/linux selected/macos selected/assets
+          git show "$SOURCE_SHA:.github/workflows/release.yml" > selected/source-release.yml
+          cp .github/workflows/release.yml selected/metadata-release.yml
+          git show "$SOURCE_SHA:crates/weft-python/pyproject.toml" > selected/source-pyproject.toml
+          test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true
+      - name: Read and verify producer run identities
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LINUX_RUN_ID: ${{ inputs.linux_run_id }}
+          MACOS_RUN_ID: ${{ inputs.macos_run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for id in "$LINUX_RUN_ID" "$MACOS_RUN_ID"; do case "$id" in ''|*[!0-9]*) exit 1;; esac; done
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$LINUX_RUN_ID" > selected/linux-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$LINUX_RUN_ID/jobs?per_page=100" > selected/linux-jobs.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$MACOS_RUN_ID" > selected/macos-run.json
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.linux_run_id }}
+          github-token: ${{ github.token }}
+          pattern: wheels-*
+          merge-multiple: true
+          path: selected/linux
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.macos_run_id }}
+          github-token: ${{ github.token }}
+          name: weft-0.4.54-macos-arm64-${{ inputs.source_sha }}
+          path: selected/macos
+      - name: Verify three exact wheel artifacts and the hosted receipt
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          METADATA_SHA: ${{ inputs.metadata_sha }}
+        run: |
+          set -euo pipefail
+          python scripts/release/verify_selected_assets_0454.py \
+            --source-sha "$SOURCE_SHA" --metadata-sha "$METADATA_SHA" \
+            --linux-run-id "${{ inputs.linux_run_id }}" --macos-run-id "${{ inputs.macos_run_id }}" \
+            --source-pyproject selected/source-pyproject.toml \
+            --source-release-workflow selected/source-release.yml --metadata-release-workflow selected/metadata-release.yml \
+            --linux-run selected/linux-run.json --linux-jobs selected/linux-jobs.json \
+            --macos-run selected/macos-run.json \
+            --linux-dir selected/linux --macos-dir selected/macos \
+            --macos-receipt selected/macos/producer-receipt.json \
+            --output selected/selected-assets-verification-0.4.54.json
+          cp selected/linux/*.whl selected/assets/
+          cp selected/linux/packaging-x86_64-unknown-linux-gnu.json selected/assets/packaging-linux-x86_64-0.4.54.json
+          cp selected/linux/packaging-aarch64-unknown-linux-gnu.json selected/assets/packaging-linux-aarch64-0.4.54.json
+          cp selected/macos/*.whl selected/assets/
+          cp selected/macos/packaging-macos-arm64.json selected/assets/packaging-macos-arm64-0.4.54.json
+          cp selected/macos/producer-receipt.json selected/assets/mac-hosted-producer-receipt-0.4.54.json
+          cp selected/macos/runner-preflight.json selected/assets/mac-runner-preflight-0.4.54.json
+          cp selected/macos/tool-binary-sha256.txt selected/assets/mac-tool-binary-sha256-0.4.54.txt
+          cp selected/macos/compiler-roster.json selected/assets/compiler-roster-0.4.54.json
+          cp selected/macos/compiler-reports.json selected/assets/rust-compiler-reports-0.4.54.json
+          cp selected/macos/python-compiler-parity.json selected/assets/python-compiler-parity-0.4.54.json
+          cp selected/macos/browser-compiler-parity.json selected/assets/browser-compiler-parity-0.4.54.json
+          cp selected/macos/browser-compiler-receipts.json selected/assets/browser-compiler-receipts-0.4.54.json
+          cp selected/selected-assets-verification-0.4.54.json selected/assets/
+          cp docs/helix/04-build/releases/v0.4.54.md selected/assets/
+          cp docs/helix/04-build/releases/release-assets-0.4.54.json selected/assets/
+          python3 - <<'PY'
+          import hashlib,json,pathlib,os
+          root=pathlib.Path('selected/assets')
+          policy=json.loads(pathlib.Path('docs/helix/04-build/releases/release-assets-0.4.54.json').read_text())
+          verification=json.loads(pathlib.Path('selected/selected-assets-verification-0.4.54.json').read_text())
+          files=sorted(p for p in root.iterdir() if p.is_file())
+          pins={'schema':'weft-selected-release-pins/1','tag':'v0.4.54','sourceCommit':os.environ['SOURCE_SHA'],'releaseMetadataCommit':os.environ['METADATA_SHA'],'macosMaturinFeatures':verification['macosMaturinFeatures'],'policy':policy,'verification':verification,'candidateAssets':[{'name':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in files]}
+          (root/'release-pins-0.4.54.json').write_text(json.dumps(pins,indent=2)+'\n')
+          files=sorted(p for p in root.iterdir() if p.is_file())
+          (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in files))
+          names={p.name for p in root.iterdir() if p.is_file()}
+          fixed={'packaging-linux-x86_64-0.4.54.json','packaging-linux-aarch64-0.4.54.json','packaging-macos-arm64-0.4.54.json','mac-hosted-producer-receipt-0.4.54.json','mac-runner-preflight-0.4.54.json','mac-tool-binary-sha256-0.4.54.txt','compiler-roster-0.4.54.json','rust-compiler-reports-0.4.54.json','python-compiler-parity-0.4.54.json','browser-compiler-parity-0.4.54.json','browser-compiler-receipts-0.4.54.json','selected-assets-verification-0.4.54.json','v0.4.54.md','release-assets-0.4.54.json','release-pins-0.4.54.json','SHA256SUMS'}
+          wheel_names={n for n in names if n.endswith('.whl')}
+          if fixed!=set(policy['expectedFixedAssetNames']) or len(wheel_names)!=policy['expectedWheelCount'] or names-fixed!=wheel_names or len(names)!=19:raise SystemExit('candidate release asset set has missing or unexpected files')
+          PY
+      - name: Reconcile exact candidate bytes to the draft and verify read-back
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          python scripts/release/sync_release_assets.py --tag "$TAG" --asset-dir selected/assets
+      - name: Promote only the fully reconciled draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true
+          gh release edit "$TAG" --draft=false --latest

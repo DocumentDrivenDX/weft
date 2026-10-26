@@ -27,7 +27,7 @@ jobs:
     # v0.4.50 and v0.4.52 have separate selected-assets paths. Never start the
     # legacy platform matrix for those tags; their promotion workflows consume
     # the exact selected Linux build plus staged macOS qualification assets.
-    if: inputs.packaging_run_id == '' && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52'
+    if: inputs.packaging_run_id == '' && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54'
     strategy:
       fail-fast: false
       matrix:
@@ -90,7 +90,7 @@ jobs:
             dist/packaging-*.json
           if-no-files-found: error
   publish:
-    if: always() && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != ''))
+    if: always() && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54' && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != ''))
     needs: wheels
     runs-on: ubuntu-24.04
     permissions:
