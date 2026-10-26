@@ -7,6 +7,7 @@ on:
       - codex/weft-main-aggregate-integration
       - codex/weft-owned-surface-diagnostic
       - codex/weft-0.4.54-release-prep
+      - codex/weft-0454-public-verification
     tags: ["**"]
   pull_request:
 permissions:

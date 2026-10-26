@@ -1,0 +1,190 @@
+name: Verify installed public Weft 0.4.54 wheel bytes
+on:
+  push:
+    branches:
+      - codex/weft-0454-public-verification
+permissions:
+  contents: read
+concurrency:
+  group: published-weft-0.4.54-installed-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  installed-wheel:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            platform: linux-x86_64
+            wheel: weft_sql-0.4.54-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            wheel_sha256: 662a46d0675ef2b59a007b1d49eeb8bc04c46384ac957c0579629e1e755da6eb
+            native_sha256: bc2de44d1ba2e66a7d57967dfeeffa6b8010c681458626cad5392f8577ec4673
+            system: Linux
+            architecture: x86_64
+          - runner: macos-14
+            platform: macos-arm64
+            wheel: weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl
+            wheel_sha256: 0ef0628143e71a6d7e7dfe53c79034307260075c78a64e92c5b19e8684cf628d
+            native_sha256: 9d33d503ad5e1a2c8234f43d8b9cf7b43288089ad17ee7d2648583e1ac5df715
+            system: Darwin
+            architecture: arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    env:
+      RELEASE_TAG: v0.4.54
+      RELEASE_ID: '423836925'
+      SOURCE_SHA: 32b5ad36fe28cebb4073b3a152f086c47a8d0fa2
+      METADATA_SHA: 1c246b903038908bb4b5db08d5db20da309dd096
+      TARGET_PLATFORM: ${{ matrix.platform }}
+      TARGET_WHEEL: ${{ matrix.wheel }}
+      TARGET_WHEEL_SHA256: ${{ matrix.wheel_sha256 }}
+      TARGET_NATIVE_SHA256: ${{ matrix.native_sha256 }}
+      TARGET_SYSTEM: ${{ matrix.system }}
+      TARGET_ARCHITECTURE: ${{ matrix.architecture }}
+    steps:
+      - name: Seed the original ten-minute evidence deadline
+        shell: bash
+        run: |
+          set -euo pipefail
+          export EVIDENCE_ROOT="$RUNNER_TEMP/weft-0.4.54-public-installed-evidence"
+          mkdir -p "$EVIDENCE_ROOT"
+          echo "EVIDENCE_ROOT=$EVIDENCE_ROOT" >> "$GITHUB_ENV"
+          echo "PUBLIC_ROOT=$RUNNER_TEMP/weft-0.4.54-public-assets" >> "$GITHUB_ENV"
+          python3 -c 'import time; print("WEFT_RELEASE_DEADLINE_MONOTONIC=" + str(time.monotonic() + 600))' >> "$GITHUB_ENV"
+          printf '{"schema":"weft-public-installed-wheel/1","status":"failed","tag":"v0.4.54","platform":"%s","failure":"verification did not reach final receipt","scope":"Nine selected legacy backend refusal responses only; no positive query compilation or native database execution."}\n' "$TARGET_PLATFORM" > "$EVIDENCE_ROOT/receipt.json"
+      - uses: actions/checkout@v6
+        timeout-minutes: 2
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v6
+        timeout-minutes: 2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: 1c246b903038908bb4b5db08d5db20da309dd096
+          path: release-source
+      - uses: actions/setup-python@v6
+        timeout-minutes: 2
+        with:
+          python-version: '3.12'
+      - name: Require exact release source and hosted target
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = refs/heads/codex/weft-0454-public-verification
+          test "$GITHUB_REPOSITORY" = DocumentDrivenDX/weft
+          test "$(uname -s)" = "$TARGET_SYSTEM"
+          test "$(uname -m)" = "$TARGET_ARCHITECTURE"
+          test "$(git -C release-source rev-parse HEAD)" = "$METADATA_SHA"
+          git -C release-source merge-base --is-ancestor "$SOURCE_SHA" HEAD
+          git -C release-source diff --exit-code "$SOURCE_SHA" HEAD -- Cargo.toml Cargo.lock crates spec vendor .cargo rust-toolchain rust-toolchain.toml packages/weft-browser tests/compile/fixtures/cases.json scripts/release/compare_selected_python_0454.py scripts/release/verify-wheel-packaging.py scripts/release/compare_selected_rust_0454.py
+          test "$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')" = 3.12
+      - name: Download and bind the public release metadata and selected wheel
+        id: public
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$PUBLIC_ROOT"
+          cat > "$RUNNER_TEMP/weft-public-download.sh" <<'SH'
+          set -euo pipefail
+          curl --fail --location --silent --show-error --max-time 60 https://api.github.com/repos/DocumentDrivenDX/weft/releases/tags/v0.4.54 -o "$PUBLIC_ROOT/release-api.json"
+          for name in release-pins-0.4.54.json SHA256SUMS compiler-roster-0.4.54.json rust-compiler-reports-0.4.54.json "$TARGET_WHEEL"; do
+            curl --fail --location --silent --show-error --max-time 60 "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.54/$name" -o "$PUBLIC_ROOT/$name"
+          done
+          python3 - <<'PY'
+          import hashlib,json,pathlib,platform,sys,os
+          root=pathlib.Path(os.environ['GITHUB_WORKSPACE']); public=pathlib.Path(os.environ['PUBLIC_ROOT']); evidence=pathlib.Path(os.environ['EVIDENCE_ROOT'])
+          receipt_path=root/'docs/helix/04-build/evidence/release-0.4.54-public/owner-public-readback001.json'
+          receipt_bytes=receipt_path.read_bytes()
+          if hashlib.sha256(receipt_bytes).hexdigest()!='4c4074f2670baba5d07deebf46f09cfc7bcaa4fb39d9ff014014ee266b87b132': raise SystemExit('reviewed public readback pin changed')
+          pinned=json.loads(receipt_bytes); api=json.loads((public/'release-api.json').read_bytes())
+          if pinned.get('status')!='ALL_19_PUBLIC_ASSET_BYTES_MATCH' or pinned.get('releaseId')!=int(os.environ['RELEASE_ID']) or pinned.get('tag')!=os.environ['RELEASE_TAG'] or pinned.get('source')!=os.environ['SOURCE_SHA'] or pinned.get('metadata')!=os.environ['METADATA_SHA']: raise SystemExit('public readback identity mismatch')
+          if api.get('id')!=int(os.environ['RELEASE_ID']) or api.get('tag_name')!=os.environ['RELEASE_TAG'] or api.get('draft') is not False or api.get('prerelease') is not False or api.get('target_commitish')!=os.environ['METADATA_SHA']: raise SystemExit('public release metadata identity mismatch')
+          expected=pinned['assetSha256']; assets=api.get('assets',[])
+          actual={a.get('name'):a.get('digest','').removeprefix('sha256:') for a in assets if a.get('state')=='uploaded'}
+          if len(expected)!=19 or len(assets)!=19 or actual!=expected: raise SystemExit('public release does not expose the exact pinned 19-asset set')
+          for name in ('release-pins-0.4.54.json','SHA256SUMS','compiler-roster-0.4.54.json','rust-compiler-reports-0.4.54.json',os.environ['TARGET_WHEEL']):
+              if hashlib.sha256((public/name).read_bytes()).hexdigest()!=expected.get(name): raise SystemExit('public downloaded asset digest mismatch: '+name)
+          sums=(public/'SHA256SUMS').read_text().splitlines()
+          parsed={line[66:].strip():line[:64] for line in sums if len(line)>=67 and line[64:66]=='  '}
+          if len(parsed)!=18 or parsed!={k:v for k,v in expected.items() if k!='SHA256SUMS'}: raise SystemExit('published SHA256SUMS does not bind the exact public asset set')
+          pins=json.loads((public/'release-pins-0.4.54.json').read_bytes())
+          if pins.get('schema')!='weft-selected-release-pins/1' or pins.get('tag')!=os.environ['RELEASE_TAG'] or pins.get('sourceCommit')!=os.environ['SOURCE_SHA'] or pins.get('releaseMetadataCommit')!=os.environ['METADATA_SHA']: raise SystemExit('published release pins do not bind exact S and M')
+          roster=json.loads((public/'compiler-roster-0.4.54.json').read_bytes())
+          if roster.get('nativeDatabaseExecution') is not False or roster.get('status')!='selected' or len(roster.get('cases',[]))!=9: raise SystemExit('public compiler roster scope mismatch')
+          machine={'schema':'weft-public-installed-wheel-runner/1','platform':os.environ['TARGET_PLATFORM'],'runnerImageOS':os.environ.get('ImageOS','unknown'),'runnerImageVersion':os.environ.get('ImageVersion','unknown'),'system':platform.system(),'platformDetail':platform.platform(),'architecture':platform.machine(),'python':sys.version,'pythonExecutable':sys.executable,'pip':'pip install --no-deps --no-index','releaseId':api['id'],'tag':api['tag_name'],'publishedAt':api.get('published_at'),'sourceCommit':os.environ['SOURCE_SHA'],'releaseMetadataCommit':os.environ['METADATA_SHA'],'workflowCommit':os.environ['GITHUB_SHA'],'runId':os.environ['GITHUB_RUN_ID'],'runAttempt':os.environ['GITHUB_RUN_ATTEMPT'],'ref':os.environ['GITHUB_REF'],'publicAssetCount':len(actual),'releaseApiAssetsSha256':hashlib.sha256((public/'release-api.json').read_bytes()).hexdigest(),'readbackReceiptSha256':hashlib.sha256(receipt_bytes).hexdigest(),'wheel':os.environ['TARGET_WHEEL'],'wheelSha256':hashlib.sha256((public/os.environ['TARGET_WHEEL']).read_bytes()).hexdigest()}
+          (evidence/'runner-and-public-inputs.json').write_text(json.dumps(machine,indent=2)+'\n')
+          PY
+          SH
+          python3 release-source/scripts/release/run_bounded_0454.py --stage public-release-download --seconds 120 --reserve-seconds 60 --log "$EVIDENCE_ROOT/public-download.log" --receipt "$EVIDENCE_ROOT/public-download-command.json" -- bash "$RUNNER_TEMP/weft-public-download.sh"
+      - name: Install only the selected public wheel in a clean environment
+        id: install
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 release-source/scripts/release/run_bounded_0454.py --stage public-wheel-install --seconds 120 --reserve-seconds 60 --log "$EVIDENCE_ROOT/install.log" --receipt "$EVIDENCE_ROOT/install-command.json" -- bash -euo pipefail -c 'python3 -m venv "$RUNNER_TEMP/weft-0.4.54-clean-venv" && "$RUNNER_TEMP/weft-0.4.54-clean-venv/bin/python" -m pip install --no-deps --no-index "$PUBLIC_ROOT/$TARGET_WHEEL"'
+      - name: Verify wheel packaging and exact nine Rust response bytes
+        id: compare
+        timeout-minutes: 4
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/weft-public-compare.sh" <<'SH'
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib
+          source=pathlib.Path(os.environ['GITHUB_WORKSPACE'])/'release-source'; public=pathlib.Path(os.environ['PUBLIC_ROOT']); evidence=pathlib.Path(os.environ['EVIDENCE_ROOT'])
+          roster=json.loads((public/'compiler-roster-0.4.54.json').read_bytes()); ids=roster['cases']; corpus=source/'tests/compile/fixtures/cases.json'; all_cases=json.loads(corpus.read_bytes()); by_id={case['id']:case for case in all_cases}
+          if len(ids)!=9 or len(by_id)!=len(all_cases) or any(case_id not in by_id for case_id in ids): raise SystemExit('selected case roster or source fixture mismatch')
+          selected=[by_id[case_id] for case_id in ids]; case_bytes=(json.dumps(selected,ensure_ascii=False)+'\n').encode()
+          if hashlib.sha256(corpus.read_bytes()).hexdigest()!=roster['corpusSha256'] or hashlib.sha256(case_bytes).hexdigest()!=roster['selectedCasesSha256']: raise SystemExit('release source fixture does not reproduce public selected vector bytes')
+          (public/'compiler-cases.json').write_bytes(case_bytes)
+          PY
+          "$RUNNER_TEMP/weft-0.4.54-clean-venv/bin/python" release-source/scripts/release/verify-wheel-packaging.py --wheel "$PUBLIC_ROOT/$TARGET_WHEEL" --version 0.4.54 --output "$EVIDENCE_ROOT/installed-wheel.json"
+          "$RUNNER_TEMP/weft-0.4.54-clean-venv/bin/python" release-source/scripts/release/compare_selected_python_0454.py --cases "$PUBLIC_ROOT/compiler-cases.json" --reports "$PUBLIC_ROOT/rust-compiler-reports-0.4.54.json" --output "$EVIDENCE_ROOT/python-compiler-parity.json" --source-root "$GITHUB_WORKSPACE/release-source"
+          SH
+          python3 release-source/scripts/release/run_bounded_0454.py --stage public-wheel-nine-refusal-vectors --seconds 120 --reserve-seconds 60 --log "$EVIDENCE_ROOT/compare.log" --receipt "$EVIDENCE_ROOT/compare-command.json" -- bash "$RUNNER_TEMP/weft-public-compare.sh"
+      - name: Finalize bounded post-publication receipt
+        if: always()
+        timeout-minutes: 1
+        shell: bash
+        env:
+          PUBLIC_OUTCOME: ${{ steps.public.outcome }}
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          COMPARE_OUTCOME: ${{ steps.compare.outcome }}
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib
+          evidence=pathlib.Path(os.environ['EVIDENCE_ROOT']); public=pathlib.Path(os.environ['PUBLIC_ROOT']); path=evidence/'receipt.json'
+          receipt={'schema':'weft-public-installed-wheel/1','status':'failed','tag':os.environ['RELEASE_TAG'],'releaseId':int(os.environ['RELEASE_ID']),'sourceCommit':os.environ['SOURCE_SHA'],'releaseMetadataCommit':os.environ['METADATA_SHA'],'platform':os.environ['TARGET_PLATFORM'],'runId':os.environ['GITHUB_RUN_ID'],'runAttempt':os.environ['GITHUB_RUN_ATTEMPT'],'workflowCommit':os.environ['GITHUB_SHA'],'ref':os.environ['GITHUB_REF'],'scope':'Installed exact public wheel; byte parity for nine selected legacy backend refusal responses only. No positive query compilation, native database execution, Linux ARM64 execution, or PyPI claim.','checks':{'publicReleaseAndWheel':os.environ.get('PUBLIC_OUTCOME'),'cleanWheelInstall':os.environ.get('INSTALL_OUTCOME'),'nineRefusalVectors':os.environ.get('COMPARE_OUTCOME')}}
+          try:
+              if any(os.environ.get(key)!='success' for key in ('PUBLIC_OUTCOME','INSTALL_OUTCOME','COMPARE_OUTCOME')): raise ValueError('a required workflow stage did not succeed')
+              runner=json.loads((evidence/'runner-and-public-inputs.json').read_bytes()); packaging=json.loads((evidence/'installed-wheel.json').read_bytes()); parity=json.loads((evidence/'python-compiler-parity.json').read_bytes()); rust=json.loads((public/'rust-compiler-reports-0.4.54.json').read_bytes()); pinned=json.loads((pathlib.Path(os.environ['GITHUB_WORKSPACE'])/'docs/helix/04-build/evidence/release-0.4.54-public/owner-public-readback001.json').read_bytes()); policy=json.loads((pathlib.Path(os.environ['GITHUB_WORKSPACE'])/'release-source/docs/helix/04-build/releases/release-assets-0.4.54.json').read_bytes())
+              expected_ids=[row['id'] for row in policy['macosSelectedResponseStatuses']]
+              if runner.get('platform')!=os.environ['TARGET_PLATFORM'] or runner.get('wheelSha256')!=os.environ['TARGET_WHEEL_SHA256']: raise ValueError('runner or wheel pin mismatch')
+              if packaging.get('status')!='passed' or packaging.get('version')!='0.4.54' or packaging.get('wheelSha256')!=os.environ['TARGET_WHEEL_SHA256'] or packaging.get('nativeModuleSha256')!=os.environ['TARGET_NATIVE_SHA256']: raise ValueError('installed wheel or embedded native digest mismatch')
+              if parity.get('status')!='passed' or parity.get('distributionVersion')!='0.4.54' or parity.get('nativeModuleSha256')!=os.environ['TARGET_NATIVE_SHA256'] or not pathlib.Path(parity.get('nativeModule','')).is_absolute(): raise ValueError('installed module identity mismatch')
+              if [row.get('id') for row in parity.get('cases',[])]!=expected_ids or [row.get('id') for row in rust]!=expected_ids: raise ValueError('selected refusal roster mismatch')
+              for expected,row,actual in zip(policy['macosSelectedResponseStatuses'],rust,parity['cases'],strict=True):
+                  decoded=json.loads(row['raw']); codes=[item['code'] for item in decoded.get('diagnostics',[])]
+                  if row.get('id')!=expected['id'] or decoded.get('status')!='blocked' or codes!=expected['diagnosticCodes'] or actual.get('rustResponseSha256')!=actual.get('pythonResponseSha256'): raise ValueError('response is outside the pinned refusal parity set')
+              logs=list(evidence.glob('*.log')); log_bytes=sum(p.stat().st_size for p in logs); evidence_bytes=sum(p.stat().st_size for p in evidence.iterdir() if p.is_file())
+              if log_bytes>3*1024*1024 or evidence_bytes>16*1024*1024: raise ValueError('evidence cap exceeded')
+              receipt.update({'status':'passed','runner':runner,'wheelSha256':packaging['wheelSha256'],'installedModulePath':parity['nativeModule'],'installedModuleSha256':parity['nativeModuleSha256'],'caseCount':len(parity['cases']),'refusalCaseIds':expected_ids,'publicReadbackAssetSetSha256':hashlib.sha256(json.dumps(pinned['assetSha256'],sort_keys=True,separators=(',',':')).encode()).hexdigest(),'logBytes':log_bytes,'artifactBytesBeforeReceipt':evidence_bytes})
+              if evidence_bytes+len(json.dumps(receipt,indent=2).encode())>16*1024*1024: raise ValueError('artifact cap exceeded after receipt')
+          except Exception as error:
+              receipt['failure']=type(error).__name__
+          path.write_text(json.dumps(receipt,indent=2)+'\n')
+          if receipt['status']!='passed': raise SystemExit('post-publication installed-wheel verification failed')
+          PY
+      - name: Upload bounded public verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        timeout-minutes: 1
+        with:
+          name: weft-0.4.54-public-installed-${{ matrix.platform }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/weft-0.4.54-public-installed-evidence/*
+          if-no-files-found: error
+          retention-days: 90

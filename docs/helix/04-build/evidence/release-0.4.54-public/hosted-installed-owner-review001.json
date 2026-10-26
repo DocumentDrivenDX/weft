@@ -1,0 +1,7 @@
+{
+  "profile": "weft.public-installed-owner-source-review/1",
+  "source": "1c246b903038908bb4b5db08d5db20da309dd096",
+  "workflowSha256": "aee6872f1b3e093db34a8c28909efa4bdfe4ca60c8064024ee98da6c7feaa9f3",
+  "review": "Root read complete workflow plus reused bounded command, package checker and installed comparator sources; verified exact runner/wheel/native pins, public19asset and18manifestrows, source vector reconstruction and pinned refusal statuses, no dependencies/offline clean installs, original600s deadline before setup with60s reserve/120s commands and15minjob. Corrected manifest count19to18 and bound release API targetM. Exactqualificationbranch excluded only from unrelated native push gate; main/tag/PR gates unchanged. No product source changes or native DB authority.",
+  "qualification": "UNRUN; fresh public wheel execution only Linuxx86_64/macARM64,9refusals; LinuxARMpackagingonly."
+}
