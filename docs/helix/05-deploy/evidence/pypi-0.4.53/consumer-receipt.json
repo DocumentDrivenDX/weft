@@ -1,0 +1,6 @@
+{
+  "index": "https://pypi.org/simple",
+  "schema": "pypi-consumer-receipt.v1",
+  "status": "passed",
+  "weft_version": "0.4.53"
+}

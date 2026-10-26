@@ -1,0 +1,48 @@
+{
+  "schema": "registry-release-verification.v1",
+  "status": "passed",
+  "distribution": "weft-sql",
+  "version": "0.4.53",
+  "tag": "v0.4.53",
+  "tag_source_sha": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+  "workflow_driver_sha": "89882adf09290e53c8f1867d2973653a026ae221",
+  "workflow_event": "workflow_dispatch",
+  "workflow_run_id": 40386978860,
+  "workflow_url": "https://github.com/DocumentDrivenDX/weft/actions/runs/40386978860",
+  "all_three_jobs_passed": true,
+  "artifact_zip_digests_verified": true,
+  "artifact_receipts": [
+    {
+      "id": 12681956518,
+      "name": "weft-pypi-publication-0.4.53",
+      "digest": "sha256:b568f20492105d1722048671b0cce883d1b7675a1a94b35403201e6063f9c070",
+      "size_in_bytes": 1197
+    },
+    {
+      "id": 12681607325,
+      "name": "weft-pypi-consumer-0.4.53",
+      "digest": "sha256:aaf64b1d740363f4c2e4edec3307a35faaa18a0fa4b8ded64c94533b285f7964",
+      "size_in_bytes": 263
+    },
+    {
+      "id": 12680762752,
+      "name": "weft-pypi-release-0.4.53",
+      "digest": "sha256:e7f7164c2158784002cd13470269b21a2507e6947e3318801fdcc5e34cdaa342",
+      "size_in_bytes": 37416824
+    }
+  ],
+  "raw_receipts_equal_zip_members": true,
+  "raw_receipts_sha256": {
+    "source-receipt.json": "a5bada660237dc07d4af9de4daa8056ead5a7a2270da04ded134ca7daaf7152b",
+    "publication-receipt.json": "beae7327c8b3ef667e93311ead8cf5f0a1e77694b4973a021f09b005a3959441",
+    "consumer-receipt.json": "d8367b55dd0236cd2ec2a796fa4bcf22afc2e2d0ba91728a8d1e3024a85b3f90"
+  },
+  "publication_mode": "oidc_upload",
+  "registry": "pypi",
+  "files": {
+    "weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl": "4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c",
+    "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "2bb5ebc1ae1ad64847bbc15cd01e6a33f87f43ea417df38b36fa6e46268ca5a9",
+    "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2"
+  },
+  "scope": "Exact existing qualified release distribution and fresh public-index import. Existing semantic, native and platform limits remain unchanged; this clears the missing public dependency for the already selected Ashlar cohort without changing its pins."
+}
