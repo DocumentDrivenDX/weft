@@ -324,6 +324,7 @@ def main() -> None:
     }
     (dist / 'release-api-assets.json').write_text(json.dumps(receipt, indent=2) + '\n')
     (dist / 'release-pins.json').write_text(json.dumps(pins, indent=2) + '\n')
+    shutil.copyfile(asset_dir / 'SHA256SUMS', dist / 'SHA256SUMS')
     print(json.dumps({'status': 'passed', 'tag': tag, 'releaseUrl': published['html_url'], 'wheelCount': 3, 'macosProducerRunId': macos_run_id}, indent=2))
 
 
