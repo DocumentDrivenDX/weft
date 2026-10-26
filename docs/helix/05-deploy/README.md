@@ -7,7 +7,11 @@ No governed execution artifacts yet. Add release or iteration records when work 
 Owner direction on 2026-10-26 requires the qualified Python distribution on
 public PyPI, with future released versions published automatically. The
 `publish-pypi.yml` driver runs on the default branch and consumes exact existing
-GitHub release assets after the release producer succeeds. Explicit backfills
+GitHub release assets after the release producer succeeds. A normal release
+dispatched from `main` hands off its tag, source and checksum manifest in a
+run-bound intent artifact; a successful publish job without that artifact
+fails visibly. An empty-tag build with a skipped publish job is a no-op.
+Selected release producers retain their exact metadata/source pin profiles. Explicit backfills
 require the release tag, its source/metadata commit and SHA256SUMS digest.
 No existing version is rebuilt, renamed or retagged for the index.
 
@@ -20,7 +24,7 @@ only initial absence is retried within a bounded visibility wait.
 
 A job without OIDC verifies a fresh public-index installation and retains its
 receipt separately from the upload/byte receipt. Configuration and local tests
-do not prove publication. Initial publisher grants and the qualified backfill
-are pending; actual public-byte and install receipts must pass before the
+do not prove publication. The approved environment and trusted publisher are
+configured; the qualified backfill remains pending; actual public-byte and install receipts must pass before the
 public-index install claim is made. This changes distribution, not runtime
 semantics, platform qualification or the latest-only support policy.

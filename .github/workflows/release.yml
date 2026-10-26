@@ -180,9 +180,17 @@ jobs:
           assert report['platform']=='macos-arm64' and report['functionalQualification']=='local-only'
           (root/'local-macos-qualification.json').write_bytes(qualification.read_bytes())
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'packagingCommit':os.environ['PACKAGING_COMMIT'],'distribution':'weft-sql','version':version,'features':features,'wheelPackaging':packaging,'functionalQualification':report,'otherPlatforms':'build and installed packaging only; no native functional qualification claimed','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'workflowRunId':int(os.environ['GITHUB_RUN_ID']),'packagingCommit':os.environ['PACKAGING_COMMIT'],'distribution':'weft-sql','version':version,'features':features,'wheelPackaging':packaging,'functionalQualification':report,'otherPlatforms':'build and installed packaging only; no native functional qualification claimed','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft
           test "$(cat /tmp/release-draft)" = true
           gh release upload "$RELEASE_TAG" dist/* --clobber
           gh release edit "$RELEASE_TAG" --draft=false --latest
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weft-pypi-intent-${{ github.run_id }}
+          path: |
+            dist/release-pins.json
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 90

@@ -161,6 +161,7 @@ def prepare_release(
     producer_run: dict[str, Any] | None = None,
     allowed_workflow_paths: set[str] | None = None,
     allowed_workflow_prefixes: tuple[str, ...] = (),
+    default_branch: str | None = None,
 ) -> dict[str, Any]:
     _require(TAG.fullmatch(tag) is not None, "tag must be numeric vX.Y.Z")
     _require(COMMIT.fullmatch(source_sha) is not None, "source SHA is invalid")
@@ -177,6 +178,7 @@ def prepare_release(
         resolve_tag_commit(tag_ref, tag_object, tag) == source_sha,
         "tag does not resolve to the pinned source",
     )
+    main_branch_dispatch = False
     if producer_run is not None:
         _require(
             producer_run.get("conclusion") == "success",
@@ -188,12 +190,21 @@ def prepare_release(
             and producer_repo.get("full_name") == repository,
             "release producer repository differs",
         )
+        producer_path = producer_run.get("path")
+        main_branch_dispatch = (
+            producer_path == ".github/workflows/release.yml"
+            and producer_run.get("event") == "workflow_dispatch"
+            and isinstance(default_branch, str)
+            and producer_run.get("head_branch") == default_branch
+        )
         _require(
             producer_run.get("event") in {"push", "workflow_dispatch"}
-            and producer_run.get("head_sha") == source_sha,
+            and (
+                producer_run.get("head_sha") == source_sha
+                or main_branch_dispatch
+            ),
             "release producer event or source commit differs",
         )
-        producer_path = producer_run.get("path")
         prefix_match = isinstance(producer_path, str) and any(
             producer_path.startswith(prefix)
             and re.fullmatch(r"[A-Za-z0-9_.-]+\.yml", producer_path[len(prefix) :])
@@ -205,10 +216,11 @@ def prepare_release(
             "release producer workflow is not allowed",
         )
         if producer_path in (allowed_workflow_paths or set()):
-            _require(
-                producer_run.get("head_branch") == tag,
-                "release producer did not run on the tagged source",
-            )
+            if not main_branch_dispatch:
+                _require(
+                    producer_run.get("head_branch") == tag,
+                    "release producer did not run on the tagged source",
+                )
         if prefix_match:
             _require(
                 producer_run.get("event") == "workflow_dispatch",
@@ -336,6 +348,31 @@ def prepare_release(
             and pins.get("version") == version
             and pins.get("distribution") == distribution,
             "release pins do not match the requested tag, source, version and distribution",
+        )
+    if main_branch_dispatch:
+        _require(
+            type(producer_run.get("id")) is int
+            and pins.get("workflowRunId") == producer_run.get("id")
+            and pins.get("workflowCommit") == producer_run.get("head_sha"),
+            "main-branch release intent is not bound to this producer run",
+        )
+        try:
+            run_start = datetime.fromisoformat(
+                producer_run["created_at"].replace("Z", "+00:00")
+            )
+            run_end = datetime.fromisoformat(
+                producer_run["updated_at"].replace("Z", "+00:00")
+            )
+            release_published = datetime.fromisoformat(
+                release["published_at"].replace("Z", "+00:00")
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ReleaseError(
+                "main-branch release publication window is missing"
+            ) from exc
+        _require(
+            run_start <= release_published <= run_end,
+            "main-branch release was published outside its successful producer run",
         )
     archives = sorted(
         name for name in sums if name.startswith(wheel_prefix) and name.endswith(".whl")
@@ -510,6 +547,7 @@ def main() -> int:
     parser.add_argument("--require-sdist", action="store_true")
     parser.add_argument("--producer-workflow-path", action="append", default=[])
     parser.add_argument("--producer-workflow-prefix", action="append", default=[])
+    parser.add_argument("--default-branch")
     parser.add_argument("--wait", action="store_true")
     parser.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
@@ -557,6 +595,7 @@ def main() -> int:
             producer_run=producer,
             allowed_workflow_paths=set(args.producer_workflow_path),
             allowed_workflow_prefixes=tuple(args.producer_workflow_prefix),
+            default_branch=args.default_branch,
         )
         args.receipt.write_text(
             json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8"

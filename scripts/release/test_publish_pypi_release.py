@@ -246,6 +246,93 @@ class PublishPypiReleaseTests(unittest.TestCase):
                 ),
             )
 
+    def test_main_branch_release_dispatch_is_bound_to_exact_run_and_tag_source(
+        self,
+    ) -> None:
+        workflow_commit = "b" * 40
+        producer_run_id = 456
+        pins = {
+            "tag": "v0.0.50",
+            "commit": "a" * 40,
+            "workflowCommit": workflow_commit,
+            "workflowRunId": producer_run_id,
+            "version": "0.0.50",
+            "distribution": "truss-toolkit",
+        }
+        pin_bytes = json.dumps(pins).encode()
+        (self.assets / "release-pins.json").write_bytes(pin_bytes)
+        self.release["assets"] = [
+            {
+                **item,
+                "digest": "sha256:" + hashlib.sha256(pin_bytes).hexdigest(),
+            }
+            if item["name"] == "release-pins.json"
+            else item
+            for item in self.release["assets"]
+        ]
+        producer = {
+            "id": producer_run_id,
+            "path": ".github/workflows/release.yml",
+            "conclusion": "success",
+            "event": "workflow_dispatch",
+            "head_branch": "main",
+            "head_sha": workflow_commit,
+            "created_at": "2026-10-26T00:00:00Z",
+            "updated_at": "2026-10-26T00:10:00Z",
+            "repository": {"full_name": "DocumentDrivenDX/weft"},
+        }
+        receipt = self.prepare(
+            producer_run=producer,
+            allowed_workflow_paths={".github/workflows/release.yml"},
+            default_branch="main",
+        )
+        self.assertEqual(receipt["source_sha"], "a" * 40)
+        self.assertEqual(receipt["producer_run_id"], producer_run_id)
+
+        self.output = self.root / "dist-main-run-mismatch"
+        with self.assertRaisesRegex(
+            publisher.ReleaseError, "not bound to this producer run"
+        ):
+            self.prepare(
+                output_dir=self.output,
+                producer_run={**producer, "id": producer_run_id + 1},
+                allowed_workflow_paths={".github/workflows/release.yml"},
+                default_branch="main",
+            )
+
+        self.output = self.root / "dist-main-window-mismatch"
+        with self.assertRaisesRegex(
+            publisher.ReleaseError, "outside its successful producer run"
+        ):
+            self.prepare(
+                output_dir=self.output,
+                producer_run={**producer, "created_at": "2026-10-26T00:03:00Z"},
+                allowed_workflow_paths={".github/workflows/release.yml"},
+                default_branch="main",
+            )
+
+    def test_main_branch_release_handoff_is_pinned_in_both_workflows(self) -> None:
+        root = Path(__file__).parents[2]
+        release_workflow = (root / ".github/workflows/release.yml").read_text()
+        publisher_workflow = (root / ".github/workflows/publish-pypi.yml").read_text()
+        self.assertIn("'workflowRunId':int(os.environ['GITHUB_RUN_ID'])", release_workflow)
+        self.assertIn("name: weft-pypi-intent-${{ github.run_id }}", release_workflow)
+        self.assertIn("dist/release-pins.json", release_workflow)
+        self.assertIn("dist/SHA256SUMS", release_workflow)
+        self.assertIn(
+            "github.event.workflow_run.event == 'workflow_dispatch'", publisher_workflow
+        )
+        self.assertIn(
+            "weft-pypi-intent-${{ github.event.workflow_run.id }}", publisher_workflow
+        )
+        self.assertIn('select(.name == "publish") | .conclusion', publisher_workflow)
+        self.assertIn('PRODUCER_PUBLISH_OUTCOME', publisher_workflow)
+        self.assertIn(
+            'main-branch release completed its publish job but its pinned intent artifact is missing',
+            publisher_workflow,
+        )
+        self.assertIn("needs.verify-release.outputs.eligible == 'true'", publisher_workflow)
+
     def test_prepare_refuses_direct_url_metadata_and_wrong_distribution(self) -> None:
         self.output = self.root / "dist3"
         raw = wheel(

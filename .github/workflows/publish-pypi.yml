@@ -27,12 +27,15 @@ jobs:
     if: >-
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
         (github.event.workflow_run.path == '.github/workflows/release.yml' || startsWith(github.event.workflow_run.path, '.github/workflows/release-selected-publish-')) &&
-        (startsWith(github.event.workflow_run.head_branch, 'v') || startsWith(github.event.workflow_run.path, '.github/workflows/release-selected-publish-'))) ||
+        (startsWith(github.event.workflow_run.head_branch, 'v') || startsWith(github.event.workflow_run.path, '.github/workflows/release-selected-publish-') ||
+          (github.event.workflow_run.path == '.github/workflows/release.yml' && github.event.workflow_run.event == 'workflow_dispatch' &&
+            github.event.workflow_run.head_branch == github.event.repository.default_branch))) ||
       (github.event_name == 'workflow_dispatch' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     outputs:
       version: ${{ steps.identity.outputs.version }}
+      eligible: ${{ steps.identity.outputs.eligible }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -43,12 +46,49 @@ jobs:
           python-version: '3.11'
       - name: Test the release publisher validator
         run: python scripts/release/test_publish_pypi_release.py
+      - name: Read the release job outcome for a main-branch dispatch
+        if: >-
+          github.event_name == 'workflow_run' &&
+          github.event.workflow_run.path == '.github/workflows/release.yml' &&
+          github.event.workflow_run.event == 'workflow_dispatch' &&
+          github.event.workflow_run.head_branch == github.event.repository.default_branch
+        id: producer-publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRODUCER_RUN_ID: ${{ github.event.workflow_run.id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          outcomes="$(gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID/jobs" --jq '.jobs[] | select(.name == "publish") | .conclusion')"
+          [[ "$outcomes" == success || "$outcomes" == skipped ]]
+          printf 'conclusion=%s\n' "$outcomes" >> "$GITHUB_OUTPUT"
+      - name: Download release intent from a main-branch release dispatch
+        if: >-
+          github.event_name == 'workflow_run' &&
+          github.event.workflow_run.path == '.github/workflows/release.yml' &&
+          github.event.workflow_run.event == 'workflow_dispatch' &&
+          github.event.workflow_run.head_branch == github.event.repository.default_branch
+        continue-on-error: true
+        id: intent
+        uses: actions/download-artifact@v4
+        with:
+          name: weft-pypi-intent-${{ github.event.workflow_run.id }}
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          path: incoming/producer-intent
       - name: Bind exact tag, source and optional backfill pins
         id: identity
         env:
           EVENT_NAME: ${{ github.event_name }}
           PRODUCER_PATH: ${{ github.event.workflow_run.path }}
           PRODUCER_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          PRODUCER_EVENT: ${{ github.event.workflow_run.event }}
+          PRODUCER_RUN_ID: ${{ github.event.workflow_run.id }}
+          PRODUCER_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          PRODUCER_PUBLISH_OUTCOME: ${{ steps.producer-publish.outputs.conclusion }}
+          INTENT_DOWNLOAD_OUTCOME: ${{ steps.intent.outcome }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           SOURCE_SHA: ${{ github.event.workflow_run.head_sha || inputs.source_sha }}
           INPUT_SOURCE_SHA: ${{ inputs.source_sha }}
           INPUT_TAG: ${{ inputs.tag }}
@@ -61,6 +101,55 @@ jobs:
             SOURCE_SHA="$INPUT_SOURCE_SHA"
             [[ "$MANUAL_SUMS_SHA256" =~ ^[0-9a-f]{64}$ ]]
             SUMS_SHA256="$MANUAL_SUMS_SHA256"
+          elif [[ "$PRODUCER_PATH" == .github/workflows/release.yml &&
+                  "$PRODUCER_EVENT" == workflow_dispatch &&
+                  "$PRODUCER_BRANCH" == "$DEFAULT_BRANCH" ]]; then
+            if [[ ! -f incoming/producer-intent/release-pins.json || ! -f incoming/producer-intent/SHA256SUMS ]]; then
+              if [[ "$PRODUCER_PUBLISH_OUTCOME" != skipped ]]; then
+                echo 'main-branch release completed its publish job but its pinned intent artifact is missing' >&2
+                exit 1
+              fi
+              echo 'eligible=false' >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [[ "$PRODUCER_PUBLISH_OUTCOME" != success || "$INTENT_DOWNLOAD_OUTCOME" != success ]]; then
+              echo 'main-branch release intent artifact is inconsistent with the producer publish job' >&2
+              exit 1
+            fi
+            python - <<'PYTHON'
+          import hashlib
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          root=Path('incoming/producer-intent')
+          pins=json.loads((root/'release-pins.json').read_text(encoding='utf-8'))
+          sums=(root/'SHA256SUMS').read_bytes()
+          tag = pins.get('tag')
+          source = pins.get('commit')
+          workflow = pins.get('workflowCommit')
+          run_id = pins.get('workflowRunId')
+          if not isinstance(tag, str) or re.fullmatch(
+              r'v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)', tag
+          ) is None:
+              raise SystemExit('producer release intent tag is invalid')
+          if not isinstance(source, str) or re.fullmatch(r'[0-9a-f]{40}', source) is None:
+              raise SystemExit('producer release intent source is invalid')
+          if (
+              workflow != os.environ['PRODUCER_HEAD_SHA']
+              or type(run_id) is not int
+              or str(run_id) != os.environ['PRODUCER_RUN_ID']
+          ):
+              raise SystemExit('producer release intent run/source binding differs')
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write(
+                  f"tag={tag}\nsource_sha={source}\n"
+                  f"sums_sha256={hashlib.sha256(sums).hexdigest()}\n"
+                  f"version={tag[1:]}\neligible=true\n"
+              )
+          PYTHON
+            exit 0
           else
             if [[ "$PRODUCER_PATH" =~ /release-selected-publish-((0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*))\.yml$ ]]; then
               TARGET_TAG="v${BASH_REMATCH[1]}"
@@ -74,7 +163,9 @@ jobs:
           VERSION="${TARGET_TAG#v}"
           printf 'tag=%s\nsource_sha=%s\nsums_sha256=%s\nversion=%s\n' \
             "$TARGET_TAG" "$SOURCE_SHA" "$SUMS_SHA256" "$VERSION" >> "$GITHUB_OUTPUT"
+          echo 'eligible=true' >> "$GITHUB_OUTPUT"
       - name: Read the immutable public release and tag objects
+        if: steps.identity.outputs.eligible == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.identity.outputs.tag }}
@@ -95,6 +186,7 @@ jobs:
           fi
           gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming/assets
       - name: Verify tag source, checksum manifest, pins and package metadata
+        if: steps.identity.outputs.eligible == 'true'
         id: source
         env:
           TAG: ${{ steps.identity.outputs.tag }}
@@ -102,6 +194,7 @@ jobs:
           VERSION: ${{ steps.identity.outputs.version }}
           EXPECTED_SUMS_SHA256: ${{ steps.identity.outputs.sums_sha256 }}
           EVENT_NAME: ${{ github.event_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         shell: bash
         run: |
           set -euo pipefail
@@ -118,11 +211,13 @@ jobs:
           if [[ "$EVENT_NAME" == workflow_run ]]; then
             ARGS+=(--producer-run-json incoming/producer-run.json
               --producer-workflow-path .github/workflows/release.yml
-              --producer-workflow-prefix .github/workflows/release-selected-publish-)
+              --producer-workflow-prefix .github/workflows/release-selected-publish-
+              --default-branch "$DEFAULT_BRANCH")
           fi
           python scripts/release/publish_pypi_release.py "${ARGS[@]}"
           printf 'version=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
+        if: steps.identity.outputs.eligible == 'true'
         with:
           name: weft-pypi-release-${{ steps.identity.outputs.version }}
           path: dist/*
@@ -131,6 +226,7 @@ jobs:
 
   publish:
     needs: verify-release
+    if: needs.verify-release.outputs.eligible == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment: pypi
@@ -198,6 +294,7 @@ jobs:
 
   installed-consumer:
     needs: [verify-release, publish]
+    if: needs.verify-release.outputs.eligible == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
