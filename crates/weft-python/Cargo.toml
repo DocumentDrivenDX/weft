@@ -1,6 +1,6 @@
 [package]
 name="weft-python"
-version = "0.4.54"
+version = "0.4.55"
 edition.workspace=true
 publish.workspace=true
 license.workspace=true

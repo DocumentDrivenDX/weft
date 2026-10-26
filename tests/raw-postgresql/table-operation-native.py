@@ -180,7 +180,7 @@ def write_partial_report(status='running',failure_type=None):
     args.report.parent.mkdir(parents=True,exist_ok=True)
     report={'status':status,'scope':'candidate SQL native behavior under source-installed PG18 RLS; not generated/runtime operation admission',
             'postgresql':server_details['versionInteger'],'postgresqlVersion':server_details['version'],
-            'weft':importlib.metadata.version('weft-sql'),'sourceDigest':bundle['sourceDigest'],'bundleDigest':bundle['bundleDigest'],
+            'weft':importlib.metadata.version('umf-weft'),'sourceDigest':bundle['sourceDigest'],'bundleDigest':bundle['bundleDigest'],
             'observations':observations,'perCallLeases':leases,'asyncLeases':async_lease_details,
             'programDigests':program_hashes,'cleanupStatus':cleanup_status,
             'cleanupFailureType':cleanup_failure_type,'nativeExecutionQualified':False}
@@ -445,7 +445,7 @@ with psycopg.connect(admin_conninfo,autocommit=True) as admin:
             check('data-effects-do-not-rewrite-source-generation',history['headDigest']==installed['entryDigest'])
         check('every-per-call-lease-released-including-refusals',leases['acquired']==leases['released'] and leases['acquired']>30)
         report={'status':'passed','scope':'candidate SQL native behavior under source-installed PG18 RLS; not generated/runtime operation admission',
-                'postgresql':server_details['versionInteger'],'postgresqlVersion':server_details['version'],'weft':importlib.metadata.version('weft-sql'),
+                'postgresql':server_details['versionInteger'],'postgresqlVersion':server_details['version'],'weft':importlib.metadata.version('umf-weft'),
                 'weftModule':Path(weft.__file__).name,'sourceDigest':bundle['sourceDigest'],'bundleDigest':bundle['bundleDigest'],
                 'observations':observations,'perCallLeases':leases,'asyncLeases':async_leases,'sessionAdapter':'installed public SyncSession/AsyncSession and Psycopg3; adapter-owned/caller-savepoint transactions plus repeated cancellation','programDigests':program_hashes,'nativeExecutionQualified':False,
                 'unqualified':['production host executor','durable data replay','authenticated opaque cursors','generated table methods','Psycopg2/SQLAlchemy operation composition and real-pool/fork parity','managed Lakebase','release']}

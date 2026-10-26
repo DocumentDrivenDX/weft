@@ -21,10 +21,27 @@ from typing import Any
 SHA = re.compile(r"[0-9a-f]{64}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 TAG = re.compile(r"v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
+VERSION = re.compile(r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
+RENAMED_DISTRIBUTION_START = (0, 4, 55)
 
 
 class ReleaseError(ValueError):
     pass
+
+
+def distribution_for_version(version: str) -> str:
+    """Keep legacy archives historical and use the new project from 0.4.55."""
+    match = VERSION.fullmatch(version)
+    _require(match is not None, "version must be numeric X.Y.Z")
+    assert match is not None
+    parts = tuple(map(int, match.groups()))
+    return "umf-weft" if parts >= RENAMED_DISTRIBUTION_START else "weft-sql"
+
+
+def wheel_prefix_for_version(version: str) -> str:
+    distribution = distribution_for_version(version)
+    normalized = re.sub(r"[-_.]+", "_", distribution)
+    return f"{normalized}-{version}-"
 
 
 def _require(condition: bool, message: str) -> None:

@@ -11,10 +11,11 @@ import weft
 
 ROOT = Path(__file__).resolve().parent
 EXPECTED_VERSION = tomllib.loads((ROOT.parents[1] / 'crates/weft-python/pyproject.toml').read_text())['project']['version']
-assert metadata.version('weft-sql') == weft.__version__ == EXPECTED_VERSION
+EXPECTED_DISTRIBUTION = 'umf-weft'
+assert metadata.version(EXPECTED_DISTRIBUTION) == weft.__version__ == EXPECTED_VERSION
 native = import_module('weft.weft')
 package_root = Path(weft.__file__).resolve().parent
-assert package_root == Path(metadata.distribution('weft-sql').locate_file('weft')).resolve()
+assert package_root == Path(metadata.distribution(EXPECTED_DISTRIBUTION).locate_file('weft')).resolve()
 assert Path(native.__file__).resolve().is_relative_to(package_root)
 assert any(str(native.__file__).endswith(suffix) for suffix in machinery.EXTENSION_SUFFIXES)
 assert callable(weft.compile_truss_runtime_json)

@@ -13,7 +13,7 @@ def visit(key):
     for dep in nodes[key]['deps']:
         if any(k['kind'] in (None,'build') for k in dep['dep_kinds']):visit(dep['pkg'])
 visit(root)
-text=['Third-party notices for weft-sql. Dependencies retain their original licenses.\n']
+text=['Third-party notices for umf-weft. Dependencies retain their original licenses.\n']
 missing=[]
 for key in sorted(seen):
     p=packages[key]

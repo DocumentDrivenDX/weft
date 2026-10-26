@@ -88,6 +88,26 @@ class PublishPypiReleaseTests(unittest.TestCase):
     def tearDown(self) -> None:
         self.temp.cleanup()
 
+    def test_distribution_rename_starts_at_new_project_cohort(self) -> None:
+        self.assertEqual(publisher.distribution_for_version("0.4.54"), "weft-sql")
+        self.assertEqual(publisher.wheel_prefix_for_version("0.4.54"), "weft_sql-0.4.54-")
+        self.assertEqual(publisher.distribution_for_version("0.4.55"), "umf-weft")
+        self.assertEqual(publisher.wheel_prefix_for_version("0.4.55"), "umf_weft-0.4.55-")
+        self.assertEqual(publisher.distribution_for_version("0.5.0"), "umf-weft")
+        with self.assertRaisesRegex(publisher.ReleaseError, "numeric X.Y.Z"):
+            publisher.distribution_for_version("v0.4.55")
+
+    def test_new_umf_weft_archive_metadata_is_exact(self) -> None:
+        path = self.root / "umf_weft-0.4.55-cp39-abi3-manylinux.whl"
+        metadata = b"Metadata-Version: 2.4\nName: umf-weft\nVersion: 0.4.55\nRequires-Python: >=3.9\n\n"
+        with zipfile.ZipFile(path, "w") as archive:
+            archive.writestr("umf_weft-0.4.55.dist-info/METADATA", metadata)
+        publisher.validate_archive(path, "umf-weft", "0.4.55")
+        with self.assertRaisesRegex(publisher.ReleaseError, "distribution name differs"):
+            publisher.validate_archive(path, "weft-sql", "0.4.55")
+        with self.assertRaisesRegex(publisher.ReleaseError, "version differs"):
+            publisher.validate_archive(path, "umf-weft", "0.4.54")
+
     def prepare(self, **overrides: object) -> dict[str, object]:
         values: dict[str, object] = {
             "repository": "DocumentDrivenDX/weft",
@@ -448,6 +468,18 @@ class PublishPypiReleaseTests(unittest.TestCase):
 
 
 class ExistingWorkflowBoundsTests(unittest.TestCase):
+    def test_future_release_paths_use_renamed_project_and_keep_old_name_historical(self) -> None:
+        root = Path(__file__).parents[2]
+        release = (root / ".github/workflows/release.yml").read_text()
+        publisher_workflow = (root / ".github/workflows/publish-pypi.yml").read_text()
+        self.assertEqual(publisher.distribution_for_version("0.4.54"), "weft-sql")
+        self.assertEqual(publisher.distribution_for_version("0.4.55"), "umf-weft")
+        self.assertIn("distribution_for_version(p)", release)
+        self.assertIn('"${WHEEL_PREFIX}*-cp39-abi3-macosx_*_arm64.whl"', release)
+        self.assertIn('--distribution "$DISTRIBUTION"', publisher_workflow)
+        self.assertIn('"$DISTRIBUTION==$VERSION"', publisher_workflow)
+        self.assertIn('metadata.version(os.environ["DISTRIBUTION"])', publisher_workflow)
+
     def test_browser_mirror_fix_keeps_existing_job_and_stage_bounds(self) -> None:
         workflow = (
             Path(__file__).parents[2] / ".github/workflows/table-operations.yml"

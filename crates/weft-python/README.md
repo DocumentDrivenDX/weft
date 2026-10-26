@@ -1,6 +1,6 @@
-# weft-sql
+# umf-weft
 
-Native Python bindings for the Weft SQL compiler. Distribution `weft-sql`, import
+Native Python bindings for the Weft SQL compiler. Distribution `umf-weft`, import
 `weft`. Functions consume pinned original compiler requests and return complete
 JSON responses or explicit refusals. The compiler does not execute database SQL
 or grant native authority. Consult the repository support inventory and release

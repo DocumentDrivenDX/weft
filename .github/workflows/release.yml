@@ -53,10 +53,18 @@ jobs:
         shell: bash
         run: |
           python - <<'PYTHON'
-          import os,tomllib
-          p=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
+          import os,sys,tomllib
+          sys.path.insert(0,'scripts/release')
+          from publish_pypi_release import distribution_for_version,wheel_prefix_for_version
+          project=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']
+          p=project['version']
           c=tomllib.load(open('crates/weft-python/Cargo.toml','rb'))['package']['version']
           assert p==c
+          expected_name=distribution_for_version(p)
+          assert project['name']==expected_name, (project['name'], expected_name)
+          prefix=wheel_prefix_for_version(p)
+          with open(os.environ['GITHUB_ENV'],'a') as output:
+              output.write(f'DISTRIBUTION={project["name"]}\nWHEEL_PREFIX={prefix}\n')
           if os.environ['RELEASE_REQUESTED']=='true':assert os.environ['RELEASE_TAG']=='v'+p
           PYTHON
       - uses: PyO3/maturin-action@v1
@@ -73,11 +81,11 @@ jobs:
         run: |
           python -m pip install --no-deps dist/*.whl
           python - <<'PYTHON'
-          import json,pathlib,subprocess,sys,tomllib
+          import json,os,pathlib,subprocess,sys,tomllib
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
           root=pathlib.Path('dist');wheels=list(root.glob('*.whl'));assert len(wheels)==1
           report=root/'packaging-${{ matrix.target }}.json'
-          subprocess.run([sys.executable,'scripts/release/verify-wheel-packaging.py','--wheel',str(wheels[0]),'--version',version,'--output',str(report)],check=True)
+          subprocess.run([sys.executable,'scripts/release/verify-wheel-packaging.py','--wheel',str(wheels[0]),'--version',version,'--distribution',os.environ['DISTRIBUTION'],'--output',str(report)],check=True)
           evidence=json.loads(report.read_text())
           evidence['sourceCommit']=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
           report.write_text(json.dumps(evidence,indent=2)+'\n')
@@ -139,7 +147,17 @@ jobs:
           export PACKAGING_COMMIT
           # The publisher already has release access. Build jobs remain read-only;
           # macOS functional and installed-package checks ran locally.
-          gh release download "$RELEASE_TAG" --pattern 'weft_sql-*-cp39-abi3-macosx_*_arm64.whl' --dir dist
+          read -r DISTRIBUTION WHEEL_PREFIX < <(python - <<'PYTHON'
+          import sys,tomllib
+          sys.path.insert(0,'scripts/release')
+          from publish_pypi_release import distribution_for_version,wheel_prefix_for_version
+          project=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']
+          assert project['name']==distribution_for_version(project['version'])
+          print(project['name'],wheel_prefix_for_version(project['version']))
+          PYTHON
+          )
+          export DISTRIBUTION WHEEL_PREFIX
+          gh release download "$RELEASE_TAG" --pattern "${WHEEL_PREFIX}*-cp39-abi3-macosx_*_arm64.whl" --dir dist
           python - <<'PYTHON'
           import hashlib,json,os,pathlib,subprocess,tomllib,zipfile
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
@@ -180,7 +198,7 @@ jobs:
           assert report['platform']=='macos-arm64' and report['functionalQualification']=='local-only'
           (root/'local-macos-qualification.json').write_bytes(qualification.read_bytes())
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'workflowRunId':int(os.environ['GITHUB_RUN_ID']),'packagingCommit':os.environ['PACKAGING_COMMIT'],'distribution':'weft-sql','version':version,'features':features,'wheelPackaging':packaging,'functionalQualification':report,'otherPlatforms':'build and installed packaging only; no native functional qualification claimed','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'workflowRunId':int(os.environ['GITHUB_RUN_ID']),'packagingCommit':os.environ['PACKAGING_COMMIT'],'distribution':os.environ['DISTRIBUTION'],'version':version,'features':features,'wheelPackaging':packaging,'functionalQualification':report,'otherPlatforms':'build and installed packaging only; no native functional qualification claimed','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft
           test "$(cat /tmp/release-draft)" = true
