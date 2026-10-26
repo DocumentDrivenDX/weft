@@ -1,0 +1,247 @@
+name: Publish Weft wheels to PyPI
+on:
+  workflow_run:
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact existing qualified release tag
+        required: true
+        type: string
+      source_sha:
+        description: Exact commit targeted by the immutable release tag
+        required: true
+        type: string
+      expected_sums_sha256:
+        description: SHA-256 of the public release SHA256SUMS file
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: pypi-publish-weft-${{ github.event.workflow_run.head_sha || inputs.source_sha || github.run_id }}
+  cancel-in-progress: false
+jobs:
+  verify-release:
+    if: >-
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
+        (github.event.workflow_run.path == '.github/workflows/release.yml' || startsWith(github.event.workflow_run.path, '.github/workflows/release-selected-publish-')) &&
+        (startsWith(github.event.workflow_run.head_branch, 'v') || startsWith(github.event.workflow_run.path, '.github/workflows/release-selected-publish-'))) ||
+      (github.event_name == 'workflow_dispatch' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      version: ${{ steps.identity.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test the release publisher validator
+        run: python scripts/release/test_publish_pypi_release.py
+      - name: Bind exact tag, source and optional backfill pins
+        id: identity
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PRODUCER_PATH: ${{ github.event.workflow_run.path }}
+          PRODUCER_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          SOURCE_SHA: ${{ github.event.workflow_run.head_sha || inputs.source_sha }}
+          INPUT_SOURCE_SHA: ${{ inputs.source_sha }}
+          INPUT_TAG: ${{ inputs.tag }}
+          MANUAL_SUMS_SHA256: ${{ inputs.expected_sums_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == workflow_dispatch ]]; then
+            TARGET_TAG="$INPUT_TAG"
+            SOURCE_SHA="$INPUT_SOURCE_SHA"
+            [[ "$MANUAL_SUMS_SHA256" =~ ^[0-9a-f]{64}$ ]]
+            SUMS_SHA256="$MANUAL_SUMS_SHA256"
+          else
+            if [[ "$PRODUCER_PATH" =~ /release-selected-publish-((0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*))\.yml$ ]]; then
+              TARGET_TAG="v${BASH_REMATCH[1]}"
+            else
+              TARGET_TAG="$PRODUCER_BRANCH"
+            fi
+            SUMS_SHA256=""
+          fi
+          [[ "$TARGET_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          VERSION="${TARGET_TAG#v}"
+          printf 'tag=%s\nsource_sha=%s\nsums_sha256=%s\nversion=%s\n' \
+            "$TARGET_TAG" "$SOURCE_SHA" "$SUMS_SHA256" "$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Read the immutable public release and tag objects
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.identity.outputs.tag }}
+          EVENT_NAME: ${{ github.event_name }}
+          PRODUCER_RUN_ID: ${{ github.event.workflow_run.id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p incoming
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > incoming/release.json
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > incoming/tag-ref.json
+          if [[ "$(jq -r .object.type incoming/tag-ref.json)" == tag ]]; then
+            OBJECT_SHA="$(jq -r .object.sha incoming/tag-ref.json)"
+            gh api "repos/$GITHUB_REPOSITORY/git/tags/$OBJECT_SHA" > incoming/tag-object.json
+          fi
+          if [[ "$EVENT_NAME" == workflow_run ]]; then
+            gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID" > incoming/producer-run.json
+          fi
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming/assets
+      - name: Verify tag source, checksum manifest, pins and package metadata
+        id: source
+        env:
+          TAG: ${{ steps.identity.outputs.tag }}
+          SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
+          VERSION: ${{ steps.identity.outputs.version }}
+          EXPECTED_SUMS_SHA256: ${{ steps.identity.outputs.sums_sha256 }}
+          EVENT_NAME: ${{ github.event_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$EXPECTED_SUMS_SHA256" ]]; then
+            EXPECTED_SUMS_SHA256="$(jq -r '.assets[] | select(.name == "SHA256SUMS") | .digest | sub("^sha256:"; "")' incoming/release.json)"
+          fi
+          test "${#EXPECTED_SUMS_SHA256}" = 64
+          ARGS=(prepare --repository "$GITHUB_REPOSITORY" --tag "$TAG" --source-sha "$SOURCE_SHA"
+            --expected-sums-sha256 "$EXPECTED_SUMS_SHA256" --distribution weft-sql
+            --wheel-prefix "weft_sql-$VERSION-" --wheel-count 3
+            --release-json incoming/release.json --tag-ref-json incoming/tag-ref.json
+            --assets-dir incoming/assets --output-dir dist --receipt dist/source-receipt.json)
+          if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
+          if [[ "$EVENT_NAME" == workflow_run ]]; then
+            ARGS+=(--producer-run-json incoming/producer-run.json
+              --producer-workflow-path .github/workflows/release.yml
+              --producer-workflow-prefix .github/workflows/release-selected-publish-)
+          fi
+          python scripts/release/publish_pypi_release.py "${ARGS[@]}"
+          printf 'version=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weft-pypi-release-${{ steps.identity.outputs.version }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 90
+
+  publish:
+    needs: verify-release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: pypi
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: weft-pypi-release-${{ needs.verify-release.outputs.version }}
+          path: dist
+      - name: Refuse PyPI collisions and require exact archive bytes
+        id: preflight
+        run: python scripts/release/publish_pypi_release.py check-pypi --receipt dist/source-receipt.json --dist-dir dist
+      - name: Stage only the verified wheels
+        if: steps.preflight.outputs.status == 'absent'
+        run: |
+          mkdir packages
+          cp dist/weft_sql-*.whl packages/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        id: pypi-upload
+        if: steps.preflight.outputs.status == 'absent'
+        with:
+          packages-dir: packages/
+      - name: Verify PyPI-served bytes after publication
+        id: postflight
+        run: python scripts/release/publish_pypi_release.py check-pypi --receipt dist/source-receipt.json --dist-dir dist --wait --timeout 300
+      - name: Record exact PyPI publication result
+        env:
+          UPLOAD_OUTCOME: ${{ steps.pypi-upload.outcome }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          source = json.loads(Path("dist/source-receipt.json").read_text(encoding="utf-8"))
+          record = {
+              "schema": "pypi-publication-receipt.v1",
+              "status": "passed",
+              "registry": "pypi",
+              "tag": source["tag"],
+              "source_sha": source["source_sha"],
+              "distribution": source["distribution"],
+              "version": source["version"],
+              "files": source["files"],
+              "publication_mode": "oidc_upload" if os.environ["UPLOAD_OUTCOME"] == "success" else "existing_exact_bytes",
+              "oidc_trusted_publisher": os.environ["UPLOAD_OUTCOME"] == "success",
+              "registry_bytes_verified": True,
+          }
+          Path("dist/publication-receipt.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weft-pypi-publication-${{ needs.verify-release.outputs.version }}
+          path: dist/*receipt.json
+          if-no-files-found: error
+          retention-days: 365
+
+  installed-consumer:
+    needs: [verify-release, publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the published Weft wheel from PyPI only
+        env:
+          VERSION: ${{ needs.verify-release.outputs.version }}
+          PIP_CONFIG_FILE: /dev/null
+          PIP_INDEX_URL: ''
+          PIP_EXTRA_INDEX_URL: ''
+          PIP_FIND_LINKS: ''
+          PIP_NO_INDEX: ''
+        run: |
+          set -euo pipefail
+          python -m venv "$RUNNER_TEMP/pypi-consumer"
+          "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install \
+            --disable-pip-version-check --no-cache-dir --index-url https://pypi.org/simple \
+            --report "$RUNNER_TEMP/pip-install-report.json" "weft-sql==$VERSION"
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/pypi-consumer/bin/python" - <<'PY'
+          import importlib.metadata, json, os
+          from pathlib import Path
+          import weft
+          report = json.loads(Path(os.environ["RUNNER_TEMP"], "pip-install-report.json").read_text(encoding="utf-8"))
+          for item in report["install"]:
+              url = item["download_info"]["url"]
+              assert url.startswith("https://files.pythonhosted.org/"), url
+          record = {
+              "schema": "pypi-consumer-receipt.v1",
+              "status": "passed",
+              "index": "https://pypi.org/simple",
+              "weft_version": importlib.metadata.version("weft-sql"),
+          }
+          assert record["weft_version"] == os.environ["VERSION"]
+          Path(os.environ["RUNNER_TEMP"], "consumer-receipt.json").write_text(
+              json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
+          print("fresh PyPI Weft consumer imported the compiler")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weft-pypi-consumer-${{ needs.verify-release.outputs.version }}
+          path: ${{ runner.temp }}/consumer-receipt.json
+          if-no-files-found: error
+          retention-days: 365
