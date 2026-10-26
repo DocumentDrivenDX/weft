@@ -1,0 +1,19 @@
+{
+  "compiler_source_commit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2",
+  "distribution": "weft-sql",
+  "files": {
+    "weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl": "0ef0628143e71a6d7e7dfe53c79034307260075c78a64e92c5b19e8684cf628d",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "38d995ed3b55cb92403f64798c8f93b0d30ac9035d5d74784aa292b372ee8219",
+    "weft_sql-0.4.54-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "662a46d0675ef2b59a007b1d49eeb8bc04c46384ac957c0579629e1e755da6eb"
+  },
+  "release_metadata_commit": "1c246b903038908bb4b5db08d5db20da309dd096",
+  "release_pins_schema": "weft-selected-release-pins/1",
+  "release_pins_sha256": "8ee0f51aac254525e61e799e1508fc58ef9826fd744f8f74903ba704f6d23e91",
+  "repository": "DocumentDrivenDX/weft",
+  "schema": "pypi-release-source.v1",
+  "source_sha": "1c246b903038908bb4b5db08d5db20da309dd096",
+  "status": "verified",
+  "sums_sha256": "d40c3352db555918f9e6e713c653de89973e6163c33cd7315eb2b58834a8debb",
+  "tag": "v0.4.54",
+  "version": "0.4.54"
+}

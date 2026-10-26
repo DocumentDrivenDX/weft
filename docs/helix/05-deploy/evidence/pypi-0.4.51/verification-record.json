@@ -1,0 +1,42 @@
+{
+  "all_three_jobs_passed": true,
+  "artifact_receipts": [
+    {
+      "id": 12667932041,
+      "name": "weft-pypi-publication-0.4.51",
+      "sha256": "a6f95d8b76d7f08105525fff880c0a977c010781a789aa09d1c4f03d7c3b81de"
+    },
+    {
+      "id": 12667513971,
+      "name": "weft-pypi-consumer-0.4.51",
+      "sha256": "13312efd2369c10c22318a01582a8fdb240e6ff3cba96ea7b6b521accc5c3e4a"
+    }
+  ],
+  "artifact_zip_digests_verified": true,
+  "distribution": "weft-sql",
+  "files": {
+    "weft_sql-0.4.51-cp39-abi3-macosx_11_0_arm64.whl": "e60e552f02c670b43a43111b08d26d6b415aaa9b9de42f241c37ad1d9fdd2487",
+    "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "42f846d689ace027d6bb2951f27c587660d4e5151285fe911ce7a3006d0001de",
+    "weft_sql-0.4.51-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "a23142f12b59444138b588a8a764666b025552a14036f62d83af022153f1a0a5"
+  },
+  "prior_attempts": [
+    {
+      "fixed_by_pull_request": 35,
+      "reason": "Repository packages directory collided with upload staging.",
+      "status": "failed_before_upload",
+      "workflow_run_id": 40357291203
+    }
+  ],
+  "publication_mode": "oidc_upload",
+  "registry": "pypi",
+  "schema": "registry-release-verification.v1",
+  "scope": "Registry distribution and fresh public-index import of the existing qualified release. Existing platform and semantic qualification limits apply.",
+  "status": "passed",
+  "tag": "v0.4.51",
+  "tag_source_sha": "d4b0b98507ae15bd98180a2ea2030ea92ce11d96",
+  "version": "0.4.51",
+  "workflow_driver_sha": "8ada03f606fda2ee9121e084f3eb3fbd4fc275ff",
+  "workflow_event": "workflow_dispatch",
+  "workflow_run_id": 40358556206,
+  "workflow_url": "https://github.com/DocumentDrivenDX/weft/actions/runs/40358556206"
+}
