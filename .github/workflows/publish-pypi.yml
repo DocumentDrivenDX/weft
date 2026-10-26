@@ -1,6 +1,7 @@
 name: Publish Weft wheels to PyPI
 on:
   workflow_run:
+    workflows: ["*"]
     types: [completed]
   workflow_dispatch:
     inputs:
