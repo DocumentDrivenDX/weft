@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "version": "0.4.54",
+  "wheel": "weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "0ef0628143e71a6d7e7dfe53c79034307260075c78a64e92c5b19e8684cf628d",
+  "nativeModuleSha256": "9d33d503ad5e1a2c8234f43d8b9cf7b43288089ad17ee7d2648583e1ac5df715",
+  "python": "3.12.10 (v3.12.10:0cc81280367, Apr  8 2025, 08:46:59) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated",
+  "sourceCommit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2",
+  "workflowCommit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2",
+  "target": "aarch64-apple-darwin",
+  "runner": "macos-14"
+}

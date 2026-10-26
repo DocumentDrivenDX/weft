@@ -1,0 +1,83 @@
+{
+  "schema": "weft-0454-owner-artifact-verification/1",
+  "sourceCommit": "32b5ad36fe28cebb4073b3a152f086c47a8d0fa2",
+  "linuxRunId": 40258052788,
+  "macosRunId": 40258058816,
+  "macosArtifactId": 12624075368,
+  "macosArtifactZipSha256": "45981b007c065db457e49446011cde5319196ae5fbecfa33d9ced793109b71a6",
+  "wheel": {
+    "name": "weft_sql-0.4.54-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "0ef0628143e71a6d7e7dfe53c79034307260075c78a64e92c5b19e8684cf628d",
+    "nativeModule": "weft/weft.abi3.so",
+    "nativeModuleSha256": "9d33d503ad5e1a2c8234f43d8b9cf7b43288089ad17ee7d2648583e1ac5df715"
+  },
+  "wasmBytes": 10047275,
+  "wasmSha256": "e76c1d20ab458204e11c521072618cc8640feea894a543cf4bbcf891420dcb04",
+  "browserVersion": "151.0.7922.34",
+  "selectedResponses": [
+    {
+      "id": "original-sales-join-truss.postgresql",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-empty-global-truss.postgresql",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-empty-grouped-truss.postgresql",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-sales-join-ashlar.databricks",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ]
+    },
+    {
+      "id": "original-empty-global-ashlar.databricks",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ]
+    },
+    {
+      "id": "original-empty-grouped-ashlar.databricks",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ]
+    },
+    {
+      "id": "original-string-exact-0",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-string-exact-1",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    },
+    {
+      "id": "original-string-exact-2",
+      "status": "blocked",
+      "diagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ]
+    }
+  ],
+  "qualification": "Exact installed macOS wheel packaging and nine legacy backend refusal responses match Rust/Python/Chromium bytes. No positive macOS query compilation/native DB qualification. Linux packaging only. Native source50cases evidence independent earlierPR30, not installed Mac proof."
+}

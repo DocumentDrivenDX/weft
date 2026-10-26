@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "id": "original-sales-join-truss.postgresql",
+      "requestSha256": "4413e42896c5dcb118e8d4f04940b19d1dd7111a8df78514e21552a1d88ca739",
+      "rustResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "pythonResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-empty-global-truss.postgresql",
+      "requestSha256": "7cb8c5dcc0b4671540b104f802fc4536f57ab68cf4d6b82ca16b3983d17e213d",
+      "rustResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "pythonResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-empty-grouped-truss.postgresql",
+      "requestSha256": "884e599b1d64cbbb624eb039649f4b36e74745f6b0ff3e9e943e79e9b4d19bc6",
+      "rustResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "pythonResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-sales-join-ashlar.databricks",
+      "requestSha256": "3e83a49e6835faf3035b085ddbdb86378f27f7b3dcd7c0b6cb975acbc0326b88",
+      "rustResponseSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65",
+      "pythonResponseSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65"
+    },
+    {
+      "id": "original-empty-global-ashlar.databricks",
+      "requestSha256": "fc4828412f4152cc93995c853d092eaa75741166c1d3a5e3ef9d31f329df21e4",
+      "rustResponseSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65",
+      "pythonResponseSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65"
+    },
+    {
+      "id": "original-empty-grouped-ashlar.databricks",
+      "requestSha256": "1c94d7c7eb6e27843336c23021578c764c4c854613a7c5fae29fc7208a420793",
+      "rustResponseSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65",
+      "pythonResponseSha256": "b0a47c28c8faf4c18c737f346f3531081a7fdcaa959cc7b1d585870b0894dd65"
+    },
+    {
+      "id": "original-string-exact-0",
+      "requestSha256": "a712ec8b8db7362b94b633648d37bef74b132bdfbc032fdebe2ee8ffdce259ff",
+      "rustResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "pythonResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-string-exact-1",
+      "requestSha256": "c8b7a2e2cb05ef100edfe22569830fda0d46e9187804654cd55f724e7d3ddcfd",
+      "rustResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "pythonResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    },
+    {
+      "id": "original-string-exact-2",
+      "requestSha256": "38fa7c0f33e0ba25cf556d12702b76e835b076744858bc8a2b8a85092b8c3d06",
+      "rustResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a",
+      "pythonResponseSha256": "e15919e21ec79e772894bb0d484d6bacc9c43e57f057cf5042b19c5f9793848a"
+    }
+  ],
+  "python": "3.12.10 (v3.12.10:0cc81280367, Apr  8 2025, 08:46:59) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "distributionVersion": "0.4.54",
+  "nativeModule": "/Users/runner/work/_temp/weft-0.4.54-venv/lib/python3.12/site-packages/weft/weft.abi3.so",
+  "nativeModuleSha256": "9d33d503ad5e1a2c8234f43d8b9cf7b43288089ad17ee7d2648583e1ac5df715",
+  "scope": "Installed exact wheel compiler parity; no native database execution."
+}
