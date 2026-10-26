@@ -4,6 +4,14 @@ Qualified registry execution records are retained under `evidence/`; each claim 
 
 ## Public PyPI distribution
 
+The next distribution-name cohort is `umf-weft==0.4.55`; it retains the
+`weft` Python import and compiler protocols. PyPI returned 404 for that exact
+version and the GitHub tag and release were absent at the 2026-10-26 check.
+Those point-in-time checks do not qualify the new archive. The `weft-sql`
+0.4.51 and 0.4.54 receipts below remain historical proof for their original
+files; the renamed cohort requires its own complete artifact and installed
+consumer qualification.
+
 Owner direction on 2026-10-26 requires the qualified Python distribution on
 public PyPI, with future released versions published automatically. The
 `publish-pypi.yml` driver runs on the default branch and consumes exact existing

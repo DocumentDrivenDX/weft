@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Exact installed ABI3 wheel RECORD, metadata and bundled notices."""
-import argparse,base64,csv,hashlib,importlib.metadata,io,json,sys,zipfile
+import argparse,base64,csv,hashlib,importlib.metadata,io,json,sys,tomllib,zipfile
 from pathlib import Path
 if sys.flags.optimize:raise RuntimeError('Packaging checks require assertions')
-p=argparse.ArgumentParser();p.add_argument('--wheel',type=Path,required=True);p.add_argument('--version',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--wheel',type=Path,required=True);p.add_argument('--version',required=True);p.add_argument('--distribution');p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+distribution=a.distribution or tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['name']
 sha=lambda raw:hashlib.sha256(raw).hexdigest()
 with zipfile.ZipFile(a.wheel) as z:
     names = z.namelist()
@@ -20,7 +21,7 @@ with zipfile.ZipFile(a.wheel) as z:
             assert digest == 'sha256=' + base64.urlsafe_b64encode(hashlib.sha256(raw).digest()).decode().rstrip('=')
             assert size == str(len(raw))
     metadata = z.read(next(n for n in names if n.endswith('.dist-info/METADATA'))).decode()
-    assert 'Name: weft-sql\n' in metadata and 'Version: '+a.version+'\n' in metadata
+    assert 'Name: '+distribution+'\n' in metadata and 'Version: '+a.version+'\n' in metadata
     assert 'License-Expression: MIT OR Apache-2.0\n' in metadata
     assert 'Requires-Python: >=3.9\n' in metadata
     assert 'Requires-Dist:' not in metadata
@@ -36,7 +37,7 @@ with zipfile.ZipFile(a.wheel) as z:
     native_sha = sha(z.read(native[0]))
 import weft
 import weft.weft as extension
-assert importlib.metadata.version('weft-sql')==weft.__version__==a.version
+assert importlib.metadata.version(distribution)==weft.__version__==a.version
 assert sha(Path(extension.__file__).read_bytes())==native_sha
 with zipfile.ZipFile(a.wheel)as archive:assert Path(weft.__file__).read_bytes()==archive.read('weft/__init__.py')
 a.output.parent.mkdir(parents=True,exist_ok=True)

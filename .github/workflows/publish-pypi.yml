@@ -36,6 +36,8 @@ jobs:
     timeout-minutes: 15
     outputs:
       version: ${{ steps.identity.outputs.version }}
+      distribution: ${{ steps.identity.outputs.distribution }}
+      wheel_prefix: ${{ steps.identity.outputs.wheel_prefix }}
       eligible: ${{ steps.identity.outputs.eligible }}
     steps:
       - uses: actions/checkout@v6
@@ -122,7 +124,11 @@ jobs:
           import json
           import os
           import re
+          import sys
           from pathlib import Path
+
+          sys.path.insert(0, 'scripts/release')
+          import publish_pypi_release as publisher
 
           root=Path('incoming/producer-intent')
           pins=json.loads((root/'release-pins.json').read_text(encoding='utf-8'))
@@ -143,11 +149,16 @@ jobs:
               or str(run_id) != os.environ['PRODUCER_RUN_ID']
           ):
               raise SystemExit('producer release intent run/source binding differs')
+          version = tag[1:]
+          distribution = publisher.distribution_for_version(version)
+          if pins.get('distribution') != distribution:
+              raise SystemExit('producer distribution does not match the selected release-name cohort')
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
               output.write(
                   f"tag={tag}\nsource_sha={source}\n"
                   f"sums_sha256={hashlib.sha256(sums).hexdigest()}\n"
-                  f"version={tag[1:]}\neligible=true\n"
+                  f"version={version}\ndistribution={distribution}\n"
+                  f"wheel_prefix={publisher.wheel_prefix_for_version(version)}\neligible=true\n"
               )
           PYTHON
             exit 0
@@ -162,8 +173,16 @@ jobs:
           [[ "$TARGET_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
           VERSION="${TARGET_TAG#v}"
-          printf 'tag=%s\nsource_sha=%s\nsums_sha256=%s\nversion=%s\n' \
-            "$TARGET_TAG" "$SOURCE_SHA" "$SUMS_SHA256" "$VERSION" >> "$GITHUB_OUTPUT"
+          read -r DISTRIBUTION WHEEL_PREFIX < <(python - "$VERSION" <<'PYTHON'
+          import sys
+          sys.path.insert(0,'scripts/release')
+          import publish_pypi_release as publisher
+          version=sys.argv[1]
+          print(publisher.distribution_for_version(version), publisher.wheel_prefix_for_version(version))
+          PYTHON
+          )
+          printf 'tag=%s\nsource_sha=%s\nsums_sha256=%s\nversion=%s\ndistribution=%s\nwheel_prefix=%s\n' \
+            "$TARGET_TAG" "$SOURCE_SHA" "$SUMS_SHA256" "$VERSION" "$DISTRIBUTION" "$WHEEL_PREFIX" >> "$GITHUB_OUTPUT"
           echo 'eligible=true' >> "$GITHUB_OUTPUT"
       - name: Read the immutable public release and tag objects
         if: steps.identity.outputs.eligible == 'true'
@@ -194,6 +213,8 @@ jobs:
           SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
           VERSION: ${{ steps.identity.outputs.version }}
           EXPECTED_SUMS_SHA256: ${{ steps.identity.outputs.sums_sha256 }}
+          DISTRIBUTION: ${{ steps.identity.outputs.distribution }}
+          WHEEL_PREFIX: ${{ steps.identity.outputs.wheel_prefix }}
           EVENT_NAME: ${{ github.event_name }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         shell: bash
@@ -204,8 +225,8 @@ jobs:
           fi
           test "${#EXPECTED_SUMS_SHA256}" = 64
           ARGS=(prepare --repository "$GITHUB_REPOSITORY" --tag "$TAG" --source-sha "$SOURCE_SHA"
-            --expected-sums-sha256 "$EXPECTED_SUMS_SHA256" --distribution weft-sql
-            --wheel-prefix "weft_sql-$VERSION-" --wheel-count 3
+            --expected-sums-sha256 "$EXPECTED_SUMS_SHA256" --distribution "$DISTRIBUTION"
+            --wheel-prefix "$WHEEL_PREFIX" --wheel-count 3
             --release-json incoming/release.json --tag-ref-json incoming/tag-ref.json
             --assets-dir incoming/assets --output-dir dist --receipt dist/source-receipt.json)
           if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
@@ -217,6 +238,8 @@ jobs:
           fi
           python scripts/release/publish_pypi_release.py "${ARGS[@]}"
           printf 'version=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
+          printf 'distribution=%s\n' "$DISTRIBUTION" >> "$GITHUB_OUTPUT"
+          printf 'wheel_prefix=%s\n' "$WHEEL_PREFIX" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         if: steps.identity.outputs.eligible == 'true'
         with:
@@ -252,9 +275,11 @@ jobs:
         run: python scripts/release/publish_pypi_release.py check-pypi --receipt dist/source-receipt.json --dist-dir dist
       - name: Stage only the verified wheels
         if: steps.preflight.outputs.status == 'absent'
+        env:
+          WHEEL_PREFIX: ${{ needs.verify-release.outputs.wheel_prefix }}
         run: |
           mkdir .verified-pypi-packages
-          cp dist/weft_sql-*.whl .verified-pypi-packages/
+          cp "dist/$WHEEL_PREFIX"*.whl .verified-pypi-packages/
       - uses: pypa/gh-action-pypi-publish@release/v1
         id: pypi-upload
         if: steps.preflight.outputs.status == 'absent'
@@ -305,6 +330,7 @@ jobs:
       - name: Install the published Weft wheel from PyPI only
         env:
           VERSION: ${{ needs.verify-release.outputs.version }}
+          DISTRIBUTION: ${{ needs.verify-release.outputs.distribution }}
           PIP_CONFIG_FILE: /dev/null
           PIP_INDEX_URL: ''
           PIP_EXTRA_INDEX_URL: ''
@@ -315,7 +341,7 @@ jobs:
           python -m venv "$RUNNER_TEMP/pypi-consumer"
           "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install \
             --disable-pip-version-check --no-cache-dir --index-url https://pypi.org/simple \
-            --report "$RUNNER_TEMP/pip-install-report.json" "weft-sql==$VERSION"
+            --report "$RUNNER_TEMP/pip-install-report.json" "$DISTRIBUTION==$VERSION"
           cd "$RUNNER_TEMP"
           "$RUNNER_TEMP/pypi-consumer/bin/python" - <<'PY'
           import importlib.metadata, json, os
@@ -329,7 +355,8 @@ jobs:
               "schema": "pypi-consumer-receipt.v1",
               "status": "passed",
               "index": "https://pypi.org/simple",
-              "weft_version": importlib.metadata.version("weft-sql"),
+              "weft_distribution": os.environ["DISTRIBUTION"],
+              "weft_version": importlib.metadata.version(os.environ["DISTRIBUTION"]),
           }
           assert record["weft_version"] == os.environ["VERSION"]
           Path(os.environ["RUNNER_TEMP"], "consumer-receipt.json").write_text(

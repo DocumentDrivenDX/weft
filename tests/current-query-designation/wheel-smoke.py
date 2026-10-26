@@ -15,7 +15,7 @@ def pins():
   names=[name for name in archive.namelist() if name.endswith(('.so','.pyd'))];assert len(names)==1
   assert digest(native.read_bytes())==digest(archive.read(names[0])) and shim.read_bytes()==archive.read('weft/__init__.py')
  return {'wheelSha256':digest(a.wheel.read_bytes()),'nativeModuleSha256':digest(native.read_bytes()),'shimSha256':digest(shim.read_bytes())}
-before=pins();version=importlib.metadata.version('weft-sql');expected_version=tomllib.loads((root/'crates/weft-python/pyproject.toml').read_text())['project']['version'];assert version==weft.__version__==expected_version
+before=pins();version=importlib.metadata.version('umf-weft');expected_version=tomllib.loads((root/'crates/weft-python/pyproject.toml').read_text())['project']['version'];assert version==weft.__version__==expected_version
 assert callable(weft.compile_truss_runtime_json) and callable(weft.compile_truss_runtime_page_json)
 def identity(element):return {'documentId':'domain','revision':'query-value-core-r1','module':'m','element':element}
 def binding(child):

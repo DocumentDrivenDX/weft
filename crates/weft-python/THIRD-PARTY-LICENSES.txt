@@ -1,4 +1,4 @@
-Third-party notices for weft-sql. Dependencies retain their original licenses.
+Third-party notices for umf-weft. Dependencies retain their original licenses.
 
 === ahash 0.8.12 | MIT OR Apache-2.0 ===
 LICENSE-APACHE

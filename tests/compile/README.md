@@ -6,7 +6,7 @@ strict versioned transport, atomic no-SQL refusals, exact pins/limits and compil
 `generate_schemas.py` finalizes the draft response structures around B-003's
 backend interface and typed 0.2 column representations.
 
-The public Python distribution is `weft-sql`, importing `weft`; the browser WASM
+The public Python distribution is `umf-weft`, importing `weft`; the browser WASM
 crate is `weft-wasm`. Both call `weft-runtime`, which calls the same core Compiler.
 Default composition currently registers no production adapter: selecting Truss
 or Ashlar returns WFT-BACKEND-MISSING until their owned implementation slices.
