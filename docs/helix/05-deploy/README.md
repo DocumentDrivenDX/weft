@@ -31,7 +31,11 @@ and `weft-sql==0.4.54` in
 [run 40361089495](https://github.com/DocumentDrivenDX/weft/actions/runs/40361089495).
 The original GitHub archives were uploaded unchanged. Source, publication,
 consumer and artifact-digest verification records are retained under
-`evidence/pypi-0.4.51/` and `evidence/pypi-0.4.54/`. This changes distribution,
+`evidence/pypi-0.4.51/` and `evidence/pypi-0.4.54/`. The exact existing
+`weft-sql==0.4.53` cohort also passed actual OIDC publication, public-byte checks
+and a fresh public-index consumer in [run 40386978860](https://github.com/DocumentDrivenDX/weft/actions/runs/40386978860).
+Its [raw receipt record](evidence/pypi-0.4.53/README.md) supplies Ashlar's already
+selected dependency without changing that consumer's pins. This changes distribution,
 not runtime semantics, platform qualification or the latest-only support policy.
 
 Every public registry upload, including historical backfills, executes in
