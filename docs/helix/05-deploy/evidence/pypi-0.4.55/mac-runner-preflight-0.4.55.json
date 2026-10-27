@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "workflowCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "version": "0.4.55",
+  "runner": {
+    "label": "macos-14",
+    "architectureSource": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+    "name": "macos14",
+    "imageVersion": "20260831.0302.1",
+    "os": "Darwin",
+    "platform": "macOS-14.8.9-arm64-arm-64bit",
+    "architecture": "arm64",
+    "target": "aarch64-apple-darwin"
+  },
+  "sdk": "14.5",
+  "python": "Python 3.12.10",
+  "bun": "1.4.2",
+  "target": "aarch64-apple-darwin",
+  "rustExpected": "1.90.0",
+  "maturinExpected": "1.9.6",
+  "wasmBindgenExpected": "0.2.105",
+  "compilerFlags": {
+    "CARGO_PROFILE": "release",
+    "featuresFrom": "crates/weft-python/pyproject.toml [tool.maturin].features"
+  },
+  "distribution": "umf-weft",
+  "node": "v24.20.0",
+  "npm": "11.19.0",
+  "maturin": "maturin 1.9.6",
+  "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+  "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+  "wasmBindgen": "wasm-bindgen 0.2.105",
+  "maturinFeatures": [
+    "ashlar-sdk-ordered-page-candidate",
+    "raw-postgresql-reads",
+    "ashlar-databricks-paths-keys",
+    "ashlar-databricks-qualified",
+    "truss-postgresql-pg18",
+    "current-postgresql-scalar-candidate",
+    "current-databricks-scalar-candidate",
+    "current-query-refinement-candidate",
+    "current-presence-graph-requirements-candidate"
+  ],
+  "maturinFeaturesSha256": "7030cfc37e4325d4c33e5e33d7b5233f4597ec4d9942066a1c7f7a6725292364"
+}

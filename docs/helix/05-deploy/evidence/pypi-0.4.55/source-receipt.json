@@ -1,0 +1,19 @@
+{
+  "distribution": "umf-weft",
+  "files": {
+    "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "f50a42a0a8c9e7b07e3eb40ad819d0964792e9d32c2de42675b22fcc6035a3ce",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85"
+  },
+  "producer_run_id": 40424462909,
+  "producer_workflow_path": ".github/workflows/release.yml",
+  "release_pins_schema": "weft-hosted-release-pins/1",
+  "release_pins_sha256": "4087158df00691e7383707bb186708683fa17ae049f5b28b5a7d9e1555081c7b",
+  "repository": "DocumentDrivenDX/weft",
+  "schema": "pypi-release-source.v1",
+  "source_sha": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "status": "verified",
+  "sums_sha256": "2d843900b6af87e6510c839475308eb7cb9a1c79271c653a6189bdc9198d4607",
+  "tag": "v0.4.55",
+  "version": "0.4.55"
+}

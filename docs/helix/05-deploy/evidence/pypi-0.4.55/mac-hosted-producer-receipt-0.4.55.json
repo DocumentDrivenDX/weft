@@ -1,0 +1,110 @@
+{
+  "schema": "weft-hosted-macos-arm64-producer/1",
+  "status": "passed",
+  "version": "0.4.55",
+  "distribution": "umf-weft",
+  "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "workflowCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "workflowRunId": "40422688981",
+  "runner": "macos-14-arm64",
+  "target": "aarch64-apple-darwin",
+  "checks": {
+    "PREFLIGHT": "success",
+    "WHEEL": "success",
+    "VECTORS": "success",
+    "PARITY": "success"
+  },
+  "compilerProfile": "nine-frozen-refusal-responses-rust-python-chromium/1",
+  "limits": [
+    "Exact installed ARM64 wheel packaging and nine frozen refusal-response compiler vectors only.",
+    "Vectors are refusal parity; no positive-query or native PostgreSQL execution is claimed.",
+    "No publication is performed by this producer."
+  ],
+  "runnerPreflightSha256": "e792c28b06398f4bf0b4f3ce59e6a681d690d28dcb4e1b9859f863e8f3d34dac",
+  "toolBinaryHashesSha256": "d5fc869d0275dc26694de5cbcf37f1ceb3f05bf3b8ca299b47d67a76cd1578bc",
+  "compilerRoster": [
+    "original-sales-join-truss.postgresql",
+    "original-empty-global-truss.postgresql",
+    "original-empty-grouped-truss.postgresql",
+    "original-sales-join-ashlar.databricks",
+    "original-empty-global-ashlar.databricks",
+    "original-empty-grouped-ashlar.databricks",
+    "original-string-exact-0",
+    "original-string-exact-1",
+    "original-string-exact-2"
+  ],
+  "wheel": {
+    "name": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+    "nativeModule": "weft/weft.abi3.so",
+    "nativeModuleSha256": "47d388f2d908f897f9fc9005fc6ae082081782d77d35b24c27de0d615565d98d"
+  },
+  "parity": {
+    "rust": "passed",
+    "installedPython": "passed",
+    "chromiumWasm": "passed"
+  },
+  "functionalQualification": "hosted-installed-wheel-refusal-parity-only",
+  "artifacts": [
+    {
+      "name": "browser-compiler-parity.json",
+      "bytes": 1372,
+      "sha256": "8c69b2b3c79f75a5e83eba21671c9db3d36ced6a3a5182954644bcb72dcec4ce"
+    },
+    {
+      "name": "browser-compiler-receipts.json",
+      "bytes": 4525,
+      "sha256": "5ca3deceedc1e42a27affa825d19615fe351c4876898501d9072a625b04e4dd4"
+    },
+    {
+      "name": "compiler-cases.json",
+      "bytes": 24883,
+      "sha256": "a6f669b4dd8282628e46c76e54683e953b66127c7e015131b445bae9123f4951"
+    },
+    {
+      "name": "compiler-reports.json",
+      "bytes": 2852,
+      "sha256": "26cdc9e854b8e3b4dc057976984e2702746a5b52dd60b139e5425d107980d453"
+    },
+    {
+      "name": "compiler-roster.json",
+      "bytes": 878,
+      "sha256": "6ad5c99438a3f7ab17fe0abbf52ef5cadede7bbf5052929d1b94e96ffdb25ec6"
+    },
+    {
+      "name": "packaging-macos-arm64.json",
+      "bytes": 671,
+      "sha256": "385039c41096df9ce814f1f29c488f3e1f3453545b9621fbda42eb30eadb98a0"
+    },
+    {
+      "name": "python-compiler-parity.json",
+      "bytes": 3651,
+      "sha256": "57cb2aadd6ad5075215dd5bfe881d69c7c796960e441cabb6540fb5f88cc6625"
+    },
+    {
+      "name": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl",
+      "bytes": 11179376,
+      "sha256": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9"
+    },
+    {
+      "name": "web/weft_wasm.d.ts",
+      "bytes": 2746,
+      "sha256": "7e314e9d48b18f365bbea3bb9c544222a8ce22605466f9b3228f6c43b2a44c05"
+    },
+    {
+      "name": "web/weft_wasm.js",
+      "bytes": 12099,
+      "sha256": "418b69a33767b66971c69088c63fd5cb399b8c0dcfefa67ab819c633163eaa9e"
+    },
+    {
+      "name": "web/weft_wasm_bg.wasm",
+      "bytes": 10047275,
+      "sha256": "e76c1d20ab458204e11c521072618cc8640feea894a543cf4bbcf891420dcb04"
+    },
+    {
+      "name": "web/weft_wasm_bg.wasm.d.ts",
+      "bytes": 1103,
+      "sha256": "6af914e7bd1b96975cb91ab081b2178e7957addaa3b3e9422825b9159c935a07"
+    }
+  ]
+}

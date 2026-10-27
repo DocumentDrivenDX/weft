@@ -1,0 +1,20 @@
+{
+  "profile": "nine-frozen-refusal-responses/1",
+  "cases": [
+    "original-sales-join-truss.postgresql",
+    "original-empty-global-truss.postgresql",
+    "original-empty-grouped-truss.postgresql",
+    "original-sales-join-ashlar.databricks",
+    "original-empty-global-ashlar.databricks",
+    "original-empty-grouped-ashlar.databricks",
+    "original-string-exact-0",
+    "original-string-exact-1",
+    "original-string-exact-2"
+  ],
+  "corpus": "tests/compile/fixtures/cases.json",
+  "corpusSha256": "d0fe7b7592ab21d105cbf4e2a3f68e22e97a77e507c70395daa35dd899dd7851",
+  "selectedCasesSha256": "a6f669b4dd8282628e46c76e54683e953b66127c7e015131b445bae9123f4951",
+  "expected": "exact Rust comparator response bytes; installed Python wheel and Chromium must match all nine ordered refusal responses",
+  "positiveQueryQualification": false,
+  "nativeDatabaseExecution": false
+}

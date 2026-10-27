@@ -1,0 +1,36 @@
+{
+  "schema": "weft-release-assets/1",
+  "tag": "v0.4.55",
+  "version": "0.4.55",
+  "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "metadataCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "status": "verified-before-publication",
+  "expectedWheelCount": 3,
+  "wheels": {
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "f50a42a0a8c9e7b07e3eb40ad819d0964792e9d32c2de42675b22fcc6035a3ce",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+    "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9"
+  },
+  "assetSha256": {
+    "SHA256SUMS": "2d843900b6af87e6510c839475308eb7cb9a1c79271c653a6189bdc9198d4607",
+    "browser-compiler-parity-0.4.55.json": "8c69b2b3c79f75a5e83eba21671c9db3d36ced6a3a5182954644bcb72dcec4ce",
+    "browser-compiler-receipts-0.4.55.json": "5ca3deceedc1e42a27affa825d19615fe351c4876898501d9072a625b04e4dd4",
+    "compiler-cases-0.4.55.json": "a6f669b4dd8282628e46c76e54683e953b66127c7e015131b445bae9123f4951",
+    "compiler-roster-0.4.55.json": "6ad5c99438a3f7ab17fe0abbf52ef5cadede7bbf5052929d1b94e96ffdb25ec6",
+    "mac-artifact-verification-0.4.55.json": "d3bc6cf449cf0ee4e560ab6f6543e00cb4d2474d6dc80c7add42df9538673ed7",
+    "mac-hosted-producer-receipt-0.4.55.json": "ec3ac93db99573630c62b67a0e30250ede3f96810d881a74855172008e00c793",
+    "mac-runner-preflight-0.4.55.json": "e792c28b06398f4bf0b4f3ce59e6a681d690d28dcb4e1b9859f863e8f3d34dac",
+    "mac-tool-binary-sha256-0.4.55.txt": "d5fc869d0275dc26694de5cbcf37f1ceb3f05bf3b8ca299b47d67a76cd1578bc",
+    "packaging-aarch64-unknown-linux-gnu.json": "9273d8aa41669a2e912e8b0bd8c09990372839f758b37a75a4ea3fbd9e3dab2f",
+    "packaging-macos-arm64-0.4.55.json": "385039c41096df9ce814f1f29c488f3e1f3453545b9621fbda42eb30eadb98a0",
+    "packaging-x86_64-unknown-linux-gnu.json": "45a5a82d4249716bd6c4b1485091a63028c23e7ed45e8f1250d2595b020d992a",
+    "python-compiler-parity-0.4.55.json": "57cb2aadd6ad5075215dd5bfe881d69c7c796960e441cabb6540fb5f88cc6625",
+    "release-pins.json": "4087158df00691e7383707bb186708683fa17ae049f5b28b5a7d9e1555081c7b",
+    "rust-compiler-reports-0.4.55.json": "26cdc9e854b8e3b4dc057976984e2702746a5b52dd60b139e5425d107980d453",
+    "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "f50a42a0a8c9e7b07e3eb40ad819d0964792e9d32c2de42675b22fcc6035a3ce",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+    "v0.4.55.md": "7e455496a2040a2a7fa61e3154b7a827baadbbe70388a2519bac7d35542fe97b"
+  },
+  "limits": "Three exact wheel packages; Mac Rust/installed-Python/Chromium parity covers nine frozen refusal responses only. Linux is packaging-only. No positive-query or native PostgreSQL execution is claimed."
+}

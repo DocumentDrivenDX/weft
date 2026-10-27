@@ -1,0 +1,84 @@
+{
+  "schema": "weft-hosted-release-pins/1",
+  "tag": "v0.4.55",
+  "metadataCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "distribution": "umf-weft",
+  "version": "0.4.55",
+  "releaseWorkflowRunId": 40424462909,
+  "packagingRunId": 40422686820,
+  "macosProducerRunId": 40422688981,
+  "macosProducerArtifactId": 12698329340,
+  "macosProducerArtifactZipSha256": "f3fdadea3f677de5861e003e6e55ad4d3e7ccc4fa713b275b5aaaff9efe4eaed",
+  "macosCompilerProfile": "nine-frozen-refusal-responses-rust-python-chromium/1",
+  "macosProducerReceiptSha256": "ec3ac93db99573630c62b67a0e30250ede3f96810d881a74855172008e00c793",
+  "macosRunnerPreflightSha256": "e792c28b06398f4bf0b4f3ce59e6a681d690d28dcb4e1b9859f863e8f3d34dac",
+  "macosToolBinaryHashesSha256": "d5fc869d0275dc26694de5cbcf37f1ceb3f05bf3b8ca299b47d67a76cd1578bc",
+  "maturinFeatures": [
+    "ashlar-sdk-ordered-page-candidate",
+    "raw-postgresql-reads",
+    "ashlar-databricks-paths-keys",
+    "ashlar-databricks-qualified",
+    "truss-postgresql-pg18",
+    "current-postgresql-scalar-candidate",
+    "current-databricks-scalar-candidate",
+    "current-query-refinement-candidate",
+    "current-presence-graph-requirements-candidate"
+  ],
+  "maturinFeaturesSha256": "7030cfc37e4325d4c33e5e33d7b5233f4597ec4d9942066a1c7f7a6725292364",
+  "wheelPackaging": [
+    {
+      "status": "passed",
+      "version": "0.4.55",
+      "wheel": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "wheelSha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+      "nativeModuleSha256": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760",
+      "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated",
+      "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+      "distribution": "umf-weft",
+      "target": "x86_64-unknown-linux-gnu",
+      "nativeModule": "weft/weft.abi3.so"
+    },
+    {
+      "status": "passed",
+      "version": "0.4.55",
+      "wheel": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "wheelSha256": "f50a42a0a8c9e7b07e3eb40ad819d0964792e9d32c2de42675b22fcc6035a3ce",
+      "nativeModuleSha256": "a38cd76f09161feba8fc9b541fa3a0ca57c0b247daad248e0cc480d0a7f15eb8",
+      "python": "3.11.17 (main, Oct  1 2026, 14:33:38) [GCC 13.3.0]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated",
+      "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+      "distribution": "umf-weft",
+      "target": "aarch64-unknown-linux-gnu",
+      "nativeModule": "weft/weft.abi3.so"
+    },
+    {
+      "status": "passed",
+      "version": "0.4.55",
+      "wheel": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl",
+      "wheelSha256": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+      "nativeModuleSha256": "47d388f2d908f897f9fc9005fc6ae082081782d77d35b24c27de0d615565d98d",
+      "python": "3.12.10 (v3.12.10:0cc81280367, Apr  8 2025, 08:46:59) [Clang 13.0.0 (clang-1300.0.29.30)]",
+      "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated",
+      "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+      "distribution": "umf-weft",
+      "target": "aarch64-apple-darwin",
+      "nativeModule": "weft/weft.abi3.so"
+    }
+  ],
+  "wheelSha256": {
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "f50a42a0a8c9e7b07e3eb40ad819d0964792e9d32c2de42675b22fcc6035a3ce",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+    "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9"
+  },
+  "nativeModuleSha256": {
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "a38cd76f09161feba8fc9b541fa3a0ca57c0b247daad248e0cc480d0a7f15eb8",
+    "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl": "47d388f2d908f897f9fc9005fc6ae082081782d77d35b24c27de0d615565d98d"
+  },
+  "qualification": "Three exact wheel packages; Mac Rust/installed-Python/Chromium parity covers nine frozen refusal responses only. Linux is packaging-only. No positive-query or native PostgreSQL execution is claimed.",
+  "commit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "workflowCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "workflowRunId": 40424462909
+}

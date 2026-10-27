@@ -1,0 +1,322 @@
+{
+  "schema": "weft-public-distribution-verification/1",
+  "status": "passed",
+  "source": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "tag": "v0.4.55",
+  "release_id": 424900540,
+  "immutable": true,
+  "published_at": "2026-10-27T00:09:24Z",
+  "release_assets": [
+    {
+      "id": 679900140,
+      "name": "browser-compiler-parity-0.4.55.json",
+      "size": 1372,
+      "digest": "sha256:8c69b2b3c79f75a5e83eba21671c9db3d36ced6a3a5182954644bcb72dcec4ce"
+    },
+    {
+      "id": 679900133,
+      "name": "browser-compiler-receipts-0.4.55.json",
+      "size": 4525,
+      "digest": "sha256:5ca3deceedc1e42a27affa825d19615fe351c4876898501d9072a625b04e4dd4"
+    },
+    {
+      "id": 679900139,
+      "name": "compiler-cases-0.4.55.json",
+      "size": 24883,
+      "digest": "sha256:a6f669b4dd8282628e46c76e54683e953b66127c7e015131b445bae9123f4951"
+    },
+    {
+      "id": 679900136,
+      "name": "compiler-roster-0.4.55.json",
+      "size": 878,
+      "digest": "sha256:6ad5c99438a3f7ab17fe0abbf52ef5cadede7bbf5052929d1b94e96ffdb25ec6"
+    },
+    {
+      "id": 679900150,
+      "name": "mac-artifact-verification-0.4.55.json",
+      "size": 1208,
+      "digest": "sha256:d3bc6cf449cf0ee4e560ab6f6543e00cb4d2474d6dc80c7add42df9538673ed7"
+    },
+    {
+      "id": 679900155,
+      "name": "mac-hosted-producer-receipt-0.4.55.json",
+      "size": 3830,
+      "digest": "sha256:ec3ac93db99573630c62b67a0e30250ede3f96810d881a74855172008e00c793"
+    },
+    {
+      "id": 679900156,
+      "name": "mac-runner-preflight-0.4.55.json",
+      "size": 1566,
+      "digest": "sha256:e792c28b06398f4bf0b4f3ce59e6a681d690d28dcb4e1b9859f863e8f3d34dac"
+    },
+    {
+      "id": 679900158,
+      "name": "mac-tool-binary-sha256-0.4.55.txt",
+      "size": 1069,
+      "digest": "sha256:d5fc869d0275dc26694de5cbcf37f1ceb3f05bf3b8ca299b47d67a76cd1578bc"
+    },
+    {
+      "id": 679900167,
+      "name": "packaging-aarch64-unknown-linux-gnu.json",
+      "size": 664,
+      "digest": "sha256:9273d8aa41669a2e912e8b0bd8c09990372839f758b37a75a4ea3fbd9e3dab2f"
+    },
+    {
+      "id": 679900168,
+      "name": "packaging-macos-arm64-0.4.55.json",
+      "size": 671,
+      "digest": "sha256:385039c41096df9ce814f1f29c488f3e1f3453545b9621fbda42eb30eadb98a0"
+    },
+    {
+      "id": 679900176,
+      "name": "packaging-x86_64-unknown-linux-gnu.json",
+      "size": 661,
+      "digest": "sha256:45a5a82d4249716bd6c4b1485091a63028c23e7ed45e8f1250d2595b020d992a"
+    },
+    {
+      "id": 679900177,
+      "name": "python-compiler-parity-0.4.55.json",
+      "size": 3651,
+      "digest": "sha256:57cb2aadd6ad5075215dd5bfe881d69c7c796960e441cabb6540fb5f88cc6625"
+    },
+    {
+      "id": 679900183,
+      "name": "release-assets-0.4.55.json",
+      "size": 3074,
+      "digest": "sha256:1c2461b4a3182c65a653344587aff4a15545883ebb32415f9a835b4d28ee7e21"
+    },
+    {
+      "id": 679900186,
+      "name": "release-pins.json",
+      "size": 4803,
+      "digest": "sha256:4087158df00691e7383707bb186708683fa17ae049f5b28b5a7d9e1555081c7b"
+    },
+    {
+      "id": 679900187,
+      "name": "rust-compiler-reports-0.4.55.json",
+      "size": 2852,
+      "digest": "sha256:26cdc9e854b8e3b4dc057976984e2702746a5b52dd60b139e5425d107980d453"
+    },
+    {
+      "id": 679900135,
+      "name": "SHA256SUMS",
+      "size": 394,
+      "digest": "sha256:2d843900b6af87e6510c839475308eb7cb9a1c79271c653a6189bdc9198d4607"
+    },
+    {
+      "id": 679900195,
+      "name": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl",
+      "size": 11179376,
+      "digest": "sha256:b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9"
+    },
+    {
+      "id": 679900193,
+      "name": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "size": 13137324,
+      "digest": "sha256:f50a42a0a8c9e7b07e3eb40ad819d0964792e9d32c2de42675b22fcc6035a3ce"
+    },
+    {
+      "id": 679900208,
+      "name": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "size": 14347375,
+      "digest": "sha256:b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85"
+    },
+    {
+      "id": 679900217,
+      "name": "v0.4.55.md",
+      "size": 3727,
+      "digest": "sha256:7e455496a2040a2a7fa61e3154b7a827baadbbe70388a2519bac7d35542fe97b"
+    }
+  ],
+  "artifact_apis": {
+    "40422686820": [
+      {
+        "id": 12699456005,
+        "name": "wheels-x86_64-unknown-linux-gnu",
+        "digest": "sha256:1d28674f9d91abd3647d61f8ab6632c63ff5211ec26539d859ae3f2cc1a760b1",
+        "size_in_bytes": 14279355
+      },
+      {
+        "id": 12698821047,
+        "name": "wheels-aarch64-unknown-linux-gnu",
+        "digest": "sha256:f22af8fc0995826568ff7b87b0758727a6133b0c806ee9c1fdf4a8aa4c1838dd",
+        "size_in_bytes": 13053673
+      }
+    ],
+    "40422688981": [
+      {
+        "id": 12698329340,
+        "name": "weft-hosted-0.4.55-macos-arm64-ea0fef0209aaf8e08ef165b6afe00b408873354f",
+        "digest": "sha256:f3fdadea3f677de5861e003e6e55ad4d3e7ccc4fa713b275b5aaaff9efe4eaed",
+        "size_in_bytes": 13849957
+      }
+    ],
+    "40424462909": [
+      {
+        "id": 12698468006,
+        "name": "weft-pypi-intent-40424462909",
+        "digest": "sha256:4fcfee6f15f6452d5f26d1a6f04bcc906529c5f6945385b0f7b4acd7db45fc97",
+        "size_in_bytes": 3909
+      }
+    ],
+    "40424569422": [
+      {
+        "id": 12698797974,
+        "name": "weft-pypi-publication-0.4.55",
+        "digest": "sha256:8d80308f52a0f947b9021bb7c1e0b3540b25f87863cfc7e1431ce02debb44e69",
+        "size_in_bytes": 1248
+      },
+      {
+        "id": 12698633677,
+        "name": "weft-pypi-consumer-0.4.55",
+        "digest": "sha256:5b8686df6861a297405e24cd9f04bdc806b39b5cf8de230b9ec13666baebd85b",
+        "size_in_bytes": 276
+      },
+      {
+        "id": 12698274872,
+        "name": "weft-pypi-release-0.4.55",
+        "digest": "sha256:298d259218dc0a0a601415bac6ff1459d250d44cefe88ef0876a2f657111ae90",
+        "size_in_bytes": 38463876
+      }
+    ]
+  },
+  "retained_files": {
+    "source-receipt.json": {
+      "sha256": "7c18fa33e7b7a7e1b561a6668bfc80ba83067939660d67f541819b21b43c4554",
+      "bytes": 1005,
+      "origin": "weft-pypi-publication-0.4.55/source-receipt.json"
+    },
+    "publication-receipt.json": {
+      "sha256": "29a0d6bca43545eae4700b8f600fcd764d53b27e612a70bf8251d2f92fbf4d65",
+      "bytes": 767,
+      "origin": "weft-pypi-publication-0.4.55/publication-receipt.json"
+    },
+    "consumer-receipt.json": {
+      "sha256": "d23f66adcca181a80a16700bdb47732821f89fd48e8b906c7d6e33c7d8139ea2",
+      "bytes": 166,
+      "origin": "weft-pypi-consumer-0.4.55/consumer-receipt.json"
+    },
+    "verified-summary.json": {
+      "sha256": "acfc7f107cd4b81262a45937ff214bebdc8095f9b1c7ffed1c7815bb2b3f4886",
+      "bytes": 1561,
+      "origin": "verified-summary.json"
+    },
+    "pypi-registry.json": {
+      "sha256": "dc0de662168c77935fe263d4c92112191f7533b9b0d6df5b776591c923a4290c",
+      "bytes": 4878,
+      "origin": "pypi-registry.json"
+    },
+    "tag-ref-api.json": {
+      "sha256": "72db7c02e1a674304f6c61722a4f5c65a27960684a72f77fdc5ca5ebb66d7f4e",
+      "bytes": 386,
+      "origin": "tag-ref-api.json"
+    },
+    "release-api-assets.json": {
+      "sha256": "4a1eaa82776d7a7bded5a661c3a73f8f4cc3babf11322748ebf55f8e7747938c",
+      "bytes": 7368,
+      "origin": "weft-pypi-intent-40424462909/release-api-assets.json"
+    },
+    "compiler-roster-0.4.55.json": {
+      "sha256": "6ad5c99438a3f7ab17fe0abbf52ef5cadede7bbf5052929d1b94e96ffdb25ec6",
+      "bytes": 878,
+      "origin": "release-assets/compiler-roster-0.4.55.json"
+    },
+    "browser-compiler-receipts-0.4.55.json": {
+      "sha256": "5ca3deceedc1e42a27affa825d19615fe351c4876898501d9072a625b04e4dd4",
+      "bytes": 4525,
+      "origin": "release-assets/browser-compiler-receipts-0.4.55.json"
+    },
+    "packaging-aarch64-unknown-linux-gnu.json": {
+      "sha256": "9273d8aa41669a2e912e8b0bd8c09990372839f758b37a75a4ea3fbd9e3dab2f",
+      "bytes": 664,
+      "origin": "release-assets/packaging-aarch64-unknown-linux-gnu.json"
+    },
+    "compiler-cases-0.4.55.json": {
+      "sha256": "a6f669b4dd8282628e46c76e54683e953b66127c7e015131b445bae9123f4951",
+      "bytes": 24883,
+      "origin": "release-assets/compiler-cases-0.4.55.json"
+    },
+    "python-compiler-parity-0.4.55.json": {
+      "sha256": "57cb2aadd6ad5075215dd5bfe881d69c7c796960e441cabb6540fb5f88cc6625",
+      "bytes": 3651,
+      "origin": "release-assets/python-compiler-parity-0.4.55.json"
+    },
+    "rust-compiler-reports-0.4.55.json": {
+      "sha256": "26cdc9e854b8e3b4dc057976984e2702746a5b52dd60b139e5425d107980d453",
+      "bytes": 2852,
+      "origin": "release-assets/rust-compiler-reports-0.4.55.json"
+    },
+    "mac-runner-preflight-0.4.55.json": {
+      "sha256": "e792c28b06398f4bf0b4f3ce59e6a681d690d28dcb4e1b9859f863e8f3d34dac",
+      "bytes": 1566,
+      "origin": "release-assets/mac-runner-preflight-0.4.55.json"
+    },
+    "release-pins.json": {
+      "sha256": "4087158df00691e7383707bb186708683fa17ae049f5b28b5a7d9e1555081c7b",
+      "bytes": 4803,
+      "origin": "release-assets/release-pins.json"
+    },
+    "packaging-x86_64-unknown-linux-gnu.json": {
+      "sha256": "45a5a82d4249716bd6c4b1485091a63028c23e7ed45e8f1250d2595b020d992a",
+      "bytes": 661,
+      "origin": "release-assets/packaging-x86_64-unknown-linux-gnu.json"
+    },
+    "mac-hosted-producer-receipt-0.4.55.json": {
+      "sha256": "ec3ac93db99573630c62b67a0e30250ede3f96810d881a74855172008e00c793",
+      "bytes": 3830,
+      "origin": "release-assets/mac-hosted-producer-receipt-0.4.55.json"
+    },
+    "mac-artifact-verification-0.4.55.json": {
+      "sha256": "d3bc6cf449cf0ee4e560ab6f6543e00cb4d2474d6dc80c7add42df9538673ed7",
+      "bytes": 1208,
+      "origin": "release-assets/mac-artifact-verification-0.4.55.json"
+    },
+    "mac-tool-binary-sha256-0.4.55.txt": {
+      "sha256": "d5fc869d0275dc26694de5cbcf37f1ceb3f05bf3b8ca299b47d67a76cd1578bc",
+      "bytes": 1069,
+      "origin": "release-assets/mac-tool-binary-sha256-0.4.55.txt"
+    },
+    "SHA256SUMS": {
+      "sha256": "2d843900b6af87e6510c839475308eb7cb9a1c79271c653a6189bdc9198d4607",
+      "bytes": 394,
+      "origin": "release-assets/SHA256SUMS"
+    },
+    "packaging-macos-arm64-0.4.55.json": {
+      "sha256": "385039c41096df9ce814f1f29c488f3e1f3453545b9621fbda42eb30eadb98a0",
+      "bytes": 671,
+      "origin": "release-assets/packaging-macos-arm64-0.4.55.json"
+    },
+    "browser-compiler-parity-0.4.55.json": {
+      "sha256": "8c69b2b3c79f75a5e83eba21671c9db3d36ced6a3a5182954644bcb72dcec4ce",
+      "bytes": 1372,
+      "origin": "release-assets/browser-compiler-parity-0.4.55.json"
+    },
+    "release-assets-0.4.55.json": {
+      "sha256": "1c2461b4a3182c65a653344587aff4a15545883ebb32415f9a835b4d28ee7e21",
+      "bytes": 3074,
+      "origin": "release-assets/release-assets-0.4.55.json"
+    },
+    "artifacts-40422686820.json": {
+      "sha256": "8bd8f071f788a1611a844f76cf4cf240535a991a2939b101772eb8beb5a21f6b",
+      "bytes": 1779,
+      "origin": "artifacts-40422686820.json"
+    },
+    "artifacts-40422688981.json": {
+      "sha256": "33b430aa3107abaf2bdf5ede74c085a224c86a64944cf8092e9cbe0014f01667",
+      "bytes": 951,
+      "origin": "artifacts-40422688981.json"
+    },
+    "artifacts-40424462909.json": {
+      "sha256": "af336b9dc77f14b6c334f24ae4a7b2c28ff66d264f7cd38e92456a68754781a1",
+      "bytes": 904,
+      "origin": "artifacts-40424462909.json"
+    },
+    "artifacts-40424569422.json": {
+      "sha256": "b5a5e8add9155f7196e369a970a854a5af9a26bbea7e32985c65c85beb84802a",
+      "bytes": 2620,
+      "origin": "artifacts-40424569422.json"
+    }
+  },
+  "verification": "All four successful workflow runs checked; each of seven Actions artifact ZIP SHA-256 digests matched its API record before reading members. Raw receipts equal ZIP members. All twenty public GitHub assets matched API SHA-256; manifest/pins matched every wheel and embedded native module. The three PyPI-served archive bytes equaled the qualified GitHub archives. Actual OIDC upload and fresh public Ubuntu consumer passed.",
+  "limits": "Mac installed packaging and nine frozen refusal-response Rust/Python/Chromium comparisons; Linux packaging only; no sdist. Consumer admission and broad compiler conformance remain separate."
+}

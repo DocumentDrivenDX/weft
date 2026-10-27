@@ -1,0 +1,10 @@
+{
+  "node_id": "REF_kwDOU9Mt-rFyZWZzL3RhZ3MvdjAuNC41NQ",
+  "object": {
+    "sha": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+    "type": "commit",
+    "url": "https://api.github.com/repos/DocumentDrivenDX/weft/git/commits/ea0fef0209aaf8e08ef165b6afe00b408873354f"
+  },
+  "ref": "refs/tags/v0.4.55",
+  "url": "https://api.github.com/repos/DocumentDrivenDX/weft/git/refs/tags/v0.4.55"
+}
