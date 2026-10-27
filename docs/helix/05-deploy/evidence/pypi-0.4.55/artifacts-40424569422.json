@@ -1,0 +1,65 @@
+{
+  "artifacts": [
+    {
+      "archive_download_url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698797974/zip",
+      "created_at": "2026-10-27T00:11:25Z",
+      "digest": "sha256:8d80308f52a0f947b9021bb7c1e0b3540b25f87863cfc7e1431ce02debb44e69",
+      "expired": false,
+      "expires_at": "2027-01-25T00:09:30Z",
+      "id": 12698797974,
+      "name": "weft-pypi-publication-0.4.55",
+      "node_id": "MDg6QXJ0aWZhY3QxMjY5ODc5Nzk3NA==",
+      "size_in_bytes": 1248,
+      "updated_at": "2026-10-27T00:11:25Z",
+      "url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698797974",
+      "workflow_run": {
+        "head_branch": "main",
+        "head_repository_id": 1406348794,
+        "head_sha": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+        "id": 40424569422,
+        "repository_id": 1406348794
+      }
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698633677/zip",
+      "created_at": "2026-10-27T00:15:59Z",
+      "digest": "sha256:5b8686df6861a297405e24cd9f04bdc806b39b5cf8de230b9ec13666baebd85b",
+      "expired": false,
+      "expires_at": "2027-01-25T00:09:30Z",
+      "id": 12698633677,
+      "name": "weft-pypi-consumer-0.4.55",
+      "node_id": "MDg6QXJ0aWZhY3QxMjY5ODYzMzY3Nw==",
+      "size_in_bytes": 276,
+      "updated_at": "2026-10-27T00:15:59Z",
+      "url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698633677",
+      "workflow_run": {
+        "head_branch": "main",
+        "head_repository_id": 1406348794,
+        "head_sha": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+        "id": 40424569422,
+        "repository_id": 1406348794
+      }
+    },
+    {
+      "archive_download_url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698274872/zip",
+      "created_at": "2026-10-27T00:10:00Z",
+      "digest": "sha256:298d259218dc0a0a601415bac6ff1459d250d44cefe88ef0876a2f657111ae90",
+      "expired": false,
+      "expires_at": "2027-01-25T00:09:30Z",
+      "id": 12698274872,
+      "name": "weft-pypi-release-0.4.55",
+      "node_id": "MDg6QXJ0aWZhY3QxMjY5ODI3NDg3Mg==",
+      "size_in_bytes": 38463876,
+      "updated_at": "2026-10-27T00:10:00Z",
+      "url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698274872",
+      "workflow_run": {
+        "head_branch": "main",
+        "head_repository_id": 1406348794,
+        "head_sha": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+        "id": 40424569422,
+        "repository_id": 1406348794
+      }
+    }
+  ],
+  "total_count": 3
+}

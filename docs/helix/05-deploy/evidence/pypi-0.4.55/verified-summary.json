@@ -1,0 +1,28 @@
+{
+  "all_public_bytes_verified": true,
+  "distribution": "umf-weft",
+  "fresh_public_ubuntu_consumer": true,
+  "immutable": true,
+  "limits": "Mac installed packaging plus nine frozen refusal-response Rust/Python/Chromium comparisons; Linux packaging only. No positive-query or native PostgreSQL claim. Consumer admission remains separate.",
+  "linux_producer": 40422686820,
+  "macos_producer": 40422688981,
+  "native_modules": {
+    "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl": "47d388f2d908f897f9fc9005fc6ae082081782d77d35b24c27de0d615565d98d",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "a38cd76f09161feba8fc9b541fa3a0ca57c0b247daad248e0cc480d0a7f15eb8",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760"
+  },
+  "oidc_upload": true,
+  "publisher_run": 40424569422,
+  "release_id": 424900540,
+  "release_run": 40424462909,
+  "sdist": "none; not produced",
+  "source": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "status": "passed",
+  "tag": "v0.4.55",
+  "version": "0.4.55",
+  "wheels": {
+    "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "f50a42a0a8c9e7b07e3eb40ad819d0964792e9d32c2de42675b22fcc6035a3ce",
+    "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85"
+  }
+}

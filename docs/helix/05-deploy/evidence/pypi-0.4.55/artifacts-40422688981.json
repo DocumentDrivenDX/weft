@@ -1,0 +1,25 @@
+{
+  "artifacts": [
+    {
+      "archive_download_url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698329340/zip",
+      "created_at": "2026-10-27T00:07:10Z",
+      "digest": "sha256:f3fdadea3f677de5861e003e6e55ad4d3e7ccc4fa713b275b5aaaff9efe4eaed",
+      "expired": false,
+      "expires_at": "2027-01-24T23:52:27Z",
+      "id": 12698329340,
+      "name": "weft-hosted-0.4.55-macos-arm64-ea0fef0209aaf8e08ef165b6afe00b408873354f",
+      "node_id": "MDg6QXJ0aWZhY3QxMjY5ODMyOTM0MA==",
+      "size_in_bytes": 13849957,
+      "updated_at": "2026-10-27T00:07:10Z",
+      "url": "https://api.github.com/repos/DocumentDrivenDX/weft/actions/artifacts/12698329340",
+      "workflow_run": {
+        "head_branch": "main",
+        "head_repository_id": 1406348794,
+        "head_sha": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+        "id": 40422688981,
+        "repository_id": 1406348794
+      }
+    }
+  ],
+  "total_count": 1
+}

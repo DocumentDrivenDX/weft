@@ -1,0 +1,22 @@
+{
+  "schema": "weft-hosted-macos-artifact-verification/1",
+  "status": "passed",
+  "producerRunId": 40422688981,
+  "producerRunAttempt": 1,
+  "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "workflowCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "workflowPath": ".github/workflows/release-hosted-macos.yml",
+  "artifactId": 12698329340,
+  "artifactName": "weft-hosted-0.4.55-macos-arm64-ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "artifactZipSha256": "f3fdadea3f677de5861e003e6e55ad4d3e7ccc4fa713b275b5aaaff9efe4eaed",
+  "artifactBytes": 13849957,
+  "wheel": {
+    "name": "umf_weft-0.4.55-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "b411545189ed573dadd4fd121e00665391f700ebe37e4a5e4ce139a97c03d7e9",
+    "nativeModule": "weft/weft.abi3.so",
+    "nativeModuleSha256": "47d388f2d908f897f9fc9005fc6ae082081782d77d35b24c27de0d615565d98d"
+  },
+  "nativeModuleSha256": "47d388f2d908f897f9fc9005fc6ae082081782d77d35b24c27de0d615565d98d",
+  "compilerProfile": "nine-frozen-refusal-responses-rust-python-chromium/1",
+  "scope": "exact hosted ARM64 wheel packaging plus nine frozen refusal-response Rust/Python/Chromium parity vectors; no positive-query or native PostgreSQL execution"
+}

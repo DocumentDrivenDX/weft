@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "version": "0.4.55",
+  "wheel": "umf_weft-0.4.55-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+  "wheelSha256": "b34ca17fa37412afa7b8e8bd86aac8ee67a3c895a9b253221e1d582b39073a85",
+  "nativeModuleSha256": "2f39a3e2bf356922a44fef0e88ffaae155d6d850e66d7f7e35d9209cd85c3760",
+  "python": "3.11.17 (main, Oct  1 2026, 14:32:31) [GCC 13.3.0]",
+  "scope": "exact installed archive, RECORD, metadata, ABI tag and notices; native semantics separately gated",
+  "sourceCommit": "ea0fef0209aaf8e08ef165b6afe00b408873354f",
+  "distribution": "umf-weft",
+  "target": "x86_64-unknown-linux-gnu",
+  "nativeModule": "weft/weft.abi3.so"
+}

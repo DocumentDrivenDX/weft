@@ -4,13 +4,16 @@ Qualified registry execution records are retained under `evidence/`; each claim 
 
 ## Public PyPI distribution
 
-The next distribution-name cohort is `umf-weft==0.4.55`; it retains the
-`weft` Python import and compiler protocols. PyPI returned 404 for that exact
-version and the GitHub tag and release were absent at the 2026-10-26 check.
-Those point-in-time checks do not qualify the new archive. The `weft-sql`
-0.4.51 and 0.4.54 receipts below remain historical proof for their original
-files; the renamed cohort requires its own complete artifact and installed
-consumer qualification.
+`umf-weft==0.4.55` is published on public PyPI, retaining the `weft` Python
+import and compiler protocols. Its fresh Linux x86_64, Linux ARM64 and macOS
+ARM64 wheels passed the bounded hosted release profile, immutable GitHub
+promotion, actual OIDC publication, exact public-byte verification and fresh
+Ubuntu public-index installation/import. See the
+[release scope](releases/v0.4.55.md) and
+[raw distribution proof](evidence/pypi-0.4.55/README.md). Mac compiler parity
+covers nine frozen refusal responses; Linux qualification is packaging-only.
+Consumer admission and broader compiler conformance remain separate. The
+`weft-sql` receipts below retain their original file identities and scope.
 
 Owner direction on 2026-10-26 requires the qualified Python distribution on
 public PyPI, with future released versions published automatically. The
