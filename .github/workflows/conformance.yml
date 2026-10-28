@@ -1,9 +1,6 @@
 name: Compiler conformance
 
 on:
-  pull_request:
-  push:
-    branches: [main, codex/reliability-review]
   workflow_dispatch:
 
 permissions:

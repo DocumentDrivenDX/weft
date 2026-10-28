@@ -1,0 +1,26 @@
+name: Pull request source checks
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: pr-source-checks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  routine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - run: bun install --frozen-lockfile
+      - run: bun run specs:check
+      - run: bun test tests/distribution-manifest/schema.test.ts
+      - run: python3 scripts/checks/check-module-boundaries.py
+      - run: python3 tests/module-boundaries/check.py
+      - run: python3 -m unittest discover -s tests/distribution-source-metadata -q
