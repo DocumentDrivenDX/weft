@@ -1,0 +1,19 @@
+name: Pull request source checks
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: pr-source-checks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  routine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m unittest discover -s tests/distribution-source-metadata -q
+      - run: python3 -m compileall -q scripts/distribution

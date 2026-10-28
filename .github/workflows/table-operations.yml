@@ -2,13 +2,9 @@
 name: Declared table operation candidate
 on:
   push:
-    branches-ignore:
-      - codex/weft-main-aggregate-qualification
-      - codex/weft-main-aggregate-integration
-      - codex/weft-owned-surface-diagnostic
-      - codex/weft-0.4.54-release-prep
     tags: ["**"]
-  pull_request:
+  workflow_dispatch:
+
 permissions:
   contents: read
 jobs:
