@@ -1307,9 +1307,9 @@ class FullPacket:
                 empty_sha = sha(b"")
                 processes = []
                 for index in range(40):
-                    if index < 20:
+                    if index < 19:
                         phase = "source-command"
-                    elif index == 20:
+                    elif index == 19:
                         phase = "release-metadata"
                     elif index == 37:
                         phase = "container-list-before-remove"
@@ -1719,7 +1719,7 @@ class FullPacket:
                 inspection_source = roots["armBuild"] / "wheel-inspection.json"
                 inspection_copy = self.root / "wheel-inspection.json"
                 inspection_copy.write_bytes(inspection_source.read_bytes())
-                arm_gate = {"profile": "umf.g03-final-baseline-build-static/1",
+                arm_gate = {"profile": gate_profiles["linux-aarch64-build-static"][0],
                     "status": "LOCAL_FINAL_BASELINE_BUILD_STATIC_PASS",
                     "source": {"head": p_commit, "tree": p_tree},
                     "candidateWheel": {"memberCount": 9,
@@ -2038,6 +2038,94 @@ class FullPacket:
                      "macBuildOperator", "macAuditOperator", "macCustody", "macSource"):
             shutil.rmtree(self.roots[name], ignore_errors=True)
         packet_path.write_text(json.dumps(packet, sort_keys=True) + "\n")
+
+
+class FinalReceiptShapeTests(unittest.TestCase):
+    def test_native_review_binds_exact_derived_operator_and_campaign_chain(self):
+        phrase = (b"ACCEPTED: the selected Linux311 G03 fourteen-case/nineteen-scenario evidence "
+                  b"conjunction closes through reviewed pure-predicate reanalysis")
+        review = (validator.FINAL_NATIVE_REANALYSIS + "\n").encode("ascii") + phrase + b"\n"
+        self.assertNotIn(validator.FINAL_NATIVE_OPERATOR.encode("ascii"), review)
+        self.assertNotIn(validator.FINAL_NATIVE_CAMPAIGN.encode("ascii"), review)
+        receipt = {"campaignResult": {"sha256": validator.FINAL_NATIVE_CAMPAIGN}}
+        derived = {"originalRun": {
+            "operatorResult": {"sha256": validator.FINAL_NATIVE_OPERATOR},
+            "campaignResult": {"sha256": validator.FINAL_NATIVE_CAMPAIGN}}}
+        with patch.object(validator, "FINAL_NATIVE_REVIEW", sha(review)):
+            validator._validate_native_acceptance_binding(
+                sha(review), review, validator.FINAL_NATIVE_OPERATOR, receipt,
+                validator.FINAL_NATIVE_REANALYSIS, derived)
+            def rejected(label, *, review_raw=review, review_digest=None,
+                         operator_digest=validator.FINAL_NATIVE_OPERATOR, row=receipt,
+                         derived_digest=validator.FINAL_NATIVE_REANALYSIS, derived_row=derived,
+                         expected_review=None):
+                expected_review = expected_review or sha(review_raw)
+                review_digest = review_digest or sha(review_raw)
+                with (self.subTest(case=label),
+                      patch.object(validator, "FINAL_NATIVE_REVIEW", expected_review),
+                      self.assertRaisesRegex(validator.ProfileError,
+                                             "native007 acceptance does not bind")):
+                    validator._validate_native_acceptance_binding(
+                        review_digest, review_raw, operator_digest, row,
+                        derived_digest, derived_row)
+
+            rejected("review pin", review_digest="0" * 64,
+                     expected_review=sha(review))
+            rejected("derived pin", derived_digest="0" * 64)
+            rejected("missing reviewed digest", review_raw=phrase)
+            rejected("missing phrase", review_raw=validator.FINAL_NATIVE_REANALYSIS.encode("ascii"))
+            rejected("measured operator digest", operator_digest="0" * 64)
+            rejected("receipt campaign", row={"campaignResult": {"sha256": "0" * 64}})
+            bad_operator = copy.deepcopy(derived)
+            bad_operator["originalRun"]["operatorResult"]["sha256"] = "0" * 64
+            rejected("operator link", derived_row=bad_operator)
+            bad_campaign = copy.deepcopy(derived)
+            bad_campaign["originalRun"]["campaignResult"]["sha256"] = "0" * 64
+            rejected("campaign link", derived_row=bad_campaign)
+            rejected("malformed operator", derived_row={"originalRun": {
+                "operatorResult": [], "campaignResult": {"sha256": validator.FINAL_NATIVE_CAMPAIGN}}})
+
+    def test_sourceguard_has_exact_19_plus_1_governed_commands_with_deadlines(self):
+        processes = ([{"phase": "source-command", "effectiveDeadlineSeconds": 30.0,
+                       "durationSeconds": 0.01} for _ in range(19)]
+                     + [{"phase": "release-metadata", "effectiveDeadlineSeconds": 30.0,
+                         "durationSeconds": 0.02}]
+                     + [{"phase": "operator-control", "effectiveDeadlineSeconds": 30.0,
+                         "durationSeconds": 0.03} for _ in range(20)])
+        validator._validate_source_process_roster(processes)
+        mutations = []
+        mutations.append(processes[:-1])
+        extra = copy.deepcopy(processes)
+        extra.append({"phase": "source-command", "effectiveDeadlineSeconds": 30.0,
+                      "durationSeconds": 0.01})
+        mutations.append(extra)
+        wrong_phase = copy.deepcopy(processes)
+        wrong_phase[19]["phase"] = "operator-control"
+        mutations.append(wrong_phase)
+        late = copy.deepcopy(processes)
+        late[0]["durationSeconds"] = 30.01
+        mutations.append(late)
+        malformed = copy.deepcopy(processes)
+        malformed[0]["effectiveDeadlineSeconds"] = True
+        mutations.append(malformed)
+        for rows in mutations:
+            with self.assertRaisesRegex(validator.ProfileError,
+                                        "source/package process roster or per-command deadlines differ"):
+                validator._validate_source_process_roster(rows)
+
+    def test_arm_build_gate_uses_exact_static_profile_and_status(self):
+        receipt = {"profile": "umf.g03-final-local-baseline-build-static/1",
+                   "status": "LOCAL_FINAL_BASELINE_BUILD_STATIC_PASS"}
+        validator._validate_gate_profile("linux-aarch64-build-static", receipt,
+                                         validator.ARM_BUILD_RESULT_SHA256)
+        for key, value in (("profile", "umf.g03-final-baseline-build-static/1"),
+                           ("status", "FAIL_OR_UNKNOWN")):
+            changed = dict(receipt)
+            changed[key] = value
+            with self.subTest(field=key), self.assertRaisesRegex(
+                    validator.ProfileError, "linux-aarch64-build-static has wrong actual profile/status"):
+                validator._validate_gate_profile("linux-aarch64-build-static", changed,
+                                                 validator.ARM_BUILD_RESULT_SHA256)
 
 
 class CopiedEvidencePathTests(unittest.TestCase):
@@ -2750,6 +2838,91 @@ class SourceMapTests(unittest.TestCase):
             receipt["selectedEvidenceFiles"][1]["path"] = "../outside.log"
             with self.assertRaises(validator.ProfileError):
                 validator._mac_selected_output_rows(receipt, root / "result.json")
+
+    def test_native_arm_mac_gate_outputs_project_to_packet_root(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "packet"
+            rows_by_gate = {}
+            for gate in ("linux-x86_64-final-native-campaign",
+                         "linux-aarch64-build-static", "macos-arm64-build-static"):
+                receipt_dir = root / "gates" / gate / "receipts"
+                (receipt_dir / "logs").mkdir(parents=True)
+                (receipt_dir / "result.json").write_text("{}\n")
+                payload = (gate + " output\n").encode()
+                (receipt_dir / "logs/output.log").write_bytes(payload)
+                rows_by_gate[gate] = [{"path":"logs/output.log", "sizeBytes":len(payload),
+                                       "sha256":sha(payload)}]
+            for gate, rows in rows_by_gate.items():
+                receipt = root / "gates" / gate / "receipts/result.json"
+                projected = validator._packet_gate_output_projection(root, receipt, rows, gate)
+                expected = f"gates/{gate}/receipts/logs/output.log"
+                self.assertEqual(projected, [{"path":expected, "sizeBytes":len((root/expected).read_bytes()),
+                                               "sha256":sha((root/expected).read_bytes())}])
+                self.assertEqual(rows[0]["path"], "logs/output.log")
+                self.assertEqual((root / projected[0]["path"]).read_bytes(),
+                                 (receipt.parent / rows[0]["path"]).read_bytes())
+
+    def test_packet_gate_output_at_packet_root_keeps_canonical_path(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "packet"
+            (root / "logs").mkdir(parents=True)
+            receipt = root / "result.json"
+            receipt.write_text("{}\n")
+            output = root / "logs/root-output.log"
+            payload = b"root-level receipt output\n"
+            output.write_bytes(payload)
+            rows = [{"path": "logs/root-output.log", "sizeBytes": len(payload),
+                     "sha256": sha(payload)}]
+            projected = validator._packet_gate_output_projection(
+                root, receipt, rows, "packet-root receipt")
+            self.assertEqual(projected, [{"path": "logs/root-output.log",
+                                          "sizeBytes": len(payload),
+                                          "sha256": sha(payload)}])
+
+    def test_packet_gate_output_projection_rejects_escape_alias_and_changed_bytes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "packet"
+            receipt_dir = root / "gates/native/receipts"
+            (receipt_dir / "logs").mkdir(parents=True)
+            receipt = receipt_dir / "result.json"
+            receipt.write_text("{}\n")
+            payload = b"closed native output\n"
+            output = receipt_dir / "logs/output.log"
+            output.write_bytes(payload)
+            row = {"path":"logs/output.log", "sizeBytes":len(payload), "sha256":sha(payload)}
+            good = validator._packet_gate_output_projection(
+                root, receipt, [row], "linux-x86_64-final-native-campaign")
+            self.assertEqual(good[0]["path"], "gates/native/receipts/logs/output.log")
+            with self.assertRaises(validator.ProfileError):
+                validator._packet_gate_output_projection(root, receipt,
+                    [{**row,"path":"../outside.log"}], "native escape")
+            with self.assertRaisesRegex(validator.ProfileError, "duplicated"):
+                validator._packet_gate_output_projection(root, receipt,
+                    [row,dict(row)], "native duplicate")
+            alias = receipt_dir / "logs/alias.log"
+            alias.hardlink_to(output)
+            alias_row = {"path":"logs/alias.log", "sizeBytes":len(payload), "sha256":sha(payload)}
+            with self.assertRaisesRegex(validator.ProfileError, "unique regular"):
+                validator._packet_gate_output_projection(root, receipt,
+                    [alias_row], "native hardlink alias")
+            alias.unlink()
+            symlink = receipt_dir / "logs/symlink.log"
+            symlink.symlink_to(output)
+            symlink_row = {"path":"logs/symlink.log", "sizeBytes":len(payload), "sha256":sha(payload)}
+            with self.assertRaises(validator.ProfileError):
+                validator._packet_gate_output_projection(root, receipt,
+                    [symlink_row], "native symlink")
+            symlink.unlink()
+            with self.assertRaisesRegex(validator.ProfileError, "bytes differ"):
+                validator._packet_gate_output_projection(root, receipt,
+                    [{**row,"sha256":"0"*64}], "native changed digest")
+            output.write_bytes(b"changed after receipt\n")
+            with self.assertRaisesRegex(validator.ProfileError, "bytes differ"):
+                validator._packet_gate_output_projection(root, receipt, [row], "native changed bytes")
+            outside = Path(temp) / "outside.json"
+            outside.write_text("{}\n")
+            with self.assertRaisesRegex(validator.ProfileError, "outside"):
+                validator._packet_gate_output_projection(root, outside, [row], "outside receipt")
 
     def test_absolute_gate_outputs_map_historical_identity_to_packet_copy(self):
         with tempfile.TemporaryDirectory() as temp:
