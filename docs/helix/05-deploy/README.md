@@ -78,4 +78,11 @@ below the original 1 MiB bound. Exact Linux x86_64 and ARM64 static-wheel
 artifacts and the macOS ARM64 build/static-only chain have separate accepted
 reviews. The Linux native run's original failure is preserved alongside its
 separate accepted predicate reanalysis; neither implies an additional runtime
-execution. Inherited-boundary and browser/WASM gates remain open.
+execution. The reviewed Table012 inherited-boundary receipt and the reviewed
+full Truss011 receipt are consumed through finite native-schema adapters; the
+same Truss011 receipt closes both browser and WASM obligations, with selected
+runtime files represented as exactly ten hashed external software witnesses
+outside the evidence ZIP. Assembly rehashes all ten and rejects missing, extra,
+changed, or ZIP-included software; no packet field can waive that roster. These scoped receipts do not make a release packet READY. The
+actual M source map, ancestry, seven-file source comparison and independent
+M-source review remain held for the normal merge and review.

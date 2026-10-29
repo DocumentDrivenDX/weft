@@ -77,6 +77,20 @@ The command must return `ASSEMBLED_LOCAL_UNSIGNED`. Preserve its output and
 review it independently before any public write. Do not overwrite a prior
 output; preserve failed or partial directories for diagnosis.
 
+The inherited-boundary adapter consumes the original Table012 receipt and
+review schema. It retains the complete 251-row public metadata roster and
+receipt while carrying the five selected Table runtime artifacts as separately
+exactly ten hashed external-software witnesses. Assembly rejects an incomplete
+roster or any payload inclusion; packet-controlled test flags cannot disable the
+production check. The browser and WASM obligations both
+bind the same original accepted Truss011 receipt and review. Its full 133-row
+output roster is closed, but the five selected runtime files remain outside
+the evidence ZIP; the other 128 metadata rows and original receipt/review are
+included. The verifier rehashes the external files against the pinned source
+root and proves that their payload bytes were not placed in the ZIP. They are
+not wheel-family bytes or evidence payloads, and this mapping does not itself
+create a READY packet or complete the held M-source/release review.
+
 The M-source review digest is supplied from an independently reviewed source
 correspondence record outside M and outside the packet. After assembly, the
 separate final-review record must bind the exact `SHA256SUMS` digest and

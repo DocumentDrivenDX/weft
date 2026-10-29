@@ -37,7 +37,16 @@ from verify_local_release_profile import (
     MAX_EVIDENCE_TOTAL,
     MAX_PACKET,
     MAX_RAW_LOGS,
+    MAX_SELECTED_SOFTWARE,
     MAX_WHEEL,
+    TABLE012_ROOT,
+    TABLE012_SOFTWARE_ROOT,
+    TABLE012_SELECTED,
+    TABLE012_RECEIPT_SHA256,
+    TRUSS011_ROOT,
+    TRUSS011_SOFTWARE_ROOT,
+    TRUSS011_SELECTED,
+    TRUSS011_RECEIPT_SHA256,
     ProfileError,
     _closed,
     _read_bounded,
@@ -158,10 +167,14 @@ def assemble(packet_path: Path, notes_path: Path, output: Path, *,
         "wheels": [{k: wheel[k] for k in ("role", "filename", "bytes", "sha256")}
                    for wheel in verified["wheels"]],
         "gates": verified["gates"], "reviews": verified["reviews"],
+        "externalSelectedSoftware": verified["externalSelectedSoftware"],
         "qualification": verified["qualification"],
     }
     qualification_bytes = (json.dumps(qualification, indent=2, sort_keys=True) + "\n").encode()
-    evidence_index_size = 1024 + sum(len(row["path"]) + 128 for row in verified["evidenceInventory"])
+    evidence_index_size = (1024 + sum(len(row["path"]) + 128
+                                       for row in verified["evidenceInventory"])
+                           + sum(len(row["sourcePath"]) + 256
+                                 for row in verified["externalSelectedSoftware"]))
     evidence_expanded = verified["evidenceBytes"] + evidence_index_size
     _need(evidence_expanded <= MAX_EVIDENCE_TOTAL,
           "preflight packet/source/gate/log evidence plus index exceeds 16 MiB")
@@ -216,6 +229,7 @@ def assemble(packet_path: Path, notes_path: Path, output: Path, *,
             "profile": "weft-local-release-evidence-index/1",
             "files": [{"path": name, "bytes": size, "sha256": digest}
                       for name, (_, digest, size) in sorted(evidence_names.items())],
+            "externalSelectedSoftware": verified["externalSelectedSoftware"],
             "indexExcludedFromItsOwnRoster": True,
         }
         evidence_index = (json.dumps(evidence_manifest, indent=2, sort_keys=True) + "\n").encode()
@@ -250,6 +264,7 @@ def assemble(packet_path: Path, notes_path: Path, output: Path, *,
                     info = check.getinfo(name)
                     _need(info.file_size == expected_size and sha(check.read(info)) == expected_digest,
                           f"written evidence ZIP member differs: {name}")
+                _verify_external_software_excluded(check, verified["externalSelectedSoftware"])
         except (OSError, zipfile.BadZipFile, KeyError) as exc:
             raise ProfileError("written evidence ZIP could not be physically reclosed") from exc
         _write_new(evidence_path, evidence_bytes)
@@ -298,6 +313,65 @@ def assemble(packet_path: Path, notes_path: Path, output: Path, *,
 def _need(ok: bool, message: str) -> None:
     if not ok:
         raise ProfileError(message)
+
+
+def _verify_external_software_excluded(archive: zipfile.ZipFile,
+                                       witnesses: Any) -> list[dict[str, Any]]:
+    """Rehash the finite selected software witnesses and prove payload exclusion."""
+    expected: dict[tuple[str, str], tuple[Path, int, str, str, str]] = {}
+    for rel, (size, digest) in TABLE012_SELECTED.items():
+        expected[(str(TABLE012_SOFTWARE_ROOT), rel)] = (
+            TABLE012_SOFTWARE_ROOT, size, digest, TABLE012_RECEIPT_SHA256,
+            "table012-selected-artifact")
+    for rel, (size, digest) in TRUSS011_SELECTED.items():
+        expected[(str(TRUSS011_SOFTWARE_ROOT), rel)] = (
+            TRUSS011_SOFTWARE_ROOT, size, digest, TRUSS011_RECEIPT_SHA256,
+            "truss011-selected-runtime-software")
+    _need(isinstance(witnesses, list) and len(witnesses) == len(expected),
+          "external selected-software witness roster is incomplete")
+    seen: set[tuple[str, str]] = set()
+    member_names = {info.filename for info in archive.infolist()}
+    for raw in witnesses:
+        item = _closed(raw, {"scope", "kind", "sourceRoot", "sourcePath", "receiptSha256",
+                             "sizeBytes", "sha256"}, "external selected-software witness")
+        key = (item["sourceRoot"], item["sourcePath"])
+        _need(key in expected and key not in seen, "external software witness is unknown or duplicated")
+        seen.add(key)
+        root, size, digest, receipt_sha, kind = expected[key]
+        _need(item == {"scope": "external selected runtime software", "kind": kind,
+                       "sourceRoot": str(root), "sourcePath": key[1],
+                       "receiptSha256": receipt_sha, "sizeBytes": size, "sha256": digest}
+              and 0 <= size <= MAX_SELECTED_SOFTWARE,
+              "external software witness differs from its original selected roster")
+        source_root = root.resolve(strict=True)
+        path = root / key[1]
+        current = root
+        for part in Path(key[1]).parts:
+            current = current / part
+            _need(not current.is_symlink(),
+                  "external selected software path contains a symlink")
+        _need(not root.is_symlink() and path.resolve(strict=True).is_relative_to(source_root),
+              "external selected software escapes its pinned source root")
+        before = path.stat(follow_symlinks=False)
+        before_id = (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)
+        first = _read_bounded(path, MAX_SELECTED_SOFTWARE, "external selected software")
+        middle = path.stat(follow_symlinks=False)
+        second = _read_bounded(path, MAX_SELECTED_SOFTWARE, "external selected software recheck")
+        after = path.stat(follow_symlinks=False)
+        after_id = (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
+        _need(stat.S_ISREG(after.st_mode) and before_id == after_id
+              == (middle.st_dev, middle.st_ino, middle.st_size, middle.st_mtime_ns)
+              and len(first) == len(second) == size and sha(first) == sha(second) == digest,
+              "external selected software changed or has a different hash")
+        _need(key[1] not in member_names,
+              "external selected software path appears as a ZIP evidence member")
+        for info in archive.infolist():
+            if info.is_dir() or info.file_size != size:
+                continue
+            _need(sha(archive.read(info)) != digest,
+                  "external selected software payload was included in the evidence ZIP")
+    _need(seen == set(expected), "external software witness roster has omitted rows")
+    return list(witnesses)
 
 
 def _bounded_capture(argv: list[str], *, timeout: float, env: dict[str, str] | None = None,
@@ -465,6 +539,50 @@ def _assembly_assets(directory: Path, expected_sha: str, review_path: Path,
     inventory_digest = sha(inv_data)
     _need(sums.get("asset-inventory.json") == inventory_digest and total <= MAX_ASSEMBLY,
           "assembly checksum/70 MiB family differs")
+    try:
+        qualification = json.loads(_read_bounded(directory / "qualification-0.4.56.json",
+                                                  MAX_ENTRY, "qualification facts"))
+        _need(isinstance(qualification, dict), "qualification facts must be a JSON object")
+        evidence_raw = _read_bounded(directory / "qualification-evidence-0.4.56.zip",
+                                     MAX_EVIDENCE_ZIP, "qualification evidence ZIP")
+        with zipfile.ZipFile(io.BytesIO(evidence_raw)) as archive:
+            members = archive.infolist()
+            _need(members and members[0].filename == "evidence-index.json"
+                  and len({item.filename for item in members}) == len(members),
+                  "evidence ZIP member roster is malformed")
+            index_raw = archive.read("evidence-index.json")
+            index = json.loads(index_raw)
+            _need(isinstance(index, dict)
+                  and set(index) == {"profile", "files", "externalSelectedSoftware",
+                                     "indexExcludedFromItsOwnRoster"}
+                  and index.get("profile") == "weft-local-release-evidence-index/1"
+                  and index.get("indexExcludedFromItsOwnRoster") is True
+                  and index.get("externalSelectedSoftware") == qualification.get("externalSelectedSoftware"),
+                  "evidence index does not bind qualification's external software witnesses")
+            rows = index.get("files")
+            _need(isinstance(rows, list), "evidence ZIP index file roster is absent")
+            names = [row.get("path") for row in rows if isinstance(row, dict)]
+            _need(len(names) == len(rows) and names == sorted(set(names))
+                  and [item.filename for item in members] == ["evidence-index.json", *names],
+                  "evidence ZIP member list differs from its sorted complete index")
+            expanded = len(index_raw)
+            for row in rows:
+                _need(set(row) == {"path", "bytes", "sha256"}
+                      and isinstance(row["path"], str) and type(row["bytes"]) is int
+                      and 0 <= row["bytes"] <= MAX_ENTRY
+                      and isinstance(row["sha256"], str) and SHA256_RE.fullmatch(row["sha256"]),
+                      "evidence ZIP index row is malformed")
+                payload = archive.read(row["path"])
+                _need(len(payload) == row["bytes"] and sha(payload) == row["sha256"],
+                      "evidence ZIP payload differs from its index")
+                expanded += len(payload)
+            _need(expanded <= MAX_EVIDENCE_TOTAL,
+                  "evidence ZIP expanded metadata exceeds unchanged 16 MiB cap")
+            _verify_external_software_excluded(archive, index["externalSelectedSoftware"])
+    except (OSError, UnicodeError, json.JSONDecodeError, zipfile.BadZipFile, KeyError) as exc:
+        raise ProfileError("qualification evidence ZIP could not be reclosed") from exc
+    _need(qualification.get("externalSelectedSoftware") == index["externalSelectedSoftware"],
+          "qualification facts omit or change external selected software witnesses")
     review_raw = _read_bounded(review_path, MAX_EVIDENCE_FILE, "post-assembly review")
     _need(isinstance(expected_review_sha256, str)
           and SHA256_RE.fullmatch(expected_review_sha256)

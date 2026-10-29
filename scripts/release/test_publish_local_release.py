@@ -29,10 +29,10 @@ def sha(data: bytes) -> str:
 
 
 def test_transport_assembly(root: Path):
-    """Construct protocol-only assets; does not invoke or impersonate qualification."""
+    """Build transport assets with ten explicit, tiny external witnesses."""
     root.mkdir(parents=True, exist_ok=False)
-    (root / "assets").mkdir()
     assets = root / "assets"
+    assets.mkdir()
     payloads = {}
     for name in WHEELS:
         wheel = io.BytesIO()
@@ -40,16 +40,50 @@ def test_transport_assembly(root: Path):
             archive.writestr("umf_weft-0.4.56.dist-info/METADATA",
                 "Metadata-Version: 2.1\nName: umf-weft\nVersion: 0.4.56\n\n")
         payloads[name] = wheel.getvalue()
+    table_root, truss_root = root / "table-software", root / "truss-software"
+    table_selected, truss_selected, witnesses = {}, {}, []
+    for label, software_root, selected, kind, receipt_sha in (
+            ("table", table_root, table_selected, "table012-selected-artifact", "a" * 64),
+            ("truss", truss_root, truss_selected, "truss011-selected-runtime-software", "b" * 64)):
+        for index in range(5):
+            relative = f"{label}/selected-{index}.bin"
+            content = f"external {label} software {index}\n".encode()
+            path = software_root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(content)
+            digest = sha(content)
+            selected[relative] = (len(content), digest)
+            witnesses.append({"scope": "external selected runtime software", "kind": kind,
+                "sourceRoot": str(software_root), "sourcePath": relative,
+                "receiptSha256": receipt_sha, "sizeBytes": len(content), "sha256": digest})
+    # These assignments are test-local fixture pins. Production defaults remain immutable.
+    publisher.TABLE012_ROOT = table_root
+    publisher.TABLE012_SOFTWARE_ROOT = table_root
+    publisher.TABLE012_SELECTED = table_selected
+    publisher.TABLE012_RECEIPT_SHA256 = "a" * 64
+    publisher.TRUSS011_ROOT = truss_root
+    publisher.TRUSS011_SOFTWARE_ROOT = truss_root
+    publisher.TRUSS011_SELECTED = truss_selected
+    publisher.TRUSS011_RECEIPT_SHA256 = "b" * 64
     payloads.update({
         "release-pins-0.4.56.json": json.dumps({
             "schema": "weft-selected-release-pins/1", "tag": "v0.4.56",
             "releaseMetadataCommit": COMMIT}).encode(),
         "qualification-0.4.56.json": json.dumps({
+            "profile": "synthetic-transport-fixture/1",
             "status": "VERIFIED_FOR_ASSEMBLY", "metadata": {"commit": COMMIT},
-            "sourceComparison": {"selectedBuildInputsEqual": True}}).encode(),
-        "qualification-evidence-0.4.56.zip": b"test-only protocol fixture\n",
+            "sourceComparison": {"selectedBuildInputsEqual": True},
+            "externalSelectedSoftware": witnesses}).encode(),
         "v0.4.56.md": b"test-only local transport protocol fixture\n",
     })
+    evidence_index = json.dumps({
+        "profile": "weft-local-release-evidence-index/1", "files": [],
+        "externalSelectedSoftware": witnesses, "indexExcludedFromItsOwnRoster": True,
+    }, sort_keys=True).encode()
+    evidence_buffer = io.BytesIO()
+    with zipfile.ZipFile(evidence_buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("evidence-index.json", evidence_index)
+    payloads["qualification-evidence-0.4.56.zip"] = evidence_buffer.getvalue()
     sums = {}
     for name, data in payloads.items():
         (assets / name).write_bytes(data)
@@ -90,11 +124,61 @@ class FakeResponse(io.BytesIO):
 
 
 class LocalAssemblyTests(unittest.TestCase):
+    def test_external_runtime_witnesses_are_rehashed_and_zip_payloads_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            table_root = root / "table"
+            truss_root = root / "truss"
+            table_file = table_root / "one.bin"
+            truss_file = truss_root / "two.bin"
+            table_file.parent.mkdir(parents=True)
+            truss_file.parent.mkdir(parents=True)
+            table_file.write_bytes(b"table")
+            truss_file.write_bytes(b"truss")
+            table_digest, truss_digest = sha(b"table"), sha(b"truss")
+            witnesses = [
+                {"scope": "external selected runtime software",
+                 "kind": "table012-selected-artifact", "sourceRoot": str(table_root),
+                 "sourcePath": "one.bin", "receiptSha256": "a" * 64,
+                 "sizeBytes": 5, "sha256": table_digest},
+                {"scope": "external selected runtime software",
+                 "kind": "truss011-selected-runtime-software", "sourceRoot": str(truss_root),
+                 "sourcePath": "two.bin", "receiptSha256": "b" * 64,
+                 "sizeBytes": 5, "sha256": truss_digest},
+            ]
+            with patch.multiple(publisher, TABLE012_ROOT=table_root,
+                                TABLE012_SOFTWARE_ROOT=table_root, TABLE012_SELECTED={"one.bin": (5, table_digest)},
+                                TABLE012_RECEIPT_SHA256="a" * 64,
+                                TRUSS011_ROOT=truss_root, TRUSS011_SOFTWARE_ROOT=truss_root,
+                                TRUSS011_SELECTED={"two.bin": (5, truss_digest)},
+                                TRUSS011_RECEIPT_SHA256="b" * 64):
+                clean = io.BytesIO()
+                with zipfile.ZipFile(clean, "w") as archive:
+                    archive.writestr("metadata/report.json", b"{}")
+                with zipfile.ZipFile(io.BytesIO(clean.getvalue())) as archive:
+                    self.assertEqual(publisher._verify_external_software_excluded(
+                        archive, witnesses), witnesses)
+                contaminated = io.BytesIO()
+                with zipfile.ZipFile(contaminated, "w") as archive:
+                    archive.writestr("metadata/report.json", b"{}")
+                    archive.writestr("payloads/one.bin", b"table")
+                with zipfile.ZipFile(io.BytesIO(contaminated.getvalue())) as archive:
+                    with self.assertRaisesRegex(ProfileError, "payload was included"):
+                        publisher._verify_external_software_excluded(archive, witnesses)
+
     def test_exact_asset_inventory_and_external_review_close(self):
         with tempfile.TemporaryDirectory() as temp:
             assets, review, sums = test_transport_assembly(Path(temp) / "fixture")
-            actual, _ = publisher._assembly_assets(assets, sums, review, sha(review.read_bytes()))
+            actual, _review = publisher._assembly_assets(assets, sums, review, sha(review.read_bytes()))
             self.assertEqual(len(actual), 9)
+            qualification = json.loads((assets / "qualification-0.4.56.json").read_text())
+            self.assertEqual(len(qualification["externalSelectedSoftware"]), 10)
+            with zipfile.ZipFile(actual["qualification-evidence-0.4.56.zip"]) as archive:
+                index = json.loads(archive.read("evidence-index.json"))
+                self.assertEqual(len(index["externalSelectedSoftware"]), 10)
+                with self.assertRaisesRegex(ProfileError, "witness roster is incomplete"):
+                    publisher._verify_external_software_excluded(
+                        archive, index["externalSelectedSoftware"][:-1])
 
     def test_oversized_notes_refuse_before_packet_read_or_output_creation(self):
         with tempfile.TemporaryDirectory() as temp:
