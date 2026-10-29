@@ -207,7 +207,7 @@ GATE_PROFILES = {
     "linux-wasm": (TRUSS011_PROFILE, TRUSS011_STATUS),
     "linux-source-package": ("umf.g03-local-source-package-guards/2",
                               "LOCAL_BOUNDED_SOURCE_PACKAGE_GUARDS_PASS"),
-    "linux-aarch64-build-static": ("umf.g03-final-baseline-build-static/1", "LOCAL_FINAL_BASELINE_BUILD_STATIC_PASS"),
+    "linux-aarch64-build-static": ("umf.g03-final-local-baseline-build-static/1", "LOCAL_FINAL_BASELINE_BUILD_STATIC_PASS"),
     # This is a static-only local artifact chain. It does not qualify Mac
     # installation, imports, runtime behavior, browser parity, or hosted CI.
     "macos-arm64-build-static": ("weft-local-macos-static-audit-only/1",
@@ -1227,6 +1227,55 @@ def _validate_metadata_files(root: Path, files_value: Any,
     return resolved
 
 
+def _validate_gate_profile(name: str, receipt: dict[str, Any], digest: str) -> tuple[str, str]:
+    expected_gate = GATE_PROFILES[name]
+    _need(expected_gate is not None,
+          f"gate {name} actual receipt profile is not implemented/frozen")
+    profile, status = expected_gate
+    _need((GATE_RECEIPT_SHA256[name] is None or digest == GATE_RECEIPT_SHA256[name])
+          and receipt.get("profile") == profile and receipt.get("status") == status,
+          f"gate {name} has wrong actual profile/status")
+    return profile, status
+
+
+def _validate_native_acceptance_binding(review_digest: str, review_raw: bytes,
+                                        operator_digest: str, receipt: dict[str, Any],
+                                        derived_digest: str, derived: dict[str, Any]) -> None:
+    """Bind the accepted review to the exact immutable operator/campaign chain."""
+    original = derived.get("originalRun")
+    operator = original.get("operatorResult") if isinstance(original, dict) else None
+    original_campaign = original.get("campaignResult") if isinstance(original, dict) else None
+    campaign = receipt.get("campaignResult")
+    phrase = (b"ACCEPTED: the selected Linux311 G03 fourteen-case/nineteen-scenario evidence "
+              b"conjunction closes through reviewed pure-predicate reanalysis")
+    _need(review_digest == FINAL_NATIVE_REVIEW
+          and operator_digest == FINAL_NATIVE_OPERATOR
+          and derived_digest == FINAL_NATIVE_REANALYSIS
+          and FINAL_NATIVE_REANALYSIS.encode("ascii") in review_raw
+          and phrase in review_raw
+          and isinstance(campaign, dict)
+          and campaign.get("sha256") == FINAL_NATIVE_CAMPAIGN
+          and isinstance(operator, dict)
+          and operator.get("sha256") == operator_digest == FINAL_NATIVE_OPERATOR
+          and isinstance(original_campaign, dict)
+          and original_campaign.get("sha256") == campaign.get("sha256") == FINAL_NATIVE_CAMPAIGN,
+          "native007 acceptance does not bind the immutable failed run and its derived receipt")
+
+
+def _validate_source_process_roster(processes: Any) -> None:
+    _need(isinstance(processes, list) and len(processes) == 40
+          and sum(row.get("phase") == "source-command" for row in processes
+                  if isinstance(row, dict)) == 19
+          and sum(row.get("phase") == "release-metadata" for row in processes
+                  if isinstance(row, dict)) == 1
+          and all(isinstance(row, dict)
+                  and type(row.get("effectiveDeadlineSeconds")) in {int, float}
+                  and type(row.get("durationSeconds")) in {int, float}
+                  and 0 <= row["durationSeconds"] <= row["effectiveDeadlineSeconds"]
+                  for row in processes),
+          "source/package process roster or per-command deadlines differ")
+
+
 def _gate(root: Path, name: str, row: Any) -> dict[str, Any]:
     if name == "macos-arm64-build-static":
         gate_keys = {"receipt", "review", "dataReview"}
@@ -1236,13 +1285,7 @@ def _gate(root: Path, name: str, row: Any) -> dict[str, Any]:
         gate_keys = {"receipt", "review"}
     item = _closed(row, gate_keys, f"gate {name}")
     receipt, path, digest, size = _json_receipt(root, item["receipt"], f"gate {name} result")
-    expected_gate = GATE_PROFILES[name]
-    _need(expected_gate is not None,
-          f"gate {name} actual receipt profile is not implemented/frozen")
-    profile, status = expected_gate
-    _need((GATE_RECEIPT_SHA256[name] is None or digest == GATE_RECEIPT_SHA256[name])
-          and receipt.get("profile") == profile and receipt.get("status") == status,
-          f"gate {name} has wrong actual profile/status")
+    profile, status = _validate_gate_profile(name, receipt, digest)
     human_review_sha = GATE_HUMAN_REVIEW_SHA256[name]
     if name == "linux-inherited-boundaries":
         output_refs, software_refs = _table012_output_rows(root, path, receipt, verify=True)
@@ -1320,9 +1363,11 @@ def _gate(root: Path, name: str, row: Any) -> dict[str, Any]:
               "Mac machine data review is not the exact accepted audit")
         review = {"kind": "pinned-human-review", "sha256": review_digest,
                   "scope": name, "boundReceiptSha256": digest}
-        output_refs = _mac_selected_output_rows(receipt, path)
+        output_refs = _packet_gate_output_projection(
+            root, path, _mac_selected_output_rows(receipt, path), name)
     elif name == "linux-aarch64-build-static":
-        output_refs = _arm_selected_output_rows(receipt, path)
+        output_refs = _packet_gate_output_projection(
+            root, path, _arm_selected_output_rows(receipt, path), name)
         review_path, review_raw, review_digest = _receipt(
             root, item["review"], f"gate {name} human review")
         review_size = len(review_raw)
@@ -1340,17 +1385,12 @@ def _gate(root: Path, name: str, row: Any) -> dict[str, Any]:
         review_size = len(review_raw)
         derived, derived_path, derived_digest, derived_size = _json_receipt(
             root, item["reanalysis"], "native007 derived predicate receipt")
-        _need(review_digest == FINAL_NATIVE_REVIEW
-              and digest == FINAL_NATIVE_OPERATOR
-              and derived_digest == FINAL_NATIVE_REANALYSIS
-              and digest.encode("ascii") in review_raw
-              and derived_digest.encode("ascii") in review_raw
-              and FINAL_NATIVE_CAMPAIGN.encode("ascii") in review_raw
-              and b"ACCEPTED: the selected Linux311 G03 fourteen-case/nineteen-scenario evidence conjunction closes through reviewed pure-predicate reanalysis" in review_raw,
-              "native007 acceptance does not bind the immutable failed run and its derived receipt")
+        _validate_native_acceptance_binding(review_digest, review_raw, digest,
+                                            receipt, derived_digest, derived)
         _validate_native_reanalysis(receipt, derived, root=root,
                                     receipt_path=path, derived_path=derived_path)
-        output_refs = _native_campaign_output_rows(receipt, path)
+        output_refs = _packet_gate_output_projection(
+            root, path, _native_campaign_output_rows(receipt, path), name)
         review = {"kind": "pinned-human-review", "sha256": review_digest,
                   "scope": name, "boundReceiptSha256": digest,
                   "derivedPredicateReceiptSha256": derived_digest}
@@ -1400,6 +1440,54 @@ def _gate(root: Path, name: str, row: Any) -> dict[str, Any]:
             **({"externalSelectedSoftware": software_refs}
                if name in {"linux-inherited-boundaries", "linux-browser", "linux-wasm"}
                else {})}
+
+
+def _packet_gate_output_projection(root: Path, receipt_path: Path,
+                                   rows: Any, where: str) -> list[dict[str, Any]]:
+    """Project verified receipt-relative outputs to packet-root references."""
+    _need(isinstance(rows, list) and rows,
+          f"{where} packet output roster is absent")
+    try:
+        packet_root = root.resolve(strict=True)
+        receipt_real = receipt_path.resolve(strict=True)
+        parent_real = receipt_path.parent.resolve(strict=True)
+        parent_rel = ("" if parent_real == packet_root else
+                      parent_real.relative_to(packet_root).as_posix())
+    except (OSError, ValueError) as exc:
+        raise ProfileError(f"{where} receipt is outside its selected packet root") from exc
+    _need(root == packet_root and receipt_path == receipt_real
+          and receipt_path.parent == parent_real,
+          f"{where} receipt path is not canonical within the selected packet root")
+    if parent_rel:
+        _canonical_relative(parent_rel, f"{where} receipt parent")
+    result: list[dict[str, Any]] = []
+    seen_paths: set[str] = set()
+    seen_inodes: set[tuple[int, int]] = set()
+    for row in rows:
+        item = _closed(row, {"path", "sizeBytes", "sha256"}, f"{where} receipt output")
+        relative = _canonical_relative(item["path"], f"{where} receipt-relative output")
+        _need(type(item["sizeBytes"]) is int and 0 <= item["sizeBytes"] <= MAX_EVIDENCE_FILE
+              and isinstance(item["sha256"], str) and SHA.fullmatch(item["sha256"]),
+              f"{where} output identity is malformed")
+        packet_relative = f"{parent_rel}/{relative}" if parent_rel else relative
+        _canonical_relative(packet_relative, f"{where} packet output")
+        _need(packet_relative not in seen_paths, f"{where} packet output path is duplicated")
+        seen_paths.add(packet_relative)
+        path = _under(root, packet_relative, f"{where} packet output")
+        try:
+            st = path.lstat()
+        except OSError as exc:
+            raise ProfileError(f"{where} packet output cannot be statted") from exc
+        _need(stat.S_ISREG(st.st_mode) and not path.is_symlink() and st.st_nlink == 1,
+              f"{where} packet output is not a unique regular file")
+        inode = (st.st_dev, st.st_ino)
+        _need(inode not in seen_inodes, f"{where} packet outputs alias the same physical file")
+        seen_inodes.add(inode)
+        size, digest = _regular(path, MAX_EVIDENCE_FILE, f"{where} packet output")
+        _need(size == item["sizeBytes"] and digest == item["sha256"],
+              f"{where} packet output bytes differ from the receipt")
+        result.append({"path": packet_relative, "sizeBytes": size, "sha256": digest})
+    return result
 
 
 def _absolute_evidence_rows(receipt_path: Path, rows: Any, where: str, *,
@@ -2274,13 +2362,7 @@ def _validate_gate_details(name: str, r: dict[str, Any], *, root: Path,
                   "v0.4.56 (not checked by source-only guard)",
               "source/package release-metadata guard is not scoped to the actual candidate")
         processes = r["processes"]
-        _need(sum(row.get("phase") == "source-command" for row in processes) == 20
-              and sum(row.get("phase") == "release-metadata" for row in processes) == 1
-              and all(type(row.get("effectiveDeadlineSeconds")) in {int, float}
-                      and type(row.get("durationSeconds")) in {int, float}
-                      and 0 <= row["durationSeconds"] <= row["effectiveDeadlineSeconds"]
-                      for row in processes),
-              "source/package process roster or per-command deadlines differ")
+        _validate_source_process_roster(processes)
         cleanup_rows = [row for row in processes if row.get("phase") in {
             "container-list-before-remove", "container-owner-before-remove",
             "remove-owned-container", "verify-container-absence",
