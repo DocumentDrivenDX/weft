@@ -373,7 +373,11 @@ class LocalAssemblyTests(unittest.TestCase):
             def api(url, method, token, payload=None, **kwargs):
                 nonlocal published
                 calls.append((method, url))
-                if url.endswith("/actions/permissions"): return 200, {"enabled": False}, b"{}"
+                if url.endswith("/actions/permissions"): return 200, {"enabled": True}, b"{}"
+                if "/actions/workflows/" in url:
+                    ident = int(url.rsplit("/", 1)[1])
+                    path = dict(publisher.GITHUB_AUTOMATIC_WORKFLOWS)[ident]
+                    return 200, {"id": ident, "path": path, "state": "disabled_manually"}, b"{}"
                 if "/git/ref/tags/" in url or "/releases/tags/" in url: return 404, {}, b"{}"
                 if url.endswith("/git/refs"): return 201, {"object": {"type": "commit", "sha": COMMIT}}, b"{}"
                 if url.endswith("/releases") and method == "POST":
@@ -403,6 +407,39 @@ class LocalAssemblyTests(unittest.TestCase):
             self.assertEqual(result["status"], "PUBLISHED_IMMUTABLE")
             self.assertTrue(result["immutable"])
             self.assertGreaterEqual(len(calls), 7)
+
+    def test_github_refuses_unapproved_automatic_workflow_state_before_mutation(self):
+        ids = publisher.GITHUB_AUTOMATIC_WORKFLOWS
+        cases = ("active", "missing", "unknown", "wrong-id", "wrong-path")
+        for case in cases:
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as temp:
+                rows = {ident: {"id": ident, "path": path, "state": "disabled_manually"}
+                        for ident, path in ids}
+                target = ids[0][0]
+                if case == "active": rows[target]["state"] = "active"
+                elif case == "unknown": rows[target]["state"] = "disabled_inactivity"
+                elif case == "wrong-id": rows[target]["id"] = str(target)
+                elif case == "wrong-path": rows[target]["path"] += ".changed"
+                calls = []
+                def api(url, method, token, payload=None, **kwargs):
+                    calls.append((method, url))
+                    if url.endswith("/actions/permissions"): return 200, {"enabled": True}, b"{}"
+                    if "/actions/workflows/" in url:
+                        ident = int(url.rsplit("/", 1)[1])
+                        if case == "missing" and ident == target: return 404, {}, b"{}"
+                        return 200, rows[ident], b"{}"
+                    raise AssertionError((method, url))
+                with patch.dict(os.environ, {"GITHUB_TOKEN": "test-secret"}), \
+                     patch.object(publisher, "_verify_metadata_commit"), \
+                     patch.object(publisher, "_assembly_assets", return_value=({}, {})), \
+                     patch.object(publisher, "_request_json", side_effect=api):
+                    with self.assertRaisesRegex(ProfileError, "automatic workflow identity or disabled state"):
+                        publisher.publish_github(Path(temp), "0" * 64, Path(temp)/"review.json",
+                            repository="org/repo", metadata_commit=COMMIT,
+                            expected_review_sha256="0" * 64)
+                self.assertTrue(calls)
+                self.assertFalse(any(method != "GET" for method, _ in calls))
+                self.assertFalse(any("/git/refs" in url or "/releases" in url for _, url in calls))
 
     def test_pypi_conflict_does_not_launch_uploader(self):
         with tempfile.TemporaryDirectory() as temp:

@@ -812,6 +812,44 @@ _SOURCEGUARD_SELECTED_PREFIXES = (
     "spikes/b001/fixtures/",
 )
 
+SOURCE_PACKAGE_OWNED_FILE_COUNT = 5901
+SOURCE_PACKAGE_OWNED_EXPANDED_BYTES = 860543639
+SOURCE_PACKAGE_OWNED_ROSTER_SHA256 = (
+    "6c718626e48f0c3225d0706a5a32ca4da87ebc58c659560da9875cd1b01e917c")
+
+_NATIVE_RESOURCE_ID = FINAL_NATIVE_EXECUTION_ID
+_NATIVE_CONTAINERS = ("net", "pg", "venv", "pgdata", "setup", "campaign")
+_NATIVE_COMMANDS = (
+    "inspect-client-image inspect-client-platform inspect-postgres-image "
+    "inspect-postgres-platform inspect-postgres-image-volumes inspect-engine-platform "
+    "inspect-engine-version"
+).split()
+_NATIVE_COMMANDS += tuple(
+    f"check-container-name-g03-f14-{name}-{_NATIVE_RESOURCE_ID}"
+    for name in _NATIVE_CONTAINERS)
+_NATIVE_COMMANDS += tuple(
+    f"check-volume-name-g03-f14-{name}-{_NATIVE_RESOURCE_ID}" for name in ("venv", "pgdata"))
+_NATIVE_COMMANDS += (
+    "check-network-name", "create-venv-volume", "inspect-venv-volume",
+    "create-pgdata-volume", "inspect-pgdata-volume", "guest-setup",
+    "inspect-setup-container", "create-internal-network", "inspect-internal-network",
+    "start-postgres", "inspect-postgres", "inspect-postgres-data-mount",
+    "postgres-readiness", "postgres-readiness", "postgres-runtime-identity",
+    "guest-campaign", "inspect-campaign-container",
+)
+for _resource, _actions in (("campaign", ("inspect", "remove", "verify-absent")),
+                            ("setup", ("inspect", "remove", "verify-absent")),
+                            ("pg", ("inspect", "stop", "remove", "verify-absent"))):
+    _NATIVE_COMMANDS += tuple(
+        f"cleanup-{action}-g03-f14-{_resource}-{_NATIVE_RESOURCE_ID}"
+        for action in _actions)
+_NATIVE_COMMANDS += ("cleanup-inspect-network", "cleanup-network", "cleanup-network-absence")
+for _volume in ("pgdata", "venv"):
+    _NATIVE_COMMANDS += tuple(
+        f"cleanup-{action}-g03-f14-{_volume}-{_NATIVE_RESOURCE_ID}"
+        for action in ("inspect-volume", "volume", "volume-verify-absent"))
+NATIVE007_COMMAND_NAMES = _NATIVE_COMMANDS
+
 
 def _selected_rows_from_source_guard(root: Path, ref: Any, role: str
                                     ) -> tuple[list[dict[str, Any]], list[str]]:
@@ -1802,14 +1840,18 @@ def _native_campaign_output_rows(receipt: dict[str, Any], receipt_path: Path) ->
               "native007 evidence row is unsafe or duplicated")
         by_path[rel] = item
     commands = receipt.get("commands")
-    _need(isinstance(commands, list) and len(commands) == 51,
+    _need(isinstance(commands, list) and len(commands) == len(NATIVE007_COMMAND_NAMES),
           "native007 outer command roster differs")
-    seen_commands: set[str] = set()
-    for command in commands:
-        _need(isinstance(command, dict) and isinstance(command.get("name"), str)
-              and command["name"] not in seen_commands,
-              "native007 command names are malformed or duplicated")
-        seen_commands.add(command["name"])
+    seen_streams: set[str] = set()
+    for ordinal, (command, expected_name) in enumerate(zip(
+            commands, NATIVE007_COMMAND_NAMES, strict=True)):
+        _need(isinstance(command, dict) and command.get("name") == expected_name
+              and re.fullmatch(r"[a-z0-9-]+", expected_name) is not None,
+              "native007 indexed command label or order differs")
+        expected_exit = 2 if ordinal in {27, 30} else 0
+        _need(type(command.get("exitCode")) is int
+              and command.get("exitCode") == expected_exit,
+              "native007 command exit differs from the reviewed retry/failure positions")
         _need(command.get("timedOut") is False and command.get("drainExpired") is False
               and command.get("logCapExceeded") is False,
               "native007 outer command timed out or exceeded a capture cap")
@@ -1822,13 +1864,58 @@ def _native_campaign_output_rows(receipt: dict[str, Any], receipt_path: Path) ->
                   "native007 outer stream capture is incomplete")
             relative = _historical_relative(stream.get("path"), FINAL_NATIVE_OUTPUT_ROOT,
                                             "native007 outer log")
+            expected_relative = f"outer/{ordinal:03d}-{expected_name}.{stream_name}.log"
+            _need(relative == expected_relative and relative not in seen_streams,
+                  "native007 indexed outer stream path is missing, reused, or mismatched")
+            seen_streams.add(relative)
             evidence = by_path.get(relative)
             _need(evidence is not None
                   and evidence["sizeBytes"] == stream["retainedBytes"]
                   and evidence["sha256"] == stream["sha256"],
                   "native007 outer stream does not match its selected physical evidence row")
+    _need(len(seen_streams) == 102,
+          "native007 outer stdout/stderr stream roster is incomplete")
     return [{"path": row["path"], "sizeBytes": row["sizeBytes"], "sha256": row["sha256"]}
             for row in rows]
+
+
+def _native007_derived_counts(receipt: dict[str, Any], derived: dict[str, Any]
+                              ) -> tuple[int, int, int, int]:
+    commands = receipt.get("commands")
+    campaign = receipt.get("campaignResult")
+    evidence = receipt.get("evidenceFiles")
+    _need(isinstance(commands, list) and len(commands) == len(NATIVE007_COMMAND_NAMES)
+          and all(isinstance(row, dict) and row.get("name") == label
+                  for row, label in zip(commands, NATIVE007_COMMAND_NAMES, strict=True))
+          and type(commands[27].get("exitCode")) is int and commands[27].get("exitCode") == 2
+          and type(commands[28].get("exitCode")) is int and commands[28].get("exitCode") == 0
+          and commands[30].get("name") == "guest-campaign"
+          and type(commands[30].get("exitCode")) is int and commands[30].get("exitCode") == 2,
+          "native007 command-indexed failure facts differ")
+    _need(isinstance(campaign, dict) and campaign.get("scenarioDispatchCount") == 19
+          and isinstance(evidence, list) and len(evidence) == 181,
+          "native007 campaign/evidence roster does not provide the bounded counts")
+    seen: set[str] = set()
+    total = 0
+    for row in evidence:
+        item = _closed(row, {"path", "sizeBytes", "sha256"}, "native007 evidence count row")
+        path = _canonical_relative(item["path"], "native007 evidence count")
+        _need(path not in seen and type(item["sizeBytes"]) is int
+              and 0 <= item["sizeBytes"] <= MAX_EVIDENCE_FILE
+              and isinstance(item["sha256"], str) and SHA.fullmatch(item["sha256"]),
+              "native007 evidence count row is malformed or duplicated")
+        seen.add(path)
+        total += item["sizeBytes"]
+    custody = derived.get("custody")
+    original = derived.get("originalRun")
+    _need(isinstance(custody, dict) and custody.get("physicalEvidenceInventory") == evidence
+          and custody.get("physicalEvidenceFileCount") == len(evidence)
+          and custody.get("physicalEvidenceBytes") == total
+          and isinstance(original, dict)
+          and original.get("campaignExitCode") == commands[30]["exitCode"]
+          and original.get("scenarioDispatchCount") == campaign["scenarioDispatchCount"],
+          "native007 derived custody does not close to the original indexed evidence")
+    return commands[30]["exitCode"], campaign["scenarioDispatchCount"], len(evidence), total
 
 
 def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
@@ -1841,7 +1928,6 @@ def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
           and r.get("executionId") == FINAL_NATIVE_EXECUTION_ID
           and r.get("campaignId") == FINAL_NATIVE_CAMPAIGN_ID
           and r.get("campaignCompleted") is False
-          and r.get("campaignExitCode") == 2
           and r.get("hostedQualificationClaim") is False
           and r.get("nativeQualificationClaim") is False
           and r.get("hosted") is not True,
@@ -1854,7 +1940,6 @@ def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
               "sha256": FINAL_NATIVE_CAMPAIGN, "sizeBytes": 2325196,
               "status": "FAIL_OR_UNKNOWN"}
           and r.get("campaignResultPath") == campaign["path"]
-          and r.get("scenarioDispatchCount") == 19
           and r.get("inputsStableAfterRun") is True
           and r.get("captureFailed") is False
           and r.get("failure", {}).get("type") is not None,
@@ -1885,6 +1970,11 @@ def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
           and r.get("postgresRuntime", {}).get("platform") == "linux/arm64"
           and r.get("postgresRuntime", {}).get("publishedPorts") is False,
           "native007 source/cohort/image/PostgreSQL target differs from its accepted profile")
+    derived_exit, derived_scenarios, derived_count, derived_bytes = \
+        _native007_derived_counts(r, derived)
+    _need(derived_exit == 2 and derived_scenarios == 19
+          and derived_count == 181 and derived_bytes == 4341728,
+          "native007 campaign/count facts differ from the reviewed evidence census")
     _need(r.get("limits") == {"aggregateSeconds": 1800,
               "evidenceBytes": MAX_EVIDENCE_TOTAL,
               "guestRawLogBytes": 786432, "hostRawLogBytes": 262144,
@@ -1893,8 +1983,6 @@ def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
               "terminationGraceSeconds": 10}
           and type(r.get("elapsedSeconds")) in {int, float}
           and 0 <= r["elapsedSeconds"] < 1800
-          and r.get("physicalEvidenceFileCount") == 181
-          and r.get("physicalEvidenceBytes") == 4341728
           and r.get("physicalLogBytes") == 9008
           and r.get("outerRawLogBytes") == 2619
           and r.get("combinedRawLogBytes") == 2619
@@ -1914,7 +2002,9 @@ def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
               f"g03-f14-venv-{FINAL_NATIVE_EXECUTION_ID}"},
           "native007 owned-resource cleanup is not closed")
     commands = r.get("commands")
-    _need(isinstance(commands, list) and len(commands) == 51
+    commands = r.get("commands")
+    evidence_rows = r.get("evidenceFiles")
+    _need(isinstance(commands, list) and len(commands) == len(NATIVE007_COMMAND_NAMES)
           and [c.get("name") for c in commands if c.get("exitCode") != 0]
               == ["postgres-readiness", "guest-campaign"]
           and all(c.get("timedOut") is False and c.get("drainExpired") is False
@@ -1970,10 +2060,46 @@ def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
           and custody.get("campaignRawLogBytes") == 954
           and custody.get("setupRawLogBytes") == 5435
           and custody.get("rawScenarioCount") == 19
-          and custody.get("sourceSealFileCount") == 8,
+          and custody.get("sourceSealFileCount") == 8
+          and custody.get("physicalEvidenceInventory") == evidence_rows
+          and custody.get("physicalEvidenceFileCount") == derived_count
+          and custody.get("physicalEvidenceBytes") == derived_bytes,
           "derived native custody counts differ from the independently reviewed raw corpus")
     _need(derived_path.is_file(),
           "derived reanalysis must be the bounded packet receipt")
+
+
+def _validate_source_owned_copy(source: dict[str, Any]) -> None:
+    before, after = source.get("ownedCopyBefore"), source.get("ownedCopyAfter")
+    expected_inventory_keys = {"expandedBytes", "fileCount", "files", "rosterSha256"}
+    _need(isinstance(before, dict) and isinstance(after, dict)
+          and set(before) == expected_inventory_keys and set(after) == expected_inventory_keys
+          and before == after,
+          "source/package complete owned-copy inventories differ")
+    rows = before.get("files")
+    _need(isinstance(rows, list) and len(rows) == SOURCE_PACKAGE_OWNED_FILE_COUNT
+          and before.get("fileCount") == SOURCE_PACKAGE_OWNED_FILE_COUNT
+          and before.get("expandedBytes") == SOURCE_PACKAGE_OWNED_EXPANDED_BYTES
+          and before.get("rosterSha256") == SOURCE_PACKAGE_OWNED_ROSTER_SHA256,
+          "source/package complete owned-copy count or inventory identity differs")
+    previous = ""
+    for row in rows:
+        item = _closed(row, {"bytes", "linkCount", "mode", "path", "sha256"},
+                       "source/package owned-copy row")
+        path = item["path"]
+        _need(isinstance(path, str) and path > previous and "\\" not in path
+              and not Path(path).is_absolute()
+              and all(part not in {"", ".", ".."} for part in path.split("/"))
+              and type(item["bytes"]) is int and item["bytes"] >= 0
+              and type(item["linkCount"]) is int and item["linkCount"] == 1
+              and type(item["mode"]) is int and item["mode"] in {0o664, 0o775}
+              and isinstance(item["sha256"], str) and SHA.fullmatch(item["sha256"]),
+              "source/package owned-copy row is malformed or unordered")
+        previous = path
+    roster_sha = _sha(json.dumps(rows, sort_keys=True, separators=(",", ":")).encode())
+    _need(sum(row["bytes"] for row in rows) == SOURCE_PACKAGE_OWNED_EXPANDED_BYTES
+          and roster_sha == SOURCE_PACKAGE_OWNED_ROSTER_SHA256,
+          "source/package owned-copy rows do not close to their fixed physical census")
 
 
 def _validate_gate_details(name: str, r: dict[str, Any], *, root: Path,
@@ -2118,10 +2244,10 @@ def _validate_gate_details(name: str, r: dict[str, Any], *, root: Path,
               and r.get("status") == "LOCAL_BOUNDED_SOURCE_PACKAGE_GUARDS_PASS"
               and r.get("failure") is None and source.get("equalityStatus") == "VERIFIED"
               and identity.get("head") == PRODUCER and identity.get("tree") == PRODUCER_TREE
-              and identity.get("trackedCount") == 5901
               and source.get("producerCheckoutTouched") is False
               and source.get("containerAbsenceVerified") is True,
               "source/package guard does not bind the clean P56 producer input")
+        _validate_source_owned_copy(source)
         _need(runtime.get("image") == "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10"
               and runtime.get("imageId") == runtime.get("image")
               and runtime.get("platform") == "linux/amd64"
