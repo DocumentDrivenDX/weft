@@ -49,6 +49,33 @@ Its [raw receipt record](evidence/pypi-0.4.53/README.md) supplies Ashlar's alrea
 selected dependency without changing that consumer's pins. This changes distribution,
 not runtime semantics, platform qualification or the latest-only support policy.
 
-Every public registry upload, including historical backfills, executes in
-GitHub Actions bound to the verified immutable tag and GitHub release. Local
-preparation and verification do not authorize a local registry upload.
+The Actions/OIDC route above remains the established route for releases that
+use it. The explicitly versioned 0.4.56 local profile is a narrow exception to
+that execution route: it permits local assembly and, after the separate
+reviewed public-transaction steps in its runbook, an owner-authorized local
+publication. It does not make local verification itself an upload permission,
+change the hosted publisher's requirements, or establish an automatic route
+for later versions. The 0.4.56 packet, final release gates, metadata merge,
+assembly review and publication authority are still required; until then the
+release remains held. See the [0.4.56 release record](releases/v0.4.56.md) and
+[local release runbook](local-release-runbook-0.4.56.md).
+
+The local packet validator derives P56/M source correspondence from complete
+source and index rosters, checks the selected build-input hashes and P-to-M
+ancestry observation, and verifies original per-platform receipt chains and
+wheel members. Required gate receipts are pinned to reviewed actual bytes;
+unknown or unfinished final gates remain held. The final asset review is
+performed after assembly and kept outside the evidence ZIP. The local profile
+does not change ordinary UMF AST 0.1: Weft's explicitly selected module
+envelope 0.2 admits only a matching non-null literal default and preserves
+omitted-input behavior.
+
+The actual Linux source/package-guard result is accepted only for its recorded
+P56 source, Python 3.11.17/Bun 1.4.3 tool profile, and measured complete output
+of 32,866 bytes. Its operator configured a 4 MiB raw-output threshold; that
+configuration is not approved as a future limit. The measured result remains
+below the original 1 MiB bound. Exact Linux x86_64 and ARM64 static-wheel
+artifacts and the macOS ARM64 build/static-only chain have separate accepted
+reviews. The Linux native run's original failure is preserved alongside its
+separate accepted predicate reanalysis; neither implies an additional runtime
+execution. Inherited-boundary and browser/WASM gates remain open.
