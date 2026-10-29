@@ -1,10 +1,6 @@
 name: Deploy signed Weft microsite
 on:
-  pull_request:
-    paths: ['website/**', 'scripts/build-site.mjs', 'scripts/sign-site.mjs', 'scripts/check-site.mjs', '.innsigle/**', 'docs/helix/02-design/brand-voice.md', 'docs/helix/02-design/design.md', '.github/workflows/pages.yml']
-  push:
-    branches: [main]
-    paths: ['website/**', 'scripts/build-site.mjs', 'scripts/sign-site.mjs', 'scripts/check-site.mjs', '.innsigle/**', 'docs/helix/02-design/brand-voice.md', 'docs/helix/02-design/design.md', '.github/workflows/pages.yml']
+  # Full browser qualification and Pages deployment are explicit manual runs.
   workflow_dispatch:
 permissions:
   contents: read
