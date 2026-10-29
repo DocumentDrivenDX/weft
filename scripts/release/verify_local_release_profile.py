@@ -51,6 +51,8 @@ FINAL_NATIVE_CAMPAIGN_ID = "661e79df-3dcb-40e3-87ed-29afcc472124"
 FINAL_NATIVE_EXECUTION_ID = "45389ee1fa7a40238d403ff0048626a1"
 FINAL_NATIVE_OUTPUT_ROOT = Path(
     "/private/tmp/g03-full14-bounded-operator-007-output/45389ee1fa7a40238d403ff0048626a1")
+INSTALLED_ADMISSION_OUTPUT_ROOT = Path(
+    "/private/tmp/g03-final-installed-prep-operator-001/runs/13fd35e735e542d6b5f1ee92b50c8796")
 FINAL_NATIVE_REANALYSIS_PROFILE = "umf.g03-full14-predicate-reanalysis/6"
 TABLE012_PROFILE = "umf.g03-table-operations-local-operator/2"
 TABLE012_STATUS = "LOCAL_TABLE_OPERATIONS_BOUNDARY_PASS"
@@ -302,6 +304,36 @@ def _closed(value: Any, keys: set[str], where: str) -> dict[str, Any]:
     return value
 
 
+def _canonical_relative(raw: Any, where: str) -> str:
+    _need(isinstance(raw, str) and raw and not raw.startswith("/") and "\\" not in raw,
+          f"{where} relative path is malformed")
+    _need(all(part not in {"", ".", ".."} for part in raw.split("/")),
+          f"{where} relative path is not canonical")
+    return raw
+
+
+def _historical_relative(raw: Any, root: Path, where: str) -> str:
+    """Translate a pinned historical absolute path lexically, without reading it."""
+    _need(isinstance(raw, str) and raw.startswith("/") and "\\" not in raw,
+          f"{where} historical path is not an absolute POSIX path")
+    parts = raw.split("/")
+    _need(parts[0] == "" and all(part not in {"", ".", ".."} for part in parts[1:]),
+          f"{where} historical path is not canonical")
+    root_text = root.as_posix()
+    _need(root.is_absolute() and root_text.startswith("/")
+          and "\\" not in root_text
+          and all(part not in {"", ".", ".."} for part in root_text.split("/")[1:]),
+          f"{where} accepted historical root is not canonical")
+    prefix = root_text + "/"
+    _need(raw.startswith(prefix), f"{where} historical path escapes its accepted root")
+    relative = raw[len(prefix):]
+    rel_parts = relative.split("/")
+    _need(relative and all(part not in {"", ".", ".."} for part in rel_parts)
+          and "/".join(root_text.split("/")[1:] + rel_parts) == raw[1:],
+          f"{where} historical path is not a canonical descendant")
+    return relative
+
+
 def _read_bounded(path: Path, cap: int, where: str) -> bytes:
     _need(not path.is_symlink(), f"{where} is a symlink")
     try:
@@ -335,10 +367,8 @@ def _regular(path: Path, cap: int, where: str) -> tuple[int, str]:
 
 
 def _under(root: Path, raw: Any, where: str) -> Path:
-    _need(isinstance(raw, str) and raw and "\\" not in raw, f"{where} path is invalid")
+    _canonical_relative(raw, f"{where} path")
     rel = Path(raw)
-    _need(not rel.is_absolute() and all(part not in {"", ".", ".."} for part in rel.parts),
-          f"{where} path escapes its packet root")
     path = root / rel
     current = root
     for part in rel.parts:
@@ -461,9 +491,8 @@ def _closed_operator_output_rows(root: Path, receipt_path: Path, rows: Any, *,
         rel = item["path"]
         _need(isinstance(rel, str) and rel and "\\" not in rel,
               f"{where} public metadata path is malformed")
+        _canonical_relative(rel, f"{where} public metadata path")
         relative = Path(rel)
-        _need(not relative.is_absolute() and all(part not in {"", ".", ".."}
-              for part in relative.parts), f"{where} public metadata path escapes its output root")
         output = base / relative
         current = base
         for part in relative.parts:
@@ -529,11 +558,7 @@ def _crossbind_capture(path_root: Path, row_by_relative: dict[str, dict[str, Any
               f"{where} guest capture path is outside /out")
         relative = (Path("owned/out") / absolute.relative_to(prefix)).as_posix()
     else:
-        absolute = Path(raw_path)
-        try:
-            relative = absolute.resolve(strict=False).relative_to(path_root.resolve(strict=True)).as_posix()
-        except ValueError as exc:
-            raise ProfileError(f"{where} outer capture path escapes its retained root") from exc
+        relative = _historical_relative(raw_path, path_root, where)
     row = row_by_relative.get(relative)
     _need(row is not None and row["sizeBytes"] == stream["rawBytes"]
           and row["sha256"] == stream["rawSha256"],
@@ -719,12 +744,8 @@ def _preflight_packet_payloads(root: Path, packet: dict[str, Any], packet_size: 
               f"gate {name} omits its physical output/log roster")
         for row in outputs:
             item = _closed(row, {"path", "sha256", "sizeBytes"}, f"gate {name} output file")
-            rel = item["path"]
-            _need(isinstance(rel, str) and rel and "\\" not in rel,
-                  f"gate {name} output path is malformed")
+            rel = _canonical_relative(item["path"], f"gate {name} output")
             relative = Path(rel)
-            _need(not relative.is_absolute() and all(part not in {"", ".", ".."}
-                  for part in relative.parts), f"gate {name} output path escapes its receipt")
             # The Table012/Truss011 native-roster adapters already return
             # packet-root-relative paths. Other operator output adapters retain
             # the native receipt-relative path convention.
@@ -1361,16 +1382,12 @@ def _absolute_evidence_rows(receipt_path: Path, rows: Any, where: str, *,
               f"{where} evidence identity is malformed")
         absolute = Path(path_value)
         if absolute.is_absolute():
-            source_root = historical_root.resolve(strict=True) if historical_root is not None else base
-            try:
-                relative_path = absolute.relative_to(source_root)
-            except ValueError as exc:
-                raise ProfileError(f"{where} absolute evidence path escapes its accepted source root") from exc
+            _need(historical_root is not None,
+                  f"{where} absolute evidence path has no accepted historical root")
+            relative_path = Path(_historical_relative(path_value, historical_root, where))
             absolute = base / relative_path
         else:
-            _need("\\" not in path_value
-                  and all(part not in {"", ".", ".."} for part in absolute.parts),
-                  f"{where} relative evidence path escapes its root")
+            _canonical_relative(path_value, f"{where} relative evidence")
             relative_path = absolute
             absolute = base / relative_path
         current = base
@@ -1409,8 +1426,14 @@ def _arm_selected_output_rows(receipt: dict[str, Any], receipt_path: Path, *,
     candidate = receipt.get("candidateWheel")
     _need(isinstance(candidate, dict) and isinstance(candidate.get("inspectionPath"), str),
           "ARM candidate inspection identity is absent")
-    inspection = Path(candidate["inspectionPath"])
-    size = inspection.stat(follow_symlinks=False).st_size
+    inspection = candidate["inspectionPath"]
+    relative = _historical_relative(inspection, ARM_BUILD_ORIGINAL_ROOT,
+                                    "ARM candidate inspection")
+    copy_size, copy_sha = _regular(receipt_path.parent / relative, MAX_EVIDENCE_FILE,
+                                   "ARM candidate inspection packet copy")
+    _need(copy_sha == candidate.get("inspectionSha256"),
+          "ARM candidate inspection packet copy digest differs")
+    size = copy_size
     rows.append({"path": str(inspection), "sizeBytes": size,
                  "sha256": candidate.get("inspectionSha256")})
     return _absolute_evidence_rows(receipt_path, rows, "ARM build",
@@ -1420,13 +1443,15 @@ def _arm_selected_output_rows(receipt: dict[str, Any], receipt_path: Path, *,
 def _mac_selected_output_rows(receipt: dict[str, Any], receipt_path: Path, *,
                               verify: bool = True) -> list[dict[str, Any]]:
     return _absolute_evidence_rows(receipt_path, receipt.get("selectedEvidenceFiles"),
-                                   "Mac audit", verify=verify)
+                                   "Mac audit", historical_root=MAC_AUDIT_ORIGINAL_ROOT,
+                                   verify=verify)
 
 
 def _producer_evidence_rows(record: dict[str, Any], receipt_path: Path,
-                            *, where: str) -> list[dict[str, Any]]:
-    """Return exact retained files named by a producer receipt, without rewriting it."""
-    base = receipt_path.parent.resolve(strict=True)
+                            *, where: str,
+                            copied_rows: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    """Return receipt-declared identities, resolving bytes only from packet copies."""
+    base = receipt_path.parent
     is_mac_build = where == "macos-arm64 build"
     is_mac_audit = where == "macos-arm64 audit"
     original_root = (MAC_BUILD_ORIGINAL_ROOT if is_mac_build else
@@ -1434,28 +1459,54 @@ def _producer_evidence_rows(record: dict[str, Any], receipt_path: Path,
                      X64_BUILD_ORIGINAL_ROOT if where == "linux-x86_64 build" else
                      X64_AUDIT_ORIGINAL_ROOT if where == "linux-x86_64 audit" else
                      ARM_BUILD_ORIGINAL_ROOT if where == "linux-aarch64 build" else None)
+    _need(copied_rows is None or isinstance(copied_rows, list),
+          f"{where} copied evidence mapping is malformed")
+    copied_by_source: dict[str, dict[str, Any]] = {}
+    for item in copied_rows or []:
+        _need(isinstance(item, dict)
+              and set(item) == {"sourcePath", "path", "sizeBytes", "sha256"}
+              and isinstance(item.get("sourcePath"), str)
+              and item["sourcePath"] not in copied_by_source
+              and isinstance(item.get("path"), str)
+              and type(item.get("sizeBytes")) is int
+              and 0 <= item["sizeBytes"] <= MAX_EVIDENCE_FILE
+              and isinstance(item.get("sha256"), str)
+              and SHA.fullmatch(item["sha256"]),
+              f"{where} copied evidence mapping has a malformed or duplicate source")
+        copied_by_source[item["sourcePath"]] = item
     rows: list[dict[str, Any]] = []
+
+    def source_identity(raw_path: Any, size: Any, digest: Any, label: str,
+                        allowed_root: Path | None = original_root) -> None:
+        _need(allowed_root is not None,
+              f"{where} {label} has no fixed historical evidence root")
+        _need(isinstance(raw_path, str) and raw_path,
+              f"{where} {label} historical path is absent")
+        path = Path(raw_path)
+        if path.is_absolute():
+            _historical_relative(raw_path, allowed_root, f"{where} {label}")
+            source_path = raw_path
+        else:
+            _canonical_relative(raw_path, f"{where} {label}")
+            source_path = (allowed_root / path).as_posix()
+        _need(isinstance(digest, str) and SHA.fullmatch(digest),
+              f"{where} {label} digest is malformed")
+        supplied = copied_by_source.get(source_path)
+        if size is None and copied_rows is not None:
+            _need(supplied is not None and supplied["sha256"] == digest,
+                  f"{where} {label} omitted size lacks a uniquely matching packet copy")
+            size = supplied["sizeBytes"]
+        _need(size is None or type(size) is int and 0 <= size <= MAX_EVIDENCE_FILE,
+              f"{where} {label} size is malformed")
+        rows.append({"sourcePath": source_path, "sizeBytes": size, "sha256": digest})
+
     if isinstance(record.get("selectedEvidenceFiles"), list):
         for item in record["selectedEvidenceFiles"]:
             _need(isinstance(item, dict), f"{where} selected-evidence row is malformed")
             raw_path = item.get("path")
             size = item.get("sizeBytes", item.get("bytes"))
             digest = item.get("sha256")
-            _need(isinstance(raw_path, str) and type(size) is int
-                  and isinstance(digest, str) and SHA.fullmatch(digest),
-                  f"{where} selected-evidence identity is malformed")
-            path = Path(raw_path)
-            if not path.is_absolute():
-                if original_root is not None:
-                    _need(all(part not in {"", ".", ".."} for part in path.parts),
-                          f"{where} historical evidence path is malformed")
-                    path = original_root / path
-                else:
-                    path = base / path
-            resolved = path.resolve(strict=True)
-            allowed_root = original_root.resolve() if original_root is not None else base
-            _need(resolved.is_relative_to(allowed_root), f"{where} selected evidence escapes its root")
-            rows.append({"sourcePath": str(resolved), "sizeBytes": size, "sha256": digest})
+            source_identity(raw_path, size, digest, "selected evidence")
     if isinstance(record.get("commands"), list):
         for command in record["commands"]:
             closure = command.get("physicalClosure") if isinstance(command, dict) else None
@@ -1466,28 +1517,13 @@ def _producer_evidence_rows(record: dict[str, Any], receipt_path: Path,
                     raw_path = item.get("path")
                     size = item.get("sizeBytes", item.get("bytes"))
                     digest = item.get("sha256")
-                    _need(isinstance(raw_path, str) and Path(raw_path).is_absolute()
-                          and type(size) is int and isinstance(digest, str)
-                          and SHA.fullmatch(digest),
+                    _need(isinstance(raw_path, str) and Path(raw_path).is_absolute(),
                           f"{where} command physical identity is malformed")
-                    resolved = Path(raw_path).resolve(strict=True)
-                    allowed_root = original_root.resolve() if original_root is not None else base
-                    _need(resolved.is_relative_to(allowed_root),
-                          f"{where} command evidence escapes its accepted source root")
-                    rows.append({"sourcePath": str(resolved), "sizeBytes": size,
-                                 "sha256": digest})
+                    source_identity(raw_path, size, digest, "command evidence")
     candidate = record.get("candidateWheel")
     if isinstance(candidate, dict) and isinstance(candidate.get("inspectionPath"), str):
-        raw_path = Path(candidate["inspectionPath"])
-        resolved = raw_path.resolve(strict=True)
-        allowed_root = original_root.resolve() if original_root is not None else base
-        _need(resolved.is_relative_to(allowed_root),
-              f"{where} wheel inspection escapes its accepted source root")
-        size = resolved.stat(follow_symlinks=False).st_size
-        digest = candidate.get("inspectionSha256")
-        _need(isinstance(digest, str) and SHA.fullmatch(digest),
-              f"{where} wheel inspection digest is malformed")
-        rows.append({"sourcePath": str(resolved), "sizeBytes": size, "sha256": digest})
+        source_identity(candidate["inspectionPath"], candidate.get("inspectionSizeBytes"),
+                        candidate.get("inspectionSha256"), "wheel inspection")
     if isinstance(record.get("files"), list):
         for item in record["files"]:
             _need(isinstance(item, dict), f"{where} file evidence is malformed")
@@ -1497,13 +1533,7 @@ def _producer_evidence_rows(record: dict[str, Any], receipt_path: Path,
             _need(isinstance(raw_path, str) and type(size) is int
                   and isinstance(digest, str) and SHA.fullmatch(digest),
                   f"{where} file evidence identity is malformed")
-            rel = Path(raw_path)
-            _need(not rel.is_absolute() and all(part not in {"", ".", ".."} for part in rel.parts),
-                  f"{where} file evidence escapes its root")
-            resolved = (base / rel).resolve(strict=True)
-            _need(resolved.is_relative_to(base),
-                  f"{where} file evidence escapes its receipt root")
-            rows.append({"sourcePath": str(resolved), "sizeBytes": size, "sha256": digest})
+            source_identity(raw_path, size, digest, "file evidence")
     operator = record.get("operator")
     if isinstance(operator, dict):
         operator_files: list[tuple[str, Any, Any]] = []
@@ -1528,16 +1558,9 @@ def _producer_evidence_rows(record: dict[str, Any], receipt_path: Path,
                   and type(size) is int and 0 <= size <= MAX_EVIDENCE_FILE
                   and isinstance(digest, str) and SHA.fullmatch(digest),
                   f"{where} operator source identity is malformed")
-            resolved = Path(raw_path).resolve(strict=True)
-            approved_external = (
-                is_mac_build and resolved.is_relative_to(
-                    MAC_BUILD_OPERATOR_ROOT.resolve())
-                or is_mac_audit and resolved.is_relative_to(
-                    MAC_AUDIT_OPERATOR_ROOT.resolve())
-            )
-            _need(resolved.is_relative_to(base) or approved_external,
-                  f"{where} operator source escapes its closed evidence roots")
-            rows.append({"sourcePath": str(resolved), "sizeBytes": size, "sha256": digest})
+            operator_root = (MAC_BUILD_OPERATOR_ROOT if is_mac_build else
+                             MAC_AUDIT_OPERATOR_ROOT if is_mac_audit else original_root)
+            source_identity(raw_path, size, digest, "operator source", operator_root)
     if is_mac_audit:
         source = record.get("originalInputs", {}).get("source", {})
         before = source.get("custodyAssetsBefore")
@@ -1545,25 +1568,31 @@ def _producer_evidence_rows(record: dict[str, Any], receipt_path: Path,
         _need(isinstance(before, dict) and before == after
               and set(before) == {"custody.json", "git-stage-roster.txt", "source-inputs.rows.json"},
               "Mac source custody assets changed or have an open roster")
-        custody_root = MAC_CUSTODY_ROOT.resolve()
+        custody_root = MAC_CUSTODY_ROOT
         for name, fact in before.items():
             _need(isinstance(fact, dict) and set(fact) == {"bytes", "path", "sha256"}
                   and fact["path"] == str(custody_root / name)
                   and type(fact["bytes"]) is int
                   and isinstance(fact["sha256"], str) and SHA.fullmatch(fact["sha256"]),
                   "Mac source custody asset identity differs")
-            rows.append({"sourcePath": fact["path"], "sizeBytes": fact["bytes"],
-                         "sha256": fact["sha256"]})
+            source_identity(fact["path"], fact["bytes"], fact["sha256"],
+                            "Mac source custody", custody_root)
     by_path: dict[str, dict[str, Any]] = {}
     for row in rows:
         previous = by_path.get(row["sourcePath"])
-        _need(previous is None or previous == row,
+        _need(previous is None or (previous["sha256"] == row["sha256"]
+              and (previous["sizeBytes"] is None or row["sizeBytes"] is None
+                   or previous["sizeBytes"] == row["sizeBytes"])),
               f"{where} duplicates a physical file with conflicting identity")
-        by_path[row["sourcePath"]] = row
-    for row in by_path.values():
-        size, digest = _regular(Path(row["sourcePath"]), MAX_EVIDENCE_FILE, where)
-        _need(size == row["sizeBytes"] and digest == row["sha256"],
-              f"{where} physical producer bytes differ from receipt")
+        if previous is None or previous["sizeBytes"] is None:
+            by_path[row["sourcePath"]] = row
+    if copied_rows is not None:
+        for source_path, row in by_path.items():
+            copied = copied_by_source.get(source_path)
+            _need(copied is not None and row["sizeBytes"] is not None
+                  and (copied["sizeBytes"], copied["sha256"])
+                      == (row["sizeBytes"], row["sha256"]),
+                  f"{where} packet copy identity differs from original receipt")
     return [by_path[key] for key in sorted(by_path)]
 
 
@@ -1583,12 +1612,10 @@ def _source_package_output_inventory(root: Path, receipt_path: Path,
     for row in artifacts:
         item = _closed(row, {"bytes", "path", "sha256", "type"},
                        "source/package terminal artifact")
-        _need(item["type"] == "file" and isinstance(item["path"], str)
-              and item["path"] and "\\" not in item["path"],
+        _need(item["type"] == "file",
               "source/package terminal artifact path/type is invalid")
+        _canonical_relative(item["path"], "source/package terminal artifact")
         rel = Path(item["path"])
-        _need(not rel.is_absolute() and all(part not in {"", ".", ".."} for part in rel.parts),
-              "source/package terminal artifact escapes its receipt")
         output = base / rel
         current = base
         for part in rel.parts:
@@ -1635,12 +1662,8 @@ def _source_package_output_inventory(root: Path, receipt_path: Path,
                 continue
             _need(isinstance(log_path, str) and Path(log_path).is_absolute(),
                   "nonempty source/package stream lacks an absolute physical log path")
-            historical = Path(log_path)
-            try:
-                logical_log = "logs/" + historical.relative_to(
-                    SOURCE_GUARD_ORIGINAL_LOG_ROOT).as_posix()
-            except ValueError as exc:
-                raise ProfileError("source/package stream path is outside the reviewed run") from exc
+            logical_log = "logs/" + _historical_relative(
+                log_path, SOURCE_GUARD_ORIGINAL_LOG_ROOT, "source/package stream")
             artifact = artifact_by_logical.get(logical_log)
             _need(artifact is not None and artifact[0] not in matched
                   and artifact[2] == raw_bytes and artifact[3] == stream_sha,
@@ -1678,12 +1701,8 @@ def _operator_output_inventory(root: Path, receipt_path: Path, receipt: dict[str
     total = log_total = guest_logs = outer_logs = 0
     for row in files:
         item = _closed(row, {"path", "sha256", "sizeBytes"}, f"gate {name} output file")
-        rel = item["path"]
-        _need(isinstance(rel, str) and rel and "\\" not in rel,
-              f"gate {name} output path is malformed")
+        rel = _canonical_relative(item["path"], f"gate {name} output")
         relative = Path(rel)
-        _need(not relative.is_absolute() and all(part not in {"", ".", ".."}
-              for part in relative.parts), f"gate {name} output path escapes its receipt")
         output_path = base / relative
         for ancestor in [base, *(base / Path(*relative.parts[:i])
                                  for i in range(1, len(relative.parts) + 1))]:
@@ -1733,10 +1752,22 @@ def _operator_output_inventory(root: Path, receipt_path: Path, receipt: dict[str
     for outer_name in ("outer.stdout.log", "outer.stderr.log"):
         matching = next((entry for entry in preflight
                          if Path(entry[0]).name == outer_name), None)
+        closure_path = outer_by_name[outer_name]["path"] if outer_name in outer_by_name else None
+        if name == "linux-x86_64-final-installed-admission":
+            closure_relative = _historical_relative(
+                closure_path, INSTALLED_ADMISSION_OUTPUT_ROOT,
+                f"gate {name} outer capture") if closure_path is not None else None
+            copied_relative = (matching[1].relative_to(base).as_posix()
+                               if matching is not None else None)
+            closure_matches = closure_relative == copied_relative
+        else:
+            closure_matches = (
+                closure_path is not None
+                and Path(closure_path).is_absolute()
+                and Path(closure_path).resolve(strict=True)
+                    == matching[1].resolve(strict=True) if matching is not None else False)
         _need(matching is not None and outer_name in outer_by_name
-              and Path(outer_by_name[outer_name]["path"]).is_absolute()
-              and Path(outer_by_name[outer_name]["path"]).resolve(strict=True)
-                  == matching[1].resolve(strict=True)
+              and closure_matches
               and outer_by_name[outer_name].get("sha256") == matching[3]
               and outer_by_name[outer_name].get("sizeBytes") == matching[2],
               f"gate {name} outer capture bytes do not match the selected physical file")
@@ -1754,7 +1785,8 @@ def _operator_output_inventory(root: Path, receipt_path: Path, receipt: dict[str
 def _native_campaign_output_rows(receipt: dict[str, Any], receipt_path: Path) -> list[dict[str, Any]]:
     """Map the immutable native007 evidence roster into the packet copy."""
     _need(receipt.get("outputRoot") == str(FINAL_NATIVE_OUTPUT_ROOT)
-          and receipt_path.parent.name == FINAL_NATIVE_EXECUTION_ID,
+          and receipt.get("executionId") == FINAL_NATIVE_EXECUTION_ID
+          and receipt.get("campaignId") == FINAL_NATIVE_CAMPAIGN_ID,
           "native007 evidence root/execution identity differs")
     rows = receipt.get("evidenceFiles")
     _need(isinstance(rows, list) and len(rows) == 181,
@@ -1762,12 +1794,9 @@ def _native_campaign_output_rows(receipt: dict[str, Any], receipt_path: Path) ->
     by_path: dict[str, dict[str, Any]] = {}
     for row in rows:
         item = _closed(row, {"path", "sizeBytes", "sha256"}, "native007 evidence row")
-        rel = item["path"]
-        _need(isinstance(rel, str) and rel and "\\" not in rel,
-              "native007 evidence path is malformed")
+        rel = _canonical_relative(item["path"], "native007 evidence")
         path = Path(rel)
-        _need(not path.is_absolute() and all(part not in {"", ".", ".."} for part in path.parts)
-              and rel not in by_path and type(item["sizeBytes"]) is int
+        _need(rel not in by_path and type(item["sizeBytes"]) is int
               and 0 <= item["sizeBytes"] <= MAX_EVIDENCE_FILE
               and isinstance(item["sha256"], str) and SHA.fullmatch(item["sha256"]),
               "native007 evidence row is unsafe or duplicated")
@@ -1791,12 +1820,8 @@ def _native_campaign_output_rows(receipt: dict[str, Any], receipt_path: Path) ->
                   and stream.get("rawBytes") == stream.get("retainedBytes")
                   and stream.get("rawSha256") == stream.get("sha256"),
                   "native007 outer stream capture is incomplete")
-            absolute = Path(stream.get("path", ""))
-            try:
-                relative = absolute.resolve(strict=True).relative_to(
-                    FINAL_NATIVE_OUTPUT_ROOT.resolve(strict=True)).as_posix()
-            except (OSError, ValueError) as exc:
-                raise ProfileError("native007 outer log escapes the owned run root") from exc
+            relative = _historical_relative(stream.get("path"), FINAL_NATIVE_OUTPUT_ROOT,
+                                            "native007 outer log")
             evidence = by_path.get(relative)
             _need(evidence is not None
                   and evidence["sizeBytes"] == stream["retainedBytes"]
@@ -1947,8 +1972,8 @@ def _validate_native_reanalysis(r: dict[str, Any], derived: dict[str, Any], *,
           and custody.get("rawScenarioCount") == 19
           and custody.get("sourceSealFileCount") == 8,
           "derived native custody counts differ from the independently reviewed raw corpus")
-    _need(derived_path.is_file() and receipt_path.parent.name == FINAL_NATIVE_EXECUTION_ID,
-          "derived reanalysis must be packetized beside its original run copy")
+    _need(derived_path.is_file(),
+          "derived reanalysis must be the bounded packet receipt")
 
 
 def _validate_gate_details(name: str, r: dict[str, Any], *, root: Path,
@@ -2271,12 +2296,8 @@ def _validate_table012_details(r: dict[str, Any], receipt_path: Path) -> None:
                       and stream.get("sha256") == stream.get("rawSha256"),
                       "Table012 phase command capture is truncated or unclosed")
                 rel = stream.get("path")
-                _need(isinstance(rel, str) and rel,
-                      "Table012 phase command path is absent")
+                _canonical_relative(rel, "Table012 phase command")
                 expected_path = Path(rel)
-                _need(not expected_path.is_absolute()
-                      and not any(part in {"", ".", ".."} for part in expected_path.parts),
-                      "Table012 phase command path escapes its receipt root")
                 public_rel = f"{phase.get('phase')}/{rel}"
                 row = next((row for row in r["publicFiles"] if row["path"] == public_rel), None)
                 _need(row is not None and row["sizeBytes"] == stream["bytes"]
@@ -2334,16 +2355,18 @@ def _validate_table012_details(r: dict[str, Any], receipt_path: Path) -> None:
               and len(closure["files"]) == 2,
               "Table012 outer capture physical closure is incomplete")
         for rel, raw_size, raw_sha in zip(cap["paths"], cap["rawBytes"], cap["rawSha256"], strict=True):
-            try:
-                relative = Path(rel).resolve(strict=False).relative_to(TABLE012_ROOT.resolve(strict=True)).as_posix()
-            except ValueError as exc:
-                raise ProfileError("Table012 outer capture escaped its original run root") from exc
+            relative = _historical_relative(rel, TABLE012_ROOT, "Table012 outer capture")
             row = next((row for row in r["publicFiles"] if row["path"] == relative), None)
             _need(row is not None and row.get("sizeBytes") == raw_size
                   and row.get("sha256") == raw_sha,
                   "Table012 outer capture bytes differ from the public metadata roster")
-        _need({Path(item["path"]).resolve(strict=False) for item in closure["files"]}
-              == {Path(path).resolve(strict=False) for path in cap["paths"]},
+        closure_paths = {_historical_relative(item["path"], TABLE012_ROOT,
+                                              "Table012 outer physical closure")
+                         for item in closure["files"]}
+        capture_paths = {_historical_relative(path, TABLE012_ROOT,
+                                              "Table012 outer command capture")
+                         for path in cap["paths"]}
+        _need(closure_paths == capture_paths,
               "Table012 outer physical closure paths differ from command capture paths")
     raw_logs = sum(row["sizeBytes"] for row in r["publicFiles"]
                    if Path(row["path"]).name.endswith((".log", ".stdout", ".stderr")))
@@ -2584,11 +2607,8 @@ def _validate_truss011_details(r: dict[str, Any], receipt_path: Path) -> None:
             _crossbind_capture(TRUSS011_ROOT, output_by_path, stream,
                                where=f"Truss011 guest {command['name']}", guest=True)
     for binding in r.get("physicalEvidenceBindings", []):
-        path = Path(binding.get("path", ""))
-        try:
-            relative = path.resolve(strict=False).relative_to(TRUSS011_ROOT.resolve(strict=True)).as_posix()
-        except ValueError as exc:
-            raise ProfileError("Truss011 physical evidence binding escapes its original root") from exc
+        relative = _historical_relative(binding.get("path"), TRUSS011_ROOT,
+                                        "Truss011 physical evidence binding")
         row = output_by_path.get(relative)
         _need(row is not None and row.get("sizeBytes") == binding.get("sizeBytes")
               and row.get("sha256") == binding.get("sha256"),
@@ -2824,12 +2844,20 @@ def _wheel(root: Path, row: Any, expected_role: str) -> dict[str, Any]:
     _need(isinstance(given, list)
           and all(isinstance(row, dict)
                   and set(row) == {"sourcePath", "path", "sizeBytes", "sha256"}
+                  and isinstance(row.get("sourcePath"), str) and row["sourcePath"]
+                  and isinstance(row.get("path"), str)
+                  and type(row.get("sizeBytes")) is int
+                  and 0 <= row["sizeBytes"] <= MAX_EVIDENCE_FILE
+                  and isinstance(row.get("sha256"), str) and SHA.fullmatch(row["sha256"])
                   for row in given), "producer evidence packet roster is malformed")
     expected_by_path = {row["sourcePath"]: (row["sizeBytes"], row["sha256"])
                         for row in producer_evidence}
     given_by_path = {row["sourcePath"]: row for row in given}
     _need(len(given_by_path) == len(given) and set(given_by_path) == set(expected_by_path),
           "producer evidence packet paths differ from the original producer receipts")
+    copied_paths = [row["path"] for row in given]
+    _need(len(copied_paths) == len(set(copied_paths)),
+          "distinct producer source identities alias one packet evidence path")
     for source_path, expected_identity in expected_by_path.items():
         row = given_by_path[source_path]
         _need((row["sizeBytes"], row["sha256"]) == expected_identity,
@@ -2930,13 +2958,9 @@ def _verify_producer_chain(root: Path, item: dict[str, Any], role: str,
             _need(isinstance(physical, list) and len(physical) == 2,
                   "Mac build stage lacks both physical capture streams")
             for stream in physical:
-                source_path = Path(stream.get("path", ""))
-                try:
-                    relative = source_path.resolve(strict=True).relative_to(
-                        MAC_BUILD_ORIGINAL_ROOT.resolve())
-                except (OSError, ValueError) as exc:
-                    raise ProfileError("Mac build stage log escapes its result directory") from exc
-                _need(selected_build.get(relative.as_posix()) ==
+                relative = _historical_relative(stream.get("path"), MAC_BUILD_ORIGINAL_ROOT,
+                                                "Mac build stage log")
+                _need(selected_build.get(relative) ==
                       (stream.get("bytes"), stream.get("sha256")),
                       "Mac build stage log differs from selected evidence")
         audit_operator = audit.get("operator")
@@ -3068,8 +3092,10 @@ def _verify_producer_chain(root: Path, item: dict[str, Any], role: str,
     else:
         _need(review_sha == MAC_ARTIFACT_REVIEW_SHA256,
               "Mac artifact review is not the exact accepted build/static review")
-    evidence = (_producer_evidence_rows(build, build_path, where=f"{role} build")
-                + _producer_evidence_rows(audit, audit_path, where=f"{role} audit"))
+    evidence = (_producer_evidence_rows(build, build_path, where=f"{role} build",
+                                        copied_rows=item["producerEvidence"])
+                + _producer_evidence_rows(audit, audit_path, where=f"{role} audit",
+                                          copied_rows=item["producerEvidence"]))
     by_path: dict[str, dict[str, Any]] = {}
     for row in evidence:
         existing = by_path.get(row["sourcePath"])
