@@ -657,7 +657,24 @@ def _bounded_response_read(response: Any, cap: int, deadline: float) -> bytes:
     sock = getattr(getattr(getattr(bounded_response, "fp", None), "raw", None), "_sock", None)
     _need(callable(reader) and sock is not None and callable(getattr(sock, "settimeout", None)),
           "HTTP response lacks the bounded read1/socket shape")
+
+    def validate_terminal_response_state() -> None:
+        isclosed = getattr(bounded_response, "isclosed", None)
+        if callable(isclosed) and isclosed():
+            remaining_length = getattr(bounded_response, "length", None)
+            _need(remaining_length in (None, 0),
+                  "HTTP response closed before its declared Content-Length was read")
+            if getattr(bounded_response, "chunked", False):
+                _need(getattr(bounded_response, "chunk_left", object()) is None,
+                      "HTTP response closed before terminal chunk framing")
+
     while True:
+        # HTTPResponse closes its socket when a framed body reaches EOF.  Check
+        # that terminal state before settimeout touches the now-closed fd.
+        isclosed = getattr(bounded_response, "isclosed", None)
+        if callable(isclosed) and isclosed():
+            validate_terminal_response_state()
+            break
         remaining = deadline - time.monotonic()
         _need(remaining > 0, "network response exceeded its absolute child deadline")
         sock.settimeout(max(0.001, remaining))
@@ -665,6 +682,7 @@ def _bounded_response_read(response: Any, cap: int, deadline: float) -> bytes:
         _need(time.monotonic() <= deadline,
               "network response exceeded its absolute child deadline")
         if not chunk:
+            validate_terminal_response_state()
             break
         total += len(chunk)
         _need(total <= cap, "network response exceeds its byte cap")
