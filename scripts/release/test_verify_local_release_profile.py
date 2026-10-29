@@ -6,6 +6,7 @@ import csv
 import hashlib
 import io
 import json
+import shutil
 import struct
 import tempfile
 import unittest
@@ -1138,7 +1139,9 @@ class FullPacket:
                     row.update(sizeBytes=size, sha256=digest)
             # The native metadata file sizes stay exact, while deterministic content
             # and all capture/hash references are synthesized under this temp root.
-            original_prefix, new_prefix = str(original_root), str(root.resolve())
+            original_prefix = str(original_root)
+            historical_copy_root = self.root / "historical" / f"{label}-output"
+            new_prefix = str(historical_copy_root)
             for row in rows:
                 rel = row["path"]
                 size = row["sizeBytes"]
@@ -1187,7 +1190,7 @@ class FullPacket:
                       "ACCEPTED scoped full local Truss facts/entity lane PASS")
             review = ref(self.root, f"reviews/{label}-accepted.md",
                          (phrase + "\n" + receipt_ref["sha256"] + "\n").encode())
-            roots[prefix + "_ROOT"] = root.resolve()
+            roots[prefix + "_ROOT"] = historical_copy_root
             digests[gate_name], review_digests[gate_name] = receipt_ref["sha256"], review["sha256"]
             gate_refs[gate_name] = {"receipt": receipt_ref, "review": review}
         gate_refs["linux-wasm"] = dict(gate_refs["linux-browser"])
@@ -1379,9 +1382,14 @@ class FullPacket:
             outer_root.mkdir(parents=True,exist_ok=True)
             outer_rows=[]
             output_files=[]
+            installed_history = self.root / "historical" / "installed-admission-output"
             for stream in ("stdout","stderr"):
                 log=outer_root/f"outer.{stream}.log"; log.write_bytes(b"")
-                fact={"path":str(log.resolve()),"sizeBytes":0,"sha256":sha(b"")}
+                historical_path = (installed_history / "outer" / name / f"outer.{stream}.log"
+                                   if name == "linux-x86_64-final-installed-admission"
+                                   else log.resolve())
+                fact={"path":str(historical_path),
+                      "sizeBytes":0,"sha256":sha(b"")}
                 outer_rows.append(fact)
                 output_files.append({"path":f"outer/{name}/outer.{stream}.log",
                                      "sizeBytes":0,"sha256":sha(b"")})
@@ -1853,6 +1861,7 @@ class FullPacket:
                  "SOURCE_GUARD_SELECTED_BYTES":sum(row["bytes"] for row in selected_rows),
                  "SOURCE_GUARD_SELECTED_ROSTER_SHA256":sha((json.dumps(selected_rows,sort_keys=True)+"\n").encode()),
                  "SOURCE_GUARD_ORIGINAL_LOG_ROOT":(self.root / "historical/source-run/logs").resolve(),
+                 "INSTALLED_ADMISSION_OUTPUT_ROOT":self.root / "historical/installed-admission-output",
                  "TABLE012_ROOT":operator_fixture["roots"]["TABLE012_ROOT"],
                  "TABLE012_SOFTWARE_ROOT":operator_fixture["tableSoftwareRoot"],
                  "TABLE012_SELECTED":operator_fixture["tableSelected"],
@@ -1984,18 +1993,204 @@ class FullPacket:
                     "pythonIdentity": operator.get("pythonBefore") == [validator.MAC_PYTHON_BYTES, validator.MAC_PYTHON_SHA256],
                 }
                 self._check_test_fixture_fields(checks)
-            selected = validator._verify_producer_chain(
-                self.root, row, row["role"], row["filename"], row["sha256"])
+            build_ref = row["buildReceipt"]
+            audit_ref = row["auditReceipt"]
+            build, build_path, _, _ = validator._json_receipt(
+                self.root, build_ref, f"{row['role']} build fixture")
+            audit, audit_path, _, _ = validator._json_receipt(
+                self.root, audit_ref, f"{row['role']} audit fixture")
+            selected = (validator._producer_evidence_rows(
+                build, build_path, where=f"{row['role']} build")
+                + validator._producer_evidence_rows(
+                    audit, audit_path, where=f"{row['role']} audit"))
+            unique = {}
+            for evidence in selected:
+                prior = unique.get(evidence["sourcePath"])
+                if prior is not None and prior != evidence:
+                    raise AssertionError("synthetic producer evidence has conflicting identities")
+                unique[evidence["sourcePath"]] = evidence
             copied = []
-            for index, evidence in enumerate(selected):
+            for index, evidence in enumerate(unique[path] for path in sorted(unique)):
                 target_name = f"producer-evidence/{row['role']}/{index:03d}.bin"
                 target = self.root / target_name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes(Path(evidence["sourcePath"]).read_bytes())
+                raw = Path(evidence["sourcePath"]).read_bytes()
+                size, digest = len(raw), sha(raw)
+                if evidence["sizeBytes"] is not None and evidence["sizeBytes"] != size:
+                    raise AssertionError("synthetic producer source size differs from its receipt")
+                if evidence["sha256"] != digest:
+                    raise AssertionError("synthetic producer source digest differs from its receipt")
+                target.write_bytes(raw)
                 copied.append({"sourcePath": evidence["sourcePath"], "path": target_name,
-                               "sizeBytes": evidence["sizeBytes"], "sha256": evidence["sha256"]})
+                               "sizeBytes": size, "sha256": digest})
             row["producerEvidence"] = copied
+        # The validating fixture deliberately lacks every historical metadata
+        # root. Only explicit Table012/Truss011 software witnesses and the
+        # observed Mac Python identity remain external physical inputs.
+        for name in ("x64Build", "x64Audit", "armBuild", "macBuild", "macAudit",
+                     "macBuildOperator", "macAuditOperator", "macCustody", "macSource"):
+            shutil.rmtree(self.roots[name], ignore_errors=True)
         packet_path.write_text(json.dumps(packet, sort_keys=True) + "\n")
+
+
+class CopiedEvidencePathTests(unittest.TestCase):
+    def test_pathless_receipt_needs_no_historical_root_but_path_bearing_one_does(self):
+        with tempfile.TemporaryDirectory() as temp:
+            receipt_path = Path(temp) / "receipts/arm-static.json"
+            receipt_path.parent.mkdir()
+            self.assertEqual(validator._producer_evidence_rows(
+                {"profile": "pinned-arm-static-report"}, receipt_path,
+                where="linux-aarch64 audit"), [])
+            with self.assertRaisesRegex(validator.ProfileError,
+                                        "no fixed historical evidence root"):
+                validator._producer_evidence_rows({"selectedEvidenceFiles": [{
+                    "path": "static-report.json", "bytes": 0,
+                    "sha256": sha(b"")}]}, receipt_path,
+                    where="linux-aarch64 audit")
+
+    def test_historical_paths_are_lexical_canonical_and_root_bound(self):
+        root = Path("/tmp/g03-never-created-historical-root")
+        self.assertEqual(validator._historical_relative(
+            str(root / "logs" / "outer.stdout.log"), root, "test path"),
+            "logs/outer.stdout.log")
+        for bad in (str(root / ".." / "escape.log"),
+                    "/tmp/g03-never-created-historical-rootish/escape.log",
+                    str(root) + "//logs/escape.log",
+                    str(root) + "/logs/./escape.log"):
+            with self.subTest(path=bad):
+                with self.assertRaises(validator.ProfileError):
+                    validator._historical_relative(bad, root, "test path")
+
+    def test_installed_outer_capture_closes_against_packet_copy_not_origin(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            packet_gate = root / "gates/installed"
+            packet_gate.mkdir(parents=True)
+            empty_sha = sha(b"")
+            outputs = []
+            closure = []
+            for name in ("outer.stdout.log", "outer.stderr.log"):
+                (packet_gate / name).write_bytes(b"")
+                outputs.append({"path": name, "sizeBytes": 0, "sha256": empty_sha})
+                closure.append({"path": str(root / "absent-installed-run" / name),
+                                "sizeBytes": 0, "sha256": empty_sha})
+            receipt = {"outputFiles": outputs, "outputBytes": 0,
+                "logBytes": {"guest": 0, "outer": 0, "total": 0,
+                             "limit": validator.MAX_RAW_LOGS},
+                "outerCapturePhysicalClosure": {"verified": True, "errors": [],
+                                                  "files": closure}}
+            historical = root / "absent-installed-run"
+            with patch.object(validator, "INSTALLED_ADMISSION_OUTPUT_ROOT", historical):
+                rows = validator._operator_output_inventory(
+                    root, packet_gate / "operator-result.json", receipt,
+                    "linux-x86_64-final-installed-admission")
+                self.assertEqual([row["path"] for row in rows],
+                                 [f"gates/installed/{name}" for name in
+                                  ("outer.stdout.log", "outer.stderr.log")])
+                self.assertFalse(historical.exists())
+                bad = json.loads(json.dumps(receipt))
+                bad["outerCapturePhysicalClosure"]["files"][0]["path"] = str(
+                    historical / ".." / "escape" / "outer.stdout.log")
+                with self.assertRaises(validator.ProfileError):
+                    validator._operator_output_inventory(
+                        root, packet_gate / "operator-result.json", bad,
+                        "linux-x86_64-final-installed-admission")
+
+    def test_native_streams_use_pinned_run_identity_and_copied_parent_layout(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            historical = root / "absent-native-output" / validator.FINAL_NATIVE_EXECUTION_ID
+            empty_sha = sha(b"")
+            files = []
+            commands = []
+            for index in range(51):
+                streams = {}
+                for stream_name in ("stdout", "stderr"):
+                    relative = f"logs/command-{index:02d}.{stream_name}.log"
+                    files.append({"path": relative, "sizeBytes": 0, "sha256": empty_sha})
+                    streams[stream_name] = {"path": str(historical / relative),
+                        "truncated": False, "rawBytes": 0, "retainedBytes": 0,
+                        "rawSha256": empty_sha, "sha256": empty_sha}
+                commands.append({"name": f"command-{index:02d}", "timedOut": False,
+                    "drainExpired": False, "logCapExceeded": False, **streams})
+            files.extend({"path": f"selected/file-{index:03d}.json", "sizeBytes": 0,
+                          "sha256": empty_sha} for index in range(79))
+            receipt = {"outputRoot": str(historical),
+                "executionId": validator.FINAL_NATIVE_EXECUTION_ID,
+                "campaignId": validator.FINAL_NATIVE_CAMPAIGN_ID,
+                "evidenceFiles": files, "commands": commands}
+            receipt_path = root / "packet-copy-parent" / "operator-result.json"
+            with patch.object(validator, "FINAL_NATIVE_OUTPUT_ROOT", historical):
+                rows = validator._native_campaign_output_rows(receipt, receipt_path)
+                self.assertEqual(len(rows), 181)
+                self.assertFalse(historical.exists())
+                for key, value in (("executionId", "wrong"),
+                                   ("outputRoot", str(root / "different-root"))):
+                    changed = dict(receipt)
+                    changed[key] = value
+                    with self.subTest(identity=key):
+                        with self.assertRaisesRegex(validator.ProfileError,
+                                                    "evidence root/execution identity"):
+                            validator._native_campaign_output_rows(changed, receipt_path)
+                escaped = json.loads(json.dumps(receipt))
+                escaped["commands"][0]["stdout"]["path"] = str(historical / ".." / "escape.log")
+                with self.assertRaisesRegex(validator.ProfileError, "not canonical"):
+                    validator._native_campaign_output_rows(escaped, receipt_path)
+
+    def test_arm_inspection_size_and_digest_come_from_packet_copy(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            history = root / "absent-arm-origin"
+            packet_gate = root / "gates/arm"
+            packet_gate.mkdir(parents=True)
+            inspection = b"bounded copied wheel inspection\n"
+            (packet_gate / "wheel-inspection.json").write_bytes(inspection)
+            commands = [{"physicalClosure": {"verified": True, "errors": [], "files": []}}
+                        for _ in range(3)]
+            receipt = {"commands": commands, "candidateWheel": {
+                "inspectionPath": str(history / "wheel-inspection.json"),
+                "inspectionSha256": sha(inspection)}}
+            with patch.object(validator, "ARM_BUILD_ORIGINAL_ROOT", history):
+                rows = validator._arm_selected_output_rows(
+                    receipt, packet_gate / "result.json")
+                self.assertEqual(rows, [{"path": "wheel-inspection.json",
+                    "sizeBytes": len(inspection), "sha256": sha(inspection)}])
+                self.assertFalse(history.exists())
+                bad = json.loads(json.dumps(receipt))
+                bad["candidateWheel"]["inspectionSha256"] = "0" * 64
+                with self.assertRaisesRegex(validator.ProfileError, "packet copy digest differs"):
+                    validator._arm_selected_output_rows(bad, packet_gate / "result.json")
+
+    def test_producer_rows_bind_historical_ids_to_explicit_copy_mapping(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            history = root / "absent-x64-build"
+            packet_receipt = root / "receipts/build.json"
+            packet_receipt.parent.mkdir()
+            payload = b"producer evidence copy\n"
+            copy = root / "producer-evidence/item.bin"
+            copy.parent.mkdir()
+            copy.write_bytes(payload)
+            source = str(history / "logs/build.log")
+            record = {"selectedEvidenceFiles": [{"path": "logs/build.log",
+                "bytes": len(payload), "sha256": sha(payload)}]}
+            mapping = [{"sourcePath": source, "path": "producer-evidence/item.bin",
+                        "sizeBytes": len(payload), "sha256": sha(payload)}]
+            with patch.object(validator, "X64_BUILD_ORIGINAL_ROOT", history):
+                rows = validator._producer_evidence_rows(
+                    record, packet_receipt, where="linux-x86_64 build", copied_rows=mapping)
+                self.assertEqual(rows, [{"sourcePath": source, "sizeBytes": len(payload),
+                                         "sha256": sha(payload)}])
+                self.assertFalse(history.exists())
+                escaped = {"selectedEvidenceFiles": [{"path": "../escape.log",
+                    "bytes": len(payload), "sha256": sha(payload)}]}
+                with self.assertRaisesRegex(validator.ProfileError, "relative path is not canonical"):
+                    validator._producer_evidence_rows(
+                        escaped, packet_receipt, where="linux-x86_64 build", copied_rows=mapping)
+                wrong = [dict(mapping[0], sha256="0" * 64)]
+                with self.assertRaisesRegex(validator.ProfileError, "copy identity differs"):
+                    validator._producer_evidence_rows(
+                        record, packet_receipt, where="linux-x86_64 build", copied_rows=wrong)
 
 
 class SourceMapTests(unittest.TestCase):
@@ -2283,6 +2478,14 @@ class SourceMapTests(unittest.TestCase):
                 packet["status"] = "READY_FOR_ASSEMBLY"
                 packet_path.write_text(json.dumps(packet, sort_keys=True) + "\n")
                 fixture.attach_producer_evidence(packet_path)
+                historical_roots = [fixture.roots[name] for name in (
+                    "x64Build", "x64Audit", "armBuild", "macBuild", "macAudit",
+                    "macBuildOperator", "macAuditOperator", "macCustody", "macSource")]
+                patch_values = dict(patches)
+                historical_roots.extend((patch_values["TABLE012_ROOT"],
+                                         patch_values["TRUSS011_ROOT"]))
+                self.assertTrue(all(not path.exists() for path in historical_roots),
+                                "positive packet fixture must validate without original metadata roots")
                 direct_refs = [packet["producer"]["sourceMap"], packet["metadata"]["sourceMap"],
                     packet["metadata"]["ancestry"], *packet["metadata"]["files"],
                     *packet["preAssemblyReviews"]]
@@ -2340,7 +2543,10 @@ class SourceMapTests(unittest.TestCase):
             ("external-M-review", "outside-Q trust anchor"),
             ("native-member-report", "member bytes differ from static report: weft/weft.abi3.so"),
             ("original-failure-chain", "separate audit does not bind the exact original failed build and wheel"),
-            ("missing-producer-evidence", "producer evidence packet paths differ"),
+            ("missing-producer-evidence", None),
+            ("producer-copy-outside", "relative path is not canonical"),
+            ("producer-copy-digest", "copied producer evidence bytes differ"),
+            ("producer-copy-alias", "alias one packet evidence path"),
             ("false-Mac-runtime", "Mac gate overclaims beyond its static-only audit"),
             ("table-software-reclassified", "selected-artifact roster was omitted, expanded, or reclassified"),
             ("truss-profile-changed", "Truss011 original receipt identity/totals differ"),
@@ -2403,6 +2609,16 @@ class SourceMapTests(unittest.TestCase):
                             validator.X64_AUDIT_RESULT_SHA256 = audit_ref["sha256"]
                         elif name == "missing-producer-evidence":
                             packet["wheels"][0]["producerEvidence"].pop()
+                        elif name == "producer-copy-outside":
+                            packet["wheels"][0]["producerEvidence"][0]["path"] = "../../outside.bin"
+                        elif name == "producer-copy-digest":
+                            evidence_path = root / packet["wheels"][0]["producerEvidence"][0]["path"]
+                            raw = evidence_path.read_bytes()
+                            evidence_path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+                        elif name == "producer-copy-alias":
+                            rows = packet["wheels"][0]["producerEvidence"]
+                            self.assertGreaterEqual(len(rows), 2)
+                            rows[1]["path"] = rows[0]["path"]
                         elif name == "false-Mac-runtime":
                             gate_ref = packet["gates"]["macos-arm64-build-static"]["receipt"]
                             gate_receipt = json.loads((root / gate_ref["path"]).read_text())
@@ -2427,9 +2643,16 @@ class SourceMapTests(unittest.TestCase):
                             packet["gates"]["linux-wasm"]["receipt"] = dict(gate_ref)
 
                         packet_path.write_text(json.dumps(packet, sort_keys=True) + "\n")
-                        with self.assertRaisesRegex(validator.ProfileError, expected_error):
-                            validator.validate_packet(
-                                packet_path, expected_metadata_review_sha256=metadata_review_sha)
+                        if expected_error is None:
+                            with self.assertRaises(validator.ProfileError):
+                                validator.validate_packet(
+                                    packet_path,
+                                    expected_metadata_review_sha256=metadata_review_sha)
+                        else:
+                            with self.assertRaisesRegex(validator.ProfileError, expected_error):
+                                validator.validate_packet(
+                                    packet_path,
+                                    expected_metadata_review_sha256=metadata_review_sha)
                     finally:
                         scope.stop()
 
