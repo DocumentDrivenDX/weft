@@ -34,6 +34,13 @@ records and retained log hashes; it must not invent a GitHub run, hosted
 attestation, or Actions artifact identity. The actual UMF test source is a
 separate identity from Weft producer P56, and the release metadata commit M is
 validated from its source map and ancestry observation, not a packet boolean.
+The closed source-map/2 form stores P's complete sorted Git stage-row roster;
+the fixed 1,459-input projection is derived from the same pinned source-package
+receipt already required by the packet. M uses a single complete seven-path
+delta against that exact P map. The verifier reconstructs the logical maps and
+rechecks full roster, selected-input, source-blob and ancestry digests. The
+source-guard reference must be identical to the packet's source-package gate
+receipt; no selector or base path is supplied independently.
 
 The three original wheel byte streams must be exactly the x86_64 Linux,
 ARM64 Linux, and ARM64 macOS `cp39-abi3` wheels for `umf-weft==0.4.56`. Their
