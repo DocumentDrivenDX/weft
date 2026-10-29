@@ -54,6 +54,7 @@ pub struct Catalog {
     pub(crate) identity_name_fallback: bool,
     raw_read_opaque_extensions: bool,
     native_operation_domains: bool,
+    logical_defaults020: bool,
     pub(crate) exact_scalars: bool,
     pub(crate) exact_dates: bool,
     pub(crate) bounded_current_strings: bool,
@@ -75,15 +76,18 @@ fn fail(code: &str, message: &str) -> Diagnostic {
 /// preserve their value domain. External semantic type references are retained
 /// in source but remain outside the raw scalar profile.
 pub(crate) fn selected010(pin: &ModelPin, element: &Value) -> Result<()> {
-    selected010_inner(pin, element, false, false, None)
+    selected010_inner(pin, element, false, false, false, None)
 }
 pub(crate) fn selected010_raw_read(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
-    selected010_inner(pin, element, true, false, Some(document))
+    selected010_inner(pin, element, true, false, false, Some(document))
 }
 pub(crate) fn selected010_table_operation(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
-    selected010_inner(pin, element, true, true, Some(document))
+    selected010_inner(pin, element, true, true, false, Some(document))
 }
-fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool, native_domains: bool, document: Option<&Value>) -> Result<()> {
+pub(crate) fn selected010_table_operation020(pin: &ModelPin, element: &Value, document: &Value) -> Result<()> {
+    selected010_inner(pin, element, true, true, true, Some(document))
+}
+fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: bool, native_domains: bool, logical_defaults020: bool, document: Option<&Value>) -> Result<()> {
     if pin.umf_version != "0.10.0" { return Ok(()); }
     const KNOWN: &[&str] = &["id", "name", "title", "description", "kind", "scalarType",
         "nullability", "cardinality", "itemType", "recordType", "facets", "members",
@@ -102,7 +106,18 @@ fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: b
             })
         })
     });
-    if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())&&!(native_domains&&element["kind"]=="field"&&k=="allowedValues")))
+    let default020_is_closed = element.get("default").is_none_or(|default| {
+        logical_defaults020
+            && element["kind"] == "field"
+            && default.as_object().is_some_and(|members| {
+                members.len() == 2
+                    && members.contains_key("on")
+                    && members.contains_key("value")
+                    && default["on"] == "missing"
+                    && !default["value"].is_null()
+            })
+    });
+    if element.as_object().is_none_or(|m|m.keys().any(|k|!KNOWN.contains(&k.as_str())&&!(native_domains&&element["kind"]=="field"&&k=="allowedValues")&&!(logical_defaults020&&element["kind"]=="field"&&k=="default"&&default020_is_closed)))
         || element.get("semanticTypes").is_some()
         || !extensions_supported
     { return Err(fail("WFT-TYPE", "Selected UMF 0.10 element has semantics outside the raw scalar profile")); }
@@ -134,7 +149,11 @@ impl Catalog {
                 .find(|(input, _)| input.pin == *pin)
                 .map(|(_, document)| document)
                 .ok_or_else(|| fail("WFT-PIN", "Selected element has no exact owning document"))?;
-            if self.native_operation_domains { selected010_table_operation(pin, element, document) }
+            if self.native_operation_domains && self.logical_defaults020 {
+                selected010_table_operation020(pin, element, document)
+            } else if self.native_operation_domains {
+                selected010_table_operation(pin, element, document)
+            }
             else { selected010_raw_read(pin, element, document) }
         }
         else { selected010(pin, element) }
@@ -179,6 +198,11 @@ impl Catalog {
     pub(crate) fn prepare_table_operation010(inputs: Vec<ModuleInput>) -> Result<Self> {
         let mut catalog=Self::prepare_raw_read010(inputs)?;
         catalog.native_operation_domains=true;
+        Ok(catalog)
+    }
+    pub(crate) fn prepare_table_operation020(inputs: Vec<ModuleInput>) -> Result<Self> {
+        let mut catalog=Self::prepare_table_operation010(inputs)?;
+        catalog.logical_defaults020=true;
         Ok(catalog)
     }
     pub(crate) fn prepare_security_bounded_strings(inputs: Vec<ModuleInput>) -> Result<Self> {
@@ -302,7 +326,7 @@ impl Catalog {
             }
             index
         }).collect();
-        Ok(Self { inputs, documents, element_locations, record_names, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version == Some("0.10.0"), identity_name_fallback:false, raw_read_opaque_extensions:false, native_operation_domains:false })
+        Ok(Self { inputs, documents, element_locations, record_names, exact_numbers:false, field_projection_decimal38:false, sdk_scalar_presence:false, exact_scalars:false, exact_dates:false, bounded_current_strings:false, security_inputs:required_version == Some("0.10.0"), identity_name_fallback:false, raw_read_opaque_extensions:false, native_operation_domains:false, logical_defaults020:false })
     }
     pub(crate) fn local_element_by_ids(&self, document: usize, module: &str, element: &str) -> Option<&Value> {
         let (module_index, elements) = self.element_locations.get(document)?.get(module)?;
@@ -508,6 +532,48 @@ impl Catalog {
             logical_type,
             self.query_name(field).expect("matched query name").into(),
         ))
+    }
+}
+
+#[cfg(test)]
+mod selected_module020_tests {
+    use super::*;
+    use serde_json::json;
+
+    fn pin() -> ModelPin {
+        ModelPin {
+            document_id: "demo".into(),
+            revision: "1".into(),
+            umf_version: "0.10.0".into(),
+            sha256: "0".repeat(64),
+        }
+    }
+
+    fn field(default: Value) -> Value {
+        json!({
+            "kind":"field", "scalarType":"integer", "cardinality":"one",
+            "nullability":"required", "extensions":{}, "facets":{},
+            "default":default
+        })
+    }
+
+    #[test]
+    fn module020_is_the_only_selected_path_that_admits_closed_non_null_defaults() {
+        let pin = pin();
+        let document = json!({});
+        let accepted = field(json!({"on":"missing","value":{"integerToken":"5"}}));
+        assert!(selected010_table_operation020(&pin, &accepted, &document).is_ok());
+        assert!(selected010_table_operation(&pin, &accepted, &document).is_err());
+        assert!(selected010(&pin, &accepted).is_err());
+
+        for invalid in [
+            json!({"on":"missing","value":null}),
+            json!({"on":"null","value":{"integerToken":"5"}}),
+            json!({"on":"missing","value":{"integerToken":"5"},"extra":true}),
+        ] {
+            let field = field(invalid);
+            assert!(selected010_table_operation020(&pin, &field, &document).is_err());
+        }
     }
 }
 

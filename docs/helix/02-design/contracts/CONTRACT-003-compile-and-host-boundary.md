@@ -234,6 +234,47 @@ Two module documents in one logical query are allowed only if the chosen backend
 maps both. Preserve unrelated extension content and compare exact reports through
 native Python/browser; neither wrapper may implement its own resolver or emitter.
 
+## Explicit ordinary table-operation module profile 0.2
+
+The prepared native table-operation module envelope accepts the existing
+`weft.table-operation-module/0.1` profile and the explicitly selected
+`weft.table-operation-module/0.2` successor. The 0.1 profile retains its exact
+source admission, outputs and refusal behavior. The 0.2 profile is selected only
+by the trusted caller's module-preparation envelope; model contents, operation
+requests, installed dependency versions and failed compiler calls never select a
+profile or trigger fallback. The ordinary UMF module declaration vocabulary,
+`umf.tables` payload and ordinary operation AST do not change.
+
+Profile 0.2 admits the existing ordinary operation source plus a narrowly
+qualified logical Field default when all of the following hold: `Field.default`
+has exactly `{on:"missing",value:CoreLiteral}`; the non-null value
+validates under the original Core scalar domain and its applicable facets; the
+Field is mapped by the exact retained `umf.tables` Table/Column and native
+binding; and that Column declares a literal native default with the same Core
+scalar meaning. Logical NULL defaults refuse under the existing UMF matching
+rule; native-only NULL defaults retain their prior behavior.
+Comparison uses the existing typed literal equality and native-capacity checks,
+not JSON spelling or display names. Only the six established nontemporal
+operation carrier families are eligible: boolean/boolean, string/text or
+varchar, integer/int2 or int4 or int8, decimal/numeric, UUID/uuid and
+bits128/bytea. Logical date/timestamp defaults and local timestamps are not
+admitted. Existing native-only defaults, including temporal defaults, retain
+their prior behavior. Unknown Field qualifiers, a missing/extra default
+member, any trigger other than `missing`, nonliteral or mismatched native
+defaults, unsupported carriers and invalid literals refuse before an operation
+program is produced.
+
+The admission check retains the complete pinned UMF source unchanged. It does
+not fill an omitted operation input, synthesize a value, rewrite a stored row,
+or change native omission, explicit-NULL or explicit-value semantics. Existing
+raw-read/query, seed and administrative paths remain on their existing profile
+and admission rules unless separately versioned. Direct operation requests keep
+their independent `weft.table-operation/0.1` or `/0.2` declaration profile; that
+version is not the table-operation-module selector. This bounded admission
+surface is the Weft implementation boundary for the selected G03 ordinary
+source subset; it grants no host authority, migration phase or native execution
+qualification.
+
 ## B-004 executable boundary in progress
 
 The pure Rust `compile::Compiler` owns an explicitly registered backend registry
