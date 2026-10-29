@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 import hashlib
+from http.client import IncompleteRead
 import io
 import json
 import os
+import socket
 import tempfile
+import threading
 import time
 import unittest
 import zipfile
@@ -26,6 +29,65 @@ WHEELS = (
 
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+class RawHTTPServer:
+    """One-request loopback peer that sends exact HTTP framing bytes."""
+
+    def __init__(self, response: bytes, *, delay_after_headers: float = 0.0):
+        self.response = response
+        self.delay_after_headers = delay_after_headers
+        self.listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.listener.bind(("127.0.0.1", 0))
+        self.listener.listen(1)
+        self.listener.settimeout(2.0)
+        self.url = f"http://127.0.0.1:{self.listener.getsockname()[1]}/metadata"
+        self.error = None
+        self.thread = threading.Thread(target=self._serve, daemon=True)
+
+    def _serve(self):
+        connection = None
+        try:
+            connection, _ = self.listener.accept()
+            connection.settimeout(2.0)
+            request = bytearray()
+            while b"\r\n\r\n" not in request and len(request) < 64 * 1024:
+                part = connection.recv(4096)
+                if not part:
+                    break
+                request.extend(part)
+            if self.delay_after_headers:
+                headers_end = self.response.find(b"\r\n\r\n") + 4
+                connection.sendall(self.response[:headers_end])
+                time.sleep(self.delay_after_headers)
+                connection.sendall(self.response[headers_end:])
+            else:
+                connection.sendall(self.response)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
+        except BaseException as exc:
+            self.error = exc
+        finally:
+            if connection is not None:
+                connection.close()
+            self.listener.close()
+
+    def __enter__(self):
+        self.thread.start()
+        return self
+
+    def __exit__(self, *_exc):
+        self.listener.close()
+        self.thread.join(timeout=3.0)
+        if self.thread.is_alive():
+            raise AssertionError("loopback HTTP server did not stop within its bound")
+        if self.error is not None:
+            raise self.error
+
+
+def raw_http_response(status: str, headers: bytes, body: bytes = b"") -> bytes:
+    return b"HTTP/1.1 " + status.encode("ascii") + b"\r\n" + headers + b"\r\n" + body
 
 
 def tool_manifest_fixture(root: Path, payload_sizes: list[int]) -> Path:
@@ -341,6 +403,62 @@ class LocalAssemblyTests(unittest.TestCase):
             with self.assertRaisesRegex(ProfileError, "bounded read1/socket shape"):
                 publisher._request_json("https://api.github.com/", "GET", None)
         self.assertTrue(inner.closed)
+
+    def test_request_json_reads_real_loopback_content_length_and_error_responses(self):
+        large_body = b'{"ok":true,"padding":"' + b"x" * 70000 + b'"}'
+        cases = (
+            ("200 OK", b"Content-Length: " + str(len(large_body)).encode() + b"\r\n",
+             large_body, 200, {"ok": True, "padding": "x" * 70000}),
+            ("200 OK", b"Content-Length: 0\r\n", b"", 200, {}),
+            ("404 Not Found", b"Content-Length: 21\r\nContent-Type: application/json\r\n",
+             b'{"message":"missing"}', 404, {"message": "missing"}),
+        )
+        for status_line, headers, body, expected_status, expected_value in cases:
+            with self.subTest(status=status_line, body_bytes=len(body)):
+                response = raw_http_response(
+                    status_line, headers + b"Connection: close\r\n", body)
+                with RawHTTPServer(response) as server:
+                    status, value, raw = publisher._request_json(
+                        server.url, "GET", None, timeout=2.0)
+                self.assertEqual((status, value, raw),
+                                 (expected_status, expected_value, body))
+
+    def test_request_json_reads_real_chunked_response_through_trailers(self):
+        body = b'{"message":"chunked"}'
+        first, second = body[:8], body[8:]
+        framed = (f"{len(first):X}\r\n".encode() + first + b"\r\n"
+                  + f"{len(second):X}\r\n".encode() + second
+                  + b"\r\n0\r\nX-Result: complete\r\n\r\n")
+        response = raw_http_response(
+            "200 OK", b"Transfer-Encoding: chunked\r\nConnection: close\r\n", framed)
+        with RawHTTPServer(response) as server:
+            status, value, raw = publisher._request_json(server.url, "GET", None, timeout=2.0)
+        self.assertEqual((status, value, raw), (200, {"message": "chunked"}, body))
+
+    def test_request_json_real_transport_keeps_cap_deadline_and_truncation_refusals(self):
+        oversized = b'{"value":"this body is over the cap"}'
+        response = raw_http_response(
+            "200 OK", b"Content-Length: " + str(len(oversized)).encode()
+            + b"\r\nConnection: close\r\n", oversized)
+        with RawHTTPServer(response) as server, patch.object(publisher, "MAX_ENTRY", 8):
+            with self.assertRaisesRegex(ProfileError, "byte cap"):
+                publisher._request_json(server.url, "GET", None, timeout=2.0)
+
+        truncated = b'{"short":true}'
+        response = raw_http_response(
+            "200 OK", b"Content-Length: " + str(len(truncated) + 4).encode()
+            + b"\r\nConnection: close\r\n", truncated)
+        with RawHTTPServer(response) as server:
+            with self.assertRaises((ProfileError, IncompleteRead, EOFError, OSError)):
+                publisher._request_json(server.url, "GET", None, timeout=2.0)
+
+        stalled = b'{"ok":true}'
+        response = raw_http_response(
+            "200 OK", b"Content-Length: " + str(len(stalled)).encode()
+            + b"\r\nConnection: close\r\n", stalled)
+        with RawHTTPServer(response, delay_after_headers=0.3) as server:
+            with self.assertRaises((ProfileError, TimeoutError, OSError)):
+                publisher._request_json(server.url, "GET", None, timeout=0.1)
 
     def test_github_auth_stays_unredirected_and_endpoint_is_not_redirect_url(self):
         request_seen = []
