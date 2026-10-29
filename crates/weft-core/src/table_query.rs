@@ -44,6 +44,9 @@ pub struct PrepareModuleRequest {
 pub struct AdmittedQueryModule {
     target: String,
     module: String,
+    // Retain the trusted prepared-module admission profile with its owned
+    // source. Standalone query-module preparation always uses the legacy path.
+    _logical_defaults020: bool,
     binding: Arc<Binding>,
     model: Arc<crate::raw_read::AdmittedModel>,
     indexes: Arc<ModuleIndexes>,
@@ -84,15 +87,15 @@ pub fn prepare_module_json(raw: &str) -> Result<AdmittedQueryModule> {
         .and_then(|c| c["id"].as_str()).ok_or("query source module has no fixed query operation")?.to_owned();
     // Parse/validate the source model once. Selected query ASTs are compiled lazily.
     let model = Arc::new(crate::raw_read::prepare_operation_document(&request.binding, source, Some(&first_query))?);
-    prepare_module_shared(request.target, request.module, Arc::new(request.binding), model)
+    prepare_module_shared(request.target, request.module, Arc::new(request.binding), model, false)
 }
 
-pub(crate) fn prepare_module_shared(target: String, module: String, binding: Arc<Binding>, model: Arc<crate::raw_read::AdmittedModel>) -> Result<AdmittedQueryModule> {
+pub(crate) fn prepare_module_shared(target: String, module: String, binding: Arc<Binding>, model: Arc<crate::raw_read::AdmittedModel>, logical_defaults020: bool) -> Result<AdmittedQueryModule> {
     if !matches!(target.as_str(), "postgresql18" | "lakebase18") { return Err("query module target differs"); }
     let module_value = model.document["modules"].as_array().and_then(|modules|modules.iter().find(|m|m["id"]==module)).ok_or("query source module absent")?;
     if !module_value["extensions"]["umf.tables"]["commands"].as_array().is_some_and(|commands|commands.iter().any(|command|command["body"]["kind"]=="query")) { return Err("query source module has no fixed query operation"); }
     let indexes=Arc::new(ModuleIndexes::new(&model,&binding,&module)?);
-    Ok(AdmittedQueryModule { target, module, binding, model, indexes })
+    Ok(AdmittedQueryModule { target, module, _logical_defaults020: logical_defaults020, binding, model, indexes })
 }
 
 struct ModuleIndexes {

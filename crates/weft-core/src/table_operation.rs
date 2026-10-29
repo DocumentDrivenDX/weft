@@ -70,9 +70,15 @@ pub struct OperationField {
 struct OperationSource {
     target: String,
     module: String,
+    module_profile: OperationModuleProfile,
     binding: Arc<Binding>,
     model: Arc<crate::raw_read::AdmittedModel>,
     metadata: Arc<ModuleMetadata>,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum OperationModuleProfile {
+    Legacy01,
+    LogicalDefaults02,
 }
 #[derive(Debug)]
 struct ResolvedTable {
@@ -144,6 +150,7 @@ impl PreparedOperationModule {
             self.source.module.clone(),
             Arc::clone(&self.source.binding),
             Arc::clone(&self.source.model),
+            self.source.module_profile == OperationModuleProfile::LogicalDefaults02,
         )
     }
 }
@@ -373,10 +380,12 @@ pub fn prepare_module_json(raw: &str) -> Result<PreparedOperationModule> {
         crate::json::checked_json(raw).map_err(|_| "operation module JSON invalid or duplicate")?,
     )
     .map_err(|_| "operation module request shape differs")?;
-    if request.version != "weft.table-operation-module/0.1" {
-        return Err("operation module version differs");
-    }
-    let source = prepare_source(request.target, request.module, request.binding)?;
+    let module_profile = match request.version.as_str() {
+        "weft.table-operation-module/0.1" => OperationModuleProfile::Legacy01,
+        "weft.table-operation-module/0.2" => OperationModuleProfile::LogicalDefaults02,
+        _ => return Err("operation module version differs"),
+    };
+    let source = prepare_source(request.target, request.module, request.binding, module_profile)?;
     Ok(PreparedOperationModule { source })
 }
 
@@ -384,6 +393,7 @@ fn prepare_source(
     target: String,
     module_id: String,
     binding: Binding,
+    module_profile: OperationModuleProfile,
 ) -> Result<Arc<OperationSource>> {
     if !matches!(target.as_str(), "postgresql18" | "lakebase18")
         || binding
@@ -414,25 +424,112 @@ fn prepare_source(
         .ok_or("operation module has no supported command")?
         .to_owned();
     let binding = Arc::new(binding);
-    let model = Arc::new(crate::raw_read::prepare_operation_document(
-        &binding,
-        source_json,
-        Some(&first_operation),
-    )?);
-    let metadata = Arc::new(prepare_module_metadata(&binding, &model, module_index)?);
+    let model = Arc::new(match module_profile {
+        OperationModuleProfile::Legacy01 => crate::raw_read::prepare_operation_document(
+            &binding, source_json, Some(&first_operation),
+        )?,
+        OperationModuleProfile::LogicalDefaults02 =>
+            crate::raw_read::prepare_operation_document020(
+                &binding, source_json, Some(&first_operation),
+            )?,
+    });
+    let metadata = Arc::new(prepare_module_metadata(&binding, &model, module_index, module_profile)?);
     Ok(Arc::new(OperationSource {
         target,
         module: module_id,
+        module_profile,
         binding,
         model,
         metadata,
     }))
 }
 
+fn canonical_128_literal(field: &Value, value: &Value, carrier: &Carrier) -> Result<String> {
+    let (logical_type, wrapper, width) = match carrier {
+        Carrier::Uuid => ("uuid", "uuid", 36),
+        Carrier::Bits128 => ("bits128", "bits128Hex", 32),
+        _ => return Err("operation default carrier unsupported"),
+    };
+    if field["scalarType"] != logical_type || value.is_null()
+        || value.as_object().is_none_or(|members| members.len() != 1)
+    {
+        return Err("operation default literal differs from original Field");
+    }
+    let token = value[wrapper].as_str().ok_or("operation default literal wrapper differs")?;
+    let bytes = token.as_bytes();
+    let valid = if carrier == &Carrier::Uuid {
+        bytes.len() == width && bytes.iter().enumerate().all(|(index, byte)| {
+            if [8, 13, 18, 23].contains(&index) { *byte == b'-' } else { byte.is_ascii_hexdigit() }
+        })
+    } else {
+        bytes.len() == width && bytes.iter().all(u8::is_ascii_hexdigit)
+    };
+    if !valid { return Err("operation default literal token differs"); }
+    if field["facets"].as_object().is_some_and(|facets| !facets.is_empty())
+        || field["allowedValues"].as_array().is_some_and(|values| !values.is_empty())
+        || field["semanticTypes"].as_array().is_some_and(|types| !types.is_empty())
+    {
+        return Err("operation exact carrier qualifiers unsupported");
+    }
+    Ok(token.to_ascii_lowercase())
+}
+
+fn validate_logical_default020(
+    field: &Value,
+    column: &Value,
+    resolved: &OperationField,
+) -> Result<()> {
+    let logical = field.get("default").ok_or("operation logical default absent")?;
+    if logical.as_object().is_none_or(|members| {
+        members.len() != 2 || !members.contains_key("on") || !members.contains_key("value")
+    }) || logical["on"] != "missing" || logical["value"].is_null()
+    {
+        return Err("operation logical default profile differs");
+    }
+    let native = column.get("default").ok_or("operation native literal default absent")?;
+    if native.as_object().is_none_or(|members| {
+        members.len() != 2 || !members.contains_key("kind") || !members.contains_key("value")
+    }) || native["kind"] != "literal" || native["value"].is_null()
+    {
+        return Err("operation native literal default profile differs");
+    }
+    if matches!(resolved.carrier, Carrier::Date | Carrier::Timestamp | Carrier::LocalTimestamp) {
+        return Err("logical temporal defaults unsupported");
+    }
+
+    let logical_value = &logical["value"];
+    let native_value = &native["value"];
+    // Validate each spelling against the existing source Field and physical
+    // capacity before comparing its established typed identity.
+    native_seed_value(resolved, logical_value)?;
+    native_seed_value(resolved, native_value)?;
+    match &resolved.carrier {
+        Carrier::Uuid | Carrier::Bits128 => {
+            if canonical_128_literal(field, logical_value, &resolved.carrier)?
+                != canonical_128_literal(field, native_value, &resolved.carrier)?
+            {
+                return Err("logical and native literal defaults differ");
+            }
+        }
+        Carrier::Boolean | Carrier::String | Carrier::Integer | Carrier::Decimal => {
+            let logical_identity = crate::security_literals::normalized_literal(field, logical_value)
+                .map_err(|_| "operation logical default violates original Field")?;
+            let native_identity = crate::security_literals::normalized_literal(field, native_value)
+                .map_err(|_| "operation native default violates original Field")?;
+            if logical_identity.is_none() || logical_identity != native_identity {
+                return Err("logical and native literal defaults differ");
+            }
+        }
+        Carrier::Date | Carrier::Timestamp | Carrier::LocalTimestamp => unreachable!(),
+    }
+    Ok(())
+}
+
 fn prepare_module_metadata(
     binding: &Binding,
     model: &crate::raw_read::AdmittedModel,
     module_index: usize,
+    module_profile: OperationModuleProfile,
 ) -> Result<ModuleMetadata> {
     let module = &model.document["modules"][module_index];
     let payload = &module["extensions"]["umf.tables"];
@@ -570,6 +667,11 @@ fn prepare_module_metadata(
                 native_type,
                 prepared_literal,
             });
+            if module_profile == OperationModuleProfile::LogicalDefaults02
+                && field.get("default").is_some()
+            {
+                validate_logical_default020(field, column, &resolved)?;
+            }
             fields.insert(reference.clone(), Arc::clone(&resolved));
             if parameter_fields
                 .insert(reference.clone(), Arc::clone(&resolved))
@@ -654,7 +756,12 @@ pub fn admit_json(raw: &str) -> Result<AdmittedOperation> {
     ) {
         return Err("operation request version differs");
     }
-    let source = prepare_source(request.target, request.module, request.binding)?;
+    let source = prepare_source(
+        request.target,
+        request.module,
+        request.binding,
+        OperationModuleProfile::Legacy01,
+    )?;
     let module = PreparedOperationModule { source };
     let admitted = module
         .prepare_operation(&request.operation)?
@@ -903,4 +1010,77 @@ fn prepare_static_operation(
 pub(crate) fn native_seed_value(field: &OperationField, value: &Value) -> Result<Value> {
     values::literal(field, value)?;
     values::native_value(field, value)
+}
+
+#[cfg(test)]
+mod module_profile020_tests {
+    use super::*;
+
+    fn operation_field(carrier: Carrier, field: Value, native_type: Value) -> OperationField {
+        OperationField {
+            reference: json!({"module":"demo","element":"value"}),
+            native: "value".into(),
+            carrier,
+            nullable: field["nullability"] == "absent-allowed",
+            declaration: field,
+            native_type,
+            prepared_literal: None,
+        }
+    }
+
+    fn column(default: Value) -> Value {
+        json!({"default":{"kind":"literal","value":default}})
+    }
+
+    #[test]
+    fn selected_module020_matches_all_non_temporal_native_literal_families() {
+        let cases = [
+            (Carrier::Boolean, json!({"kind":"field","scalarType":"boolean","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"boolean":true}}}), json!({"kind":"boolean"}), json!({"boolean":true}), json!({"boolean":true})),
+            (Carrier::String, json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"Ada"}}}), json!({"kind":"text"}), json!({"string":"Ada"}), json!({"string":"Ada"})),
+            (Carrier::Integer, json!({"kind":"field","scalarType":"integer","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"integerToken":"5"}}}), json!({"kind":"int4"}), json!({"integerToken":"5"}), json!({"integerToken":"5"})),
+            (Carrier::Decimal, json!({"kind":"field","scalarType":"decimal","cardinality":"one","nullability":"required","extensions":{},"facets":{"precision":8,"scale":2},"default":{"on":"missing","value":{"decimalToken":"5.00"}}}), json!({"kind":"numeric","precision":8,"scale":2}), json!({"decimalToken":"5.00"}), json!({"decimalToken":"5.0"})),
+            (Carrier::Uuid, json!({"kind":"field","scalarType":"uuid","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"uuid":"ABCDEF01-2345-6789-abcd-ef0123456789"}}}), json!({"kind":"uuid"}), json!({"uuid":"ABCDEF01-2345-6789-abcd-ef0123456789"}), json!({"uuid":"abcdef01-2345-6789-ABCD-EF0123456789"})),
+            (Carrier::Bits128, json!({"kind":"field","scalarType":"bits128","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"bits128Hex":"ABCDEF0123456789abcdef0123456789"}}}), json!({"kind":"bytea"}), json!({"bits128Hex":"ABCDEF0123456789abcdef0123456789"}), json!({"bits128Hex":"abcdef0123456789ABCDEF0123456789"})),
+        ];
+        for (carrier, field, native_type, logical, native) in cases {
+            let operation_field = operation_field(carrier, field, native_type);
+            validate_logical_default020(&operation_field.declaration, &column(native.clone()), &operation_field)
+                .expect("typed-equivalent Core literals should match");
+            assert_eq!(native_seed_value(&operation_field, &logical).unwrap(), native_seed_value(&operation_field, &native).unwrap());
+        }
+    }
+
+    #[test]
+    fn selected_module020_refuses_mismatches_null_temporal_and_bad_shapes() {
+        let field = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"absent-allowed","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"Ada"}}});
+        let resolved = operation_field(Carrier::String, field.clone(), json!({"kind":"varchar","length":16}));
+        assert_eq!(validate_logical_default020(&field, &column(json!({"string":"Eve"})), &resolved), Err("logical and native literal defaults differ"));
+
+        let null_field = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"absent-allowed","extensions":{},"facets":{},"default":{"on":"missing","value":null}});
+        let null_resolved = operation_field(Carrier::String, null_field.clone(), json!({"kind":"varchar","length":16}));
+        assert!(validate_logical_default020(&null_field, &column(Value::Null), &null_resolved).is_err());
+
+        let extra_member = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"Ada"},"extra":true}});
+        let extra_resolved = operation_field(Carrier::String, extra_member.clone(), json!({"kind":"text"}));
+        assert!(validate_logical_default020(&extra_member, &column(json!({"string":"Ada"})), &extra_resolved).is_err());
+
+        let wrong_trigger = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"null","value":{"string":"Ada"}}});
+        let wrong_trigger_resolved = operation_field(Carrier::String, wrong_trigger.clone(), json!({"kind":"text"}));
+        assert!(validate_logical_default020(&wrong_trigger, &column(json!({"string":"Ada"})), &wrong_trigger_resolved).is_err());
+
+        let temporal = json!({"kind":"field","scalarType":"date","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"date":"2026-01-02"}}});
+        let temporal_resolved = operation_field(Carrier::Date, temporal.clone(), json!({"kind":"date"}));
+        assert_eq!(validate_logical_default020(&temporal, &column(json!({"date":"2026-01-02"})), &temporal_resolved), Err("logical temporal defaults unsupported"));
+    }
+
+    #[test]
+    fn selected_module020_checks_native_capacity_before_equality() {
+        let field = json!({"kind":"field","scalarType":"integer","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"integerToken":"2147483648"}}});
+        let resolved = operation_field(Carrier::Integer, field.clone(), json!({"kind":"int4"}));
+        assert!(validate_logical_default020(&field, &column(json!({"integerToken":"2147483648"})), &resolved).is_err());
+
+        let text = json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required","extensions":{},"facets":{},"default":{"on":"missing","value":{"string":"four"}}});
+        let varchar = operation_field(Carrier::String, text.clone(), json!({"kind":"varchar","length":3}));
+        assert!(validate_logical_default020(&text, &column(json!({"string":"four"})), &varchar).is_err());
+    }
 }

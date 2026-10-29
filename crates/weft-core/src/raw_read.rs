@@ -218,6 +218,18 @@ pub(crate) fn prepare_operation_document(
 ) -> Result<AdmittedModel> {
     prepare_native_document(binding, doc, operation, false, false, NativeDocumentMode::Runtime)
 }
+/// Admit a table-operation module selected under the explicit 0.2 envelope.
+/// This profile-specific path is not used by raw reads, direct queries, seeds,
+/// administrative operations or the legacy module envelope.
+pub(crate) fn prepare_operation_document020(
+    binding: &Binding,
+    doc: Json,
+    operation: Option<&str>,
+) -> Result<AdmittedModel> {
+    prepare_native_document_with_module020(
+        binding, doc, operation, false, false, NativeDocumentMode::Runtime, true,
+    )
+}
 /// Admit original operation meaning for a Weft-owned administrative compiler.
 /// This keeps the normal operation source/field/type checks while deliberately
 /// bypassing runtime lifecycle admission; the caller must establish a separate
@@ -236,6 +248,17 @@ fn prepare_native_document(
     seed: bool,
     temporal_read: bool,
     mode: NativeDocumentMode,
+) -> Result<AdmittedModel> {
+    prepare_native_document_with_module020(binding, doc, operation, seed, temporal_read, mode, false)
+}
+fn prepare_native_document_with_module020(
+    binding: &Binding,
+    doc: Json,
+    operation: Option<&str>,
+    seed: bool,
+    temporal_read: bool,
+    mode: NativeDocumentMode,
+    logical_defaults020: bool,
 ) -> Result<AdmittedModel> {
     if binding.tables.iter().flat_map(|t| &t.columns).any(|c| {
         matches!(
@@ -269,7 +292,11 @@ fn prepare_native_document(
         return Err("raw-read supports UMF core 0.10.0 sources only");
     }
     let catalog = if operation.is_some() || seed {
-        crate::model::Catalog::prepare_table_operation010(vec![input])
+        if logical_defaults020 && operation.is_some() {
+            crate::model::Catalog::prepare_table_operation020(vec![input])
+        } else {
+            crate::model::Catalog::prepare_table_operation010(vec![input])
+        }
     } else if matches!(mode, NativeDocumentMode::FiniteUnityCurrentSummary | NativeDocumentMode::FiniteUnityCurrentSum | NativeDocumentMode::FiniteUnityCurrentAvg) {
         crate::model::Catalog::prepare_raw_read010_finite_current_aggregate(vec![input])
     } else {
@@ -334,7 +361,13 @@ fn prepare_native_document(
                 return Err("column absent/ambiguous in UMF");
             };
             let (field, member) = matches.unwrap()[0];
-            (if operation.is_some() || seed { crate::model::selected010_table_operation(&record.pin, field, &doc) } else { crate::model::selected010_raw_read(&record.pin, field, &doc) }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
+            (if logical_defaults020 && operation.is_some() {
+                crate::model::selected010_table_operation020(&record.pin, field, &doc)
+            } else if operation.is_some() || seed {
+                crate::model::selected010_table_operation(&record.pin, field, &doc)
+            } else {
+                crate::model::selected010_raw_read(&record.pin, field, &doc)
+            }).map_err(|_| "selected UMF 0.10 field has unsupported meaning")?;
             let family = match c.carrier {
                 Carrier::Integer => "integer",
                 Carrier::Decimal => "decimal",

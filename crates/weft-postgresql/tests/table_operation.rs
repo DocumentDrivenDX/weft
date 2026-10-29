@@ -42,6 +42,40 @@ fn repin(r: &mut Value, source: Value) {
     r["binding"]["modelJson"] = json!(text);
     r["binding"]["modelSha256"] = json!(weft_core::json::sha256(text.as_bytes()));
 }
+fn add_default_measure(
+    document: &mut Value,
+    binding: &mut Value,
+    scalar_type: &str,
+    carrier: &str,
+    native_type: Value,
+    logical_default: Value,
+    native_default: Value,
+) {
+    let module = &mut document["modules"][0];
+    let facets = if scalar_type == "decimal" {
+        json!({"precision":8,"scale":2})
+    } else {
+        json!({})
+    };
+    module["elements"].as_array_mut().unwrap().push(json!({
+        "id":"measure", "kind":"field", "scalarType":scalar_type,
+        "cardinality":"one", "nullability":"required", "extensions":{},
+        "facets":facets, "default":{"on":"missing","value":logical_default}
+    }));
+    module["elements"][2]["members"].as_array_mut().unwrap().push(
+        json!({"module":"demo","element":"measure"})
+    );
+    module["extensions"]["umf.tables"]["tables"][0]["columns"]
+        .as_array_mut().unwrap().push(json!({
+            "field":{"module":"demo","element":"measure"},
+            "name":"measure", "nativeType":native_type,
+            "default":{"kind":"literal","value":native_default}
+        }));
+    binding["tables"][0]["columns"].as_array_mut().unwrap().push(json!({
+        "logical":"measure", "native":"measure", "carrier":carrier,
+        "nullable":false
+    }));
+}
 fn compile(r: Value) -> Value {
     serde_json::from_str(&weft_postgresql::table_operation::compile_json(
         &r.to_string(),
@@ -123,6 +157,210 @@ fn prepared_operation_module_reuses_source_and_returns_compact_call_programs() {
     assert_eq!(compiled["callKind"], "single");
     assert_eq!(compiled["declarationDigest"].as_str().unwrap().len(), 64);
 }
+
+#[test]
+fn explicit_module020_admits_only_matching_defaults_and_does_not_fill_omitted_inputs() {
+    let first = request("create");
+    let mut document = source();
+    let mut binding = first["binding"].clone();
+    add_default_measure(
+        &mut document, &mut binding, "string", "string", json!({"kind":"text"}),
+        json!({"string":"alice"}), json!({"string":"alice"}),
+    );
+    document["modules"][0]["extensions"]["umf.tables"]["commands"]
+        .as_array_mut().unwrap().push(json!({
+            "version":"umf.table-operation/0.1", "id":"owner_query",
+            "parameters":[], "consistency":"statement", "replay":"none",
+            "body":{
+                "kind":"query", "language":"weft.pg-select/0.1",
+                "sql":"SELECT COALESCE(id, '') AS id FROM notes",
+                "outputs":[{"name":"id","field":{"module":"demo","element":"id"}}],
+                "maxRows":10
+            }
+        }));
+    let text = serde_json::to_string(&document).unwrap();
+    binding["modelJson"] = json!(text);
+    binding["modelSha256"] = json!(weft_core::json::sha256(text.as_bytes()));
+
+    let module_request = |version: &str, binding: Value| json!({
+        "version":version,
+        "target":"postgresql18",
+        "module":"demo",
+        "binding":binding,
+    });
+    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &module_request("weft.table-operation-module/0.1", binding.clone()).to_string()
+    ).is_err());
+
+    let module = weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &module_request("weft.table-operation-module/0.2", binding.clone()).to_string()
+    ).expect("explicit module 0.2 should admit an exact matching source default");
+    let create = module.prepare_operation("create").unwrap();
+    let omitted: Value = serde_json::from_str(&create.bind_json(
+        r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"}}}}"#
+    )).unwrap();
+    assert_eq!(omitted["status"], "blocked");
+    let complete: Value = serde_json::from_str(&create.bind_json(
+        r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}}}"#
+    )).unwrap();
+    assert_eq!(complete["status"], "compiled", "{complete}");
+    assert_eq!(complete["nativeInputs"][0], json!({"id":"n2","owner":"alice"}));
+    assert!(!complete["sql"].as_str().unwrap().contains("measure"));
+    let owner_query = module
+        .prepare_query("owner_query")
+        .expect("module 0.2 should prepare the valid required-output query");
+    let owner_query_program: Value = serde_json::from_str(&owner_query.program_json()).unwrap();
+    assert_eq!(owner_query_program["status"], "compiled", "{owner_query_program}");
+    let owner_query_bind: Value = serde_json::from_str(
+        &owner_query.bind_json(r#"{"inputs":{}}"#),
+    )
+    .unwrap();
+    assert_eq!(owner_query_bind, json!({"nativeInputs":[{}]}));
+    let standalone_query_module = json!({
+        "version":"weft.table-query-module/0.1",
+        "target":"postgresql18",
+        "module":"demo",
+        "binding":binding.clone(),
+    });
+    assert!(weft_postgresql::table_query::PreparedQueryModule::prepare(
+        &standalone_query_module.to_string()
+    ).is_err());
+    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &module_request("weft.table-operation-module/0.3", binding.clone()).to_string()
+    ).is_err());
+    let mut unknown_envelope = module_request("weft.table-operation-module/0.2", binding.clone());
+    unknown_envelope["unexpected"] = json!(true);
+    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &unknown_envelope.to_string()
+    ).is_err());
+
+    let mut direct = first.clone();
+    direct["binding"] = binding.clone();
+    assert_eq!(compile(direct)["status"], "blocked");
+
+    let mut native_only = document.clone();
+    native_only["modules"][0]["elements"][3].as_object_mut().unwrap().remove("default");
+    let native_only_text = serde_json::to_string(&native_only).unwrap();
+    let mut native_only_binding = binding.clone();
+    native_only_binding["modelJson"] = json!(native_only_text);
+    native_only_binding["modelSha256"] =
+        json!(weft_core::json::sha256(native_only_text.as_bytes()));
+    let native_only_module = json!({
+        "version":"weft.table-operation-module/0.1",
+        "target":"postgresql18",
+        "module":"demo",
+        "binding":native_only_binding,
+    });
+    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &native_only_module.to_string()
+    ).is_ok());
+    let native_only_legacy = weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &native_only_module.to_string()
+    ).unwrap().prepare_operation("create").unwrap();
+    let native_only_v02 = weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &module_request("weft.table-operation-module/0.2", native_only_binding.clone()).to_string()
+    ).unwrap().prepare_operation("create").unwrap();
+    let call = r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}}}"#;
+    let baseline_text = native_only_legacy.bind_json(call);
+    let selected_text = native_only_v02.bind_json(call);
+    let baseline: Value = serde_json::from_str(&baseline_text).unwrap();
+    let selected: Value = serde_json::from_str(&selected_text).unwrap();
+    assert_eq!(baseline["status"], "compiled", "{baseline}");
+    assert_eq!(selected["status"], "compiled", "{selected}");
+    assert_eq!(baseline_text, selected_text);
+
+    let native_only_query_module = json!({
+        "version":"weft.table-operation-module/0.1",
+        "target":"postgresql18",
+        "module":"demo",
+        "binding":native_only_binding.clone(),
+    });
+    let native_only_query = weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &native_only_query_module.to_string()
+    )
+    .expect("native-only module 0.1 query baseline should prepare")
+    .prepare_query("owner_query")
+    .expect("native-only module 0.1 query should prepare");
+    let native_only_query_program: Value = serde_json::from_str(&native_only_query.program_json()).unwrap();
+    assert_eq!(native_only_query_program["status"], "compiled", "{native_only_query_program}");
+    let native_only_query_bind: Value = serde_json::from_str(
+        &native_only_query.bind_json(r#"{"inputs":{}}"#),
+    )
+    .unwrap();
+    assert_eq!(native_only_query_bind, json!({"nativeInputs":[{}]}));
+
+    let mut mismatch = document.clone();
+    mismatch["modules"][0]["extensions"]["umf.tables"]["tables"][0]["columns"][2]["default"]["value"] =
+        json!({"string":"eve"});
+    let mut bad_binding = binding.clone();
+    let mismatch_text = serde_json::to_string(&mismatch).unwrap();
+    bad_binding["modelJson"] = json!(mismatch_text);
+    bad_binding["modelSha256"] = json!(weft_core::json::sha256(mismatch_text.as_bytes()));
+    let mismatch_module = json!({
+        "version":"weft.table-operation-module/0.2",
+        "target":"postgresql18",
+        "module":"demo",
+        "binding":bad_binding,
+    });
+    assert!(weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &mismatch_module.to_string()
+    ).is_err());
+
+    let mut mismatched_native_binding = binding.clone();
+    let mismatched_text = serde_json::to_string(&mismatch).unwrap();
+    mismatched_native_binding["modelJson"] = json!(mismatched_text);
+    mismatched_native_binding["modelSha256"] =
+        json!(weft_core::json::sha256(mismatched_text.as_bytes()));
+    assert!(compile(json!({
+        "version":"weft.table-operation/0.1",
+        "target":"postgresql18",
+        "module":"demo",
+        "operation":"create",
+        "binding":mismatched_native_binding,
+        "call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}},
+        "idempotencyKey":"test-key"
+    }))["status"].as_str().unwrap() == "blocked");
+}
+
+#[test]
+fn explicit_module020_admits_matching_defaults_through_all_six_native_families() {
+    let cases = [
+        ("boolean", "boolean", json!({"kind":"boolean"}), json!({"boolean":true}), json!({"boolean":true})),
+        ("string", "string", json!({"kind":"text"}), json!({"string":"Ada"}), json!({"string":"Ada"})),
+        ("integer", "integer", json!({"kind":"int4"}), json!({"integerToken":"5"}), json!({"integerToken":"5"})),
+        ("decimal", "decimal", json!({"kind":"numeric","precision":8,"scale":2}), json!({"decimalToken":"5.00"}), json!({"decimalToken":"5.0"})),
+        ("uuid", "uuid", json!({"kind":"uuid"}), json!({"uuid":"ABCDEF01-2345-6789-ABCD-EF0123456789"}), json!({"uuid":"abcdef01-2345-6789-abcd-ef0123456789"})),
+        ("bits128", "bits128", json!({"kind":"bytea"}), json!({"bits128Hex":"ABCDEF0123456789ABCDEF0123456789"}), json!({"bits128Hex":"abcdef0123456789abcdef0123456789"})),
+    ];
+    for (scalar_type, carrier, native_type, logical, native) in cases {
+        let first = request("create");
+        let mut document = source();
+        let mut binding = first["binding"].clone();
+        add_default_measure(
+            &mut document, &mut binding, scalar_type, carrier, native_type,
+            logical, native,
+        );
+        let text = serde_json::to_string(&document).unwrap();
+        binding["modelJson"] = json!(text);
+        binding["modelSha256"] = json!(weft_core::json::sha256(text.as_bytes()));
+        let module_request = json!({
+            "version":"weft.table-operation-module/0.2",
+            "target":"postgresql18",
+            "module":"demo",
+            "binding":binding,
+        });
+        let module = weft_postgresql::table_operation::PreparedOperationModule::prepare(
+            &module_request.to_string()
+        ).unwrap_or_else(|error| panic!("{scalar_type} module preparation: {error}"));
+        let create = module.prepare_operation("create").unwrap();
+        let call = r#"{"idempotencyKey":"test-key","call":{"kind":"single","inputs":{"id":{"string":"n2"},"owner":{"string":"alice"}}}}"#;
+        let output: Value = serde_json::from_str(&create.bind_json(call)).unwrap();
+        assert_eq!(output["status"], "compiled", "{scalar_type}: {output}");
+        assert_eq!(output["nativeInputs"][0], json!({"id":"n2","owner":"alice"}));
+        assert!(!output["sql"].as_str().unwrap().contains("measure"));
+    }
+}
+
 #[test]
 fn source_original_sql_is_not_a_request_surface_and_legacy_guards_stay_closed() {
     let mut r = request("read_many");
