@@ -15,9 +15,11 @@ ddx:
 
 # Weft 0.4.56 local release runbook
 
-This runbook describes a narrow no-Actions release path for version 0.4.56.
-It is not a qualification receipt or authorization to publish. The local
-assembler is offline by default and accepts only a closed
+This runbook describes a narrow local release path for version 0.4.56; it
+does not dispatch workflows. Before a GitHub write, the publisher checks the
+five exact automatic workflows are `disabled_manually`; global Actions and
+manual workflows need not be disabled. It is not a qualification receipt or
+authorization to publish. The local assembler is offline by default and accepts only a closed
 `weft-local-build-static-release/1` packet whose exact source, artifacts,
 final gates, and pre-assembly source/artifact reviews are present and accepted.
 The independent review of the final asset directory is a later sidecar input

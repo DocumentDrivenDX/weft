@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import base64
+import copy
 import csv
 import hashlib
 import io
@@ -1329,12 +1330,23 @@ class FullPacket:
                         "stdout": {"rawBytes": stdout_size, "sha256": stdout_sha,
                                    "logPath": str(log_path.resolve()) if index == 0 else None},
                         "stderr": {"rawBytes": 0, "sha256": empty_sha, "logPath": None}})
+                owned_rows = [
+                    {"path": path, "bytes": len(path.encode()), "sha256": sha(path.encode()),
+                     "mode": 0o664, "linkCount": 1}
+                    for path in pmap["trackedPaths"]]
+                owned_bytes = sum(row["bytes"] for row in owned_rows)
+                owned_roster_sha = sha(json.dumps(
+                    owned_rows, sort_keys=True, separators=(",", ":")).encode())
+                self.owned_copy_facts = (len(owned_rows), owned_bytes, owned_roster_sha)
+                owned_inventory = {"expandedBytes": owned_bytes, "fileCount": len(owned_rows),
+                    "files": owned_rows, "rosterSha256": owned_roster_sha}
                 receipt = {"profile": profile, "status": status, "failure": None,
                     "hosted": False, "workflowRunId": None,
                     "source": {"equalityStatus": "VERIFIED",
-                        "identity": {"head": p_commit, "tree": p_tree, "trackedCount": 5901},
+                        "identity": {"head": p_commit, "tree": p_tree},
                         "producerCheckoutTouched": False, "containerAbsenceVerified": True,
-                        "ownedCopyAfter": {"files": []}},
+                        "ownedCopyBefore": owned_inventory,
+                        "ownedCopyAfter": json.loads(json.dumps(owned_inventory))},
                     "runtime": {"image": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
                         "imageId": "sha256:1f983eafda3fd12f069837f7e972179ec3b8d74587190751db85b555b3430c10",
                         "platform": "linux/amd64",
@@ -1363,14 +1375,6 @@ class FullPacket:
                     "cleanup":{"errors":[],"volumeAbsenceVerified":{
                         "g03-source-cargo-5cfb93d1-07c":True,
                         "g03-source-target-5cfb93d1-07c":True}}}
-                selected_by_path = {row["path"]: row for row in pmap["selectedBuildInputs"]}
-                receipt["source"]["ownedCopyAfter"]["files"] = [
-                    {"path": path, "bytes": selected_by_path[path]["bytes"]
-                        if path in selected_by_path else len(path.encode()),
-                     "sha256": selected_by_path[path]["sha256"]
-                        if path in selected_by_path else sha(path.encode()),
-                     "mode": 0o100644, "linkCount": 1}
-                    for path in pmap["trackedPaths"]]
             else:
                 receipt = {"profile": profile, "status": status,
                            "commands": [{"exitCode": 0, "timedOut": False, "outputCapped": False}],
@@ -1860,6 +1864,9 @@ class FullPacket:
                  "SOURCE_GUARD_SELECTED_COUNT":len(selected_rows),
                  "SOURCE_GUARD_SELECTED_BYTES":sum(row["bytes"] for row in selected_rows),
                  "SOURCE_GUARD_SELECTED_ROSTER_SHA256":sha((json.dumps(selected_rows,sort_keys=True)+"\n").encode()),
+                 "SOURCE_PACKAGE_OWNED_FILE_COUNT":self.owned_copy_facts[0],
+                 "SOURCE_PACKAGE_OWNED_EXPANDED_BYTES":self.owned_copy_facts[1],
+                 "SOURCE_PACKAGE_OWNED_ROSTER_SHA256":self.owned_copy_facts[2],
                  "SOURCE_GUARD_ORIGINAL_LOG_ROOT":(self.root / "historical/source-run/logs").resolve(),
                  "INSTALLED_ADMISSION_OUTPUT_ROOT":self.root / "historical/installed-admission-output",
                  "TABLE012_ROOT":operator_fixture["roots"]["TABLE012_ROOT"],
@@ -2096,46 +2103,113 @@ class CopiedEvidencePathTests(unittest.TestCase):
                         root, packet_gate / "operator-result.json", bad,
                         "linux-x86_64-final-installed-admission")
 
-    def test_native_streams_use_pinned_run_identity_and_copied_parent_layout(self):
+    def test_native_reanalysis_full_original_failure_and_derived_pass_shape(self):
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
-            historical = root / "absent-native-output" / validator.FINAL_NATIVE_EXECUTION_ID
-            empty_sha = sha(b"")
-            files = []
-            commands = []
-            for index in range(51):
-                streams = {}
-                for stream_name in ("stdout", "stderr"):
-                    relative = f"logs/command-{index:02d}.{stream_name}.log"
-                    files.append({"path": relative, "sizeBytes": 0, "sha256": empty_sha})
-                    streams[stream_name] = {"path": str(historical / relative),
-                        "truncated": False, "rawBytes": 0, "retainedBytes": 0,
-                        "rawSha256": empty_sha, "sha256": empty_sha}
-                commands.append({"name": f"command-{index:02d}", "timedOut": False,
-                    "drainExpired": False, "logCapExceeded": False, **streams})
-            files.extend({"path": f"selected/file-{index:03d}.json", "sizeBytes": 0,
-                          "sha256": empty_sha} for index in range(79))
-            receipt = {"outputRoot": str(historical),
-                "executionId": validator.FINAL_NATIVE_EXECUTION_ID,
-                "campaignId": validator.FINAL_NATIVE_CAMPAIGN_ID,
-                "evidenceFiles": files, "commands": commands}
-            receipt_path = root / "packet-copy-parent" / "operator-result.json"
-            with patch.object(validator, "FINAL_NATIVE_OUTPUT_ROOT", historical):
-                rows = validator._native_campaign_output_rows(receipt, receipt_path)
-                self.assertEqual(len(rows), 181)
-                self.assertFalse(historical.exists())
-                for key, value in (("executionId", "wrong"),
-                                   ("outputRoot", str(root / "different-root"))):
-                    changed = dict(receipt)
-                    changed[key] = value
-                    with self.subTest(identity=key):
-                        with self.assertRaisesRegex(validator.ProfileError,
-                                                    "evidence root/execution identity"):
-                            validator._native_campaign_output_rows(changed, receipt_path)
-                escaped = json.loads(json.dumps(receipt))
-                escaped["commands"][0]["stdout"]["path"] = str(historical / ".." / "escape.log")
-                with self.assertRaisesRegex(validator.ProfileError, "not canonical"):
-                    validator._native_campaign_output_rows(escaped, receipt_path)
+            root = Path(temp); out = root / "absent-native" / validator.FINAL_NATIVE_EXECUTION_ID
+            empty = sha(b""); labels = validator.NATIVE007_COMMAND_NAMES
+            rows = [{"path": f"outer/{i:03d}-{n}.{stream}.log", "sizeBytes": 0,
+                     "sha256": empty} for i, n in enumerate(labels)
+                    for stream in ("stdout", "stderr")]
+            sizes = [1048576] * 4 + [147424]
+            rows += [{"path": f"selected/e{i:03d}", "sizeBytes": sizes[i] if i < 5 else 0,
+                      "sha256": empty} for i in range(79)]
+            cmds = []
+            for i, n in enumerate(labels):
+                streams = {k: {"path": str(out / f"outer/{i:03d}-{n}.{k}.log"),
+                    "truncated": False, "rawBytes": 0, "retainedBytes": 0,
+                    "rawSha256": empty, "sha256": empty} for k in ("stdout", "stderr")}
+                cmds.append({"name":n,"exitCode":2 if i in (27,30) else 0,
+                    "timedOut":False,"drainExpired":False,"logCapExceeded":False,
+                    "elapsedSeconds":.1,"timeoutSeconds":1,**streams})
+            campaign_path = str(out / "campaign/full14-result.json")
+            r = {"profile":"umf.g03-full14-local-linux-operator/1", "status":"FAIL_OR_UNKNOWN",
+                 "executionKind":"local_linux_diagnostic", "executionId":validator.FINAL_NATIVE_EXECUTION_ID,
+                 "outputRoot":str(out), "campaignId":validator.FINAL_NATIVE_CAMPAIGN_ID, "campaignCompleted":False,
+                 "hostedQualificationClaim":False, "nativeQualificationClaim":False,
+                 "campaignResult":{"elapsedSeconds":844.566,"path":campaign_path,"rawLogBytes":6389,
+                    "scenarioDispatchCount":19,"sha256":validator.FINAL_NATIVE_CAMPAIGN,
+                    "sizeBytes":2325196,"status":"FAIL_OR_UNKNOWN"},
+                 "campaignResultPath":campaign_path,"inputsStableAfterRun":True,"captureFailed":False,
+                 "failure":{"type":"campaign-failed"},
+                 "sourceSeal":{"manifestSha256":validator.FINAL_PREP_SOURCE_SEAL,
+                    "profile":"umf.g03-reviewed-harness-source-subset/2",
+                    "root":"/private/tmp/g03-full14-source-seal-005"},
+                 "cohort":{"aggregateIndexSha256":validator.FINAL_COHORT_INDEX,
+                    "custodySha256":validator.FINAL_COHORT_CUSTODY,
+                    "mirrorManifestSha256":validator.FINAL_MIRROR,
+                    "requirementsLockSha256":validator.FINAL_REQUIREMENTS,
+                    "root":"/private/tmp/g03-final-cohort-056-linux311-001",
+                    "selectedLockSha256":validator.FINAL_COHORT_LOCK,
+                    "weftWheel":{"path":"aggregate/mirror/files/umf_weft-0.4.56-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "sha256":validator.FINAL_WEFT_WHEEL,"sizeBytes":validator.FINAL_WEFT_WHEEL_BYTES}},
+                 "images":{"client":{"id":"sha256:7e44ba6b5c483f84c0d630180ba4cd17a82f1bba950577bf1dc9200e7f26e556","platform":"linux/amd64"},
+                    "postgres":{"id":"sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336","platform":"linux/arm64"}},
+                 "postgresRuntime":{"shortVersion":"18.6 (Debian 18.6-1.pgdg13+2)","serverVersionNum":"180006","platform":"linux/arm64","publishedPorts":False},
+                 "commands":cmds,"evidenceFiles":rows,"limits":{"aggregateSeconds":1800,
+                    "evidenceBytes":validator.MAX_EVIDENCE_TOTAL,"guestRawLogBytes":786432,
+                    "hostRawLogBytes":262144,"perScenarioChildSeconds":180,"perStreamRetainedBytes":65536,
+                    "rawLogBytes":validator.MAX_RAW_LOGS,"terminalReserveSeconds":60,"terminationGraceSeconds":10},
+                 "elapsedSeconds":1000.0,"physicalLogBytes":9008,"outerRawLogBytes":2619,
+                 "combinedRawLogBytes":2619,"evidenceBytesBeforeResult":4341728,
+                 "cleanup":{"status":"PASS","errors":[],"elapsedSeconds":1000.0,
+                    "resources":{f"g03-f14-{x}-{validator.FINAL_NATIVE_EXECUTION_ID}":True
+                      for x in ("campaign","net","pg","pgdata","setup","venv")}}}
+            original = {"campaignExitCode":2,"campaignId":validator.FINAL_NATIVE_CAMPAIGN_ID,
+                "campaignResult":{"path":campaign_path,"sha256":validator.FINAL_NATIVE_CAMPAIGN,"sizeBytes":2325196},
+                "campaignStatus":"FAIL_OR_UNKNOWN","executionId":validator.FINAL_NATIVE_EXECUTION_ID,
+                "expectedData":{"path":str(out/"campaign/campaign-expected-data.json"),
+                    "sha256":"d8d66928cc3090312c93a13761084f21a1dd8dc66b807650c9e5e39f23dc8460","sizeBytes":87149},
+                "inputPacket":{"path":"/private/tmp/g03-full14-input-packet-001/inputs.json",
+                    "sha256":"c91b7b4d688a51c95c09cdd51ed5084899aba8adaa83c9b7f6b48a3c48d7478b","sizeBytes":76566},
+                "operatorResult":{"path":str(out/"operator-result.json"),"sha256":validator.FINAL_NATIVE_OPERATOR,"sizeBytes":115374},
+                "scenarioDispatchCount":19,"sourceSealManifest":{"path":"/private/tmp/g03-full14-source-seal-005/manifest.json",
+                    "sha256":validator.FINAL_PREP_SOURCE_SEAL},"status":"FAIL_OR_UNKNOWN"}
+            d = {"profile":validator.FINAL_NATIVE_REANALYSIS_PROFILE,"status":"PREDICATE_REANALYSIS_PASS",
+                "executionKind":"metadata_only_pure_predicate_reanalysis",
+                "scope":"Reinterprets only the immutable actual007 raw corpus; original run stays FAIL_OR_UNKNOWN; no DB, product import, runner, or live observation.",
+                "originalFailuresPreserved":True,"elapsedSeconds":0.116,"originalPredicateReport":{"status":"FAIL_OR_UNKNOWN"},
+                "originalRun":original,"derivedPredicateResult":{"status":"PASS","predicatePassed":True,"exactRoster":True,
+                    "casePredicates":[{"caseId":f"G03-N{i:02d}","missingRequirements":[],"predicatePassed":True,"status":"PASS"} for i in range(1,15)]},
+                "custody":{"outerCleanupStatus":"PASS","setupInventoryUnchanged":True,"physicalEvidenceFileCount":181,
+                    "physicalEvidenceBytes":4341728,"physicalLogBytes":9008,"allRawLogBytes":9008,"outerRawLogBytes":2619,
+                    "campaignRawLogBytes":954,"setupRawLogBytes":5435,"rawScenarioCount":19,"sourceSealFileCount":8,
+                    "physicalEvidenceInventory":copy.deepcopy(rows)}}
+            dp = root / "derived.json"; dp.touch()
+            receipt_path=root/"packet-copy"/"operator-result.json"
+            with patch.object(validator, "FINAL_NATIVE_OUTPUT_ROOT", out):
+                self.assertEqual(len(validator._native_campaign_output_rows(r, receipt_path)),181)
+                self.assertFalse(out.exists())
+                validator._validate_native_reanalysis(r,d,root=root,receipt_path=receipt_path,derived_path=dp)
+                for key,value in (("executionId","wrong"),("outputRoot",str(root/"different"))):
+                    changed=copy.deepcopy(r); changed[key]=value
+                    with self.assertRaisesRegex(validator.ProfileError,"evidence root/execution identity"):
+                        validator._native_campaign_output_rows(changed,receipt_path)
+                for mutate in (lambda x:x["commands"][26].update(name="postgres-readiness"),
+                    lambda x:x["commands"].reverse(), lambda x:x["commands"][28].update(exitCode=2),
+                    lambda x:x["commands"][29]["stdout"].update(path=x["commands"][28]["stdout"]["path"]),
+                    lambda x:x["commands"][27]["stdout"].update(path=str(out/"outer/027-wrong.stdout.log")),
+                    lambda x:x["evidenceFiles"].pop()):
+                    changed=copy.deepcopy(r); mutate(changed)
+                    with self.assertRaises(validator.ProfileError):
+                        validator._native_campaign_output_rows(changed,receipt_path)
+                escaped=copy.deepcopy(r); escaped["commands"][0]["stdout"]["path"]=str(out/"../escape.log")
+                with self.assertRaises(validator.ProfileError):
+                    validator._native_campaign_output_rows(escaped,receipt_path)
+            self.assertFalse(r.keys() & {"campaignExitCode","scenarioDispatchCount",
+                "physicalEvidenceFileCount","physicalEvidenceBytes"})
+            for change in (lambda a,b:a["commands"][30].update(exitCode=0),
+                lambda a,b:a["campaignResult"].update(scenarioDispatchCount=18),
+                lambda a,b:a["evidenceFiles"].pop(),
+                lambda a,b:b["custody"]["physicalEvidenceInventory"].pop()):
+                a,b=copy.deepcopy(r),copy.deepcopy(d); change(a,b)
+                with patch.object(validator, "FINAL_NATIVE_OUTPUT_ROOT", out), self.assertRaises(validator.ProfileError):
+                    validator._validate_native_reanalysis(a,b,root=root,receipt_path=receipt_path,derived_path=dp)
+            a,b=copy.deepcopy(r),copy.deepcopy(d)
+            a["evidenceFiles"][-1]["sizeBytes"] += 1
+            b["custody"]["physicalEvidenceInventory"][-1]["sizeBytes"] += 1
+            b["custody"]["physicalEvidenceBytes"] += 1
+            with patch.object(validator, "FINAL_NATIVE_OUTPUT_ROOT", out), self.assertRaises(validator.ProfileError):
+                validator._validate_native_reanalysis(a,b,root=root,receipt_path=receipt_path,derived_path=dp)
 
     def test_arm_inspection_size_and_digest_come_from_packet_copy(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -2779,5 +2853,30 @@ class SourceMapTests(unittest.TestCase):
                 with self.assertRaises(validator.ProfileError):
                     validator._source_package_output_inventory(
                         root, receipt_dir / "result.json", receipt)
+
+    def test_source_package_complete_owned_copy_inventory_closes_and_rejects_drift(self):
+        rows = [{"path": f"src/f{i}", "bytes": 1, "sha256": sha(str(i).encode()),
+                 "mode": 0o664, "linkCount": 1} for i in range(6)]
+        digest = sha(json.dumps(rows, sort_keys=True, separators=(",", ":")).encode())
+        inv = {"expandedBytes": 6, "fileCount": 6, "files": rows, "rosterSha256": digest}
+        source = {"ownedCopyBefore": inv, "ownedCopyAfter": copy.deepcopy(inv)}
+        with patch.multiple(validator, SOURCE_PACKAGE_OWNED_FILE_COUNT=6,
+                            SOURCE_PACKAGE_OWNED_EXPANDED_BYTES=6,
+                            SOURCE_PACKAGE_OWNED_ROSTER_SHA256=digest):
+            validator._validate_source_owned_copy(source)
+            drift = copy.deepcopy(source)
+            drift["ownedCopyBefore"]["files"][0]["path"] = "src/drift"
+            with self.assertRaises(validator.ProfileError): validator._validate_source_owned_copy(drift)
+            for field, value in (("fileCount", 5), ("rosterSha256", "0" * 64)):
+                changed = copy.deepcopy(source)
+                for side in ("ownedCopyBefore", "ownedCopyAfter"):
+                    changed[side][field] = value
+                with self.assertRaises(validator.ProfileError): validator._validate_source_owned_copy(changed)
+            changed = copy.deepcopy(source)
+            for side in ("ownedCopyBefore", "ownedCopyAfter"):
+                changed[side]["files"][0]["path"] = "src/other"
+                changed[side]["rosterSha256"] = sha(json.dumps(
+                    changed[side]["files"], sort_keys=True, separators=(",", ":")).encode())
+            with self.assertRaises(validator.ProfileError): validator._validate_source_owned_copy(changed)
 
 if __name__ == "__main__": unittest.main()

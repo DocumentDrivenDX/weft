@@ -66,6 +66,13 @@ CHILD_SECONDS = 180
 TERMINAL_RESERVE_SECONDS = 60
 TERMINATION_GRACE_SECONDS = 10
 KILL_DRAIN_SECONDS = 1
+GITHUB_AUTOMATIC_WORKFLOWS = (
+    (399841670, ".github/workflows/pull-request.yml"),
+    (397164017, ".github/workflows/pypi-validation.yml"),
+    (397163983, ".github/workflows/publish-pypi.yml"),
+    (383307356, ".github/workflows/release.yml"),
+    (389805166, ".github/workflows/table-operations.yml"),
+)
 _LAST_CAPTURE: dict[str, Any] = {}
 
 
@@ -757,8 +764,15 @@ def publish_github(assembly: Path, assembly_sha: str, review_path: Path, *,
         return result
 
     status, perms, _ = api(base + "/actions/permissions", "GET")
-    _need(status == 200 and perms.get("enabled") is False,
-          "Actions must be disabled before the no-Actions GitHub transaction")
+    _need(status == 200 and isinstance(perms, dict) and type(perms.get("enabled")) is bool,
+          "GitHub Actions permissions state is unavailable or malformed")
+    for workflow_id, workflow_path in GITHUB_AUTOMATIC_WORKFLOWS:
+        code, workflow, _ = api(base + f"/actions/workflows/{workflow_id}", "GET")
+        _need(code == 200 and isinstance(workflow, dict)
+              and type(workflow.get("id")) is int and workflow.get("id") == workflow_id
+              and workflow.get("path") == workflow_path
+              and workflow.get("state") == "disabled_manually",
+              "approved automatic workflow identity or disabled state differs")
     tag_status, tag_ref, _ = api(base + f"/git/ref/tags/{tag}", "GET")
     _need(tag_status == 404, "release tag already exists or tag absence is unknown")
     releases_status, releases, _ = api(base + f"/releases/tags/{tag}", "GET")
