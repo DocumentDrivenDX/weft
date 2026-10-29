@@ -28,6 +28,25 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def tool_manifest_fixture(root: Path, payload_sizes: list[int]) -> Path:
+    files_root = root / "tool-files"
+    files_root.mkdir(parents=True)
+    entries = []
+    for index, size in enumerate(payload_sizes):
+        path = files_root / f"member-{index:04d}.bin"
+        with path.open("wb") as stream:
+            stream.truncate(size)
+        entries.append({"path": f"tool-files/{path.name}", "sizeBytes": size,
+                        "sha256": sha(path.read_bytes())})
+    manifest = {"profile": "weft-local-pypi-uploader-tool-closure/1",
+                "uploader": "twine", "version": "7.0.0", "pinnedVersion": "7.0.0",
+                "pythonExecutable": str(Path(publisher.sys.executable).resolve()),
+                "files": entries}
+    manifest_path = root / "tool-manifest.json"
+    manifest_path.write_text(json.dumps(manifest, sort_keys=True) + "\n")
+    return manifest_path
+
+
 def test_transport_assembly(root: Path):
     """Build transport assets with ten explicit, tiny external witnesses."""
     root.mkdir(parents=True, exist_ok=False)
@@ -124,6 +143,36 @@ class FakeResponse(io.BytesIO):
 
 
 class LocalAssemblyTests(unittest.TestCase):
+    def test_pypi_tool_manifest_file_count_exact_boundary(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest = tool_manifest_fixture(root, [0] * publisher.MAX_TOOL_FILES)
+            checked = publisher._validate_pypi_tool_manifest(manifest, sha(manifest.read_bytes()))
+            self.assertEqual(len(checked["files"]), 2048)
+            extra = root / "tool-files" / "member-extra.bin"
+            extra.write_bytes(b"")
+            data = json.loads(manifest.read_text())
+            data["files"].append({"path": "tool-files/member-extra.bin", "sizeBytes": 0,
+                                  "sha256": sha(b"")})
+            manifest.write_text(json.dumps(data, sort_keys=True) + "\n")
+            with self.assertRaisesRegex(ProfileError, "roster is outside its bound"):
+                publisher._validate_pypi_tool_manifest(manifest, sha(manifest.read_bytes()))
+
+    def test_pypi_tool_manifest_total_bytes_exact_boundary(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest = tool_manifest_fixture(root, [16 * 1024 * 1024, 16 * 1024 * 1024, 0])
+            checked = publisher._validate_pypi_tool_manifest(manifest, sha(manifest.read_bytes()))
+            self.assertEqual(len(checked["files"]), 3)
+            extra = root / "tool-files" / "member-0002.bin"
+            extra.write_bytes(b"x")
+            data = json.loads(manifest.read_text())
+            data["files"][2]["sizeBytes"] = 1
+            data["files"][2]["sha256"] = sha(b"x")
+            manifest.write_text(json.dumps(data, sort_keys=True) + "\n")
+            with self.assertRaisesRegex(ProfileError, "exceeds its complete 32 MiB bound"):
+                publisher._validate_pypi_tool_manifest(manifest, sha(manifest.read_bytes()))
+
     def test_external_runtime_witnesses_are_rehashed_and_zip_payloads_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

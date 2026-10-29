@@ -58,7 +58,8 @@ from verify_local_release_profile import (
 MAX_ASSEMBLY = 70 * 1024 * 1024
 MAX_EVIDENCE_ZIP = 16 * 1024 * 1024
 MAX_ENTRY = 16 * 1024 * 1024
-MAX_TOOL_CLOSURE = 16 * 1024 * 1024
+MAX_TOOL_CLOSURE = 32 * 1024 * 1024
+MAX_TOOL_FILES = 2048
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
 AGGREGATE_SECONDS = 1800
 CHILD_SECONDS = 180
@@ -970,15 +971,9 @@ def readback_public(assembly: Path, assembly_sha: str, review_path: Path, *,
                        "terminalReserveSeconds": TERMINAL_RESERVE_SECONDS}}
 
 
-def publish_pypi(assembly: Path, assembly_sha: str, review_path: Path, *,
-                 tool_manifest: Path, tool_manifest_sha256: str,
-                 repository: str, metadata_commit: str, expected_review_sha256: str,
-                 capture_dir: Path | None = None) -> dict[str, Any]:
-    deadline = time.monotonic() + AGGREGATE_SECONDS - TERMINAL_RESERVE_SECONDS
-    username = os.environ.get("TWINE_USERNAME")
-    password = os.environ.get("TWINE_PASSWORD")
-    _need(username == "__token__" and bool(password),
-          "authorized TWINE token credential is required for PyPI upload")
+def _validate_pypi_tool_manifest(tool_manifest: Path,
+                                tool_manifest_sha256: str) -> dict[str, Any]:
+    """Verify the complete local Twine manifest without credentials or network."""
     manifest = _read_bounded(tool_manifest, MAX_EVIDENCE_FILE, "pinned PyPI tool manifest")
     _need(sha(manifest) == tool_manifest_sha256,
           "PyPI uploader tool-closure manifest digest differs")
@@ -990,7 +985,7 @@ def publish_pypi(assembly: Path, assembly_sha: str, review_path: Path, *,
           and tools.get("pythonExecutable") == str(Path(sys.executable).resolve())
           and isinstance(tools.get("files"), list) and tools["files"],
           "PyPI uploader closure is not explicitly pinned")
-    _need(0 < len(tools["files"]) <= 1000,
+    _need(0 < len(tools["files"]) <= MAX_TOOL_FILES,
           "PyPI uploader closure roster is outside its bound")
     tool_paths: set[str] = set()
     tool_preflight: list[tuple[dict[str, Any], Path, int]] = []
@@ -1012,12 +1007,25 @@ def publish_pypi(assembly: Path, assembly_sha: str, review_path: Path, *,
         tool_total += member_stat.st_size
         tool_preflight.append((item, member_path, member_stat.st_size))
     _need(tool_total <= MAX_TOOL_CLOSURE,
-          "PyPI uploader closure exceeds its complete 16 MiB bound")
+          "PyPI uploader closure exceeds its complete 32 MiB bound")
     for item, member_path, member_size in tool_preflight:
         data = _read_bounded(member_path, MAX_EVIDENCE_FILE, "PyPI tool closure member")
         digest = sha(data)
         _need(digest == item["sha256"] and len(data) == member_size,
               "PyPI uploader tool closure member differs")
+    return tools
+
+
+def publish_pypi(assembly: Path, assembly_sha: str, review_path: Path, *,
+                 tool_manifest: Path, tool_manifest_sha256: str,
+                 repository: str, metadata_commit: str, expected_review_sha256: str,
+                 capture_dir: Path | None = None) -> dict[str, Any]:
+    deadline = time.monotonic() + AGGREGATE_SECONDS - TERMINAL_RESERVE_SECONDS
+    username = os.environ.get("TWINE_USERNAME")
+    password = os.environ.get("TWINE_PASSWORD")
+    _need(username == "__token__" and bool(password),
+          "authorized TWINE token credential is required for PyPI upload")
+    tools = _validate_pypi_tool_manifest(tool_manifest, tool_manifest_sha256)
     _need(capture_dir is not None and not capture_dir.exists() and not capture_dir.is_symlink(),
           "PyPI phase requires a fresh bounded capture directory")
     capture_dir.mkdir(parents=True)

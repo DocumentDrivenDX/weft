@@ -122,9 +122,13 @@ credential and a pinned, source-reviewed local upload client. No credential
 value may appear in argv, logs, packets, or evidence. Do not search unrelated
 secret stores or claim the GitHub token supplies PyPI authority. If a supported
 credential or project policy is unavailable, hold only the authenticated
-upload execution; the transport remains implemented and mock-testable. An
-upload attempt is not proof: read back the public version and all three exact
-served archive bytes, then perform the separately bounded fresh Linux x86_64
+upload execution; the transport remains implemented and mock-testable. The
+local uploader software manifest has a separate preflight bound of 32 MiB and
+2048 regular files, with the existing 16 MiB per-file limit. This allowance
+does not change the 16 MiB release-evidence limit, 1 MiB raw-capture limit, or
+70 MiB complete-assembly limit. An upload attempt is not proof: read back the
+public version and all three exact served archive bytes, then perform the
+separately bounded fresh Linux x86_64
 public-index install/admission proof against the actual final tuple.
 
 No step dispatches Actions, triggers a tag build, rebuilds or renames an
