@@ -61,9 +61,14 @@ release remains held. See the [0.4.56 release record](releases/v0.4.56.md) and
 [local release runbook](local-release-runbook-0.4.56.md).
 
 The local packet validator derives P56/M source correspondence from complete
-source and index rosters, checks the selected build-input hashes and P-to-M
-ancestry observation, and verifies original per-platform receipt chains and
-wheel members. Required gate receipts are pinned to reviewed actual bytes;
+source and Git index rosters, checks selected build-input hashes against the
+pinned source-package custody receipt, and verifies the P-to-M ancestry
+observation and original per-platform receipt chains. Its compact source-map
+representation stores P's complete stage rows once and M's exact seven-path
+metadata-only delta; validation reconstructs the logical maps and checks the
+original path, count, digest, selected-input, Git-blob and ancestry predicates.
+The original gate receipts, output rows, failure records and software witnesses
+remain separately bound to their reviewed bytes. Required gate receipts are pinned to reviewed actual bytes;
 unknown or unfinished final gates remain held. The final asset review is
 performed after assembly and kept outside the evidence ZIP. The local profile
 does not change ordinary UMF AST 0.1: Weft's explicitly selected module

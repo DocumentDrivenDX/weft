@@ -765,15 +765,16 @@ def padded_json_bytes(value: dict, target: int) -> bytes:
 
 
 def source_map(root: Path, role: str, commit: str, tree: str, changed: bool = False,
-               metadata_contents: dict[str, bytes] | None = None) -> tuple[dict, dict]:
-    paths = [f"src/input-{i:04d}" for i in range(1459)]
+               metadata_contents: dict[str, bytes] | None = None,
+               omit_paths: set[str] | None = None) -> tuple[dict, dict]:
+    paths = [f"crates/input-{i:04d}" for i in range(1459)]
     required = ["docs/helix/05-deploy/README.md", "docs/helix/05-deploy/releases/v0.4.56.md",
                 "docs/helix/05-deploy/local-release-runbook-0.4.56.md",
                 "scripts/release/verify_local_release_profile.py",
                 "scripts/release/publish_local_release.py",
                 "scripts/release/test_verify_local_release_profile.py",
                 "scripts/release/test_publish_local_release.py"]
-    paths += required
+    paths += [path for path in required if path not in (omit_paths or set())]
     paths += [f"docs/helix/05-deploy/meta-{i:04d}.md" for i in range(5901 - len(paths))]
     paths.sort()
     stage, tracked, selected = [], [], []
@@ -786,7 +787,7 @@ def source_map(root: Path, role: str, commit: str, tree: str, changed: bool = Fa
         mode = "100644"
         stage.append(f"{mode} {blob} 0\t{path}")
         tracked.append({"path": path, "mode": mode, "gitBlobSha1": blob})
-        if path.startswith("src/input-"):
+        if path.startswith("crates/input-"):
             raw = path.encode()
             selected.append({"path": path, "bytes": len(raw), "sha256": sha(raw)})
     if changed:
@@ -1211,7 +1212,10 @@ class FullPacket:
             for path in validator.METADATA_ONLY_PATHS}
         metadata_m = dict(metadata_base)
         metadata_m["docs/helix/05-deploy/README.md"] = b"metadata-only"
-        p_ref, pmap = source_map(self.root, "P", p_commit, p_tree, metadata_contents=metadata_base)
+        p_ref, pmap = source_map(self.root, "P", p_commit, p_tree,
+                                 metadata_contents=metadata_base,
+                                 omit_paths=set(validator.METADATA_ONLY_PATHS) -
+                                 {"docs/helix/05-deploy/README.md"})
         m_ref, mmap = source_map(self.root, "M", m_commit, m_tree, metadata_contents=metadata_m)
         commands = [
             {"name": "merge-base", "argv": ["git", "merge-base", "--is-ancestor", p_commit, m_commit],
@@ -1471,6 +1475,59 @@ class FullPacket:
                 gate_refs[name]["reanalysis"] = native_reanalysis
             gate_receipt_digests[name] = rr["sha256"]
             gate_review_digests[name] = rv["sha256"]
+        source_guard_ref = gate_refs["linux-source-package"]["receipt"]
+        selected_rows = pmap["selectedBuildInputs"]
+        guard_receipt_path = self.root / source_guard_ref["path"]
+        guard_receipt = json.loads(guard_receipt_path.read_text())
+        guard_files = guard_receipt["source"]["ownedCopyAfter"]["files"]
+        selected_by_path = {row["path"]: row for row in selected_rows}
+        for row in guard_files:
+            row["mode"] = 0o664
+            row["linkCount"] = 1
+            if row["path"] in selected_by_path:
+                row["bytes"] = selected_by_path[row["path"]]["bytes"]
+                row["sha256"] = selected_by_path[row["path"]]["sha256"]
+            else:
+                row["bytes"] = len(row["path"].encode())
+                row["sha256"] = sha(row["path"].encode())
+        rewrite_json_ref(self.root, source_guard_ref, guard_receipt)
+        guard_review_ref = gate_refs["linux-source-package"]["review"]
+        guard_review_path = self.root / guard_review_ref["path"]
+        guard_review = guard_review_path.read_text()
+        old_guard_sha = gate_receipt_digests["linux-source-package"]
+        guard_review_path.write_text(guard_review.replace(old_guard_sha, source_guard_ref["sha256"]))
+        guard_review_ref.update(sizeBytes=guard_review_path.stat().st_size,
+                                sha256=sha(guard_review_path.read_bytes()))
+        # Convert the compact portable P/M fixture into the real source-map/2
+        # topology: complete P stage rows plus an exact seven-path one-hop M delta.
+        p_stage_rows = list(pmap["stageRows"])
+        p_by_path = {line.split("\t", 1)[1]: line for line in p_stage_rows}
+        p_identity = dict(pmap["source"])
+        p_value = {"profile": "weft-local-release-source-map/2", "source": p_identity,
+                   "stageRows": p_stage_rows, "selectedInputsFrom": source_guard_ref}
+        rewrite_json_ref(self.root, p_ref, p_value)
+        changes = []
+        m_by_path = dict(p_by_path)
+        for source_path in sorted(validator.METADATA_ONLY_PATHS):
+            old = m_by_path.get(source_path)
+            new_blob = git_blob_sha(metadata_m[source_path])
+            new = f"100644 {new_blob} 0\t{source_path}"
+            changes.append({"path": source_path, "oldStageRow": old, "newStageRow": new})
+            m_by_path[source_path] = new
+        m_stage_rows = [m_by_path[path] for path in sorted(m_by_path)]
+        m_paths = [line.split("\t", 1)[1] for line in m_stage_rows]
+        m_selected = list(selected_rows)
+        m_source = {"commit": m_commit, "tree": m_tree, "status": "",
+            "trackedCount": len(m_paths),
+            "trackedPathSha256": sha(("\n".join(m_paths) + "\n").encode()),
+            "gitStageRosterSha256": sha("\n".join(m_stage_rows).encode()),
+            "selectedInputCount": len(m_selected),
+            "selectedInputRosterSha256": sha((json.dumps(m_selected, sort_keys=True) + "\n").encode()),
+            "version": validator.VERSION}
+        m_value = {"profile": "weft-local-release-source-map-delta/2", "source": m_source,
+            "base": {key: p_ref[key] for key in ("path", "sizeBytes", "sha256")},
+            "changes": changes, "selectedInputsFrom": source_guard_ref}
+        rewrite_json_ref(self.root, m_ref, m_value)
         wheel_rows, static_refs, chain_refs, artifact_refs = [], [], [], []
         wheel_members_by_role = {}
         fake_constants = {"LICENSE.md": b"synthetic license\n", "LICENSE-MIT": b"mit\n",
@@ -1792,6 +1849,9 @@ class FullPacket:
                  "SOURCE_GUARD_REVIEW_SHA256":gate_refs.get("linux-source-package",{}).get("review",{}).get("sha256"),
                  "SOURCE_GUARD_RAW_BYTES":len(b"test-only complete captured source output\n"),
                  "SOURCE_GUARD_EVIDENCE_BYTES":200000,
+                 "SOURCE_GUARD_SELECTED_COUNT":len(selected_rows),
+                 "SOURCE_GUARD_SELECTED_BYTES":sum(row["bytes"] for row in selected_rows),
+                 "SOURCE_GUARD_SELECTED_ROSTER_SHA256":sha((json.dumps(selected_rows,sort_keys=True)+"\n").encode()),
                  "SOURCE_GUARD_ORIGINAL_LOG_ROOT":(self.root / "historical/source-run/logs").resolve(),
                  "TABLE012_ROOT":operator_fixture["roots"]["TABLE012_ROOT"],
                  "TABLE012_SOFTWARE_ROOT":operator_fixture["tableSoftwareRoot"],
@@ -1939,6 +1999,142 @@ class FullPacket:
 
 
 class SourceMapTests(unittest.TestCase):
+    def test_v2_full_p_map_and_one_hop_m_delta_close_and_reject_bad_bindings(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            required = set(validator.METADATA_ONLY_PATHS)
+            p_contents = {path: ("P fixture " + path + "\n").encode() for path in required}
+            m_contents = {path: ("M fixture " + path + "\n").encode() for path in required}
+            p_contents["docs/helix/05-deploy/README.md"] = b"P README\n"
+            m_contents["docs/helix/05-deploy/README.md"] = b"M README\n"
+            p_v1_ref, p_v1 = source_map(root, "v2-p", "a" * 40, "b" * 40,
+                metadata_contents=p_contents,
+                omit_paths=required - {"docs/helix/05-deploy/README.md"})
+            selected = p_v1["selectedBuildInputs"]
+            sourceguard = {"profile": "synthetic-sourceguard", "source": {"ownedCopyAfter": {
+                "files": [{"path": path, "bytes": next((row["bytes"] for row in selected
+                    if row["path"] == path), len(path.encode())), "sha256": next((row["sha256"]
+                    for row in selected if row["path"] == path), sha(path.encode())),
+                    "mode": 0o664, "linkCount": 1} for path in p_v1["trackedPaths"]]}}}
+            guard_ref = json_ref(root, "receipts/sourceguard.json", sourceguard)
+            selected_raw = (json.dumps(selected, sort_keys=True) + "\n").encode()
+            sourcepatch = {
+                "SOURCE_GUARD_SELECTED_COUNT": len(selected),
+                "SOURCE_GUARD_SELECTED_BYTES": sum(row["bytes"] for row in selected),
+                "SOURCE_GUARD_SELECTED_ROSTER_SHA256": sha(selected_raw),
+            }
+            p_value = {"profile": "weft-local-release-source-map/2",
+                "source": p_v1["source"], "stageRows": p_v1["stageRows"],
+                "selectedInputsFrom": guard_ref}
+            p_ref = json_ref(root, "maps/p.json", p_value)
+            p_value2, p_files = None, None
+            with patch.multiple(validator, **sourcepatch):
+                p_value2, p_files = validator._validate_source_map(
+                    root, p_ref, "producer P", source_guard_ref=guard_ref)
+                changes = []
+                rows = {line.split("\t", 1)[1]: line for line in p_value2["stageRows"]}
+                for path in sorted(required):
+                    old = rows.get(path)
+                    new = f"100644 {git_blob_sha(m_contents[path])} 0\t{path}"
+                    changes.append({"path": path, "oldStageRow": old, "newStageRow": new})
+                    rows[path] = new
+                m_stage = [rows[path] for path in sorted(rows)]
+                m_paths = sorted(rows)
+                m_source = {**p_value["source"], "commit": "c" * 40, "tree": "d" * 40,
+                    "trackedCount": len(m_stage),
+                    "trackedPathSha256": sha(("\n".join(m_paths) + "\n").encode()),
+                    "gitStageRosterSha256": sha("\n".join(m_stage).encode())}
+                m_value = {"profile": "weft-local-release-source-map-delta/2",
+                    "source": m_source,
+                    "base": {key: p_ref[key] for key in ("path", "sizeBytes", "sha256")},
+                    "changes": changes, "selectedInputsFrom": guard_ref}
+                m_ref = json_ref(root, "maps/m-delta.json", m_value)
+                m_parsed, m_files = validator._validate_source_map(
+                    root, m_ref, "metadata M", source_guard_ref=guard_ref,
+                    producer_map=p_value2)
+                self.assertEqual(len(p_files), 5901)
+                self.assertEqual(len(m_files), 5907)
+                self.assertEqual(m_parsed["source"]["trackedCount"], 5907)
+                self.assertEqual(len(m_parsed["selectedBuildInputs"]), len(selected))
+
+                bad = dict(p_value)
+                bad["selectedInputsFrom"] = {**guard_ref, "sha256": "0" * 64}
+                bad_ref = json_ref(root, "maps/bad-guard.json", bad)
+                with self.assertRaisesRegex(validator.ProfileError, "sourceguard reference differs"):
+                    validator._validate_source_map(root, bad_ref, "producer P",
+                                                   source_guard_ref=guard_ref)
+
+                for label, edit, message in (
+                    ("duplicate", lambda rows: rows.__setitem__(1, rows[0]), "malformed or unordered"),
+                    ("missing", lambda rows: rows.pop(), "incomplete or exceeds its bound"),
+                    ("unsafe", lambda rows: rows.__setitem__(0,
+                        rows[0].split("\t", 1)[0] + "\t../escape"), "malformed or unordered"),
+                    ("nonzero-stage", lambda rows: rows.__setitem__(0,
+                        rows[0].replace(" 0\t", " 1\t", 1)), "malformed or unordered"),
+                ):
+                    changed_map = json.loads(json.dumps(p_value))
+                    edit(changed_map["stageRows"])
+                    if label == "nonzero-stage":
+                        changed_map["source"]["gitStageRosterSha256"] = sha(
+                            "\n".join(changed_map["stageRows"]).encode())
+                    bad_ref = json_ref(root, f"maps/bad-stage-{label}.json", changed_map)
+                    with self.assertRaisesRegex(validator.ProfileError, message):
+                        validator._validate_source_map(root, bad_ref, "producer P",
+                                                       source_guard_ref=guard_ref)
+
+                changed_guard = json.loads(json.dumps(sourceguard))
+                selected_path = selected[0]["path"]
+                next(row for row in changed_guard["source"]["ownedCopyAfter"]["files"]
+                     if row["path"] == selected_path)["sha256"] = "0" * 64
+                changed_guard_ref = json_ref(root, "receipts/changed-sourceguard.json", changed_guard)
+                changed_map = {**p_value, "selectedInputsFrom": changed_guard_ref}
+                bad_ref = json_ref(root, "maps/changed-selected-inputs.json", changed_map)
+                with self.assertRaisesRegex(validator.ProfileError, "fixed source-guard selection differs"):
+                    validator._validate_source_map(root, bad_ref, "producer P",
+                        source_guard_ref=changed_guard_ref)
+
+                bad_delta = json.loads(json.dumps(m_value))
+                bad_delta["base"]["sha256"] = "0" * 64
+                bad_ref = json_ref(root, "maps/bad-base.json", bad_delta)
+                with self.assertRaisesRegex(validator.ProfileError, "exact validated P full map"):
+                    validator._validate_source_map(root, bad_ref, "metadata M",
+                        source_guard_ref=guard_ref, producer_map=p_value2)
+
+                bad_delta = json.loads(json.dumps(m_value))
+                bad_delta["base"]["path"] = "maps/m-delta.json"
+                bad_ref = json_ref(root, "maps/recursive-base.json", bad_delta)
+                with self.assertRaisesRegex(validator.ProfileError, "exact validated P full map"):
+                    validator._validate_source_map(root, bad_ref, "metadata M",
+                        source_guard_ref=guard_ref, producer_map=p_value2)
+
+                bad_delta = json.loads(json.dumps(m_value))
+                bad_delta["changes"][0]["oldStageRow"] = "100644 " + "0" * 40 + " 0\t" + bad_delta["changes"][0]["path"]
+                bad_ref = json_ref(root, "maps/bad-old-row.json", bad_delta)
+                with self.assertRaisesRegex(validator.ProfileError, "old row, order, or path"):
+                    validator._validate_source_map(root, bad_ref, "metadata M",
+                        source_guard_ref=guard_ref, producer_map=p_value2)
+
+                bad_delta = json.loads(json.dumps(m_value))
+                bad_delta["changes"] = bad_delta["changes"][:-1]
+                bad_ref = json_ref(root, "maps/missing-delta.json", bad_delta)
+                with self.assertRaisesRegex(validator.ProfileError, "exact seven-path roster"):
+                    validator._validate_source_map(root, bad_ref, "metadata M",
+                        source_guard_ref=guard_ref, producer_map=p_value2)
+
+                bad_delta = json.loads(json.dumps(m_value))
+                bad_delta["changes"][0]["newStageRow"] = bad_delta["changes"][0]["oldStageRow"]
+                bad_ref = json_ref(root, "maps/no-op-delta.json", bad_delta)
+                with self.assertRaisesRegex(validator.ProfileError, "old row, order, or path"):
+                    validator._validate_source_map(root, bad_ref, "metadata M",
+                        source_guard_ref=guard_ref, producer_map=p_value2)
+
+                bad_delta = json.loads(json.dumps(m_value))
+                bad_delta["changes"][0]["path"] = "src/unreviewed.py"
+                bad_ref = json_ref(root, "maps/unreviewed-delta.json", bad_delta)
+                with self.assertRaisesRegex(validator.ProfileError, "old row, order, or path"):
+                    validator._validate_source_map(root, bad_ref, "metadata M",
+                        source_guard_ref=guard_ref, producer_map=p_value2)
+
     def test_table012_original_roster_splits_metadata_from_external_software(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -2139,7 +2335,7 @@ class SourceMapTests(unittest.TestCase):
     def test_ready_packet_refuses_coherent_semantic_mutation_table(self):
         mutations = (
             ("ancestry-source", "ancestry receipt identities differ"),
-            ("selected-M-input", "metadata M changes selected producer build inputs"),
+            ("selected-M-input", "selected-input sourceguard reference differs"),
             ("consumed-M-bytes", "metadata source bytes differ from M's tracked Git blob"),
             ("external-M-review", "outside-Q trust anchor"),
             ("native-member-report", "member bytes differ from static report: weft/weft.abi3.so"),
@@ -2177,10 +2373,7 @@ class SourceMapTests(unittest.TestCase):
                         elif name == "selected-M-input":
                             source_ref = packet["metadata"]["sourceMap"]
                             source_map_value = json.loads((root / source_ref["path"]).read_text())
-                            source_map_value["selectedBuildInputs"][0]["sha256"] = "e" * 64
-                            canonical = source_map_value["selectedBuildInputs"]
-                            source_map_value["source"]["selectedInputRosterSha256"] = sha(
-                                (json.dumps(canonical, sort_keys=True) + "\n").encode())
+                            source_map_value["selectedInputsFrom"]["sha256"] = "e" * 64
                             rewrite_json_ref(root, source_ref, source_map_value)
                         elif name == "consumed-M-bytes":
                             row = packet["metadata"]["files"][0]

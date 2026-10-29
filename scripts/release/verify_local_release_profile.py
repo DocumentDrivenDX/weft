@@ -90,6 +90,9 @@ TRUSS011_SELECTED = {
 }
 SOURCE_GUARD_RECEIPT_SHA256 = "58b9f92e6ab60fa2cd092ab0f17987cdb864c8659847a7f28a0473570253c2af"
 SOURCE_GUARD_REVIEW_SHA256 = "21bf2fa2477d41e93e89e4714f6e45fae872f5ec201378861dfe80d2611b0728"
+SOURCE_GUARD_SELECTED_COUNT = 1459
+SOURCE_GUARD_SELECTED_BYTES = 134880002
+SOURCE_GUARD_SELECTED_ROSTER_SHA256 = "6a671799d5be7a511cc6b5f7c9282d8745fbc80f4a5d796538b6643e8492f2a2"
 SOURCE_GUARD_RAW_BYTES = 32866
 SOURCE_GUARD_EVIDENCE_BYTES = 3821574
 SOURCE_GUARD_ORIGINAL_LOG_ROOT = Path(
@@ -770,16 +773,186 @@ def _preflight_packet_payloads(root: Path, packet: dict[str, Any], packet_size: 
           "complete retained producer/gate raw logs exceed the 1 MiB cap before reads")
 
 
-def _validate_source_map(root: Path, ref: Any, role: str) -> tuple[dict[str, Any], dict[str, str]]:
+def _source_map_identity(value: Any, role: str) -> dict[str, Any]:
+    source = _closed(value, {"commit", "tree", "status", "trackedCount",
+                              "trackedPathSha256", "gitStageRosterSha256",
+                              "selectedInputCount", "selectedInputRosterSha256", "version"},
+                     f"{role} source identity")
+    _need(isinstance(source["commit"], str) and COMMIT.fullmatch(source["commit"])
+          and isinstance(source["tree"], str) and COMMIT.fullmatch(source["tree"])
+          and source["status"] == "" and source["version"] == VERSION,
+          f"{role} source identity is malformed or dirty")
+    return source
+
+
+_SOURCEGUARD_SELECTED_PREFIXES = (
+    "crates/", "spec/", "vendor/", ".cargo/", "tests/",
+    "docs/helix/02-design/contracts/", "docs/helix/03-test/fixtures/",
+    "spikes/b001/fixtures/",
+)
+
+
+def _selected_rows_from_source_guard(root: Path, ref: Any, role: str
+                                    ) -> tuple[list[dict[str, Any]], list[str]]:
+    guard, _, _, _ = _json_receipt(root, ref, f"{role} pinned source-guard receipt")
+    actual_rows = guard.get("source", {}).get("ownedCopyAfter", {}).get("files")
+    _need(isinstance(actual_rows, list) and len(actual_rows) == 5901,
+          f"{role} source guard lacks the exact complete P physical roster")
+    paths: list[str] = []
+    selected: list[dict[str, Any]] = []
+    previous = ""
+    for row in actual_rows:
+        item = _closed(row, {"bytes", "linkCount", "mode", "path", "sha256"},
+                       f"{role} physical P source file")
+        _need(isinstance(item["path"], str) and item["path"] > previous
+              and "\\" not in item["path"]
+              and all(part not in {"", ".", ".."} for part in Path(item["path"]).parts)
+              and type(item["bytes"]) is int and item["bytes"] >= 0
+              and type(item["linkCount"]) is int and item["linkCount"] == 1
+              and type(item["mode"]) is int and item["mode"] in {0o664, 0o775}
+              and isinstance(item["sha256"], str) and SHA.fullmatch(item["sha256"]),
+              f"{role} physical P source roster is malformed or unordered")
+        paths.append(item["path"])
+        if "/" not in item["path"] or item["path"].startswith(_SOURCEGUARD_SELECTED_PREFIXES):
+            selected.append({"path": item["path"], "bytes": item["bytes"],
+                             "sha256": item["sha256"]})
+        previous = item["path"]
+    _need(len(selected) == SOURCE_GUARD_SELECTED_COUNT
+          and sum(row["bytes"] for row in selected) == SOURCE_GUARD_SELECTED_BYTES
+          and _sha((json.dumps(selected, sort_keys=True) + "\n").encode()) ==
+          SOURCE_GUARD_SELECTED_ROSTER_SHA256,
+          f"{role} fixed source-guard selection differs from the accepted roster")
+    return selected, paths
+
+
+def _validate_source_map(root: Path, ref: Any, role: str, *,
+                         source_guard_ref: Any = None,
+                         producer_map: dict[str, Any] | None = None) -> tuple[dict[str, Any], dict[str, str]]:
     value, _, _, _ = _json_receipt(root, ref, f"{role} source map")
+    if isinstance(value, dict) and value.get("profile") in {
+            "weft-local-release-source-map/2", "weft-local-release-source-map-delta/2"}:
+        is_delta = value["profile"] == "weft-local-release-source-map-delta/2"
+        if is_delta:
+            _closed(value, {"profile", "source", "base", "changes", "selectedInputsFrom"},
+                    "metadata M delta map")
+            _need(role == "metadata M", "producer P cannot use a source-map delta")
+        else:
+            _closed(value, {"profile", "source", "stageRows", "selectedInputsFrom"},
+                    f"{role} source map v2")
+            _need(role == "producer P", "metadata M requires a one-hop source-map delta")
+        _need(source_guard_ref is not None and value["selectedInputsFrom"] == source_guard_ref,
+              f"{role} selected-input sourceguard reference differs from the packet gate receipt")
+        selected, source_paths = _selected_rows_from_source_guard(root, source_guard_ref, role)
+        source = _source_map_identity(value["source"], role)
+        if is_delta:
+            _need(producer_map is not None
+                  and producer_map.get("profile") == "weft-local-release-source-map/2"
+                  and "_packetRef" in producer_map,
+                  "metadata M delta has no validated producer base")
+            stage_rows = []
+        else:
+            _closed(value, {"profile", "source", "stageRows", "selectedInputsFrom"},
+                    f"{role} source map v2")
+            stage_rows = value["stageRows"]
+            _need(isinstance(stage_rows, list) and type(source["trackedCount"]) is int
+                  and len(stage_rows) == source["trackedCount"] <= 10000,
+                  f"{role} v2 stage-row roster is incomplete or exceeds its bound")
+        tracked_map: dict[str, str] = {}
+        stage_map: dict[str, tuple[str, str]] = {}
+        tracked_paths: list[str] = []
+        previous_path = ""
+        for line in stage_rows:
+            _need(isinstance(line, str) and "\\" not in line,
+                  f"{role} git index stage row is malformed")
+            left, separator, path = line.partition("\t")
+            fields = left.split(" ")
+            _need(separator == "\t" and len(fields) == 3
+                  and fields[0] in {"100644", "100755", "120000"}
+                  and re.fullmatch(r"[0-9a-f]{40}", fields[1]) is not None
+                  and fields[2] == "0" and path and path == Path(path).as_posix()
+                  and not Path(path).is_absolute()
+                  and all(part not in {"", ".", ".."} for part in Path(path).parts)
+                  and "\n" not in path and "\r" not in path and "\t" not in path
+                  and path > previous_path,
+                  f"{role} git index stage row is malformed or unordered")
+            tracked_paths.append(path)
+            tracked_map[path] = fields[1]
+            stage_map[path] = (fields[0], fields[1])
+            previous_path = path
+        if not is_delta:
+            _need(tracked_paths == source_paths,
+                  f"{role} full stage roster differs from sourceguard physical P roster")
+            _need(_sha(("\n".join(tracked_paths) + "\n").encode()) == source["trackedPathSha256"]
+                  and _sha("\n".join(stage_rows).encode()) == source["gitStageRosterSha256"],
+                  f"{role} v2 stage/path digest differs")
+        _need(source["selectedInputCount"] == len(selected)
+              and source["selectedInputRosterSha256"] ==
+              _sha((json.dumps(selected, sort_keys=True) + "\n").encode()),
+              f"{role} selected build-input digest differs from the fixed sourceguard projection")
+        if is_delta:
+            _need(type(source["trackedCount"]) is int and 0 < source["trackedCount"] <= 10000,
+                  "metadata M tracked count is outside the bounded roster range")
+            base_ref = value.get("base")
+            changes = value.get("changes")
+            _need(isinstance(base_ref, dict)
+                  and set(base_ref) == {"path", "sizeBytes", "sha256"}
+                  and base_ref.get("path") == producer_map["_packetRef"]["path"]
+                  and base_ref.get("sizeBytes") == producer_map["_packetRef"]["sizeBytes"]
+                  and base_ref.get("sha256") == producer_map["_packetRef"]["sha256"],
+                  "metadata M delta base is not the exact validated P full map")
+            p_rows = {line.split("\t", 1)[1]: line for line in producer_map["stageRows"]}
+            _need(isinstance(changes, list) and len(changes) == 7,
+                  "metadata M delta does not contain the exact seven-path roster")
+            prior = ""
+            for row in changes:
+                item = _closed(row, {"path", "oldStageRow", "newStageRow"},
+                               "metadata M delta row")
+                path = item["path"]
+                _need(isinstance(path, str) and path > prior and path in METADATA_ONLY_PATHS
+                      and item["oldStageRow"] == p_rows.get(path)
+                      and item["oldStageRow"] != item["newStageRow"],
+                      "metadata M delta old row, order, or path is invalid")
+                new_line = item["newStageRow"]
+                if new_line is not None:
+                    _need(isinstance(new_line, str) and new_line.endswith("\t" + path),
+                          "metadata M delta new row path differs")
+                    p_rows[path] = new_line
+                else:
+                    _need(path in p_rows, "metadata M delta null row claims a missing path")
+                    del p_rows[path]
+                prior = path
+            stage_rows = [p_rows[path] for path in sorted(p_rows)]
+            tracked_paths = [line.split("\t", 1)[1] for line in stage_rows]
+            _need(len(stage_rows) == source["trackedCount"]
+                  and _sha(("\n".join(tracked_paths) + "\n").encode()) == source["trackedPathSha256"]
+                  and _sha(("\n".join(stage_rows)).encode()) == source["gitStageRosterSha256"],
+                  "metadata M reconstructed stage/path roster differs from its source identity")
+            _need(all(isinstance(line, str) and "\\" not in line
+                      and len(line.partition("\t")[0].split(" ")) == 3
+                      and line.partition("\t")[0].split(" ")[0] in {"100644", "100755", "120000"}
+                      and re.fullmatch(r"[0-9a-f]{40}", line.partition("\t")[0].split(" ")[1])
+                      and line.partition("\t")[0].split(" ")[2] == "0"
+                      and line.partition("\t")[1] == "\t"
+                      and line.partition("\t")[2] == path
+                      for path, line in zip(tracked_paths, stage_rows, strict=True)),
+                  "metadata M reconstructed stage row is malformed")
+            tracked_map = {line.split("\t", 1)[1]: line.split(" ")[1]
+                           for line in stage_rows}
+            stage_map = {line.split("\t", 1)[1]: (line.split(" ")[0], line.split(" ")[1])
+                         for line in stage_rows}
+        _need(all(row["path"] in tracked_map for row in selected),
+              f"{role} selected sourceguard input is absent from the stage roster")
+        logical = {**value, "trackedPaths": tracked_paths,
+                   "trackedFiles": [{"path": path, "mode": pair[0], "gitBlobSha1": pair[1]}
+                                    for path, pair in sorted(stage_map.items())],
+                   "selectedBuildInputs": selected, "stageRows": stage_rows,
+                   "_packetRef": ref}
+        return logical, tracked_map
     _closed(value, {"profile", "source", "trackedPaths", "stageRows", "trackedFiles",
                     "selectedBuildInputs"}, f"{role} source map")
     _need(value["profile"] == "weft-local-release-source-map/1",
           f"{role} source map profile differs")
-    source = _closed(value["source"], {"commit", "tree", "status", "trackedCount",
-                                        "trackedPathSha256", "gitStageRosterSha256",
-                                        "selectedInputCount", "selectedInputRosterSha256", "version"},
-                     f"{role} source identity")
+    source = _source_map_identity(value["source"], role)
     _need(isinstance(source["commit"], str) and COMMIT.fullmatch(source["commit"])
           and isinstance(source["tree"], str) and COMMIT.fullmatch(source["tree"])
           and source["status"] == "" and source["version"] == VERSION,
@@ -914,9 +1087,17 @@ def _verify_ancestry(root: Path, ref: Any, p_commit: str, m_commit: str) -> dict
 
 
 def _source_correspondence(root: Path, producer_ref: Any, metadata_ref: Any,
-                           ancestry_ref: Any) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
-    pmap, p_files = _validate_source_map(root, producer_ref, "producer P")
-    mmap, m_files = _validate_source_map(root, metadata_ref, "metadata M")
+                           ancestry_ref: Any, source_guard_ref: Any = None
+                           ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    pmap, p_files = _validate_source_map(root, producer_ref, "producer P",
+                                         source_guard_ref=source_guard_ref)
+    mmap, m_files = _validate_source_map(root, metadata_ref, "metadata M",
+                                         source_guard_ref=source_guard_ref,
+                                         producer_map=pmap)
+    p_v2 = pmap.get("profile") == "weft-local-release-source-map/2"
+    m_v2 = mmap.get("profile") == "weft-local-release-source-map-delta/2"
+    _need(p_v2 == m_v2,
+          "P full source map and M delta must use the same reviewed storage profile")
     _, _, metadata_map_sha = _receipt(root, metadata_ref, "metadata M source map")
     _, _, ancestry_sha = _receipt(root, ancestry_ref, "metadata M ancestry")
     p = pmap["source"]
@@ -2927,7 +3108,8 @@ def validate_packet(packet_path: Path, *, expected_metadata_review_sha256: str |
           "wheel or pre-assembly review roster is malformed")
     _preflight_packet_payloads(packet_path.parent, packet, packet_size)
     pmap, mmap, source_comparison = _source_correspondence(
-        packet_path.parent, producer["sourceMap"], metadata["sourceMap"], metadata["ancestry"])
+        packet_path.parent, producer["sourceMap"], metadata["sourceMap"], metadata["ancestry"],
+        gates["linux-source-package"]["receipt"])
     metadata_files = _validate_metadata_files(packet_path.parent, metadata["files"], mmap)
     producer_identity = pmap["source"]
     metadata_identity = mmap["source"]
