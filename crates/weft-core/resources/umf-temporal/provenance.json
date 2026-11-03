@@ -1,31 +1,31 @@
 {
   "source": "https://github.com/DocumentDrivenDX/umf",
-  "revision": "a5e24d17017a3de0ee701837d9c99c3dad27d0a5",
+  "revision": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
   "files": [
     {
       "file": "core.json",
       "sourcePath": "spec/core/schema.json",
-      "sha256": "7e42a2d4e0e72af3b01147a5ad95b49a0ccfc9692baadfc9a17144d262e2713a"
+      "sha256": "f5f7f090e6a4618803c3e0fdbb0be20ad62ae092c99f0d7e0f15a6733d67aabf"
     },
     {
       "file": "reference.json",
       "sourcePath": "spec/core/semantic-type-reference.schema.json",
-      "sha256": "9c3b38c144065a8c62b331c21c0870be76562d48181daa1af7dd9b114fa7704a"
+      "sha256": "4a9908810531cced6208289f89dfcbc2e9406c303834a2749591cbe823ca3f65"
     },
     {
       "file": "package.json",
       "sourcePath": "spec/core/extension-package.schema.json",
-      "sha256": "ab01598d5f0a13ce080a3e4d8bd9334017cb6c659c6c88e8f041767410553462"
+      "sha256": "fca24a871abf83e89837bf881bc5251b1a71ab98411fa5055af12e1bdd00fda5"
     },
     {
       "file": "constraints.json",
       "sourcePath": "spec/metamodel/generated/core-constraints.json",
-      "sha256": "74390306731b6e13edfe7b506f381f561db76c5539a30dba3ed29f8062ea3fe5"
+      "sha256": "180497da09a76cbbef5332d234258936668e06f7152f119d4be7aeebfa6b39cc"
     },
     {
       "file": "domain.json",
       "sourcePath": "spec/metamodel/generated/domain-policy.json",
-      "sha256": "bdd48aaeca22c922cc9fdb4eb2fdef2d1b37070bec8fe9744ed26135403e2a82"
+      "sha256": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c"
     },
     {
       "file": "tables.json",
@@ -47,5 +47,7 @@
       "sourcePath": "spec/extensions/binding-stable/package.json",
       "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e"
     }
-  ]
+  ],
+  "tree": "a21368a92df488882ef9771e4a1d92205267ddd3",
+  "previousAcquisitionRevision": "a5e24d17017a3de0ee701837d9c99c3dad27d0a5"
 }
