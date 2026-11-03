@@ -194,6 +194,50 @@ def verify_sdist(root,R,archive,metadata):
   if native!='crates/weft-python':need(data[native+'/Cargo.toml']==gitbytes(root,R,native+'/Cargo.toml'),'Dependency manifest was rewritten')
  return dict(archive=str(archive),sha256=sha(archive),sourceFiles=len(data),requiredNativeFiles=len(needed),cargoLockSha256=sha(root/'Cargo.lock'),inclusion='native crate source/resources/manifests plus R-tracked tests/spec/.cargo; generated metadata limited to declared PKG-INFO/pyproject/workspace/Python-readme packaging rules',allOtherBytesMatchR=True,selectedLocalRoots=native_roots,completeDeclaredInventory=True,mappedGitModesMatchR=True,declaredInventory={name:dict(source=source,mode=oct(modes[name])) for name,source in sorted(declared.items())},cargoPackageLists=package_lists)
 
+def verify_canonical_git_inventory(metadata,expected,root,R):
+ # Complete resolved/selected Git closure and manifest declarations have
+ # different scopes. Validate BOTH against their own unchanged frozen records.
+ packages={p['id']:p for p in metadata['packages']}
+ need(len(packages)==len(metadata['packages']),'Duplicate canonical metadata package ID')
+ git_rows=lambda values:sorted((p['name'],p['version'],p['source']) for p in values if (p.get('source') or '').startswith('git+'))
+ locked=sorted((p['name'],p['version'],p['sourceID']) for p in expected['lockGitPackages'])
+ actual=git_rows(packages.values())
+ need(actual==locked,'Complete canonical locked Git package inventory differs')
+ nodes={n['id']:n for n in metadata['resolve']['nodes']}
+ need(len(nodes)==len(metadata['resolve']['nodes']),'Duplicate selected graph identity')
+ selected=metadata['resolve'].get('root')
+ need(selected in packages and selected in nodes and packages[selected]['name']=='weft-python','Actual selected inventory root is not weft-python')
+ todo=[selected];seen=set()
+ while todo:
+  key=todo.pop()
+  if key in seen:continue
+  need(key in packages and key in nodes,'Selected inventory graph edge missing');seen.add(key)
+  for edge in nodes[key]['deps']:
+   kinds=edge.get('dep_kinds')
+   need(type(kinds) is list and bool(kinds) and all(type(k) is dict and k.get('kind','invalid') in [None,'build','dev'] for k in kinds),'Unknown selected inventory dependency kind')
+   if any(k['kind']!='dev' for k in kinds):todo.append(edge['pkg'])
+ need(git_rows(packages[k] for k in seen)==locked,'Complete selected normal/build Git closure differs')
+ declared=expected['packages']
+ need(len(declared)==8 and len({p['packageID'] for p in declared})==8,'Exact two dependencies/six patches inventory differs')
+ for item in declared:
+  matches=[p for p in packages.values() if p['name']==item['name'] and p['version']==item['version']]
+  need(len(matches)==1 and matches[0]['id']==item['packageID'] and matches[0].get('source')==item['sourceID'],'Declared canonical package/source ID differs: '+item['name'])
+ core=tomllib.loads(gitbytes(root,R,'crates/weft-core/Cargo.toml').decode())
+ workspace=tomllib.loads(gitbytes(root,R,'Cargo.toml').decode())
+ direct=[(name,pin) for section in ['dependencies','build-dependencies'] for name,pin in core.get(section,{}).items() if isinstance(pin,dict) and ('git' in pin or name in ['umf-core','umf-codegen'])]
+ patches=[(name,pin) for name,pin in workspace['patch']['crates-io'].items() if isinstance(pin,dict) and 'git' in pin]
+ need(len(direct)==2 and {n for n,p in direct}=={'umf-core','umf-codegen'} and len(patches)==6,'Actual two dependency/six patch declarations differ')
+ observed=[]
+ for name,pin in direct+patches:
+  package=pin.get('package',name);matches=[p for p in declared if p['name']==package and (pin.get('version') is None or pin['version']=='='+p['version'])]
+  need(len(matches)==1 and 'path' not in pin and 'git' in pin and 'rev' in pin,'Declared package/version/source differs: '+name)
+  item=matches[0]
+  need((name,pin) in direct or pin.get('version')=='='+item['version'],'Patch version is not exact')
+  source='git+'+pin['git']+'?rev='+pin['rev']+'#'+pin['rev']
+  observed.append((package,item['version'],source))
+ need(sorted(observed)==sorted((p['name'],p['version'],p['sourceID']) for p in declared),'Actual declaration inventory differs from frozen eight')
+ return dict(completeLockedGitPackages=[dict(name=n,version=v,sourceID=s) for n,v,s in actual],selectedNormalBuildGitCount=len(locked),declaredPackageIDs=[p['packageID'] for p in declared],completeLockedGitCount=len(actual),declaredTwoDependenciesSixPatchesCount=len(declared))
+
 def main():
  p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);a=p.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=True);root=Path(__file__).resolve().parents[2]
  need(not out.is_relative_to(root),'Source output must be external')
@@ -204,7 +248,7 @@ def main():
  features=','.join(before['features'])
  run(root,['cargo','metadata','--locked','--format-version','1','--manifest-path','crates/weft-python/Cargo.toml','--filter-platform','x86_64-unknown-linux-gnu','--features',features],out,'locked-metadata')
  expected=json.loads(Path(__file__).with_name('current-inputs-0457.json').read_text());m=json.loads((out/'locked-metadata.stdout').read_text())
- need(sorted((p['name'],p['version'],p['source']) for p in m['packages'] if (p.get('source') or '').startswith('git+'))==sorted((p['name'],p['version'],p['sourceID']) for p in expected['packages']),'SDist preflight canonical source IDs differ')
+ save(out/'source-git-inventory.json',verify_canonical_git_inventory(m,expected,root,R))
  save(out/'locked-selected-features.json',m['resolve'])
  selected_local_roots(root,R,m) # refuse unreviewed/substituted local roots before production
  need(verify(root)==before,'Preflight source/lock mutation')
@@ -227,7 +271,7 @@ def main():
  run(checked,['cargo','metadata','--locked','--format-version','1','--manifest-path','crates/weft-python/Cargo.toml','--filter-platform','x86_64-unknown-linux-gnu','--features',features],out,'archive-locked-metadata')
  need(sha(checked/'Cargo.lock')==archive_lock==before['cargoLockSha256'],'Archive resolver mutated/changed lock')
  archived=json.loads((out/'archive-locked-metadata.stdout').read_text())
- need(all((p.get('source') or '').startswith('git+https://github.com/DocumentDrivenDX/umf.git?rev='+expected['canonicalSourceID'].split('?rev=')[1].split('#')[0]+'#') for p in archived['packages'] if (p.get('source') or '').startswith('git+')),'Archive resolver substituted Git source')
+ save(out/'archive-git-inventory.json',verify_canonical_git_inventory(archived,expected,root,R))
  save(out/'archive-selected-features.json',archived['resolve'])
  # Full repository source archive is separate and always names final R.
  archive=out/('weft-source-'+R+'.tar.gz')
