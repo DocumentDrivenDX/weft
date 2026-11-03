@@ -75,7 +75,7 @@ class ActualArchiveCorrespondence(unittest.TestCase):
   root=nested.replace(b'readme="README.md"',b'readme="crates/weft-python/README.md"')
   root=root.replace(b'license-files=["LICENSE.md","LICENSE-MIT","LICENSE-APACHE","THIRD-PARTY-LICENSES.txt"]',b'license-files=["crates/weft-python/LICENSE.md","crates/weft-python/LICENSE-MIT","crates/weft-python/LICENSE-APACHE","crates/weft-python/THIRD-PARTY-LICENSES.txt"]')
   root=root.replace(b'[tool.maturin]',b'[tool.maturin]\nmanifest-path="crates/weft-python/Cargo.toml"')
-  root=root.replace(b'include=[{path="../../tests/**",format="sdist"},{path="../../spec/**",format="sdist"},{path="../../.cargo/**",format="sdist"}]',b'include=[{path="tests/**",format="sdist"},{path="spec/**",format="sdist"},{path=".cargo/**",format="sdist"},{path="vendor/ahash/**",format="sdist"}]')
+  root=root.replace(b'include=[{path="../../tests/**",format="sdist"},{path="../../spec/**",format="sdist"},{path="../../.cargo/**",format="sdist"}]',b'include=[{path="tests/**/*",format="sdist"},{path="spec/**/*",format="sdist"},{path=".cargo/**/*",format="sdist"},{path="vendor/ahash/**/*",format="sdist"}]')
   self.files['pyproject.toml']=root
   for name in archives.AHASH_GIT_R_FILES:
    self.files.setdefault('vendor/ahash/'+name,('synthetic tracked '+name+'\n').encode())

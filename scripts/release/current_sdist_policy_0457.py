@@ -12,7 +12,7 @@ def validate_sdist_configs(root,nested):
  expected['project']['readme']='crates/weft-python/README.md'
  expected['project']['license-files']=['crates/weft-python/'+p for p in nested['project']['license-files']]
  expected['tool']['maturin']['manifest-path']='crates/weft-python/Cargo.toml'
- expected['tool']['maturin']['include']=[dict(path=p+'/**',format='sdist') for p in ['tests','spec','.cargo','vendor/ahash']]
+ expected['tool']['maturin']['include']=[dict(path=p+'/**/*',format='sdist') for p in ['tests','spec','.cargo','vendor/ahash']]
  need(root==expected,'Root/nested sdist config metadata/features/discovery parity differs')
  need(root['build-system']==dict(requires=['maturin==1.9.6'],**{'build-backend':'maturin'}),'Pinned sdist backend differs')
  return dict(manifestPath='crates/weft-python/Cargo.toml',includes=expected['tool']['maturin']['include'],metadataFeaturesMatchNested=True)
