@@ -2,16 +2,26 @@ name: Compiler conformance
 
 on:
   workflow_dispatch:
+    inputs:
+      temporal_selected_candidate:
+        description: Explicit reviewed Linux 0.4.57 and WASM component selection
+        type: boolean
+        default: false
+      expected_control_sha:
+        description: Exact Sol-reviewed workflow/control commit; required for selection
+        type: string
+        default: ''
 
 permissions:
   contents: read
 
 concurrency:
   group: conformance-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ !inputs.temporal_selected_candidate }}
 
 jobs:
   compiler-and-evidence:
+    if: ${{ !inputs.temporal_selected_candidate }}
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     env:
@@ -207,6 +217,7 @@ jobs:
           if-no-files-found: error
 
   graph-requirements-candidate:
+    if: ${{ !inputs.temporal_selected_candidate }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -257,3 +268,108 @@ jobs:
             ${{ runner.temp }}/graph-evidence
             ${{ runner.temp }}/graph-wheels
           if-no-files-found: warn
+
+  temporal-selected-linux:
+    if: ${{ inputs.temporal_selected_candidate }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      CARGO_BUILD_JOBS: '1'
+      RUSTUP_TOOLCHAIN: '1.90.0'
+      EXPECTED_CONTROL_SHA: ${{ inputs.expected_control_sha }}
+    steps:
+      - name: Set isolated hosted Cargo paths
+        shell: bash
+        run: |
+          printf 'CARGO_HOME=%s/temporal-cargo\nCARGO_TARGET_DIR=%s/temporal-target\n' "$RUNNER_TEMP" "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - name: Checkout reviewed workflow controls
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: controls
+          persist-credentials: false
+      - name: Checkout frozen artifact source separately
+        uses: actions/checkout@v4
+        with:
+          ref: d52644f4b2fb5579f9a303012cfc3a98ac6c174e
+          path: source
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fail closed on source, lock, resources and reviewed control identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_SHA" = "$EXPECTED_CONTROL_SHA"
+          test "$(git -C controls rev-parse HEAD)" = "$EXPECTED_CONTROL_SHA"
+          test "$GITHUB_REPOSITORY" = DocumentDrivenDX/weft
+          if git -C source config --get-regexp '^url\..*\.insteadof$'; then
+            echo 'Git URL rewrite refused' >&2; exit 1
+          else
+            test "$?" = 1
+          fi
+          python controls/.github/scripts/temporal-selected-0457.py source controls/.github/scripts/temporal-selected-0457 "$RUNNER_TEMP/temporal-evidence" --preflight
+      - name: Produce only Linux x86_64 manylinux2014 wheel
+        uses: PyO3/maturin-action@v1
+        env:
+          CARGO_TARGET_DIR: target
+        with:
+          maturin-version: '1.9.6'
+          rust-toolchain: '1.90.0'
+          target: x86_64-unknown-linux-gnu
+          manylinux: '2014'
+          working-directory: source
+          before-script-linux: |
+            set -eu
+            mkdir -p dist/selected-0457
+            cargo --version --verbose > dist/selected-0457/container-cargo.txt
+            rustc --version --verbose > dist/selected-0457/container-rust.txt
+            cargo metadata --locked --format-version 1 --manifest-path crates/weft-python/Cargo.toml --filter-platform x86_64-unknown-linux-gnu --features ashlar-sdk-ordered-page-candidate,raw-postgresql-reads,ashlar-databricks-paths-keys,ashlar-databricks-qualified,truss-postgresql-pg18,current-postgresql-scalar-candidate,current-databricks-scalar-candidate,current-query-refinement-candidate,current-presence-graph-requirements-candidate > dist/selected-0457/container-wheel-metadata.json
+            cargo tree --locked -p weft-python --target x86_64-unknown-linux-gnu --features ashlar-sdk-ordered-page-candidate,raw-postgresql-reads,ashlar-databricks-paths-keys,ashlar-databricks-qualified,truss-postgresql-pg18,current-postgresql-scalar-candidate,current-databricks-scalar-candidate,current-query-refinement-candidate,current-presence-graph-requirements-candidate --edges normal,build,features --invert serde_json@1.0.145 --no-dedupe --format '{p} features=[{f}]' > dist/selected-0457/container-wheel-features.txt
+          args: --manifest-path crates/weft-python/Cargo.toml --release --locked --out dist/selected-0457
+      - name: Retain the genuine container-built wheel
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/temporal-evidence/wheels"
+          cp source/dist/selected-0457/* "$RUNNER_TEMP/temporal-evidence/wheels/"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - name: Prepare pinned WASM and actual Chromium builders
+        working-directory: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$CARGO_HOME/bin:$PATH"
+          rustup toolchain install 1.90.0 --profile minimal --target wasm32-unknown-unknown
+          cargo install --locked --version 0.2.105 wasm-bindgen-cli
+          bun install --frozen-lockfile
+          python3 .github/scripts/configure_ubuntu_apt_sources.py --self-test
+          sudo python3 .github/scripts/configure_ubuntu_apt_sources.py --apply
+          sudo timeout --signal=TERM --kill-after=30s 5m apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update
+          timeout --kill-after=30s 15m bun x playwright install --with-deps chromium
+          {
+            rustc --version --verbose
+            cargo --version --verbose
+            wasm-bindgen --version
+            bun --version
+            node --version
+          } | tee "$RUNNER_TEMP/temporal-evidence/host-builder-versions.txt"
+      - name: Installed Linux controls, full-feature WASM, Node and real Chromium
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$CARGO_HOME/bin:$PATH"
+          python controls/.github/scripts/temporal-selected-0457.py source controls/.github/scripts/temporal-selected-0457 "$RUNNER_TEMP/temporal-evidence"
+      - name: Preserve all actual outputs including failure or timeout evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: temporal-selected-linux-wasm-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/temporal-evidence
+            ${{ runner.temp }}/temporal-target/wasm32-unknown-unknown/release/weft_wasm.wasm
+          if-no-files-found: error
+          retention-days: 90
