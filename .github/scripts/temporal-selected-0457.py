@@ -105,6 +105,11 @@ def main():
     native = Path((out / 'native-origin.stdout').read_text().strip())
     run('installed-temporal', [python, '-I', root / 'tests/engine-catalog/temporal-boundary.py', native, corpus])
     run('installed-routing', [python, '-I', root / 'tests/engine-catalog/temporal-routing-boundary.py', native])
+    # Test-control checkout carries the reviewed smoke-only correction. Artifact
+    # source stays SOURCE; report both identities, never relabel the built module.
+    sdk_script = control.parents[2] / 'tests/engine-catalog/wheel-smoke.py'
+    sdk_exit = run('reviewed-sdk-smoke', [python, '-I', sdk_script,
+        '--wheel', wheel, '--output', out / 'sdk-smoke.json'], required=False)
     wasm_features = 'raw-postgresql-reads,' + ','.join('weft-runtime/' + x for x in features)
     for label, package, target, selected in [
         ('native', 'weft-runtime', 'x86_64-unknown-linux-gnu', 'raw-postgresql-reads'),
@@ -136,11 +141,6 @@ def main():
         run('bindgen-' + mode, ['wasm-bindgen', raw, '--target', mode, '--out-dir', out / mode])
     run('wasm-node', ['node', root / 'tests/engine-catalog/temporal-boundary.mjs', out / 'nodejs/weft_wasm.js', corpus])
     run('wasm-browser', ['node', root / 'tests/engine-catalog/temporal-browser.mjs', out / 'web', corpus])
-    # Test-control checkout carries the reviewed smoke-only correction. Artifact
-    # source stays SOURCE; report both identities, never relabel the built module.
-    sdk_script = control.parents[2] / 'tests/engine-catalog/wheel-smoke.py'
-    sdk_exit = run('reviewed-sdk-smoke', [python, '-I', sdk_script,
-        '--wheel', wheel, '--output', out / 'sdk-smoke.json'], required=False)
     check_identity(root, expected)
     artifacts = [wheel, native, raw, out / 'web/weft_wasm_bg.wasm', out / 'nodejs/weft_wasm_bg.wasm']
     save(out / 'artifact-manifest.json', dict(source=SOURCE, canonicalUMF=UMF, lockSHA256=LOCK,
