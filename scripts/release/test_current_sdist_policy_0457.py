@@ -29,6 +29,9 @@ class RootConfig(unittest.TestCase):
  def test_root_includes_are_sdist_only(self):
   self.root['tool']['maturin']['include'][0]['format']='wheel'
   with self.assertRaisesRegex(ValueError,'parity'):self.check()
+ def test_terminal_directory_only_globs_refuse(self):
+  for item in self.root['tool']['maturin']['include']:item['path']=item['path'].removesuffix('/*')
+  with self.assertRaisesRegex(ValueError,'parity'):self.check()
  def test_missing_vendor_include_refuses(self):
   self.root['tool']['maturin']['include'].pop()
   with self.assertRaisesRegex(ValueError,'parity'):self.check()

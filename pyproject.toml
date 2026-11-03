@@ -14,6 +14,6 @@ Repository="https://github.com/DocumentDrivenDX/weft"
 Issues="https://github.com/DocumentDrivenDX/weft/issues"
 [tool.maturin]
 manifest-path="crates/weft-python/Cargo.toml"
-include=[{path="tests/**",format="sdist"},{path="spec/**",format="sdist"},{path=".cargo/**",format="sdist"},{path="vendor/ahash/**",format="sdist"}]
+include=[{path="tests/**/*",format="sdist"},{path="spec/**/*",format="sdist"},{path=".cargo/**/*",format="sdist"},{path="vendor/ahash/**/*",format="sdist"}]
 bindings="pyo3"
 features=["ashlar-sdk-ordered-page-candidate","raw-postgresql-reads","ashlar-databricks-paths-keys","ashlar-databricks-qualified","truss-postgresql-pg18","current-postgresql-scalar-candidate","current-databricks-scalar-candidate","current-query-refinement-candidate","current-presence-graph-requirements-candidate"]
