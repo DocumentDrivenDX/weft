@@ -1,0 +1,19 @@
+[build-system]
+requires=["maturin==1.9.6"]
+build-backend="maturin"
+[project]
+license = "MIT OR Apache-2.0"
+license-files = ["crates/weft-python/LICENSE.md", "crates/weft-python/LICENSE-MIT", "crates/weft-python/LICENSE-APACHE", "crates/weft-python/THIRD-PARTY-LICENSES.txt"]
+name="umf-weft"
+version = "0.4.57"
+description="Native UMF-powered SQL compiler with explicit backend profiles"
+readme="crates/weft-python/README.md"
+requires-python=">=3.9"
+[project.urls]
+Repository="https://github.com/DocumentDrivenDX/weft"
+Issues="https://github.com/DocumentDrivenDX/weft/issues"
+[tool.maturin]
+manifest-path="crates/weft-python/Cargo.toml"
+include=[{path="tests/**",format="sdist"},{path="spec/**",format="sdist"},{path=".cargo/**",format="sdist"},{path="vendor/ahash/**",format="sdist"}]
+bindings="pyo3"
+features=["ashlar-sdk-ordered-page-candidate","raw-postgresql-reads","ashlar-databricks-paths-keys","ashlar-databricks-qualified","truss-postgresql-pg18","current-postgresql-scalar-candidate","current-databricks-scalar-candidate","current-query-refinement-candidate","current-presence-graph-requirements-candidate"]

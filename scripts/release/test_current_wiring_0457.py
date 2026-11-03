@@ -69,6 +69,16 @@ class ActualArchiveCorrespondence(unittest.TestCase):
     'vendor/ahash/README.md':b'ahash retained readme\n','vendor/ahash/LICENSE-MIT':b'synthetic MIT notice\n',
     'vendor/ahash/LICENSE-APACHE':b'synthetic Apache notice\n','vendor/ahash/Cargo.toml.orig':b'original upstream manifest, filtered by Maturin\n',
     'tests/dev-probe/Cargo.toml':b'[package]\nname="dev-probe"\nversion="0.0.0"\n'})
+  nested=self.files['crates/weft-python/pyproject.toml']
+  nested=b'[build-system]\nrequires=["maturin==1.9.6"]\nbuild-backend="maturin"\n'+nested
+  self.files['crates/weft-python/pyproject.toml']=nested
+  root=nested.replace(b'readme="README.md"',b'readme="crates/weft-python/README.md"')
+  root=root.replace(b'license-files=["LICENSE.md","LICENSE-MIT","LICENSE-APACHE","THIRD-PARTY-LICENSES.txt"]',b'license-files=["crates/weft-python/LICENSE.md","crates/weft-python/LICENSE-MIT","crates/weft-python/LICENSE-APACHE","crates/weft-python/THIRD-PARTY-LICENSES.txt"]')
+  root=root.replace(b'[tool.maturin]',b'[tool.maturin]\nmanifest-path="crates/weft-python/Cargo.toml"')
+  root=root.replace(b'include=[{path="../../tests/**",format="sdist"},{path="../../spec/**",format="sdist"},{path="../../.cargo/**",format="sdist"}]',b'include=[{path="tests/**",format="sdist"},{path="spec/**",format="sdist"},{path=".cargo/**",format="sdist"},{path="vendor/ahash/**",format="sdist"}]')
+  self.files['pyproject.toml']=root
+  for name in archives.AHASH_GIT_R_FILES:
+   self.files.setdefault('vendor/ahash/'+name,('synthetic tracked '+name+'\n').encode())
   self.source_modes={'tests/run-roster.py':0o755};self.tar_modes={}
   for n,b in self.files.items():
    p=self.root/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b);p.chmod(self.source_modes.get(n,0o644))
@@ -78,12 +88,12 @@ class ActualArchiveCorrespondence(unittest.TestCase):
   subprocess.run(['git','add','.'],cwd=self.root,check=True)
   subprocess.run(['git','-c','user.name=Archive Unit','-c','user.email=unit@example.invalid','-c','commit.gpgsign=false','commit','-qm','synthetic source-byte fixture'],cwd=self.root,check=True)
   self.R=subprocess.check_output(['git','rev-parse','HEAD'],cwd=self.root,text=True).strip()
-  self.archive=dict(self.files);self.archive.pop('unrelated.rs');self.archive.pop('crates/weft-python/pyproject.toml');self.archive.pop('crates/weft-core/developer-only.txt');self.archive.pop('vendor/ahash/Cargo.toml.orig')
-  for name in ['README.md','LICENSE.md','LICENSE-MIT','LICENSE-APACHE','THIRD-PARTY-LICENSES.txt']:self.archive[name]=self.files['crates/weft-python/'+name]
-  self.archive['Cargo.toml']=self.files['Cargo.toml'].replace(b',"crates/weft-wasm"',b'')
+  self.archive=dict(self.files);self.archive.pop('unrelated.rs');self.archive.pop('crates/weft-python/pyproject.toml');self.archive.pop('crates/weft-core/developer-only.txt')
+  self.archive['Cargo.toml']=self.files['Cargo.toml'].replace(b'members=["crates/weft-core","crates/weft-databricks","crates/weft-postgresql","crates/weft-python","crates/weft-runtime","crates/weft-wasm"]',b'members=["crates/weft-python"]')
   self.archive['crates/weft-python/Cargo.toml']+=b'readme="README.md"\n'
-  self.archive['pyproject.toml']=self.files['crates/weft-python/pyproject.toml']+b'manifest-path="crates/weft-python/Cargo.toml"\n'
+  self.archive['pyproject.toml']=self.files['pyproject.toml']
   self.archive['PKG-INFO']=b'Metadata-Version: 2.4\nName: umf-weft\nVersion: 0.4.57\nRequires-Python: >=3.9\nLicense-Expression: MIT OR Apache-2.0\n\n'
+  self.archive['PKG-INFO']=self.archive['PKG-INFO'].replace(b'Requires-Python:',b'License-File: crates/weft-python/LICENSE.md\nLicense-File: crates/weft-python/LICENSE-MIT\nLicense-File: crates/weft-python/LICENSE-APACHE\nLicense-File: crates/weft-python/THIRD-PARTY-LICENSES.txt\nRequires-Python:')
   self.metadata=self.graph_fixture()
  def graph_fixture(self):
   packages=[];nodes=[];ids={}
@@ -103,6 +113,14 @@ class ActualArchiveCorrespondence(unittest.TestCase):
    nodes.append(dict(id=key,deps=deps))
   nodes.append(dict(id=registry,deps=[dict(pkg=ids['vendor/ahash'],dep_kinds=[dict(kind='build',target='cfg(target_os = "linux")')])]))
   nodes.append(dict(id=probe,deps=[]))
+  by_id={p['id']:p for p in packages}
+  for node in nodes:
+   node['dependencies']=[d['pkg'] for d in node['deps']]
+   package=by_id[node['id']];package['dependencies']=[]
+   for edge in node['deps']:
+    dependency=by_id[edge['pkg']]
+    path=str(Path(dependency['manifest_path']).parent) if dependency['source'] is None and dependency['name']!='ahash' else None
+    package['dependencies'].append(dict(name=dependency['name'],rename=None,path=path))
   return dict(workspace_root=str(self.root),packages=packages,resolve=dict(root=ids['crates/weft-python'],nodes=nodes))
  def verify_archive(self):
   import tarfile,io
@@ -114,6 +132,7 @@ class ActualArchiveCorrespondence(unittest.TestCase):
    if args[0]=='cargo':
     if getattr(self,'package_mutation',None):
      change=self.package_mutation;self.package_mutation=None;change()
+    self.assertNotEqual(args[-1],'vendor/ahash/Cargo.toml','Non-member Cargo listing is forbidden')
     self.assertEqual(args[:5],['cargo','package','--list','--allow-dirty','--manifest-path'])
     return self.package_lists[args[-1].removesuffix('/Cargo.toml')].encode()
    return check_output(args,**kwargs)
@@ -123,7 +142,14 @@ class ActualArchiveCorrespondence(unittest.TestCase):
  def test_complete_declared_roster_is_recorded(self):
   proof=self.verify_archive();self.assertTrue(proof['completeDeclaredInventory']);self.assertTrue(proof['mappedGitModesMatchR'])
   self.assertEqual(set(proof['declaredInventory']),set(self.archive))
-  self.assertEqual(proof['declaredInventory']['README.md']['source'],'crates/weft-python/README.md')
+  self.assertEqual(proof['declaredInventory']['crates/weft-python/README.md']['source'],'crates/weft-python/README.md')
+ def test_raw_tar_headers_are_retained(self):
+  import base64
+  proof=self.verify_archive();header=proof['rawTarHeaders']['spec/required.json'];raw=base64.b64decode(header['rawHeaderChainBase64'])
+  self.assertGreaterEqual(len(raw),512);self.assertEqual(raw[-512+156:-512+157],bytes.fromhex(header['entryTypeHex']))
+ def test_mapped_license_metadata_paths_are_required(self):
+  self.archive['PKG-INFO']=self.archive['PKG-INFO'].replace(b'License-File: crates/weft-python/LICENSE.md',b'License-File: LICENSE.md')
+  with self.assertRaisesRegex(ValueError,'license path'):self.verify_archive()
  def test_missing_required_generated_metadata(self):
   self.archive.pop('PKG-INFO')
   with self.assertRaisesRegex(ValueError,'misses required'):self.verify_archive()
@@ -131,10 +157,10 @@ class ActualArchiveCorrespondence(unittest.TestCase):
   self.archive.pop('pyproject.toml')
   with self.assertRaisesRegex(ValueError,'misses required'):self.verify_archive()
  def test_missing_required_readme(self):
-  self.archive.pop('README.md')
+  self.archive.pop('crates/weft-python/README.md')
   with self.assertRaisesRegex(ValueError,'misses required'):self.verify_archive()
  def test_missing_required_notices(self):
-  self.archive.pop('THIRD-PARTY-LICENSES.txt')
+  self.archive.pop('crates/weft-python/THIRD-PARTY-LICENSES.txt')
   with self.assertRaisesRegex(ValueError,'misses required'):self.verify_archive()
  def test_missing_declared_tests(self):
   self.archive.pop('tests/run-roster.py')
@@ -171,7 +197,7 @@ class ActualArchiveCorrespondence(unittest.TestCase):
   self.assertTrue((self.root/'unexpected-source').exists())
  def test_root_pyproject_transform_must_remain_explicit(self):
   self.archive['pyproject.toml']+=b'new-unreviewed-option=true\n'
-  with self.assertRaisesRegex(ValueError,'manifest location'):self.verify_archive()
+  with self.assertRaisesRegex(ValueError,'root pyproject bytes'):self.verify_archive()
  def test_workspace_transform_cannot_change_dependency_pins(self):
   self.archive['Cargo.toml']+=b'[workspace.dependencies]\nwrong="1"\n'
   with self.assertRaisesRegex(ValueError,'workspace/pins'):self.verify_archive()
@@ -184,7 +210,9 @@ class ActualArchiveCorrespondence(unittest.TestCase):
   self.assertEqual(proof['selectedLocalRoots'],sorted(archives.REVIEWED_LOCAL_ROOTS))
   self.assertIn('vendor/ahash/build.rs',proof['declaredInventory'])
   self.assertIn('vendor/ahash/LICENSE-APACHE',proof['declaredInventory'])
-  self.assertIn('vendor/ahash',proof['cargoPackageLists'])
+  self.assertNotIn('vendor/ahash',proof['cargoPackageLists'])
+  self.assertEqual(len(proof['cargoPackageLists']),5)
+  self.assertEqual(len(proof['gitDerivedLocalDependency']['files']),23)
  def test_other_vendor_root_is_not_generically_admitted(self):
   self.metadata_package('ahash')['manifest_path']=str(self.root/'vendor/other/Cargo.toml')
   with self.assertRaisesRegex(ValueError,'Unreviewed selected local root'):self.verify_archive()
