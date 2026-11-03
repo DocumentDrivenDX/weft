@@ -1767,3 +1767,6 @@ mod engine_temporal_tests;
 
 #[cfg(feature="raw-postgresql-reads")]
 pub mod engine_temporal;
+
+#[cfg(all(test,feature="raw-postgresql-reads"))]
+mod engine_temporal_routing_tests;
