@@ -90,6 +90,8 @@ jobs:
           python-version: '3.12'
       - name: Exact-main R input admission before tools
         run: python scripts/release/verify_current_inputs_0457.py > "$RUNNER_TEMP/current-wasm/preflight.json"
+      - name: Serialize verified source and WASM feature metadata before builders
+        run: python scripts/release/qualify_current_wasm_0457.py --preflight-only --out "$RUNNER_TEMP/current-wasm"
       - name: Pinned WASM builders
         shell: bash
         run: |
