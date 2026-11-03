@@ -205,6 +205,11 @@ jobs:
             gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID" > incoming/producer-run.json
           fi
           gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir incoming/assets
+      - name: Authenticate current closed3 SDK42 and final-R source manifests
+        if: steps.identity.outputs.eligible == 'true' && steps.identity.outputs.version == '0.4.57'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/release/current_publication_0457.py --source-sha '${{ steps.identity.outputs.source_sha }}' --assets incoming/assets --out "$RUNNER_TEMP/current-publication-api"
       - name: Verify tag source, checksum manifest, pins and package metadata
         if: steps.identity.outputs.eligible == 'true'
         id: source
@@ -236,6 +241,7 @@ jobs:
               --producer-workflow-prefix .github/workflows/release-selected-publish-
               --default-branch "$DEFAULT_BRANCH")
           fi
+          if [[ "$VERSION" == 0.4.57 ]]; then ARGS+=(--require-sdist); fi
           python scripts/release/publish_pypi_release.py "${ARGS[@]}"
           printf 'version=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
           printf 'distribution=%s\n' "$DISTRIBUTION" >> "$GITHUB_OUTPUT"
@@ -280,6 +286,9 @@ jobs:
         run: |
           mkdir .verified-pypi-packages
           cp "dist/$WHEEL_PREFIX"*.whl .verified-pypi-packages/
+          if [[ '${{ needs.verify-release.outputs.version }}' == 0.4.57 ]]; then
+            cp dist/umf_weft-0.4.57*.tar.gz .verified-pypi-packages/
+          fi
       - uses: pypa/gh-action-pypi-publish@release/v1
         id: pypi-upload
         if: steps.preflight.outputs.status == 'absent'

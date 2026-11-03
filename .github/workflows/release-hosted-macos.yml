@@ -2,6 +2,16 @@ name: Build Weft hosted macOS ARM64 wheel and refusal-parity profile
 on:
   workflow_dispatch:
     inputs:
+      current_source_run_id:
+        description: Successful exact-R source/archive and temporal-WASM run
+        required: false
+        default: ''
+        type: string
+      current_final:
+        description: Explicit reviewed final-R 0.4.57 producer selection
+        required: false
+        default: false
+        type: boolean
       source_sha:
         description: Exact reviewed default-branch commit to build
         required: true
@@ -21,9 +31,12 @@ concurrency:
   cancel-in-progress: false
 jobs:
   macos-arm64:
-    if: inputs.source_sha != '' && inputs.version != '' && inputs.distribution != ''
+    if: (inputs.version != '0.4.57' || inputs.current_final) && inputs.source_sha != '' && inputs.version != '' && inputs.distribution != ''
     runs-on: macos-14
     timeout-minutes: 60
+    permissions:
+      contents: read
+      actions: read
     env:
       SOURCE_SHA: ${{ inputs.source_sha }}
       SOURCE_VERSION: ${{ inputs.version }}
@@ -76,6 +89,18 @@ jobs:
           assert project['version']==crate['version']==os.environ['SOURCE_VERSION']
           assert project['name']==os.environ['DISTRIBUTION']==distribution_for_version(project['version'])
           PY
+      - name: Current final-R source, S and frozen-lock preflight
+        if: inputs.current_final
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/current-sdk-aarch64-apple-darwin"
+          python3 scripts/release/verify_current_inputs_0457.py > "$RUNNER_TEMP/current-sdk-aarch64-apple-darwin/preflight.json"
+      - name: Admit actual current R source/archive and temporal WASM producer
+        if: inputs.current_final
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/release/admit_current_sources_0457.py --source-sha "$SOURCE_SHA" --run-id '${{ inputs.current_source_run_id }}' --out "$RUNNER_TEMP/current-source-admission"
       - uses: oven-sh/setup-bun@v2
         timeout-minutes: 5
         with:
@@ -129,6 +154,32 @@ jobs:
           d.update({'sourceCommit':os.environ['SOURCE_SHA'],'distribution':os.environ['DISTRIBUTION'],'target':'aarch64-apple-darwin','nativeModule':modules[0]})
           p.write_text(json.dumps(d,indent=2)+'\n')
           PY
+      - name: Current42 SDK and actual installed final-R correspondence
+        if: inputs.current_final
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/release/qualify_current_sdk_0457.py --wheel "$(find "$DIST_ROOT" -maxdepth 1 -name '*.whl' -print -quit)" --target aarch64-apple-darwin --out "$RUNNER_TEMP/current-sdk-aarch64-apple-darwin"
+      - name: Preserve Mac producer partials at their original attempt
+        if: always() && inputs.current_final
+        shell: bash
+        run: |
+          python3 - <<'PARTIALS'
+          from pathlib import Path
+          import os,shutil
+          source=Path(os.environ['DIST_ROOT']);out=Path(os.environ['RUNNER_TEMP'])/'current-sdk-aarch64-apple-darwin';out.mkdir(parents=True,exist_ok=True)
+          for p in source.glob('*.whl'):shutil.copyfile(p,out/p.name)
+          for p in source.glob('packaging-*.json'):
+              q=out/'producer-packaging'/p.name;q.parent.mkdir(exist_ok=True);shutil.copyfile(p,q)
+          PARTIALS
+      - name: Emit current final-R Mac wheel and SDK evidence immediately
+        if: always() && inputs.current_final
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-sdk-aarch64-apple-darwin-${{ github.sha }}-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/current-sdk-aarch64-apple-darwin
+          if-no-files-found: error
+          retention-days: 90
       - name: Freeze nine refusal-response compiler vectors
         id: vectors
         shell: bash
@@ -146,6 +197,11 @@ jobs:
           (out/'compiler-cases.json').write_text(json.dumps(chosen,ensure_ascii=False)+'\n')
           (out/'compiler-roster.json').write_text(json.dumps({'profile':'nine-frozen-refusal-responses/1','cases':ids,'corpus':'tests/compile/fixtures/cases.json','corpusSha256':hashlib.sha256(corpus.read_bytes()).hexdigest(),'selectedCasesSha256':hashlib.sha256((out/'compiler-cases.json').read_bytes()).hexdigest(),'expected':'exact Rust comparator response bytes; installed Python wheel and Chromium must match all nine ordered refusal responses','positiveQueryQualification':False,'nativeDatabaseExecution':False},indent=2)+'\n')
           PY
+      - name: Current cheap locked WASM CLI preflight
+        if: inputs.current_final
+        shell: bash
+        run: |
+          python3 -c 'import sys,os; from pathlib import Path; sys.path.insert(0,"scripts/release"); from verify_current_tools_0457 import inspect; inspect(Path.cwd(),Path(os.environ["EVIDENCE_ROOT"])/"current-tools",wasm=True)'
       - name: Build Rust comparator and browser WASM using exact wheel features
         id: parity
         shell: bash
@@ -178,7 +234,7 @@ jobs:
         if: always()
         timeout-minutes: 1
         with:
-          name: weft-hosted-${{ inputs.version }}-macos-arm64-${{ inputs.source_sha }}
+          name: ${{ job.status == 'success' && format('weft-hosted-{0}-macos-arm64-{1}', inputs.version, inputs.source_sha) || format('failed-weft-hosted-{0}-macos-arm64-{1}-attempt-{2}', inputs.version, inputs.source_sha, github.run_attempt) }}
           path: ${{ runner.temp }}/weft-macos-upload/**
           if-no-files-found: error
           retention-days: 90

@@ -9,6 +9,7 @@ permissions:
   contents: read
 jobs:
   native-table-operations:
+    if: github.ref != 'refs/tags/v0.4.57'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     services:

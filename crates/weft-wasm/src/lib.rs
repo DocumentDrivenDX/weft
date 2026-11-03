@@ -268,17 +268,17 @@ pub fn compile_table_seed_json(request:&js_sys::JsString)->Result<String,wasm_bi
 pub fn check_table_seed_json(program:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{Ok(weft_runtime::check_table_seed_json(&strict_text(program,33_554_432)?))}
 
 #[cfg(feature="raw-postgresql-reads")]
-#[wasm_bindgen(js_name=check_engine_temporal_read_shape_json)]
+#[wasm_bindgen::prelude::wasm_bindgen(js_name=check_engine_temporal_read_shape_json)]
 pub fn check_engine_temporal_read_shape_json(program:&js_sys::JsString,request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let program=strict_text(program,4_194_304)?;let request=strict_text(request,4_194_304)?;Ok(weft_runtime::engine_temporal::check_json(&program,&request,None,false,true))}
 
 #[cfg(feature="raw-postgresql-reads")]
-#[wasm_bindgen(js_name=check_engine_temporal_page_shape_json)]
+#[wasm_bindgen::prelude::wasm_bindgen(js_name=check_engine_temporal_page_shape_json)]
 pub fn check_engine_temporal_page_shape_json(program:&js_sys::JsString,request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let program=strict_text(program,4_194_304)?;let request=strict_text(request,4_194_304)?;Ok(weft_runtime::engine_temporal::check_json(&program,&request,None,true,true))}
 
 #[cfg(feature="raw-postgresql-reads")]
-#[wasm_bindgen(js_name=check_engine_temporal_read_json)]
+#[wasm_bindgen::prelude::wasm_bindgen(js_name=check_engine_temporal_read_json)]
 pub fn check_engine_temporal_read_json(program:&js_sys::JsString,request:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let program=strict_text(program,4_194_304)?;let request=strict_text(request,4_194_304)?;Ok(weft_runtime::engine_temporal::check_json(&program,&request,None,false,false))}
 
 #[cfg(feature="raw-postgresql-reads")]
-#[wasm_bindgen(js_name=check_engine_temporal_page_json)]
+#[wasm_bindgen::prelude::wasm_bindgen(js_name=check_engine_temporal_page_json)]
 pub fn check_engine_temporal_page_json(program:&js_sys::JsString,request:&js_sys::JsString,after_json:&js_sys::JsString)->Result<String,wasm_bindgen::JsValue>{let program=strict_text(program,4_194_304)?;let request=strict_text(request,4_194_304)?;let after=strict_text(after_json,1_048_576)?;Ok(weft_runtime::engine_temporal::check_json(&program,&request,Some(&after),true,false))}
