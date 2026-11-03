@@ -816,3 +816,56 @@ fn temporal_selected_key_suffix_is_exact_including_null_placement() {
         assert_eq!(sort[slots - 1]["field"]["element"], "id2");
     }
 }
+
+#[test]
+fn cohort_integrated_inspector_keeps_unknown_content_and_original_source_bytes() {
+    let mut r = request();
+    rewrite_model(&mut r, |doc| {
+        doc["vocabularies"]["cohort.unknown"] = json!({"version":"0.1.0"});
+        doc["modules"][0]["extensions"]["cohort.unknown"] =
+            weft_core::json::checked_json(r#"{"$serde_json::private::Number":"not JSON","$serde_json::private::RawValue":"invalid[","exactDecimal":1.00e0,"nested":{"z":true,"a":null}}"#).unwrap();
+    });
+    let original = r["modules"][0]["documentJson"].as_str().unwrap().to_owned();
+    let hash = weft_core::json::sha256(original.as_bytes());
+    let program = compile(&r);
+    assert_eq!(program["status"], "compiled", "{program}");
+    assert_eq!(
+        program["request"]["modules"][0]["documentJson"]
+            .as_str()
+            .unwrap()
+            .as_bytes(),
+        original.as_bytes()
+    );
+    assert_eq!(program["request"]["modules"][0]["pin"]["sha256"], hash);
+    assert_eq!(
+        check(&program, &r, false, true, "null"),
+        json!({"status":"checked","program":program})
+    );
+}
+
+#[test]
+fn cohort_integrated_inspector_refuses_lossy_unknown_numbers() {
+    for token in [
+        "9007199254740993",
+        "1267650600228229401496703205376",
+        "0.10000000000000001",
+        "-0.00e2",
+        "1e400",
+    ] {
+        let mut r = request();
+        rewrite_model(&mut r, |doc| {
+            doc["modules"][0]["extensions"]["cohort.unknown"] =
+                weft_core::json::checked_json(token).unwrap();
+        });
+        let out = compile(&r);
+        assert_eq!(out["status"], "blocked", "{token}: {out}");
+        assert!(
+            out["diagnostics"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|d| d["code"] == "NUMBER"),
+            "{token}: {out}"
+        );
+    }
+}
