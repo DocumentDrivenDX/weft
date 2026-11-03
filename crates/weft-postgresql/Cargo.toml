@@ -19,6 +19,7 @@ name = "candidate-compiler"
 path = "../../tests/truss-postgresql/compiler.rs"
 
 [features]
+engine-temporal=["weft-core/engine-temporal"]
 current-presence-candidate=["weft-core/current-presence-context-candidate"]
 bounded-current-string-candidate=["current-query-refinement-candidate","weft-core/bounded-current-string-candidate"]
 current-query-refinement-candidate=["weft-core/current-query-refinement-candidate"]

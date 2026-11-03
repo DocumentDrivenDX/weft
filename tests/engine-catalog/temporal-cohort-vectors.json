@@ -1,0 +1,55 @@
+{
+  "scope": "Integrated UMF/Weft DEV feature-union controls; independent ordinary and lossless native profiles, no native Truss proof",
+  "vectors": [
+    {
+      "name": "unknown-private-number-key",
+      "raw": "{\"$serde_json::private::Number\":\"not JSON\",\"nested\":{\"$serde_json::private::RawValue\":\"[invalid\"}}",
+      "ordinary": "{\"$serde_json::private::Number\":\"not JSON\",\"nested\":{\"$serde_json::private::RawValue\":\"[invalid\"}}"
+    },
+    {
+      "name": "large-integer",
+      "raw": "9007199254740993",
+      "ordinaryError": "NUMBER"
+    },
+    {
+      "name": "arbitrary-bigint",
+      "raw": "1267650600228229401496703205376",
+      "ordinaryError": "NUMBER"
+    },
+    {
+      "name": "decimal-exponent",
+      "raw": "1.2300e+2",
+      "ordinary": "123"
+    },
+    {
+      "name": "negative-zero",
+      "raw": "-0",
+      "ordinaryError": "NUMBER"
+    },
+    {
+      "name": "negative-decimal-zero",
+      "raw": "-0.00e+2",
+      "ordinaryError": "NUMBER"
+    },
+    {
+      "name": "rounding-sensitive",
+      "raw": "0.10000000000000001",
+      "ordinaryError": "NUMBER"
+    },
+    {
+      "name": "round-trip-float",
+      "raw": "1.0000000000000002",
+      "ordinary": "1.0000000000000002"
+    },
+    {
+      "name": "ordinary-decimal",
+      "raw": "0.1",
+      "ordinary": "0.1"
+    },
+    {
+      "name": "large-exponent",
+      "raw": "1e400",
+      "ordinaryError": "NUMBER"
+    }
+  ]
+}

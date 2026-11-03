@@ -231,7 +231,22 @@ def main() -> None:
     shutil.copyfile(dist / 'macos-artifact-verification.json', asset_dir / f'mac-artifact-verification-{version}.json')
     shutil.copyfile(note, asset_dir / note.name)
 
+    current_proof = None
+    if version == '0.4.57':
+        # All strict historical source/tree/Mac/package guards above already ran.
+        # Authenticate actual three-wheel42 + source/WASM bytes BEFORE any tag.
+        from current_publication_0457 import stage
+        import tempfile
+        require(bool(packaging_run_id), 'Current publication must reuse completed Linux producers')
+        with tempfile.TemporaryDirectory(prefix='weft-current-publication-') as folder:
+            current_proof = stage(source_sha, int(packaging_run_id), macos_run_id,
+                                  int(os.environ['CURRENT_SOURCE_RUN_ID']), asset_dir, Path(folder)/'proof')
+
     sums = ''.join(f'{sha(path.read_bytes())}  {path.name}\n' for path in sorted(all_wheels, key=lambda item: item.name))
+    if current_proof is not None:
+        sdists = list(asset_dir.glob('umf_weft-0.4.57*.tar.gz'))
+        require(len(sdists) == 1, 'Current release requires one authenticated sdist')
+        sums += f'{sha(sdists[0].read_bytes())}  {sdists[0].name}\n'
     (asset_dir / 'SHA256SUMS').write_text(sums)
     features = project_features
     pins = {
@@ -251,6 +266,9 @@ def main() -> None:
         'nativeModuleSha256': {row['wheel']: row['nativeModuleSha256'] for row in [*linux_packaging, mac_report]},
         'qualification': 'Three exact wheel packages; Mac Rust/installed-Python/Chromium parity covers nine frozen refusal responses only. Linux is packaging-only. No positive-query or native PostgreSQL execution is claimed.',
     }
+    if current_proof is not None:
+        pins['currentQualification'] = current_proof
+        pins['qualification'] += ' Current3 closed SDK42, 14 temporal compiler controls, five routing controls and raw temporal Node/Chromium14 are separately authenticated; no native database authority inferred.'
     pins.update(producer_intent(source_sha, head, current_run_id))
     (asset_dir / 'release-pins.json').write_text(json.dumps(pins, indent=2) + '\n')
     manifest = {

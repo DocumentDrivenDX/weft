@@ -4,6 +4,16 @@ on:
     tags: ['v*']
   workflow_dispatch:
     inputs:
+      current_source_run_id:
+        description: Successful exact-R source/archive and temporal-WASM run
+        required: false
+        default: ''
+        type: string
+      current_final:
+        description: Explicit reviewed final-R 0.4.57 producer selection
+        required: false
+        default: false
+        type: boolean
       tag:
         description: Existing release tag to build (empty builds only)
         required: false
@@ -40,8 +50,14 @@ concurrency:
 jobs:
   route:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
     outputs:
       hosted_macos: ${{ steps.profile.outputs.hosted_macos }}
+      current_profile: ${{ steps.profile.outputs.current_profile }}
+      current_produce: ${{ steps.profile.outputs.current_produce }}
+      current_publish: ${{ steps.profile.outputs.current_publish }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -58,9 +74,10 @@ jobs:
           SOURCE_SHA: ${{ inputs.source_sha }}
           MACOS_RUN_ID: ${{ inputs.macos_run_id }}
           MACOS_SOURCE_SHA: ${{ inputs.macos_source_sha }}
+          CURRENT_INPUTS: ${{ toJSON(inputs) }}
         run: |
           python - <<'PY'
-          import os,sys,tomllib
+          import os,sys,tomllib,json
           sys.path.insert(0,'scripts/release')
           from publish_pypi_release import distribution_for_version
           project=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']
@@ -70,13 +87,27 @@ jobs:
               assert os.environ['SOURCE_SHA']==os.environ['GITHUB_SHA']
               assert os.environ['MACOS_SOURCE_SHA']==os.environ['SOURCE_SHA']
               assert os.environ['GITHUB_REF']=='refs/heads/main'
-          with open(os.environ['GITHUB_OUTPUT'],'a') as output: output.write(f'hosted_macos={hosted}\n')
+          from select_current_events_0457 import select
+          current=select(os.environ['GITHUB_EVENT_NAME'],os.environ['GITHUB_REF'],json.loads(os.environ['CURRENT_INPUTS'])) if project['version']=='0.4.57' else dict(produce=False,publish=False)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as output:
+              output.write(f'hosted_macos={hosted}\n')
+              for role,value in current.items():output.write('current_'+role+'='+str(value).lower()+'\n')
+              output.write('current_profile='+('true' if project['version']=='0.4.57' else 'false')+'\n')
           PY
+      - name: Admit actual current R source/archive and temporal WASM producer
+        if: inputs.current_final
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/release/admit_current_sources_0457.py --source-sha '${{ inputs.source_sha }}' --run-id '${{ inputs.current_source_run_id }}' --out "$RUNNER_TEMP/current-source-admission"
   wheels:
+    needs: route
+    env:
+      CARGO_BUILD_JOBS: '1'
+      SOURCE_SHA: ${{ inputs.source_sha }}
     # v0.4.50 and v0.4.52 have separate selected-assets paths. Never start the
     # legacy platform matrix for those tags; their promotion workflows consume
     # the exact selected Linux build plus staged macOS qualification assets.
-    if: inputs.packaging_run_id == '' && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54'
+    if: (needs.route.outputs.current_profile != 'true' || needs.route.outputs.current_produce == 'true') && github.ref_name != 'v0.4.57' && inputs.packaging_run_id == '' && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54'
     strategy:
       fail-fast: false
       matrix:
@@ -116,12 +147,28 @@ jobs:
               output.write(f'DISTRIBUTION={project["name"]}\nWHEEL_PREFIX={prefix}\n')
           if os.environ['RELEASE_REQUESTED']=='true':assert os.environ['RELEASE_TAG']=='v'+p
           PYTHON
+      - name: Current final-R source, S and frozen-lock preflight
+        if: inputs.current_final
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/current-sdk-${{ matrix.target }}"
+          python scripts/release/verify_current_inputs_0457.py > "$RUNNER_TEMP/current-sdk-${{ matrix.target }}/preflight.json"
       - uses: PyO3/maturin-action@v1
         with:
           maturin-version: '1.9.6'
           rust-toolchain: '1.90.0'
           target: ${{ matrix.target }}
           manylinux: ${{ matrix.manylinux }}
+          before-script-linux: |
+            set -eu
+            mkdir -p dist/current-native-tools
+            rustc --version --verbose > dist/current-native-tools/rust.stdout
+            cargo --version --verbose > dist/current-native-tools/cargo.stdout
+            maturin --version > dist/current-native-tools/maturin.stdout
+            grep -q '^rustc 1.90.0 ' dist/current-native-tools/rust.stdout
+            grep -q '^cargo 1.90.0 ' dist/current-native-tools/cargo.stdout
+            grep -qx 'maturin 1.9.6' dist/current-native-tools/maturin.stdout
           args: --manifest-path crates/weft-python/Cargo.toml --release --locked --out dist
       # Legacy releases retain their existing macOS qualification process.
       # The renamed umf-weft cohort uses release-hosted-macos.yml for its
@@ -143,15 +190,43 @@ jobs:
           evidence.update({'sourceCommit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'distribution':os.environ['DISTRIBUTION'],'target':'${{ matrix.target }}','nativeModule':modules[0]})
           report.write_text(json.dumps(evidence,indent=2)+'\n')
           PYTHON
-      - uses: actions/upload-artifact@v4
+      - name: Current42 SDK and actual installed final-R correspondence
+        if: inputs.current_final
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/release/qualify_current_sdk_0457.py --wheel "$(find dist -maxdepth 1 -name '*.whl' -print -quit)" --target '${{ matrix.target }}' --out "$RUNNER_TEMP/current-sdk-${{ matrix.target }}"
+      - name: Preserve actual producer partials at their original attempt
+        if: always() && inputs.current_final
+        shell: bash
+        run: |
+          python - <<'PARTIALS'
+          from pathlib import Path
+          import os,shutil
+          source=Path('dist');out=Path(os.environ['RUNNER_TEMP'])/'current-sdk-${{ matrix.target }}';out.mkdir(parents=True,exist_ok=True)
+          for p in source.glob('*.whl'):shutil.copyfile(p,out/p.name)
+          for p in source.glob('packaging-*.json'):
+              q=out/'producer-packaging'/p.name;q.parent.mkdir(exist_ok=True);shutil.copyfile(p,q)
+          if (source/'current-native-tools').exists():shutil.copytree(source/'current-native-tools',out/'native-builder-tools',dirs_exist_ok=True)
+          PARTIALS
+      - name: Emit current final-R wheel and SDK evidence immediately
+        if: always() && inputs.current_final
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels-${{ matrix.target }}
+          name: current-sdk-${{ matrix.target }}-${{ github.sha }}-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/current-sdk-${{ matrix.target }}
+          if-no-files-found: error
+          retention-days: 90
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ job.status == 'success' && format('wheels-{0}', matrix.target) || format('failed-wheels-{0}-attempt-{1}', matrix.target, github.run_attempt) }}
           path: |
             dist/*.whl
             dist/packaging-*.json
           if-no-files-found: error
   publish:
-    if: always() && needs.route.result == 'success' && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54' && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != '')) && (needs.route.outputs.hosted_macos != 'true' || (inputs.macos_run_id != '' && inputs.macos_source_sha != ''))
+    if: (needs.route.outputs.current_profile != 'true' || needs.route.outputs.current_publish == 'true') && always() && needs.route.result == 'success' && github.ref_name != 'v0.4.50' && inputs.tag != 'v0.4.50' && github.ref_name != 'v0.4.52' && inputs.tag != 'v0.4.52' && github.ref_name != 'v0.4.54' && inputs.tag != 'v0.4.54' && (github.ref_type == 'tag' || inputs.tag != '') && (needs.wheels.result == 'success' || (needs.wheels.result == 'skipped' && inputs.packaging_run_id != '')) && (needs.route.outputs.hosted_macos != 'true' || (inputs.macos_run_id != '' && inputs.macos_source_sha != ''))
     needs: [wheels, route]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -175,6 +250,11 @@ jobs:
           pattern: wheels-*
           merge-multiple: true
           path: dist
+      - name: Authenticate actual current3 SDK42 reports before existing publisher
+        if: inputs.current_final
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/release/admit_current_sdk_0457.py --source-sha '${{ inputs.source_sha }}' --linux-run '${{ inputs.packaging_run_id }}' --macos-run '${{ inputs.macos_run_id }}' --out "$RUNNER_TEMP/current-sdk-admission"
       - name: Verify hosted ARM64 producer and publish exact three-platform release
         if: inputs.macos_run_id != ''
         env:
@@ -183,6 +263,7 @@ jobs:
           MACOS_RUN_ID: ${{ inputs.macos_run_id }}
           MACOS_SOURCE_SHA: ${{ inputs.macos_source_sha }}
           GH_REPOSITORY: ${{ github.repository }}
+          CURRENT_SOURCE_RUN_ID: ${{ inputs.current_source_run_id }}
         shell: bash
         run: |
           set -euo pipefail

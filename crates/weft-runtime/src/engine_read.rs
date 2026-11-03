@@ -171,7 +171,52 @@ fn bind(program:&Value,request:&Value)->Result<Value>{
  #[cfg(not(feature="ashlar-sdk-ordered-page-candidate"))]compile_original(method,request)}
 }
 fn response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-read/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-READ","message":code}]})).to_string()}
-pub fn compile_json(raw:&str)->String{response((||{let v=weft_core::json::checked_json(raw).map_err(|_|"request framing refused")?;let r:Request=serde_json::from_value(v).map_err(|_|"closed engine catalog request required")?;if r.version!=if matches!(r.compiler.as_str(),"ashlar-spark4-sdk"|"ashlar-spark4-sdk-pages"|"truss-runtime-binary"){"weft.engine-read/0.2"}else{"weft.engine-read/0.1"}{return Err("engine catalog version differs")};{
+// Probe only top-level route selectors, borrowing the other values as raw JSON.
+// Selection grants no admission: the temporal compiler always validates the
+// complete original input under its own byte/node/closed-shape limits. Do not
+// make ordinary input bounds or diagnostics depend on the temporal profile.
+fn temporal_selected(raw: &str, version: &str) -> bool {
+    struct Selector<'a> {
+        version: &'a str,
+        selected: &'a mut bool,
+    }
+    impl<'de> serde::de::Visitor<'de> for Selector<'_> {
+        type Value = ();
+        fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            f.write_str("an engine request object")
+        }
+        fn visit_map<M: serde::de::MapAccess<'de>>(
+            self,
+            mut map: M,
+        ) -> std::result::Result<(), M::Error> {
+            while let Some(key) = map.next_key::<String>()? {
+                let value = map.next_value::<&serde_json::value::RawValue>()?;
+                if (key == "version"
+                    && serde_json::from_str::<String>(value.get()).is_ok_and(|v| v == self.version))
+                    || (key == "compiler"
+                        && serde_json::from_str::<String>(value.get())
+                            .is_ok_and(|v| v == "truss-runtime-temporal"))
+                {
+                    *self.selected = true;
+                    return Ok(());
+                }
+            }
+            Ok(())
+        }
+    }
+    // Deliberately allow an early positive probe. A malformed remainder must
+    // still be refused by the selected temporal compiler, never fall back.
+    let mut selected = false;
+    let _ = serde::Deserializer::deserialize_map(
+        &mut serde_json::Deserializer::from_str(raw),
+        Selector {
+            version,
+            selected: &mut selected,
+        },
+    );
+    selected
+}
+pub fn compile_json(raw:&str)->String{if temporal_selected(raw,"weft.engine-read/0.4"){return crate::engine_temporal::compile_json(raw,false)}response((||{let v=weft_core::json::checked_json(raw).map_err(|_|"request framing refused")?;let r:Request=serde_json::from_value(v).map_err(|_|"closed engine catalog request required")?;if r.version!=if matches!(r.compiler.as_str(),"ashlar-spark4-sdk"|"ashlar-spark4-sdk-pages"|"truss-runtime-binary"){"weft.engine-read/0.2"}else{"weft.engine-read/0.1"}{return Err("engine catalog version differs")};{
  #[cfg(feature="ashlar-sdk-ordered-page-candidate")]return compile_with_order(&r.compiler,&r.request,r.order_key.as_ref());
  #[cfg(not(feature="ashlar-sdk-ordered-page-candidate"))]{if r.order_key.is_some(){return Err("ordered read feature not selected")};compile_original(&r.compiler,&r.request)}
  }})())}
@@ -238,6 +283,7 @@ fn binary_page(request:&Value,size:u16,after:Option<Vec<String>>,key:Option<&Val
 }
 fn page_response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-page/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-PAGE","message":code}]})).to_string()}
 pub fn compile_page_json(raw:&str)->String{
+ if temporal_selected(raw,"weft.engine-page/0.4"){return crate::engine_temporal::compile_json(raw,true)}
  #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
  if weft_core::json::checked_json(raw).is_ok_and(|v|v["version"]=="weft.engine-page/0.2"&&v["compiler"]!="truss-runtime-binary"){return crate::engine_ordered_page::compile_json(raw);}
  page_response((||{

@@ -1,0 +1,53 @@
+{
+  "source": "https://github.com/DocumentDrivenDX/umf",
+  "revision": "e3f38ef6f05ae636d2837f9d69f8d6805222664b",
+  "files": [
+    {
+      "file": "core.json",
+      "sourcePath": "spec/core/schema.json",
+      "sha256": "f5f7f090e6a4618803c3e0fdbb0be20ad62ae092c99f0d7e0f15a6733d67aabf"
+    },
+    {
+      "file": "reference.json",
+      "sourcePath": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "4a9908810531cced6208289f89dfcbc2e9406c303834a2749591cbe823ca3f65"
+    },
+    {
+      "file": "package.json",
+      "sourcePath": "spec/core/extension-package.schema.json",
+      "sha256": "fca24a871abf83e89837bf881bc5251b1a71ab98411fa5055af12e1bdd00fda5"
+    },
+    {
+      "file": "constraints.json",
+      "sourcePath": "spec/metamodel/generated/core-constraints.json",
+      "sha256": "180497da09a76cbbef5332d234258936668e06f7152f119d4be7aeebfa6b39cc"
+    },
+    {
+      "file": "domain.json",
+      "sourcePath": "spec/metamodel/generated/domain-policy.json",
+      "sha256": "4d742505e483d23f7ef60cc904b45aa44db73473c71a98e01a919f289c414a9c"
+    },
+    {
+      "file": "tables.json",
+      "sourcePath": "spec/extensions/tables/package.json",
+      "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    {
+      "file": "actions.json",
+      "sourcePath": "spec/extensions/actions/package.json",
+      "sha256": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181"
+    },
+    {
+      "file": "binding.json",
+      "sourcePath": "spec/extensions/binding/package.json",
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f"
+    },
+    {
+      "file": "stable-binding.json",
+      "sourcePath": "spec/extensions/binding-stable/package.json",
+      "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e"
+    }
+  ],
+  "tree": "a21368a92df488882ef9771e4a1d92205267ddd3",
+  "previousAcquisitionRevision": "a5e24d17017a3de0ee701837d9c99c3dad27d0a5"
+}

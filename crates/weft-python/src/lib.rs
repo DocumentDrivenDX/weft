@@ -32,6 +32,14 @@ fn compile_truss_postgresql_json(request: &str, composition: &str) -> String {
 }
 #[pymodule]
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(check_engine_temporal_page_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(check_engine_temporal_read_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(check_engine_temporal_page_shape_json, m)?)?;
+    #[cfg(feature="raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(check_engine_temporal_read_shape_json, m)?)?;
     #[cfg(feature = "raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_raw_read_json, m)?)?;
     #[cfg(feature = "raw-postgresql-reads")]
@@ -861,3 +869,19 @@ pub fn compile_table_seed_json(request:&str)->String{weft_runtime::compile_table
 #[cfg(feature="raw-postgresql-reads")]
 #[pyfunction]
 pub fn check_table_seed_json(program:&str)->String{weft_runtime::check_table_seed_json(program)}
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn check_engine_temporal_read_shape_json(program: &str, original_request: &str) -> String { weft_runtime::engine_temporal::check_json(program,original_request,None,false,true) }
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn check_engine_temporal_page_shape_json(program: &str, original_request: &str) -> String { weft_runtime::engine_temporal::check_json(program,original_request,None,true,true) }
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn check_engine_temporal_read_json(program: &str, current_request: &str) -> String { weft_runtime::engine_temporal::check_json(program,current_request,None,false,false) }
+
+#[cfg(feature="raw-postgresql-reads")]
+#[pyfunction]
+pub fn check_engine_temporal_page_json(program: &str, current_request: &str, after_json: &str) -> String { weft_runtime::engine_temporal::check_json(program,current_request,Some(after_json),true,false) }

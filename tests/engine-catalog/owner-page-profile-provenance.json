@@ -1,0 +1,64 @@
+{
+  "kind": "Compiler-only complete requests derived from existing owner positive construction; not new native captures",
+  "ownerSourceCommit": "d52644f4b2fb5579f9a303012cfc3a98ac6c174e",
+  "ownerSourcePath": "crates/weft-runtime/src/engine_read.rs",
+  "ownerSourceSHA256": "9cc5d35acb236079c516d4322a69555b5bd8cbe9f1fab6fdcfa2ae3be36f258b",
+  "ownerTest": "page_tests::original_ashlar_page_compilation_retains_snapshot_key_obligation",
+  "registrySource": "crates/weft-databricks/src/authored_pages.rs",
+  "registrySHA256": "6d0cc6bd0f46905596790e4a472fd89b91e2c3f69d65709f69317b40f544f110",
+  "nativeAuthority": false,
+  "cases": [
+    {
+      "file": "owner-spark4-page-profile-request.json",
+      "sha256": "a0763ca59eccf20c2341af1a0e5b7fa5f991fe65aafdee61bbae3b52191fc706",
+      "retainedSource": "native-ashlar-spark4-request.json",
+      "retainedSourceSHA256": "219bbd341c82d54eaee12c288971b24d5fa6fbb43583f4091a349db9ab55ef93",
+      "bindingSHA256": "21bbc14db23d5148a0b3f0004fa137315ee9698fdebe03d6d460e2e939a7dfd2",
+      "moduleDocumentSHA256s": [
+        "587986d807d6cf985463dd5c4516596e8bca1f4ce9f7f08dd2349b16b8f1ab69"
+      ],
+      "construction": {
+        "interfaceVersion": "weft-compile/0.2.7",
+        "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+        "backendId": "ashlar.databricks",
+        "backendVersion": "0.1.0-local-spark4-pages-candidate",
+        "targetProfile": "spark4.0.1-delta4.0.0-candidate"
+      },
+      "preserved": [
+        "complete modules including documentJson bytes and pins",
+        "complete bindingJson bytes and bindingSha256",
+        "SQL",
+        "parameters",
+        "options",
+        "dialect"
+      ],
+      "expectedIR": "weft-ir/0.2.7"
+    },
+    {
+      "file": "owner-dbsql-20261016-page-profile-request.json",
+      "sha256": "44d53226361b82bae68ef403f9e4742907a985c7a837a89f1413750ccad9ee5f",
+      "retainedSource": "native-ashlar-dbsql-20261016-request.json",
+      "retainedSourceSHA256": "2671302d2a60b2b4770254dc21cdd076d5b1ea2d26c46a29e0ecd4607c5ec087",
+      "bindingSHA256": "a46484781c19b745f19180b8a5295eaf4b9e87ea29efb2ec8dda7b5c93e59c3c",
+      "moduleDocumentSHA256s": [
+        "587986d807d6cf985463dd5c4516596e8bca1f4ce9f7f08dd2349b16b8f1ab69"
+      ],
+      "construction": {
+        "interfaceVersion": "weft-compile/0.2.7",
+        "timestampComparisonProfile": "umf-rfc3339-exact-instant/1.0.0",
+        "backendId": "ashlar.databricks",
+        "backendVersion": "0.1.0-managed-20261016-pages-candidate",
+        "targetProfile": "dbsql2026.39-build-20261016-candidate"
+      },
+      "preserved": [
+        "complete modules including documentJson bytes and pins",
+        "complete bindingJson bytes and bindingSha256",
+        "SQL",
+        "parameters",
+        "options",
+        "dialect"
+      ],
+      "expectedIR": "weft-ir/0.2.7"
+    }
+  ]
+}

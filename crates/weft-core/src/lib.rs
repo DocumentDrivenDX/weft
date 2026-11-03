@@ -1,3 +1,5 @@
+#[cfg(feature="engine-temporal")]
+pub mod application_temporal;
 // SPDX-License-Identifier: MIT OR Apache-2.0
 mod application_binary;
 pub mod application_ir;

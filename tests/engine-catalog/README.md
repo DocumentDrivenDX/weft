@@ -24,12 +24,23 @@ portable UTF-16 handling are bounded before parsing. No token grants permission.
 Truss uses its original runtime page compiler. Ashlar has separate explicit
 `ashlar-spark4-pages` and `ashlar-dbsql-20261016-pages` compiler selections with
 backend versions `0.1.0-local-spark4-pages-candidate` and
-`0.1.0-managed-20261016-pages-candidate`, backend interface0.2.2 and compile0.2.2.
+`0.1.0-managed-20261016-pages-candidate`. Their declared authored-page language
+is SQL0.2.0/IR0.2.7, with backend interface0.2.7 and explicit compile0.2.7 plus
+`timestampComparisonProfile: umf-rfc3339-exact-instant/1.0.0`.
 Their native physical engine profiles remain separately pinned. Historical
 compile0.2.0 profiles are unchanged and cannot be relabeled as page programs.
 These candidates require the original `ashlar.candidate.keyIntegrity` handler,
 held native pin/publication scope and fresh complete closing resolution; compiler
 success alone qualifies none of those host obligations.
+
+The installed-wheel smoke preserves its historical compile0.2.2 request
+construction as an exact `WFT-BACKEND-VERSION` refusal with no executable
+artifact. Distinct `owner-*-page-profile-request.json` positive cases retain
+complete source and binding bytes and follow the existing owner test
+`original_ashlar_page_compilation_retains_snapshot_key_obligation`.
+`owner-page-profile-provenance.json` records that construction, original fixture
+hashes and explicit profiles. These are compiler-only derived requests, not
+new native captures or evidence of execution against those engines.
 
 The selected SDK carrier subset remains exact non-temporal string, boolean,
 integer and decimal scalars. Typed Date/timestamp selection remains held even

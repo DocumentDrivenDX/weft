@@ -1,0 +1,6134 @@
+{
+  "profile": "umf.constraints/1",
+  "steps": [
+    {
+      "op": "let",
+      "name": "elements",
+      "value": {
+        "op": "flatten",
+        "args": [
+          {
+            "op": "map",
+            "args": [
+              {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "doc"
+                  },
+                  [
+                    "modules"
+                  ]
+                ]
+              }
+            ],
+            "as": "wm",
+            "index": "wmi",
+            "value": {
+              "op": "map",
+              "args": [
+                {
+                  "op": "get",
+                  "args": [
+                    {
+                      "var": "wm"
+                    },
+                    [
+                      "elements"
+                    ]
+                  ]
+                }
+              ],
+              "as": "we",
+              "index": "wei",
+              "value": {
+                "node": {
+                  "var": "we"
+                },
+                "moduleId": {
+                  "op": "get",
+                  "args": [
+                    {
+                      "var": "wm"
+                    },
+                    [
+                      "id"
+                    ]
+                  ]
+                },
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    "/modules/",
+                    {
+                      "var": "wmi"
+                    },
+                    "/elements/",
+                    {
+                      "var": "wei"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "op": "let",
+      "name": "elementIndex",
+      "value": {
+        "op": "index",
+        "args": [
+          {
+            "var": "elements"
+          }
+        ],
+        "as": "wi",
+        "value": {
+          "op": "tuple",
+          "args": [
+            {
+              "op": "get",
+              "args": [
+                {
+                  "var": "wi"
+                },
+                [
+                  "moduleId"
+                ]
+              ]
+            },
+            {
+              "op": "get",
+              "args": [
+                {
+                  "var": "wi"
+                },
+                [
+                  "node",
+                  "id"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "for",
+      "each": {
+        "op": "keys",
+        "args": [
+          {
+            "var": "doc"
+          }
+        ]
+      },
+      "as": "unknownKey",
+      "body": [
+        {
+          "op": "emit",
+          "when": {
+            "op": "not",
+            "args": [
+              {
+                "op": "in",
+                "args": [
+                  {
+                    "var": "unknownKey"
+                  },
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "policy"
+                      },
+                      [
+                        "knownKeys",
+                        "document"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "diagnostic": {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": {
+              "op": "concat",
+              "args": [
+                "",
+                "/",
+                {
+                  "op": "pointer",
+                  "args": [
+                    {
+                      "var": "unknownKey"
+                    }
+                  ]
+                }
+              ]
+            },
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          }
+        }
+      ]
+    },
+    {
+      "op": "for",
+      "each": {
+        "op": "entries",
+        "args": [
+          {
+            "op": "get",
+            "args": [
+              {
+                "var": "doc"
+              },
+              [
+                "vocabularies"
+              ]
+            ]
+          }
+        ]
+      },
+      "as": "v",
+      "body": [
+        {
+          "op": "for",
+          "each": {
+            "op": "keys",
+            "args": [
+              {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "v"
+                  },
+                  [
+                    1
+                  ]
+                ]
+              }
+            ]
+          },
+          "as": "unknownKey",
+          "body": [
+            {
+              "op": "emit",
+              "when": {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "in",
+                    "args": [
+                      {
+                        "var": "unknownKey"
+                      },
+                      [
+                        "version"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "op": "concat",
+                      "args": [
+                        "/vocabularies/",
+                        {
+                          "op": "pointer",
+                          "args": [
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "var": "v"
+                                },
+                                [
+                                  0
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "/",
+                    {
+                      "op": "pointer",
+                      "args": [
+                        {
+                          "var": "unknownKey"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            }
+          ]
+        },
+        {
+          "op": "emit",
+          "when": {
+            "op": "not",
+            "args": [
+              {
+                "op": "registered",
+                "args": [
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "v"
+                      },
+                      [
+                        0
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "v"
+                          },
+                          [
+                            1
+                          ]
+                        ]
+                      },
+                      [
+                        "version"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "diagnostic": {
+            "code": "UNKNOWN_EXTENSION",
+            "path": {
+              "op": "concat",
+              "args": [
+                "/vocabularies/",
+                {
+                  "op": "pointer",
+                  "args": [
+                    {
+                      "op": "get",
+                      "args": [
+                        {
+                          "var": "v"
+                        },
+                        [
+                          0
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          }
+        }
+      ]
+    },
+    {
+      "op": "for",
+      "each": {
+        "op": "extension-errors",
+        "args": [
+          {
+            "var": "doc"
+          },
+          {
+            "op": "get",
+            "args": [
+              {
+                "var": "doc"
+              },
+              [
+                "extensions"
+              ]
+            ]
+          },
+          "document",
+          "",
+          {
+            "op": "get",
+            "args": [
+              {
+                "var": "policy"
+              },
+              [
+                "extensions"
+              ]
+            ]
+          }
+        ]
+      },
+      "as": "extensionError",
+      "body": [
+        {
+          "op": "emit",
+          "diagnostic": {
+            "var": "extensionError"
+          }
+        }
+      ]
+    },
+    {
+      "op": "let",
+      "name": "moduleIds",
+      "value": {
+        "op": "set",
+        "args": []
+      }
+    },
+    {
+      "op": "for",
+      "each": {
+        "op": "get",
+        "args": [
+          {
+            "var": "doc"
+          },
+          [
+            "modules"
+          ]
+        ]
+      },
+      "as": "m",
+      "index": "mi",
+      "body": [
+        {
+          "op": "let",
+          "name": "mp",
+          "value": {
+            "op": "concat",
+            "args": [
+              "/modules/",
+              {
+                "var": "mi"
+              }
+            ]
+          }
+        },
+        {
+          "op": "for",
+          "each": {
+            "op": "keys",
+            "args": [
+              {
+                "var": "m"
+              }
+            ]
+          },
+          "as": "unknownKey",
+          "body": [
+            {
+              "op": "emit",
+              "when": {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "in",
+                    "args": [
+                      {
+                        "var": "unknownKey"
+                      },
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "policy"
+                          },
+                          [
+                            "knownKeys",
+                            "module"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "mp"
+                    },
+                    "/",
+                    {
+                      "op": "pointer",
+                      "args": [
+                        {
+                          "var": "unknownKey"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            }
+          ]
+        },
+        {
+          "op": "remember",
+          "set": {
+            "var": "moduleIds"
+          },
+          "key": {
+            "op": "get",
+            "args": [
+              {
+                "var": "m"
+              },
+              [
+                "id"
+              ]
+            ]
+          },
+          "diagnostic": {
+            "code": "DUPLICATE_MODULE",
+            "path": {
+              "op": "concat",
+              "args": [
+                {
+                  "var": "mp"
+                },
+                "/id"
+              ]
+            },
+            "message": "Module id is not unique",
+            "severity": "error"
+          }
+        },
+        {
+          "op": "for",
+          "each": {
+            "op": "extension-errors",
+            "args": [
+              {
+                "var": "doc"
+              },
+              {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "m"
+                  },
+                  [
+                    "extensions"
+                  ]
+                ]
+              },
+              "module",
+              {
+                "var": "mp"
+              },
+              {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "policy"
+                  },
+                  [
+                    "extensions"
+                  ]
+                ]
+              }
+            ]
+          },
+          "as": "extensionError",
+          "body": [
+            {
+              "op": "emit",
+              "diagnostic": {
+                "var": "extensionError"
+              }
+            }
+          ]
+        },
+        {
+          "op": "let",
+          "name": "elementIds",
+          "value": {
+            "op": "set",
+            "args": []
+          }
+        },
+        {
+          "op": "for",
+          "each": {
+            "op": "get",
+            "args": [
+              {
+                "var": "m"
+              },
+              [
+                "elements"
+              ]
+            ]
+          },
+          "as": "e",
+          "index": "ei",
+          "body": [
+            {
+              "op": "let",
+              "name": "ep",
+              "value": {
+                "op": "concat",
+                "args": [
+                  {
+                    "var": "mp"
+                  },
+                  "/elements/",
+                  {
+                    "var": "ei"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "keys",
+                "args": [
+                  {
+                    "var": "e"
+                  }
+                ]
+              },
+              "as": "unknownKey",
+              "body": [
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "unknownKey"
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "policy"
+                              },
+                              [
+                                "knownKeys",
+                                "element"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "UNKNOWN_CORE_FIELD",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/",
+                        {
+                          "op": "pointer",
+                          "args": [
+                            {
+                              "var": "unknownKey"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "message": "Field retained without interpretation",
+                    "severity": "warning"
+                  }
+                }
+              ]
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "kind"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "e"
+                              },
+                              [
+                                "kind"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "policy"
+                              },
+                              [
+                                "vocabulary",
+                                "kind"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNKNOWN_ELEMENT_KIND",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/",
+                    "kind"
+                  ]
+                },
+                "message": "Kind retained without interpretation",
+                "severity": "warning"
+              }
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "nullability"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "e"
+                              },
+                              [
+                                "nullability"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "policy"
+                              },
+                              [
+                                "vocabulary",
+                                "nullability"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNKNOWN_NULLABILITY",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/",
+                    "nullability"
+                  ]
+                },
+                "message": "Availability label retained without interpretation",
+                "severity": "warning"
+              }
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "cardinality"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "e"
+                              },
+                              [
+                                "cardinality"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "policy"
+                              },
+                              [
+                                "vocabulary",
+                                "cardinality"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNKNOWN_CARDINALITY",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/",
+                    "cardinality"
+                  ]
+                },
+                "message": "Container label retained without interpretation",
+                "severity": "warning"
+              }
+            },
+            {
+              "op": "if",
+              "test": {
+                "op": "has",
+                "args": [
+                  {
+                    "var": "e"
+                  },
+                  [
+                    "itemType"
+                  ]
+                ]
+              },
+              "then": [
+                {
+                  "op": "for",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "itemType"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "as": "unknownKey",
+                  "body": [
+                    {
+                      "op": "emit",
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "unknownKey"
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "policy"
+                                  },
+                                  [
+                                    "knownKeys",
+                                    "itemType"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "diagnostic": {
+                        "code": "UNKNOWN_CORE_FIELD",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "ep"
+                                },
+                                "/itemType"
+                              ]
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "unknownKey"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Field retained without interpretation",
+                        "severity": "warning"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "else": []
+            },
+            {
+              "op": "if",
+              "test": {
+                "op": "has",
+                "args": [
+                  {
+                    "var": "e"
+                  },
+                  [
+                    "facets"
+                  ]
+                ]
+              },
+              "then": [
+                {
+                  "op": "let",
+                  "name": "facets",
+                  "value": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "facets"
+                      ]
+                    ]
+                  }
+                },
+                {
+                  "op": "for",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "var": "facets"
+                      }
+                    ]
+                  },
+                  "as": "unknownKey",
+                  "body": [
+                    {
+                      "op": "emit",
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "unknownKey"
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "policy"
+                                  },
+                                  [
+                                    "knownKeys",
+                                    "facets"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "diagnostic": {
+                        "code": "UNKNOWN_FACET",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "ep"
+                                },
+                                "/facets"
+                              ]
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "unknownKey"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Facet member retained without interpretation",
+                        "severity": "warning"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "has",
+                        "args": [
+                          {
+                            "var": "facets"
+                          },
+                          [
+                            "precision"
+                          ]
+                        ]
+                      },
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "facets"
+                              },
+                              [
+                                "scale"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "facets"
+                              },
+                              [
+                                "precision"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "FACET_SCALE",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/facets/scale"
+                      ]
+                    },
+                    "message": "Scale must not exceed precision",
+                    "severity": "error"
+                  }
+                },
+                {
+                  "op": "if",
+                  "test": {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "facets"
+                      },
+                      [
+                        "integerWidth"
+                      ]
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "for",
+                      "each": {
+                        "op": "keys",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "facets"
+                              },
+                              [
+                                "integerWidth"
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      "as": "unknownKey",
+                      "body": [
+                        {
+                          "op": "emit",
+                          "when": {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "in",
+                                "args": [
+                                  {
+                                    "var": "unknownKey"
+                                  },
+                                  [
+                                    "bits",
+                                    "signed"
+                                  ]
+                                ]
+                              }
+                            ]
+                          },
+                          "diagnostic": {
+                            "code": "UNKNOWN_FACET",
+                            "path": {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "op": "concat",
+                                  "args": [
+                                    {
+                                      "var": "ep"
+                                    },
+                                    "/facets/integerWidth"
+                                  ]
+                                },
+                                "/",
+                                {
+                                  "op": "pointer",
+                                  "args": [
+                                    {
+                                      "var": "unknownKey"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            "message": "Facet member retained without interpretation",
+                            "severity": "warning"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "else": []
+                }
+              ],
+              "else": []
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "scalarType"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "e"
+                              },
+                              [
+                                "scalarType"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "policy"
+                              },
+                              [
+                                "vocabulary",
+                                "scalarType"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNKNOWN_SCALAR_TYPE",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/scalarType"
+                  ]
+                },
+                "message": "Scalar family retained without interpretation",
+                "severity": "warning"
+              }
+            },
+            {
+              "op": "remember",
+              "set": {
+                "var": "elementIds"
+              },
+              "key": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "e"
+                  },
+                  [
+                    "id"
+                  ]
+                ]
+              },
+              "diagnostic": {
+                "code": "DUPLICATE_ELEMENT",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/id"
+                  ]
+                },
+                "message": "Element id is not unique within module",
+                "severity": "error"
+              }
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "extension-errors",
+                "args": [
+                  {
+                    "var": "doc"
+                  },
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "extensions"
+                      ]
+                    ]
+                  },
+                  "element",
+                  {
+                    "var": "ep"
+                  },
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "policy"
+                      },
+                      [
+                        "extensions"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "as": "extensionError",
+              "body": [
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "var": "extensionError"
+                  }
+                }
+              ]
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "e"
+                  },
+                  [
+                    "references"
+                  ]
+                ]
+              },
+              "as": "reference",
+              "index": "ri",
+              "body": [
+                {
+                  "op": "for",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "var": "reference"
+                      }
+                    ]
+                  },
+                  "as": "unknownKey",
+                  "body": [
+                    {
+                      "op": "emit",
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "unknownKey"
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "policy"
+                                  },
+                                  [
+                                    "knownKeys",
+                                    "reference"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "diagnostic": {
+                        "code": "UNKNOWN_CORE_FIELD",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "ep"
+                                },
+                                "/references/",
+                                {
+                                  "var": "ri"
+                                }
+                              ]
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "unknownKey"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Field retained without interpretation",
+                        "severity": "warning"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "for",
+      "each": {
+        "var": "elements"
+      },
+      "as": "w",
+      "body": [
+        {
+          "op": "let",
+          "name": "e",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "node"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "let",
+          "name": "ep",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "path"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "for",
+          "each": {
+            "op": "get",
+            "args": [
+              {
+                "var": "e"
+              },
+              [
+                "references"
+              ]
+            ]
+          },
+          "as": "reference",
+          "index": "ri",
+          "body": [
+            {
+              "op": "emit",
+              "when": {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "lookup",
+                    "args": [
+                      {
+                        "var": "elementIndex"
+                      },
+                      {
+                        "op": "tuple",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "reference"
+                              },
+                              [
+                                "module"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "reference"
+                              },
+                              [
+                                "element"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNRESOLVED_REFERENCE",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/references/",
+                    {
+                      "var": "ri"
+                    }
+                  ]
+                },
+                "message": "Target element does not exist in supplied document",
+                "severity": "error"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "for",
+      "each": {
+        "var": "elements"
+      },
+      "as": "w",
+      "body": [
+        {
+          "op": "let",
+          "name": "e",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "node"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "let",
+          "name": "ep",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "path"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "e"
+              },
+              [
+                "itemType"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "let",
+              "name": "item",
+              "value": {
+                "op": "lookup",
+                "args": [
+                  {
+                    "var": "elementIndex"
+                  },
+                  {
+                    "op": "tuple",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "itemType",
+                            "module"
+                          ]
+                        ]
+                      },
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "itemType",
+                            "element"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "op": "if",
+              "test": {
+                "op": "not",
+                "args": [
+                  {
+                    "var": "item"
+                  }
+                ]
+              },
+              "then": [
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": "UNRESOLVED_ITEM_TYPE",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/itemType"
+                      ]
+                    },
+                    "message": "Item/value Field does not exist in supplied document",
+                    "severity": "error"
+                  }
+                }
+              ],
+              "else": [
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "ne",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "item"
+                          },
+                          [
+                            "node",
+                            "kind"
+                          ]
+                        ]
+                      },
+                      "field"
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "ITEM_TYPE_ROLE",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/itemType"
+                      ]
+                    },
+                    "message": "Item/value definition must be an explicit Field",
+                    "severity": "error"
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      ]
+    },
+    {
+      "op": "let",
+      "name": "keyOwners",
+      "value": {
+        "op": "set",
+        "args": []
+      }
+    },
+    {
+      "op": "for",
+      "as": "keyEntry",
+      "each": {
+        "var": "elements"
+      },
+      "body": [
+        {
+          "op": "let",
+          "name": "keyRecord",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "keyEntry"
+              },
+              [
+                "node"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "let",
+          "name": "keyRecordPath",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "keyEntry"
+              },
+              [
+                "path"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "keyRecord"
+              },
+              [
+                "members"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "let",
+              "name": "keyOwnMembers",
+              "value": {
+                "op": "set",
+                "args": []
+              }
+            },
+            {
+              "op": "for",
+              "as": "memberRef",
+              "each": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "keyRecord"
+                  },
+                  [
+                    "members"
+                  ]
+                ]
+              },
+              "body": [
+                {
+                  "op": "let",
+                  "name": "memberPath",
+                  "value": {
+                    "op": "concat",
+                    "args": [
+                      {
+                        "var": "keyRecordPath"
+                      },
+                      "/members/",
+                      {
+                        "var": "memberIndex"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "let",
+                  "name": "memberIdentity",
+                  "value": {
+                    "op": "tuple",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "memberRef"
+                          },
+                          [
+                            "module"
+                          ]
+                        ]
+                      },
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "memberRef"
+                          },
+                          [
+                            "element"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "let",
+                  "name": "memberField",
+                  "value": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "op": "lookup",
+                        "args": [
+                          {
+                            "var": "elementIndex"
+                          },
+                          {
+                            "op": "tuple",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "memberRef"
+                                  },
+                                  [
+                                    "module"
+                                  ]
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "memberRef"
+                                  },
+                                  [
+                                    "element"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      [
+                        "node"
+                      ]
+                    ]
+                  }
+                },
+                {
+                  "op": "for",
+                  "as": "qualifier",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "var": "memberRef"
+                      }
+                    ]
+                  },
+                  "body": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "UNKNOWN_KEY_QUALIFIER",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "memberPath"
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "qualifier"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Qualifier retained without interpretation",
+                        "severity": "warning"
+                      },
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "qualifier"
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "policy"
+                                  },
+                                  [
+                                    "keys",
+                                    "known",
+                                    "member"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "remember",
+                  "set": {
+                    "var": "keyOwnMembers"
+                  },
+                  "key": {
+                    "var": "memberIdentity"
+                  },
+                  "diagnostic": {
+                    "code": "KEY_DUPLICATE_MEMBER",
+                    "path": {
+                      "var": "memberPath"
+                    },
+                    "message": "Record membership repeats a Field identity",
+                    "severity": "error"
+                  }
+                },
+                {
+                  "op": "if",
+                  "test": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "memberIdentity"
+                          },
+                          {
+                            "var": "elementIndex"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "KEY_MEMBER_MISSING",
+                        "path": {
+                          "var": "memberPath"
+                        },
+                        "message": "Member Field does not exist",
+                        "severity": "error"
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "KEY_MEMBER_KIND",
+                        "path": {
+                          "var": "memberPath"
+                        },
+                        "message": "Record members must be explicit Fields",
+                        "severity": "error"
+                      },
+                      "when": {
+                        "op": "ne",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "memberField"
+                              },
+                              [
+                                "kind"
+                              ]
+                            ]
+                          },
+                          "field"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "let",
+                  "name": "previousKeyOwner",
+                  "value": {
+                    "op": "lookup",
+                    "args": [
+                      {
+                        "var": "keyOwners"
+                      },
+                      {
+                        "var": "memberIdentity"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": "KEY_MEMBER_OWNER",
+                    "path": {
+                      "var": "memberPath"
+                    },
+                    "message": {
+                      "op": "concat",
+                      "args": [
+                        "Field already belongs to another Record: ",
+                        {
+                          "var": "previousKeyOwner"
+                        }
+                      ]
+                    },
+                    "severity": "error"
+                  },
+                  "when": {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "memberIdentity"
+                          },
+                          {
+                            "var": "keyOwners"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "ne",
+                        "args": [
+                          {
+                            "var": "previousKeyOwner"
+                          },
+                          {
+                            "var": "keyRecordPath"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "remember",
+                  "set": {
+                    "var": "keyOwners"
+                  },
+                  "key": {
+                    "var": "memberIdentity"
+                  },
+                  "value": {
+                    "var": "keyRecordPath"
+                  }
+                }
+              ],
+              "index": "memberIndex"
+            },
+            {
+              "op": "let",
+              "name": "keyIds",
+              "value": {
+                "op": "set",
+                "args": []
+              }
+            },
+            {
+              "op": "let",
+              "name": "keyNames",
+              "value": {
+                "op": "set",
+                "args": []
+              }
+            },
+            {
+              "op": "let",
+              "name": "keySets",
+              "value": {
+                "op": "set",
+                "args": []
+              }
+            },
+            {
+              "op": "let",
+              "name": "keyPrimaries",
+              "value": {
+                "op": "set",
+                "args": []
+              }
+            },
+            {
+              "op": "for",
+              "as": "keyDefinition",
+              "each": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "keyRecord"
+                  },
+                  [
+                    "keys"
+                  ]
+                ]
+              },
+              "body": [
+                {
+                  "op": "let",
+                  "name": "keyPath",
+                  "value": {
+                    "op": "concat",
+                    "args": [
+                      {
+                        "var": "keyRecordPath"
+                      },
+                      "/keys/",
+                      {
+                        "var": "keyIndex"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "for",
+                  "as": "qualifier",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "var": "keyDefinition"
+                      }
+                    ]
+                  },
+                  "body": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "UNKNOWN_KEY_QUALIFIER",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "keyPath"
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "qualifier"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Qualifier retained without interpretation",
+                        "severity": "warning"
+                      },
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "qualifier"
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "policy"
+                                  },
+                                  [
+                                    "keys",
+                                    "known",
+                                    "key"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "remember",
+                  "set": {
+                    "var": "keyIds"
+                  },
+                  "key": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "keyDefinition"
+                      },
+                      [
+                        "id"
+                      ]
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "KEY_DUPLICATE_ID",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "keyPath"
+                        },
+                        "/id"
+                      ]
+                    },
+                    "message": "Key ID is not unique within the Record",
+                    "severity": "error"
+                  }
+                },
+                {
+                  "op": "remember",
+                  "set": {
+                    "var": "keyNames"
+                  },
+                  "key": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "keyDefinition"
+                      },
+                      [
+                        "name"
+                      ]
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "KEY_DUPLICATE_NAME",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "keyPath"
+                        },
+                        "/name"
+                      ]
+                    },
+                    "message": "Key name is not unique within the Record",
+                    "severity": "error"
+                  }
+                },
+                {
+                  "op": "if",
+                  "test": {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "keyDefinition"
+                          },
+                          [
+                            "primary"
+                          ]
+                        ]
+                      },
+                      true
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "remember",
+                      "set": {
+                        "var": "keyPrimaries"
+                      },
+                      "key": true,
+                      "diagnostic": {
+                        "code": "KEY_PRIMARY_COUNT",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "keyPath"
+                            },
+                            "/primary"
+                          ]
+                        },
+                        "message": "At most one key may be primary",
+                        "severity": "error"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "let",
+                  "name": "keyFieldIdentities",
+                  "value": {
+                    "op": "map",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "keyDefinition"
+                          },
+                          [
+                            "fields"
+                          ]
+                        ]
+                      }
+                    ],
+                    "as": "component",
+                    "value": {
+                      "op": "canonical",
+                      "args": [
+                        {
+                          "op": "tuple",
+                          "args": [
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "var": "component"
+                                },
+                                [
+                                  "module"
+                                ]
+                              ]
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "var": "component"
+                                },
+                                [
+                                  "element"
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": "KEY_DUPLICATE_FIELD",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "keyPath"
+                        },
+                        "/fields"
+                      ]
+                    },
+                    "message": "Key repeats a Field identity",
+                    "severity": "error"
+                  },
+                  "when": {
+                    "op": "ne",
+                    "args": [
+                      {
+                        "op": "length",
+                        "args": [
+                          {
+                            "op": "index",
+                            "args": [
+                              {
+                                "var": "keyFieldIdentities"
+                              }
+                            ],
+                            "as": "componentIdentity",
+                            "value": {
+                              "var": "componentIdentity"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "op": "length",
+                        "args": [
+                          {
+                            "var": "keyFieldIdentities"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "remember",
+                  "set": {
+                    "var": "keySets"
+                  },
+                  "key": {
+                    "op": "sort",
+                    "args": [
+                      {
+                        "var": "keyFieldIdentities"
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "KEY_DUPLICATE_SET",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "keyPath"
+                        },
+                        "/fields"
+                      ]
+                    },
+                    "message": "Key component set duplicates another key, regardless of order",
+                    "severity": "error"
+                  }
+                },
+                {
+                  "op": "for",
+                  "as": "keyRef",
+                  "each": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "keyDefinition"
+                      },
+                      [
+                        "fields"
+                      ]
+                    ]
+                  },
+                  "body": [
+                    {
+                      "op": "let",
+                      "name": "keyFieldPath",
+                      "value": {
+                        "op": "concat",
+                        "args": [
+                          {
+                            "var": "keyPath"
+                          },
+                          "/fields/",
+                          {
+                            "var": "keyFieldIndex"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "op": "let",
+                      "name": "keyFieldIdentity",
+                      "value": {
+                        "op": "tuple",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "keyRef"
+                              },
+                              [
+                                "module"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "keyRef"
+                              },
+                              [
+                                "element"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "op": "let",
+                      "name": "keyField",
+                      "value": {
+                        "op": "get",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "args": [
+                              {
+                                "var": "elementIndex"
+                              },
+                              {
+                                "op": "tuple",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "keyRef"
+                                      },
+                                      [
+                                        "module"
+                                      ]
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "keyRef"
+                                      },
+                                      [
+                                        "element"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          [
+                            "node"
+                          ]
+                        ]
+                      }
+                    },
+                    {
+                      "op": "for",
+                      "as": "qualifier",
+                      "each": {
+                        "op": "keys",
+                        "args": [
+                          {
+                            "var": "keyRef"
+                          }
+                        ]
+                      },
+                      "body": [
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "UNKNOWN_KEY_QUALIFIER",
+                            "path": {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "keyFieldPath"
+                                },
+                                "/",
+                                {
+                                  "op": "pointer",
+                                  "args": [
+                                    {
+                                      "var": "qualifier"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            "message": "Qualifier retained without interpretation",
+                            "severity": "warning"
+                          },
+                          "when": {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "in",
+                                "args": [
+                                  {
+                                    "var": "qualifier"
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "policy"
+                                      },
+                                      [
+                                        "keys",
+                                        "known",
+                                        "member"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "KEY_FIELD_OWNER",
+                        "path": {
+                          "var": "keyFieldPath"
+                        },
+                        "message": "Key component is not a member of its owning Record",
+                        "severity": "error"
+                      },
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "keyFieldIdentity"
+                              },
+                              {
+                                "var": "keyOwnMembers"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "op": "if",
+                      "test": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "keyFieldIdentity"
+                              },
+                              {
+                                "var": "elementIndex"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "KEY_FIELD_MISSING",
+                            "path": {
+                              "var": "keyFieldPath"
+                            },
+                            "message": "Key Field does not exist",
+                            "severity": "error"
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "KEY_FIELD_KIND",
+                            "path": {
+                              "var": "keyFieldPath"
+                            },
+                            "message": "Key component must be an explicit Field",
+                            "severity": "error"
+                          },
+                          "when": {
+                            "op": "ne",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "keyField"
+                                  },
+                                  [
+                                    "kind"
+                                  ]
+                                ]
+                              },
+                              "field"
+                            ]
+                          }
+                        },
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "KEY_FIELD_REQUIRED",
+                            "path": {
+                              "var": "keyFieldPath"
+                            },
+                            "message": "Key component must explicitly supply a value",
+                            "severity": "error"
+                          },
+                          "when": {
+                            "op": "ne",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "keyField"
+                                  },
+                                  [
+                                    "nullability"
+                                  ]
+                                ]
+                              },
+                              "required"
+                            ]
+                          }
+                        },
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "KEY_FIELD_SINGULAR",
+                            "path": {
+                              "var": "keyFieldPath"
+                            },
+                            "message": "Key component must explicitly be singular",
+                            "severity": "error"
+                          },
+                          "when": {
+                            "op": "ne",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "keyField"
+                                  },
+                                  [
+                                    "cardinality"
+                                  ]
+                                ]
+                              },
+                              "one"
+                            ]
+                          }
+                        },
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "KEY_EQUALITY",
+                            "path": {
+                              "var": "keyFieldPath"
+                            },
+                            "message": "Key equality is undefined for this component",
+                            "severity": "error"
+                          },
+                          "when": {
+                            "op": "or",
+                            "args": [
+                              {
+                                "op": "not",
+                                "args": [
+                                  {
+                                    "op": "in",
+                                    "args": [
+                                      {
+                                        "op": "get",
+                                        "args": [
+                                          {
+                                            "var": "keyField"
+                                          },
+                                          [
+                                            "scalarType"
+                                          ]
+                                        ]
+                                      },
+                                      {
+                                        "op": "get",
+                                        "args": [
+                                          {
+                                            "var": "policy"
+                                          },
+                                          [
+                                            "keys",
+                                            "equalityFamilies"
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "some",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "keyField"
+                                      },
+                                      [
+                                        "references"
+                                      ]
+                                    ]
+                                  }
+                                ],
+                                "as": "fieldReference",
+                                "value": {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "var": "fieldReference"
+                                        },
+                                        [
+                                          "role"
+                                        ]
+                                      ]
+                                    },
+                                    "record-type"
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "KEY_DECIMAL_DOMAIN",
+                            "path": {
+                              "var": "keyFieldPath"
+                            },
+                            "message": "Decimal key equality requires explicit precision and scale",
+                            "severity": "error"
+                          },
+                          "when": {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "keyField"
+                                      },
+                                      [
+                                        "scalarType"
+                                      ]
+                                    ]
+                                  },
+                                  "decimal"
+                                ]
+                              },
+                              {
+                                "op": "or",
+                                "args": [
+                                  {
+                                    "op": "not",
+                                    "args": [
+                                      {
+                                        "op": "has",
+                                        "args": [
+                                          {
+                                            "var": "keyField"
+                                          },
+                                          [
+                                            "facets",
+                                            "precision"
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "not",
+                                    "args": [
+                                      {
+                                        "op": "has",
+                                        "args": [
+                                          {
+                                            "var": "keyField"
+                                          },
+                                          [
+                                            "facets",
+                                            "scale"
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "index": "keyFieldIndex"
+                }
+              ],
+              "index": "keyIndex"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "let",
+      "name": "relationshipAnyPresentations",
+      "value": {
+        "op": "set",
+        "args": []
+      }
+    },
+    {
+      "op": "let",
+      "name": "relationshipInversePresentations",
+      "value": {
+        "op": "set",
+        "args": []
+      }
+    },
+    {
+      "op": "for",
+      "as": "relationshipModule",
+      "each": {
+        "op": "get",
+        "args": [
+          {
+            "var": "doc"
+          },
+          [
+            "modules"
+          ]
+        ]
+      },
+      "body": [
+        {
+          "op": "let",
+          "name": "relationshipIds",
+          "value": {
+            "op": "set",
+            "args": []
+          }
+        },
+        {
+          "op": "let",
+          "name": "relationshipNames",
+          "value": {
+            "op": "set",
+            "args": []
+          }
+        },
+        {
+          "op": "for",
+          "as": "relationship",
+          "each": {
+            "op": "get",
+            "args": [
+              {
+                "var": "relationshipModule"
+              },
+              [
+                "relationships"
+              ]
+            ]
+          },
+          "body": [
+            {
+              "op": "let",
+              "name": "relationshipPath",
+              "value": {
+                "op": "concat",
+                "args": [
+                  "/modules/",
+                  {
+                    "var": "relationshipModuleIndex"
+                  },
+                  "/relationships/",
+                  {
+                    "var": "relationshipIndex"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "for",
+              "as": "qualifier",
+              "each": {
+                "op": "keys",
+                "args": [
+                  {
+                    "var": "relationship"
+                  }
+                ]
+              },
+              "body": [
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "relationshipPath"
+                        },
+                        "/",
+                        {
+                          "op": "pointer",
+                          "args": [
+                            {
+                              "var": "qualifier"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "message": "Qualifier retained without interpretation",
+                    "severity": "warning"
+                  },
+                  "when": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "qualifier"
+                          },
+                          [
+                            "id",
+                            "name",
+                            "source",
+                            "target",
+                            "sourceMultiplicity",
+                            "targetMultiplicity",
+                            "targetLifecycle",
+                            "directed",
+                            "inverse",
+                            "associationRecord"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "op": "remember",
+              "set": {
+                "var": "relationshipIds"
+              },
+              "key": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "relationship"
+                  },
+                  [
+                    "id"
+                  ]
+                ]
+              },
+              "diagnostic": {
+                "code": "RELATIONSHIP_DUPLICATE_ID",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "relationshipPath"
+                    },
+                    "/id"
+                  ]
+                },
+                "message": "Relationship ID must be unique in its module",
+                "severity": "error"
+              }
+            },
+            {
+              "op": "remember",
+              "set": {
+                "var": "relationshipNames"
+              },
+              "key": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "relationship"
+                  },
+                  [
+                    "name"
+                  ]
+                ]
+              },
+              "diagnostic": {
+                "code": "RELATIONSHIP_DUPLICATE_NAME",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "relationshipPath"
+                    },
+                    "/name"
+                  ]
+                },
+                "message": "Relationship name must be unique in its module",
+                "severity": "error"
+              }
+            },
+            {
+              "op": "for",
+              "as": "relationshipEnd",
+              "each": [
+                "source",
+                "target"
+              ],
+              "body": [
+                {
+                  "op": "let",
+                  "name": "endpointSeen",
+                  "value": {
+                    "op": "set",
+                    "args": []
+                  }
+                },
+                {
+                  "op": "for",
+                  "as": "endpointRef",
+                  "each": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "relationship"
+                      },
+                      [
+                        {
+                          "var": "relationshipEnd"
+                        }
+                      ]
+                    ]
+                  },
+                  "body": [
+                    {
+                      "op": "let",
+                      "name": "endpointPath",
+                      "value": {
+                        "op": "concat",
+                        "args": [
+                          {
+                            "var": "relationshipPath"
+                          },
+                          "/",
+                          {
+                            "var": "relationshipEnd"
+                          },
+                          "/",
+                          {
+                            "var": "endpointIndex"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "op": "if",
+                      "test": {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "var": "relationshipEnd"
+                          },
+                          "target"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "for",
+                          "as": "qualifier",
+                          "each": {
+                            "op": "keys",
+                            "args": [
+                              {
+                                "var": "endpointRef"
+                              }
+                            ]
+                          },
+                          "body": [
+                            {
+                              "op": "emit",
+                              "diagnostic": {
+                                "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+                                "path": {
+                                  "op": "concat",
+                                  "args": [
+                                    {
+                                      "var": "endpointPath"
+                                    },
+                                    "/",
+                                    {
+                                      "op": "pointer",
+                                      "args": [
+                                        {
+                                          "var": "qualifier"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "message": "Qualifier retained without interpretation",
+                                "severity": "warning"
+                              },
+                              "when": {
+                                "op": "not",
+                                "args": [
+                                  {
+                                    "op": "in",
+                                    "args": [
+                                      {
+                                        "var": "qualifier"
+                                      },
+                                      [
+                                        "module",
+                                        "element",
+                                        "key"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "for",
+                          "as": "qualifier",
+                          "each": {
+                            "op": "keys",
+                            "args": [
+                              {
+                                "var": "endpointRef"
+                              }
+                            ]
+                          },
+                          "body": [
+                            {
+                              "op": "emit",
+                              "diagnostic": {
+                                "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+                                "path": {
+                                  "op": "concat",
+                                  "args": [
+                                    {
+                                      "var": "endpointPath"
+                                    },
+                                    "/",
+                                    {
+                                      "op": "pointer",
+                                      "args": [
+                                        {
+                                          "var": "qualifier"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "message": "Qualifier retained without interpretation",
+                                "severity": "warning"
+                              },
+                              "when": {
+                                "op": "not",
+                                "args": [
+                                  {
+                                    "op": "in",
+                                    "args": [
+                                      {
+                                        "var": "qualifier"
+                                      },
+                                      {
+                                        "op": "get",
+                                        "args": [
+                                          {
+                                            "var": "policy"
+                                          },
+                                          [
+                                            "knownKeys",
+                                            "itemType"
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "remember",
+                      "set": {
+                        "var": "endpointSeen"
+                      },
+                      "key": {
+                        "op": "tuple",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "endpointRef"
+                              },
+                              [
+                                "module"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "endpointRef"
+                              },
+                              [
+                                "element"
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      "diagnostic": {
+                        "code": "RELATIONSHIP_DUPLICATE_ENDPOINT",
+                        "path": {
+                          "var": "endpointPath"
+                        },
+                        "message": "Endpoint Record repeats, regardless of qualifiers or target key",
+                        "severity": "error"
+                      }
+                    },
+                    {
+                      "op": "let",
+                      "name": "endpointRecord",
+                      "value": {
+                        "op": "get",
+                        "args": [
+                          {
+                            "op": "lookup",
+                            "args": [
+                              {
+                                "var": "elementIndex"
+                              },
+                              {
+                                "op": "tuple",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "endpointRef"
+                                      },
+                                      [
+                                        "module"
+                                      ]
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "endpointRef"
+                                      },
+                                      [
+                                        "element"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          [
+                            "node"
+                          ]
+                        ]
+                      }
+                    },
+                    {
+                      "op": "if",
+                      "test": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "op": "tuple",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "endpointRef"
+                                      },
+                                      [
+                                        "module"
+                                      ]
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "endpointRef"
+                                      },
+                                      [
+                                        "element"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "var": "elementIndex"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "RELATIONSHIP_ENDPOINT_MISSING",
+                            "path": {
+                              "var": "endpointPath"
+                            },
+                            "message": "Endpoint does not resolve by exact module and element IDs",
+                            "severity": "error"
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "if",
+                          "test": {
+                            "op": "ne",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "endpointRecord"
+                                  },
+                                  [
+                                    "kind"
+                                  ]
+                                ]
+                              },
+                              "record"
+                            ]
+                          },
+                          "then": [
+                            {
+                              "op": "emit",
+                              "diagnostic": {
+                                "code": "RELATIONSHIP_ENDPOINT_KIND",
+                                "path": {
+                                  "var": "endpointPath"
+                                },
+                                "message": "Endpoint must be a Record",
+                                "severity": "error"
+                              }
+                            }
+                          ],
+                          "else": [
+                            {
+                              "op": "emit",
+                              "diagnostic": {
+                                "code": "RELATIONSHIP_ENDPOINT_KEY",
+                                "path": {
+                                  "var": "endpointPath"
+                                },
+                                "message": "Endpoint must have authored Keys",
+                                "severity": "error"
+                              },
+                              "when": {
+                                "op": "eq",
+                                "args": [
+                                  {
+                                    "op": "length",
+                                    "args": [
+                                      {
+                                        "op": "get",
+                                        "args": [
+                                          {
+                                            "var": "endpointRecord"
+                                          },
+                                          [
+                                            "keys"
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  0
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "RELATIONSHIP_TARGET_KEY",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "endpointPath"
+                            },
+                            "/key"
+                          ]
+                        },
+                        "message": "Target key must resolve by its stable ID",
+                        "severity": "error"
+                      },
+                      "when": {
+                        "op": "and",
+                        "args": [
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "var": "relationshipEnd"
+                              },
+                              "target"
+                            ]
+                          },
+                          {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "endpointRecord"
+                                  },
+                                  [
+                                    "kind"
+                                  ]
+                                ]
+                              },
+                              "record"
+                            ]
+                          },
+                          {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "some",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "endpointRecord"
+                                      },
+                                      [
+                                        "keys"
+                                      ]
+                                    ]
+                                  }
+                                ],
+                                "as": "authoredKey",
+                                "value": {
+                                  "op": "eq",
+                                  "args": [
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "var": "authoredKey"
+                                        },
+                                        [
+                                          "id"
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "op": "get",
+                                      "args": [
+                                        {
+                                          "var": "endpointRef"
+                                        },
+                                        [
+                                          "key"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "op": "if",
+                      "test": {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "var": "relationshipEnd"
+                          },
+                          "source"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "let",
+                          "name": "presentationIdentity",
+                          "value": {
+                            "op": "tuple",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "endpointRef"
+                                  },
+                                  [
+                                    "module"
+                                  ]
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "endpointRef"
+                                  },
+                                  [
+                                    "element"
+                                  ]
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "relationship"
+                                  },
+                                  [
+                                    "name"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+                            "path": {
+                              "var": "endpointPath"
+                            },
+                            "message": {
+                              "op": "concat",
+                              "args": [
+                                "Inverse presentation collides on this endpoint with ",
+                                {
+                                  "op": "lookup",
+                                  "args": [
+                                    {
+                                      "var": "relationshipInversePresentations"
+                                    },
+                                    {
+                                      "var": "presentationIdentity"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            "severity": "error"
+                          },
+                          "when": {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "presentationIdentity"
+                              },
+                              {
+                                "var": "relationshipInversePresentations"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "op": "remember",
+                          "set": {
+                            "var": "relationshipAnyPresentations"
+                          },
+                          "key": {
+                            "var": "presentationIdentity"
+                          },
+                          "value": {
+                            "var": "endpointPath"
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "if",
+                          "test": {
+                            "op": "has",
+                            "args": [
+                              {
+                                "var": "relationship"
+                              },
+                              [
+                                "inverse"
+                              ]
+                            ]
+                          },
+                          "then": [
+                            {
+                              "op": "let",
+                              "name": "presentationIdentity",
+                              "value": {
+                                "op": "tuple",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "endpointRef"
+                                      },
+                                      [
+                                        "module"
+                                      ]
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "endpointRef"
+                                      },
+                                      [
+                                        "element"
+                                      ]
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "relationship"
+                                      },
+                                      [
+                                        "inverse"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "op": "emit",
+                              "diagnostic": {
+                                "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+                                "path": {
+                                  "op": "concat",
+                                  "args": [
+                                    {
+                                      "var": "relationshipPath"
+                                    },
+                                    "/inverse"
+                                  ]
+                                },
+                                "message": {
+                                  "op": "concat",
+                                  "args": [
+                                    "Inverse presentation collides on this endpoint with ",
+                                    {
+                                      "op": "lookup",
+                                      "args": [
+                                        {
+                                          "var": "relationshipAnyPresentations"
+                                        },
+                                        {
+                                          "var": "presentationIdentity"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "severity": "error"
+                              },
+                              "when": {
+                                "op": "in",
+                                "args": [
+                                  {
+                                    "var": "presentationIdentity"
+                                  },
+                                  {
+                                    "var": "relationshipAnyPresentations"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "op": "remember",
+                              "set": {
+                                "var": "relationshipAnyPresentations"
+                              },
+                              "key": {
+                                "var": "presentationIdentity"
+                              },
+                              "value": {
+                                "op": "concat",
+                                "args": [
+                                  {
+                                    "var": "relationshipPath"
+                                  },
+                                  "/inverse"
+                                ]
+                              }
+                            },
+                            {
+                              "op": "remember",
+                              "set": {
+                                "var": "relationshipInversePresentations"
+                              },
+                              "key": {
+                                "var": "presentationIdentity"
+                              },
+                              "value": {
+                                "op": "concat",
+                                "args": [
+                                  {
+                                    "var": "relationshipPath"
+                                  },
+                                  "/inverse"
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "index": "endpointIndex"
+                },
+                {
+                  "op": "let",
+                  "name": "multiplicityName",
+                  "value": {
+                    "op": "concat",
+                    "args": [
+                      {
+                        "var": "relationshipEnd"
+                      },
+                      "Multiplicity"
+                    ]
+                  }
+                },
+                {
+                  "op": "let",
+                  "name": "multiplicity",
+                  "value": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "relationship"
+                      },
+                      [
+                        {
+                          "var": "multiplicityName"
+                        }
+                      ]
+                    ]
+                  }
+                },
+                {
+                  "op": "for",
+                  "as": "qualifier",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "var": "multiplicity"
+                      }
+                    ]
+                  },
+                  "body": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "relationshipPath"
+                                },
+                                "/",
+                                {
+                                  "var": "multiplicityName"
+                                }
+                              ]
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "qualifier"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Qualifier retained without interpretation",
+                        "severity": "warning"
+                      },
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "qualifier"
+                              },
+                              [
+                                "min",
+                                "max"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": "RELATIONSHIP_MULTIPLICITY",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "relationshipPath"
+                        },
+                        "/",
+                        {
+                          "var": "multiplicityName"
+                        }
+                      ]
+                    },
+                    "message": "Maximum must be at least the minimum",
+                    "severity": "error"
+                  },
+                  "when": {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "ne",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "multiplicity"
+                              },
+                              [
+                                "max"
+                              ]
+                            ]
+                          },
+                          "*"
+                        ]
+                      },
+                      {
+                        "op": "lt",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "multiplicity"
+                              },
+                              [
+                                "max"
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "multiplicity"
+                              },
+                              [
+                                "min"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "op": "emit",
+              "diagnostic": {
+                "code": "RELATIONSHIP_LIFECYCLE",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "relationshipPath"
+                    },
+                    "/targetLifecycle"
+                  ]
+                },
+                "message": "Owned target lifecycle requires a directed relationship",
+                "severity": "error"
+              },
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "relationship"
+                          },
+                          [
+                            "targetLifecycle"
+                          ]
+                        ]
+                      },
+                      "owned"
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "relationship"
+                          },
+                          [
+                            "directed"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "op": "emit",
+              "diagnostic": {
+                "code": "UNKNOWN_RELATIONSHIP_LIFECYCLE",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "relationshipPath"
+                    },
+                    "/targetLifecycle"
+                  ]
+                },
+                "message": "Future lifecycle retained without interpretation",
+                "severity": "warning"
+              },
+              "when": {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "in",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "relationship"
+                          },
+                          [
+                            "targetLifecycle"
+                          ]
+                        ]
+                      },
+                      [
+                        "owned",
+                        "independent",
+                        "unspecified"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "op": "if",
+              "test": {
+                "op": "has",
+                "args": [
+                  {
+                    "var": "relationship"
+                  },
+                  [
+                    "associationRecord"
+                  ]
+                ]
+              },
+              "then": [
+                {
+                  "op": "for",
+                  "as": "qualifier",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "relationship"
+                          },
+                          [
+                            "associationRecord"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "body": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "relationshipPath"
+                                },
+                                "/associationRecord"
+                              ]
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "qualifier"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Qualifier retained without interpretation",
+                        "severity": "warning"
+                      },
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "qualifier"
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "policy"
+                                  },
+                                  [
+                                    "knownKeys",
+                                    "itemType"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "let",
+                  "name": "associationRecord",
+                  "value": {
+                    "op": "get",
+                    "args": [
+                      {
+                        "op": "lookup",
+                        "args": [
+                          {
+                            "var": "elementIndex"
+                          },
+                          {
+                            "op": "tuple",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "relationship"
+                                      },
+                                      [
+                                        "associationRecord"
+                                      ]
+                                    ]
+                                  },
+                                  [
+                                    "module"
+                                  ]
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "relationship"
+                                      },
+                                      [
+                                        "associationRecord"
+                                      ]
+                                    ]
+                                  },
+                                  [
+                                    "element"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      [
+                        "node"
+                      ]
+                    ]
+                  }
+                },
+                {
+                  "op": "if",
+                  "test": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "op": "tuple",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "relationship"
+                                      },
+                                      [
+                                        "associationRecord"
+                                      ]
+                                    ]
+                                  },
+                                  [
+                                    "module"
+                                  ]
+                                ]
+                              },
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "relationship"
+                                      },
+                                      [
+                                        "associationRecord"
+                                      ]
+                                    ]
+                                  },
+                                  [
+                                    "element"
+                                  ]
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "var": "elementIndex"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": "RELATIONSHIP_ENDPOINT_MISSING",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "relationshipPath"
+                            },
+                            "/associationRecord"
+                          ]
+                        },
+                        "message": "Endpoint does not resolve by exact module and element IDs",
+                        "severity": "error"
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "op": "if",
+                      "test": {
+                        "op": "ne",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "associationRecord"
+                              },
+                              [
+                                "kind"
+                              ]
+                            ]
+                          },
+                          "record"
+                        ]
+                      },
+                      "then": [
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "RELATIONSHIP_ENDPOINT_KIND",
+                            "path": {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "relationshipPath"
+                                },
+                                "/associationRecord"
+                              ]
+                            },
+                            "message": "Endpoint must be a Record",
+                            "severity": "error"
+                          }
+                        }
+                      ],
+                      "else": [
+                        {
+                          "op": "emit",
+                          "diagnostic": {
+                            "code": "RELATIONSHIP_ENDPOINT_KEY",
+                            "path": {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "relationshipPath"
+                                },
+                                "/associationRecord"
+                              ]
+                            },
+                            "message": "Endpoint must have authored Keys",
+                            "severity": "error"
+                          },
+                          "when": {
+                            "op": "eq",
+                            "args": [
+                              {
+                                "op": "length",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "associationRecord"
+                                      },
+                                      [
+                                        "keys"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              },
+                              0
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "index": "relationshipIndex"
+        }
+      ],
+      "index": "relationshipModuleIndex"
+    },
+    {
+      "op": "for",
+      "each": {
+        "var": "elements"
+      },
+      "as": "w",
+      "body": [
+        {
+          "op": "let",
+          "name": "e",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "node"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "let",
+          "name": "ep",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "path"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "let",
+          "name": "facets",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "e"
+              },
+              [
+                "facets"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "facets"
+              },
+              [
+                "length"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "let",
+              "name": "bounds",
+              "value": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "facets"
+                  },
+                  [
+                    "length"
+                  ]
+                ]
+              }
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "keys",
+                "args": [
+                  {
+                    "var": "bounds"
+                  }
+                ]
+              },
+              "as": "unknownKey",
+              "body": [
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "unknownKey"
+                          },
+                          [
+                            "min",
+                            "max",
+                            "unit"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "UNKNOWN_SCHEMA_PROPERTY",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "ep"
+                            },
+                            "/facets/",
+                            "length"
+                          ]
+                        },
+                        "/",
+                        {
+                          "op": "pointer",
+                          "args": [
+                            {
+                              "var": "unknownKey"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "message": "Qualifier retained without interpretation",
+                    "severity": "warning"
+                  }
+                }
+              ]
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "not",
+                "args": [
+                  {
+                    "op": "in",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "bounds"
+                          },
+                          [
+                            "unit"
+                          ]
+                        ]
+                      },
+                      [
+                        "unicode-scalar",
+                        "byte"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "UNKNOWN_FACET_UNIT",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/facets/length/unit"
+                  ]
+                },
+                "message": "Length unit retained without interpretation",
+                "severity": "warning"
+              }
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "bounds"
+                      },
+                      [
+                        "min"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "bounds"
+                      },
+                      [
+                        "max"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "gt",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "bounds"
+                          },
+                          [
+                            "min"
+                          ]
+                        ]
+                      },
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "bounds"
+                          },
+                          [
+                            "max"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "CORE_SCHEMA_PROPERTIES",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/facets/",
+                    "length"
+                  ]
+                },
+                "message": "Minimum exceeds maximum",
+                "severity": "error"
+              }
+            }
+          ],
+          "else": []
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "facets"
+              },
+              [
+                "collectionSize"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "let",
+              "name": "bounds",
+              "value": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "facets"
+                  },
+                  [
+                    "collectionSize"
+                  ]
+                ]
+              }
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "keys",
+                "args": [
+                  {
+                    "var": "bounds"
+                  }
+                ]
+              },
+              "as": "unknownKey",
+              "body": [
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "unknownKey"
+                          },
+                          [
+                            "min",
+                            "max"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "UNKNOWN_SCHEMA_PROPERTY",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "ep"
+                            },
+                            "/facets/",
+                            "collectionSize"
+                          ]
+                        },
+                        "/",
+                        {
+                          "op": "pointer",
+                          "args": [
+                            {
+                              "var": "unknownKey"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "message": "Qualifier retained without interpretation",
+                    "severity": "warning"
+                  }
+                }
+              ]
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "bounds"
+                      },
+                      [
+                        "min"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "bounds"
+                      },
+                      [
+                        "max"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "gt",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "bounds"
+                          },
+                          [
+                            "min"
+                          ]
+                        ]
+                      },
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "bounds"
+                          },
+                          [
+                            "max"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "CORE_SCHEMA_PROPERTIES",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/facets/",
+                    "collectionSize"
+                  ]
+                },
+                "message": "Minimum exceeds maximum",
+                "severity": "error"
+              }
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "ne",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "kind"
+                          ]
+                        ]
+                      },
+                      "field"
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "e"
+                              },
+                              [
+                                "cardinality"
+                              ]
+                            ]
+                          },
+                          [
+                            "array",
+                            "map"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "CORE_SCHEMA_PROPERTIES",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/facets/collectionSize"
+                  ]
+                },
+                "message": "Collection bounds require array/map Field",
+                "severity": "error"
+              }
+            }
+          ],
+          "else": []
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "facets"
+              },
+              [
+                "range"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "let",
+              "name": "range",
+              "value": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "facets"
+                  },
+                  [
+                    "range"
+                  ]
+                ]
+              }
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "keys",
+                "args": [
+                  {
+                    "var": "range"
+                  }
+                ]
+              },
+              "as": "unknownKey",
+              "body": [
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "unknownKey"
+                          },
+                          [
+                            "min",
+                            "max",
+                            "minInclusive",
+                            "maxInclusive"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "UNKNOWN_SCHEMA_PROPERTY",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "ep"
+                            },
+                            "/facets/range"
+                          ]
+                        },
+                        "/",
+                        {
+                          "op": "pointer",
+                          "args": [
+                            {
+                              "var": "unknownKey"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "message": "Qualifier retained without interpretation",
+                    "severity": "warning"
+                  }
+                }
+              ]
+            },
+            {
+              "op": "if",
+              "test": {
+                "op": "or",
+                "args": [
+                  {
+                    "op": "ne",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "kind"
+                          ]
+                        ]
+                      },
+                      "field"
+                    ]
+                  },
+                  {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "e"
+                              },
+                              [
+                                "scalarType"
+                              ]
+                            ]
+                          },
+                          [
+                            "integer",
+                            "decimal"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "then": [
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": "CORE_SCHEMA_PROPERTIES",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/facets/range"
+                      ]
+                    },
+                    "message": "Range requires integer/decimal Field",
+                    "severity": "error"
+                  }
+                }
+              ],
+              "else": [
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "has",
+                            "args": [
+                              {
+                                "var": "range"
+                              },
+                              [
+                                "min"
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "has",
+                        "args": [
+                          {
+                            "var": "range"
+                          },
+                          [
+                            "minInclusive"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "CORE_SCHEMA_PROPERTIES",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/facets/range/",
+                        "min",
+                        "Inclusive"
+                      ]
+                    },
+                    "message": "Inclusive flag requires its bound",
+                    "severity": "error"
+                  }
+                },
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "has",
+                            "args": [
+                              {
+                                "var": "range"
+                              },
+                              [
+                                "max"
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "has",
+                        "args": [
+                          {
+                            "var": "range"
+                          },
+                          [
+                            "maxInclusive"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "CORE_SCHEMA_PROPERTIES",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/facets/range/",
+                        "max",
+                        "Inclusive"
+                      ]
+                    },
+                    "message": "Inclusive flag requires its bound",
+                    "severity": "error"
+                  }
+                },
+                {
+                  "op": "for",
+                  "each": {
+                    "op": "numeric-interval",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      {
+                        "var": "range"
+                      },
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "policy"
+                          },
+                          [
+                            "literal"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "as": "literalError",
+                  "body": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "code"
+                            ]
+                          ]
+                        },
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "ep"
+                                },
+                                "/facets/range"
+                              ]
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "var": "literalError"
+                                },
+                                [
+                                  "path"
+                                ]
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "message"
+                            ]
+                          ]
+                        },
+                        "severity": {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "severity"
+                            ]
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "else": []
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "e"
+              },
+              [
+                "allowedValues"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "let",
+              "name": "allowedSeen",
+              "value": {
+                "op": "set",
+                "args": []
+              }
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "e"
+                  },
+                  [
+                    "allowedValues"
+                  ]
+                ]
+              },
+              "as": "allowed",
+              "index": "ai",
+              "body": [
+                {
+                  "op": "let",
+                  "name": "allowedErrors",
+                  "value": {
+                    "op": "literal-errors",
+                    "args": [
+                      {
+                        "var": "doc"
+                      },
+                      {
+                        "op": "without",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "allowedValues"
+                          ]
+                        ]
+                      },
+                      {
+                        "var": "allowed"
+                      },
+                      true,
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "policy"
+                          },
+                          [
+                            "literal"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "for",
+                  "each": {
+                    "var": "allowedErrors"
+                  },
+                  "as": "literalError",
+                  "body": [
+                    {
+                      "op": "emit",
+                      "diagnostic": {
+                        "code": {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "code"
+                            ]
+                          ]
+                        },
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "ep"
+                                },
+                                "/allowedValues"
+                              ]
+                            },
+                            {
+                              "op": "get",
+                              "args": [
+                                {
+                                  "var": "literalError"
+                                },
+                                [
+                                  "path"
+                                ]
+                              ]
+                            }
+                          ]
+                        },
+                        "message": {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "message"
+                            ]
+                          ]
+                        },
+                        "severity": {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "severity"
+                            ]
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "op": "if",
+                  "test": {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "op": "length",
+                        "args": [
+                          {
+                            "var": "allowedErrors"
+                          }
+                        ]
+                      },
+                      0
+                    ]
+                  },
+                  "then": [
+                    {
+                      "op": "remember",
+                      "set": {
+                        "var": "allowedSeen"
+                      },
+                      "key": {
+                        "op": "literal-identity",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          {
+                            "var": "allowed"
+                          },
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "policy"
+                              },
+                              [
+                                "literal"
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      "diagnostic": {
+                        "code": "CORE_SCHEMA_PROPERTIES",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "ep"
+                            },
+                            "/allowedValues/",
+                            {
+                              "var": "ai"
+                            }
+                          ]
+                        },
+                        "message": "Duplicate equal allowed value",
+                        "severity": "error"
+                      }
+                    }
+                  ],
+                  "else": []
+                }
+              ]
+            }
+          ],
+          "else": []
+        },
+        {
+          "op": "for",
+          "each": {
+            "op": "get",
+            "args": [
+              {
+                "var": "e"
+              },
+              [
+                "examples"
+              ]
+            ]
+          },
+          "as": "example",
+          "index": "xi",
+          "body": [
+            {
+              "op": "for",
+              "each": {
+                "op": "literal-errors",
+                "args": [
+                  {
+                    "var": "doc"
+                  },
+                  {
+                    "var": "e"
+                  },
+                  {
+                    "var": "example"
+                  },
+                  false,
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "policy"
+                      },
+                      [
+                        "literal"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "as": "literalError",
+              "body": [
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": {
+                      "op": "get",
+                      "args": [
+                        {
+                          "var": "literalError"
+                        },
+                        [
+                          "code"
+                        ]
+                      ]
+                    },
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "ep"
+                            },
+                            "/examples/",
+                            {
+                              "var": "xi"
+                            }
+                          ]
+                        },
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "path"
+                            ]
+                          ]
+                        }
+                      ]
+                    },
+                    "message": {
+                      "op": "get",
+                      "args": [
+                        {
+                          "var": "literalError"
+                        },
+                        [
+                          "message"
+                        ]
+                      ]
+                    },
+                    "severity": {
+                      "op": "get",
+                      "args": [
+                        {
+                          "var": "literalError"
+                        },
+                        [
+                          "severity"
+                        ]
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "e"
+              },
+              [
+                "default"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "for",
+              "each": {
+                "op": "keys",
+                "args": [
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "default"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "as": "unknownKey",
+              "body": [
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "not",
+                    "args": [
+                      {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "unknownKey"
+                          },
+                          [
+                            "value",
+                            "on"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "UNKNOWN_SCHEMA_PROPERTY",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "ep"
+                            },
+                            "/default"
+                          ]
+                        },
+                        "/",
+                        {
+                          "op": "pointer",
+                          "args": [
+                            {
+                              "var": "unknownKey"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "message": "Qualifier retained without interpretation",
+                    "severity": "warning"
+                  }
+                }
+              ]
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "literal-errors",
+                "args": [
+                  {
+                    "var": "doc"
+                  },
+                  {
+                    "var": "e"
+                  },
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "default",
+                        "value"
+                      ]
+                    ]
+                  },
+                  true,
+                  {
+                    "op": "get",
+                    "args": [
+                      {
+                        "var": "policy"
+                      },
+                      [
+                        "literal"
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "as": "literalError",
+              "body": [
+                {
+                  "op": "emit",
+                  "diagnostic": {
+                    "code": {
+                      "op": "get",
+                      "args": [
+                        {
+                          "var": "literalError"
+                        },
+                        [
+                          "code"
+                        ]
+                      ]
+                    },
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "var": "ep"
+                            },
+                            "/default/value"
+                          ]
+                        },
+                        {
+                          "op": "get",
+                          "args": [
+                            {
+                              "var": "literalError"
+                            },
+                            [
+                              "path"
+                            ]
+                          ]
+                        }
+                      ]
+                    },
+                    "message": {
+                      "op": "get",
+                      "args": [
+                        {
+                          "var": "literalError"
+                        },
+                        [
+                          "message"
+                        ]
+                      ]
+                    },
+                    "severity": {
+                      "op": "get",
+                      "args": [
+                        {
+                          "var": "literalError"
+                        },
+                        [
+                          "severity"
+                        ]
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      ]
+    },
+    {
+      "op": "for",
+      "each": {
+        "var": "elements"
+      },
+      "as": "w",
+      "body": [
+        {
+          "op": "let",
+          "name": "e",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "node"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "let",
+          "name": "ep",
+          "value": {
+            "op": "get",
+            "args": [
+              {
+                "var": "w"
+              },
+              [
+                "path"
+              ]
+            ]
+          }
+        },
+        {
+          "op": "if",
+          "test": {
+            "op": "has",
+            "args": [
+              {
+                "var": "e"
+              },
+              [
+                "semanticTypes"
+              ]
+            ]
+          },
+          "then": [
+            {
+              "op": "emit",
+              "diagnostic": {
+                "code": "SEMANTIC_TYPE_EXTERNAL",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/semanticTypes"
+                  ]
+                },
+                "message": "Exact external semantic definitions and value validators are resolved separately",
+                "severity": "warning"
+              }
+            },
+            {
+              "op": "emit",
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "has",
+                    "args": [
+                      {
+                        "var": "e"
+                      },
+                      [
+                        "extensions",
+                        "umf.semantic-types",
+                        "types"
+                      ]
+                    ]
+                  },
+                  {
+                    "op": "ne",
+                    "args": [
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "extensions",
+                            "umf.semantic-types",
+                            "types"
+                          ]
+                        ]
+                      },
+                      {
+                        "op": "get",
+                        "args": [
+                          {
+                            "var": "e"
+                          },
+                          [
+                            "semanticTypes"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "diagnostic": {
+                "code": "SEMANTIC_TYPE_COMPETING_MEANING",
+                "path": {
+                  "op": "concat",
+                  "args": [
+                    {
+                      "var": "ep"
+                    },
+                    "/semanticTypes"
+                  ]
+                },
+                "message": "Core semanticTypes differ from the umf.semantic-types extension payload; core is authoritative and the extension is retained unchanged",
+                "severity": "warning"
+              }
+            },
+            {
+              "op": "for",
+              "each": {
+                "op": "get",
+                "args": [
+                  {
+                    "var": "e"
+                  },
+                  [
+                    "semanticTypes"
+                  ]
+                ]
+              },
+              "as": "term",
+              "index": "ti",
+              "body": [
+                {
+                  "op": "for",
+                  "each": {
+                    "op": "keys",
+                    "args": [
+                      {
+                        "var": "term"
+                      }
+                    ]
+                  },
+                  "as": "unknownKey",
+                  "body": [
+                    {
+                      "op": "emit",
+                      "when": {
+                        "op": "not",
+                        "args": [
+                          {
+                            "op": "in",
+                            "args": [
+                              {
+                                "var": "unknownKey"
+                              },
+                              [
+                                "vocabulary",
+                                "version",
+                                "term"
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      "diagnostic": {
+                        "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+                        "path": {
+                          "op": "concat",
+                          "args": [
+                            {
+                              "op": "concat",
+                              "args": [
+                                {
+                                  "var": "ep"
+                                },
+                                "/semanticTypes/",
+                                {
+                                  "var": "ti"
+                                }
+                              ]
+                            },
+                            "/",
+                            {
+                              "op": "pointer",
+                              "args": [
+                                {
+                                  "var": "unknownKey"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "message": "Qualifier retained without interpretation",
+                        "severity": "warning"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
+    "compilerSha256": "f4bf9751145f3be097eef0f8373e65da356f519b54d153c0227af5882e1c545c"
+  }
+}
