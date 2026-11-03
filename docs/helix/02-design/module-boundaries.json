@@ -725,6 +725,32 @@
           ],
           "defaultFeatures": false,
           "path": null
+        },
+        {
+          "name": "umf-codegen",
+          "kind": "normal",
+          "optional": true,
+          "source": "git+https://github.com/DocumentDrivenDX/umf.git?rev=f629cda829223fb889d1faf25a2543e40689146d",
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "umf-core",
+          "kind": "normal",
+          "optional": true,
+          "source": "git+https://github.com/DocumentDrivenDX/umf.git?rev=f629cda829223fb889d1faf25a2543e40689146d",
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [
+            "full-core"
+          ],
+          "defaultFeatures": false,
+          "path": null
         }
       ],
       "sources": [
@@ -982,6 +1008,83 @@
             "field:order_nulls",
             "field:limit",
             "fn:parse"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_temporal.rs",
+          "publicDeclarations": [
+            "struct:Failure",
+            "field:diagnostics",
+            "type:Result",
+            "const:PROFILE",
+            "fn:fail",
+            "struct:KeyRef",
+            "field:module",
+            "field:record",
+            "field:key",
+            "struct:Request",
+            "field:interface_version",
+            "field:dialect",
+            "field:modules",
+            "field:sql",
+            "field:parameters",
+            "field:exact_parameters",
+            "field:temporal_profile",
+            "field:temporal_parameters",
+            "field:options",
+            "field:target",
+            "struct:Options",
+            "field:allow_candidate",
+            "struct:Target",
+            "field:backend_id",
+            "field:backend_version",
+            "field:target_profile",
+            "field:binding_json",
+            "field:binding_sha256",
+            "struct:TemporalParameter",
+            "field:kind",
+            "field:value",
+            "struct:Field",
+            "field:identity",
+            "field:kind",
+            "field:missing",
+            "field:nullable",
+            "field:descriptor",
+            "field:logical_type",
+            "struct:Operand",
+            "field:kind",
+            "field:value",
+            "field:field",
+            "field:origin",
+            "enum:Predicate",
+            "struct:Sort",
+            "field:field",
+            "field:direction",
+            "field:nulls",
+            "struct:Output",
+            "field:field",
+            "field:name",
+            "struct:Plan",
+            "field:record",
+            "field:fields",
+            "field:outputs",
+            "field:sort",
+            "field:predicate",
+            "field:limit",
+            "field:selected_key",
+            "field:key_fields",
+            "field:model_pins",
+            "fn:canonical",
+            "fn:is_temporal",
+            "fn:prepare"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_temporal/inspection.rs",
+          "publicDeclarations": [
+            "fn:inspect"
           ],
           "pathReferences": []
         },
@@ -1725,6 +1828,7 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:application_temporal",
             "mod:application_ir",
             "mod:application_lineage",
             "mod:application_model",
@@ -4307,6 +4411,7 @@
             "const:QUERY_ABI_PROFILE",
             "const:QUERY_ABI_TARGET",
             "const:QUERY_ABI_SHA256",
+            "mod:temporal",
             "struct:Runtime",
             "struct:Mapping",
             "struct:TargetPlan",
@@ -4320,6 +4425,13 @@
         {
           "path": "crates/weft-postgresql/src/truss_runtime/selective.rs",
           "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/truss_runtime/temporal.rs",
+          "publicDeclarations": [
+            "fn:compile_value"
+          ],
           "pathReferences": []
         },
         {
@@ -4520,6 +4632,24 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-runtime/src/engine_temporal.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:check_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-runtime/src/engine_temporal_routing_tests.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-runtime/src/engine_temporal_tests.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/implicit_arithmetic.rs",
           "publicDeclarations": [
             "fn:compile_json"
@@ -4625,7 +4755,8 @@
             "fn:prepare_operation",
             "fn:check_table_operation_json",
             "fn:compile_table_seed_json",
-            "fn:check_table_seed_json"
+            "fn:check_table_seed_json",
+            "mod:engine_temporal"
           ],
           "pathReferences": []
         },
@@ -4789,7 +4920,11 @@
             "fn:compile_table_operation_json",
             "fn:check_table_operation_json",
             "fn:compile_table_seed_json",
-            "fn:check_table_seed_json"
+            "fn:check_table_seed_json",
+            "fn:check_engine_temporal_read_shape_json",
+            "fn:check_engine_temporal_page_shape_json",
+            "fn:check_engine_temporal_read_json",
+            "fn:check_engine_temporal_page_json"
           ],
           "pathReferences": []
         }
@@ -4899,7 +5034,11 @@
             "fn:compile_table_operation_json",
             "fn:check_table_operation_json",
             "fn:compile_table_seed_json",
-            "fn:check_table_seed_json"
+            "fn:check_table_seed_json",
+            "fn:check_engine_temporal_read_shape_json",
+            "fn:check_engine_temporal_page_shape_json",
+            "fn:check_engine_temporal_read_json",
+            "fn:check_engine_temporal_page_json"
           ],
           "pathReferences": []
         }
@@ -5199,6 +5338,7 @@
         "scripts/release/finalize_hosted_macos.py",
         "scripts/release/finalize_selected_macos_0454.py",
         "scripts/release/publish_hosted_release.py",
+        "scripts/release/publish_local_release.py",
         "scripts/release/publish_pypi_release.py",
         "scripts/release/record_preflight_0454.py",
         "scripts/release/run_bounded_0454.py",
@@ -5211,10 +5351,12 @@
         "scripts/release/test-selected-0.4.50-release-gates.py",
         "scripts/release/test-wheel-packaging-version-gate.py",
         "scripts/release/test_publish_hosted_release.py",
+        "scripts/release/test_publish_local_release.py",
         "scripts/release/test_publish_pypi_release.py",
         "scripts/release/test_selected_assets_0454.py",
         "scripts/release/test_sync_release_assets.py",
         "scripts/release/test_verify_hosted_macos_artifact.py",
+        "scripts/release/test_verify_local_release_profile.py",
         "scripts/release/test_verify_promotion.py",
         "scripts/release/verify-date-smoke.py",
         "scripts/release/verify-decimal12-smoke.py",
@@ -5226,6 +5368,7 @@
         "scripts/release/verify-selected-assets-0.4.52.py",
         "scripts/release/verify-wheel-packaging.py",
         "scripts/release/verify_hosted_macos_artifact.py",
+        "scripts/release/verify_local_release_profile.py",
         "scripts/release/verify_selected_assets_0454.py",
         "scripts/release/verify_toolchain_0454.py",
         "scripts/reliability/__init__.py",

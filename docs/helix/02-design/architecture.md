@@ -102,7 +102,7 @@ never establishes semantic conformance.
 
 | Module | Responsibility / Owned Types | Public API | Allowed Dependencies | Forbidden Dependencies |
 | --- | --- | --- | --- | --- |
-| `crates/weft-core` | Original owning-version model interpretation, logical AST/IR, capability gates and compile protocol | Compiler/Registry, CONTRACT-001–003 | Locked external compiler dependencies; no workspace imports | Backend crates, embedding crates, storage/host implementations |
+| `crates/weft-core` | Original owning-version model interpretation, logical AST/IR, capability gates and compile protocol | Compiler/Registry, CONTRACT-001–003 | Locked external compiler and UMF semantic libraries; no workspace imports | Backend crates, embedding crates, storage/host implementations |
 | `crates/weft-databricks` | Target binding, finite native representation, SQL/decoder obligations; `count_having` and `left_join` own their separate explicit profiles | Backend implementations of CONTRACT-002 | `weft-core`; locked serialization dependencies | Runtime/wrappers, PostgreSQL adapter, live storage clients |
 | `crates/weft-postgresql` | PostgreSQL target meanings and SQL/obligations | Backend implementations of CONTRACT-002 | `weft-core`; locked target dependencies | Runtime/wrappers, Databricks adapter, live storage clients |
 | `tests/register-backend/probe` | Independent conformance backend | Registered test Backend | `weft-core` | Concrete production adapters/runtime |
@@ -125,6 +125,31 @@ content. Host source/schema/ACK checks and release are external integration
 ownership. Existing paths registration is independent. Cargo direction/private
 visibility checks apply unchanged; exact per-profile inventory, prefix overflow
 and native correspondence require semantic review and tests under CONTRACT-005.
+
+The explicitly selected temporal candidate follows
+[weft.typed-sdk-engine-catalog](contracts/typed-sdk-engine-catalog.md#explicit-guarded-truss-temporal-engine--freeze1).
+`weft-core::application_temporal` owns the closed request and logical plan for
+`umf.weft-binding-temporal/0.2`; its private `inspection` module calls the pinned
+canonical UMF inspector and temporal oracle using retained trusted resources.
+UMF retains metamodel meaning. The optional `engine-temporal` feature declares
+these external semantic-library dependencies; it adds no core-to-backend edge.
+`weft-postgresql::truss_runtime::temporal` owns ABI1.3 source-guard requirements,
+SQL lowering and decoder/page metadata. `weft-runtime::engine_temporal` owns
+whole-program correspondence and current parameter custody for explicit
+`weft.engine-read/0.4` and `weft.engine-page/0.4` selection. The existing
+`raw-postgresql-reads` feature composes these modules.
+
+The thin Python and WASM hosts export
+`check_engine_temporal_read_shape_json`,
+`check_engine_temporal_page_shape_json`, `check_engine_temporal_read_json` and
+`check_engine_temporal_page_json`; their signatures and result rules belong to
+that contract. Both hosts call the same runtime checker. Ordinary ABI1.2
+admission remains under its original profile, and WASM retains its independent
+transport bound. Compiler source-guard metadata and buffered SQL express host
+obligations; native full-source validation, snapshot/security behavior and
+execution authority remain Truss/host responsibilities. Module-map adoption
+establishes source ownership and lexical inventory, not native, feature-union,
+package or release qualification.
 
 **Integration Owners**: UMF document interpretation -> `weft-core` owning-version reader; Databricks physical translation -> `weft-databricks`; PostgreSQL physical translation -> `weft-postgresql`; Python/browser translation -> their thin wrappers. External execution, original public UMF receipts, native source guards and authority/ACK admission belong to the caller host, not these compiler packages.
 
