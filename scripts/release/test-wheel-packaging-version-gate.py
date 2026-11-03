@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Exercise the actual workflow snippets across the packaging-version boundary."""
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
 import tempfile
 import textwrap
+import tomllib
 from unittest.mock import MagicMock, patch
 import zipfile
 
@@ -20,7 +22,24 @@ with tempfile.TemporaryDirectory() as environment:
     with patch.dict(os.environ,{'GITHUB_ENV':str(Path(environment)/'github-env'),'RELEASE_REQUESTED':'false','RELEASE_TAG':''}):
         exec(identity_source,{})
     recorded=(Path(environment)/'github-env').read_text()
-    assert 'DISTRIBUTION=umf-weft\n' in recorded and 'WHEEL_PREFIX=umf_weft-0.4.55-\n' in recorded
+    selected_project=tomllib.loads(Path('crates/weft-python/pyproject.toml').read_text())['project']
+    selected_version=selected_project['version']
+    assert recorded==f'DISTRIBUTION=umf-weft\nWHEEL_PREFIX=umf_weft-{selected_version}-\n'
+    # Exercise the production identity step's refusal, without editing source.
+    original_open=open
+    def mismatched_crate(path,*args,**kwargs):
+        if path=='crates/weft-python/Cargo.toml':
+            return io.BytesIO(b'[package]\nversion="0.0.0"\n')
+        return original_open(path,*args,**kwargs)
+    with patch.dict(os.environ,{'GITHUB_ENV':str(Path(environment)/'github-env'),'RELEASE_REQUESTED':'false','RELEASE_TAG':''}),patch('builtins.open',side_effect=mismatched_crate):
+        try:exec(identity_source,{})
+        except AssertionError:pass
+        else:raise AssertionError('mismatched distribution/crate versions accepted')
+    with patch.dict(os.environ,{'GITHUB_ENV':str(Path(environment)/'github-env'),'RELEASE_REQUESTED':'true','RELEASE_TAG':'v0.0.0'}):
+        try:exec(identity_source,{})
+        except AssertionError:pass
+        else:raise AssertionError('mismatched release tag accepted')
+    checks.extend(['selected distribution/crate metadata accepted','mismatched crate version refused','mismatched release tag refused'])
     fake_archive=MagicMock();fake_archive.__enter__.return_value.namelist.return_value=['weft/fixture.so']
     with patch('pathlib.Path.glob',return_value=iter([Path('dist/exact.whl')])),patch('pathlib.Path.read_text',return_value='{}'),patch('pathlib.Path.write_text'),patch('zipfile.ZipFile',return_value=fake_archive),patch('subprocess.run')as invoke,patch('subprocess.check_output',return_value='a'*40),patch.dict(os.environ,{'DISTRIBUTION':'umf-weft'}):
         exec(source,{});assert invoke.call_count==1
