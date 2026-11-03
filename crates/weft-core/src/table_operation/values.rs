@@ -95,7 +95,7 @@ pub(super) fn literal(field: &OperationField, value: &Value) -> Result<()> {
             } else {
                 64
             };
-            let bound = num_bigint::BigInt::from(1) << (bits - 1);
+            let bound: num_bigint::BigInt = num_bigint::BigInt::from(1) << (bits - 1);
             if n < -&bound || n >= bound {
                 return Err("operation integer exceeds native capacity");
             }

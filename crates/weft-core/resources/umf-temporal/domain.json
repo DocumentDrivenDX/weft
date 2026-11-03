@@ -1,0 +1,610 @@
+{
+  "vocabulary": {
+    "scalarType": [
+      "boolean",
+      "integer",
+      "decimal",
+      "float",
+      "string",
+      "binary",
+      "date",
+      "time",
+      "timestamp",
+      "bits128",
+      "uuid"
+    ],
+    "kind": [
+      "field",
+      "record",
+      "group"
+    ],
+    "nullability": [
+      "required",
+      "absent-allowed",
+      "unspecified"
+    ],
+    "cardinality": [
+      "one",
+      "array",
+      "map",
+      "unspecified"
+    ]
+  },
+  "knownKeys": {
+    "document": [
+      "umf",
+      "id",
+      "vocabularies",
+      "modules",
+      "extensions",
+      "title",
+      "aliases"
+    ],
+    "module": [
+      "id",
+      "namespace",
+      "elements",
+      "extensions",
+      "relationships",
+      "title",
+      "aliases"
+    ],
+    "element": [
+      "id",
+      "name",
+      "description",
+      "scalarType",
+      "extensions",
+      "references",
+      "kind",
+      "nullability",
+      "cardinality",
+      "itemType",
+      "facets",
+      "members",
+      "keys",
+      "title",
+      "aliases",
+      "examples",
+      "allowedValues",
+      "default",
+      "semanticTypes"
+    ],
+    "reference": [
+      "role",
+      "module",
+      "element"
+    ],
+    "itemType": [
+      "module",
+      "element"
+    ],
+    "facets": [
+      "length",
+      "precision",
+      "scale",
+      "integerWidth",
+      "collectionSize",
+      "range"
+    ]
+  },
+  "keys": {
+    "equalityFamilies": [
+      "boolean",
+      "integer",
+      "decimal",
+      "string",
+      "binary",
+      "bits128",
+      "uuid"
+    ],
+    "known": {
+      "member": [
+        "module",
+        "element"
+      ],
+      "key": [
+        "id",
+        "name",
+        "fields",
+        "primary"
+      ]
+    }
+  },
+  "extensions": {
+    "undeclared": {
+      "code": "UNDECLARED_EXTENSION",
+      "message": "Extension has no version declaration",
+      "severity": "error"
+    },
+    "scope": {
+      "code": "EXTENSION_SCOPE",
+      "message": "Extension not permitted at this scope",
+      "severity": "error"
+    },
+    "structure": {
+      "code": "EXTENSION_STRUCTURE",
+      "message": "Invalid payload",
+      "severity": "error"
+    },
+    "unchecked": {
+      "code": "SEMANTICS_UNCHECKED",
+      "message": "Structure checked; semantics not validated",
+      "severity": "warning"
+    },
+    "failure": {
+      "code": "VALIDATOR_FAILURE",
+      "message": "Validator failure",
+      "severity": "error"
+    },
+    "kindCatalogPolicy": {
+      "activeCoreVersion": "0.10.0",
+      "profile": "1.0.0",
+      "schemaReference": "#/$defs/extensionKindCatalog"
+    },
+    "kindRequired": {
+      "code": "EXTENSION_KIND_REQUIRED",
+      "message": "Expected an own nonempty string kind tag",
+      "severity": "error"
+    },
+    "kindUnknown": {
+      "code": "EXTENSION_KIND_UNKNOWN",
+      "message": "Kind is not declared by this exact extension version",
+      "severity": "error"
+    },
+    "kindScope": {
+      "code": "EXTENSION_KIND_SCOPE",
+      "message": "Kind is not permitted at this attachment scope",
+      "severity": "error"
+    },
+    "kindUnsupported": {
+      "code": "EXTENSION_KIND_CATALOG_UNSUPPORTED",
+      "message": "Kind catalog retained without interpretation",
+      "severity": "warning"
+    }
+  },
+  "literal": {
+    "fieldKind": "field",
+    "recordReferenceRole": "record-type",
+    "nullability": "absent-allowed",
+    "itemReferenceKeys": [
+      "module",
+      "element"
+    ],
+    "facetKeys": [
+      "length",
+      "precision",
+      "scale",
+      "integerWidth",
+      "collectionSize",
+      "range"
+    ],
+    "facetGroups": {
+      "length": [
+        "min",
+        "max",
+        "unit"
+      ],
+      "integerWidth": [
+        "bits",
+        "signed"
+      ],
+      "range": [
+        "min",
+        "max",
+        "minInclusive",
+        "maxInclusive"
+      ],
+      "collectionSize": [
+        "min",
+        "max"
+      ]
+    },
+    "containers": {
+      "array": {
+        "carrier": "array",
+        "mechanic": "sequence"
+      },
+      "map": {
+        "carrier": "map",
+        "mechanic": "mapping"
+      }
+    },
+    "singular": [
+      "one",
+      "unspecified"
+    ],
+    "families": {
+      "boolean": {
+        "carrier": "boolean",
+        "mechanic": "boolean",
+        "equality": true,
+        "refinements": true
+      },
+      "integer": {
+        "carrier": "integerToken",
+        "mechanic": "integer",
+        "equality": true,
+        "refinements": true
+      },
+      "decimal": {
+        "carrier": "decimalToken",
+        "mechanic": "decimal",
+        "equality": true,
+        "refinements": true
+      },
+      "string": {
+        "carrier": "string",
+        "mechanic": "unicode",
+        "equality": true,
+        "refinements": true,
+        "lengthUnit": "unicode-scalar"
+      },
+      "binary": {
+        "carrier": "binaryHex",
+        "mechanic": "hex",
+        "equality": true,
+        "refinements": true,
+        "lengthUnit": "byte"
+      },
+      "bits128": {
+        "carrier": "bits128Hex",
+        "mechanic": "bits128",
+        "equality": true,
+        "refinements": true
+      },
+      "uuid": {
+        "carrier": "uuid",
+        "mechanic": "uuid",
+        "equality": true,
+        "refinements": true
+      },
+      "float": {
+        "carrier": "floatToken",
+        "mechanic": "text",
+        "equality": false,
+        "refinements": false
+      },
+      "date": {
+        "carrier": "date",
+        "mechanic": "text",
+        "equality": false,
+        "refinements": false
+      },
+      "time": {
+        "carrier": "time",
+        "mechanic": "text",
+        "equality": false,
+        "refinements": false
+      },
+      "timestamp": {
+        "carrier": "timestamp",
+        "mechanic": "text",
+        "equality": false,
+        "refinements": false
+      }
+    },
+    "numericFacetKeys": [
+      "precision",
+      "scale",
+      "integerWidth"
+    ],
+    "errors": {
+      "numeric-token": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected exact JSON numeric token",
+        "severity": "error"
+      },
+      "numeric-exponent": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Numeric exponent exceeds bounded domain",
+        "severity": "error"
+      },
+      "numeric-rounding": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Numeric value would require rounding",
+        "severity": "error"
+      },
+      "numeric-resource": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Numeric value exceeds precision/resource limit",
+        "severity": "error"
+      },
+      "numeric-precision": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Numeric value exceeds precision",
+        "severity": "error"
+      },
+      "unicode": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Unpaired Unicode surrogate",
+        "severity": "error"
+      },
+      "object": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected object",
+        "severity": "error"
+      },
+      "unknown": {
+        "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+        "message": "Unknown relevant qualifier: {detail}",
+        "severity": "warning"
+      },
+      "null-equality": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Null has no allowed-value equality",
+        "severity": "error"
+      },
+      "equality": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "No exact equality for this literal/domain",
+        "severity": "error"
+      },
+      "bits128": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected exact128-bit hexadecimal value",
+        "severity": "error"
+      },
+      "uuid": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected UUID text",
+        "severity": "error"
+      },
+      "decimal-domain": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Decimal requires explicit precision/scale",
+        "severity": "error"
+      },
+      "hex": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected hexadecimal bytes",
+        "severity": "error"
+      },
+      "boolean": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected boolean literal",
+        "severity": "error"
+      },
+      "mechanic": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Unsupported literal mechanic",
+        "severity": "error"
+      },
+      "depth": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Literal recursion exceeds limit",
+        "severity": "error"
+      },
+      "field-role": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Literal target must be a Field",
+        "severity": "error"
+      },
+      "record-value": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Record-valued literals require a separate contract",
+        "severity": "error"
+      },
+      "null": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Null requires explicit absent-allowed",
+        "severity": "error"
+      },
+      "wrapper": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected one typed literal wrapper",
+        "severity": "error"
+      },
+      "container": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Container literal does not match Field",
+        "severity": "error"
+      },
+      "item-required": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Container literal requires explicit itemType",
+        "severity": "error"
+      },
+      "item-missing": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Unresolved itemType",
+        "severity": "error"
+      },
+      "collection-size": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Collection size outside bounds",
+        "severity": "error"
+      },
+      "cardinality": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Unknown cardinality",
+        "severity": "error"
+      },
+      "family": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Literal does not match scalar family",
+        "severity": "error"
+      },
+      "refinements": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Value/default semantics for float/temporal domain are not defined",
+        "severity": "error"
+      },
+      "text": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected literal text",
+        "severity": "error"
+      },
+      "length-unit": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Unknown/incompatible length unit",
+        "severity": "error"
+      },
+      "length-domain": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Length requires string/binary",
+        "severity": "error"
+      },
+      "length": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Literal length outside bounds",
+        "severity": "error"
+      },
+      "integer-width": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Integer outside width/signedness",
+        "severity": "error"
+      },
+      "numeric-null": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Numeric bounds cannot be null",
+        "severity": "error"
+      },
+      "range": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Literal outside numeric range",
+        "severity": "error"
+      },
+      "allowed": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Literal is not an allowed value",
+        "severity": "error"
+      },
+      "interval": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Empty or inverted numeric interval",
+        "severity": "error"
+      }
+    },
+    "fields": {
+      "role": "kind",
+      "references": "references",
+      "referenceRole": "role",
+      "item": "itemType",
+      "facets": "facets",
+      "family": "scalarType",
+      "cardinality": "cardinality",
+      "availability": "nullability",
+      "precision": "precision",
+      "scale": "scale"
+    },
+    "wrapperKeys": 1,
+    "itemLookup": {
+      "modules": "modules",
+      "moduleId": "id",
+      "elements": "elements",
+      "elementId": "id",
+      "moduleRef": "module",
+      "elementRef": "element"
+    },
+    "interval": {
+      "min": "min",
+      "max": "max",
+      "minInclusive": "minInclusive",
+      "maxInclusive": "maxInclusive",
+      "width": [
+        "facets",
+        "integerWidth"
+      ],
+      "bits": "bits",
+      "signed": "signed",
+      "omit": [
+        "allowedValues",
+        "default"
+      ],
+      "qualifierKeys": {
+        "integerWidth": [
+          "bits",
+          "signed"
+        ]
+      }
+    },
+    "refinements": [
+      {
+        "mechanic": "count-bounds",
+        "selector": [
+          "facets",
+          "collectionSize"
+        ],
+        "applies": "container",
+        "mode": "always",
+        "min": "min",
+        "max": "max",
+        "error": "collection-size",
+        "domainError": "collection-size",
+        "phase": "before"
+      },
+      {
+        "mechanic": "count-bounds",
+        "selector": [
+          "facets",
+          "length"
+        ],
+        "applies": "scalar",
+        "mode": "always",
+        "min": "min",
+        "max": "max",
+        "unit": "unit",
+        "unitError": "length-unit",
+        "domainError": "length-domain",
+        "error": "length",
+        "phase": "before"
+      },
+      {
+        "mechanic": "integer-width",
+        "selector": [
+          "facets",
+          "integerWidth"
+        ],
+        "applies": "scalar",
+        "mode": "always",
+        "bits": "bits",
+        "signed": "signed",
+        "error": "integer-width",
+        "phase": "before"
+      },
+      {
+        "mechanic": "coefficient-range",
+        "selector": [
+          "facets",
+          "range"
+        ],
+        "applies": "scalar",
+        "mode": "refinements",
+        "min": "min",
+        "max": "max",
+        "minInclusive": "minInclusive",
+        "maxInclusive": "maxInclusive",
+        "error": "range",
+        "nullError": "numeric-null",
+        "phase": "before"
+      },
+      {
+        "mechanic": "allowed-membership",
+        "selector": [
+          "allowedValues"
+        ],
+        "applies": "all",
+        "mode": "refinements",
+        "error": "allowed",
+        "phase": "after"
+      }
+    ]
+  },
+  "structuralDiagnostic": {
+    "code": "SEMANTIC_TYPE_STRUCTURE",
+    "message": "Invalid core semantic type structure",
+    "severity": "error"
+  },
+  "schemaPropertyNames": [
+    "title",
+    "aliases",
+    "examples",
+    "allowedValues",
+    "default"
+  ],
+  "provenance": {
+    "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
+    "compilerSha256": "53c2af76df1a5f45862e7ed4cb308cf1d7cc9b7edcf2897c96ebad5ef0d715c4"
+  }
+}

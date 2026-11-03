@@ -6,6 +6,7 @@ edition.workspace = true
 publish.workspace = true
 rust-version = "1.90"
 [features]
+engine-temporal=["dep:umf-core","dep:umf-codegen"]
 engine-ordered-page-candidate=[]
 current-presence-graph-requirements-candidate=["current-presence-model-requirements-candidate"]
 current-presence-model-requirements-candidate=["current-presence-context-candidate"]
@@ -15,6 +16,8 @@ bounded-current-string-candidate=["current-query-refinement-candidate"]
 current-query-refinement-candidate=[]
 
 [dependencies]
+umf-core = { git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d", default-features = false, features = ["full-core"], optional = true }
+umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d", optional = true }
 base64 = "=0.22.1"
 serde.workspace = true
 serde_json.workspace = true

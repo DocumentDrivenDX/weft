@@ -1,0 +1,38 @@
+{
+  "interfaceVersion": "weft-compile/0.2.10",
+  "dialect": "weft-sql/0.2.0",
+  "modules": [
+    {
+      "documentJson": "{\"umf\":\"0.10.0\",\"id\":\"temporal-compiler-fixture\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"m\",\"elements\":[{\"id\":\"id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"id2\",\"name\":\"id2\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"day\",\"name\":\"day\",\"kind\":\"field\",\"scalarType\":\"date\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"at\",\"name\":\"at\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"wall\",\"name\":\"wall\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"label\",\"name\":\"label\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"R\",\"name\":\"R\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"id\"},{\"module\":\"m\",\"element\":\"id2\"},{\"module\":\"m\",\"element\":\"day\"},{\"module\":\"m\",\"element\":\"at\"},{\"module\":\"m\",\"element\":\"wall\"},{\"module\":\"m\",\"element\":\"label\"}],\"keys\":[{\"id\":\"pair\",\"primary\":true,\"fields\":[{\"module\":\"m\",\"element\":\"id\"},{\"module\":\"m\",\"element\":\"id2\"}],\"name\":\"Composite string identity\"}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"m\",\"element\":\"R\"},\"selectedKey\":{\"module\":\"m\",\"element\":\"R\",\"key\":\"pair\"},\"fields\":[{\"field\":{\"module\":\"m\",\"element\":\"id\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"m\",\"element\":\"id2\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"m\",\"element\":\"day\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"m\",\"element\":\"at\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"m\",\"element\":\"wall\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false,\"temporal\":\"local\"},{\"field\":{\"module\":\"m\",\"element\":\"label\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}]}],\"columns\":[],\"search\":[],\"searchBindings\":[]}},\"namespace\":\"m\"}]}",
+      "pin": {
+        "documentId": "temporal-compiler-fixture",
+        "revision": "558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844",
+        "sha256": "558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844",
+        "umfVersion": "0.10.0"
+      },
+      "selectedModuleIds": [
+        "m"
+      ]
+    }
+  ],
+  "sql": "SELECT r.day AS day,r.at AS at,r.wall AS wall FROM R r WHERE r.at >= :since ORDER BY r.wall DESC NULLS FIRST,r.day ASC",
+  "parameters": {},
+  "exactParameters": {},
+  "temporalProfile": "umf.weft-binding-temporal/0.2",
+  "temporalParameters": {
+    "since": {
+      "kind": "instant",
+      "value": "1969-12-31T23:59:59.5Z"
+    }
+  },
+  "options": {
+    "allowCandidate": true
+  },
+  "target": {
+    "backendId": "truss.postgresql.runtime",
+    "backendVersion": "0.4.47",
+    "targetProfile": "truss-runtime-pg18.6/0.7-temporal-candidate",
+    "bindingJson": "{\"interfaceVersion\":\"truss-runtime-binding/0.5\",\"schema\":\"truss\",\"installationId\":\"compiler-test-only\",\"releaseId\":\"truss-catalog-runtime/0.76-temporal-candidate\",\"releaseSha256\":\"605db1b08b94982015ebbf764d68d7539914cbaa6461d4dae51c27e85167525d\",\"queryAbi\":{\"identity\":\"truss-postgresql-logical-query\",\"version\":\"1.3\",\"sha256\":\"7d89d7969f8827590327da59c6237bdefc5496f1d0996ea97eb7903a5f38e71c\"},\"catalogRevision\":1,\"maximumScanRows\":10000,\"maximumResultRows\":1000,\"maximumBytes\":1048576,\"documents\":[{\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\",\"sha256\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"}],\"records\":[{\"identity\":{\"module\":\"m\",\"element\":\"R\",\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"},\"typeId\":\"1\",\"fields\":[{\"identity\":{\"module\":\"m\",\"element\":\"id\",\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"},\"propertyId\":\"1\"},{\"identity\":{\"module\":\"m\",\"element\":\"id2\",\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"},\"propertyId\":\"2\"},{\"identity\":{\"module\":\"m\",\"element\":\"day\",\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"},\"propertyId\":\"3\"},{\"identity\":{\"module\":\"m\",\"element\":\"at\",\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"},\"propertyId\":\"4\"},{\"identity\":{\"module\":\"m\",\"element\":\"wall\",\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"},\"propertyId\":\"5\"},{\"identity\":{\"module\":\"m\",\"element\":\"label\",\"documentId\":\"temporal-compiler-fixture\",\"revision\":\"558485026a5795478013ae06318740d3d9fa243f9ea893aae6b9837f194ee844\"},\"propertyId\":\"6\"}],\"keys\":[{\"keyId\":\"pair\",\"propertyIds\":[\"1\",\"2\"]}]}],\"relationships\":[]}",
+    "bindingSha256": "598ff10f6c61f2e36bfd649ade187ef40ba88c0eb70fb2bbe48e9e0159b9a3da"
+  }
+}

@@ -35,6 +35,8 @@ fn runtime_identity(value: &str) -> bool {
             parts.len() == 2 && parts.iter().all(|part| !part.is_empty() && part.bytes().all(|b| b.is_ascii_digit())) })
 }
 mod selective;
+#[cfg(feature="engine-temporal")]
+pub mod temporal;
 const BACKEND: &str = "truss.postgresql.runtime";
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]

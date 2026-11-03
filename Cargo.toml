@@ -13,6 +13,12 @@ sha2 = "=0.10.9"
 sqlparser = { version = "=0.63.0", default-features = false, features = ["std", "visitor"] }
 
 [patch.crates-io]
+hashbrown-012 = { package = "hashbrown", version = "=0.12.3", git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d" }
+hashbrown-013 = { package = "hashbrown", version = "=0.13.2", git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d" }
+json-ld-core = { package = "json-ld-core", version = "=0.21.4", git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d" }
+json-ld-syntax = { package = "json-ld-syntax", version = "=0.21.4", git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d" }
+json-syntax = { package = "json-syntax", version = "=0.12.5", git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d" }
+xsd-types = { package = "xsd-types", version = "=0.9.6", git = "https://github.com/DocumentDrivenDX/umf.git", rev = "f629cda829223fb889d1faf25a2543e40689146d" }
 ahash = { path = "vendor/ahash" }
 
 # Preserve native extension loadability on macOS27 with the pinned Rust toolchain.

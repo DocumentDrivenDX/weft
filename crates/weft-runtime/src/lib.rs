@@ -1761,3 +1761,9 @@ pub fn check_table_operation_json(program: &str) -> String {
 pub fn compile_table_seed_json(request:&str)->String{weft_postgresql::table_seed::compile_json(request)}
 #[cfg(feature="raw-postgresql-reads")]
 pub fn check_table_seed_json(program:&str)->String{weft_postgresql::table_seed::check_json(program)}
+
+#[cfg(all(test,feature="raw-postgresql-reads"))]
+mod engine_temporal_tests;
+
+#[cfg(feature="raw-postgresql-reads")]
+pub mod engine_temporal;

@@ -171,7 +171,7 @@ fn bind(program:&Value,request:&Value)->Result<Value>{
  #[cfg(not(feature="ashlar-sdk-ordered-page-candidate"))]compile_original(method,request)}
 }
 fn response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-read/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-READ","message":code}]})).to_string()}
-pub fn compile_json(raw:&str)->String{response((||{let v=weft_core::json::checked_json(raw).map_err(|_|"request framing refused")?;let r:Request=serde_json::from_value(v).map_err(|_|"closed engine catalog request required")?;if r.version!=if matches!(r.compiler.as_str(),"ashlar-spark4-sdk"|"ashlar-spark4-sdk-pages"|"truss-runtime-binary"){"weft.engine-read/0.2"}else{"weft.engine-read/0.1"}{return Err("engine catalog version differs")};{
+pub fn compile_json(raw:&str)->String{if raw.len()>4_194_304{return crate::engine_temporal::compile_json(raw,false)}if raw.len()<=4_194_304 && weft_core::json::checked_json(raw).is_ok_and(|v|v["version"]=="weft.engine-read/0.4"||v["compiler"]=="truss-runtime-temporal"){return crate::engine_temporal::compile_json(raw,false)}response((||{let v=weft_core::json::checked_json(raw).map_err(|_|"request framing refused")?;let r:Request=serde_json::from_value(v).map_err(|_|"closed engine catalog request required")?;if r.version!=if matches!(r.compiler.as_str(),"ashlar-spark4-sdk"|"ashlar-spark4-sdk-pages"|"truss-runtime-binary"){"weft.engine-read/0.2"}else{"weft.engine-read/0.1"}{return Err("engine catalog version differs")};{
  #[cfg(feature="ashlar-sdk-ordered-page-candidate")]return compile_with_order(&r.compiler,&r.request,r.order_key.as_ref());
  #[cfg(not(feature="ashlar-sdk-ordered-page-candidate"))]{if r.order_key.is_some(){return Err("ordered read feature not selected")};compile_original(&r.compiler,&r.request)}
  }})())}
@@ -238,8 +238,10 @@ fn binary_page(request:&Value,size:u16,after:Option<Vec<String>>,key:Option<&Val
 }
 fn page_response(result:Result<Value>)->String{result.unwrap_or_else(|code|json!({"version":"weft.engine-page/0.1","status":"blocked","diagnostics":[{"code":"WFT-ENGINE-PAGE","message":code}]})).to_string()}
 pub fn compile_page_json(raw:&str)->String{
+ if raw.len()>4_194_304{return crate::engine_temporal::compile_json(raw,true)}
+ if raw.len()<=4_194_304 && weft_core::json::checked_json(raw).is_ok_and(|v|v["version"]=="weft.engine-page/0.4"||v["compiler"]=="truss-runtime-temporal"){return crate::engine_temporal::compile_json(raw,true)}
  #[cfg(feature="ashlar-sdk-ordered-page-candidate")]
- if weft_core::json::checked_json(raw).is_ok_and(|v|v["version"]=="weft.engine-page/0.2"&&v["compiler"]!="truss-runtime-binary"){return crate::engine_ordered_page::compile_json(raw);}
+ if raw.len()<=4_194_304 && weft_core::json::checked_json(raw).is_ok_and(|v|v["version"]=="weft.engine-page/0.2"&&v["compiler"]!="truss-runtime-binary"){return crate::engine_ordered_page::compile_json(raw);}
  page_response((||{
  if raw.len()>4_194_304{return Err("bounded original page request required")}
  let value=weft_core::json::checked_json(raw).map_err(|_|"page request framing refused")?;
