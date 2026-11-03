@@ -5,12 +5,13 @@ from verify_current_inputs_0457 import verify,sha,need
 
 def save(p,v):Path(p).write_text(json.dumps(v,indent=2)+'\n')
 def main():
- p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);a=p.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=True);root=Path(__file__).resolve().parents[2]
- from verify_current_tools_0457 import inspect
- inspect(root,out/'tools',wasm=True)
+ p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--preflight-only',action='store_true');a=p.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=True);root=Path(__file__).resolve().parents[2]
  inputs=verify(root);R=inputs['sourceCommit'];fs='raw-postgresql-reads,'+','.join('weft-runtime/'+x for x in inputs['features'])
  corpus=root/'tests/engine-catalog/temporal-native-495-corpus.json';need(sha(corpus)=='c8a13365a0a479d2156bf765a4718999f8e59a8d77f3f88cfb613e427f917c5e','Rust oracle changed')
- save(out/'inputs.json',dict(**inputs,workflowCommit=os.environ['GITHUB_SHA'],runID=os.environ['GITHUB_RUN_ID'],target='wasm32-unknown-unknown',features=fs,oracle='14 retained495 Rust COMPILER-ONLY cases; no native database execution'))
+ save(out/'inputs.json',dict(**inputs,workflowCommit=os.environ['GITHUB_SHA'],runID=os.environ['GITHUB_RUN_ID'],wasmBuild=dict(target='wasm32-unknown-unknown',features=fs),oracle='14 retained495 Rust COMPILER-ONLY cases; no native database execution'))
+ if a.preflight_only:return
+ from verify_current_tools_0457 import inspect
+ inspect(root,out/'tools',wasm=True)
  rows=[]
  def run(name,args):
   need(verify(root)==inputs,'Source/lock drift before '+name)
