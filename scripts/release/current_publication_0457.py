@@ -43,6 +43,10 @@ def stage(R,linux,mac,source_run,asset_dir,out):
 
 def verify_public(R,asset_dir,out):
  root=Path(asset_dir);pins=json.loads((root/'release-pins.json').read_bytes());proof=pins['currentQualification']
+ from current_macos_pair_0457 import COHORT_PROFILE
+ if proof.get('profile')==COHORT_PROFILE:
+  from publish_macos_pair_0457 import verify_public as verify_exact_pairs
+  return verify_exact_pairs(R,asset_dir,out)
  need(pins['version']=='0.4.57' and pins['sourceCommit']==pins['commit']==R and proof['profile']==PROFILE,'Current publication profile/source differs')
  assets,fresh=assemble(R,proof['linuxRun'],proof['macosRun'],proof['sourceRun'],out)
  # API observations may include fresh timestamps; bind immutable byte payloads,

@@ -4,6 +4,16 @@ on:
     tags: ['v*']
   workflow_dispatch:
     inputs:
+      current_pair_publish:
+        description: Explicit registered0457 R Q A publication using already-qualified bytes only
+        required: false
+        default: false
+        type: boolean
+      current_arm64_run_id:
+        description: Successful separately registered ARM64 controller run
+        required: false
+        default: ''
+        type: string
       current_source_run_id:
         description: Successful exact-R source/archive and temporal-WASM run
         required: false
@@ -63,7 +73,7 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-          ref: ${{ inputs.source_sha || (inputs.tag && format('refs/tags/{0}', inputs.tag)) || github.sha }}
+          ref: ${{ inputs.current_pair_publish && github.sha || inputs.source_sha || (inputs.tag && format('refs/tags/{0}', inputs.tag)) || github.sha }}
       - uses: actions/setup-python@v6
         timeout-minutes: 5
         with:
@@ -83,12 +93,17 @@ jobs:
           project=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']
           assert project['name']==distribution_for_version(project['version'])
           hosted='true' if project['name']=='umf-weft' else 'false'
-          if hosted=='true' and os.environ['MACOS_RUN_ID']:
+          pair_publish=json.loads(os.environ['CURRENT_INPUTS']).get('current_pair_publish',False)
+          if hosted=='true' and os.environ['MACOS_RUN_ID'] and not pair_publish:
               assert os.environ['SOURCE_SHA']==os.environ['GITHUB_SHA']
               assert os.environ['MACOS_SOURCE_SHA']==os.environ['SOURCE_SHA']
               assert os.environ['GITHUB_REF']=='refs/heads/main'
           from select_current_events_0457 import select
           current=select(os.environ['GITHUB_EVENT_NAME'],os.environ['GITHUB_REF'],json.loads(os.environ['CURRENT_INPUTS'])) if project['version']=='0.4.57' else dict(produce=False,publish=False)
+          if pair_publish:
+              from current_macos_pair_0457 import REGISTRY
+              from publish_macos_pair_0457 import select_publication
+              current=select_publication(os.environ['GITHUB_EVENT_NAME'],os.environ['GITHUB_REF'],json.loads(os.environ['CURRENT_INPUTS']),json.load(open(REGISTRY)))
           with open(os.environ['GITHUB_OUTPUT'],'a') as output:
               output.write(f'hosted_macos={hosted}\n')
               for role,value in current.items():output.write('current_'+role+'='+str(value).lower()+'\n')
@@ -238,25 +253,36 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-          ref: ${{ inputs.source_sha || (inputs.tag && format('refs/tags/{0}', inputs.tag)) || github.sha }}
+          ref: ${{ inputs.current_pair_publish && github.sha || inputs.source_sha || (inputs.tag && format('refs/tags/{0}', inputs.tag)) || github.sha }}
       - uses: actions/setup-python@v6
         timeout-minutes: 5
         with:
           python-version: '3.12'
       - uses: actions/download-artifact@v4
+        if: ${{ !inputs.current_pair_publish }}
         with:
           run-id: ${{ inputs.packaging_run_id || github.run_id }}
           github-token: ${{ github.token }}
           pattern: wheels-*
           merge-multiple: true
           path: dist
+      - name: Authenticate and publish only exact registered R Q A qualified bytes
+        if: inputs.current_pair_publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          python scripts/release/publish_macos_pair_0457.py --registration-sha "$GITHUB_SHA" --linux-run '${{ inputs.packaging_run_id }}' --macos-run '${{ inputs.macos_run_id }}' --arm64-run '${{ inputs.current_arm64_run_id }}' --source-run '${{ inputs.current_source_run_id }}' --dist "$RUNNER_TEMP/pair-publication" --publish-reviewed
+          mkdir -p dist
+          cp "$RUNNER_TEMP/pair-publication/release-pins.json" "$RUNNER_TEMP/pair-publication/SHA256SUMS" "$RUNNER_TEMP/pair-publication/release-api-assets.json" dist/
       - name: Authenticate actual current3 SDK42 reports before existing publisher
-        if: inputs.current_final
+        if: inputs.current_final && !inputs.current_pair_publish
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/release/admit_current_sdk_0457.py --source-sha '${{ inputs.source_sha }}' --linux-run '${{ inputs.packaging_run_id }}' --macos-run '${{ inputs.macos_run_id }}' --out "$RUNNER_TEMP/current-sdk-admission"
       - name: Verify hosted ARM64 producer and publish exact three-platform release
-        if: inputs.macos_run_id != ''
+        if: inputs.macos_run_id != '' && !inputs.current_pair_publish
         env:
           GH_TOKEN: ${{ github.token }}
           PACKAGING_RUN_ID: ${{ inputs.packaging_run_id }}
@@ -278,7 +304,7 @@ jobs:
             --receipt dist/macos-artifact-verification.json
           SOURCE_SHA="$MACOS_SOURCE_SHA" MACOS_RUN_ID="$MACOS_RUN_ID" PACKAGING_RUN_ID="$PACKAGING_RUN_ID" RELEASE_TAG="$RELEASE_TAG" GH_REPOSITORY="$GH_REPOSITORY" GH_TOKEN="$GH_TOKEN" python scripts/release/publish_hosted_release.py --dist dist
       - name: Record exact artifacts and publish
-        if: inputs.macos_run_id == ''
+        if: inputs.macos_run_id == '' && !inputs.current_pair_publish
         env:
           GH_TOKEN: ${{ github.token }}
           PACKAGING_RUN_ID: ${{ inputs.packaging_run_id }}
