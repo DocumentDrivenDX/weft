@@ -25,7 +25,7 @@ for (const [name,mutate] of [
   ['deleted requirement mapping', (x:any)=>delete x.requirements['FR-22']],
   ['deleted story allocation', (x:any)=>x.allocation.splice(x.allocation.findIndex((s:any)=>s.story==='US-009'),1)],
   ['deleted criterion', (x:any)=>x.allocation.at(-1).criteria.pop()],
-  ['new unallocated requirement', (x:any)=>x.artifacts.get('weft.prd').body+='\n| FR-23 | P0 | New requirement |\n'],
+  ['new unallocated requirement', (x:any)=>{ const id = 'FR-' + (1 + Math.max(...Object.keys(x.requirements).map((id:string)=>Number(id.slice(3))))); x.artifacts.get('weft.prd').body+=`\n| ${id} | P0 | New requirement |\n`; }],
   ['new unallocated criterion', (x:any)=>x.artifacts.get('US-009').body+='\n- **US-009-AC5:** New criterion\n'],
   ['criterion mentioned outside mapping', (x:any)=>x.artifacts.get('STP-009').body=x.artifacts.get('STP-009').body.replace('| US-009-AC4 |','US-009-AC4')],
   ['executed state disguised as allocation', (x:any)=>x.allocation[0].criteria[0].state='passed'],

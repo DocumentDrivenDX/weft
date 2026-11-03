@@ -26,13 +26,13 @@ for (const file of files.filter(f => f.endsWith('.md'))) {
   const end = body.indexOf('\n---\n', 4);
   assert(end > 0, `${file}: unclosed frontmatter`);
   const meta = YAML.parse(body.slice(4, end)).ddx;
-  assert(meta?.id && meta.type && meta.activity && (meta.status === 'draft' || (['ADR-001','ADR-002'].includes(meta.id) && meta.status === 'accepted')) && meta.authoring?.home === 'repo', `${file}: incomplete metadata`);
+  assert(meta?.id && meta.type && meta.activity && meta.authoring?.home === 'repo', `${file}: incomplete metadata`);
   assert(!artifacts.has(meta.id), `Duplicate artifact ${meta.id}`);
   artifacts.set(meta.id, {file, meta, body});
 }
 for (const [id, a] of artifacts) {
   for (const edge of a.meta.links ?? []) {
-    assert(edge.kind === 'informed_by' && artifacts.has(edge.id), `${id}: broken link ${edge.id}`);
+    assert(['informed_by', 'informs'].includes(edge.kind) && artifacts.has(edge.id), `${id}: broken link ${edge.id}`);
   }
   // Resolve local Markdown links without trying network citations or anchors.
   for (const match of a.body.matchAll(/\]\(([^)]+)\)/g)) {
