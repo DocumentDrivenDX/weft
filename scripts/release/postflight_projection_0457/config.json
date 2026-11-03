@@ -1,0 +1,24 @@
+{
+  "artifactId": 13275468435,
+  "expectedOutputEntries": 68,
+  "inventoryPath": "original-container-inventory.json",
+  "inventorySha256": "12d8fa6fecc807683fdca578c0e3cb39b22c17d53653f4bb5cc2464e6a69b04b",
+  "newCaps": {
+    "entries": 160,
+    "expandedBytes": 104857600,
+    "zipBytes": 83886080
+  },
+  "originalArtifactAccepted": false,
+  "originalAttempt": 1,
+  "originalControllerV": "02011d980d8390e3e5c016993fff05598571dffb",
+  "originalJob": 126242032126,
+  "originalRun": 41729261593,
+  "provenancePath": "original-ci-provenance.json",
+  "provenanceSha256": "737128f87917f7bf3b68bdd1b7ee747ee47114d13a1513b4a799a420769ebff9",
+  "rawZIPBytes": 69166353,
+  "rawZIPSha256": "774abad88e800af3661cb54bdb1dcf3567d6b0f76ee83dd2c3835e2e07489a3f",
+  "schema": "weft-hosted-postflight-retention-projection-inputs/1",
+  "sourceR": "c623b94b66b0b46d492d457c62faddc896e2e452",
+  "whitelistPath": "selected-proof-whitelist.json",
+  "whitelistSha256": "3944d1d662e655a6a8792918fe221ca10adc0e4fa15d01c5e73be3efc3e1d83b"
+}
