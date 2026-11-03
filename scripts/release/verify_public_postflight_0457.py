@@ -54,6 +54,14 @@ def installed_binding(record,wheel,venv):
   need(record.get(role+'Sha256')==wheel[key],'Installed '+role+' hash differs')
  return record
 
+def public_consumer_venv(out,runner_temp):
+ proof=Path(out).resolve();temp=Path(runner_temp).resolve();upload_root=proof.parent
+ need(proof.is_relative_to(temp) and proof!=temp,'Proof output must be inside runner temp')
+ venv=temp/'weft-public-postflight-consumer-venv'
+ need(not venv.is_relative_to(upload_root) and not upload_root.is_relative_to(venv),'Consumer venv must be outside complete uploaded parent')
+ need(not venv.is_relative_to(ROOT.resolve()),'Consumer venv must be outside controller checkout')
+ return venv
+
 def main(args):
  need(sys.flags.optimize==0 and platform.system()=='Linux' and platform.machine()=='x86_64','One native Linux x86 public consumer required')
  need(os.environ.get('GITHUB_EVENT_NAME')=='workflow_dispatch' and os.environ.get('GITHUB_REPOSITORY')=='DocumentDrivenDX/weft','Manual canonical verification only')
@@ -90,7 +98,7 @@ def main(args):
  producer=c.json(PREFIX+f'/actions/runs/{pins["workflowRunId"]}','P-github-publisher');need(producer.get('head_sha')==P and producer.get('path')=='.github/workflows/release.yml' and producer.get('conclusion')=='success' and producer.get('status')=='completed','Original P GitHub publisher differs')
  with urllib.request.urlopen('https://pypi.org/pypi/umf-weft/0.4.57/json',timeout=30) as response:body=response.read(2*1024*1024+1)
  need(len(body)<=2*1024*1024,'Public metadata cap exceeded');(out/'public-pypi-version.json').write_bytes(body);rows=public_inventory(json.loads(body),expected)
- venv=out.parent/(out.name+'-venv');need(not venv.exists(),'Consumer venv already exists');run('venv',[sys.executable,'-m','venv',venv]);python=venv/'bin/python';env=dict(os.environ,PIP_CONFIG_FILE='/dev/null',PIP_INDEX_URL='',PIP_EXTRA_INDEX_URL='',PIP_FIND_LINKS='',PIP_NO_INDEX='',PYTHONPATH='');cwd=out.parent
+ venv=public_consumer_venv(out,Path(os.environ['RUNNER_TEMP']));need(not venv.exists(),'Consumer venv already exists');run('venv',[sys.executable,'-m','venv',venv]);python=venv/'bin/python';env=dict(os.environ,PIP_CONFIG_FILE='/dev/null',PIP_INDEX_URL='',PIP_EXTRA_INDEX_URL='',PIP_FIND_LINKS='',PIP_NO_INDEX='',PYTHONPATH='');cwd=out.parent
  run('pip-install',[python,'-I','-m','pip','--isolated','install','--disable-pip-version-check','--no-cache-dir','--index-url','https://pypi.org/simple','--only-binary=:all:','--report',out/'pip-install-report.json','umf-weft==0.4.57'],cwd=cwd,env=env)
  name,url=selected_public_wheel(json.loads((out/'pip-install-report.json').read_bytes()),expected);byte_receipts=[]
  for row in rows:
