@@ -2270,7 +2270,8 @@
             "fn:admit_finite_current_summary_json",
             "fn:admit_finite_current_sum_json",
             "fn:admit_finite_current_avg_json",
-            "fn:authored_temporal_meaning"
+            "fn:authored_temporal_meaning",
+            "fn:admit_generated_read"
           ],
           "pathReferences": []
         },
@@ -2609,6 +2610,7 @@
             "struct:PreparedLiteral",
             "fn:new",
             "fn:check",
+            "fn:generated_query_refinements",
             "fn:check_literal",
             "fn:validate_field"
           ],
@@ -3151,7 +3153,9 @@
             "fn:max_rows",
             "fn:obligations",
             "fn:original_source_digest",
+            "fn:generated_input_codecs",
             "fn:bind_inputs",
+            "fn:generated_codec_for_member",
             "struct:CteScopes",
             "fn:enter",
             "fn:leave",
@@ -3814,12 +3818,42 @@
         {
           "path": "crates/weft-postgresql/src/raw_read.rs",
           "publicDeclarations": [
+            "fn:prepare_generated_read_algebra_json",
+            "fn:prepare_generated_read_algebra_v2_json",
+            "fn:prepare_generated_read_algebra_v3_json",
+            "fn:prepare_generated_read_algebra_v4_json",
+            "fn:prepare_generated_read_algebra_v5_json",
+            "fn:prepare_generated_read_algebra_v6_json",
+            "fn:prepare_generated_read_algebra_v8_json",
+            "fn:prepare_generated_read_algebra_v7_json",
             "fn:compile_json"
           ],
           "pathReferences": [
             "crates/weft-postgresql/src/raw_read_projection.rs",
-            "crates/weft-postgresql/src/raw_read_relationships.rs"
+            "crates/weft-postgresql/src/raw_read_relationships.rs",
+            "crates/weft-postgresql/src/raw_read_generated_algebra.rs"
           ]
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read_generated_algebra.rs",
+          "publicDeclarations": [
+            "fn:prepare_generated_read_algebra_v2_json",
+            "fn:prepare_generated_read_algebra_v3_json",
+            "fn:prepare_generated_read_algebra_v4_json",
+            "fn:prepare_generated_read_algebra_v5_json",
+            "fn:prepare_generated_read_algebra_v8_json",
+            "fn:prepare_generated_read_algebra_v7_json",
+            "fn:prepare_generated_read_algebra_v6_json",
+            "fn:prepare_generated_read_algebra_json"
+          ],
+          "pathReferences": [
+            "crates/weft-postgresql/src/raw_read_generated_join_v8.rs"
+          ]
+        },
+        {
+          "path": "crates/weft-postgresql/src/raw_read_generated_join_v8.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
         },
         {
           "path": "crates/weft-postgresql/src/raw_read_projection.rs",
@@ -4341,6 +4375,7 @@
             "fn:prepare",
             "fn:prepare_operation",
             "fn:prepare_query",
+            "fn:bind_connection_json",
             "fn:bind_json",
             "fn:compile_json",
             "fn:check_json"
@@ -4359,6 +4394,7 @@
             "struct:PreparedQuery",
             "fn:prepare",
             "fn:program_json",
+            "fn:export_generated_program_json",
             "fn:bind_json",
             "struct:PreparedQueryModule",
             "fn:prepare",
@@ -4738,18 +4774,28 @@
             "fn:compile_related_read_json",
             "mod:engine_ordered_page",
             "fn:compile_table_operation_json",
+            "fn:prepare_generated_read_algebra_json",
+            "fn:prepare_generated_read_algebra_v2_json",
+            "fn:prepare_generated_read_algebra_v3_json",
+            "fn:prepare_generated_read_algebra_v4_json",
+            "fn:prepare_generated_read_algebra_v5_json",
+            "fn:prepare_generated_read_algebra_v6_json",
+            "fn:prepare_generated_read_algebra_v8_json",
+            "fn:prepare_generated_read_algebra_v7_json",
             "struct:PreparedTableOperationModule",
             "fn:prepare",
             "fn:prepare_operation",
             "fn:prepare_query",
             "struct:PreparedTableOperation",
             "fn:bind_json",
+            "fn:bind_connection_json",
             "fn:prepare_table_query_json",
             "fn:bind_table_query_json",
             "struct:PreparedTableQuery",
             "fn:prepare",
             "fn:bind_json",
             "fn:program_json",
+            "fn:export_generated_program_json",
             "struct:PreparedTableQueryModule",
             "fn:prepare",
             "fn:prepare_operation",
