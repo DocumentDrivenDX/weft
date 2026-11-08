@@ -7,7 +7,7 @@
     {"$ref": "#/$defs/unsupported"}
   ],
   "$defs": {
-    "codec": {"$ref": "urn:weft:query-codec-instructions:1"},
+    "codec": {"$ref": "https://weft.invalid/schemas/query-codec-instructions.schema.json"},
     "nativeType": {
       "oneOf": [
         {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"const": "text"}}},

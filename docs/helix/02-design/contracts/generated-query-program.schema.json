@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:weft:generated-query-program:1",
+  "$id": "https://weft.invalid/schemas/generated-query-program.schema.json",
   "title": "Weft generated query pre-artifact",
   "description": "Build-issued fixed-query pre-artifact. Export-only values are inspectable; executable readiness requires the exact closed codec profile and qualified binder.",
   "type": "object",

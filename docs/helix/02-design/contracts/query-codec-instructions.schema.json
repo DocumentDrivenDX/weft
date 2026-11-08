@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:weft:query-codec-instructions:1",
+  "$id": "https://weft.invalid/schemas/query-codec-instructions.schema.json",
   "title": "Weft issued exact query input codec instructions",
   "description": "Closed instruction structure. Cross-step carrier/profile agreement and exact source parity require semantic verification.",
   "type": "object",
