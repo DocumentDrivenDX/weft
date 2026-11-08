@@ -5,7 +5,7 @@ build-backend="maturin"
 license = "MIT OR Apache-2.0"
 license-files = ["crates/weft-python/LICENSE.md", "crates/weft-python/LICENSE-MIT", "crates/weft-python/LICENSE-APACHE", "crates/weft-python/THIRD-PARTY-LICENSES.txt"]
 name="umf-weft"
-version = "0.4.57"
+version = "0.4.58"
 description="Native UMF-powered SQL compiler with explicit backend profiles"
 readme="crates/weft-python/README.md"
 requires-python=">=3.9"

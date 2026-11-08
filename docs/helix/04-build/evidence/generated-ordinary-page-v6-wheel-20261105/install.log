@@ -1,0 +1,5 @@
+Processing /private/tmp/weft-generated-v6-wheelhouse-20261105/weft_sql-0.4.65.dev1-cp39-abi3-macosx_11_0_arm64.whl
+Installing collected packages: weft-sql
+Successfully installed weft-sql-0.4.65.dev1
+WARNING: You are using pip version 21.2.4; however, version 26.0.1 is available.
+You should consider upgrading via the '/private/tmp/weft-generated-v6-wheel-venv-20261105/bin/python -m pip install --upgrade pip' command.

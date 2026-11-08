@@ -1,0 +1,3 @@
+INSERT 0 1
+psql:docs/helix/04-build/evidence/generated-ordinary-page-v6-source-review-20261105/native-guard.sql:3: NOTICE:  byte guard raised SQLSTATE 22012
+DO

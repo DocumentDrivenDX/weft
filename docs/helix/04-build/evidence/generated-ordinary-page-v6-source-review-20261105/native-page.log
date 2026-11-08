@@ -1,0 +1,42 @@
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 4
+  nspname   | collname | collisdeterministic 
+------------+----------+---------------------
+ pg_catalog | C        | t
+(1 row)
+
+ __weft_ordinal | __weft_page_key | __weft_field_1 
+----------------+-----------------+----------------
+              1 | a               | A
+              2 | b               | B
+              3 | c               | C
+(3 rows)
+
+ __weft_ordinal | __weft_page_key | __weft_field_1 
+----------------+-----------------+----------------
+              1 | c               | C
+              2 | d               | D
+(2 rows)
+
+ __weft_ordinal | __weft_page_key 
+----------------+-----------------
+              1 | a
+              2 | b
+              3 | c
+(3 rows)
+
+CREATE TABLE
+INSERT 0 3
+  nspname   | collname | collisdeterministic 
+------------+----------+---------------------
+ pg_catalog | C        | t
+(1 row)
+
+ __weft_ordinal | __weft_page_key | __weft_field_1 
+----------------+-----------------+----------------
+              1 | a               | A
+              2 | b               | B
+              3 | c               | C
+(3 rows)
+

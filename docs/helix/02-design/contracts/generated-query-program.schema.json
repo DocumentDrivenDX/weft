@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:generated-query-program:1",
+  "title": "Weft generated query pre-artifact",
+  "description": "Build-issued fixed-query pre-artifact. Export-only values are inspectable; executable readiness requires the exact closed codec profile and qualified binder.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "readiness",
+    "source",
+    "target",
+    "parameterOrder",
+    "parameters",
+    "parameterSources",
+    "outputs",
+    "obligations",
+    "template",
+    "program"
+  ],
+  "properties": {
+    "version": {
+      "const": "weft.generated-query-program/1"
+    },
+    "readiness": {
+      "enum": [
+        "export-only",
+        "weft.fixed-query-executable/1"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modelSha256",
+        "module",
+        "operation"
+      ],
+      "properties": {
+        "modelSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "modelSha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modelSha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "parameterOrder": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/parameter"
+      }
+    },
+    "parameterSources": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "obligations": {
+      "type": "object"
+    },
+    "template": {
+      "type": "object"
+    },
+    "program": {
+      "type": "object"
+    },
+    "programDigest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slot",
+        "field",
+        "declaration",
+        "carrier",
+        "nullable",
+        "codec"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "field": {
+          "type": "object"
+        },
+        "declaration": {
+          "type": "object"
+        },
+        "carrier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "codec": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "profile",
+                "inputWrapper",
+                "nativeNormalization",
+                "fieldDeclaration"
+              ],
+              "properties": {
+                "profile": {
+                  "const": "weft.query-input-codec/1"
+                },
+                "inputWrapper": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "nativeNormalization": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "fieldDeclaration": {
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "$ref": "query-codec-instructions.schema.json"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "readiness": {
+            "const": "weft.fixed-query-executable/1"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "programDigest"
+        ]
+      }
+    }
+  ]
+}

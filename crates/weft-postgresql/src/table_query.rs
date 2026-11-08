@@ -383,6 +383,50 @@ impl PreparedQuery {
         Ok(Self { admitted, template, program })
     }
     pub fn program_json(&self) -> String { self.program.to_string() }
+    /// Export the immutable output of query admission/lowering for a trusted
+    /// build pipeline. This is a pre-artifact: it carries no build receipt,
+    /// publisher identity, or installation trust claim. The final generated
+    /// execution manifest is assembled and admitted by the owning build and
+    /// host layers. Its codec instructions target the agreed VM, but this
+    /// pre-artifact qualifies only the fixed-query codec/binding profile.
+    pub fn export_generated_program_json(&self) -> Result<String> {
+        let codecs=self.admitted.generated_input_codecs()?;
+        let parameters = self.admitted.parameter_order().iter().enumerate().map(|(index, id)| {
+            let field = self.admitted.parameters().get(id).ok_or("generated query parameter absent")?;
+            Ok(json!({
+                "id": id,
+                "slot": index + 1,
+                "field": field.field,
+                "declaration": field.declaration,
+                "carrier": field.carrier,
+                "nullable": field.nullable,
+                "codec": codecs[index],
+            }))
+        }).collect::<Result<Vec<_>>>()?;
+        let program_digest=weft_core::json::sha256(weft_core::mutation::canonical(&self.program).as_bytes());
+        let artifact = json!({
+            "version": "weft.generated-query-program/1",
+            "readiness": "weft.fixed-query-executable/1",
+            "programDigest": program_digest,
+            "source": {
+                "modelSha256": self.admitted.original_source_digest(),
+                "module": self.admitted.request().module,
+                "operation": self.admitted.request().operation,
+            },
+            "target": {
+                "id": self.admitted.request().target,
+                "modelSha256": self.admitted.binding().model_sha256,
+            },
+            "parameterOrder": self.admitted.parameter_order(),
+            "parameters": parameters,
+            "parameterSources": self.program["parameterSources"],
+            "outputs": self.template["outputs"],
+            "obligations": self.template["obligations"],
+            "template": self.template,
+            "program": self.program,
+        });
+        Ok(weft_core::mutation::canonical(&artifact))
+    }
     pub fn bind_json(&self, call: &str) -> String { match bind(&self.template,&self.admitted,call) { Ok(v)=>v.to_string(),Err(e)=>json!({"status":"error","error":e}).to_string() } }
 }
 pub struct PreparedQueryModule { inner: table_query::AdmittedQueryModule }

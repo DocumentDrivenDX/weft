@@ -42,3 +42,12 @@ Arbitrary nested SQL, unrestricted graph traversal, host privilege fallback, OFF
 ## Success Metrics
 
 All six US-007 criteria have passing independent frontend, host and native adapter evidence for the released profiles. Existing 0.1 fixtures remain unchanged.
+
+## Generated ORM delivery
+
+Application-read requirements also apply to build-generated execution artifacts
+under CONTRACT-003/004. Preserve complete supported composition, exact parameters,
+entity/relationship semantics and keyset/connection behavior without a runtime
+compiler or manually captured application query catalog. Current compiler/native
+embedding evidence remains separate from compiler-free executor qualification.
+Explicit runtime model uploads use a separate authoring/admission workflow.

@@ -1,0 +1,34 @@
+import json
+import psycopg
+
+conn=psycopg.connect('host=/private/tmp/weft-v5-sock port=55439 dbname=postgres user=erik')
+conn.execute('CREATE SCHEMA plugin_demo')
+conn.execute('CREATE TABLE plugin_demo.notes (id text COLLATE "C" NOT NULL PRIMARY KEY, owner text COLLATE "C" NOT NULL)')
+conn.execute('CREATE TABLE plugin_demo."n%s" (id text COLLATE "C" NOT NULL PRIMARY KEY, owner text COLLATE "C" NOT NULL)')
+for table in ('notes','n%s'):
+    conn.execute(psycopg.sql.SQL("INSERT INTO plugin_demo.{} VALUES ('a','alice'),('b','alice'),('c','bob')").format(psycopg.sql.Identifier(table)))
+conn.commit()
+
+def run(path, table, probe):
+    artifact=json.load(open(path)); root=artifact['roots']['demo/Note']; c=root['forwardConnection']
+    select=', ' + ', '.join(f['selectSql'] for f in root['fields'].values())
+    filt='"r"."owner" COLLATE pg_catalog."C" = %s::pg_catalog.text'
+    forward=c['forward']['sqlTemplate'].replace('{{SELECT_COLUMNS}}',select).replace('{{FILTER}}',filt)
+    previous=c['previous']['sqlTemplate'].replace('{{FILTER}}',filt)
+    with conn.cursor() as cur:
+      # first=0 must still fetch one row for the first-edge probe.
+      cur.execute(forward, ('alice',None,None,1)); empty=cur.fetchall()
+      assert len(empty)==1 and empty[0][1]=='a', (path,empty)
+      # first=2 uses first+1 lookahead; all values are filter, after, after, limit.
+      cur.execute(forward, ('alice',None,None,3)); page=cur.fetchall()
+      assert [r[1] for r in page]==['a','b'],(path,page)
+      # A fresh continuation after a deleted/absent anchor uses keyset predicate.
+      cur.execute(forward, ('alice','a','a',3)); cont=cur.fetchall()
+      assert [r[1] for r in cont]==['b'],(path,cont)
+      cur.execute(previous, ('alice',None,None)); prior_false=cur.fetchone()[0]
+      cur.execute(previous, ('alice','b','b')); prior_true=cur.fetchone()[0]
+      assert prior_false is False and prior_true is True,(path,prior_false,prior_true)
+      print(json.dumps({'artifact':path,'table':table,'first0_probe_key':empty[0][1], 'first2_keys':[r[1] for r in page], 'after_a_keys':[r[1] for r in cont], 'prior_without_after':prior_false,'prior_at_b':prior_true, 'forward_sql_sha256':c['forward']['templateSha256'],'previous_sql_sha256':c['previous']['templateSha256']}))
+run('/private/tmp/weft-v5-issued.json','notes',None)
+run('/private/tmp/weft-v5-issued-percent.json','n%s',None)
+conn.close()

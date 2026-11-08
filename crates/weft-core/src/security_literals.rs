@@ -4,7 +4,7 @@ use crate::error::{Diagnostic,Result};
 use num_bigint::{BigInt,Sign};
 use serde_json::{json,Value};
 use std::collections::BTreeSet;
-const MAX_TEXT:usize=4_000_000;
+pub(crate) const MAX_TEXT:usize=4_000_000;
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-LITERAL","model","Security literal or refinement refused")}
 #[derive(Debug,Clone,PartialEq,Eq,PartialOrd,Ord)]
 pub enum ScalarLiteral{Boolean(bool),String(String),Binary(String),Number(BigInt)}
@@ -45,6 +45,36 @@ impl PreparedLiteral {
    if self.allowed.as_ref().is_some_and(|allowed|!allowed.contains(&identity)){return Err(fail());}
   }
   Ok(())
+ }
+
+ /// Export the already validated, normalized operands needed by the closed
+ /// generated query codec VM. This does not emit source text or attest to a
+ /// trusted build; it serializes only the constraints this owner has already
+ /// admitted and compiled.
+ pub fn generated_query_refinements(&self)->Result<Value>{
+  let facets=&self.base["facets"];
+  let range=if let Some(range)=facets.get("range"){
+   let min=range.get("min").map(|value|numeric(&self.base,value).map(|number|number.to_str_radix(10))).transpose()?;
+   let max=range.get("max").map(|value|numeric(&self.base,value).map(|number|number.to_str_radix(10))).transpose()?;
+   json!({
+    "minCoefficient":min,
+    "minInclusive":range.get("minInclusive").and_then(Value::as_bool).unwrap_or(true),
+    "maxCoefficient":max,
+    "maxInclusive":range.get("maxInclusive").and_then(Value::as_bool).unwrap_or(true),
+   })
+  }else{Value::Null};
+  let allowed=self.allowed.as_ref().map(|values|values.iter().map(|value|match value{
+   ScalarLiteral::Boolean(value)=>json!({"kind":"boolean","value":value}),
+   ScalarLiteral::String(value)=>json!({"kind":"string","value":value}),
+   ScalarLiteral::Binary(value)=>json!({"kind":"binaryHex","value":value}),
+   ScalarLiteral::Number(value)=>json!({"kind":"numberCoefficient","value":value.to_str_radix(10)}),
+  }).collect::<Vec<_>>());
+  Ok(json!({
+   "length":facets.get("length").cloned().unwrap_or(Value::Null),
+   "integerWidth":facets.get("integerWidth").cloned().unwrap_or(Value::Null),
+   "range":range,
+   "allowedIdentities":allowed,
+  }))
  }
 }
 pub(crate) fn coefficient(token:&str,scale:u64,precision:Option<u64>)->Result<BigInt>{

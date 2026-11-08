@@ -30,6 +30,32 @@ impl PgCarrier for Carrier {
 
 #[path="raw_read_relationships.rs"]
 mod native_relationships;
+#[path="raw_read_generated_algebra.rs"]
+mod generated_read_algebra;
+pub fn prepare_generated_read_algebra_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_json(raw)
+}
+pub fn prepare_generated_read_algebra_v2_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_v2_json(raw)
+}
+pub fn prepare_generated_read_algebra_v3_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_v3_json(raw)
+}
+pub fn prepare_generated_read_algebra_v4_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_v4_json(raw)
+}
+pub fn prepare_generated_read_algebra_v5_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_v5_json(raw)
+}
+pub fn prepare_generated_read_algebra_v6_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_v6_json(raw)
+}
+pub fn prepare_generated_read_algebra_v8_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_v8_json(raw)
+}
+pub fn prepare_generated_read_algebra_v7_json(raw: &str) -> std::result::Result<String, &'static str> {
+    generated_read_algebra::prepare_generated_read_algebra_v7_json(raw)
+}
 type Result<T> = std::result::Result<T, &'static str>;
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]

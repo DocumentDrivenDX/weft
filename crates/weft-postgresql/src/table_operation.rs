@@ -351,10 +351,10 @@ fn compile(raw: &str) -> Result<Value> {
     ));
     Ok(program)
 }
-pub fn compile_admitted(
-    operation: &table_operation::AdmittedOperation,
-    compact: bool,
-) -> Result<Value> {
+pub fn compile_admitted(operation: &table_operation::AdmittedOperation, compact: bool) -> Result<Value> {
+    compile_page(operation, compact, None)
+}
+fn compile_page(operation: &table_operation::AdmittedOperation, compact: bool, connection_size: Option<u64>) -> Result<Value> {
     let request = operation.request();
     let body = &operation.declaration()["body"];
     let kind = body["kind"].as_str().unwrap();
@@ -389,6 +389,10 @@ pub fn compile_admitted(
     if !read {
         projections.push("1 AS umf_affected".into());
     }
+    if connection_size.is_some() && (!read || body["result"] != "page") {
+        return Err("connection requires a declared page read");
+    }
+    let mut previous_query = None;
     let mut cursor = Value::Null;
     let mut frame_order = vec![];
     let sql = if read {
@@ -397,6 +401,9 @@ pub fn compile_admitted(
         if result == "page" {
             let order = body["orderBy"].as_array().unwrap();
             let fields = order.iter().map(|o| o["field"].clone()).collect::<Vec<_>>();
+            if connection_size.is_some() && fields.iter().any(|f| operation.field(f).map(|f| f.nullable).unwrap_or(true)) {
+                return Err("connection order requires non-null fields");
+            }
             cursor = json!({"key":body["cursorKey"],"fields":fields,"ordering":"declared-lexicographic-order","directions":order.iter().map(|o|o["direction"].clone()).collect::<Vec<_>>(),"requiresSourceAndPrincipalBinding":true});
             if matches!(
                 operation.call(),
@@ -452,6 +459,9 @@ pub fn compile_admitted(
                         .collect::<Vec<_>>()
                         .join(" OR ")
                 };
+                if connection_size.is_some() {
+                    previous_query = Some(format!("SELECT EXISTS (SELECT 1 FROM {relation} AS t WHERE ({predicate}) AND NOT ({compare})) AS umf_has_previous"));
+                }
                 predicate = format!("({predicate}) AND ({compare})");
             }
         }
@@ -500,7 +510,7 @@ pub fn compile_admitted(
                 } else {
                     format!(" ORDER BY {}", order.join(", "))
                 },
-                operation.max_rows() + 1
+                connection_size.unwrap_or(operation.max_rows()) + 1
             )
         }
     } else {
@@ -700,6 +710,17 @@ pub fn compile_admitted(
     if request.version == "weft.table-operation/0.2" {
         program["result"]["nativeExactValueGuard"] = json!({"profile":"pg18-row-expression-exact/0.1","sqlstate":"22012","scope":"all-direct-target-rows","nullResult":"statement-error-and-transaction-rollback","nonfiniteInput":"statement-error-and-transaction-rollback","lossyAssignment":"statement-error-and-transaction-rollback","privateResults":true});
     }
+    if let Some(size) = connection_size {
+        program["result"]["maxRows"] = json!(size);
+        program["result"]["connectionProfile"] = json!("forward-edge/1");
+        program["previous"] = if let Some(sql) = previous_query {
+            let mut previous = json!({"sql":sql,"parameterOrder":program["parameterOrder"],
+                "parameterSources":program["parameterSources"],"nativeInputs":program["nativeInputs"],
+                "nativeAfter":program["nativeAfter"]});
+            crate::dbapi::attach(&mut previous)?;
+            previous
+        } else { json!(false) };
+    }
     crate::dbapi::attach(&mut program)?;
     if let Some(native_batch) = native_batch {
         program["nativeBatch"] = native_batch;
@@ -745,6 +766,22 @@ impl PreparedOperationModule {
     }
 }
 impl PreparedOperation {
+    pub fn bind_connection_json(&self, call: &str) -> String {
+        let result = (|| {
+            if call.len() > 4_194_304 { return Err("operation invocation capacity exceeded"); }
+            let mut invocation = weft_core::json::checked_json(call).map_err(|_| "operation invocation JSON invalid or duplicate")?;
+            let zero = invocation["call"]["size"].as_u64() == Some(0);
+            if zero { invocation["call"]["size"] = json!(1); }
+            let operation = self.inner.bind_json(&invocation.to_string())?;
+            let size = if zero { 0 } else { operation.max_rows() };
+            compile_page(&operation, true, Some(size))
+        })();
+        match result {
+            Ok(program) => { let output = program.to_string();
+                if output.len() > 33_554_432 { blocked("operation program capacity exceeded") } else { output } }
+            Err(reason) => blocked(reason),
+        }
+    }
     pub fn bind_json(&self, call: &str) -> String {
         match self
             .inner

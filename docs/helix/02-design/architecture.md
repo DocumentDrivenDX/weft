@@ -169,3 +169,25 @@ evaluation and grants no native authority. Native hosts still own source/caller/
 current-cut admission, genuine and complete input custody, statement/result
 capture, retention and guarded release. This adds a conformance consumer within
 the existing pure-core/host boundary, not a connection or public query executor.
+
+## Generated ORM build/execution separation
+
+Weft's compiler composition, currently named `weft-runtime`, is a tooling library;
+its name does not make it part of a generated ORM deployment. The build consumes
+pinned UMF/bindings and emits target-specific executable programs, closed
+composition templates, exact codecs and ABI/provenance metadata. UMF composes
+those outputs with its generated API; Batten hosts execute through public ports.
+
+Deployed generated execution MUST NOT import/link compiler frontend, model
+resolution, generic backend SQL lowering or compiler-backed prepared operations.
+A qualified generated executor may select/compose build-generated fragments and
+bind inputs within the admitted algebra; no wrapper may duplicate handwritten SQL
+semantics or disguise the general compiler as a binder. The generated algebra
+retains dynamic typed expression composition without a manually captured query set.
+
+Artifact/runtime ABI is independent of compiler embedding and hosting identity.
+Local macOS/Linux, Databricks Apps and Workers share operation meaning but qualify
+their own driver/ABI, native custody and resource budgets. No full compiler
+PyEmscripten port is a prerequisite for the ordinary ORM Workers profile.
+An explicit new-model upload/authoring capability may carry the compiler; it
+verifies and admits new output before execution and is never a runtime fallback.

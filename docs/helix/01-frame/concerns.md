@@ -75,3 +75,12 @@ release of security, a new configuration/diagnostic surface, or platform expansi
 Universal dialect versus native limits: define portable logical semantics and
 refuse unsupported targets. Reuse UMF versus native embedding: share versioned
 schemas/fixtures and validation results, not a TypeScript subprocess.
+
+## Generated ORM execution boundary
+
+Preserve the single Rust semantic owner while separating compiler/tooling from
+build-generated execution. Module/import and installed-closure checks must reject
+compiler linkage, generic lowering hidden in binders and compiler services during
+ordinary ORM execution. Generated complete expression machinery and exact codecs
+retain source-owned semantics. A separately declared runtime model-upload authoring
+capability may compile, verify and admit new output; it is not an execution fallback.

@@ -100,6 +100,13 @@ fn sort_sql(order: &[OrderByExpr]) -> Result<String> {
     }).collect::<Result<Vec<_>>>().map(|parts| parts.join(", "))
 }
 
+/// Closed SQL template for compiler-free composed reads. The executor may fill
+/// only the two issuer-owned slots; the materialized guard counts the UTF-8
+/// bytes of PostgreSQL's row JSON, including the hidden ordinal.
+pub(crate) fn composed_native_frame_template() -> &'static str {
+    "WITH \"__weft_source\" AS MATERIALIZED ({{SOURCE_SQL}}), \"__weft_guard\" AS MATERIALIZED (SELECT CASE WHEN COALESCE(pg_catalog.sum(pg_catalog.octet_length(pg_catalog.convert_to(pg_catalog.row_to_json(f)::pg_catalog.text, 'UTF8'))),0) <= 8388608 THEN 1::pg_catalog.int8 ELSE 1::pg_catalog.int8 / (pg_catalog.count(*) - pg_catalog.count(*)) END AS ok FROM \"__weft_source\" AS f) SELECT {{RETURN_COLUMNS}} FROM \"__weft_source\" AS f ORDER BY f.\"__weft_ordinal\" LIMIT ALL OFFSET (SELECT 1 - ok FROM \"__weft_guard\")"
+}
+
 /// Wrap the validated, source-resolved, typed SELECT in a bounded wire frame.
 /// Authored order/limit/offset stay native and intact. `sort_order` references
 /// hidden aliases supplied by the compiler and carries exact direction, nulls,
@@ -271,6 +278,21 @@ mod tests {
         assert_eq!(program["dbapiParameterOrder"], json!(["second","first","second"]));
         assert_eq!(program["nativeDescriptionDbapiSql"], "SELECT %s::numeric AS x, %s::text AS y, '50%%'");
         assert_eq!(program["nativeDescriptionDbapiParameterOrder"], json!(["first","first"]));
+    }
+
+    #[test]
+    fn composed_native_frame_template_is_closed_and_preserves_marker_text_in_source() {
+        let template = composed_native_frame_template();
+        assert_eq!(template.matches("{{SOURCE_SQL}}").count(), 1);
+        assert_eq!(template.matches("{{RETURN_COLUMNS}}").count(), 1);
+        let (before_source, rest) = template.split_once("{{SOURCE_SQL}}").unwrap();
+        let (between_slots, after_return) = rest.split_once("{{RETURN_COLUMNS}}").unwrap();
+        let source = "SELECT 1::pg_catalog.int8 AS \"__weft_ordinal\", 'marker {{RETURN_COLUMNS}} and 50%'::pg_catalog.text AS \"__weft_field_0\"";
+        let sql = format!("{before_source}{source}{between_slots}f.\"__weft_field_0\"{after_return}");
+        assert!(sql.contains("marker {{RETURN_COLUMNS}} and 50%"));
+        assert!(sql.contains("convert_to(pg_catalog.row_to_json(f)::pg_catalog.text, 'UTF8')"));
+        assert!(sql.contains("LIMIT ALL OFFSET (SELECT 1 - ok FROM \"__weft_guard\")"));
+        Parser::parse_sql(&PostgreSqlDialect {}, &sql).unwrap();
     }
 
 }

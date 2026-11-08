@@ -45,6 +45,22 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     #[cfg(feature = "raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(compile_table_operation_json, m)?)?;
     #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_v2_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_v3_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_v4_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_v5_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_v6_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_v7_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
+    m.add_function(wrap_pyfunction!(prepare_generated_read_algebra_v8_json, m)?)?;
+    #[cfg(feature = "raw-postgresql-reads")]
     m.add_function(wrap_pyfunction!(prepare_table_operation_module_json, m)?)?;
     #[cfg(feature = "raw-postgresql-reads")]
     m.add_class::<PreparedTableOperationModule>()?;
@@ -138,7 +154,7 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     #[cfg(feature = "ashlar-databricks-implicit-arithmetic")]
     m.add_function(wrap_pyfunction!(compile_implicit_arithmetic_json, m)?)?;
-    m.add("__version__", env!("CARGO_PKG_VERSION"))?;
+    m.add("__version__", env!("CARGO_PKG_VERSION").replace("-dev.", ".dev"))?;
     Ok(())
 }
 
@@ -185,6 +201,9 @@ impl PreparedTableQuery {
         self.inner.bind_json(call)
     }
     fn program_json(&self) -> String { self.inner.program_json() }
+    fn export_generated_program_json(&self) -> PyResult<String> {
+        self.inner.export_generated_program_json().map_err(mutation_error)
+    }
 }
 #[cfg(feature = "raw-postgresql-reads")]
 #[pyfunction]
@@ -231,12 +250,55 @@ struct PreparedTableOperation { inner: weft_runtime::PreparedTableOperation }
 #[pymethods]
 impl PreparedTableOperation {
     fn bind_json(&self, call: &str) -> String { self.inner.bind_json(call) }
+    fn bind_connection_json(&self, call: &str) -> String { self.inner.bind_connection_json(call) }
 }
 #[cfg(feature = "raw-postgresql-reads")]
 #[pyfunction]
 fn prepare_table_operation_module_json(request: &str) -> PyResult<PreparedTableOperationModule> {
     let inner = weft_runtime::PreparedTableOperationModule::prepare(request).map_err(mutation_error)?;
     Ok(PreparedTableOperationModule { inner })
+}
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_json(request).map_err(mutation_error)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_v2_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_v2_json(request).map_err(mutation_error)
+}
+
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_v3_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_v3_json(request).map_err(mutation_error)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_v4_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_v4_json(request).map_err(mutation_error)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_v5_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_v5_json(request).map_err(mutation_error)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_v6_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_v6_json(request).map_err(mutation_error)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_v8_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_v8_json(request).map_err(mutation_error)
+}
+
+#[cfg(feature = "raw-postgresql-reads")]
+#[pyfunction]
+fn prepare_generated_read_algebra_v7_json(request: &str) -> PyResult<String> {
+    weft_runtime::prepare_generated_read_algebra_v7_json(request).map_err(mutation_error)
 }
 #[pymethods]
 impl MutationCompiler {

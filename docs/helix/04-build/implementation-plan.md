@@ -3019,3 +3019,90 @@ retain setup failures and the stale-success failure. These component rehearsals
 do not close fresh input custody or publication. A clean full local and hosted
 run on committed source is required next. Compiler/build source and selected
 release770137be remain unchanged.
+
+## Generated ORM compiler-free delivery
+
+The PRD generated-delivery boundary and CONTRACT-003/004 govern these additional
+slices. Preserve compiler APIs for build/authoring, including explicitly uploaded
+UMF, while removing compiler dependence from ordinary generated ORM deployment.
+No full compiler Workers embedding is on the required path.
+
+| Slice | Depends on | Deliverable and gate |
+| --- | --- | --- |
+| G0: generated ABI | Current source/binding/algebra census | Freeze versioned generated execution artifact, target/runtime ABI, trusted build provenance and package/import boundaries with UMF. Map every supported composed operation and refusal; do not reduce to sample captured queries. |
+| G1: execution generation | G0 | Emit parameterized target programs, closed query-composition templates and exact codecs/binding machinery from the original Rust owner. Deterministic fixtures and independent semantic vectors. |
+| G2: compiler-free executor | G1 | Separate executor/generated code from `weft-runtime` compiler composition. Reads/writes/bulk/search/Relay pages bind without `compile_admitted`, source resolution/recompilation or remote calls; no renamed generic compiler or handwritten duplicate lowerer. |
+| G3: artifact and native qualification | G2; UMF generated binding | Run compiler-absent installed closure, complete supported algebra and independent native corpus, drift/tamper/capacity/refusal controls; preserve native authority/publication and original-outcome obligations. |
+| G4: host consumer evidence | G3; each Batten host prerequisite | Qualify generated executor through UMF/Batten on local macOS/Linux, Databricks Apps and Workers with exact target/ABI/source cohorts. Keep historical compiler/native/browser results distinct. |
+
+### Candidate connection consumer evidence — 2026-11-05
+
+Weft `0.4.64.dev1` issues the explicit `/5` connection family; `/4` remains the
+build default. Its wheel is a build-only input, with SHA-256
+`1bdb1d68d57227629ee49111f24d6e99ad1a8281f9ec562b2fae7dca145cdf18`.
+The compiler is absent from UMF runtime dev15 / executor a7's isolated installed
+replay. That receipt covers nine Note carriers across two connection projections
+and eight through `getMany`, plus historical `/4` artifact admission. It is
+direct native API evidence, not a full generated SDK journey; see UMF's
+`docs/helix/04-build/evidence/generated-execution-v5-final-wheels-20261104/`.
+
+Batten's working-tree provider also executes Note and Task connections plus a
+Key batch on one held PostgreSQL 18.6 request pair. Its corrected PID-based
+receipt is `batten/docs/helix/04-build/evidence/local-batten-host-v5-pg18-source-20261105/`
+in the sibling repository. These local fixture observations do not close full
+ORM composition, installed Batten, Lintel/Relay or the macOS/Linux/Apps/Workers
+host matrix. G0–G4 remain open at their full stated scope.
+
+### Next bounded generated profile: Page and connection coexistence
+
+Finish the separate `/6` ordinary Page review and pure/typed/native consumer
+gates first. Then propose one additive combined algebra profile (working `/7`,
+ABI 1.7 pending issuer/verifier agreement) carrying `/5` forward connections
+and `/6` ordinary Pages from the same verified source and target in one
+generated manifest, inventory and trusted receipt. The Rust issuer reuses the
+two closed semantic payloads and preserves their distinct cursor meaning;
+it does not widen either eligible subset, mutate frozen `/5` or `/6` outputs,
+or generate runtime SQL. The new closed schema and UMF verifier check both
+descriptor support/refusal branches and shared source, Record, Key, Field and
+physical mappings. For the combined root, the `/6` issued-program digest
+normalizes only its own `ordinaryPage.continuation.fixed.issuedProgramDigest`
+feedback slot away, retaining the full `/5` descriptor and template digests in
+the canonical preimage. `/5` has no current complete-root digest slot. A second
+such slot would require a new cycle-free normalization. Inventory, algebra
+SHA-256 and receipt cover the entire combined output; changed digest bytes are
+new profile bytes, not byte-identical `/6` artifacts.
+
+Decisive installed PostgreSQL 18 evidence uses one compiler-free package,
+admitted source/artifact/runtime and Host for ordinary typed SDK initial/next/
+exhausted Pages and Lintel API3 `first=0`/interior connections, a mixed
+Note/Task/Node GraphQL operation on the Relay path, noninterchangeable tokens,
+current policy/head checks, exact
+scalars, byte guards and closed leases. Browser and Workerd replay are separate
+claims. After this coexistence gate, the next semantic increment is one
+authored required to-one inner join through the existing
+`Query.join(relationship, *, how=None)` API, with Rust-issued transition and
+fragment plus original native relationship/output metadata. Optional/left,
+multi-hop, grouped, search, action, bulk and recovery families remain open.
+The Page client must cross a separate standalone `Host.invoke` statement route
+using a closed UMF call/position mapping; the current Batten ordinary route
+only handles `GeneratedReadCallV2`. Relay retains its held request snapshot,
+and a direct native SDK Page call does not prove same-Host coexistence.
+
+### Execution contract
+
+The owner now authorizes G0–G4 implementation and required local verification.
+G0 settles concrete output/schema/package names and migration/versioning before
+dependent source work. Sol owns planning/review and Luna bounded implementation.
+Existing selected cohorts may be assembled for tests; new dependency choices,
+credentials, external applies, publication and production deployment retain their
+concrete review boundaries. Explicit authoring compilation for runtime model
+uploads remains separate from compiler-free ORM execution.
+
+### Continuation evidence and exit
+
+Record generated artifact hashes, trusted provenance, absence checks, exact
+runtime/target versions and native outcomes per slice. The historical B-series
+compiler completion remains scoped to its original artifacts. G4 requires all
+claimed generated behavior to run without any compiler closure or fallback;
+missing current host evidence leaves that host unqualified. Upgrade/rollback must
+retain compatible artifact/runtime pairs and never replay uncertain mutations.

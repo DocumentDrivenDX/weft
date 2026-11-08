@@ -1704,6 +1704,38 @@ pub fn compile_table_operation_json(request: &str) -> String {
     weft_postgresql::table_operation::compile_json(request)
 }
 #[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_v2_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_v2_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_v3_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_v3_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_v4_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_v4_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_v5_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_v5_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_v6_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_v6_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_v8_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_v8_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
+pub fn prepare_generated_read_algebra_v7_json(request: &str) -> std::result::Result<String, &'static str> {
+    weft_postgresql::raw_read::prepare_generated_read_algebra_v7_json(request)
+}
+#[cfg(feature = "raw-postgresql-reads")]
 pub struct PreparedTableOperationModule { inner: weft_postgresql::table_operation::PreparedOperationModule }
 #[cfg(feature = "raw-postgresql-reads")]
 impl PreparedTableOperationModule {
@@ -1722,6 +1754,7 @@ pub struct PreparedTableOperation { inner: weft_postgresql::table_operation::Pre
 #[cfg(feature = "raw-postgresql-reads")]
 impl PreparedTableOperation {
     pub fn bind_json(&self, call: &str) -> String { self.inner.bind_json(call) }
+    pub fn bind_connection_json(&self, call: &str) -> String { self.inner.bind_connection_json(call) }
 }
 #[cfg(feature = "raw-postgresql-reads")]
 pub fn prepare_table_query_json(request: &str) -> String {
@@ -1740,6 +1773,9 @@ impl PreparedTableQuery {
     }
     pub fn bind_json(&self, call: &str) -> String { self.inner.bind_json(call) }
     pub fn program_json(&self) -> String { self.inner.program_json() }
+    pub fn export_generated_program_json(&self) -> std::result::Result<String, &'static str> {
+        self.inner.export_generated_program_json()
+    }
 }
 #[cfg(feature = "raw-postgresql-reads")]
 pub struct PreparedTableQueryModule { inner: weft_postgresql::table_query::PreparedQueryModule }

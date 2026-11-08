@@ -37,6 +37,30 @@ fn request(id: &str) -> Value {
     };
     r
 }
+fn query_request() -> Value {
+    let mut r = request("read_many");
+    let mut model: Value = serde_json::from_str(
+        r["binding"]["modelJson"].as_str().unwrap(),
+    ).unwrap();
+    let command = model["modules"][0]["extensions"]["umf.tables"]["commands"]
+        .as_array_mut().unwrap().iter_mut()
+        .find(|command| command["id"] == "read_many").unwrap();
+    command["parameters"].as_array_mut().unwrap().push(json!({
+        "id":"note_id",
+        "field":{"module":"demo","element":"id"}
+    }));
+    command["body"] = json!({
+        "kind":"query",
+        "language":"weft.pg-select/0.1",
+        "sql":"SELECT 'fixed' AS id FROM notes WHERE id = :note_id AND owner = :owner",
+        "outputs":[{"name":"id","field":{"module":"demo","element":"id"}}],
+        "maxRows":100
+    });
+    let model_text = serde_json::to_string(&model).unwrap();
+    r["binding"]["modelSha256"] = json!(weft_core::json::sha256(model_text.as_bytes()));
+    r["binding"]["modelJson"] = json!(model_text);
+    r
+}
 fn repin(r: &mut Value, source: Value) {
     let text = serde_json::to_string(&source).unwrap();
     r["binding"]["modelJson"] = json!(text);
@@ -361,6 +385,64 @@ fn explicit_module020_admits_matching_defaults_through_all_six_native_families()
     }
 }
 
+#[test]
+fn prepared_query_exports_deterministic_generated_program_with_complete_ordered_codecs() {
+    let request = query_request();
+    let source = json!({
+        "version":"weft.table-operation-module/0.1",
+        "target":request["target"],
+        "module":request["module"],
+        "binding":request["binding"],
+    });
+    let module = weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &source.to_string(),
+    ).unwrap();
+    let query = module.prepare_query("read_many").unwrap();
+    let artifact_text = query.export_generated_program_json().unwrap();
+    let artifact: Value = serde_json::from_str(&artifact_text).unwrap();
+
+    assert_eq!(artifact["version"], "weft.generated-query-program/1");
+    assert_eq!(artifact["readiness"], "weft.fixed-query-executable/1");
+    assert_eq!(artifact["source"]["modelSha256"], request["binding"]["modelSha256"]);
+    assert_eq!(artifact["target"]["modelSha256"], request["binding"]["modelSha256"]);
+    assert_eq!(artifact["source"]["module"], "demo");
+    assert_eq!(artifact["source"]["operation"], "read_many");
+    assert_eq!(artifact["parameterOrder"], json!(["note_id", "owner"]));
+    assert_eq!(artifact["parameters"].as_array().unwrap().len(), 2);
+    assert_eq!(artifact["parameters"][0]["slot"], 1);
+    assert_eq!(artifact["parameters"][0]["id"], "note_id");
+    assert_eq!(artifact["parameters"][0]["carrier"], "string");
+    assert_eq!(artifact["parameters"][0]["nullable"], false);
+    assert_eq!(artifact["parameters"][0]["declaration"],
+        request["binding"]["modelJson"]
+            .as_str().and_then(|raw| serde_json::from_str::<Value>(raw).ok())
+            .unwrap()["modules"][0]["elements"][0]);
+    assert_eq!(artifact["parameters"][1]["slot"], 2);
+    assert_eq!(artifact["parameters"][1]["id"], "owner");
+    assert_eq!(artifact["parameters"][1]["declaration"],
+        request["binding"]["modelJson"]
+            .as_str().and_then(|raw| serde_json::from_str::<Value>(raw).ok())
+            .unwrap()["modules"][0]["elements"][1]);
+    assert_eq!(artifact["parameters"][0]["codec"]["profile"], "weft.query-codec-instructions/1");
+    assert_eq!(artifact["parameters"][0]["codec"]["steps"][0], json!({"op":"require-exact-wrapper","wrapper":"string","nullable":false}));
+    assert_eq!(artifact["parameters"][0]["codec"]["steps"][1], json!({"op":"parse-carrier","carrier":"string","profile":"weft.string/1","scale":null,"precision":null,"maxTokenBytes":null}));
+    assert_eq!(artifact["parameters"][0]["codec"]["steps"][2], json!({"op":"check-refinements","carrier":"string","length":null,"integerWidth":null,"range":null,"allowedIdentities":null}));
+    assert_eq!(artifact["parameters"][0]["codec"]["steps"][3], json!({"op":"normalize-native-query-value","carrier":"string","mode":"identity"}));
+    assert_eq!(artifact["parameterSources"], artifact["program"]["parameterSources"]);
+    assert!(!artifact["template"]["sql"].as_str().unwrap().contains(":owner"));
+    assert!(artifact["template"]["sql"].as_str().unwrap().contains("$1::pg_catalog.text"));
+    assert_eq!(artifact["program"], serde_json::from_str::<Value>(&query.program_json()).unwrap());
+    assert_eq!(artifact["programDigest"],weft_core::json::sha256(weft_core::mutation::canonical(&artifact["program"]).as_bytes()));
+    assert_eq!(artifact_text, query.export_generated_program_json().unwrap());
+
+    let bound: Value = serde_json::from_str(&query.bind_json(
+        &json!({"inputs":{"owner":{"string":"alice"},"note_id":{"string":"n1"}}}).to_string(),
+    )).unwrap();
+    assert_eq!(bound["nativeInputs"][0]["owner"], "alice");
+    assert_eq!(bound["nativeInputs"][0]["note_id"], "n1");
+    assert_eq!(artifact["parameterSources"][0]["source"]["parameter"], "note_id");
+    assert_eq!(artifact["parameterSources"][1]["source"]["parameter"], "owner");
+}
 #[test]
 fn source_original_sql_is_not_a_request_surface_and_legacy_guards_stay_closed() {
     let mut r = request("read_many");
@@ -1560,4 +1642,32 @@ fn g02_intrinsic_null_types_and_null_safe_comparisons_remain_closed() {
             assert!(sql.contains("NOT (("), "{sql}");
         }
     }
+}
+
+#[test]
+fn connection_binding_is_additive_bounded_and_issues_exact_previous_probe() {
+    let r = request("read_page");
+    let module = weft_postgresql::table_operation::PreparedOperationModule::prepare(
+        &json!({"version":"weft.table-operation-module/0.1","target":r["target"],
+                "binding":r["binding"],"module":r["module"]}).to_string()).unwrap();
+    let page = module.prepare_operation("read_page").unwrap();
+    let zero = json!({"call":{"kind":"single","inputs":r["call"]["inputs"],"size":0}});
+    let ordinary: Value = serde_json::from_str(&page.bind_json(&zero.to_string())).unwrap();
+    assert_eq!(ordinary["status"], "blocked");
+    let zero: Value = serde_json::from_str(&page.bind_connection_json(&zero.to_string())).unwrap();
+    assert_eq!(zero["status"], "compiled");
+    assert_eq!(zero["result"]["maxRows"], 0);
+    assert_eq!(zero["result"]["connectionProfile"], "forward-edge/1");
+    assert_eq!(zero["previous"], false);
+    assert!(zero["sql"].as_str().unwrap().contains("LIMIT 1"));
+    let after = json!({"call":{"kind":"single","inputs":r["call"]["inputs"],"size":2,
+                               "after":[{"string":"n1"}]}});
+    let bound: Value = serde_json::from_str(&page.bind_connection_json(&after.to_string())).unwrap();
+    assert_eq!(bound["status"], "compiled");
+    assert!(bound["previous"]["dbapiSql"].as_str().unwrap().contains("AND NOT"));
+    assert!(bound["previous"]["sql"].as_str().unwrap().contains("EXISTS"));
+    assert_eq!(bound["previous"]["nativeAfter"], bound["nativeAfter"]);
+    let other = module.prepare_operation("read_many").unwrap();
+    let refused: Value = serde_json::from_str(&other.bind_connection_json(&json!({"call":r["call"]}).to_string())).unwrap();
+    assert_eq!(refused["status"], "blocked");
 }

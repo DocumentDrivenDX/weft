@@ -1,0 +1,11 @@
+file:///Users/erik/Projects/weft/docs/helix/04-build/evidence/generated-ordinary-page-v6-correction-2-20261105/validate-native-types.mjs:20
+  if (validateOutput(x.output)) throw new Error(`schema accepted ${label}`);
+                                      ^
+
+Error: schema accepted bytea carrier drift
+    at file:///Users/erik/Projects/weft/docs/helix/04-build/evidence/generated-ordinary-page-v6-correction-2-20261105/validate-native-types.mjs:20:39
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:105:5)
+
+Node.js v26.12.1

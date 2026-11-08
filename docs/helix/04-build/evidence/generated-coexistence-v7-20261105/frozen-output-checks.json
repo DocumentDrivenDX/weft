@@ -1,0 +1,11 @@
+{
+  "frozenV5": {
+    "sha256": "a57c5aa63276b7b41f48c4b37b20da16db1a10de0ed4a6939d56ebf7405a940d",
+    "bytes": 20377
+  },
+  "frozenV6": {
+    "sha256": "c07e0fefb5763235af066578fc750b810c97b8d382c74260ea476257b777590f",
+    "bytes": 28659
+  },
+  "comparison": "installed .66 output strings exactly equal the retained source vectors"
+}
