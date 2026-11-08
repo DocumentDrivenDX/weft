@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import Ajv from 'ajv/dist/2020.js';
+const base='docs/helix/02-design/contracts/';
+const ajv=new Ajv({strict:false,allErrors:true});
+for(const file of ['query-codec-instructions.schema.json','generated-ordinary-page.schema.json']) ajv.addSchema(JSON.parse(fs.readFileSync(base+file,'utf8')));
+const validate=ajv.compile(JSON.parse(fs.readFileSync(base+'generated-read-algebra-v6.schema.json','utf8')));
+const wheel=JSON.parse(fs.readFileSync('docs/helix/04-build/evidence/generated-ordinary-page-v6-wheel-20261105/wheel-issued-v6.json','utf8'));
+if(!validate(wheel)) throw new Error(JSON.stringify(validate.errors));
+const changed=structuredClone(wheel); delete changed.roots['demo/Note'].ordinaryPage.page.fieldOutputs[0].output.nativeType;
+if(validate(changed)) throw new Error('accepted omitted output nativeType');
+console.log('PASS: wheel-issued /6 instance validates against Sol-accepted current schema; nativeType omission refused.');

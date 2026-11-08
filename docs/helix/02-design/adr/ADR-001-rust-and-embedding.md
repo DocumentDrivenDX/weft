@@ -59,3 +59,18 @@ same core; do not weaken FR-10 silently. Versions/OS/browser matrix remain open.
 ## B-001 evidence and decision
 
 [Execution evidence](../../04-build/evidence/B-001-native-python-browser.md) records shared-source Rust/Python/browser byte parity across 597 scenarios, exact values and explicit refusals. Proceed to B-002 with one Rust core and thin bindings. This decision establishes an implementation direction; it does not accept the draft public contracts or assert full UMF, language, backend or wheel-matrix conformance. Parser acceptance still requires Weft-specific gating.
+
+## Generated ORM consumers
+
+Keep one Rust owner for compiler and generation semantics. Native Python and
+browser compiler embeddings remain build/authoring surfaces; generated ORM
+applications deploy without that compiler closure. Build-generated expression
+machinery and exact codecs may execute within a separately versioned lightweight
+runtime, without importing parser/model resolution/general SQL lowering. Do not
+ship a renamed compiler or introduce a second handwritten semantic implementation.
+
+Runtime compilation is justified only by an explicitly declared workflow needing
+source unavailable beforehand, such as uploaded UMF. It produces verified artifacts
+for explicit admission; normal generated ORM calls have no implicit local or remote
+compiler path. Workers qualification targets the generated executor, not mandatory
+packaging of the complete PyO3 compiler for Pyodide.

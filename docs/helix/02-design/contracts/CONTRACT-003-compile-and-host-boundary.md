@@ -575,3 +575,31 @@ shadowing at opening and closing. Hosts still own genuine source/caller/cut,
 Delta identity/version/schema, complete eligible populations, policy/action
 decisions, finite capture and guarded release. Local fixture custody is not
 Unity Catalog or security admission.
+
+## Generated execution artifact boundary
+
+For UMF ORM consumers, `compile_json` and source/program recompilation checkers
+are build/authoring APIs. The compiler MUST generate target-specific execution
+artifacts and the supported schema-specific composition/binding machinery so
+ordinary deployed reads, actions, bulk and recovery do not call these APIs.
+
+Build output MUST bind exact original UMF/unknown content and binding digests,
+compiler/generator identity, target/capability profile, generated code/template
+inventory, typed parameter/result codecs, native obligations, finite bounds and
+execution ABI. Trusted build verification covers semantic source-to-output
+correspondence; an artifact self-hash is not provenance or authority. The successor
+artifact format/ABI must be frozen before implementation without silently changing
+existing compile protocol versions or relabeling old evidence.
+
+The generated executor MAY select and combine generated closed fragments within
+its admitted query algebra and bind values. It MUST NOT parse arbitrary SQL/UMF,
+resolve new model meaning, invoke generic lowering or call a compiler service.
+All supported composed expressions must work; a finite captured query list cannot
+replace the common ORM API. Unknown operators and stale target/ABI refuse before
+effects, not trigger compilation. Exact input values never become SQL syntax.
+
+Deployment verifies trusted provenance, integrity and target/runtime compatibility
+without recompilation, then enforces current native obligations. Build verifiers
+remain available to tooling and separately declared ingestion of new UMF; upload
+outputs need verification and explicit admission before execution. That capability
+cannot be activated by ordinary generated ORM requests.

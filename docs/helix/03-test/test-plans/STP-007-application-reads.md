@@ -35,3 +35,13 @@ Parser/model/IR and independent bag/presence/key-order oracle first; same reques
 ## Current acceptance determination
 
 The [30-criterion matrix](../../04-build/evidence/B-007-acceptance-matrix.json) records this story's passing P0 assertions, covering evidence and exact limits. Both current-source workspace compositions pass; qualified native compiler and actual Python/browser correspondence are separately retained. Historical component observations remain scoped to their recorded revisions. Distribution and production execution are separately qualified; the final CI/review/merge gates remain open.
+
+## Generated execution replay
+
+Replay the existing US-007 acceptance inputs and expected outcomes against the
+compiler-free generated executor under TP-001 GEN-01–05. The compiler may produce
+test/build artifacts, but must be absent from the executor's package/binary/service
+closure. Extend composition/property cases to cover the entire claimed algebra,
+not only captured queries. Native policy, exact paging and Relay connection
+obligations remain separate current-host acceptance; old compiler results cannot
+be relabeled as this new execution evidence.

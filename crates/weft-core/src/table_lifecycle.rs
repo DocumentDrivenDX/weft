@@ -72,6 +72,111 @@ fn digest(value: &str) -> bool {
 fn query_name(value: &Value) -> Option<&str> {
     value["name"].as_str().or_else(|| value["id"].as_str())
 }
+fn exact_object(value: &Value, keys: &[&str]) -> bool {
+    value.as_object().is_some_and(|object| {
+        object.len() == keys.len() && keys.iter().all(|key| object.contains_key(*key))
+    })
+}
+fn known_access_shape(doc: &Value, module: &Value) -> bool {
+    let access = &module["extensions"]["umf.access"];
+    doc["vocabularies"]["umf.access"]["version"] == "0.1.0"
+        && exact_object(access, &["views", "columns", "search", "searchBindings"])
+        && access["views"].as_array().is_some_and(|views| !views.is_empty())
+        && access["columns"].as_array().is_some_and(Vec::is_empty)
+        && access["search"].as_array().is_some_and(Vec::is_empty)
+        && access["searchBindings"].as_array().is_some_and(Vec::is_empty)
+}
+fn known_access_view(
+    access: &Value,
+    module: &str,
+    record: &Value,
+    table: &Value,
+    elements: &[Value],
+) -> bool {
+    let Some(views) = access["views"].as_array() else {
+        return false;
+    };
+    if record["id"].as_str().is_none() {
+        return false;
+    }
+    let matching = views
+        .iter()
+        .filter(|view| {
+            view["record"]["module"] == module && view["record"]["element"] == record["id"]
+        })
+        .collect::<Vec<_>>();
+    if matching.len() != 1 {
+        return false;
+    }
+    let view = matching[0];
+    if !exact_object(view, &["record", "fields", "selectedKey"])
+        || !exact_object(&view["record"], &["module", "element"])
+        || !exact_object(&view["selectedKey"], &["module", "element", "key"])
+        || view["record"]["module"] != module
+        || view["record"]["element"] != record["id"]
+        || view["selectedKey"]["module"] != module
+        || view["selectedKey"]["element"] != record["id"]
+    {
+        return false;
+    }
+    let Some(fields) = view["fields"].as_array() else {
+        return false;
+    };
+    let Some(members) = record["members"].as_array() else {
+        return false;
+    };
+    if fields.len() != members.len() {
+        return false;
+    }
+    let Some(columns) = table["columns"].as_array() else {
+        return false;
+    };
+    for (field, member) in fields.iter().zip(members) {
+        let field_ref = &field["field"];
+        let source_field = elements.iter().find(|element| {
+            element["kind"] == "field"
+                && element["id"] == field_ref["element"]
+                && field_ref["module"] == module
+        });
+        let native_columns = columns
+            .iter()
+            .filter(|column| column.get("field") == Some(member))
+            .collect::<Vec<_>>();
+        let timestamp = source_field.is_some_and(|source| source["scalarType"] == "timestamp");
+        let temporal_matches = if timestamp {
+            exact_object(
+                field,
+                &["field", "row", "create", "mutable", "generated", "temporal"],
+            ) && field["temporal"] == "instant"
+                && native_columns.len() == 1
+                && native_columns[0]["nativeType"]["kind"] == "timestamptz"
+        } else {
+            exact_object(field, &["field", "row", "create", "mutable", "generated"])
+                && !field.as_object().is_some_and(|object| object.contains_key("temporal"))
+        };
+        if !temporal_matches
+            || !exact_object(&field["field"], &["module", "element"])
+            || !exact_object(&field["row"], &["missing", "null"])
+            || !exact_object(&field["create"], &["missing", "null"])
+            || field.get("field") != Some(member)
+            || field["mutable"].as_bool().is_none()
+            || field["generated"].as_bool().is_none()
+            || field["row"]["missing"].as_bool().is_none()
+            || field["row"]["null"].as_bool().is_none()
+            || field["create"]["missing"].as_bool().is_none()
+            || field["create"]["null"].as_bool().is_none()
+        {
+            return false;
+        }
+    }
+    let Some(primary) = record["keys"]
+        .as_array()
+        .and_then(|keys| keys.iter().find(|key| key["primary"] == true))
+    else {
+        return false;
+    };
+    view["selectedKey"]["key"] == primary["id"]
+}
 impl AdmittedLifecycle {
     pub fn obligation(&self, selected: &BTreeSet<Vec<String>>) -> Result<Value> {
         let tables = selected
@@ -145,9 +250,14 @@ fn admit_profile(binding:&Binding,doc:&Value,records:&BTreeMap<Vec<String>,crate
         .enumerate()
         .find(|(_, m)| m["id"] == context.module)
         .ok_or("native module absent")?;
-    if module["extensions"]
-        .as_object()
-        .is_none_or(|m| m.len() != 1)
+    let extension_shape = module["extensions"].as_object().is_some_and(|extensions| {
+        (extensions.len() == 1 && extensions.contains_key("umf.tables"))
+            || (extensions.len() == 2
+                && extensions.contains_key("umf.tables")
+                && extensions.contains_key("umf.access")
+                && known_access_shape(doc, module))
+    });
+    if !extension_shape
         || doc["vocabularies"]["umf.tables"]["version"] != "0.1.0"
     {
         return Err("native table lifecycle selected vocabulary composition unsupported");
@@ -166,6 +276,17 @@ fn admit_profile(binding:&Binding,doc:&Value,records:&BTreeMap<Vec<String>,crate
     if declared.len() != binding.tables.len() {
         return Err("complete native module binding inventory required");
     }
+    if let Some(access) = module["extensions"].get("umf.access") {
+        let views = access["views"].as_array().ok_or("native table access views absent")?;
+        if views.len() != declared.len()
+            || declared.iter().any(|table| {
+                let record = &table["record"];
+                views.iter().filter(|view| view.get("record") == Some(record)).count() != 1
+            })
+        {
+            return Err("native table access views differ from complete table inventory");
+        }
+    }
     let elements = module["elements"]
         .as_array()
         .ok_or("native module elements absent")?;
@@ -180,6 +301,11 @@ fn admit_profile(binding:&Binding,doc:&Value,records:&BTreeMap<Vec<String>,crate
             .iter()
             .find(|e| e["id"] == table["record"]["element"] && e["kind"] == "record")
             .ok_or("native source Record absent")?;
+        if module["extensions"].get("umf.access").is_some_and(|access| {
+            !known_access_view(access, &context.module, record, table, elements)
+        }) {
+            return Err("native table access view composition unsupported");
+        }
         if record["extensions"]
             .as_object()
             .is_none_or(|v| !v.is_empty())
@@ -400,6 +526,37 @@ fn admit_profile(binding:&Binding,doc:&Value,records:&BTreeMap<Vec<String>,crate
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn access_temporal_is_exactly_instants_on_timestamptz_columns() {
+        let record = json!({"id":"Event","members":[{"module":"demo","element":"id"},{"module":"demo","element":"observed"}],"keys":[{"id":"primary","primary":true}]});
+        let elements = vec![
+            json!({"id":"id","kind":"field","scalarType":"string"}),
+            json!({"id":"observed","kind":"field","scalarType":"timestamp"}),
+        ];
+        let table = json!({"columns":[
+            {"field":{"module":"demo","element":"id"},"nativeType":{"kind":"text"}},
+            {"field":{"module":"demo","element":"observed"},"nativeType":{"kind":"timestamptz"}}
+        ]});
+        let access = json!({"views":[{"record":{"module":"demo","element":"Event"},"selectedKey":{"module":"demo","element":"Event","key":"primary"},"fields":[
+            {"field":{"module":"demo","element":"id"},"row":{"missing":false,"null":false},"create":{"missing":false,"null":false},"mutable":false,"generated":false},
+            {"field":{"module":"demo","element":"observed"},"row":{"missing":false,"null":false},"create":{"missing":false,"null":false},"mutable":false,"generated":false,"temporal":"instant"}
+        ]}]});
+        assert!(known_access_view(&access, "demo", &record, &table, &elements));
+
+        let mut local = access.clone();
+        local["views"][0]["fields"][1]["temporal"] = json!("local");
+        assert!(!known_access_view(&local, "demo", &record, &table, &elements));
+        let mut missing = access.clone();
+        missing["views"][0]["fields"][1]
+            .as_object_mut()
+            .unwrap()
+            .remove("temporal");
+        assert!(!known_access_view(&missing, "demo", &record, &table, &elements));
+        let mut physical = table.clone();
+        physical["columns"][1]["nativeType"]["kind"] = json!("timestamp");
+        assert!(!known_access_view(&access, "demo", &record, &physical, &elements));
+    }
 
     #[test]
     fn related_association_source_is_closed_without_inventing_a_foreign_key() {

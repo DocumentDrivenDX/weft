@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/erik/Projects/weft/docs/helix/04-build/evidence/generated-ordinary-page-v6-wheel-20261105/verify-wheel.py", line 14, in <module>
+    assert out6 == expected6, 'wheel /6 output differs from accepted source vector'
+AssertionError: wheel /6 output differs from accepted source vector

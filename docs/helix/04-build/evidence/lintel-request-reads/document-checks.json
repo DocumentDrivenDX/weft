@@ -1,0 +1,189 @@
+{
+  "documents": [
+    {
+      "repo": "umf",
+      "path": "docs/helix/02-design/architecture.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": true
+    },
+    {
+      "repo": "umf",
+      "path": "docs/helix/02-design/contracts/CONTRACT-079-unified-python-access.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": true
+    },
+    {
+      "repo": "umf",
+      "path": "docs/helix/README.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": true
+    },
+    {
+      "repo": "umf",
+      "path": "docs/helix/02-design/request-reads.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": false
+    },
+    {
+      "repo": "umf",
+      "path": "docs/helix/04-build/lintel-request-reads.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": false
+    },
+    {
+      "repo": "weft",
+      "path": "docs/helix/02-design/contracts/CONTRACT-004-application-reads.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": true
+    },
+    {
+      "repo": "weft",
+      "path": "docs/helix/04-build/lintel-request-reads.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": false
+    },
+    {
+      "repo": "lintel",
+      "path": "docs/helix/02-design/upstream-changes.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": true
+    },
+    {
+      "repo": "lintel",
+      "path": "docs/helix/04-build/request-read-implementation.md",
+      "newBrokenLinks": 0,
+      "existingFrontmatterPreserved": false
+    }
+  ],
+  "contracts": [
+    {
+      "repo": "umf",
+      "path": "docs/helix/02-design/contracts/CONTRACT-079-unified-python-access.md",
+      "exitCode": 1,
+      "result": {
+        "instance": "/Users/erik/.codex/worktrees/7076/umf/docs/helix/02-design/contracts/CONTRACT-079-unified-python-access.md",
+        "type": "contract",
+        "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
+        "findings": [
+          {
+            "severity": "blocking",
+            "check": "required_sections.purpose",
+            "message": "required section 'purpose' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.scope_and_boundaries",
+            "message": "required section 'scope_and_boundaries' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.normative_surface",
+            "message": "required section 'normative_surface' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.precedence_and_compatibility",
+            "message": "required section 'precedence_and_compatibility' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.error_semantics",
+            "message": "required section 'error_semantics' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.examples",
+            "message": "required section 'examples' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "warning",
+            "check": "placeholder.bracket_token",
+            "message": "possible template token '[Row]'",
+            "line": 451
+          },
+          {
+            "severity": "warning",
+            "check": "placeholder.bracket_token",
+            "message": "possible template token '[Row]'",
+            "line": 452
+          }
+        ],
+        "summary": {
+          "blocking": 6,
+          "warning": 2,
+          "info": 0
+        }
+      },
+      "baselineBlocking": 6,
+      "introducedBlocking": 0
+    },
+    {
+      "repo": "weft",
+      "path": "docs/helix/02-design/contracts/CONTRACT-004-application-reads.md",
+      "exitCode": 1,
+      "result": {
+        "instance": "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-004-application-reads.md",
+        "type": "contract",
+        "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.20.0/workflows/activities",
+        "findings": [
+          {
+            "severity": "blocking",
+            "check": "required_sections.purpose",
+            "message": "required section 'purpose' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.scope_and_boundaries",
+            "message": "required section 'scope_and_boundaries' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.normative_surface",
+            "message": "required section 'normative_surface' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.precedence_and_compatibility",
+            "message": "required section 'precedence_and_compatibility' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.error_semantics",
+            "message": "required section 'error_semantics' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "blocking",
+            "check": "required_sections.examples",
+            "message": "required section 'examples' is not an H2 in the instance",
+            "line": null
+          },
+          {
+            "severity": "warning",
+            "check": "delivery_history",
+            "message": "Keep repository-history citations in source control or the runtime tracker",
+            "line": 18
+          }
+        ],
+        "summary": {
+          "blocking": 6,
+          "warning": 1,
+          "info": 0
+        }
+      },
+      "baselineBlocking": 6,
+      "introducedBlocking": 0
+    }
+  ],
+  "qualification": "New links resolve and frontmatter retained; 0 introduced contract blockers. Both existing contracts retain 6 pre-existing template-heading findings; no full-template conformance claim."
+}

@@ -345,8 +345,10 @@ ON CONFLICT add their actual SELECT privilege/policy requirements.
 Compilation authenticates no native deployment or person/batch role. Programs
 retain original request/source, declaration and invocation digests, complete
 transaction/replay/cursor obligations and `nativeExecutionQualified:false`.
-Full source recompilation checks a program; a self-rehashed digest alone is no
-proof. Native ledger/current generation, effective privileges, forced RLS,
+Build/authoring source recompilation checks source-to-program correspondence; a
+self-rehashed digest alone is no proof. Ordinary deployment consumes trusted
+verified generated artifacts without recompilation. Native ledger/current generation,
+effective privileges, forced RLS,
 policy/principal scope, atomic durable receipts and host transaction execution
 remain mandatory before admitting a generated operation. No release or full
 Praxis support follows from compiler acceptance alone.
@@ -496,3 +498,37 @@ before execution and retain native authority/constraint/writer exclusion plus
 atomic migration data/DDL/progress. This compiler program remains
 `nativeExecutionQualified:false`; storage qualification belongs to the exact
 installed native cohort. No managed, online or other-backend claim follows.
+
+## Declared page connection compilation
+
+Prepared native table operations add `bind_connection_json(invocation)`, retaining
+the existing closed invocation shape. It MUST refuse non-page, mutation, batch or
+unknown source meaning. It produces the existing bounded page program plus
+`result.connectionProfile = forward-edge/1` and `previous` evidence. First=0 is
+admitted only by this entrypoint; ordinary binding keeps its nonzero bounds.
+
+`previous` is false without an after position, otherwise a compiler-owned
+parameterized EXISTS query over the identical declared predicate and the complement
+of the after-position comparator. Native policy applies to both. Its DBAPI order
+is compiler-issued. The host MUST execute both statements in one qualified native
+read view, preserving current admission separately. These are execution artifacts,
+not a new model-description schema. Rust is the sole lowering implementation.
+Legacy compiler output is unchanged. No runtime permission or database connection
+is issued by compilation. PostgreSQL native evidence is required before claiming
+this connection profile; Python and native Rust share the same implementation.
+
+## Generated execution for ORM consumers
+
+CONTRACT-003's generated execution boundary covers raw table reads/writes, composed
+queries, bulk and `forward-edge/1` connection pages. The build emits parameterized
+programs and complete supported composition/binding machinery; deployment does
+not call prepared compiler APIs, including `bind_connection_json` implementations
+that lower SQL on invocation. Existing prepared compiler entrypoints remain tooling
+interfaces and their evidence is not compiler-free execution evidence.
+
+Preserve zero-size connection semantics, arbitrary/interior/terminal continuation,
+parameter occurrence order, previous-position probes and one native read view.
+Current source/head/principal/policy and receipt obligations remain live and consume
+admitted metadata. Native model drift requires regeneration/readmission; runtime
+page values and batch sizes use generated binding rules rather than recompilation.
+Explicit uploaded UMF uses separate authoring compilation and output admission.

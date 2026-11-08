@@ -136,3 +136,13 @@ now has reviewed native-class custody and data-correspondence evidence. It keeps
 the original preparation alive and rejects cross-profile objects and imported
 reports. Its [qualified local wheel evidence](04-build/evidence/current-presence-bridge-20261016/README.md)
 adds no default feature, public release, WASM bridge or native execution authority.
+
+## Compiler-free generated ORM delivery
+
+The [generated-delivery plan](04-build/implementation-plan.md#generated-orm-compiler-free-delivery)
+keeps Weft compilation/generation in build/authoring and emits the complete
+supported execution algebra for UMF consumers. Ordinary ORM deployment needs
+no compiler, including for bulk and Relay paging. Explicit uploaded-UMF workflows
+may compile separately, then verify and admit output. CONTRACT-003/004 and
+TP-001 define the new artifact and compiler-absence qualification boundary;
+existing compiler evidence does not establish its implementation.

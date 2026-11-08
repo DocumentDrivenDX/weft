@@ -1248,6 +1248,43 @@ fn exact_object_keys(value: &Json, required: &[&str], optional: &[&str]) -> bool
     })
 }
 
+/// Build-only admission for SQL fragments produced by the PostgreSQL
+/// generated-read issuer. It validates the full original table-operation
+/// source in seed mode and accepts no caller-supplied SQL at the public seam.
+pub fn admit_generated_read(
+    target: String,
+    binding: Binding,
+    sql: String,
+    parameters: Vec<Parameter>,
+    row_cap: u16,
+) -> Result<AdmittedRead> {
+    if !matches!(target.as_str(), "postgresql18" | "lakebase18")
+        || !(1..=1000).contains(&row_cap)
+        || sql.len() > 65536
+        || parameters.len() > 1
+    { return Err("generated read request outside issuer profile"); }
+    let model = prepare_seed_model(&binding)?;
+    let mut statements = Parser::parse_sql(&PostgreSqlDialect {}, &sql)
+        .map_err(|_| "generated read SQL parse refused")?;
+    if statements.len() != 1 { return Err("generated read needs one SELECT"); }
+    let Statement::Query(query) = statements.remove(0) else { return Err("generated read needs one SELECT"); };
+    let request = Request {
+        version: "weft.raw-read/0.1".into(),
+        temporal_profile: None,
+        target,
+        sql,
+        binding,
+        parameters,
+        row_cap,
+        verification_profile: Some("table-lifecycle/0.1".into()),
+        snapshots: None,
+        keyset: false,
+        stream_page_size: false,
+        snapshot: false,
+    };
+    Ok(AdmittedRead { request, query: *query, model })
+}
+
 #[cfg(test)]
 mod source_identity_tests {
     use super::*;

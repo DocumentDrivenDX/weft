@@ -204,3 +204,22 @@ safe stage evidence and explicit capture loss without credential/value leakage;
 local records alone claim no OpenTelemetry receiver integration or production
 retention. No renewed scale experiment is required for these finite semantic
 and representation-bound controls.
+
+## Generated ORM execution allocation
+
+The PRD generated-delivery boundary and CONTRACT-003/004 require a new separately
+qualified output profile. Reuse the existing exact-value, table-operation, paging,
+mutation and refusal corpora; do not infer this support from compiler parity.
+
+| Criterion | Primary layer | Required result |
+| --- | --- | --- |
+| GEN-01 generation/provenance | Rust generation and artifact conformance | Deterministic source/binding/target/ABI pins and trusted source-to-output verification; tampered or unknown selected meaning refuses. |
+| GEN-02 complete generated algebra | Property/differential corpus plus independent native oracle | Composed predicates/joins/projections/aggregates/search/paging/bulk preserve existing supported behavior without mandatory capture. Compiler reference runs only in the build/test environment. |
+| GEN-03 absent compiler | Installed executor integration | Generated operations work with compiler libraries/binaries/embedded compiler engines absent and compiler endpoints unavailable; negative controls detect eager/lazy linkage, general lowering and remote fallback. |
+| GEN-04 native effects and connections | Existing PostgreSQL/Databricks host corpus | Exact values, policy/publication obligations, maxItems rollback, receipts and cancellation remain unchanged; Relay zero/interior/terminal/deleted-position behavior retains one read view. |
+| GEN-05 universal host consumers | UMF/Batten installed and deployed acceptance | Native macOS/Linux, Databricks Apps and Workers bind the same operation meaning through qualified target-specific executors; compiler WASM evidence cannot qualify Workers execution. |
+| GEN-06 explicit upload workflow | Ingestion/admission integration | Newly available UMF compiles only in declared authoring, then output verifies/readmits; normal ORM misses never invoke it. |
+
+Fix exact schema/ABI, suite ownership and runner commands in the first plan slice
+before dependent source work. Resource budgets and cross-host support remain
+unmeasured until executed. No planned criterion is a passing result.

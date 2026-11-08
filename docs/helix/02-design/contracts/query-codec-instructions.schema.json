@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:query-codec-instructions:1",
+  "title": "Weft issued exact query input codec instructions",
+  "description": "Closed instruction structure. Cross-step carrier/profile agreement and exact source parity require semantic verification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile", "steps"],
+  "properties": {
+    "profile": {"const": "weft.query-codec-instructions/1"},
+    "steps": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {"$ref": "#/$defs/wrapper"},
+        {"$ref": "#/$defs/parser"},
+        {"$ref": "#/$defs/refinements"},
+        {"$ref": "#/$defs/normalize"}
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "wrapper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "wrapper", "nullable"],
+      "properties": {
+        "op": {"const": "require-exact-wrapper"},
+        "wrapper": {"enum": ["boolean", "string", "floatToken", "integerToken", "decimalToken"]},
+        "nullable": {"type": "boolean"}
+      }
+    },
+    "parser": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "carrier", "profile", "scale", "precision", "maxTokenBytes"],
+      "properties": {
+        "op": {"const": "parse-carrier"},
+        "carrier": {"enum": ["boolean", "string", "float", "integer", "decimal"]},
+        "profile": {"enum": ["weft.boolean/1", "weft.string/1", "weft.finite-ascii-f64-token/1", "weft.exact-coefficient/1"]},
+        "scale": {"type": ["integer", "null"], "minimum": 0},
+        "precision": {"type": ["integer", "null"], "minimum": 0},
+        "maxTokenBytes": {"type": ["integer", "null"], "minimum": 1}
+      }
+    },
+    "refinements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "carrier", "length", "integerWidth", "range", "allowedIdentities"],
+      "properties": {
+        "op": {"const": "check-refinements"},
+        "carrier": {"enum": ["boolean", "string", "float", "integer", "decimal"]},
+        "length": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/length"}]},
+        "integerWidth": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/width"}]},
+        "range": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/range"}]},
+        "allowedIdentities": {"oneOf": [{"type": "null"}, {"type": "array", "items": {"$ref": "#/$defs/identity"}}]}
+      }
+    },
+    "length": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit"],
+      "properties": {
+        "unit": {"const": "unicode-scalar"},
+        "min": {"type": "integer", "minimum": 0},
+        "max": {"type": "integer", "minimum": 0}
+      }
+    },
+    "width": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bits", "signed"],
+      "properties": {
+        "bits": {"type": "integer", "minimum": 1},
+        "signed": {"type": "boolean"}
+      }
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minCoefficient", "minInclusive", "maxCoefficient", "maxInclusive"],
+      "properties": {
+        "minCoefficient": {"type": ["string", "null"], "pattern": "^-?(?:0|[1-9][0-9]*)$"},
+        "minInclusive": {"type": "boolean"},
+        "maxCoefficient": {"type": ["string", "null"], "pattern": "^-?(?:0|[1-9][0-9]*)$"},
+        "maxInclusive": {"type": "boolean"}
+      }
+    },
+    "identity": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"const": "boolean"}, "value": {"type": "boolean"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"const": "string"}, "value": {"type": "string"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"const": "numberCoefficient"}, "value": {"type": "string", "pattern": "^-?(?:0|[1-9][0-9]*)$"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"const": "float64Bits"}, "value": {"type": "string", "pattern": "^[0-9a-f]{16}$"}}}
+      ]
+    },
+    "normalize": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "carrier", "mode"],
+      "properties": {
+        "op": {"const": "normalize-native-query-value"},
+        "carrier": {"enum": ["boolean", "string", "float", "integer", "decimal"]},
+        "mode": {"enum": ["identity", "preserve-float-token", "canonical-integer-decimal", "canonical-scaled-decimal"]}
+      }
+    }
+  }
+}

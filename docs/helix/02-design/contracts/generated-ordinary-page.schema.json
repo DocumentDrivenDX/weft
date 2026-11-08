@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weft.invalid/schemas/generated-ordinary-page.schema.json",
+  "title": "Weft generated ordinary Page descriptor",
+  "oneOf": [
+    {"$ref": "#/$defs/eligible"},
+    {"$ref": "#/$defs/unsupported"}
+  ],
+  "$defs": {
+    "codec": {"$ref": "urn:weft:query-codec-instructions:1"},
+    "nativeType": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"const": "text"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "length"], "properties": {"kind": {"const": "varchar"}, "length": {"type": "integer", "minimum": 1}}}
+      ]
+    },
+    "stringOutput": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "carrier", "nullable", "nativeType", "oid"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1}, "carrier": {"const": "string"},
+        "nullable": {"const": false}, "nativeType": {"$ref": "#/$defs/nativeType"}, "oid": {"enum": [25, 1043]}
+      },
+      "oneOf": [
+        {"properties": {"nativeType": {"properties": {"kind": {"const": "text"}}}, "oid": {"const": 25}}},
+        {"properties": {"nativeType": {"properties": {"kind": {"const": "varchar"}}}, "oid": {"const": 1043}}}
+      ]
+    },
+    "eligible": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile", "status", "maxSize", "snapshot", "key", "size", "nativeCollationPrecondition", "page", "continuation"],
+      "properties": {
+        "profile": {"const": "weft.generated-ordinary-page/1"}, "status": {"const": "eligible"}, "maxSize": {"const": 1000},
+        "snapshot": {"type": "object", "additionalProperties": false, "required": ["supported", "trueOutcome"], "properties": {"supported": {"const": false}, "trueOutcome": {"const": "UNSUPPORTED"}}},
+        "key": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "fieldId", "codec", "output", "direction", "nulls", "collation"],
+          "properties": {"id": {"type": "string", "minLength": 1}, "fieldId": {"type": "string", "minLength": 1}, "codec": {"$ref": "#/$defs/codec"}, "output": {"$ref": "#/$defs/stringOutput"}, "direction": {"const": "asc"}, "nulls": {"const": "last"}, "collation": {"const": "pg_catalog.\"C\""}}
+        },
+        "size": {"type": "object", "additionalProperties": false, "required": ["slot", "carrier", "minimum", "maximum", "identity"], "properties": {"slot": {"const": "size"}, "carrier": {"const": "int64"}, "minimum": {"const": 1}, "maximum": {"const": 1000}, "identity": {"const": true}}},
+        "nativeCollationPrecondition": {
+          "type": "object", "additionalProperties": false,
+          "required": ["profile", "required", "sourceSqlTemplate", "sqlTemplate", "parameterOrder", "dbapiParameterOrder", "parameterSources", "expected"],
+          "properties": {"profile": {"const": "weft.generated-table-collation-c/1"}, "required": {"const": true}, "sourceSqlTemplate": {"type": "string", "minLength": 1}, "sqlTemplate": {"type": "string", "minLength": 1}, "parameterOrder": {"const": ["schema", "table", "column"]}, "dbapiParameterOrder": {"const": ["schema", "table", "column"]}, "parameterSources": {"const": ["binding.schema", "binding.table.native", "binding.keyColumn.native"]}, "expected": {"type": "object", "additionalProperties": false, "required": ["schema", "name", "deterministic"], "properties": {"schema": {"const": "pg_catalog"}, "name": {"const": "C"}, "deterministic": {"const": true}}}}
+        },
+        "page": {
+          "type": "object", "additionalProperties": false,
+          "required": ["sourceSqlTemplate", "sqlTemplate", "templateSha256", "filterParameterGroup", "projectionSlot", "parameterOrder", "dbapiParameterOrder", "lookaheadRows", "serverByteGuard", "ordinalOutput", "hiddenKeyOutput", "fieldOutputs"],
+          "properties": {
+            "sourceSqlTemplate": {"type": "string", "minLength": 1}, "sqlTemplate": {"type": "string", "minLength": 1}, "templateSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "filterParameterGroup": {"const": "filterValues"}, "projectionSlot": {"type": "object", "additionalProperties": false, "required": ["name", "emptyValue", "nonemptyPrefix"], "properties": {"name": {"const": "PUBLIC_PROJECTION"}, "emptyValue": {"const": ""}, "nonemptyPrefix": {"const": ", "}}},
+            "parameterOrder": {"const": ["filterValues", "after", "after", "size"]}, "dbapiParameterOrder": {"const": ["after", "after", "size"]}, "lookaheadRows": {"const": 1}, "serverByteGuard": {"const": true},
+            "ordinalOutput": {"type": "object", "additionalProperties": false, "required": ["name", "carrier", "nullable", "nativeType", "oid"], "properties": {"name": {"const": "__weft_ordinal"}, "carrier": {"const": "integer"}, "nullable": {"const": false}, "nativeType": {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"const": "int8"}}}, "oid": {"const": 20}}},
+            "hiddenKeyOutput": {"$ref": "#/$defs/stringOutput"},
+            "fieldOutputs": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["fieldId", "sourceField", "nativeColumn", "output"], "properties": {"fieldId": {"type": "string", "minLength": 1}, "sourceField": {"type": "object", "additionalProperties": false, "required": ["module", "element"], "properties": {"module": {"type": "string", "minLength": 1}, "element": {"type": "string", "minLength": 1}}}, "nativeColumn": {"type": "string", "minLength": 1}, "output": {"type": "object", "allOf": [{"$ref": "https://weft.invalid/schemas/generated-read-algebra-v6.schema.json#/$defs/output"}], "required": ["nativeType", "oid"]}}}}
+          }
+        },
+        "continuation": {
+          "type": "object", "additionalProperties": false,
+          "required": ["profile", "ownerCursor", "snapshotVersions", "exactFullPageYieldsContinuation", "fixed", "requestInputs"],
+          "properties": {
+            "profile": {"const": "weft.generated-ordinary-page-continuation-identity/1"}, "ownerCursor": {"type": "null"}, "snapshotVersions": {"type": "array", "maxItems": 0}, "exactFullPageYieldsContinuation": {"const": true},
+            "fixed": {"type": "object", "additionalProperties": false, "required": ["sourceModelSha256", "targetId", "targetModelSha256", "bindingDigest", "module", "record", "keyId", "keyFieldId", "issuedPageTemplateSha256", "issuedProgramDigest"], "properties": {"sourceModelSha256": {"$ref": "#/$defs/digest"}, "targetId": {"type": "string", "minLength": 1}, "targetModelSha256": {"$ref": "#/$defs/digest"}, "bindingDigest": {"$ref": "#/$defs/digest"}, "module": {"type": "string", "minLength": 1}, "record": {"type": "string", "minLength": 1}, "keyId": {"type": "string", "minLength": 1}, "keyFieldId": {"type": "string", "minLength": 1}, "issuedPageTemplateSha256": {"$ref": "#/$defs/digest"}, "issuedProgramDigest": {"$ref": "#/$defs/digest"}}},
+            "requestInputs": {"type": "object", "additionalProperties": false, "required": ["selectedFieldIds", "filterProgram", "predicateInputs", "predicateIds", "normalizedPredicateValues", "size"], "properties": {
+              "selectedFieldIds": {"type": "object", "additionalProperties": false, "required": ["allowed", "ordered", "identity"], "properties": {"allowed": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "ordered": {"const": true}, "identity": {"const": true}}},
+              "filterProgram": {"type": "object", "additionalProperties": false, "required": ["profile", "identity", "predicateIdSet", "operators", "valueOrder", "emptyExpression", "emptySql"], "properties": {"profile": {"const": "weft.generated-page-filter-program/1"}, "identity": {"const": "canonical-exact-tree"}, "predicateIdSet": {"const": "predicateIds.allowed"}, "operators": {"const": ["predicate", "and", "or", "not"]}, "valueOrder": {"const": "depth-first-left-to-right"}, "emptyExpression": {"type": "null"}, "emptySql": {"const": "TRUE"}}},
+              "predicateInputs": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "fieldId", "operator", "arity", "codec"], "properties": {"id": {"type": "string", "minLength": 1}, "fieldId": {"type": "string", "minLength": 1}, "operator": {"enum": ["eq", "ne", "lt", "le", "gt", "ge"]}, "arity": {"const": 1}, "codec": {"$ref": "#/$defs/codec"}}}},
+              "predicateIds": {"type": "object", "additionalProperties": false, "required": ["allowed", "ordered", "identity"], "properties": {"allowed": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "ordered": {"const": true}, "identity": {"const": true}}},
+              "normalizedPredicateValues": {"type": "object", "additionalProperties": false, "required": ["occurrenceOrder", "exactCodecNormalization", "identity"], "properties": {"occurrenceOrder": {"const": "depth-first-left-to-right-arity-one-predicate-leaves"}, "exactCodecNormalization": {"const": true}, "identity": {"const": true}}},
+              "size": {"type": "object", "additionalProperties": false, "required": ["minimum", "maximum", "exactInteger", "identity"], "properties": {"minimum": {"const": 1}, "maximum": {"const": 1000}, "exactInteger": {"const": true}, "identity": {"const": true}}}
+            }}
+          }
+        }
+      }
+    },
+    "unsupported": {
+      "type": "object", "additionalProperties": false, "required": ["profile", "status", "reason"],
+      "properties": {"profile": {"const": "weft.generated-ordinary-page/1"}, "status": {"const": "unsupported"}, "reason": {"type": "string", "minLength": 1}}
+    },
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

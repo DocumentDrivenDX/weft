@@ -1,0 +1,11 @@
+{
+  "ajv": "8.17.1",
+  "command": [
+    "node",
+    "docs/helix/04-build/evidence/generated-ordinary-page-v6-correction-3-20261105/validate-required-native-output.mjs"
+  ],
+  "exitCode": 0,
+  "logSha256": "965cdaf4c97111b286d6e606054572d79f2f3183d46a0cd2bdb86fc635119cee",
+  "node": "v26.12.1",
+  "scriptSha256": "2d141189169d184e104a4b57e2fb860a6f01683b26090b76a67e4baf092fb16d"
+}

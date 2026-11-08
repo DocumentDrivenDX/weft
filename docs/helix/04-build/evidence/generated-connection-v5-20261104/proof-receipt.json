@@ -1,0 +1,39 @@
+{
+  "scope": "Rust-issued v5 forward/prior SQL only",
+  "postgresql": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0",
+  "driver": "psycopg 3.3.6",
+  "schemaValidation": {
+    "validator": "Ajv 8.20.0 Draft 2020-12",
+    "schema": "/Users/erik/Projects/umf/docs/helix/02-design/contracts/generated-read-algebra-v5.schema.json",
+    "artifacts": ["issued-v5.json", "issued-v5-percent-table.json"],
+    "result": "both valid"
+  },
+  "artifacts": {
+    "issued-v5.json": {
+      "sha256": "a57c5aa63276b7b41f48c4b37b20da16db1a10de0ed4a6939d56ebf7405a940d",
+      "table": "plugin_demo.notes",
+      "forwardSqlTemplateSha256": "6eb2e8f20ac1eee1d89ff51e445ee6f09e4063627ed881b8cc3583f7292cd18a",
+      "previousSqlTemplateSha256": "5e461f59b191d1ced46c4f99b719b6c242422418d54652cb6961ff1d812a3e07"
+    },
+    "issued-v5-percent-table.json": {
+      "sha256": "1f81686810ea3f14f1192887870530ba5a7f7c552b51180e145af852c9b7267f",
+      "table": "plugin_demo.\"n%s\"",
+      "forwardSqlTemplateSha256": "7bd83a0dd1a6f0c387f86a94d132c7d6617fd6bb730f6f0cb6705419b84faff3",
+      "previousSqlTemplateSha256": "3a80e8cbc092894de423cd8279918f35a0d5a9ef540c275d93628b2b0947c7c3"
+    }
+  },
+  "fixtureRunner": {
+    "file": "postgresql18-qualify.py.txt",
+    "sha256": "3cd3b4c7692fc9e319446c8914dc794001c59b7bd7010404fce9d3606817d8e1",
+    "command": "/Users/erik/Projects/batten/.venv/bin/python /private/tmp/weft-v5-qualify.py"
+  },
+  "executedCases": [
+    {"table": "notes", "firstZeroProbeKey": "a", "firstTwoKeys": ["a", "b"], "afterAKeys": ["b"], "priorNull": false, "priorAtB": true},
+    {"table": "n%s", "firstZeroProbeKey": "a", "firstTwoKeys": ["a", "b"], "afterAKeys": ["b"], "priorNull": false, "priorAtB": true}
+  ],
+  "cleanup": "PostgreSQL stopped with pg_ctl -m fast; /private/tmp/weft-v5-pgdata and /private/tmp/weft-v5-sock removed",
+  "limitations": [
+    "No UMF cursor HMAC, native lifecycle/head guard, pre-lease validation, request-snapshot, or host execution was exercised.",
+    "The PostgreSQL fixture validates issued SQL after filling issued select/filter macro slots; it does not validate any UMF consumer or cursor protocol."
+  ]
+}

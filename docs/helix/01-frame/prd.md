@@ -189,3 +189,29 @@ foundation is scoped evidence only; it emits no security-enabled artifact.
 | FR-24 | P0 | Preserve exact field/key/parameter/source meanings and refuse unsupported mutations before emission. |
 | FR-25 | P0 | Trusted backend registrations lower bounded selection with complete-population preflight, original identity/version/key carriers, typed parameters and maxItems+1 overflow refusal. |
 | FR-26 | P0 | Native Python and browser bindings share the original mutation compiler core; host-owned renderer registration and native execution remain separately qualified. |
+
+## Generated ORM delivery boundary
+
+FR-8/9/17/18 and FR-23–26 require build-generated execution artifacts for UMF ORM
+consumers. Ordinary generated ORM deployment MUST NOT depend on the Weft compiler,
+source parsing/model resolution, runtime SQL lowering, source recompilation or a
+compiler service. Weft owns build-time lowering and generation of exact templates,
+parameter/result codecs and the supported schema-specific expression machinery.
+
+Runtime callers retain composable typed queries. Generated execution may select
+and combine build-generated fragments within the admitted algebra and bind exact
+values; it must not embed the general compiler under another name. Bulk actions,
+keyset/Relay connection pages, search and recovery have the same compiler-free
+requirement. No manually captured application query catalog is mandatory.
+
+A separately declared authoring/ingestion workflow may compile UMF unavailable
+until runtime, such as uploaded models. It is a distinct compiler consumer, not
+an execution fallback. New output is verified, explicitly admitted and pinned
+before use. Existing compiler APIs remain tooling/authoring APIs; native Python
+and browser compiler support is not a dependency of a generated ORM deployment.
+
+Acceptance runs generated artifacts with compiler packages/binaries/services absent
+and preserves semantic parity, exact values, refusals and native obligations.
+UMF owns model/API generation and hosts own authority/execution; no second
+handwritten SQL compiler belongs in UMF or Batten. Artifact/runtime ABI and target
+profile are versioned independently of compiler embedding and hosting platform.

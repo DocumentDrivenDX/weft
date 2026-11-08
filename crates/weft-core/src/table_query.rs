@@ -211,6 +211,15 @@ impl AdmittedQuery {
         &self.original_source_digest
     }
 
+    /// Generate the closed, parameter-ordered codec instructions for the
+    /// exact validator and normalizer used by this admitted query.
+    pub fn generated_input_codecs(&self) -> Result<Vec<Value>> {
+        self.parameter_order.iter().map(|id| {
+            let field=self.parameters.get(id).ok_or("generated query parameter absent")?;
+            field.generated_codec_instructions()
+        }).collect()
+    }
+
     /// Validate the exact typed input map. Native conversion is performed by the backend codec.
     pub fn bind_inputs(&self, inputs: &BTreeMap<String, Value>) -> Result<Vec<Value>> {
         if inputs.len() != self.parameters.len()
@@ -226,6 +235,76 @@ impl AdmittedQuery {
         }
         Ok(normalized)
     }
+}
+
+impl QueryField {
+    fn generated_codec_instructions(&self)->Result<Value>{
+        let (wrapper,parse_profile,scale,precision,max_token_bytes,normalize)=match self.carrier.as_str(){
+            "boolean"=>("boolean","weft.boolean/1",Value::Null,Value::Null,Value::Null,"identity"),
+            "string"=>("string","weft.string/1",Value::Null,Value::Null,Value::Null,"identity"),
+            "float"=>("floatToken","weft.finite-ascii-f64-token/1",Value::Null,Value::Null,json!(128),"preserve-float-token"),
+            "integer"=>("integerToken","weft.exact-coefficient/1",json!(0),Value::Null,json!(crate::security_literals::MAX_TEXT),"canonical-integer-decimal"),
+            "decimal"=>{
+                let scale=crate::security_literals::unsigned(&self.declaration["facets"]["scale"]).map_err(|_|"decimal codec scale absent")?;
+                let precision=crate::security_literals::unsigned(&self.declaration["facets"]["precision"]).map_err(|_|"decimal codec precision absent")?;
+                ("decimalToken","weft.exact-coefficient/1",json!(scale),json!(precision),json!(crate::security_literals::MAX_TEXT),"canonical-scaled-decimal")
+            },
+            _=>return Err("query input native codec is not yet admitted"),
+        };
+        let refinements=if self.carrier=="float"{
+            if self.declaration.get("facets").is_some_and(|facets|facets.as_object().is_none_or(|facets|!facets.is_empty())){
+                return Err("query Float facets unsupported");
+            }
+            let allowed=self.float_allowed_values.as_ref().map(|values|values.iter().map(|bits|json!({"kind":"float64Bits","value":format!("{bits:016x}")})).collect::<Vec<_>>());
+            json!({"length":null,"integerWidth":null,"range":null,"allowedIdentities":allowed})
+        }else{
+            self.prepared_literal.as_ref().ok_or("query prepared literal absent")?.generated_query_refinements().map_err(|_|"query codec refinements unavailable")?
+        };
+        let (length,width,range,allowed)=(&refinements["length"],&refinements["integerWidth"],&refinements["range"],&refinements["allowedIdentities"]);
+        if !matches!(self.carrier.as_str(),"string"|"integer"|"decimal"|"boolean"|"float")
+            || self.carrier=="float"&&( !length.is_null()||!width.is_null()||!range.is_null() )
+            || self.carrier=="string"&&(!width.is_null()||!range.is_null())
+            || self.carrier=="boolean"&&(!length.is_null()||!width.is_null()||!range.is_null())
+            || self.carrier=="integer"&&!length.is_null()
+            || self.carrier=="decimal"&&!length.is_null()
+        {return Err("query codec refinement outside closed carrier profile");}
+        Ok(json!({
+            "profile":"weft.query-codec-instructions/1",
+            "steps":[
+                {"op":"require-exact-wrapper","wrapper":wrapper,"nullable":self.nullable},
+                {"op":"parse-carrier","carrier":self.carrier,"profile":parse_profile,"scale":scale,"precision":precision,"maxTokenBytes":max_token_bytes},
+                {"op":"check-refinements","carrier":self.carrier,"length":length,"integerWidth":width,"range":range,"allowedIdentities":allowed},
+                {"op":"normalize-native-query-value","carrier":self.carrier,"mode":normalize}
+            ]
+        }))
+    }
+}
+
+/// Emit the exact codec used by the fixed-query owner for an original Record
+/// member, including a Field owned by another selected module.
+pub fn generated_codec_for_member(document: &Value, reference: &Value) -> Result<Value> {
+    let module = reference["module"].as_str().ok_or("query Field module absent")?;
+    let element = reference["element"].as_str().ok_or("query Field element absent")?;
+    let modules = document["modules"].as_array().ok_or("query source modules absent")?;
+    let module_position = modules.iter().position(|value| value["id"] == module)
+        .ok_or("query Field module absent")?;
+    let value = &modules[module_position];
+    let elements = value["elements"].as_array().ok_or("query source elements absent")?;
+    let mut index = BTreeMap::new();
+    for (position, field) in elements.iter().enumerate() {
+        if let Some(id) = field["id"].as_str() { index.insert(id.to_owned(), position); }
+    }
+    let indexes = ModuleIndexes {
+        module_position,
+        elements: index,
+        commands: BTreeMap::new(),
+        tables: BTreeMap::new(),
+        record_paths: BTreeMap::new(),
+        bound_tables: BTreeMap::new(),
+        namespace: value["namespace"].as_str().ok_or("query Field namespace absent")?.to_owned(),
+    };
+    query_field(document, module, &indexes, element.to_owned(), reference)?
+        .generated_codec_instructions()
 }
 
 #[derive(Default)]
@@ -464,7 +543,7 @@ fn query_field(doc: &Value, module: &str, indexes:&ModuleIndexes, id: String, re
     let declaration = field(doc, module, indexes, reference)?.clone();
     let carrier=declaration["scalarType"].as_str().ok_or("query Field type absent")?.to_owned();
     let prepared_literal=if carrier=="float" {None}else{Some(Arc::new(crate::security_literals::PreparedLiteral::from_validated(&declaration).map_err(|_|"query Field facets unsupported")?))};
-    let float_allowed_values=if carrier=="float" {declaration.get("allowedValues").and_then(Value::as_array).map(|allowed|allowed.iter().filter_map(|candidate|candidate.get("floatToken").and_then(Value::as_str)).filter_map(|token|token.parse::<f64>().ok()).filter(|number|number.is_finite()).map(float_key).collect())}else{None};
+    let float_allowed_values=if carrier=="float" {float_allowed_values(&declaration)?}else{None};
     Ok(QueryField {
         id,
         field: reference.clone(),
@@ -707,6 +786,24 @@ fn admit_request(request: QueryIdentity, binding: Arc<Binding>, model: Arc<crate
     })
 }
 
+fn parse_float_token(value:&Value)->Result<f64>{
+    if value.as_object().is_none_or(|object|object.len()!=1){return Err("query Float input needs an exact floatToken wrapper");}
+    let token=value["floatToken"].as_str().ok_or("query Float token absent")?;
+    if token.is_empty()||token.len()>128||token.trim()!=token{return Err("query Float token lexical form invalid");}
+    let number=token.parse::<f64>().map_err(|_|"query Float token is outside binary64")?;
+    if !number.is_finite(){return Err("query Float token must be finite binary64");}
+    Ok(number)
+}
+fn float_allowed_values(declaration:&Value)->Result<Option<BTreeSet<u64>>>{
+    let Some(raw)=declaration.get("allowedValues") else{return Ok(None)};
+    let values=raw.as_array().ok_or("query Float allowedValues are outside the finite token profile")?;
+    let mut allowed=BTreeSet::new();
+    for value in values {
+        let number=parse_float_token(value).map_err(|_|"query Float allowedValue is outside the finite token profile")?;
+        if !allowed.insert(float_key(number)){return Err("query Float allowedValues collapse to duplicate binary64 identities");}
+    }
+    Ok(Some(allowed))
+}
 fn check_value(field: &QueryField, value: &Value) -> Result<()> {
     if field.carrier == "float" {
         if value.is_null() {
@@ -716,19 +813,7 @@ fn check_value(field: &QueryField, value: &Value) -> Result<()> {
                 Err("required query Float input is null")
             };
         }
-        if value.as_object().is_none_or(|o| o.len() != 1) {
-            return Err("query Float input needs an exact floatToken wrapper");
-        }
-        let token = value["floatToken"]
-            .as_str()
-            .ok_or("query Float token absent")?;
-        if token.is_empty() || token.len() > 128 || token.trim() != token {
-            return Err("query Float token lexical form invalid");
-        }
-        let number: f64 = token
-            .parse()
-            .map_err(|_| "query Float token is outside binary64")?;
-        if !number.is_finite() { return Err("query Float token must be finite binary64"); }
+        let number=parse_float_token(value)?;
         if field.float_allowed_values.as_ref().is_some_and(|allowed|!allowed.contains(&float_key(number))) {
             return Err("query Float input is outside its original UMF allowedValues");
         }
@@ -869,6 +954,13 @@ mod query_input_tests {
         };
         assert!(check_value(&input, &json!({"decimalToken":"1.23"})).is_ok());
         assert!(check_value(&input, &json!({"decimalToken":"1.24"})).is_err());
+        let codec=input.generated_codec_instructions().unwrap();
+        assert_eq!(codec["profile"],"weft.query-codec-instructions/1");
+        assert_eq!(codec["steps"][0],json!({"op":"require-exact-wrapper","wrapper":"decimalToken","nullable":false}));
+        assert_eq!(codec["steps"][1],json!({"op":"parse-carrier","carrier":"decimal","profile":"weft.exact-coefficient/1","scale":2,"precision":8,"maxTokenBytes":4_000_000}));
+        assert_eq!(codec["steps"][2]["allowedIdentities"],json!([{"kind":"numberCoefficient","value":"123"}]));
+        assert_eq!(codec["steps"][3],json!({"op":"normalize-native-query-value","carrier":"decimal","mode":"canonical-scaled-decimal"}));
+        assert_eq!(native_value(&input,&json!({"decimalToken":"1.230"})).unwrap(),json!("123e-2"));
     }
 
     #[test]
@@ -878,6 +970,61 @@ mod query_input_tests {
         for token in ["1","1.0","1.000"] { assert!(check_value(&input,&json!({"decimalToken":token})).is_ok(),"{token}"); }
         assert!(check_value(&input,&json!(null)).is_ok());
         assert!(check_value(&input,&json!({"decimalToken":"2"})).is_err());
+        let codec=input.generated_codec_instructions().unwrap();
+        assert_eq!(codec["steps"][0]["nullable"],true);
+        assert_eq!(codec["steps"][2]["allowedIdentities"],json!([{"kind":"numberCoefficient","value":"100"}]));
+    }
+
+    #[test]
+    fn generated_integer_and_string_refinements_are_rust_normalized() {
+        let (doc,indexes)=dto_field("integer","required",Some(json!({
+            "integerWidth":{"bits":8,"signed":true},
+            "range":{"min":{"integerToken":"1"},"minInclusive":false,"max":{"integerToken":"10"},"maxInclusive":true}
+        })),Some(json!([{"integerToken":"2"}])));
+        let integer=query_field(&doc,"m",&indexes,"n".into(),&json!({"module":"m","element":"out"})).unwrap();
+        let codec=integer.generated_codec_instructions().unwrap();
+        assert_eq!(codec["steps"][2]["integerWidth"],json!({"bits":8,"signed":true}));
+        assert_eq!(codec["steps"][2]["range"],json!({"minCoefficient":"1","minInclusive":false,"maxCoefficient":"10","maxInclusive":true}));
+        assert_eq!(codec["steps"][2]["allowedIdentities"],json!([{"kind":"numberCoefficient","value":"2"}]));
+        let value=json!({"integerToken":"2"});
+        assert!(check_value(&integer,&value).is_ok());
+        assert_eq!(native_value(&integer,&value).unwrap(),json!("2"));
+
+        let (doc,indexes)=dto_field("string","required",Some(json!({"length":{"unit":"unicode-scalar","min":1,"max":2}})),Some(json!([{"string":"猫€"}])));
+        let string=query_field(&doc,"m",&indexes,"label".into(),&json!({"module":"m","element":"out"})).unwrap();
+        let codec=string.generated_codec_instructions().unwrap();
+        assert_eq!(codec["steps"][2]["length"],json!({"unit":"unicode-scalar","min":1,"max":2}));
+        assert_eq!(codec["steps"][2]["allowedIdentities"],json!([{"kind":"string","value":"猫€"}]));
+        assert!(check_value(&string,&json!({"string":"猫€"})).is_ok());
+        assert_eq!(native_value(&string,&json!({"string":"猫€"})).unwrap(),json!("猫€"));
+        let (doc,indexes)=dto_field("string","required",Some(json!({"length":{"unit":"unicode-scalar","max":1}})),None);
+        let scalar=query_field(&doc,"m",&indexes,"s".into(),&json!({"module":"m","element":"out"})).unwrap();
+        assert!(check_value(&scalar,&json!({"string":"😀"})).is_ok());
+        assert!(check_value(&scalar,&json!({"string":"é"})).is_err());
+        assert!(crate::json::checked_json(r#"{"string":"\ud800"}"#).is_err());
+    }
+
+    #[test]
+    fn generated_numeric_instruction_profile_matches_original_token_acceptance() {
+        let (doc,indexes)=dto_field("integer","required",None,None);
+        let integer=query_field(&doc,"m",&indexes,"n".into(),&json!({"module":"m","element":"out"})).unwrap();
+        let codec=integer.generated_codec_instructions().unwrap();
+        assert_eq!(codec["steps"][1],json!({"op":"parse-carrier","carrier":"integer","profile":"weft.exact-coefficient/1","scale":0,"precision":null,"maxTokenBytes":4_000_000}));
+        for (token,normalized) in [("9007199254740993","9007199254740993"),("1.00e3","1000"),("-0","0")] {
+            let value=json!({"integerToken":token});
+            assert!(check_value(&integer,&value).is_ok(),"{token}");
+            assert_eq!(native_value(&integer,&value).unwrap(),json!(normalized),"{token}");
+        }
+        for token in ["1.5","01","1e-1","1e4000001","1e+","1.","1E2E3"] {
+            assert!(check_value(&integer,&json!({"integerToken":token})).is_err(),"{token}");
+        }
+    }
+
+    #[test]
+    fn generated_codec_refuses_native_carriers_without_an_exact_query_normalizer() {
+        let field=QueryField{id:"blob".into(),field:json!({}),carrier:"binary".into(),nullable:false,
+            declaration:json!({}),prepared_literal:None,float_allowed_values:None};
+        assert!(field.generated_codec_instructions().is_err());
     }
 
     #[test]
@@ -890,6 +1037,27 @@ mod query_input_tests {
         };
         assert!(check_value(&field,&json!({"floatToken":"1.5"})).is_ok());
         assert!(check_value(&field,&json!({"floatToken":"2.5"})).is_err());
+        let codec=field.generated_codec_instructions().unwrap();
+        assert_eq!(codec["steps"][0],json!({"op":"require-exact-wrapper","wrapper":"floatToken","nullable":false}));
+        assert_eq!(codec["steps"][2]["allowedIdentities"],json!([{"kind":"float64Bits","value":"3ff8000000000000"}]));
+        assert_eq!(codec["steps"][3]["mode"],"preserve-float-token");
+        assert_eq!(native_value(&field,&json!({"floatToken":"1.5000"})).unwrap(),json!("1.5000"));
+        for token in ["NaN","Infinity","1e999"," 1.5","1_0"] {
+            assert!(check_value(&field,&json!({"floatToken":token})).is_err(),"{token}");
+        }
+        assert!(check_value(&field,&json!({"floatToken":"1".repeat(129)})).is_err());
+    }
+
+    #[test]
+    fn float_query_domains_refuse_lost_or_duplicate_source_identities() {
+        for values in [
+            json!([{"floatToken":"1.5"},{"floatToken":"NaN"}]),
+            json!([{"floatToken":"1.5"},{"floatToken":"1.500"}]),
+            json!([{"floatToken":"1.5","unknown":true}]),
+        ] {
+            let (doc,indexes)=dto_field("float","required",None,Some(values));
+            assert!(query_field(&doc,"m",&indexes,"score".into(),&json!({"module":"m","element":"out"})).is_err());
+        }
     }
 
     #[test]
@@ -900,6 +1068,7 @@ mod query_input_tests {
         assert!(check_value(&field,&json!({"floatToken":"0"})).is_ok());
         assert!(check_value(&field,&json!({"floatToken":"-0"})).is_ok());
         assert!(check_value(&field,&json!({"floatToken":"1e-300"})).is_err());
+        assert_eq!(field.generated_codec_instructions().unwrap()["steps"][2]["allowedIdentities"],json!([{"kind":"float64Bits","value":"0000000000000000"}]));
     }
 
     #[test]
