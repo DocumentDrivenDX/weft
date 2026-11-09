@@ -1,0 +1,66 @@
+# Heavy suite on PRs is opt-in; everything else is proven by evidence.
+#
+# On a PR, `full` runs only with the `ci:full` label. Otherwise the cheap
+# `evidence-gate` job (seconds, bash/git/jq) passes when ANY of:
+#   (a) .ci/evidence/full-suite.json matches this PR head's content hash --
+#       run `scripts/verify-full.sh` locally on the final commit, then commit
+#       the evidence file as the LAST commit (any later edit invalidates it);
+#   (b) the PR has label `ci:full` and the heavy suite below passed;
+#   (c) the diff touches no path the heavy suite covers (see HEAVY_RE).
+# Release, tag and publish workflows ignore evidence and always run the suite.
+name: PR full suite
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+permissions:
+  contents: read
+concurrency:
+  # Unrelated label churn must not cancel a running heavy suite.
+  group: pr-full-${{ github.event.pull_request.number }}-${{ ((github.event.action == 'labeled' && github.event.label.name != 'ci:full') || github.event.action == 'unlabeled') && 'meta' || 'run' }}
+  cancel-in-progress: true
+jobs:
+  full:
+    if: contains(github.event.pull_request.labels.*.name, 'ci:full') && github.event.action != 'unlabeled' && (github.event.action != 'labeled' || github.event.label.name == 'ci:full')
+    uses: ./.github/workflows/conformance.yml
+
+  # Cheap gate (seconds): proves the heavy suite was run for this exact tree.
+  evidence-gate:
+    name: evidence-gate
+    if: always() && github.event_name == 'pull_request'
+    needs: [full]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check evidence
+        env:
+          FULL_RESULT: ${{ needs.full.result }}
+          BASE_REF: ${{ github.base_ref }}
+          HEAVY_RE: '^(crates|packages|scripts|tests|spec|vendor|distributions|spikes|\.cargo)/|^(Cargo\.(toml|lock)|package\.json|bun\.lock|pyproject\.toml|rust-toolchain\.toml)$'
+        run: |
+          set -euo pipefail
+          changed=$(git diff --name-only "origin/${BASE_REF}...HEAD")
+          if ! grep -Eq "$HEAVY_RE" <<<"$changed"; then
+            echo "No heavy-suite paths changed; gate passes."; exit 0
+          fi
+          if [[ "$FULL_RESULT" == "success" ]]; then
+            echo "ci:full label set and heavy suite passed; gate passes."; exit 0
+          fi
+          f=.ci/evidence/full-suite.json
+          if [[ -f "$f" ]]; then
+            want=$(jq -r .content_hash "$f")
+            have=$(bash scripts/verify-full.sh --hash-only)
+            if [[ "$want" == "$have" ]]; then
+              echo "Evidence matches ($(jq -r '.suite + " @ " + .timestamp' "$f")); gate passes."; exit 0
+            fi
+            echo "::error::Evidence is stale (recorded $want, tree is $have). Re-run scripts/verify-full.sh and commit."
+          else
+            echo "::error::No $f. Run scripts/verify-full.sh and commit the evidence, or add the 'ci:full' label."
+          fi
+          exit 1

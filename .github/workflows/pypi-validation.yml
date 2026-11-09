@@ -11,17 +11,9 @@ on:
       - .github/workflows/*pypi*.yml
       - .github/workflows/release.yml
       - .github/workflows/release-hosted-macos.yml
-  push:
-    paths:
-      - scripts/**publish_pypi_release.py
-      - scripts/**publish_hosted_release.py
-      - scripts/**verify_hosted_macos_artifact.py
-      - scripts/**finalize_hosted_macos.py
-      - scripts/**test_publish_hosted_release.py
-      - scripts/**test_verify_hosted_macos_artifact.py
-      - .github/workflows/*pypi*.yml
-      - .github/workflows/release.yml
-      - .github/workflows/release-hosted-macos.yml
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:

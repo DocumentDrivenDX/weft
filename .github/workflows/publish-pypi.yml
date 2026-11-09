@@ -1,7 +1,8 @@
 name: Publish Weft wheels to PyPI
 on:
   workflow_run:
-    workflows: ["*"]
+    # Only the producers verify-release accepts; a wildcard fired a (skipped) run per unrelated workflow.
+    workflows: ["Release Python wheels", "Publish selected*"]
     types: [completed]
   workflow_dispatch:
     inputs:
