@@ -1,6 +1,10 @@
 name: Pull request source checks
 on:
   pull_request:
+    paths:
+      - scripts/distribution/**
+      - tests/distribution-source-metadata/**
+      - .github/workflows/pull-request.yml
 permissions:
   contents: read
 concurrency:
