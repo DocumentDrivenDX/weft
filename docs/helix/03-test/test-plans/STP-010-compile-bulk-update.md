@@ -44,7 +44,11 @@ Prove US-010's original portable or native outcomes under its contracted profile
 
 ## Executable Proof
 
-Primary planned command: `cargo test -p weft-core --test mutation_compile`. Create the target before feature implementation; every test must cite its allocated AC and be capable of failing. Record results under `docs/helix/04-build/evidence/bulk-update/`, with actual source/profile/runtime versions, original owner hashes, negative controls and explicit residuals. Actual Chromium is required for the browser rows; pure/static checks cannot substitute for native or browser outcomes.
+Primary planned command for US-010-AC1–AC5: `cargo test -p weft-core --test mutation_compile`. US-010-AC6 is owned by weft-postgresql and is NOT run by that command; its command is `cargo test -p weft-postgresql --features conformance-original --test mutation_lowering` (target `mutation_lowering` -> `tests/mutation/lowering.rs`, already declared in `crates/weft-postgresql/Cargo.toml`). AC6's masked-nonmatching and AND/OR preflight behavior is backend-obligated (CONTRACT-009), so this opt-in target is the only enforcement until a second backend registers; a backend without an equivalent lowering test cannot claim AC6. Create each target before feature implementation; every test must cite its allocated AC and be capable of failing. Record results under `docs/helix/04-build/evidence/bulk-update/`, with actual source/profile/runtime versions, original owner hashes, negative controls and explicit residuals. Actual Chromium is required for the browser rows; pure/static checks cannot substitute for native or browser outcomes.
+
+## Formal analysis
+
+No temporal or finite-state obligation applies to compilation/lowering: they are pure, deterministic and execute no effects. The `formal-methods` concern here is scoped to TD-009 security composition. The job/batch state-transition model is owned by UMF CONTRACT-904 and Truss US-048-AC7; Weft consumes no state machine and allocates none.
 
 ## Data and Setup
 
