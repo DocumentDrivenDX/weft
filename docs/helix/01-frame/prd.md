@@ -45,7 +45,7 @@ registration independently; preserve exact values; make limits inspectable.
 | Plugin independence | Third test backend, zero frontend changes | Registration/conformance test |
 
 Non-goals for v0.1: query execution engine, database drivers, storage/schema
-bootstrap, catalog management, mutation/history/feed operations, authentication,
+bootstrap, catalog management, history/feed operations, general mutation execution (only the FR-23–FR-26 UPDATE compilation and selection lowering are in scope; execution is host/Truss-owned), authentication,
 policy decision engine, cost optimizer and cross-backend federation. Longer-term
 language additions require separately governed semantics and delivery selection.
 
