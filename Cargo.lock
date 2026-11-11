@@ -506,12 +506,12 @@ dependencies = [
 [[package]]
 name = "hashbrown"
 version = "0.12.3"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 
 [[package]]
 name = "hashbrown"
 version = "0.13.2"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 
 [[package]]
 name = "hashbrown"
@@ -782,7 +782,7 @@ dependencies = [
 [[package]]
 name = "json-ld-core"
 version = "0.21.4"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "contextual",
  "educe 0.4.23",
@@ -846,7 +846,7 @@ dependencies = [
 [[package]]
 name = "json-ld-syntax"
 version = "0.21.4"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "contextual",
  "decoded-char",
@@ -876,7 +876,7 @@ dependencies = [
 [[package]]
 name = "json-syntax"
 version = "0.12.5"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "contextual",
  "decoded-char",
@@ -1302,7 +1302,7 @@ checksum = "54b4ed3a7192fa19f5f48f99871f2755047fabefd7f222f12a1df1773796a102"
 [[package]]
 name = "oxrdf"
 version = "0.3.5"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "oxilangtag",
  "oxiri",
@@ -1312,7 +1312,7 @@ dependencies = [
 [[package]]
 name = "oxttl"
 version = "0.2.5"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "memchr",
  "oxilangtag",
@@ -1744,7 +1744,7 @@ checksum = "700de91d5fd6091442d00fdd9ee790af6d4f0f480562b0f5a1e8f59e90aafe73"
 [[package]]
 name = "saphyr-parser"
 version = "0.1.0"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "arraydeque",
  "thiserror 2.0.21",
@@ -2065,7 +2065,7 @@ checksum = "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20"
 [[package]]
 name = "umf-codegen"
 version = "0.10.8"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "num-bigint",
  "sha2",
@@ -2075,7 +2075,7 @@ dependencies = [
 [[package]]
 name = "umf-core"
 version = "0.10.8"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "base64",
  "contextual",
@@ -2368,7 +2368,7 @@ checksum = "3ad82d2a33cdc9674dc7465672f271e096168fcdbe0f799d9e6db8c5892679dc"
 [[package]]
 name = "xsd-types"
 version = "0.9.6"
-source = "git+https://github.com/DocumentDrivenDX/umf.git?rev=e3f38ef6f05ae636d2837f9d69f8d6805222664b#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
+source = "git+https://github.com/DocumentDrivenDX/umf.git?tag=umf-v0.10.8#e3f38ef6f05ae636d2837f9d69f8d6805222664b"
 dependencies = [
  "chrono",
  "iref",

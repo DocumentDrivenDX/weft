@@ -16,8 +16,8 @@ bounded-current-string-candidate=["current-query-refinement-candidate"]
 current-query-refinement-candidate=[]
 
 [dependencies]
-umf-core = { git = "https://github.com/DocumentDrivenDX/umf.git", rev = "e3f38ef6f05ae636d2837f9d69f8d6805222664b", default-features = false, features = ["full-core"], optional = true }
-umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf.git", rev = "e3f38ef6f05ae636d2837f9d69f8d6805222664b", optional = true }
+umf-core = { git = "https://github.com/DocumentDrivenDX/umf.git", tag = "umf-v0.10.8", default-features = false, features = ["full-core"], optional = true }
+umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf.git", tag = "umf-v0.10.8", optional = true }
 base64 = "=0.22.1"
 serde.workspace = true
 serde_json.workspace = true
