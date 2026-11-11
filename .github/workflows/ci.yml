@@ -78,9 +78,11 @@ jobs:
                    tests/engine-catalog/wheel-smoke.py \
                    tests/current-query-refinement/wheel-smoke.py \
                    tests/current-unity-aggregate/python-bridge.py \
-                   tests/truss-date/wheel-smoke.py; do
+                   tests/truss-date/wheel-smoke.py \
+                   tests/current-query-designation/wheel-smoke.py; do
             "$py" "$f" --wheel "$wheel" --output "$RUNNER_TEMP/$(basename "$(dirname "$f")")-$(basename "$f").json"
           done
+          "$py" tests/truss-catalog-capacity/wheel-smoke.py
           "$py" tests/current-query-refinement/order-limit-oracle.py --output "$RUNNER_TEMP/order-limit-oracle.json"
       - name: Native CLI and installed wheel agree on table operations
         run: |
