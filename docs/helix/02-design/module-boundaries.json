@@ -5179,6 +5179,7 @@
         "scripts/build-site.mjs",
         "scripts/check-site.mjs",
         "scripts/check-specs.ts",
+        "scripts/check-tree-size.py",
         "scripts/checks/check-module-boundaries.py",
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
