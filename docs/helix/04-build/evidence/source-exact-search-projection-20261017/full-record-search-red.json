@@ -1,9 +1,0 @@
-{
-  "diagnostics": [
-    {
-      "code": "search projected Field/native correspondence absent"
-    }
-  ],
-  "status": "blocked",
-  "version": "weft.search/0.1"
-}

@@ -462,7 +462,7 @@ mod ashlar_tests {
     #[test]
     fn retired_ashlar_input_refuses_without_rewriting_historical_artifact() {
         let case: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/B-006-cross-module-native/compile.json"
+            "../../../tests/fixtures/retained/B-006-cross-module-native-compile.json"
         ))
         .unwrap();
         let request = case["request"].to_string();

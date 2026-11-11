@@ -3473,7 +3473,7 @@ mod tests {
 
             let synthetic_cells = synthetic_native_tree(&layout, &stored);
             let native_receipt: Value = serde_json::from_str(include_str!(
-                "../../../docs/helix/04-build/evidence/B-005-original-recursive-row-native.json"
+                "../../../tests/fixtures/retained/B-005-original-recursive-row-native.json"
             ))
             .unwrap();
             let native_cases: Vec<_> = native_receipt["results"]

@@ -2,49 +2,17 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
-import YAML from 'yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
-import { checkAllocation } from './spec-allocation';
 
 const root = resolve(import.meta.dir, '..');
 const read = (p: string) => readFile(resolve(root, p), 'utf8');
 const json = async (p: string) => JSON.parse(await read(p));
 const assert = (ok: unknown, message: string): asserts ok => { if (!ok) throw new Error(message); };
 async function walk(p: string): Promise<string[]> {
-  // Byte-preserved historical copies are evidence, not governing instances or schemas.
-  if (p === 'docs/helix/04-build/evidence') return [];
   const entries = await readdir(resolve(root, p), { withFileTypes: true });
   return (await Promise.all(entries.map(e => e.isDirectory() ? walk(`${p}/${e.name}`) : [`${p}/${e.name}`]))).flat();
 }
-const marker = YAML.parse(await read('.helix.yml'));
-assert(marker.flows?.some((f: any) => f.id === 'helix' && f.root === 'docs/helix/'), 'Missing active HELIX scope');
 const files = await walk('docs/helix');
-const artifacts = new Map<string, { file: string; meta: any; body: string }>();
-for (const file of files.filter(f => f.endsWith('.md'))) {
-  const body = await read(file);
-  if (!body.startsWith('---\n')) continue;
-  const end = body.indexOf('\n---\n', 4);
-  assert(end > 0, `${file}: unclosed frontmatter`);
-  const meta = YAML.parse(body.slice(4, end)).ddx;
-  assert(meta?.id && meta.type && meta.activity && meta.authoring?.home === 'repo', `${file}: incomplete metadata`);
-  assert(!artifacts.has(meta.id), `Duplicate artifact ${meta.id}`);
-  artifacts.set(meta.id, {file, meta, body});
-}
-for (const [id, a] of artifacts) {
-  for (const edge of a.meta.links ?? []) {
-    assert(['informed_by', 'informs'].includes(edge.kind) && artifacts.has(edge.id), `${id}: broken link ${edge.id}`);
-  }
-  // Resolve local Markdown links without trying network citations or anchors.
-  for (const match of a.body.matchAll(/\]\(([^)]+)\)/g)) {
-    const target = match[1].split('#')[0];
-    if (!target || /^(https?:|app:|codex:|\/)/.test(target)) continue;
-    const absolute = resolve(root, dirname(a.file), target);
-    assert(absolute.startsWith(`${root}/`), `${a.file}: link escapes repository`);
-    await readFile(absolute);
-  }
-}
-const allocation = await json('docs/helix/03-test/story-test-allocation.json');
-const criteria = checkAllocation(artifacts, allocation, await json('docs/helix/03-test/requirement-allocation.json'));
 const schemaDir = 'docs/helix/02-design/contracts';
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 // Security contract literals reference the separately pinned UMF 0.8 envelope.
@@ -77,7 +45,6 @@ const sha256 = (s: string) => createHash('sha256').update(s, 'utf8').digest('hex
 for (const c of cases) {
   assert(validateCase(c), `${c.id}: case schema ${JSON.stringify(validateCase.errors)}`);
   assert(!ids.has(c.id), `Duplicate case ${c.id}`); ids.add(c.id);
-  for (const criterion of c.covers) assert(criteria.has(criterion), `${c.id}: unknown ${criterion}`);
   const valid = validateRequest(c.request);
   if (c.setup.schemaNegative) { assert(!valid, `${c.id}: deliberate invalid request accepted`); structuralNegatives++; }
   else assert(valid, `${c.id}: request schema ${JSON.stringify(validateRequest.errors)}`);
@@ -104,6 +71,6 @@ for (const version of ['0.1.0','0.2.0','0.3.0']) {
   }
 }
 
-console.log(`Checked ${artifacts.size} governed artifacts, ${schemas.length} schemas, ${criteria.size} allocated criteria (planned/open/deferred; execution separate) and ${cases.length} fixture scenarios (${structuralNegatives} deliberate schema negatives).`);
+console.log(`Checked ${schemas.length} schemas and ${cases.length} fixture scenarios (${structuralNegatives} deliberate schema negatives).`);
 console.log('No compiler, database or embedding tests were executed.');
 

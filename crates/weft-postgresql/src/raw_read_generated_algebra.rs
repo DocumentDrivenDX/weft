@@ -1789,7 +1789,7 @@ mod tests {
     fn issues_closed_ordinary_page_and_keeps_v5_independent() {
         let request = request_with_access("0.1.0", "primary", false);
         let v5_before = issue_v5(request.clone()).unwrap();
-        let frozen_v5: Value = serde_json::from_str(include_str!("../../../docs/helix/04-build/evidence/generated-connection-v5-20261104/issued-v5.json")).unwrap();
+        let frozen_v5: Value = serde_json::from_str(include_str!("../../../tests/fixtures/retained/issued-v5.json")).unwrap();
         assert_eq!(v5_before, frozen_v5);
         let v6 = issue_v6(request.clone()).unwrap();
         if std::env::var_os("WEFT_TEST_CAPTURE_GENERATED_READ_V6").is_some() {

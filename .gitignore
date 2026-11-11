@@ -6,3 +6,13 @@ __pycache__/
 *.pyc
 .DS_Store
 *.whl
+/docs/helix/04-build/evidence/
+/distributions/
+/.ci/
+*.zip
+*.tar.gz
+*.log
+*.stdout
+*.stderr
+*.so
+*.dylib
