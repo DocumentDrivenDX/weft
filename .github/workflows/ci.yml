@@ -64,15 +64,13 @@ jobs:
           "$py" -I tests/mutation/python-check.py
           "$py" -I examples/quickstart.py
           # More installed-wheel checks. They import helpers from their own directory, so no -I.
+          # (tests/current-query-presence/python-*bridge.py are run by tests/engine-catalog/wheel-smoke.py.)
           for f in tests/current-query-designation/issued-current-python.py \
                    tests/current-query-designation/python-bridge.py \
                    tests/current-scalar-databricks/python-bridge.py \
                    tests/engine-catalog/test_owner_page_profile.py \
                    tests/lineage-v02/issued-python.py \
-                   tests/lineage-v02/python-bridge.py \
-                   tests/current-query-presence/python-bridge.py \
-                   tests/current-query-presence/python-graph-requirements-bridge.py \
-                   tests/current-query-presence/python-model-requirements-bridge.py; do
+                   tests/lineage-v02/python-bridge.py; do
             "$py" "$f"
           done
           wheel=$(ls dist/*.whl)
