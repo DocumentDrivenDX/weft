@@ -1,0 +1,250 @@
+{
+  "scope": "Private scalar custody projection over synthetic native values, preserving NULL/empty, native numeric versus original token and exact binary bytes; not codec/domain correspondence, logical result decoding, installed layout or host qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "33d210784dc73eff235046c1a99dd02ee55c4c9e7a275b10e0ce1a6f0fe2abc8",
+  "harnessSha256": "0f7567c6371f210b73cf384a6d319904bccf518df29fc0fa09fe2238f6620404",
+  "results": [
+    {
+      "kind": "object",
+      "case": "unicode",
+      "values": [
+        "true",
+        "string",
+        "é😀  ",
+        null,
+        null,
+        null,
+        "00ff",
+        "fe00"
+      ],
+      "sqlSha256": "198f438744751eaebadc2763cd904cbee6fc5caa73e79f377bb850c89bc75972"
+    },
+    {
+      "kind": "object",
+      "case": "empty",
+      "values": [
+        "true",
+        "string",
+        "",
+        null,
+        null,
+        null,
+        "",
+        ""
+      ],
+      "sqlSha256": "9f0fba58e0e7dcd64bf81de0aa838d14e1f06c3be2e873d6119f3f29a5607e3f"
+    },
+    {
+      "kind": "object",
+      "case": "false",
+      "values": [
+        "true",
+        "boolean",
+        null,
+        "false",
+        null,
+        null,
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "696c27eac1689b35a13b36f89249b04fb25430243bb32eb218d327207ba35892"
+    },
+    {
+      "kind": "object",
+      "case": "true",
+      "values": [
+        "true",
+        "boolean",
+        null,
+        "true",
+        null,
+        null,
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "3dd336b95091f34626df71a913b0fcdabcc17c8e4fff520fe057422ef1223f26"
+    },
+    {
+      "kind": "object",
+      "case": "uint64",
+      "values": [
+        "true",
+        "integer",
+        null,
+        null,
+        "18446744073709551615",
+        "18446744073709551615",
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "c3fb5be9ed5f39b3b3f15325c2f8406c6d65fd10093648baf18e6d2483bb7c08"
+    },
+    {
+      "kind": "object",
+      "case": "negative-zero",
+      "values": [
+        "true",
+        "decimal",
+        null,
+        null,
+        "0.00",
+        "-0.00",
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "46b39b215463da1ae898d3e0b6e01a1ebbc70bd681be8e52116a5d83d113ca20"
+    },
+    {
+      "kind": "object",
+      "case": "mismatch",
+      "values": [
+        "true",
+        "decimal",
+        null,
+        null,
+        "2",
+        "1",
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "b10221472690e68d84d83d5f095835d7bb93e449443a87456d4eb3108c702089"
+    },
+    {
+      "kind": "object",
+      "case": "absent",
+      "values": [
+        "false",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "sqlSha256": "42f40bdf74f4639ad5712b4ac0fc11c46a2030ce739c1f4de0522242025a1bc1"
+    },
+    {
+      "kind": "edge",
+      "case": "unicode",
+      "values": [
+        "true",
+        "string",
+        "é😀  ",
+        null,
+        null,
+        null,
+        "00ff",
+        "fe00"
+      ],
+      "sqlSha256": "198f438744751eaebadc2763cd904cbee6fc5caa73e79f377bb850c89bc75972"
+    },
+    {
+      "kind": "edge",
+      "case": "empty",
+      "values": [
+        "true",
+        "string",
+        "",
+        null,
+        null,
+        null,
+        "",
+        ""
+      ],
+      "sqlSha256": "9f0fba58e0e7dcd64bf81de0aa838d14e1f06c3be2e873d6119f3f29a5607e3f"
+    },
+    {
+      "kind": "edge",
+      "case": "false",
+      "values": [
+        "true",
+        "boolean",
+        null,
+        "false",
+        null,
+        null,
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "696c27eac1689b35a13b36f89249b04fb25430243bb32eb218d327207ba35892"
+    },
+    {
+      "kind": "edge",
+      "case": "true",
+      "values": [
+        "true",
+        "boolean",
+        null,
+        "true",
+        null,
+        null,
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "3dd336b95091f34626df71a913b0fcdabcc17c8e4fff520fe057422ef1223f26"
+    },
+    {
+      "kind": "edge",
+      "case": "uint64",
+      "values": [
+        "true",
+        "integer",
+        null,
+        null,
+        "18446744073709551615",
+        "18446744073709551615",
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "c3fb5be9ed5f39b3b3f15325c2f8406c6d65fd10093648baf18e6d2483bb7c08"
+    },
+    {
+      "kind": "edge",
+      "case": "negative-zero",
+      "values": [
+        "true",
+        "decimal",
+        null,
+        null,
+        "0.00",
+        "-0.00",
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "46b39b215463da1ae898d3e0b6e01a1ebbc70bd681be8e52116a5d83d113ca20"
+    },
+    {
+      "kind": "edge",
+      "case": "mismatch",
+      "values": [
+        "true",
+        "decimal",
+        null,
+        null,
+        "2",
+        "1",
+        "00",
+        "ff"
+      ],
+      "sqlSha256": "b10221472690e68d84d83d5f095835d7bb93e449443a87456d4eb3108c702089"
+    },
+    {
+      "kind": "edge",
+      "case": "absent",
+      "values": [
+        "false",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "sqlSha256": "42f40bdf74f4639ad5712b4ac0fc11c46a2030ce739c1f4de0522242025a1bc1"
+    }
+  ],
+  "sourceSha256": "5405ce1086f205fed55ceed5ba249b2c779fd81d0d34ecfc89d01059a7cf19fc",
+  "rustTestLogSha256": "d9e697cb57f61e183d77a3d9f1017ae6d7f8ac573b92f335a3e491e11c140fdd"
+}

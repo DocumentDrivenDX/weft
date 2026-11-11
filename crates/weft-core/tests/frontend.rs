@@ -36,7 +36,7 @@ fn independent_corpus_resolution_and_refusals() {
 
 #[test]
 fn retired_b001_numeric_corpus_refuses_without_current_plan() {
-    let original = include_bytes!("../../../spikes/b001/fixtures/cases-umf070.json");
+    let original = include_bytes!("../../../tests/fixtures/cases-umf070.json");
     assert_eq!(
         weft_core::json::sha256(original),
         "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306"
