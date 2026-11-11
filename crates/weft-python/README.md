@@ -1,17 +1,44 @@
 # umf-weft
 
-Native Python bindings for the Weft SQL compiler. Distribution `umf-weft`, import
-`weft`. Functions consume pinned original compiler requests and return complete
-JSON responses or explicit refusals. The compiler does not execute database SQL
-or grant native authority. Consult the repository support inventory and release
-pins for each backend, feature, native subset and required owner obligations.
+Python bindings for [Weft](https://github.com/DocumentDrivenDX/weft), a compiler
+that turns a request (a UMF document, a storage binding and a query) into SQL for
+a chosen backend: Truss on PostgreSQL or Ashlar on Databricks. The distribution
+is `umf-weft`; the import is `weft`. Functions take a JSON request and return a
+JSON response with SQL, parameters, result types and diagnostics, or an explicit
+refusal. Weft never connects to a database or executes SQL.
 
-Standard wheels include the original Typed SDK APIs and distinct candidate
-page registrations. Package versions are separate from backend and ABI versions.
-The combined 0.4.40 line preserves the explicit Truss Date ABI1.1 profile alongside
-older profiles. Selected temporal Typed SDK qualification remains HELD.
+Status: experimental.
 
-CPython ABI3 targets conventional GIL builds of Python3.9 and later on the five
-published platform targets. Installed-wheel gates qualify exact artifacts;
-other interpreters and platforms are not implied. Licensed at your option under
-MIT or Apache-2.0. Dependencies retain their own licenses and bundled notices.
+## Install
+
+```sh
+pip install umf-weft
+```
+
+Wheels are abi3 and support CPython 3.9 or later on manylinux x86_64, manylinux
+aarch64 and macOS arm64.
+
+## Quickstart
+
+```python
+import json, weft
+
+# Any request object from the repository's examples; this one selects one field.
+request = json.load(open("plain-field.request.json"))
+result = json.loads(weft.compile_truss_runtime_json(json.dumps(request)))
+assert result["status"] == "compiled", result
+print(result["sql"])
+```
+
+Get [plain-field.request.json](https://github.com/DocumentDrivenDX/weft/blob/main/examples/plain-field.request.json)
+and the full [quickstart](https://github.com/DocumentDrivenDX/weft/blob/main/examples/quickstart.py)
+from the repository. CI runs the quickstart against each built wheel.
+
+## Links
+
+[Source and issues](https://github.com/DocumentDrivenDX/weft) ·
+[Changelog](https://github.com/DocumentDrivenDX/weft/blob/main/CHANGELOG.md) ·
+[Contracts](https://github.com/DocumentDrivenDX/weft/tree/main/docs/helix/02-design/contracts)
+
+Licensed at your option under MIT or Apache-2.0. Dependencies retain their own
+licenses and bundled notices.

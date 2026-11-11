@@ -7,6 +7,7 @@ on:
   schedule:
     - cron: '17 6 * * *'   # nightly jobs
   workflow_dispatch:
+  workflow_call:   # called by release.yml; the nightly jobs below are skipped there
 
 permissions:
   contents: read
@@ -61,6 +62,45 @@ jobs:
           "$py" -I tests/truss-facts/check.py --reports "$RUNNER_TEMP/truss-facts.json"
           "$py" -I tests/truss-entity-selection/check.py --reports "$RUNNER_TEMP/entity-selection.json"
           "$py" -I tests/mutation/python-check.py
+          "$py" -I examples/quickstart.py
+          # More installed-wheel checks. They import helpers from their own directory, so no -I.
+          # (tests/current-query-presence/python-*bridge.py are run by tests/engine-catalog/wheel-smoke.py.)
+          for f in tests/current-query-designation/issued-current-python.py \
+                   tests/current-query-designation/python-bridge.py \
+                   tests/current-scalar-databricks/python-bridge.py \
+                   tests/engine-catalog/test_owner_page_profile.py \
+                   tests/lineage-v02/issued-python.py \
+                   tests/lineage-v02/python-bridge.py; do
+            "$py" "$f"
+          done
+          wheel=$(ls dist/*.whl)
+          for f in tests/current-scalar-databricks/wheel-smoke.py \
+                   tests/engine-catalog/wheel-smoke.py \
+                   tests/current-query-refinement/wheel-smoke.py \
+                   tests/current-unity-aggregate/python-bridge.py \
+                   tests/truss-date/wheel-smoke.py; do
+            "$py" "$f" --wheel "$wheel" --output "$RUNNER_TEMP/$(basename "$(dirname "$f")")-$(basename "$f").json"
+          done
+          "$py" tests/current-query-refinement/order-limit-oracle.py --output "$RUNNER_TEMP/order-limit-oracle.json"
+      - name: Native CLI and installed wheel agree on table operations
+        run: |
+          cargo build --locked -p weft-postgresql --example compile_table_operation --example compile_table_seed --example compile_raw_read
+          py="$RUNNER_TEMP/venv/bin/python"
+          "$py" tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation "$RUNNER_TEMP/op-bindings.json"
+          "$py" tests/raw-postgresql/table-seed-bindings.py target/debug/examples/compile_table_seed "$RUNNER_TEMP/seed-report.json" "$RUNNER_TEMP/seed-corpus.json"
+          "$py" tests/raw-postgresql/table-lifecycle-bindings-check.py target/debug/examples/compile_raw_read
+      - name: Committed fixtures are what their generators produce
+        run: |
+          export WEFT_TEST_OUT_FILE="$RUNNER_TEMP/host-obligation.json"
+          py="$RUNNER_TEMP/venv/bin/python"
+          for f in tests/application/generate.py tests/compile/generate.py tests/register-backend/generate.py \
+                   tests/truss-postgresql/build-*.py tests/truss-postgresql/generate-*.py; do
+            "$py" "$f"
+          done
+          "$py" tests/truss-postgresql/host-obligation-check.py
+          "$py" tests/truss-postgresql/pg18-python-check.py
+          git diff --exit-code -- tests docs
+          test -z "$(git ls-files --others --exclude-standard -- tests docs)"
 
   js:
     runs-on: ubuntu-24.04
@@ -205,7 +245,8 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: cargo test --locked -p weft-postgresql --test table_operation --test table_lifecycle
       - name: Native table operations
-        # umf-access>=0.10.11 is not on PyPI yet (only 0.1.0.dev8); remove continue-on-error once it is published.
+        # TODO(follow-up): publish umf-access>=0.10.11 to PyPI (umf 0.10.11 release; PyPI has only
+        # 0.1.0.dev8), then delete continue-on-error. Until then this step cannot install and is not a gate.
         continue-on-error: true
         run: |
           pip install maturin==1.9.6 'umf-access>=0.10.11,<0.11' 'umf-codegen>=0.10.11,<0.11' 'psycopg[binary]==3.2.13' 'pydantic==2.13.5'
@@ -214,6 +255,36 @@ jobs:
           cargo build --locked -p weft-postgresql --example compile_table_operation
           python -I tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation "$RUNNER_TEMP/bindings.json" "$RUNNER_TEMP/compile.json"
           python -I tests/raw-postgresql/table-operation-native.py --dsn-env WEFT_NATIVE_DSN --report "$RUNNER_TEMP/native.json"
+
+  native-probes:
+    # Truss/PostgreSQL native probes: compile with the installed wheel, run the SQL in a throwaway
+    # PostgreSQL 18.6 container (reached with `docker exec`, no published port), compare results.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - name: Start PostgreSQL 18.6
+        run: |
+          docker run -d --name weft-native-pg -e POSTGRES_HOST_AUTH_METHOD=trust postgres:18.6
+          for i in $(seq 1 30); do docker exec weft-native-pg pg_isready -U postgres && break; sleep 2; done
+      - name: Build and install the wheel
+        run: |
+          pip install maturin==1.9.6
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out dist
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install dist/*.whl
+      - name: Probes
+        run: |
+          export WEFT_TEST_OUT_FILE="$RUNNER_TEMP/probe-receipt.json"
+          for f in multi-recursive-entity-native optional-scalar-native recursive-entity-native; do
+            "$RUNNER_TEMP/venv/bin/python" "tests/truss-postgresql/$f.py"
+          done
 
   umf-latest:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

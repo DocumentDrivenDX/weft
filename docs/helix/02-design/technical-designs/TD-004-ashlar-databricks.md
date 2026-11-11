@@ -75,7 +75,7 @@ requires actual host verification of complete caller authority, immutable
 publication, lifecycle and projection custody before execution and buffered
 publication. The current native synthetic-admin corpus does not fulfill that
 entire host gate. See the B-006 execution record for exact component evidence;
-the [B-006 acceptance audit](../../04-build/evidence/B-006-acceptance.md) records
+the B-006 acceptance audit records
 completed candidate recursive/presence lowering and buffered host fixture
 enforcement, with production policy and release qualification kept separate.
 

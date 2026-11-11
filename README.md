@@ -1,85 +1,84 @@
 # Weft
 
-A universal UMF-powered SQL dialect with pluggable storage backends.
+Weft compiles a request (a UMF document, a storage binding and a query) into SQL
+for a chosen backend, with bound parameters, result types, decoding instructions
+and diagnostics. If a selected meaning cannot be preserved, compilation returns
+an explicit refusal instead of guessing. Weft never connects to a database or
+executes SQL: execution, authorization and result publication belong to the host.
 
-**Input:** Weft SQL + supplied UMF modules. **Output:** SQL for the selected backend, with parameters, result types, decoding instructions and diagnostics.
+Weft is a Rust compiler with Python bindings (`umf-weft`, import `weft`) and a
+WebAssembly build. It consumes [UMF](https://github.com/DocumentDrivenDX/umf) and
+lowers to two backends: Truss on PostgreSQL and Ashlar on Databricks.
 
-Initial backends: **Ashlar on Databricks** and **Truss on PostgreSQL**. Weft is a separate compiler project that consumes UMF; storage layouts remain owned by Ashlar and Truss.
+**Status: experimental.** The public surface is the JSON request and response
+contracts in `docs/helix/02-design/contracts/`.
 
-Weft implements a Rust compiler with native Python and browser WASM bindings. The versioned 0.1 scalar and 0.2 application-read dialects resolve pinned UMF modules, then lower through separately registered Truss/PostgreSQL and Ashlar/Databricks backends. Unsupported or unknown selected meaning produces an explicit refusal.
+## What CI tests
 
-Python wheels are distributed through [GitHub releases](https://github.com/DocumentDrivenDX/weft/releases). The [0.4.48 qualification report](docs/helix/04-build/releases/local-macos-0.4.48.json) records local macOS ARM64/PostgreSQL 18.6 evidence for current UMF 0.10 declared tables, batches and typed queries. Other platform jobs check packaging only. Earlier PostgreSQL 17.9 synthetic fixtures, Databricks SQL 2026.39 and Chromium evidence retain the exact historical scope in the [support inventory](docs/helix/04-build/evidence/B-007-support-inventory.json). Database execution, authorization, integrity and publication remain host obligations; no broader backend execution claim follows from installing a wheel.
+- The Rust workspace test suite (`cargo test --workspace`) on Linux x86_64.
+- The Python wheel, built from this source and installed into a fresh virtualenv:
+  the quickstart below plus the installed-wheel checks listed in
+  `.github/workflows/ci.yml`.
+- Nightly: backend feature matrices, WebAssembly parity in Chromium, and native
+  PostgreSQL 18.6 table-operation tests (see `.github/workflows/ci.yml`).
+- Releases build abi3 wheels (Python 3.9 or later) for manylinux x86_64,
+  manylinux aarch64 and macOS arm64, an sdist, and two WebAssembly tarballs. Each
+  wheel is installed into a fresh virtualenv and runs the quickstart before
+  anything is published.
 
-[0.4.49](docs/helix/04-build/releases/v0.4.49.md) optimizes Truss complete-entity
-facts lowering and adds an explicit shared Rust WASM compiler export. Its
-[separate qualification](docs/helix/04-build/releases/local-macos-0.4.49.json)
-records the exact macOS wheel, affected Rust/native tests and five actual
-Chromium parity cases. Earlier qualification retains its original version scope.
+The Truss/PostgreSQL and Ashlar/Databricks backends are compile-only in this
+repository. Nothing here is tested against a running Databricks warehouse.
 
-Start at [the specification index](docs/helix/README.md), [PRD](docs/helix/01-frame/prd.md), [language contract](docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md) and [test plan](docs/helix/03-test/TP-001-compiler-conformance.md).
-
-## Validate the specifications
+## Install
 
 ```sh
-bun install --frozen-lockfile
-bun run specs:check
+pip install umf-weft
 ```
 
-This checks document traceability, public JSON schemas and fixture integrity. It does not execute a compiler or database. See the [build plan](docs/helix/04-build/implementation-plan.md) for the implementation gates.
+## Quickstart
 
-The [0.1 frontend](crates/weft-core/) resolves all 636 specification cases to typed logical plans or explicit refusals. [B-002 evidence](docs/helix/04-build/evidence/B-002-frontend.md) includes independent bag evaluation and browser parity. The [application-read contract](docs/helix/02-design/contracts/CONTRACT-004-application-reads.md) governs complete entities, exact keyset paging, counts, related reads and typed parameters. Executable compiler and evidence commands are in the [conformance guide](tests/qualify-and-evolve/README.md).
+```sh
+git clone https://github.com/DocumentDrivenDX/weft && cd weft
+python examples/quickstart.py
+```
 
-## Truss PG18 host bridge
+`examples/quickstart.py` loads `examples/plain-field.request.json` and compiles it:
 
-Build the Python extension with `truss-postgresql-pg18` to expose
-`weft.compile_truss_postgresql_json(request_json, composition_json)`. This normal
-feature accepts host-supplied original storage declarations without the test
-fixture registry. Use backend `truss.postgresql.original` version `0.2.0`, target
-`truss-pg18.6-live/0.1` and composition version
-`weft-truss-pg18-composition/0.1.0`. Candidate opt-in remains required.
+```python
+import json, pathlib, weft
 
-Scalar filter/count compilation has native Python evidence. This does not
-qualify execution against a live Truss database. The host must enforce the emitted
-obligations, exact decoding, authority and `search_path=pg_catalog,pg_temp`;
-Truss's public execution integration remains in progress. The target carries no
-inherited PG17 native evidence.
+request = json.loads(pathlib.Path(__file__).with_name("plain-field.request.json").read_text())
+result = json.loads(weft.compile_truss_runtime_json(json.dumps(request)))
+assert result["status"] == "compiled", result
+print(result["sql"])
+```
 
-The same feature also exports `compile_truss_runtime_json(request_json)` for the
-actual Truss runtime mapping. It uses backend `truss.postgresql.runtime` version
-`0.4.3`, binding `truss-runtime-binding/0.4` and target
-`truss-runtime-pg18.6/0.4`. Truss constructs the binding from its accepted source
-bytes and actual catalog IDs; consumers do not construct per-field codec graphs.
-This separate adapter uses Weft's application-read frontend and typed IR, then
-lowers to Truss's fixed, independently authorized query source. The current
-installed consumer demonstrates string/boolean filters, exact integer/decimal
-fields and parameters, counts, `alias.*`, optional/null values and read-only
-execution on PG18.6. Decimal projections retain original tokens; the native
-finite numeric domain is explicitly checked. Independent directed monomorphic
-relationships support HAS_RELATED and bounded RELATED_KEYS, forward/inverse,
-with authored required string keys. Edge bags and composite key ordering are
-preserved. Explicit entity/related-entity page profiles use exact authored
-required-string native keys and typed C-collated continuation, with complete
-source uniqueness checked by Truss before filtering. Count-summary supports
-ungrouped counts and grouped counts over required, non-nullable string/boolean
-fields, with complete grouping order and an explicit LIMIT. Duplicate rows count
-individually; string grouping uses C collation. Multi-hop relationships, structured
-properties, non-string page keys and optional/numeric grouping remain unsupported
-in that consumer. All new declarations retain Candidate status.
+The request is chosen by the host: a UMF document, a Truss runtime binding and the
+query to compile. The output is one PostgreSQL statement, which begins:
 
-Backend0.4.3 retains the complete authored Record member/native-ID mapping while
-interpreting only selected query fields. Supported scalar projections and counts
-can therefore read Truss runtime0.31 records/documents containing timestamp or
-binary siblings. Truss still validates every source cell before filtering.
-Selecting those unsupported SQL types, or an entity projection containing them,
-refuses without omitting values. This adds no timestamp/binary SQL semantics.
+```
+SELECT (("s0".props->'1'->>'text') COLLATE pg_catalog."C")::pg_catalog.text AS "A-label" FROM "truss"."query_objects"($1::pg_catalog.jsonb,1::pg_catalog.int4) AS "s0" LIMIT 101
+```
 
-The runtime compiler retains explicit release selection: backend0.4.3 selects
-runtime0.31; backend0.4.2 retains the group capability for Truss runtime0.30.
-Backend0.4.1 retains its ungrouped0.30
-semantics; backend0.4.0 remains the0.29 realization. Binding/target identifiers
-stay0.4, and legacy backend selections retain their original native profiles.
+CI runs this script against a freshly built wheel on every pull request.
+
+## Build from source
+
+```sh
+rustup show                                   # installs the pinned toolchain
+cargo test --workspace --locked
+pip install maturin==1.9.6
+maturin develop --manifest-path crates/weft-python/Cargo.toml
+bun install --frozen-lockfile && bun run specs:check && bun run modules:check
+```
+
+## More
+
+- [Architecture](docs/helix/02-design/architecture.md) and [ADRs](docs/helix/02-design/adr/)
+- [Request and response contracts](docs/helix/02-design/contracts/)
+- [Changelog](CHANGELOG.md) and [roadmap](ROADMAP.md)
 
 ## License
 
-First-party software is dual-licensed under MIT OR Apache-2.0, at your option.
-See [LICENSE.md](LICENSE.md). Third-party materials retain their original notices.
+Dual-licensed under MIT OR Apache-2.0, at your option. See [LICENSE.md](LICENSE.md).
+Third-party materials retain their original notices.

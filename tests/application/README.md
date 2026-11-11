@@ -1,7 +1,7 @@
 # Application-read frontend conformance
 
 Run `sh scripts/run-b002a.sh` with the pinned toolchain and Chromium profile in
-[B-002A evidence](../../docs/helix/04-build/evidence/B-002A-application-reads.md).
+B-002A evidence.
 It preserves the original gate and adds 620 application frontend cases, an
 independent 18-scenario result oracle, versioned schema checks and native/browser
 byte parity. `cargo test -p weft-core` runs the native tests alone.

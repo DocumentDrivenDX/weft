@@ -151,7 +151,7 @@ compiler/backend support claims remain unverified until evidence exists.
 
 ## Application-read requirements incorporated from PR #2
 
-The owner requested that [the merged discovery input](../00-discover/application-read-requirements-input.md) be accounted for in design and implementation. These are now required outcomes, not optional roadmap suggestions. Preserve Weft SQL 0.1 compatibility and introduce a versioned 0.2 application-read profile with independent fixtures. FEAT-005 and US-007 own this cohesive subsystem; CONTRACT-004 defines its boundary.
+The owner requested that the merged discovery input be accounted for in design and implementation. These are now required outcomes, not optional roadmap suggestions. Preserve Weft SQL 0.1 compatibility and introduce a versioned 0.2 application-read profile with independent fixtures. FEAT-005 and US-007 own this cohesive subsystem; CONTRACT-004 defines its boundary.
 
 | ID | Priority | Required outcome |
 |---|---|---|

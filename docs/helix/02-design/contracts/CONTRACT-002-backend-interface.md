@@ -201,7 +201,7 @@ backend is selected. Default Rust unwind panics are normalized atomically;
 non-unwinding aborts and WASM traps require wrapper/host normalization, which is
 part of B-004 qualification, not a capability established by native unwind tests.
 
-This library interface passes B-003 component/native/browser gates; [evidence](../../04-build/evidence/B-003-backend-interface.md) qualifies the exact subset. ADR-002 accepts the structural boundary. Public compile wrappers, production mappings and target-native qualification remain B-004 through B-007. No production mapping is invented here.
+This library interface passes B-003 component/native/browser gates; evidence qualifies the exact subset. ADR-002 accepts the structural boundary. Public compile wrappers, production mappings and target-native qualification remain B-004 through B-007. No production mapping is invented here.
 
 The registry also checks emitted column count/order/name, logical type,
 selected source identities, exact numeric carrier/decoder pairing and typed

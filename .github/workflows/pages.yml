@@ -1,6 +1,9 @@
 name: Deploy signed Weft microsite
 on:
-  # Full browser qualification and Pages deployment are explicit manual runs.
+  push:
+    branches: [main]
+    paths: ['website/**', 'README.md', 'scripts/build-site.mjs', '.github/workflows/pages.yml']
+    tags: ['v*']
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,10 +13,12 @@ concurrency:
 jobs:
   build:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # the site is stamped with the latest v* tag
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -58,7 +63,7 @@ jobs:
   deploy:
     if: github.event_name != 'pull_request'
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       pages: write
