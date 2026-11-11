@@ -1,0 +1,1 @@
+crates/weft-python/THIRD-PARTY-LICENSES.txt

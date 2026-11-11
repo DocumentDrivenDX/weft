@@ -54,6 +54,21 @@ jobs:
         run: |
           pip install maturin==1.9.6
           maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out dist
+      - name: Sdist metadata and compile inputs
+        # Cheap guard (the full sdist -> wheel build runs in the nightly features job,
+        # about 8 minutes cold): pip's metadata step failed on nested license-files,
+        # and the sdist once lacked the schemas weft-core includes at compile time.
+        run: |
+          maturin sdist --out "$RUNNER_TEMP/sdist"
+          mkdir "$RUNNER_TEMP/sdist-src"
+          tar -xzf "$RUNNER_TEMP"/sdist/*.tar.gz -C "$RUNNER_TEMP/sdist-src" --strip-components=1
+          (cd "$RUNNER_TEMP/sdist-src" && maturin pep517 write-dist-info \
+            --metadata-directory "$RUNNER_TEMP/sdist-meta" --interpreter "$(command -v python)")
+          for f in LICENSE.md LICENSE-MIT LICENSE-APACHE THIRD-PARTY-LICENSES.txt; do
+            test -s "$RUNNER_TEMP"/sdist-meta/*.dist-info/licenses/"$f"
+          done
+          (cd "$RUNNER_TEMP/sdist-src" && grep -rhoE '\.\./(\.\./)+docs/[A-Za-z0-9._/-]*\.schema\.json' crates/*/src \
+            | sed 's#^\(\.\./\)*##' | sort -u | while read -r f; do test -f "$f" || { echo "missing from sdist: $f"; exit 1; }; done)
       - name: Install the wheel in a fresh venv and run the installed-wheel checks
         run: |
           python -m venv "$RUNNER_TEMP/venv"
