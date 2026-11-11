@@ -1,1 +1,0 @@
-{"fieldId":"demo/short_code","nativeColumn":"short_code","output":{"carrier":"string","name":"field","nativeType":{"kind":"char","length":8},"nullable":false,"oid":1042},"sourceField":{"element":"short_code","module":"demo"}}

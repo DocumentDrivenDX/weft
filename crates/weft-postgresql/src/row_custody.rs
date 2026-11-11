@@ -439,7 +439,7 @@ mod tests {
     #[test]
     fn tree_index_refuses_corrupt_links_slots_cycles_and_work_bounds() {
         let receipt: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/B-005-row-tree-custody-native.json"
+            "../../../tests/fixtures/retained/B-005-row-tree-custody-native.json"
         ))
         .unwrap();
         let case = receipt["results"]
@@ -533,7 +533,7 @@ mod tests {
     #[test]
     fn native_bags_require_complete_unique_reachable_tree_structure() {
         let receipt: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/B-005-row-tree-custody-native.json"
+            "../../../tests/fixtures/retained/B-005-row-tree-custody-native.json"
         ))
         .unwrap();
         for case in receipt["results"].as_array().unwrap() {
@@ -562,7 +562,7 @@ mod tests {
     #[test]
     fn admits_all_ten_recorded_complete_state_native_bags() {
         let receipt: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/B-005-row-tree-custody-native.json"
+            "../../../tests/fixtures/retained/B-005-row-tree-custody-native.json"
         ))
         .unwrap();
         let cases = receipt["results"].as_array().unwrap();
@@ -704,7 +704,7 @@ mod tests {
     #[test]
     fn admits_all_sixteen_recorded_native_custody_vectors() {
         let receipt: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/B-005-row-custody-native.json"
+            "../../../tests/fixtures/retained/B-005-row-custody-native.json"
         ))
         .unwrap();
         let observations = receipt["results"].as_array().unwrap();

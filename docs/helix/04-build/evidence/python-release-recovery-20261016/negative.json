@@ -1,7 +1,0 @@
-{
-  "status": "passed",
-  "checks": [
-    "obsolete version refused",
-    "changed archive bytes refused by original RECORD"
-  ]
-}

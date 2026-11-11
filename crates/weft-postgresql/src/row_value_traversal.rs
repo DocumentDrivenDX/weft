@@ -310,7 +310,7 @@ mod tests {
     }
     fn rows() -> Vec<TreeRow> {
         let receipt: Value = serde_json::from_str(include_str!(
-            "../../../docs/helix/04-build/evidence/B-005-row-tree-custody-native.json"
+            "../../../tests/fixtures/retained/B-005-row-tree-custody-native.json"
         ))
         .unwrap();
         let case = receipt["results"]

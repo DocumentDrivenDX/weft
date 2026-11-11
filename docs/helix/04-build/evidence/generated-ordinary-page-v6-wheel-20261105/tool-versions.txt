@@ -1,5 +1,0 @@
-rustc 1.90.0 (1159e78c4 2025-09-14)
-cargo 1.90.0 (840b83a10 2025-07-30)
-maturin 1.9.6
-Python 3.9.6
-Darwin SYN-5177 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:06:40 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T6050 arm64

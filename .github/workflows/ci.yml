@@ -1,0 +1,235 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 6 * * *'   # nightly jobs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: '0'
+  # The decimal-domain test takes ~11 minutes at opt-level 0.
+  CARGO_PROFILE_TEST_OPT_LEVEL: '1'
+  CARGO_PROFILE_DEV_OPT_LEVEL: '1'
+
+jobs:
+  size:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check-tree-size.py
+
+  rust:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --locked
+
+  python:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - name: Build the wheel
+        run: |
+          pip install maturin==1.9.6
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out dist
+      - name: Install the wheel in a fresh venv and run the installed-wheel checks
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install dist/*.whl
+          py="$RUNNER_TEMP/venv/bin/python"
+          "$py" -I tests/truss-facts/check.py --reports "$RUNNER_TEMP/truss-facts.json"
+          "$py" -I tests/truss-entity-selection/check.py --reports "$RUNNER_TEMP/entity-selection.json"
+          "$py" -I tests/mutation/python-check.py
+
+  js:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run specs:check
+      - run: bun tests/compile/schema-v0.4-check.ts
+      - run: bun tests/two-hop-schemas/check.ts
+      - run: WEFT_CARGO="$(command -v cargo)" bun run modules:check
+      - run: python3 tests/module-boundaries/check.py
+
+  # ---- nightly (schedule / manual dispatch) ----
+
+  features:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - name: Candidate registrations
+        run: cargo test --workspace --features weft-runtime/truss-postgresql-candidate,weft-runtime/ashlar-databricks-candidate,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
+      - name: Qualified registrations
+        run: cargo test --workspace --features weft-runtime/truss-postgresql-qualified,weft-runtime/ashlar-databricks-qualified,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
+      - name: Implicit arithmetic and CLI transport
+        run: cargo test --locked -j1 -p weft-runtime --no-default-features --features ashlar-databricks-paths-keys,ashlar-databricks-implicit-arithmetic
+      - name: Build optional runtimes
+        run: |
+          cargo build -p weft-runtime --features ashlar-databricks-count-distinct --locked
+          cargo build -p weft-runtime --features ashlar-databricks-count-having --locked
+          cargo build -p weft-runtime --features ashlar-databricks-left-join --locked
+      - name: Paths and paths-keys
+        run: |
+          cargo test -p weft-runtime --features ashlar-databricks-paths paths::tests --locked
+          cargo test -p weft-runtime --features ashlar-databricks-paths --bin weft-paths --test paths_cli --locked
+          cargo test -p weft-runtime --no-default-features --features ashlar-databricks-paths-keys,ashlar-databricks-paths --lib paths --locked
+          cargo test -p weft-databricks --lib related_keys::tests --locked
+          cargo test -p weft-runtime --no-default-features --features ashlar-databricks-paths-keys --bin weft-paths-keys --test paths_keys_cli --locked
+          cargo test -p weft-runtime --no-default-features --features ashlar-databricks-paths-keys --test paths_keys_having --locked
+      - name: Graph requirements candidate
+        run: |
+          cargo test --locked -p weft-core --features current-presence-graph-requirements-candidate --lib
+          cargo test --locked -p weft-core --features current-presence-graph-requirements-candidate --doc current_presence_graph_requirements
+          cargo test --locked -p weft-runtime --features current-presence-graph-requirements-candidate --lib current_presence
+      - name: Conflicting registrations are refused
+        shell: bash
+        run: |
+          refuse() {
+            if cargo check -p weft-runtime --features "$1" --locked > conflict.log 2>&1; then cat conflict.log; exit 1; fi
+            grep -F 'Choose either candidate or qualified registration for each backend' conflict.log
+          }
+          refuse truss-postgresql-candidate,truss-postgresql-qualified
+          refuse ashlar-databricks-candidate,ashlar-databricks-qualified
+          refuse ashlar-databricks-count-having,ashlar-databricks-count-distinct
+          refuse ashlar-databricks-count-distinct,ashlar-databricks-arithmetic
+          for prior in candidate qualified arithmetic mathematical-integer count-distinct count-having; do
+            refuse "ashlar-databricks-left-join,ashlar-databricks-${prior}"
+          done
+      - name: sdist builds
+        run: |
+          pip install maturin==1.9.6
+          maturin sdist --out "$RUNNER_TEMP/sdist"
+          pip wheel --no-deps "$RUNNER_TEMP"/sdist/*.tar.gz -w "$RUNNER_TEMP/sdist-wheel"
+
+  wasm-browser:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - run: bun install --frozen-lockfile
+      - name: Native reports
+        run: |
+          pip install maturin==1.9.6
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out dist
+          pip install dist/*.whl
+          python tests/truss-facts/check.py --reports "$RUNNER_TEMP/reports.json"
+          python tests/truss-entity-selection/check.py --reports "$RUNNER_TEMP/entity-reports.json"
+      - name: Build WASM
+        run: |
+          cargo install wasm-bindgen-cli --version 0.2.105 --locked
+          cargo build --locked -p weft-wasm --features truss-postgresql-pg18 --target wasm32-unknown-unknown
+          wasm-bindgen --target web --out-dir "$RUNNER_TEMP/weft-web" target/wasm32-unknown-unknown/debug/weft_wasm.wasm
+          bun build packages/weft-browser/src/index.ts --target browser --outdir "$RUNNER_TEMP/wrapper"
+      - run: bunx --bun playwright@1.62.1 install --with-deps chromium
+      - name: Browser parity with the native reports
+        run: |
+          for pair in "truss-facts:compile_truss_runtime_json:reports" "truss-entity-selection:compile_truss_runtime_entity_selection:entity-reports"; do
+            IFS=: read -r dir api reports <<<"$pair"
+            WEFT_PROBE_JS="$RUNNER_TEMP/weft-web/weft_wasm.js" \
+            WEFT_PROBE_WASM="$RUNNER_TEMP/weft-web/weft_wasm_bg.wasm" \
+            WEFT_BROWSER_WRAPPER="$RUNNER_TEMP/wrapper/index.js" \
+            WEFT_FRONTEND_CORPUS="tests/$dir/cases.json" \
+            WEFT_FRONTEND_REPORTS="$RUNNER_TEMP/$reports.json" \
+            WEFT_PROBE_API="$api" \
+            WEFT_FRONTEND_BROWSER_SUMMARY="$RUNNER_TEMP/$dir-browser-summary.json" \
+            WEFT_BROWSER_RECEIPTS="$RUNNER_TEMP/$dir-browser-receipts.json" \
+              node tests/compile/browser-check.mjs
+          done
+
+  postgres:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      WEFT_NATIVE_DSN: postgresql://postgres@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --locked -p weft-postgresql --test table_operation --test table_lifecycle
+      - name: Native table operations
+        # umf-access>=0.10.11 is not on PyPI yet (only 0.1.0.dev8); remove continue-on-error once it is published.
+        continue-on-error: true
+        run: |
+          pip install maturin==1.9.6 'umf-access>=0.10.11,<0.11' 'umf-codegen>=0.10.11,<0.11' 'psycopg[binary]==3.2.13' 'pydantic==2.13.5'
+          maturin build --locked --profile dev --manifest-path crates/weft-python/Cargo.toml --out dist
+          pip install dist/*.whl
+          cargo build --locked -p weft-postgresql --example compile_table_operation
+          python -I tests/raw-postgresql/table-operation-bindings.py target/debug/examples/compile_table_operation "$RUNNER_TEMP/bindings.json" "$RUNNER_TEMP/compile.json"
+          python -I tests/raw-postgresql/table-operation-native.py --dsn-env WEFT_NATIVE_DSN --report "$RUNNER_TEMP/native.json"
+
+  umf-latest:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup show
+      - uses: Swatinem/rust-cache@v2
+      - name: Point at the latest released UMF tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(gh release list -R DocumentDrivenDX/umf --exclude-pre-releases -L 30 --json tagName -q '[.[]|select(.tagName|startswith("umf-v"))][0].tagName')
+          echo "UMF tag: $tag"
+          sed -i -E "/umf\.git/ s/(rev|tag) = \"[^\"]*\"/tag = \"$tag\"/" Cargo.toml crates/weft-core/Cargo.toml
+          cargo update -p umf-core -p umf-codegen
+      # Red here means upstream moved; it tells the maintainer to bump the tag.
+      - run: cargo test -p weft-core -p weft-postgresql

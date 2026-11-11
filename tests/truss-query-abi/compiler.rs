@@ -23,7 +23,7 @@ fn original_named_owned_and_independent_queries_compile(){
 }
 #[test]
 fn legacy_core_source_and_old_abi_refuse(){
- let old:Value=serde_json::from_str(include_str!("../../docs/helix/04-build/evidence/mutation-current-truss-20261014/native-query-bundle.json")).unwrap();
+ let old:Value=serde_json::from_str(include_str!("../fixtures/retained/native-query-bundle.json")).unwrap();
  let mut original=request("SELECT COUNT(*) FROM products p");original["modules"]=old["modules"].clone();
  original["target"]["backendVersion"]=json!("0.4.35");original["target"]["targetProfile"]=json!("truss-runtime-pg18.6/0.4");
  let raw=old["bindingJson"].as_str().unwrap();original["target"]["bindingJson"]=json!(raw);original["target"]["bindingSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));
