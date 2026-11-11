@@ -2304,32 +2304,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "weft-spike-core"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "sha2",
- "sqlparser",
-]
-
-[[package]]
-name = "weft-spike-python"
-version = "0.1.0"
-dependencies = [
- "pyo3",
- "weft-spike-core",
-]
-
-[[package]]
-name = "weft-spike-wasm"
-version = "0.1.0"
-dependencies = [
- "wasm-bindgen",
- "weft-spike-core",
-]
-
-[[package]]
 name = "weft-wasm"
 version = "0.1.0"
 dependencies = [
