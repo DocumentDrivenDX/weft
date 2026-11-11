@@ -53,12 +53,12 @@ same core; do not weaken FR-10 silently. Versions/OS/browser matrix remain open.
 
 ## References
 
-[Research](../../00-discover/research.md), [PRD](../../01-frame/prd.md),
+Research, [PRD](../../01-frame/prd.md),
 [architecture](../architecture.md), PyO3 and wasm-bindgen official guides.
 
 ## B-001 evidence and decision
 
-[Execution evidence](../../04-build/evidence/B-001-native-python-browser.md) records shared-source Rust/Python/browser byte parity across 597 scenarios, exact values and explicit refusals. Proceed to B-002 with one Rust core and thin bindings. This decision establishes an implementation direction; it does not accept the draft public contracts or assert full UMF, language, backend or wheel-matrix conformance. Parser acceptance still requires Weft-specific gating.
+Execution evidence records shared-source Rust/Python/browser byte parity across 597 scenarios, exact values and explicit refusals. Proceed to B-002 with one Rust core and thin bindings. This decision establishes an implementation direction; it does not accept the draft public contracts or assert full UMF, language, backend or wheel-matrix conformance. Parser acceptance still requires Weft-specific gating.
 
 ## Generated ORM consumers
 

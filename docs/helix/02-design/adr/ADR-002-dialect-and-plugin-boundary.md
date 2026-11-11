@@ -55,7 +55,7 @@ The pure Rust associated-type backend trait and explicit registry support typed
 0.1/0.2 plans without frontend backend-ID switches. The third fixture plugin has
 native schema/version/pin/capability/coverage/emission/refusal tests, independent
 SQLite execution of its simple string-projection SQL and real Chromium byte
-parity. [B-003 evidence](../../04-build/evidence/B-003-backend-interface.md) records
+parity. B-003 evidence records
 exact versions, inputs and qualification limits. This accepts the structural
 boundary, not production engine/layout compatibility or package distribution.
 

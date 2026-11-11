@@ -1,148 +1,16 @@
 # Weft specification index
 
-Python0.4.57 is published with three qualified wheels, source archives, temporal
-Node/Chromium evidence and one fresh public-index Linux consumer. The
-[release scope and durable evidence](05-deploy/releases/v0.4.57.md) distinguish
-product/controller identities, accepted bounded retention, original ZIP refusal
-and anonymous availability. Native database/security/Truss qualification remains
-independent. Earlier entries below retain their historical scopes.
+What remains under `docs/helix/` is the specification Weft is built against. It is
+reference material, not a statement of what is supported: the README says what
+CI tests.
 
-Python 0.4.52 is prepared as a selected-assets release candidate from source `32ec02f0c3fd24a97b7726500dc5992c6475908d`, with Linux x86_64 and macOS ARM64 wheel pins and compiler-only macOS evidence. The draft has no tag, publication, Linux compiler-only run, or native execution qualification. See [candidate release scope](04-build/releases/v0.4.52.md), [candidate pins](04-build/releases/release-pins-0.4.52.json), and [checksums](04-build/releases/SHA256SUMS-0.4.52).
-
-The unpublished [Praxis DBAPI transport candidate](04-build/evidence/praxis-dbapi/README.md)
-adds compiler-owned positional transport to raw PostgreSQL reads and related
-composition. Scoped local native/generated-client evidence passes; full lifecycle
-and release qualification remain open.
-
-Python 0.4.36 is published with explicit Truss backend0.4.39 support for
-fixed decimal(12,2) and original stable Record/Field IDs when names are absent.
-Authored names take precedence; old backend registrations retain their refusals.
-All five public wheel payloads and 20 source-bound reports are verified, including
-22 closed Decimal/name controls per platform. See [release scope](04-build/releases/v0.4.36.md)
-and [public qualification evidence](04-build/evidence/release036-public-20261016/summary.json).
-
-Main separately includes the optional `bounded-current-string-candidate` feature
-at `8e0f4cb`, with reviewed Python/WASM and PostgreSQL/Databricks compiler evidence.
-That feature is not part of the frozen public0.4.36 source. See
-[bounded String evidence](04-build/evidence/bounded-current-strings-20261015/README.md).
-Main also includes the optional Core-only `tagged-current-projection-candidate`
-frontend: explicit `.4` direct Field lineage preserves original availability.
-It cannot issue current-query designations or SQL and is not in public0.4.36.
-See [reviewed projection lineage evidence](04-build/evidence/tagged-projection-lineage-20261016/README.md).
-
-B-008 remains incomplete: all132 original shared/native requirements remain in
-force, and these increments promote no native case. Conditional checker matches
-grant no native authority; genuine caller/source/current-authority admission and
-guarded native release still require qualified host enforcement.
-
-Proposed Python0.4.33 includes the current-query source-context and conditional
-SQL APIs in standard wheels, with exact-wheel ABI2/3/4 smoke checks across all
-five platform targets. These are compiler candidates, not native permissions or
-completed B-008 security. Actual host enforcement and alternate-read activation
-remain required. See [release scope](04-build/releases/v0.4.33.md).
-
-Python 0.4.32 extends the existing Truss backend 0.4.36 guard to
-native runtime 0.66 and 0.67 (0.65 retains backend 0.4.35), preserving the original binding release ID and
-digest. Query/layout semantics are unchanged. The same allowlist applies to
-mutation selection registration. Native 0.68 and older-backend mismatches remain
-refused. This compatibility change adds no key encoder; Truss 0.67 derives keys
-in PostgreSQL. Public compiler guard tests and actual Truss 0.66 backfill/query
-execution pass locally on PostgreSQL 18.6. The standard0.4.32 wheels omit the
-optional current-query API;0.4.33 preparation adds it explicitly.
-
-
-The active flow is `helix` under `docs/helix/`. Current catalog binding: installed HELIX **0.15.4**, full plugin `workflows/graph.yml`; templates and methodology are resolved from that plugin and are not vendored here.
-
-Public contracts and requirements remain drafts. ADR-001 selects Rust after the bounded B-001 spike; ADR-002 accepts the structural registered backend boundary. The public compiler has native Python and browser WASM component evidence. No production storage binding is implemented.
-
-| Activity | Read first |
+| Directory | Contents |
 |---|---|
-| Discover | [Vision](00-discover/product-vision.md), [research](00-discover/research.md) |
-| Frame | [PRD](01-frame/prd.md), [concerns](01-frame/concerns.md); six features and nine stories in adjacent directories |
-| Design | [Architecture](02-design/architecture.md), [ADR-001](02-design/adr/ADR-001-rust-and-embedding.md), [ADR-002](02-design/adr/ADR-002-dialect-and-plugin-boundary.md) |
-| Contracts | [Language/IR](02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md), [backend interface](02-design/contracts/CONTRACT-002-backend-interface.md), [compile/host boundary](02-design/contracts/CONTRACT-003-compile-and-host-boundary.md), [application reads](02-design/contracts/CONTRACT-004-application-reads.md), [blocked compatibility security foundation](02-design/contracts/CONTRACT-007-security-compilation.md), [reliability runner](02-design/contracts/CONTRACT-008-reliability-runner.md) |
-| Test | [Project plan](03-test/TP-001-compiler-conformance.md), nine story plans, [fixture corpus](03-test/fixtures/README.md) |
-| Build | [Implementation plan](04-build/implementation-plan.md), [embedding spike](02-design/spikes/SPIKE-001-native-python-browser.md) |
+| [01-frame](01-frame/) | [PRD](01-frame/prd.md), [concerns](01-frame/concerns.md), features and user stories |
+| [02-design](02-design/) | [Architecture](02-design/architecture.md), [ADR-001](02-design/adr/ADR-001-rust-and-embedding.md), [ADR-002](02-design/adr/ADR-002-dialect-and-plugin-boundary.md), solution and technical designs, [module boundaries](02-design/module-boundaries.json) |
+| [02-design/contracts](02-design/contracts/) | The request and response contracts (markdown plus versioned JSON schemas); these are the public API reference |
+| [03-test/fixtures](03-test/fixtures/README.md) | The conformance fixture corpus read by the Rust tests and `bun run specs:check` |
 
-The versioned JSON schemas and EBNF live beside their governing contracts. Stable `ddx.id` and `ddx.links` record local traceability. Sibling project evidence is cited as sources; this bootstrap does not invent a cross-flow catalog.
-
-B-001 through B-004 complete their recorded component scopes; see the
-[implementation plan and evidence](04-build/implementation-plan.md). This includes
-PR #2's versioned application-read frontend, registered backend boundary and
-public Rust/Python/browser compiler parity. B-005 completes its owner-authorized
-candidate compiler scope; the [acceptance audit](04-build/evidence/B-005-acceptance.md)
-records original mappings, native PostgreSQL results and exact host boundaries. B-006 candidate work now has registered scalar lowering and native Databricks
-[preparation/corpus evidence](04-build/evidence/B-006-native-preparation.md).
-B-006 completes its owner-authorized candidate compiler scope; its
-[acceptance audit](04-build/evidence/B-006-acceptance.md) records native typed homes,
-optional/recursive/relationship values, numeric/collation/resource boundaries and
-actual buffered host custody checks. Fresh Python/browser/CLI builds match 463
-artifacts with a documented declaration-only correction. Synthetic fixture bindings do not select either
-production profile or qualify an engine version. Historical B-007 records [passing acceptance for all 30 P0 criteria](04-build/evidence/B-007-acceptance-matrix.json), [exact supported native/compiler and host profiles](04-build/evidence/B-007-support-inventory.json), and both historical checkpoint workspace compositions. PR review/CI/merge remain pending. The [closure audit](04-build/evidence/B-007-closure-audit.md) separates those gates from distribution and production execution.
-
-
-Shared security integration is B-008 (open), framed as FR-19–22 and
-[CONTRACT-007](02-design/contracts/CONTRACT-007-security-compilation.md).
-Main’s separate security0.1/0.2 protocols are governed by [CONTRACT-006](02-design/contracts/CONTRACT-006-security-compilation.md). Compile0.5 remains a separately validated blocked compatibility envelope underCONTRACT-007. Trusted security0.2 registration may run once after owner admission; physical lowering remains closed. The initial0.5 transport/core08 custody foundation refuses activation;
-security logical/physical lowering and Rust/Python/browser/native qualification
-remain unfinished. Prior B-007 ordinary compiler claims remain qualified to their original checkpoint.
-
-B-009 reliability remediation is governed by [US-008](01-frame/user-stories/US-008-reliability.md), [TD-008](02-design/technical-designs/TD-008-reliability.md) and [STP-008](03-test/test-plans/STP-008-reliability.md). [US-009](01-frame/user-stories/US-009-security-compilation.md) separately allocates the four open security outcomes. The 30-criterion B-007 acceptance matrix is historical and does not qualify changed source or close these additional criteria.
-
-## B-009 current reliability qualification
-
-R0–R5 are reviewed prerequisite, bounded-input, module, configuration, diagnostics
-and finite formal assurance chunks. R6 distinguishes the historical B-007
-checkpoint from current input closure and freshly loaded host artifacts. Current
-evidence is under `04-build/evidence/reliability/r6-*.json`; the final hosted CI
-run must succeed at the pushed branch head. Ordinary qualification remains
-scoped to retained native-tested fixtures and versions. Native databases are
-not re-executed, released packages are not claimed, and FR19–22 security
-acceptance stays open with public activation blocked.
-
-## Next security work
-
-The [B-008 continuation plan](04-build/implementation-plan.md#b-008-continuation-protected-read-security-completion-plan--2026-10-10)
-sequences S00–S12 from upstream contract/version reconciliation through graph
-query integration, owner-derived coverage, physical lowering, native custody and
-guarded release, binding parity and per-profile activation. [TD-009](02-design/technical-designs/TD-009-security-compilation.md)
-and [STP-009](03-test/test-plans/STP-009-security-compilation.md) retain design and
-planned AC coverage. This is planning only. Native resources/version decisions
-remain explicit prerequisites; FR19–22 full acceptance and public activation stay
-open. B-009 completed at `2b88a9a`; its qualification receipts retain that exact
-checkpoint and are not refreshed by these documentation edits.
-
-
-The 2026-10-10 main integration preserves ordinary main versions and assigns
-blocked security compile 0.5 / CONTRACT-007. Its independently built main
-reference covers all 2,181 unchanged retained fixture requests: 2,128 complete response objects
-are unchanged from historical native receipts; 53 changed outputs require native
-requalification. [Baseline and exact differences](04-build/evidence/main-integration-20261010/baseline.json)
-record that distinction. Fresh integrated host and CI qualification are separate
-merge gates; historical R6 receipts remain pinned to 2b88a9a.
-
-
-The optional [current-presence context](02-design/contracts/CONTRACT-012-current-presence-context.md)
-and [PostgreSQL tagged transport](02-design/contracts/CONTRACT-013-current-presence-transport.md)
-now have reviewed source/type/data-correspondence evidence. Complete disclosure
-cells retain explicit absence, withholding and null distinctions. Their
-[qualified evidence](04-build/evidence/current-presence-postgresql-20261016/README.md)
-does not establish native authority, producer invocation, execution or guarded
-release. Full B-008 acceptance remains open.
-
-
-The optional [issued runtime/Python presence bridge](02-design/contracts/CONTRACT-014-current-presence-bridge.md)
-now has reviewed native-class custody and data-correspondence evidence. It keeps
-the original preparation alive and rejects cross-profile objects and imported
-reports. Its [qualified local wheel evidence](04-build/evidence/current-presence-bridge-20261016/README.md)
-adds no default feature, public release, WASM bridge or native execution authority.
-
-## Compiler-free generated ORM delivery
-
-The [generated-delivery plan](04-build/implementation-plan.md#generated-orm-compiler-free-delivery)
-keeps Weft compilation/generation in build/authoring and emits the complete
-supported execution algebra for UMF consumers. Ordinary ORM deployment needs
-no compiler, including for bulk and Relay paging. Explicit uploaded-UMF workflows
-may compile separately, then verify and admit output. CONTRACT-003/004 and
-TP-001 define the new artifact and compiler-absence qualification boundary;
-existing compiler evidence does not establish its implementation.
+`bun run specs:check` compiles every contract schema and validates the fixture
+scenarios against them. Release notes live in [CHANGELOG.md](../../CHANGELOG.md);
+open work is in [ROADMAP.md](../../ROADMAP.md).

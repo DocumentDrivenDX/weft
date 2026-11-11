@@ -39,7 +39,7 @@ UMF owns policy evaluation and the canonical winning source occurrences. The
 required producer is the private candidate API
 `evaluateCandidateCatalogReadDisclosureBatchWithinOperation`, returning protocol
 `umf.security.logical-disclosure-batch/0.1-candidate`. The exact atomic producer has a reviewed logical-subset implementation. The
-[qualified native transport component evidence](../../04-build/evidence/current-presence-native-20261016/README.md)
+qualified native transport component evidence
 retains actual invocation and disclosure transport over supplied logical facts;
 it does not qualify authenticated original source/caller/current authority or
 guarded release. The earlier selection-only protocol remains separate

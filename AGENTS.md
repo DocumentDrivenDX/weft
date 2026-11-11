@@ -1,23 +1,17 @@
 # Working in Weft
 
-Weft is a universal UMF-powered SQL dialect with pluggable backends. Initially:
-Ashlar on Databricks and Truss on PostgreSQL. Start with docs/helix/README.md,
-read .helix.yml, and engage the installed HELIX skill for governed work.
+Weft compiles UMF-described queries to backend SQL (Truss on PostgreSQL, Ashlar on
+Databricks). Rust core in `crates/`, Python bindings in `crates/weft-python`, WASM in
+`crates/weft-wasm`, browser wrapper in `packages/`, specs and contracts in `docs/helix/`.
 
-- Keep governed artifacts under docs/helix/ in the matching activity.
-- Resolve the graph/templates/prompts from the installed HELIX plugin; never
-  copy the methodology catalog into this repo.
-- Read upstream artifacts before editing downstream specs. Preserve artifact
-  IDs/frontmatter and deliberate ddx.links. Draft status never means approval.
-- Weft owns source-dialect semantics and the logical plan. UMF owns metamodel
-  meaning. Backends own physical mappings, target SQL and execution obligations.
-- Never silently lose meaning. Preserve unknown model content; block selected
-  semantics that cannot be established. Qualify claims by versions/subset/evidence.
-- Rust is the selected compiler foundation following B-001; native Python and browser WASM bindings
-  must share that core. No JavaScript sidecar is permitted for the Python API.
-- Keep connections, credentials, data execution, authorization and publication
-  enforcement in hosts/backends. Model content never loads executable plugins.
-- The v0.1 grammar is a bounded first delivery slice, not Weft's product ceiling.
-  New capabilities extend governed language/plan contracts and conformance data.
-- Implementation starts with an isolated B-001 spike, not a released compiler. Do not report broader compiler, plugin, Python,
-  browser or database support without fresh executable evidence.
+- Test: `cargo test --workspace --locked`, `bun install --frozen-lockfile && bun run specs:check && bun run modules:check`.
+- Wheel: `maturin develop --manifest-path crates/weft-python/Cargo.toml`, then `python examples/quickstart.py`.
+- Run output belongs in CI artifacts or a temp directory, never in git.
+- Ownership: UMF owns metamodel meaning; backends own physical mapping and target SQL;
+  hosts own connections, credentials, execution, authorization and publication.
+  Preserve unknown model content and refuse what cannot be preserved.
+- Python bindings share the Rust core. No JavaScript sidecar for the Python API.
+- Release: bump the version in `pyproject.toml`, `crates/weft-python/pyproject.toml` and
+  `crates/weft-python/Cargo.toml`, add a `CHANGELOG.md` section, then push tag `vX.Y.Z`
+  from main. `scripts/check-release-version.py` enforces agreement.
+- Only claim what CI tests; label the rest experimental.

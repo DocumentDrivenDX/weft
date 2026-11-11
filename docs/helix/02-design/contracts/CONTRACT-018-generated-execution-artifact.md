@@ -159,7 +159,7 @@ primary Key in fixed C-ascending order; unsupported roots retain explicit
 per-root refusals. Other authored orders and the legacy typed `Page`
 continuation remain separate preservation work.
 
-The [issuer SQL evidence](../../04-build/evidence/generated-connection-v5-20261104/README.md)
+The issuer SQL evidence
 qualifies the forward/prior templates on PostgreSQL 18.6. The closed schema,
 native cursor contract and consumer qualification are maintained with UMF's
 CONTRACT-907. Existing `/4` receipts retain their exact original cohorts.
@@ -191,9 +191,9 @@ alternate order. `/6` uses the `/4` root algebra and issues this page family
 independently; Relay eligibility is not a prerequisite. The descriptor schema is
 [`generated-ordinary-page.schema.json`](generated-ordinary-page.schema.json).
 The bounded source/schema test record is
-[`generated ordinary Page `/6` review evidence`](../../04-build/evidence/generated-ordinary-page-v6-source-review-20261105/README.md);
+`generated ordinary Page `/6` review evidence`;
 it does not qualify downstream consumers or release artifacts. The
-[installed-wheel varchar schema correction](../../04-build/evidence/generated-ordinary-page-v6-varchar-schema-20261105/README.md)
+installed-wheel varchar schema correction
 requires the exact positive-integer varchar length in both Key outputs and
 pairs each text/varchar native type with its PostgreSQL OID. This is schema
 validation of emitted compiler data, not native execution qualification.

@@ -71,7 +71,7 @@ Use the exact finite item/byte/node/deadline/result-capacity bounds in the contr
 
 ## Testing
 
-[STP-011](../../03-test/test-plans/STP-011-portable-mutation-embedding.md) allocates each criterion once to a planned test with canonical citation. Command: `cargo test -p weft-core --test mutation_embedding`. The command/test target is planned, not currently passing evidence. Independent exact effects/refusals are the oracle, not generated output snapshots alone.
+STP-011 allocates each criterion once to a planned test with canonical citation. Command: `cargo test -p weft-core --test mutation_embedding`. The command/test target is planned, not currently passing evidence. Independent exact effects/refusals are the oracle, not generated output snapshots alone.
 
 ## Migration & Rollback
 

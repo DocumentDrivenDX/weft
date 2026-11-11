@@ -15,7 +15,7 @@ ddx:
 
 # CONTRACT-004: Versioned application reads
 
-**Versions:** proposed `weft-sql/0.2.0`, `weft-ir/0.2.0`, `weft-compile/0.2.0` and recognizer profile `weft-application-read/0.2.0`. **Status:** required product outcomes; draft concrete extension with B-002A frontend evidence; public/native backend support remains unqualified. The owner requested incorporation of [PR #2's discovery input](../../00-discover/application-read-requirements-input.md).
+**Versions:** proposed `weft-sql/0.2.0`, `weft-ir/0.2.0`, `weft-compile/0.2.0` and recognizer profile `weft-application-read/0.2.0`. **Status:** required product outcomes; draft concrete extension with B-002A frontend evidence; public/native backend support remains unqualified. The owner requested incorporation of PR #2's discovery input.
 
 ## Purpose and Scope
 
@@ -123,7 +123,7 @@ Truss requires qualified type/key/property-home scans, exact missing/null/list d
 
 ## Compatibility, Diagnostics and Validation
 
-B-002A implements the draft frontend extension against the [0.2 grammar](weft-sql-v0.2.ebnf), [typed plan schema](logical-plan-v0.2.schema.json), [request schema](compile-request-v0.2.schema.json) and [value carrier schema](application-result-v0.2.schema.json). These structures and maxima have structural, independent result, resource/refusal and real-browser component evidence in [B-002A](../../04-build/evidence/B-002A-application-reads.md); public/native backend qualification remains incomplete. Backend interfaces must include capabilities for whole-entity member representations, presence, key order/tuple comparison, limit, count, relationships and parameters. Unsupported selected meaning, representation, ordering or obligations blocks atomically with a named construct. Independent fixtures cover all US-007 criteria, including composite keys, inverse names, absence/null/empty-list distinctions and unchanged 0.1 refusals. No native backend or release support is implied by this contract.
+B-002A implements the draft frontend extension against the [0.2 grammar](weft-sql-v0.2.ebnf), [typed plan schema](logical-plan-v0.2.schema.json), [request schema](compile-request-v0.2.schema.json) and [value carrier schema](application-result-v0.2.schema.json). These structures and maxima have structural, independent result, resource/refusal and real-browser component evidence in B-002A; public/native backend qualification remains incomplete. Backend interfaces must include capabilities for whole-entity member representations, presence, key order/tuple comparison, limit, count, relationships and parameters. Unsupported selected meaning, representation, ordering or obligations blocks atomically with a named construct. Independent fixtures cover all US-007 criteria, including composite keys, inverse names, absence/null/empty-list distinctions and unchanged 0.1 refusals. No native backend or release support is implied by this contract.
 
 
 ## Executable draft details for B-002A
@@ -309,7 +309,7 @@ The pinned original schema and provenance live in
 `spec/upstream/umf-tables-0.1.0.*`. Structural schema checks do not substitute for
 UMF's contextual source interpretation or native policy/constraint enforcement.
 Positive/refusal compiler evidence lives in
-[the candidate receipt](../../04-build/evidence/praxis-table-lifecycle/README.md).
+the candidate receipt.
 
 ## Named native operation invocation candidate — 2026-10-19
 

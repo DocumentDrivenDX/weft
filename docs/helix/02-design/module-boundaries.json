@@ -5166,7 +5166,6 @@
       "roots": [
         "scripts",
         "tests/qualify-and-evolve",
-        "tests/current-scalar-spark",
         "tests/truss-entity-selection"
       ],
       "extensions": [
@@ -5177,6 +5176,7 @@
       ],
       "sources": [
         "scripts/build-site.mjs",
+        "scripts/check-release-version.py",
         "scripts/check-site.mjs",
         "scripts/check-specs.ts",
         "scripts/check-tree-size.py",
@@ -5186,7 +5186,6 @@
         "scripts/python-release/licenses.py",
         "scripts/sign-site.mjs",
         "scripts/upstream/bundle-umf010-schema.py",
-        "tests/current-scalar-spark/python-bridge.py",
         "tests/truss-entity-selection/check.py"
       ]
     }

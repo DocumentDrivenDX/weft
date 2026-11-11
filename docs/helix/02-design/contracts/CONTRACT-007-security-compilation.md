@@ -988,7 +988,7 @@ An omitted field without explicit absence refuses. These inputs remain simulated
 facts, not authenticated native observations, and no method releases results.
 
 The component evidence is under
-`../../04-build/evidence/security-optional-presence-20261012/`. Public security
+a retained receipt that is no longer in the tree (see git history). Public security
 compilation still refuses lowering and emission; native codec/presence, current
 policy and final publication obligations remain required before integration can
 claim support. This extends pure correspondence only, not the supported SQL
@@ -1017,7 +1017,7 @@ obligation is admitted. It issues no execution credential or immutable checked
 plan. Callers cannot convert success into emission or bypass future correspondence.
 
 The component receipt is
-`../../04-build/evidence/security-physical-shape-20261012/receipt.json`.
+a retained receipt that is no longer in the tree (see git history).
 Public security compilation remains blocked. Complete physical/result/dependency
 coverage, backend capabilities, installed native behavior and host lifetime remain
 required. No independent SQL feature allowlist is introduced by these finite bounds.
@@ -1042,7 +1042,7 @@ is matched to an actual source query, native placeholder layout or codec by this
 check; those mandatory obligations remain before lowering/emission. Success
 issues no authority and the public security compiler stays blocked.
 
-`../../04-build/evidence/security-physical-domains-20261012/receipt.json` retains
+a retained receipt that is no longer in the tree (see git history) retains
 source-qualified component checks. No separate SQL feature allowlist, new local
 literal algebra or native backend qualification is introduced.
 
@@ -1065,7 +1065,7 @@ does not inspect SQL placeholder placement or prove SQL implements the original
 query; installation and policy/subject parameters remain separately unadmitted.
 Successful checks still produce no security-enabled compiler response or authority.
 
-`../../04-build/evidence/security-query-slots-20261012/receipt.json` retains
+a retained receipt that is no longer in the tree (see git history) retains
 source-qualified tests. Complete SQL/capability/obligation/native/host validation
 and original backend acceptance remain required.
 
@@ -1088,7 +1088,7 @@ PostgreSQL ordinal profile; other strategies/dialects require their own coverage
 The existing1MiB SQL bound limits tokenizer input. No allocation/instruction-level
 or concurrency-memory proof is claimed. This introduces no SQL keyword/feature
 allowlist and leaves public security compiler emission blocked. The source-qualified
-receipt is `../../04-build/evidence/security-postgres-placeholders-20261012/receipt.json`.
+receipt is a retained receipt that is no longer in the tree (see git history).
 
 The lexical correction retains `WFT-SECURITY-PHYSICAL` refusal for operator tokens
 containing a comment opener, continued escape strings, non-ASCII dollar tags and
@@ -1098,7 +1098,7 @@ admitted; whitespace before an operator-adjacent comment avoids that ambiguous
 token form. PostgreSQL18.6 native controls demonstrate that `$1` in
 `SELECT 1%/*$1*/1` and an escape-string continuation can be non-parameter text;
 the corrected checker refuses these cases. Native observations and before/after source checks are in
-`../../04-build/evidence/security-placeholder-review-20261012/receipt.json`.
+a retained receipt that is no longer in the tree (see git history).
 This is finite lexical correspondence evidence, not complete lowering or backend
 security acceptance; the public compiler remains blocked.
 
@@ -1119,7 +1119,7 @@ of issuer trust. Its correspondence relies on SHA256 collision resistance and
 original compiler-context source custody. A caller computing the expected hash
 still gains no execution authority or SQL-semantic validation; complete lowering,
 native qualification and host release remain mandatory. The source-qualified
-receipt is `../../04-build/evidence/security-slot-context-20261012/receipt.json`.
+receipt is a retained receipt that is no longer in the tree (see git history).
 
 
 ## Required lowering-obligation coverage and settlement design — 2026-10-12
@@ -1195,7 +1195,7 @@ Three SAT witnesses establish a usable dependency chain, the weakness of
 all-declared-enforced without complete owner coverage, and the fact that accepted
 flags alone do not prove actual native enforcement. This is conditional design
 analysis, not Rust refinement, authenticated evidence or backend qualification.
-Retained results: `../../04-build/evidence/security-obligation-model-20261012/receipt.json`.
+Retained results: a retained receipt that is no longer in the tree (see git history).
 Public security compilation remains blocked until complete lowering, evidence
 validation and mandatory host/native admission are implemented and qualified.
 
@@ -1228,7 +1228,7 @@ malformed/empty members, count exhaustion and total text exhaustion. This is
 finite algorithm correspondence and boundary evidence, not a general formal
 refinement or native authority proof. The final compiler still refuses with no
 SQL/parameters/plan. Receipt:
-`../../04-build/evidence/security-obligation-shape-20261012/receipt.json`.
+a retained receipt that is no longer in the tree (see git history).
 
 
 ## Context-bound owner event-source coverage component — 2026-10-12
@@ -1272,7 +1272,7 @@ repeated aliases distinct and verify field-free COUNT lineage. Original contexts
 with changed SQL, binding or profile bytes refuse retained declarations; binding
 and profile controls explicitly keep all underlying unframed event IDs identical.
 The original compiler remains blocked with no SQL/parameters/plan. Retained
-receipt: `../../04-build/evidence/security-source-coverage-20261012/receipt.json`.
+receipt: a retained receipt that is no longer in the tree (see git history).
 
 
 ## Combined registry-bound candidate declaration check — 2026-10-12
@@ -1313,7 +1313,7 @@ for an original resource-field query: its acceptance demonstrates that this
 checker does not establish SQL meaning. Eight isolated candidate corruptions,
 six selected-registration corruptions, Candidate refusal without explicit
 selection and foreign registry identity controls all refuse. Receipt:
-`../../04-build/evidence/security-candidate-declaration-20261012/receipt.json`.
+a retained receipt that is no longer in the tree (see git history).
 
 
 ## Private matched-instance candidate projection — 2026-10-12
@@ -1355,7 +1355,7 @@ corruptions cover capability omission/substitution/duplication, output omission,
 empty SQL and obligation omission. A deliberately semantically unproved `SELECT 1`
 can pass declaration comparison; SQL equivalence and native disclosure are not
 established. Public compilation/dispatch remains unchanged and blocked. Receipt:
-`../../04-build/evidence/security-matched-candidate-20261012/receipt.json`.
+a retained receipt that is no longer in the tree (see git history).
 
 
 ## Known projection agreement in logical simulation — 2026-10-12
@@ -1369,7 +1369,7 @@ The fold borrows normalized identities and values without cloning their payload,
 
 Draft graph and mixed raw/graph-record rule simulation applies known-field agreement across every supplied subject, resource and record witness, including unused witnesses. Grouping uses the original typed target, declared key and ordered normalized components. Missing fields remain unknown and never enrich the projection used for actual policy evaluation. Context is a distinct channel. This candidate subset still has only its existing non-null scalar fields; it does not gain explicit absence/null support.
 
-The borrowed preflight has a separate1,000,000 row/field step and16,000,000 conservative reference/scalar payload-unit ceiling, in addition to existing evaluation budgets. It does not establish a total heap/time ceiling, Rust source refinement, authenticated source or native cut. Public security compilation remains closed. Retained regression, mixed witness, no-enrichment and exact-limit controls: `../../04-build/evidence/security-graph-fact-consistency-20261012/receipt.json`.
+The borrowed preflight has a separate1,000,000 row/field step and16,000,000 conservative reference/scalar payload-unit ceiling, in addition to existing evaluation budgets. It does not establish a total heap/time ceiling, Rust source refinement, authenticated source or native cut. Public security compilation remains closed. Retained regression, mixed witness, no-enrichment and exact-limit controls: a retained receipt that is no longer in the tree (see git history).
 
 
 ### Source-bound mapping preparation transport — 2026-10-13
