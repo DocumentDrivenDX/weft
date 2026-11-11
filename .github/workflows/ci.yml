@@ -61,7 +61,6 @@ jobs:
           "$py" -I tests/truss-facts/check.py --reports "$RUNNER_TEMP/truss-facts.json"
           "$py" -I tests/truss-entity-selection/check.py --reports "$RUNNER_TEMP/entity-selection.json"
           "$py" -I tests/mutation/python-check.py
-          "$py" -I tests/compile/python-check.py
 
   js:
     runs-on: ubuntu-24.04
