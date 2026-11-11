@@ -4,6 +4,7 @@
 @covers US-003-AC2: original property homes and discriminated owner scans.
 @covers US-003-AC3: owner-wide prerequisite refusal independent of page bound.
 """
+import tempfile
 import csv,hashlib,io,json,os,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures';path=F/'original-recursive-entity-public.json';raw=path.read_bytes();captures=json.loads(raw);inputs=json.loads((F/'original-recursive-entity-inputs.json').read_text());results=[];driver_setups=[]
@@ -59,7 +60,7 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
   for i,check in enumerate(e['checks']):sql+=f'PREPARE check_{i}({types}) AS {check}; EXECUTE check_{i}({args});\n'
   if not corrupt:sql+=f"PREPARE q({types}) AS {e['sql']}; EXECUTE q({args});\n"
   sql+='ROLLBACK;\n'
-  rows=list(csv.reader(io.StringIO(subprocess.check_output(['docker','exec','-i','weft-b005-pg17','psql','-U','postgres','-X','-q','--csv','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode())))
+  rows=list(csv.reader(io.StringIO(subprocess.check_output(['docker','exec','-i','weft-native-pg','psql','-U','postgres','-X','-q','--csv','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode())))
   counts=[]
   for i in range(len(e['checks'])):
    assert rows[2*i]==['violations'];counts.append(int(rows[2*i+1][0]))
@@ -74,9 +75,9 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
    parsed=[(json.loads(r[0]),json.loads(r[1]),r[2],r[3]) for r in remaining[1:]];assert parsed==expected,(e['fixture'],case,parsed)
   else:assert not remaining
   results.append(dict(fixture=e['fixture'],noteHome=e['noteHome'],bound=e['bound'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
-server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
+server=subprocess.check_output(['docker','exec','weft-native-pg','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(scope='Complete original scalar/recursive entities over seven selected graph shapes with mixed optional scalar homes; synthetic PostgreSQL fixtures, not new embedding or production qualification',server=server,captureSha256=hashlib.sha256(raw).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
-Path(os.environ.get("WEFT_EVIDENCE_OUTPUT", ROOT/"docs/helix/04-build/evidence/B-005-recursive-entity-native.json")).write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} original recursive entity native cases passed')
+Path(os.environ.get("WEFT_TEST_OUT_FILE", str(Path(tempfile.gettempdir())/"B-005-recursive-entity-native.json"))).write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} original recursive entity native cases passed')
 
 if os.environ.get("WEFT_ENTITY_DRIVER_SETUPS"):
  Path(os.environ["WEFT_ENTITY_DRIVER_SETUPS"]).write_text(json.dumps(driver_setups)+"\n")

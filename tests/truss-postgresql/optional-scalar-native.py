@@ -4,6 +4,7 @@
 @covers US-003-AC2: original member order and logical/native identifiers.
 @covers US-003-AC3: null and corrupt stored meanings report violations.
 """
+import tempfile
 import csv,hashlib,io,json,subprocess
 import os
 from pathlib import Path
@@ -50,7 +51,7 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
   for i,check in enumerate(e['checks']):sql+=f'PREPARE check_{i}({types}) AS {check}; EXECUTE check_{i}({args});\n'
   if not corrupt:sql+=f"PREPARE q({types}) AS {e['sql']}; EXECUTE q({args});\n"
   sql+='ROLLBACK;\n'
-  rows=list(csv.reader(io.StringIO(subprocess.check_output(['docker','exec','-i','weft-b005-pg17','psql','-U','postgres','-X','-q','--csv','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode())))
+  rows=list(csv.reader(io.StringIO(subprocess.check_output(['docker','exec','-i','weft-native-pg','psql','-U','postgres','-X','-q','--csv','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode())))
   counts=[]
   for i in range(len(e['checks'])):
    assert rows[2*i]==['violations'];counts.append(int(rows[2*i+1][0]))
@@ -67,7 +68,7 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
    assert parsed==expected,parsed
   else:assert not remaining
   results.append(dict(home=e['home'],kind=e['kind'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
-server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
+server=subprocess.check_output(['docker','exec','weft-native-pg','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(scope='Original optional Unicode scalar and complete three-scalar entity over props/native row homes; native null explicitly unsupported by pinned presence profile; synthetic PostgreSQL fixtures only',server=server,captureSha256=hashlib.sha256(raw).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
-Path(os.environ.get("WEFT_EVIDENCE_OUTPUT", ROOT/"docs/helix/04-build/evidence/B-005-optional-scalar-native.json")).write_text(json.dumps(receipt,indent=2)+'\n')
+Path(os.environ.get("WEFT_TEST_OUT_FILE", str(Path(tempfile.gettempdir())/"B-005-optional-scalar-native.json"))).write_text(json.dumps(receipt,indent=2)+'\n')
 print(f'{len(results)} original optional scalar/entity native cases passed')

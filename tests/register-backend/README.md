@@ -1,7 +1,7 @@
 # Registered backend component conformance
 
 Run `sh scripts/run-b003.sh` with the toolchain/Chromium profile in
-[B-003 evidence](../../docs/helix/04-build/evidence/B-003-backend-interface.md).
+B-003 evidence.
 It includes the previous frontend gates, backend tests, independent SQLite
 execution, manifest schema checks and real Chromium/native byte parity.
 

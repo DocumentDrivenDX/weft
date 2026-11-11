@@ -3,6 +3,7 @@
 @covers US-003-AC1: declared order and exact Boolean/structured/scalar values.
 @covers US-003-AC3: each root's corruption blocks even a one-row page.
 """
+import tempfile
 import copy,csv,hashlib,io,json,subprocess
 import os
 from pathlib import Path
@@ -43,7 +44,7 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
   types=','.join('text' for p in r['parameters']);args=','.join("'"+p['value'].replace("'","''")+"'" for p in r['parameters'])
   for i,check in enumerate(checks):sql+=f'PREPARE check_{i}({types}) AS {check}; EXECUTE check_{i}({args});\n'
   if not corrupt:sql+=f"PREPARE q({types}) AS {r['sql']}; EXECUTE q({args});\n"
-  sql+='ROLLBACK;\n';rows=list(csv.reader(io.StringIO(subprocess.check_output(['docker','exec','-i','weft-b005-pg17','psql','-U','postgres','-X','-q','--csv','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode())))
+  sql+='ROLLBACK;\n';rows=list(csv.reader(io.StringIO(subprocess.check_output(['docker','exec','-i','weft-native-pg','psql','-U','postgres','-X','-q','--csv','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode())))
   counts=[]
   for i in range(len(checks)):assert rows[2*i]==['violations'];counts.append(int(rows[2*i+1][0]))
   assert any(counts) if corrupt else not any(counts),(t['bound'],case,counts)
@@ -56,6 +57,6 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
     expected.append((tags,address,note_value,id,part))
    actual=[(json.loads(row[0]),json.loads(row[1]),json.loads(row[2]),row[3],row[4]) for row in remaining[1:]];assert actual==expected,(case,actual,expected)
   results.append(dict(bound=t['bound'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
-server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
+server=subprocess.check_output(['docker','exec','weft-native-pg','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(server=server,transportSha256=hashlib.sha256((F/'original-multi-recursive-entity-public.json').read_bytes()).hexdigest(),scope='Synthetic original complete entity combining independently admitted native Boolean sequence and numeric structured roots plus scalars; no fresh embedding or production claim',cases=len(results),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
-Path(os.environ.get("WEFT_EVIDENCE_OUTPUT", ROOT/"docs/helix/04-build/evidence/B-005-multi-recursive-entity-native.json")).write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} multi-recursive entity native cases passed')
+Path(os.environ.get("WEFT_TEST_OUT_FILE", str(Path(tempfile.gettempdir())/"B-005-multi-recursive-entity-native.json"))).write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} multi-recursive entity native cases passed')
