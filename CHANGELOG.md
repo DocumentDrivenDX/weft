@@ -2,7 +2,7 @@
 
 Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/releases).
 
-## 0.4.58
+## 0.4.58 - 2026-11-11
 
 - Generated read algebra v6 to v8 and ordinary pages (PR #59).
 - The query-codec-instructions schema reference uses the target's URN `$id`, so
@@ -14,7 +14,14 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
 - CI tests every pull request: Rust workspace, installed wheel, schema checks.
 - Repository cleanup: committed run output, receipts and candidate binaries were
   removed from the tree (they remain in git history).
-- UMF consumed by release tag instead of a commit pin.
+- UMF is consumed by release tag instead of a commit pin, and moves to UMF 0.10.11
+  (`umf-v0.10.11`, the release that ports the UMF core to Rust). The vendored
+  `umf-temporal` schemas were refreshed from that tag.
+- The source distribution now builds a wheel (flat license files, schema inputs
+  shipped in the sdist); a metadata check guards it in pull requests.
+- The `weft-sql` distribution name is retired. `umf-weft` is the only name.
+- The 408 MB source tarball is no longer attached to releases; the sdist and git
+  tag are the source distribution.
 
 ## 0.4.57
 
