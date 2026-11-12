@@ -2,7 +2,7 @@
 
 Direction, not commitments. Nothing here is claimed as supported until CI tests it.
 
-- Consume UMF 0.10.11 (`umf-v0.10.11`) once it is released, then keep the tag current.
+- Keep the UMF tag current (0.4.58 consumes `umf-v0.10.11`).
 - Publish `umf-weft` to PyPI from the tag-driven release workflow; retire the `weft-sql` name.
 - Run the native PostgreSQL 18.6 table-operation test in nightly CI against released
   `umf-access` and `umf-codegen` (the packages are not yet on PyPI at the required version).
