@@ -16,6 +16,7 @@ bounded-current-string-candidate=["current-query-refinement-candidate"]
 current-query-refinement-candidate=[]
 
 [dependencies]
+weft-model = { path = "../weft-model" }
 umf-core = { git = "https://github.com/DocumentDrivenDX/umf.git", tag = "umf-v0.10.11", default-features = false, features = ["full-core"], optional = true }
 umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf.git", tag = "umf-v0.10.11", optional = true }
 base64 = "=0.22.1"

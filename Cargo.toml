@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/weft-databricks","crates/weft-postgresql","crates/weft-runtime","crates/weft-python","crates/weft-wasm","tests/register-backend/probe","tests/frontend/wasm-probe","crates/weft-core"]
+members = ["crates/weft-databricks","crates/weft-postgresql","crates/weft-runtime","crates/weft-python","crates/weft-wasm","tests/register-backend/probe","tests/frontend/wasm-probe","crates/weft-core","crates/weft-model"]
 resolver = "2"
 [workspace.package]
 version = "0.1.0"

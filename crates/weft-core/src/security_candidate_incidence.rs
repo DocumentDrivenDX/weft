@@ -12,7 +12,7 @@ impl CandidateIncidenceValue{
  pub fn key_id(&self)->&str{&self.key_id}
  pub fn components(&self)->&[ScalarLiteral]{&self.components}
  pub fn component_domains(&self)->&[Value]{&self.component_domains}
- pub fn require_catalog(&self,catalog:&Catalog)->Result<()>{if catalog.pins()!=self.model_pins||catalog.inputs().len()!=catalog.documents.len(){return Err(fail());}for (input,document) in catalog.inputs().iter().zip(&catalog.documents){if crate::json::sha256(input.document_json.as_bytes())!=input.pin.sha256||input.pin.document_id!=document["id"]||input.pin.umf_version!=document["umf"]||crate::json::checked_json(&input.document_json).map_err(|_|fail())?!=*document{return Err(fail());}}Ok(())}
+ pub fn require_catalog(&self,catalog:&Catalog)->Result<()>{if catalog.pins()!=self.model_pins||catalog.inputs().len()!=catalog.documents().len(){return Err(fail());}for (input,document) in catalog.inputs().iter().zip(catalog.documents()){if crate::json::sha256(input.document_json.as_bytes())!=input.pin.sha256||input.pin.document_id!=document["id"]||input.pin.umf_version!=document["umf"]||crate::json::checked_json(&input.document_json).map_err(|_|fail())?!=*document{return Err(fail());}}Ok(())}
 
  pub fn read(plan:&SecurityCandidateLogicalPlan,catalog:&Catalog,association:&SecurityAssociationRef,role:&str,side:CandidateSide,target:&SecurityRef,key_id:&str,components:&[Value])->Result<Self>{
   Self::read_bounded(plan,catalog,association,role,side,target,key_id,components,4_000_000)

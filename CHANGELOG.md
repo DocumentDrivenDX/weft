@@ -2,6 +2,30 @@
 
 Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/releases).
 
+## Unreleased
+
+- New crate `weft-model` 0.1.0 (own semver; `crates/weft-model/README.md`): UMF
+  0.10 document preparation, name and identity resolution, logical types,
+  descriptors, exact literals, exact instants and diagnostics, moved out of
+  `weft-core` so other compilers can depend on them. `weft-core` re-exports them
+  under their old module paths (`model`, `application_model`, `ir`, `error`,
+  `json`, `current_string_domain`, `syntax::Name`), so existing code compiles
+  unchanged.
+- `Catalog` admission flags are an explicit `Admission` profile
+  (`Catalog::prepare_with`, `Catalog::admit`, `Catalog::admission`); prepared
+  documents are read through `Catalog::documents`.
+- `LogicalType` is generic over its family set. weft's dialect profiles keep the
+  four-family `Family` and cannot represent anything wider, so weft-sql 0.1
+  through 0.3 accept and refuse exactly what they did. The opt-in `ScalarFamily`
+  adds UMF `timestamp` (exact UTC instants) and `float` (finite binary64 tokens),
+  available through `Catalog::field_as`, `Catalog::entity_descriptor_as` and the
+  other `*_as` methods; `Admission::nullable_fields` types `absent-allowed`
+  Fields as nullable.
+- `bun scripts/module-boundaries-update.ts` regenerates the dependency and
+  public-declaration inventory in `docs/helix/02-design/module-boundaries.json`.
+  `scripts/check-release-version.py --shared-crates` (run in CI) checks that each
+  shared crate's README states its Cargo version.
+
 ## 0.4.58 - 2026-11-11
 
 - Generated read algebra v6 to v8 and ordinary pages (PR #59).

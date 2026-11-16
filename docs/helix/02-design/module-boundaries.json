@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "All eleven Cargo workspace packages, canonical source/manifests and path dependencies, complete direct dependency identity (source/version/alias/target/features), all src Rust files and conservative lexical public declarations. No complete Rust name-resolution or intra-core dependency proof.",
+  "scope": "All Cargo workspace packages, canonical source/manifests and path dependencies, complete direct dependency identity (source/version/alias/target/features), all src Rust files and conservative lexical public declarations. No complete Rust name-resolution or intra-core dependency proof.",
   "packages": [
     {
       "name": "weft-databricks",
@@ -614,7 +614,7 @@
       "name": "weft-core",
       "manifest": "crates/weft-core/Cargo.toml",
       "responsibility": "Semantic compiler",
-      "ownedTypes": "Catalog, prepared documents, exact literals, atomic reports and blocked security simulation",
+      "ownedTypes": "SQL dialect parsing, resolution, logical plans, backend ports, atomic reports and blocked security simulation; re-exports weft-model under its historical module paths",
       "constructionAndIntegration": "Runtime and backend implementations consume explicit pure-library ports; src/bin/frontend.rs is a scoped host-owned probe with stdin/stdout IO.",
       "dependencies": [
         {
@@ -751,6 +751,18 @@
           ],
           "defaultFeatures": false,
           "path": null
+        },
+        {
+          "name": "weft-model",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-model"
         }
       ],
       "sources": [
@@ -847,45 +859,7 @@
         {
           "path": "crates/weft-core/src/application_model.rs",
           "publicDeclarations": [
-            "struct:Member",
-            "field:name",
-            "field:identity",
-            "enum:Shape",
-            "enum:ExactScalarType",
-            "struct:Descriptor",
-            "field:identity",
-            "field:availability",
-            "field:shape",
-            "struct:EntityDescriptor",
-            "field:members",
-            "field:graph",
-            "struct:AuthoredKey",
-            "field:id",
-            "field:fields",
-            "field:types",
-            "fn:record_members",
-            "fn:entity_descriptor",
-            "fn:member_descriptor",
-            "fn:member_descriptor_by_identity",
-            "fn:authored_key",
-            "struct:RelationshipIdentity",
-            "field:document_id",
-            "field:revision",
-            "field:module",
-            "field:relationship",
-            "struct:RelationshipRead",
-            "field:identity",
-            "field:inverse",
-            "field:from",
-            "field:to",
-            "field:source_key",
-            "field:target_key",
-            "field:source_multiplicity",
-            "field:target_multiplicity",
-            "field:target_lifecycle",
-            "fn:relationship_read",
-            "fn:relationship_read_identity",
-            "fn:scalar_descriptor_by_identity"
+            "use:weft_model : : descriptor : : *"
           ],
           "pathReferences": []
         },
@@ -1739,38 +1713,22 @@
         {
           "path": "crates/weft-core/src/current_string_domain.rs",
           "publicDeclarations": [
-            "struct:Length",
-            "fn:min",
-            "fn:max",
-            "fn:bounds",
-            "fn:supported",
-            "fn:validate",
-            "fn:validate_facets",
-            "fn:same_domain",
-            "fn:literal_compatible"
+            "use:weft_model : : string_domain : : *"
           ],
           "pathReferences": []
         },
         {
           "path": "crates/weft-core/src/error.rs",
           "publicDeclarations": [
-            "struct:Diagnostic",
-            "field:code",
-            "field:severity",
-            "field:message",
-            "field:phase",
-            "field:source_span",
-            "fn:new",
-            "fn:at",
-            "type:Result"
+            "use:weft_model : : diagnostic : : *"
           ],
           "pathReferences": []
         },
         {
           "path": "crates/weft-core/src/exact.rs",
           "publicDeclarations": [
-            "fn:literal",
-            "fn:validate_binary_token"
+            "use:weft_model : : exact : : validate_binary_token",
+            "fn:literal"
           ],
           "pathReferences": []
         },
@@ -1782,24 +1740,7 @@
         {
           "path": "crates/weft-core/src/ir.rs",
           "publicDeclarations": [
-            "struct:Span",
-            "field:start",
-            "field:end",
-            "struct:Identity",
-            "field:document_id",
-            "field:revision",
-            "field:module",
-            "field:element",
-            "struct:ModelPin",
-            "field:document_id",
-            "field:revision",
-            "field:umf_version",
-            "field:sha256",
-            "enum:Family",
-            "struct:LogicalType",
-            "field:family",
-            "field:facets",
-            "field:nullable",
+            "use:weft_model : : types : : { Family , Identity , LogicalType , ModelPin , Span }",
             "enum:Expression",
             "fn:logical_type",
             "fn:span",
@@ -1819,9 +1760,7 @@
         {
           "path": "crates/weft-core/src/json.rs",
           "publicDeclarations": [
-            "fn:sha256",
-            "fn:checked_json",
-            "fn:checked_truss_runtime_catalog_json"
+            "use:weft_model : : json : : *"
           ],
           "pathReferences": []
         },
@@ -1898,25 +1837,7 @@
         {
           "path": "crates/weft-core/src/model.rs",
           "publicDeclarations": [
-            "struct:ModuleInput",
-            "field:document_json",
-            "field:pin",
-            "field:selected_module_ids",
-            "struct:Catalog",
-            "struct:Record",
-            "field:identity",
-            "field:pin",
-            "field:value",
-            "field:document",
-            "fn:sdk_scalar_presence",
-            "fn:inputs",
-            "fn:prepare_exact_numbers",
-            "fn:prepare",
-            "fn:prepare_security",
-            "fn:pins",
-            "fn:record_by_identity",
-            "fn:record",
-            "fn:field"
+            "use:weft_model : : catalog : : *"
           ],
           "pathReferences": []
         },
@@ -2958,22 +2879,13 @@
         {
           "path": "crates/weft-core/src/syntax.rs",
           "publicDeclarations": [
-            "struct:Name",
-            "field:value",
-            "field:quoted",
-            "field:span",
-            "fn:matches",
-            "fn:key",
+            "use:weft_model : : name : : Name",
             "struct:Column",
             "field:unqualified",
             "field:alias",
             "field:field",
             "field:span",
-            "enum:LiteralKind",
-            "struct:Literal",
-            "field:value",
-            "field:kind",
-            "field:span",
+            "use:weft_model : : exact : : { Literal , LiteralKind }",
             "enum:Operand",
             "struct:Predicate",
             "field:left",
@@ -3189,6 +3101,351 @@
             "field:tables",
             "field:rows",
             "fn:admit_json"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-model",
+      "manifest": "crates/weft-model/Cargo.toml",
+      "responsibility": "Shared UMF model layer (own semver; see crates/weft-model/README.md)",
+      "ownedTypes": "Catalog, Admission, prepared documents, identities, logical types and family sets, descriptors, diagnostics, exact literals and instants",
+      "constructionAndIntegration": "Pure library with no workspace dependencies; weft-core and other compilers prepare catalogs and select admission explicitly",
+      "dependencies": [
+        {
+          "name": "base64",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.22.1",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "jsonschema",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.56.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary-precision",
+            "macros"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        },
+        {
+          "name": "num-bigint",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.4.8",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "sha2",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.10.9",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-model/src/catalog.rs",
+          "publicDeclarations": [
+            "struct:ModuleInput",
+            "field:document_json",
+            "field:pin",
+            "field:selected_module_ids",
+            "struct:Catalog",
+            "struct:Admission",
+            "field:exact_numbers",
+            "field:field_projection_decimal38",
+            "field:sdk_scalar_presence",
+            "field:security_inputs",
+            "field:identity_name_fallback",
+            "field:raw_read_opaque_extensions",
+            "field:native_operation_domains",
+            "field:logical_defaults020",
+            "field:exact_scalars",
+            "field:exact_dates",
+            "field:bounded_current_strings",
+            "field:nullable_fields",
+            "fn:scalar_rules",
+            "struct:Record",
+            "field:identity",
+            "field:pin",
+            "field:value",
+            "field:document",
+            "fn:selected010",
+            "fn:selected010_raw_read",
+            "fn:selected010_table_operation",
+            "fn:selected010_table_operation020",
+            "fn:sdk_scalar_presence",
+            "fn:admission",
+            "fn:admit",
+            "fn:prepare_with",
+            "fn:documents",
+            "fn:verify_retained_sources",
+            "fn:query_name",
+            "fn:validate_selected010",
+            "fn:inputs",
+            "fn:prepare_exact_numbers",
+            "fn:prepare",
+            "fn:prepare_truss_runtime",
+            "fn:prepare_security",
+            "fn:prepare_raw_read010",
+            "fn:prepare_raw_read010_finite_current_aggregate",
+            "fn:prepare_table_operation010",
+            "fn:prepare_table_operation020",
+            "fn:prepare_security_bounded_strings",
+            "fn:local_element_by_ids",
+            "fn:pins",
+            "fn:record_by_identity",
+            "fn:record",
+            "fn:field",
+            "fn:field_as",
+            "fn:field03",
+            "struct:ScalarRules",
+            "field:mathematical_integer",
+            "field:mathematical_decimal",
+            "field:bounded_strings",
+            "field:decimal38",
+            "field:nullable_fields",
+            "fn:scalar_type",
+            "fn:scalar_type_projected",
+            "fn:scalar_type_with"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/descriptor.rs",
+          "publicDeclarations": [
+            "struct:Member",
+            "field:name",
+            "field:identity",
+            "enum:Shape",
+            "enum:ExactScalarType",
+            "struct:Descriptor",
+            "field:identity",
+            "field:availability",
+            "field:shape",
+            "struct:EntityDescriptor",
+            "field:members",
+            "field:graph",
+            "struct:AuthoredKey",
+            "field:id",
+            "field:fields",
+            "field:types",
+            "fn:local_element",
+            "fn:member_name_matches",
+            "fn:record_members",
+            "fn:entity_descriptor",
+            "fn:entity_descriptor_as",
+            "fn:member_descriptor",
+            "fn:member_descriptor_as",
+            "fn:member_descriptor_by_identity",
+            "fn:member_descriptor_by_identity_as",
+            "fn:authored_key",
+            "fn:authored_key_as",
+            "struct:RelationshipIdentity",
+            "field:document_id",
+            "field:revision",
+            "field:module",
+            "field:relationship",
+            "struct:RelationshipRead",
+            "field:identity",
+            "field:inverse",
+            "field:from",
+            "field:to",
+            "field:source_key",
+            "field:target_key",
+            "field:source_multiplicity",
+            "field:target_multiplicity",
+            "field:target_lifecycle",
+            "fn:entity_relationships",
+            "fn:relationship_read",
+            "fn:relationship_read_identity",
+            "fn:scalar_descriptor_by_identity",
+            "fn:scalar_descriptor_by_identity_as"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/diagnostic.rs",
+          "publicDeclarations": [
+            "enum:ResolutionReason",
+            "fn:code",
+            "struct:Diagnostic",
+            "field:code",
+            "field:severity",
+            "field:message",
+            "field:phase",
+            "field:source_span",
+            "field:resolution_reason",
+            "fn:new",
+            "fn:at",
+            "fn:column",
+            "fn:unavailable_source",
+            "type:Result"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/exact.rs",
+          "publicDeclarations": [
+            "enum:LiteralKind",
+            "struct:Literal",
+            "field:value",
+            "field:kind",
+            "field:span",
+            "const:MAX_TOKEN",
+            "fn:check_literal",
+            "fn:validate_float_token",
+            "fn:coefficient",
+            "fn:validate_mathematical_decimal",
+            "fn:validate_binary_token",
+            "fn:validate_date_token"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/exact_instant.rs",
+          "publicDeclarations": [
+            "const:PROFILE",
+            "fn:key"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/json.rs",
+          "publicDeclarations": [
+            "fn:sha256",
+            "fn:checked_json",
+            "fn:checked_truss_runtime_catalog_json",
+            "fn:checked_json_bounded",
+            "fn:checked_json_bounded_charged"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/lib.rs",
+          "publicDeclarations": [
+            "mod:catalog",
+            "mod:descriptor",
+            "mod:diagnostic",
+            "mod:exact",
+            "mod:exact_instant",
+            "mod:json",
+            "mod:name",
+            "mod:string_domain",
+            "mod:types",
+            "const:VERSION"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/name.rs",
+          "publicDeclarations": [
+            "struct:Name",
+            "field:value",
+            "field:quoted",
+            "field:span",
+            "fn:matches",
+            "fn:key",
+            "fn:quoted"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/string_domain.rs",
+          "publicDeclarations": [
+            "struct:Length",
+            "fn:min",
+            "fn:max",
+            "fn:bounds",
+            "fn:supported",
+            "fn:validate",
+            "fn:validate_facets",
+            "fn:same_domain",
+            "fn:literal_compatible"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-model/src/types.rs",
+          "publicDeclarations": [
+            "struct:Span",
+            "field:start",
+            "field:end",
+            "struct:Identity",
+            "field:document_id",
+            "field:revision",
+            "field:module",
+            "field:element",
+            "struct:ModelPin",
+            "field:document_id",
+            "field:revision",
+            "field:umf_version",
+            "field:sha256",
+            "enum:Family",
+            "enum:ScalarFamily",
+            "fn:from_umf",
+            "fn:umf_name",
+            "trait:FamilySet",
+            "struct:LogicalType",
+            "field:family",
+            "field:facets",
+            "field:nullable",
+            "type:ScalarType",
+            "fn:plain",
+            "fn:widen",
+            "fn:narrow"
           ],
           "pathReferences": []
         }
@@ -5181,6 +5438,7 @@
         "scripts/check-specs.ts",
         "scripts/check-tree-size.py",
         "scripts/checks/check-module-boundaries.py",
+        "scripts/module-boundaries-update.ts",
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
         "scripts/python-release/licenses.py",

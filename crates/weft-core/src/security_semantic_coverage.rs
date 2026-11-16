@@ -50,7 +50,7 @@ impl<'a> OwnerIndex<'a>{
  fn build(ctx:&'a SecurityBackendContext<'_>,b:&mut Budget)->Result<Self>{
   let mut revisions=BTreeMap::new();let mut elements=BTreeMap::new();
   for input in ctx.catalog().inputs(){b.text(&input.document_json)?;b.text(&input.pin.document_id)?;b.text(&input.pin.revision)?;if revisions.insert(input.pin.document_id.clone(),input.pin.revision.clone()).is_some(){return Err(fail());}}
-  for (doc,input) in ctx.catalog().documents.iter().zip(ctx.catalog().inputs()){b.step()?;let document=doc["id"].as_str().ok_or_else(fail)?;
+  for (doc,input) in ctx.catalog().documents().iter().zip(ctx.catalog().inputs()){b.step()?;let document=doc["id"].as_str().ok_or_else(fail)?;
    let mut selected=BTreeSet::new();for id in &input.selected_module_ids{b.text(id)?;selected.insert(id.as_str());}
    for module in doc["modules"].as_array().ok_or_else(fail)?{b.step()?;let mid=module["id"].as_str().ok_or_else(fail)?;b.text(mid)?;if !selected.contains(mid){continue;}
     for element in module["elements"].as_array().ok_or_else(fail)?{b.step()?;let eid=element["id"].as_str().ok_or_else(fail)?;b.text(document)?;b.text(mid)?;b.text(eid)?;

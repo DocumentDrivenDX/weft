@@ -102,7 +102,8 @@ never establishes semantic conformance.
 
 | Module | Responsibility / Owned Types | Public API | Allowed Dependencies | Forbidden Dependencies |
 | --- | --- | --- | --- | --- |
-| `crates/weft-core` | Original owning-version model interpretation, logical AST/IR, capability gates and compile protocol | Compiler/Registry, CONTRACT-001–003 | Locked external compiler and UMF semantic libraries; no workspace imports | Backend crates, embedding crates, storage/host implementations |
+| `crates/weft-model` | UMF 0.10 document preparation, identity resolution, logical types and family sets, exact literals and instants (own semver; [README](../../../crates/weft-model/README.md)) | `Catalog`, `Admission`, `LogicalType<F>`, `check_literal` | Locked serialization, digest and schema libraries; no workspace imports | weft-core, other compilers (Fireweed) |
+| `crates/weft-core` | Dialect parsing, logical AST/IR, capability gates and compile protocol; re-exports weft-model under its historical module paths | Compiler/Registry, CONTRACT-001–003 | `weft-model`; locked external compiler and UMF semantic libraries | Backend crates, embedding crates, storage/host implementations |
 | `crates/weft-databricks` | Target binding, finite native representation, SQL/decoder obligations; `count_having` and `left_join` own their separate explicit profiles | Backend implementations of CONTRACT-002 | `weft-core`; locked serialization dependencies | Runtime/wrappers, PostgreSQL adapter, live storage clients |
 | `crates/weft-postgresql` | PostgreSQL target meanings and SQL/obligations | Backend implementations of CONTRACT-002 | `weft-core`; locked target dependencies | Runtime/wrappers, Databricks adapter, live storage clients |
 | `tests/register-backend/probe` | Independent conformance backend | Registered test Backend | `weft-core` | Concrete production adapters/runtime |
@@ -151,7 +152,7 @@ execution authority remain Truss/host responsibilities. Module-map adoption
 establishes source ownership and lexical inventory, not native, feature-union,
 package or release qualification.
 
-**Integration Owners**: UMF document interpretation -> `weft-core` owning-version reader; Databricks physical translation -> `weft-databricks`; PostgreSQL physical translation -> `weft-postgresql`; Python/browser translation -> their thin wrappers. External execution, original public UMF receipts, native source guards and authority/ACK admission belong to the caller host, not these compiler packages.
+**Integration Owners**: UMF document interpretation -> `weft-model` owning-version reader, consumed through `weft-core`; Databricks physical translation -> `weft-databricks`; PostgreSQL physical translation -> `weft-postgresql`; Python/browser translation -> their thin wrappers. External execution, original public UMF receipts, native source guards and authority/ACK admission belong to the caller host, not these compiler packages.
 
 **Construction Policy**: `weft-runtime` registers explicitly compiled features; request backend ID/version/profile selects registered code. A SQL expression MUST NOT choose or silently switch a backend. Existing library consumers may construct their own Registry through CONTRACT-002.
 

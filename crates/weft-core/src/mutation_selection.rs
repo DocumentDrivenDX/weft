@@ -22,7 +22,7 @@ impl Resolver<'_> {
             .as_array()
             .ok_or_else(|| fail("RESOLVE", "resolve", "Explicit Record members required"))?
         {
-            let module = self.catalog.documents[self.record.document]["modules"]
+            let module = self.catalog.documents()[self.record.document]["modules"]
                 .as_array()
                 .unwrap()
                 .iter()

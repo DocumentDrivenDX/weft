@@ -17,7 +17,7 @@ pub(crate) struct TypeBinding{pub source:Value,pub fields:BTreeSet<SecurityRef>,
 #[derive(Debug)]
 pub struct SecurityOntologyClosure{pub(crate) types:BTreeMap<SecurityRef,TypeBinding>,pub(crate) fields:BTreeMap<SecurityRef,Value>,pub(crate) subject:SecurityRef,pub(crate) context:BTreeSet<SecurityRef>}
 pub(crate) fn locate<'a>(catalog:&'a Catalog,r:&SecurityRef)->Result<&'a Value>{
- let doc=catalog.documents.iter().find(|d|d["id"]==r.document_id).ok_or_else(fail)?;
+ let doc=catalog.documents().iter().find(|d|d["id"]==r.document_id).ok_or_else(fail)?;
  doc["modules"].as_array().ok_or_else(fail)?.iter().find(|m|m["id"]==r.module_id).ok_or_else(fail)?["elements"].as_array().ok_or_else(fail)?.iter().find(|e|e["id"]==r.element_id).ok_or_else(fail)
 }
 pub(crate) fn domain(field:&Value)->Result<Value>{

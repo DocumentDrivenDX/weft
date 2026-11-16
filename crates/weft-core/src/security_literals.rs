@@ -77,25 +77,9 @@ impl PreparedLiteral {
   }))
  }
 }
+/// Exact decimal coefficient (weft-model); refusals keep this module's diagnostic.
 pub(crate) fn coefficient(token:&str,scale:u64,precision:Option<u64>)->Result<BigInt>{
- if token.len()>MAX_TEXT{return Err(fail());}
- let (negative,body)=if let Some(v)=token.strip_prefix('-'){(true,v)}else{(false,token)};
- let at=body.find(['e','E']);let (mantissa,exponent)=if let Some(at)=at{(&body[..at],&body[at+1..])}else{(body,"0")};
- let exponent_digits=exponent.strip_prefix(['+','-']).unwrap_or(exponent);
- if exponent_digits.is_empty()||!exponent_digits.bytes().all(|b|b.is_ascii_digit()){return Err(fail());}
- let (whole,fraction)=if let Some((whole,fraction))=mantissa.split_once('.'){
-  if fraction.is_empty()||!fraction.bytes().all(|b|b.is_ascii_digit()){return Err(fail());}(whole,fraction)
- }else{(mantissa,"")};
- if whole.is_empty()||!whole.bytes().all(|b|b.is_ascii_digit())||(whole.len()>1&&whole.starts_with('0')){return Err(fail());}
- let joined=format!("{whole}{fraction}");let mut digits=joined.trim_start_matches('0').to_string();
- if digits.is_empty(){return Ok(BigInt::from(0));}
- if exponent.len()>32{return Err(fail());}let exponent: i128=exponent.parse().map_err(|_|fail())?;
- let shift=exponent-fraction.len() as i128+scale as i128;
- if shift<0{let cut=-shift;if cut>digits.len() as i128{return Err(fail());}let at=digits.len()-cut as usize;if !digits[at..].bytes().all(|b|b==b'0'){return Err(fail());}digits.truncate(at);}
- else{let bound=precision.unwrap_or(MAX_TEXT as u64).min(MAX_TEXT as u64);if digits.len() as i128+shift>bound as i128{return Err(fail());}digits.extend(std::iter::repeat_n('0',shift as usize));}
- if precision.is_some_and(|p|digits.len() as u64>p){return Err(fail());}
- if digits.is_empty(){return Ok(BigInt::from(0));}
- if negative{digits.insert(0,'-');}BigInt::parse_bytes(digits.as_bytes(),10).ok_or_else(fail)
+ weft_model::exact::coefficient(token,scale,precision).ok_or_else(fail)
 }
 pub(crate) fn unsigned(v:&Value)->Result<u64>{
  if !v.is_number(){return Err(fail());}let text=v.to_string();let n=coefficient(&text,0,None)?;

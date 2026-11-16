@@ -1,45 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct Span {
-    pub start: usize,
-    pub end: usize,
-}
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Identity {
-    pub document_id: String,
-    pub revision: String,
-    pub module: String,
-    pub element: String,
-}
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase", deny_unknown_fields)]
-pub struct ModelPin {
-    pub document_id: String,
-    pub revision: String,
-    pub umf_version: String,
-    pub sha256: String,
-}
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub enum Family {
-    #[serde(rename = "boolean")]
-    Boolean,
-    #[serde(rename = "string")]
-    String,
-    #[serde(rename = "integer")]
-    Integer,
-    #[serde(rename = "decimal")]
-    Decimal,
-}
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct LogicalType {
-    pub family: Family,
-    pub facets: Value,
-    pub nullable: bool,
-}
+pub use weft_model::types::{Family, Identity, LogicalType, ModelPin, Span};
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Expression {

@@ -1,7 +1,8 @@
 {
   "format": "weft-cargo-boundaries/0.1",
   "modules": {
-    "weft-core": [],
+    "weft-model": [],
+    "weft-core": ["weft-model"],
     "weft-databricks": ["weft-core"],
     "weft-postgresql": ["weft-core"],
     "weft-backend-probe": ["weft-core"],
