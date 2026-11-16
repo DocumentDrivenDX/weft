@@ -71,7 +71,11 @@ length/version limits and physical discriminator filters are target-owned and
 must be covered by native evidence. Result numeric carriers must remain exact text. The PostgreSQL conventions (quoted
 identifiers, `$n` slots, string literals, typed casts with the `C` collation and
 exact decoders) are implemented once in the `weft-postgresql-emit` crate; storage
-layouts such as Truss's are separate bindings over it.
+layouts such as Truss's are separate bindings over it. For the opt-in UMF `timestamp`
+and `float` families (not admitted by any weft dialect profile), `Emission<ScalarFamily>`
+columns use the exact text decoders `utc-instant` (`YYYY-MM-DDTHH:MM:SS.ffffffZ`) and
+`ieee754-binary64-hex` (the binary64 bit pattern, most significant byte first); these
+are experimental and covered by unit tests only.
 
 ## Initial Backend Profiles
 

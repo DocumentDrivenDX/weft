@@ -27,4 +27,5 @@ text and refusal codes are part of the surface.
 | `string_literal`, `escape_string_literal` | `'...'` and `E'...'` literals; `None` for text containing NUL. |
 | `COLLATE_C`, `collate_c` | The bytewise `pg_catalog."C"` collation used for every text comparison and ordering. |
 | `cast_type`, `typed` | `expr::pg_catalog.text COLLATE pg_catalog."C"`, `::bool`, `::numeric` (exact integers and decimals); for opt-in families `::timestamptz` and `::float8`. |
-| `decoder`, `decoder_for` | The exact result decoder for a column's family. Timestamp and float columns have no decoder in the SQL carrier yet (`decoder_for` returns `None`). |
+| `decoder`, `decoder_for` | The exact result decoder for a column's family (`ScalarDecoder::exact`). |
+| `decodable` | Projects an expression to the text its decoder reads: `to_char(.. AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')` for timestamps, `encode(float8send(..), 'hex')` for floats, `::text` for integers and decimals. Instants outside years 0001–9999 or infinite are not decodable. Experimental: only unit tests use it. |

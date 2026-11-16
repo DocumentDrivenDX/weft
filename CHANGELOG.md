@@ -50,6 +50,14 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   literal and decoder helpers in the Truss runtime, candidate and mutation
   lowerings now call it; emitted SQL is unchanged. The Truss layout stays in
   `weft-postgresql`.
+- The SQL carrier has result decoders for the opt-in families: `utc-instant`
+  (`YYYY-MM-DDTHH:MM:SS.ffffffZ`) for `timestamp` and `ieee754-binary64-hex` (the
+  binary64 bit pattern) for `float`. `Emission`, `Column` and `Representation`
+  take a family-set parameter that defaults to `Family`, so weft's emissions
+  cannot carry these columns and weft's emission checks refuse the new decoders.
+  `weft_postgresql_emit::decodable` projects a PostgreSQL expression to its
+  decoder's text, and `decoder_for` now returns a decoder for every family.
+  Experimental: only unit tests exercise them.
 - `bun scripts/module-boundaries-update.ts` regenerates the dependency and
   public-declaration inventory in `docs/helix/02-design/module-boundaries.json`.
   `scripts/check-release-version.py --shared-crates` (run in CI) checks that each

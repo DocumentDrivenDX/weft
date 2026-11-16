@@ -6,7 +6,10 @@
 use crate::{boundary::{Frontend, TargetArtifact}, manifest::{failure, Obligation}};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use weft_model::diagnostic::Result;
+use weft_model::{
+    diagnostic::Result,
+    types::{Family, FamilySet, ScalarFamily},
+};
 
 /// Explicit backend-owned facts, never synthetic authored UMF Field identities.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -54,13 +57,41 @@ pub enum ScalarCarrier {
     Text,
     Boolean,
 }
-#[derive(Debug, Clone, Serialize)]
+/// How a host decodes one scalar result value from its carrier. Every decoder
+/// is exact: it reproduces the value without rounding or session dependence.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum ScalarDecoder {
+    /// The text value as is.
     Text,
+    /// A boolean.
     Boolean,
+    /// A canonical decimal integer token.
     ExactInteger,
+    /// A canonical decimal token.
     ExactDecimal,
+    /// `utc-instant`: a UTC instant as text `YYYY-MM-DDTHH:MM:SS.ffffffZ`, a
+    /// four-digit year and exactly six fractional digits (microseconds). Hosts
+    /// refuse any other text. For the opt-in `timestamp` family.
+    UtcInstant,
+    /// `ieee754-binary64-hex`: the IEEE 754 binary64 bit pattern as 16
+    /// lowercase hexadecimal digits, most significant byte first. Hosts refuse
+    /// other text and non-finite values (UMF floats are finite). For the opt-in
+    /// `float` family.
+    Ieee754Binary64Hex,
+}
+impl ScalarDecoder {
+    /// The exact decoder for a column of `family`, in any family set.
+    pub fn exact<T: FamilySet>(family: &T) -> Self {
+        match family.widen() {
+            ScalarFamily::String => Self::Text,
+            ScalarFamily::Boolean => Self::Boolean,
+            ScalarFamily::Integer => Self::ExactInteger,
+            ScalarFamily::Decimal => Self::ExactDecimal,
+            ScalarFamily::Timestamp => Self::UtcInstant,
+            ScalarFamily::Float => Self::Ieee754Binary64Hex,
+        }
+    }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -70,7 +101,7 @@ pub struct OuterJoin {
 }
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "kind", rename_all = "camelCase")]
-pub enum Representation {
+pub enum Representation<T = Family> {
     NativeMetadata {
         metadata: NativeMetadata,
         #[serde(rename = "logicalType")]
@@ -80,7 +111,7 @@ pub enum Representation {
     },
     Scalar {
         #[serde(rename = "logicalType")]
-        logical_type: weft_model::types::LogicalType,
+        logical_type: weft_model::types::LogicalType<T>,
         carrier: ScalarCarrier,
         decoder: ScalarDecoder,
     },
@@ -104,27 +135,31 @@ pub enum Representation {
 }
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Column {
+pub struct Column<T = Family> {
     pub position: usize,
     pub output_name: String,
     /// Physical result label; only explicitly admitted 0.3 positional outputs may carry it.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub carrier_name: Option<String>,
-    pub representation: Representation,
+    pub representation: Representation<T>,
     pub source_identities: Vec<weft_model::types::Identity>,
     pub nullable: bool,
 }
+/// A SQL artifact. `T` is the family set of its scalar result columns: weft's
+/// backends emit [`Family`] columns only; a compiler with timestamp and float
+/// columns emits `Emission<ScalarFamily>`.
 #[derive(Debug, Clone, Serialize)]
-pub struct Emission {
+pub struct Emission<T = Family> {
     pub sql: String,
     pub parameters: Vec<ParameterSlot>,
-    pub columns: Vec<Column>,
+    pub columns: Vec<Column<T>>,
     pub obligations: Vec<Obligation>,
 }
 
-impl<F: Frontend> TargetArtifact<F> for Emission
+impl<F, T> TargetArtifact<F> for Emission<T>
 where
-    F: SqlChecks,
+    F: SqlChecks<T>,
+    T: Send,
 {
     fn obligations_mut(&mut self) -> &mut Vec<Obligation> {
         &mut self.obligations
@@ -135,8 +170,49 @@ where
 }
 /// A frontend's checks on an emitted SQL artifact against its program
 /// (output order, decoders, parameter domains). Default: none.
-pub trait SqlChecks: Frontend {
-    fn check_emission(_program: Self::Program<'_>, _emission: &Emission, _selection: &crate::boundary::Selection, _assessments: &[crate::boundary::Assessment]) -> Result<()> {
+pub trait SqlChecks<T = Family>: Frontend {
+    fn check_emission(_program: Self::Program<'_>, _emission: &Emission<T>, _selection: &crate::boundary::Selection, _assessments: &[crate::boundary::Assessment]) -> Result<()> {
         Ok(())
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+    use weft_model::types::{Identity, LogicalType, ScalarType};
+    #[test]
+    fn opt_in_columns_carry_timestamp_and_float_decoders() {
+        let column = |position: usize, family: ScalarFamily| Column {
+            position,
+            output_name: family.umf_name().into(),
+            carrier_name: None,
+            representation: Representation::Scalar {
+                logical_type: ScalarType::plain(family, false),
+                carrier: ScalarCarrier::Text,
+                decoder: ScalarDecoder::exact(&family),
+            },
+            source_identities: Vec::<Identity>::new(),
+            nullable: false,
+        };
+        let emission = Emission::<ScalarFamily> {
+            sql: "SELECT".into(),
+            parameters: vec![],
+            columns: vec![column(1, ScalarFamily::Timestamp), column(2, ScalarFamily::Float)],
+            obligations: vec![],
+        };
+        let value = serde_json::to_value(&emission).unwrap();
+        assert_eq!(value["columns"][0]["representation"]["decoder"], json!("utc-instant"));
+        assert_eq!(value["columns"][0]["representation"]["logicalType"]["family"], json!("timestamp"));
+        assert_eq!(value["columns"][1]["representation"]["decoder"], json!("ieee754-binary64-hex"));
+        // weft's core families keep their decoders.
+        for (family, decoder) in [
+            (Family::String, "text"),
+            (Family::Boolean, "boolean"),
+            (Family::Integer, "exact-integer"),
+            (Family::Decimal, "exact-decimal"),
+        ] {
+            assert_eq!(serde_json::to_value(ScalarDecoder::exact(&family)).unwrap(), json!(decoder));
+            let _: LogicalType = LogicalType::plain(family, true);
+        }
     }
 }

@@ -227,17 +227,30 @@ pub fn typed<F: FamilySet>(expression: &str, family: &F) -> String {
 }
 /// The exact result decoder for a column of a core family.
 pub fn decoder(family: &Family) -> ScalarDecoder {
-    match family {
-        Family::String => ScalarDecoder::Text,
-        Family::Boolean => ScalarDecoder::Boolean,
-        Family::Integer => ScalarDecoder::ExactInteger,
-        Family::Decimal => ScalarDecoder::ExactDecimal,
-    }
+    ScalarDecoder::exact(family)
 }
-/// The decoder for any family set; `None` where the SQL carrier has no exact
-/// decoder yet (timestamp and float columns).
-pub fn decoder_for<F: FamilySet>(family: &F) -> Option<ScalarDecoder> {
-    Family::try_from(family.widen()).ok().map(|family| decoder(&family))
+/// The exact result decoder for a column of any family set.
+pub fn decoder_for<F: FamilySet>(family: &F) -> ScalarDecoder {
+    ScalarDecoder::exact(family)
+}
+/// Project `expression` (already typed as `family`) to the text its decoder
+/// reads: `timestamptz` as `to_char(.. AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`
+/// for [`ScalarDecoder::UtcInstant`]; `float8` as `encode(float8send(..), 'hex')`
+/// for [`ScalarDecoder::Ieee754Binary64Hex`], independent of
+/// `extra_float_digits`; integers and decimals as `::pg_catalog.text`; strings
+/// and booleans unchanged.
+///
+/// `to_char` gives `NULL` for infinite instants and has no era marker, so an
+/// instant outside years 0001–9999 is not decodable: hosts refuse its text.
+pub fn decodable<F: FamilySet>(expression: &str, family: &F) -> String {
+    match family.widen() {
+        ScalarFamily::String | ScalarFamily::Boolean => expression.to_owned(),
+        ScalarFamily::Integer | ScalarFamily::Decimal => format!("({expression})::pg_catalog.text"),
+        ScalarFamily::Timestamp => format!(
+            "pg_catalog.to_char(({expression}) AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"')"
+        ),
+        ScalarFamily::Float => format!("pg_catalog.encode(pg_catalog.float8send(({expression})::pg_catalog.float8), 'hex')"),
+    }
 }
 #[cfg(test)]
 mod tests {
@@ -314,8 +327,21 @@ mod tests {
         assert_eq!(typed("$3", &ScalarFamily::Timestamp), "$3::pg_catalog.timestamptz");
         assert_eq!(cast_type(&ScalarFamily::Float), "float8");
         assert!(matches!(decoder(&Family::Integer), ScalarDecoder::ExactInteger));
-        assert!(decoder_for(&ScalarFamily::Float).is_none());
-        assert!(matches!(decoder_for(&ScalarFamily::Boolean), Some(ScalarDecoder::Boolean)));
+        assert!(matches!(decoder_for(&ScalarFamily::Boolean), ScalarDecoder::Boolean));
+        assert_eq!(decoder_for(&ScalarFamily::Timestamp), ScalarDecoder::UtcInstant);
+        assert_eq!(decoder_for(&ScalarFamily::Float), ScalarDecoder::Ieee754Binary64Hex);
+        assert_eq!(serde_json::to_value(ScalarDecoder::UtcInstant).unwrap(), json!("utc-instant"));
+        assert_eq!(serde_json::to_value(ScalarDecoder::Ieee754Binary64Hex).unwrap(), json!("ieee754-binary64-hex"));
+        assert_eq!(decodable("x", &ScalarFamily::String), "x");
+        assert_eq!(decodable("$1", &Family::Decimal), "($1)::pg_catalog.text");
+        assert_eq!(
+            decodable("t.at", &ScalarFamily::Timestamp),
+            "pg_catalog.to_char((t.at) AT TIME ZONE 'UTC', 'YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"')"
+        );
+        assert_eq!(
+            decodable("t.ratio", &ScalarFamily::Float),
+            "pg_catalog.encode(pg_catalog.float8send((t.ratio)::pg_catalog.float8), 'hex')"
+        );
     }
     #[test]
     fn slots_preserve_exact_values_and_origins_without_deduplicating() {

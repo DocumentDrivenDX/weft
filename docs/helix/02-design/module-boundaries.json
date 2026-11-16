@@ -3697,6 +3697,7 @@
             "field:origin",
             "enum:ScalarCarrier",
             "enum:ScalarDecoder",
+            "fn:exact",
             "struct:OuterJoin",
             "field:scan",
             "field:record",
@@ -3804,7 +3805,8 @@
             "fn:cast_type",
             "fn:typed",
             "fn:decoder",
-            "fn:decoder_for"
+            "fn:decoder_for",
+            "fn:decodable"
           ],
           "pathReferences": []
         }
