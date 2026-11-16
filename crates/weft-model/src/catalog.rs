@@ -169,7 +169,7 @@ fn selected010_inner(pin: &ModelPin, element: &Value, allow_raw_read_metadata: b
     }
     Ok(())
 }
-#[jsonschema::validator(path = "../../spec/upstream/umf-0.10.0-bundled.schema.json")]
+#[jsonschema::validator(path = "schema/umf-0.10.0-bundled.schema.json")]
 struct Envelope10;
 impl Catalog {
     /// Immutable evidence of the trusted SDK scalar presence preparation path.

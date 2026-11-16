@@ -12,6 +12,8 @@ Databricks). Rust core in `crates/`, Python bindings in `crates/weft-python`, WA
   Preserve unknown model content and refuse what cannot be preserved.
 - Python bindings share the Rust core. No JavaScript sidecar for the Python API.
 - Release: bump the version in `pyproject.toml`, `crates/weft-python/pyproject.toml` and
-  `crates/weft-python/Cargo.toml`, add a `CHANGELOG.md` section, then push tag `vX.Y.Z`
-  from main. `scripts/check-release-version.py` enforces agreement.
+  `Cargo.toml` (`[workspace.package]` and the four shared-crate pins in
+  `[workspace.dependencies]`), add a `CHANGELOG.md` section, then push tag `vX.Y.Z`
+  from main. The tag publishes the wheel to PyPI and the shared crates to crates.io.
+  `scripts/check-release-version.py` enforces agreement.
 - Only claim what CI tests; label the rest experimental.

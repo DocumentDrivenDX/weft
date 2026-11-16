@@ -5,7 +5,9 @@ upstream core schema is `umf-0.10.0.schema.json`; source provenance and the
 semantic-type reference resource are pinned under
 `actions-plan-010/owner-pins.json`.
 
-`umf-0.10.0-bundled.schema.json` is the compile-time validator input. Recreate
+`crates/weft-model/schema/umf-0.10.0-bundled.schema.json` is the compile-time
+validator input; it lives in the `weft-model` crate so the published crate
+carries it. Recreate
 it with `python3 scripts/upstream/bundle-umf010-schema.py`. The generator checks
 the owner-pinned source hashes and writes provenance to
 `umf-0.10.0-bundled.source.json`. The bundle resolves the pinned semantic-type

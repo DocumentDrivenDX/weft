@@ -5,10 +5,12 @@
 Usage: check-release-version.py vX.Y.Z
        check-release-version.py --shared-crates   (only the shared-crate check; CI runs it on every PR)
 
-Checks that the tag, both pyproject.toml files and crates/weft-python/Cargo.toml
+Checks that the tag, both pyproject.toml files and the Cargo workspace version
 carry the same version, that no Cargo.toml pins UMF by commit (`rev =`), that
 CHANGELOG.md has a section for the version, and that each shared compiler crate
-(SHARED_CRATES, versioned on its own) states its Cargo version in its README title.
+(SHARED_CRATES, published to crates.io) inherits the workspace version, is
+publishable only to crates.io, and is pinned at exactly that version in
+[workspace.dependencies].
 """
 import re
 import sys
@@ -16,19 +18,29 @@ import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-# Crates other compilers depend on. Each has its own semver and a README whose
-# first line is "# <name> <version>".
+# Crates other compilers depend on, published to crates.io at the workspace
+# version by the release workflow, in this (dependency) order.
 SHARED_CRATES = ("weft-model", "weft-expr", "weft-backend", "weft-postgresql-emit")
+
+
+def workspace() -> dict:
+    return tomllib.loads((ROOT / "Cargo.toml").read_text())["workspace"]
 
 
 def shared_crate_errors() -> list[str]:
     errors = []
+    root = workspace()
+    version = root["package"]["version"]
+    pins = root.get("dependencies", {})
     for name in SHARED_CRATES:
-        crate = ROOT / "crates" / name
-        version = tomllib.loads((crate / "Cargo.toml").read_text())["package"]["version"]
-        title = (crate / "README.md").read_text().splitlines()[0]
-        if title != f"# {name} {version}":
-            errors.append(f"crates/{name}/README.md title {title!r} does not state Cargo version {version}")
+        package = tomllib.loads((ROOT / "crates" / name / "Cargo.toml").read_text())["package"]
+        if package.get("version") != {"workspace": True}:
+            errors.append(f"crates/{name}/Cargo.toml must use version.workspace = true")
+        if package.get("publish") != ["crates-io"]:
+            errors.append(f"crates/{name}/Cargo.toml must set publish = [\"crates-io\"]")
+        pin = pins.get(name, {})
+        if pin.get("path") != f"crates/{name}" or pin.get("version") != f"={version}":
+            errors.append(f"Cargo.toml [workspace.dependencies] {name} must be path crates/{name}, version ={version}")
     return errors
 
 
@@ -42,9 +54,7 @@ def main(tag: str) -> int:
         "crates/weft-python/pyproject.toml": tomllib.loads(
             (ROOT / "crates/weft-python/pyproject.toml").read_text()
         )["project"]["version"],
-        "crates/weft-python/Cargo.toml": tomllib.loads(
-            (ROOT / "crates/weft-python/Cargo.toml").read_text()
-        )["package"]["version"],
+        "Cargo.toml [workspace.package]": workspace()["package"]["version"],
     }
     for name, value in fields.items():
         if value != version:
@@ -71,7 +81,7 @@ def shared_only() -> int:
     for error in errors:
         print(f"error: {error}", file=sys.stderr)
     if not errors:
-        print("shared crates: " + ", ".join(SHARED_CRATES) + " README titles match Cargo versions")
+        print("shared crates: " + ", ".join(SHARED_CRATES) + " inherit and pin the workspace version")
     return 1 if errors else 0
 
 

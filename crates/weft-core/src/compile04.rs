@@ -386,7 +386,7 @@ impl Compiler {
             .collect();
         let response = json!({
             "interfaceVersion":"weft-compile/0.4.0", "status":"compiled", "diagnostics":[],
-            "dialect":"weft-sql/0.4.0", "compilerVersion":concat!("weft/",env!("CARGO_PKG_VERSION")),
+            "dialect":"weft-sql/0.4.0", "compilerVersion":crate::COMPILER_VERSION,
             "modelPins":catalog.pins(), "logicalPlan":plan,
             "backend":{"backendId":compiled.backend_id,"backendVersion":compiled.backend_version,
                 "targetProfile":compiled.target_profile.id,"interfaceVersion":"weft-backend/0.3.0"},

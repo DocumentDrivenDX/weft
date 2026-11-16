@@ -2,11 +2,20 @@
 members = ["crates/weft-databricks","crates/weft-postgresql","crates/weft-runtime","crates/weft-python","crates/weft-wasm","tests/register-backend/probe","tests/frontend/wasm-probe","crates/weft-core","crates/weft-model","crates/weft-expr","crates/weft-backend","crates/weft-postgresql-emit"]
 resolver = "2"
 [workspace.package]
-version = "0.1.0"
+# The weft release version: the umf-weft wheel, the vX.Y.Z tag and the published
+# shared crates all carry it. scripts/check-release-version.py checks agreement.
+version = "0.4.58"
 edition = "2021"
 publish = false
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/DocumentDrivenDX/weft"
 [workspace.dependencies]
+# Shared crates, published to crates.io at the workspace version. Keep each
+# `version` equal to [workspace.package] version.
+weft-model = { path = "crates/weft-model", version = "=0.4.58" }
+weft-expr = { path = "crates/weft-expr", version = "=0.4.58" }
+weft-backend = { path = "crates/weft-backend", version = "=0.4.58" }
+weft-postgresql-emit = { path = "crates/weft-postgresql-emit", version = "=0.4.58" }
 serde = { version = "=1.0.228", features = ["derive"] }
 serde_json = { version = "=1.0.145", features = ["arbitrary_precision", "raw_value"] }
 sha2 = "=0.10.9"

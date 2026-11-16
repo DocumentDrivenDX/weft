@@ -1,6 +1,7 @@
 name: Release
 
-# Pushing a tag vX.Y.Z tests, builds, smoke-tests and publishes umf-weft.
+# Pushing a tag vX.Y.Z tests, builds, smoke-tests and publishes umf-weft to
+# PyPI and the shared crates to crates.io.
 # A manual run (workflow_dispatch) builds and smoke-tests only; it publishes
 # nothing unless it is started on a tag with dry_run set to false.
 on:
@@ -172,8 +173,25 @@ jobs:
         with:
           packages-dir: dist
 
+  crates:
+    # Publish the shared crates (SHARED_CRATES in scripts/check-release-version.py)
+    # to crates.io at the release version, in dependency order. Needs the
+    # owner's CARGO_REGISTRY_TOKEN secret in the crates-io environment. cargo
+    # 1.97.1 for the reason in ci.yml's crates job.
+    if: ${{ github.ref_type == 'tag' && (github.event_name == 'push' || inputs.dry_run == false) }}
+    needs: [ci, version, wheels, sdist, wasm, smoke]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: crates-io
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install 1.97.1 --profile minimal
+      - run: cargo +1.97.1 publish --locked -p weft-model -p weft-expr -p weft-backend -p weft-postgresql-emit
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
   github-release:
-    needs: [version, publish, wasm]
+    needs: [version, publish, crates, wasm]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:

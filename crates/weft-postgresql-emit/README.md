@@ -1,4 +1,4 @@
-# weft-postgresql-emit 0.1.0
+# weft-postgresql-emit
 
 PostgreSQL emission primitives shared by weft's PostgreSQL backends
 (`weft-postgresql`) and other compilers' PostgreSQL bindings (Fireweed): quoted
@@ -13,10 +13,12 @@ primitives.
 
 ## Version
 
-Own semver, independent of the workspace and the `umf-weft` wheel;
-`weft_postgresql_emit::VERSION` reports it. While the major version is 0, a
-minor bump may break the public surface below; a patch bump may not. Emitted
-text and refusal codes are part of the surface.
+Published to crates.io with every weft release, at the release version: the
+`vX.Y.Z` tag, the `umf-weft` wheel and all four shared crates (`weft-model`,
+`weft-expr`, `weft-backend`, `weft-postgresql-emit`) carry the same number, and
+`weft_postgresql_emit::VERSION` reports it. Depend on them at one exact version, for example
+`weft-postgresql-emit = "=0.4.58"`. While weft is 0.x any release may change the public
+surface below; `CHANGELOG.md` records each change. Emitted text and refusal codes are part of the surface.
 
 ## Public surface
 
