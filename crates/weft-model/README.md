@@ -21,6 +21,7 @@ are part of the surface.
 | Module | Items | Meaning |
 | --- | --- | --- |
 | `catalog` | `Catalog`, `ModuleInput`, `Record`, `Admission`, `ScalarRules`, `scalar_type`, `scalar_type_projected`, `scalar_type_with`, `selected010*` | Prepare a bundle of pinned UMF 0.10 documents (digest, identity, schema and limit checks), keep the original bytes, resolve Records and Fields by authored name or identity, and type selected Fields. |
+| `core_literal` | `field_domain`, `validate_field`, `check_literal`, `PreparedLiteral`, `ScalarLiteral`, `normalized_facets`, `normalized_literal`, `coefficient`, `unsigned`, `MAX_TEXT` | UMF CoreLiteral JSON (`{"integerToken":..}`, `{"string":..}`, ...) admitted against a selected Field's domain: facets, integer widths, decimal precision/scale, ranges, allowed values, examples and defaults. Refusals keep weft's historical codes `WFT-SECURITY-LITERAL` and `WFT-SECURITY-ONTOLOGY`. |
 | `descriptor` | `Shape`, `Descriptor`, `EntityDescriptor`, `Member`, `AuthoredKey`, `ExactScalarType`, `RelationshipRead`, `RelationshipIdentity` | Identity-based type graphs of Records and their members, authored keys and relationship reads. |
 | `types` | `Span`, `Identity`, `ModelPin`, `Family`, `ScalarFamily`, `FamilySet`, `LogicalType<F>`, `ScalarType` | Resolved identities and logical scalar types. |
 | `name` | `Name` | Authored names; quoted names match exactly, unquoted names ASCII-case-fold. |

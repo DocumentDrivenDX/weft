@@ -2527,13 +2527,7 @@
         {
           "path": "crates/weft-core/src/security_literals.rs",
           "publicDeclarations": [
-            "enum:ScalarLiteral",
-            "struct:PreparedLiteral",
-            "fn:new",
-            "fn:check",
-            "fn:generated_query_refinements",
-            "fn:check_literal",
-            "fn:validate_field"
+            "use:weft_model : : core_literal : : { check_literal , validate_field , PreparedLiteral , ScalarLiteral }"
           ],
           "pathReferences": []
         },
@@ -3264,6 +3258,26 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-model/src/core_literal.rs",
+          "publicDeclarations": [
+            "const:MAX_TEXT",
+            "enum:ScalarLiteral",
+            "struct:PreparedLiteral",
+            "fn:new",
+            "fn:from_validated",
+            "fn:check",
+            "fn:generated_query_refinements",
+            "fn:coefficient",
+            "fn:unsigned",
+            "fn:normalized_facets",
+            "fn:check_literal",
+            "fn:validate_field",
+            "fn:normalized_literal",
+            "fn:field_domain"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-model/src/descriptor.rs",
           "publicDeclarations": [
             "struct:Member",
@@ -3377,6 +3391,7 @@
           "path": "crates/weft-model/src/lib.rs",
           "publicDeclarations": [
             "mod:catalog",
+            "mod:core_literal",
             "mod:descriptor",
             "mod:diagnostic",
             "mod:exact",

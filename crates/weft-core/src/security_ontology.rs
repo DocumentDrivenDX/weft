@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Exact ontology reference/key/classification closure. Does not authorize native execution.
 use crate::{error::{Diagnostic,Result},model::Catalog,security_source::SecuritySourcePacket};
-use serde_json::{json,Value};
+use serde_json::Value;
 use std::collections::{BTreeMap,BTreeSet};
 #[derive(Debug,Clone,PartialEq,Eq,PartialOrd,Ord,serde::Serialize,serde::Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
@@ -20,27 +20,7 @@ pub(crate) fn locate<'a>(catalog:&'a Catalog,r:&SecurityRef)->Result<&'a Value>{
  let doc=catalog.documents().iter().find(|d|d["id"]==r.document_id).ok_or_else(fail)?;
  doc["modules"].as_array().ok_or_else(fail)?.iter().find(|m|m["id"]==r.module_id).ok_or_else(fail)?["elements"].as_array().ok_or_else(fail)?.iter().find(|e|e["id"]==r.element_id).ok_or_else(fail)
 }
-pub(crate) fn domain(field:&Value)->Result<Value>{
- members(field,&["id","kind","name","description","extensions","scalarType","nullability","cardinality","facets","references","title","aliases","examples","allowedValues","default"])?;
- if field["kind"]!="field"||field["cardinality"]!="one"||!matches!(field["scalarType"].as_str(),Some("boolean"|"string"|"integer"|"decimal"|"binary"))||field["references"].as_array().is_some_and(|r|!r.is_empty()){return Err(fail());}
- let facets=crate::security_literals::normalized_facets(field)?;
- members(&facets,&["length","precision","scale","integerWidth","range","collectionSize"])?;
- for (group,keys) in [("length",&["min","max","unit"][..]),("integerWidth",&["bits","signed"][..]),("range",&["min","max","minInclusive","maxInclusive"][..]),("collectionSize",&["min","max"][..])]{if let Some(value)=facets.get(group){members(value,keys)?;}}
- if !matches!(field["nullability"].as_str(),Some("required"|"absent-allowed"|"unspecified")){return Err(fail());}
- let kind=field["scalarType"].as_str().unwrap();
- if facets.get("collectionSize").is_some()||((facets.get("precision").is_some()||facets.get("scale").is_some())&&kind!="decimal")||(facets.get("integerWidth").is_some()&&kind!="integer")||(facets.get("range").is_some()&&!matches!(kind,"integer"|"decimal")){return Err(fail());}
- if let Some(length)=facets.get("length"){
-  if length["unit"]!=if kind=="string"{"unicode-scalar"}else if kind=="binary"{"byte"}else{return Err(fail());}{return Err(fail());}
- }
- if let Some(width)=facets.get("integerWidth"){
-  let bits=width["bits"].as_u64().ok_or_else(fail)?;if bits==0||bits>9_007_199_254_740_991||!width["signed"].is_boolean(){return Err(fail());}
- }
- if field["scalarType"]=="decimal"{
-  let precision=facets["precision"].as_u64().ok_or_else(fail)?;let scale=facets["scale"].as_u64().ok_or_else(fail)?;
-  if precision==0||precision>9_007_199_254_740_991||scale>precision{return Err(fail());}
- }
- Ok(json!({"scalarType":field["scalarType"],"cardinality":field["cardinality"],"nullability":field["nullability"],"facets":facets,"allowedValues":field.get("allowedValues").unwrap_or(&Value::Null)}))
-}
+pub(crate) use weft_model::core_literal::field_domain as domain;
 /// Original authored scalar-key references, with no native identity or authority.
 pub fn authored_key_fields(catalog:&Catalog,record_ref:&SecurityRef,key_id:&str)->Result<Vec<SecurityRef>> {
  let record=locate(catalog,record_ref)?;if record["kind"]!="record"{return Err(fail());}

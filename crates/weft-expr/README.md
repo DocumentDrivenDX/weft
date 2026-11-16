@@ -35,4 +35,4 @@ Each weft dialect version's plan tree (`ir::Expression`, `application_ir::Predic
 dialect that owns it; those trees are built from the operands above. Source
 parsing and name resolution (`arithmetic_resolve::resolve`, the mutation SQL
 parser) stay in weft-core because they read weft-sql text. Checking that a
-CoreLiteral is in a UMF Field's domain stays in weft-core's `security_literals`.
+CoreLiteral is in a UMF Field's domain is `weft_model::core_literal`.

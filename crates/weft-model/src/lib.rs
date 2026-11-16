@@ -8,6 +8,7 @@
 //! no SQL parsing, planning, backend lowering or IO. See `README.md` for the
 //! versioned public surface.
 pub mod catalog;
+pub mod core_literal;
 pub mod descriptor;
 pub mod diagnostic;
 pub mod exact;

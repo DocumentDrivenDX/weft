@@ -21,6 +21,10 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   available through `Catalog::field_as`, `Catalog::entity_descriptor_as` and the
   other `*_as` methods; `Admission::nullable_fields` types `absent-allowed`
   Fields as nullable.
+- CoreLiteral admission against UMF Field domains (`security_literals`, and the
+  field-domain normalizer from `security_ontology`) moves to
+  `weft_model::core_literal`; `weft_core::security_literals` re-exports it.
+  Diagnostic codes are unchanged.
 - New crate `weft-expr` 0.1.0 (own semver; `crates/weft-expr/README.md`): typed
   `Field`/`Value` operands, comparison operators and their typing rule, exact
   arithmetic domains and expressions, and the `weft.update-selection/1`
