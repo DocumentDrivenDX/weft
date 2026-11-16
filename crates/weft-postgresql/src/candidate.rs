@@ -368,12 +368,7 @@ impl Backend for Candidate {
                 Identifier::new(&o.name)?.sql()
             ));
             let ty = o.expression.logical_type().clone();
-            let decoder = match ty.family {
-                Family::String => ScalarDecoder::Text,
-                Family::Boolean => ScalarDecoder::Boolean,
-                Family::Integer => ScalarDecoder::ExactInteger,
-                Family::Decimal => ScalarDecoder::ExactDecimal,
-            };
+            let decoder = weft_postgresql_emit::decoder(&ty.family);
             fn origins(e: &Expression) -> Vec<Identity> {
                 match e {
                     Expression::Field { identity, .. } => vec![identity.clone()],
@@ -617,17 +612,7 @@ impl Build<'_> {
                         value.clone(),
                         json!({"literalSpan":span}),
                     )?;
-                    let cast = match logical_type.family {
-                        Family::String => "text",
-                        Family::Boolean => "bool",
-                        Family::Integer | Family::Decimal => "numeric",
-                    };
-                    let value = format!("{slot}::pg_catalog.{cast}");
-                    if logical_type.family == Family::String {
-                        format!("{value} COLLATE pg_catalog.\"C\"")
-                    } else {
-                        value
-                    }
+                    weft_postgresql_emit::typed(&slot, &logical_type.family)
                 }
                 Expression::Equal { .. } => format!("({} = {})", operands[0], operands[1]),
                 Expression::And { .. } => format!("({} AND {})", operands[0], operands[1]),

@@ -177,7 +177,7 @@ impl<'a> SourceIssuer<'a, '_> {
         if self.rule_events.len()>4096 {return Err(fail());} Ok(())
     }
     fn field_carrier(&mut self, ctx: &'a SecurityBackendContext<'_>, reference: &SecurityRef) -> Result<&'a serde_json::Value> {
-        for document in &ctx.catalog().documents {
+        for document in ctx.catalog().documents() {
             self.charge(0)?;
             if document["id"].as_str() != Some(reference.document_id.as_str()) { continue; }
             for module in document["modules"].as_array().ok_or_else(fail)? {

@@ -120,7 +120,7 @@ pub fn derive<'context,'parent>(context:&'context CurrentPresencePreparation<'pa
     "core-relationship"=>{
      let reference=SecurityAssociationRef::read(&selection["relationship"])?;let SecurityAssociationRef::Relationship(r)=&reference else{return Err(fail())};
      let pins=catalog.pins();let pin=pins.iter().find(|p|p.document_id==r.document_id).ok_or_else(fail)?;let revision=pin.revision.clone();
-     let doc=catalog.documents.iter().find(|d|d["id"]==r.document_id).ok_or_else(fail)?;let module=doc["modules"].as_array().ok_or_else(fail)?.iter().find(|m|m["id"]==r.module_id).ok_or_else(fail)?;
+     let doc=catalog.documents().iter().find(|d|d["id"]==r.document_id).ok_or_else(fail)?;let module=doc["modules"].as_array().ok_or_else(fail)?.iter().find(|m|m["id"]==r.module_id).ok_or_else(fail)?;
      let mut matches=module["relationships"].as_array().ok_or_else(fail)?.iter().filter(|a|a["id"]==r.relationship_id);let authored=matches.next().ok_or_else(fail)?;if matches.next().is_some(){return Err(fail())}
      // Keep original metadata, including annotations and exact parsed values.
      // These required declarations enable correspondence, not semantic admission.

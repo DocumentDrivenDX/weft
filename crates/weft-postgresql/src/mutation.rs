@@ -11,6 +11,7 @@ use crate::{
 };
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
+use weft_expr::selection::{self, Refusal};
 use weft_core::{
     ir::{Family, Identity, ModelPin},
     model::Catalog,
@@ -51,13 +52,10 @@ fn original<T>(result: weft_core::error::Result<T>) -> MResult<T> {
     })
 }
 fn literal(text: &str) -> MResult<String> {
-    if text.contains('\0') {
-        return Err(fail(
-            "ACTION",
-            "Native PostgreSQL text cannot represent NUL",
-        ));
-    }
-    Ok(format!("'{}'", text.replace('\'', "''")))
+    weft_postgresql_emit::string_literal(text).ok_or_else(|| fail(
+        "ACTION",
+        "Native PostgreSQL text cannot represent NUL",
+    ))
 }
 impl OriginalMutationBackend {
     pub fn new(
@@ -166,7 +164,7 @@ impl OriginalMutationBackend {
         weft_core::mutation_backend::inspect_selection(selection, model)?;
         let program = selection.read()?;
         let document = model.read()?;
-        if program["protocol"] != "weft.update-selection/1" {
+        if program["protocol"] != selection::PROTOCOL {
             return Err(fail("ACTION", "Exact selection profile required"));
         }
         let identity = Identity {
@@ -247,41 +245,26 @@ impl OriginalMutationBackend {
             alias.sql(),
             original(Identifier::new(&self.columns.version.name))?.sql()
         );
-        let mut refs = Vec::new();
+        // inspect_selection above validated structure and domains; the shared
+        // decoder only re-reads the admitted predicate.
+        let predicate = selection::walk(
+            &program["predicate"],
+            |_| Ok(()),
+            |refusal| match refusal {
+                Refusal::Depth => fail("LIMIT", "Selection depth exceeded"),
+                Refusal::Comparisons => fail("LIMIT", "Comparison bound exceeded"),
+                Refusal::Operator => fail("ACTION", "Unknown comparison operation"),
+                _ => fail("ACTION", "Typed predicate node required"),
+            },
+        )?;
         let mut operations: BTreeMap<String, BTreeSet<Operation>> = BTreeMap::new();
-        let mut work = vec![(&program["predicate"], 1)];
-        let mut nodes = 0;
-        while let Some((node, depth)) = work.pop() {
-            if depth > 24 {
-                return Err(fail("LIMIT", "Selection depth exceeded"));
-            }
-            if let Some(c) = node.get("compare") {
-                nodes += 1;
-                if nodes > 256 {
-                    return Err(fail("LIMIT", "Comparison bound exceeded"));
-                }
-                let operation = match c["op"].as_str() {
-                    Some("eq" | "ne") => Operation::Equality,
-                    Some("lt" | "le" | "gt" | "ge") => Operation::Ordering,
-                    _ => return Err(fail("ACTION", "Unknown comparison operation")),
-                };
-                operations
-                    .entry(weft_core::mutation::canonical(&c["field"]))
-                    .or_default()
-                    .insert(operation);
-                if !refs.contains(&c["field"]) {
-                    refs.push(c["field"].clone());
-                }
-            } else {
-                let cs = node
-                    .get("and")
-                    .or_else(|| node.get("or"))
-                    .and_then(Value::as_array)
-                    .filter(|cs| (2..=64).contains(&cs.len()))
-                    .ok_or_else(|| fail("ACTION", "Typed predicate node required"))?;
-                work.extend(cs.iter().rev().map(|c| (c, depth + 1)));
-            }
+        for c in predicate.comparisons() {
+            operations
+                .entry(weft_core::mutation::canonical(&c.field))
+                .or_default()
+                .insert(if c.op.orders() { Operation::Ordering } else { Operation::Equality });
         }
+        let mut refs = predicate.dependencies();
         for field in &key.fields {
             let r = json!({"module":field.module,"element":field.element});
             if !refs.contains(&r) {

@@ -29,34 +29,8 @@ pub struct EntityProjection {
     pub facts: Vec<NativeMetadata>,
     pub relationships: bool,
 }
-#[derive(Debug, Clone, Serialize)]
-pub struct Field {
-    pub scan: String,
-    pub identity: Identity,
-    #[serde(rename = "type")]
-    pub logical_type: LogicalType,
-    pub span: Span,
-}
-#[derive(Debug, Clone, Serialize)]
-#[serde(tag = "kind", rename_all = "camelCase")]
-pub enum Value {
-    Literal {
-        value: String,
-        #[serde(rename = "type")]
-        logical_type: LogicalType,
-        span: Span,
-    },
-    Parameter {
-        name: String,
-        value: String,
-        #[serde(rename = "type")]
-        logical_type: LogicalType,
-        span: Span,
-    },
-    Field {
-        field: Field,
-    },
-}
+/// Typed operands live in weft-expr; their wire shapes are unchanged.
+pub use weft_expr::operand::{Field, Value};
 #[derive(Debug, Clone, Serialize)]
 pub struct ExactField {
     pub scan: String,
@@ -137,19 +111,8 @@ pub enum Expression {
         bound: u16,
     },
 }
-/// Explicit backend-owned facts, never synthetic authored UMF Field identities.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub enum NativeMetadata {
-    Version,
-    CreatedBy,
-    CreatedAt,
-    UpdatedBy,
-    UpdatedAt,
-    OriginalAuthor,
-    OriginalAt,
-    LoadId,
-}
+/// Explicit backend-owned facts; the type lives with the SQL carrier in weft-backend.
+pub use weft_backend::sql::NativeMetadata;
 #[derive(Debug, Clone, Serialize)]
 pub struct Output {
     pub name: String,

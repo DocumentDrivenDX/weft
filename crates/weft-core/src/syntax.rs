@@ -3,24 +3,7 @@ use crate::{
     error::{Diagnostic, Result},
     ir::Span,
 };
-#[derive(Debug, Clone)]
-pub struct Name {
-    pub value: String,
-    pub quoted: bool,
-    pub span: Span,
-}
-impl Name {
-    pub fn matches(&self, value: &str) -> bool {
-        if self.quoted {
-            self.value == value
-        } else {
-            self.value == value.to_ascii_lowercase()
-        }
-    }
-    pub fn key(&self) -> &str {
-        &self.value
-    }
-}
+pub use weft_model::name::Name;
 #[derive(Debug, Clone)]
 pub struct Column {
     pub unqualified: bool,
@@ -28,18 +11,7 @@ pub struct Column {
     pub field: Name,
     pub span: Span,
 }
-#[derive(Debug, Clone)]
-pub enum LiteralKind {
-    Number,
-    String,
-    Boolean,
-}
-#[derive(Debug, Clone)]
-pub struct Literal {
-    pub value: String,
-    pub kind: LiteralKind,
-    pub span: Span,
-}
+pub use weft_model::exact::{Literal, LiteralKind};
 #[derive(Debug, Clone)]
 pub enum Operand {
     Column(Column),

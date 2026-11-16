@@ -7,13 +7,7 @@ use crate::{
 };
 use serde::Serialize;
 /// Additive 0.3 scalar comparison operators; old =/> variants retain their wire shape.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub enum ComparisonOperator { Less, LessEqual, GreaterEqual, NotEqual }
-impl ComparisonOperator {
-    pub fn sql(self) -> &'static str { match self { Self::Less => "<", Self::LessEqual => "<=", Self::GreaterEqual => ">=", Self::NotEqual => "<>" } }
-    pub fn capability(self) -> &'static str { match self { Self::Less => "compare.less", Self::LessEqual => "compare.lessEqual", Self::GreaterEqual => "compare.greaterEqual", Self::NotEqual => "compare.notEqual" } }
-}
+pub use weft_expr::compare::ComparisonOperator;
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Predicate {

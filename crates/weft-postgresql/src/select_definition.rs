@@ -1144,11 +1144,11 @@ fn render_application_equality<'a>(
                 Expression::Literal { .. },
             ) = (predicate, node)
             {
-                let before = parameters.0.len();
+                let before = parameters.slots().len();
                 let sql = native(node, operands, access, parameters)?;
-                if parameters.0.len() != before + 1
-                    || parameters.0[before].value != *value
-                    || parameters.0[before].logical_type != *logical_type
+                if parameters.slots().len() != before + 1
+                    || parameters.slots()[before].value != *value
+                    || parameters.slots()[before].logical_type != *logical_type
                 {
                     return Err(Diagnostic::new(
                         "WFT-BINDING",
@@ -1156,7 +1156,7 @@ fn render_application_equality<'a>(
                         "Named parameter conversion must retain one exact typed value slot",
                     ));
                 }
-                parameters.0[before].origin = serde_json::json!({"parameter":name,"span":span});
+                parameters.set_origin(before, serde_json::json!({"parameter":name,"span":span}));
                 Ok(sql)
             } else {
                 native(node, operands, access, parameters)

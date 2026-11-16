@@ -348,7 +348,7 @@ impl Compiler {
             if sdk_scalar_presence && (req.modules.is_empty()||req.modules.iter().any(|m|m.pin.umf_version!="0.10.0")||req.interface_version!="weft-compile/0.2.0" || req.dialect!="weft-sql/0.2.0" || req.target.backend_id!="ashlar.databricks" || !matches!(req.target.backend_version.as_str(),"0.1.0-local-spark4-sdk-candidate"|"0.1.0-local-spark4-sdk-pages-candidate") || req.target.target_profile!="spark4.0.1-delta4.0.0-sdk-candidate" || (ordered_page.is_some() && req.target.backend_version!="0.1.0-local-spark4-sdk-pages-candidate") || page.is_some() || cursor_delivery || field_projection_decimal38 || req.security.is_some() || req.exact_parameters.is_some()) {
                 return Err(Diagnostic::new("WFT-SDK-PRESENCE","input","Explicit non-temporal SDK presence profile required"));
             }
-            let mut catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
+            let catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
                 crate::model::Catalog::prepare_security(req.modules)?
             } else if truss_runtime_catalog {
                 crate::model::Catalog::prepare_truss_runtime(req.modules, exact_numbers)?
@@ -357,11 +357,13 @@ impl Compiler {
             } else {
                 crate::model::Catalog::prepare(req.modules)?
             };
-            catalog.identity_name_fallback = identity_name_fallback;
-            catalog.field_projection_decimal38=field_projection_decimal38;
-            catalog.sdk_scalar_presence=sdk_scalar_presence;
-            catalog.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6" | "weft-compile/0.2.7"|"weft-compile/0.2.8");
-            catalog.exact_dates = matches!(req.interface_version.as_str(),"weft-compile/0.2.7"|"weft-compile/0.2.8");
+            let catalog = catalog.admit(|admission| {
+                admission.identity_name_fallback = identity_name_fallback;
+                admission.field_projection_decimal38=field_projection_decimal38;
+                admission.sdk_scalar_presence=sdk_scalar_presence;
+                admission.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.2.3" | "weft-compile/0.2.4" | "weft-compile/0.2.5" | "weft-compile/0.2.6" | "weft-compile/0.2.7"|"weft-compile/0.2.8");
+                admission.exact_dates = matches!(req.interface_version.as_str(),"weft-compile/0.2.7"|"weft-compile/0.2.8");
+            });
             if let Some(source)=req.security.as_ref() {
                 let packet=crate::security_source::SecuritySourcePacket::read(
                     source["policyJson"].as_str().expect("security request schema"),
@@ -681,7 +683,7 @@ fn validate_application_plan(catalog:&crate::model::Catalog,plan:&mut crate::app
                 if interface_version=="weft-compile/0.2.8" {
                     plan.ir_version="weft-ir/0.2.8".into();
                     if !Plan028::is_valid(&serde_json::to_value(&*plan).expect("typed selective query plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates selective query semantics"));}
-                } else if catalog.exact_dates {
+                } else if catalog.admission().exact_dates {
                     plan.ir_version="weft-ir/0.2.7".into();
                     if !Plan027::is_valid(&serde_json::to_value(&*plan).expect("typed canonical date plan")) {return Err(Diagnostic::new("WFT-IR","resolve","Resolved plan violates canonical date semantics"));}
                 } else if timestamp_equality {
@@ -700,7 +702,7 @@ fn validate_application_plan(catalog:&crate::model::Catalog,plan:&mut crate::app
                     plan.ir_version = "weft-ir/0.2.2".into();
                     let value = serde_json::to_value(&*plan).map_err(|_| Diagnostic::new("WFT-IR", "resolve", "Invalid resolved entity plan"))?;
                     if !Plan022::is_valid(&value) { return Err(Diagnostic::new("WFT-IR", "resolve", "Resolved plan violates versioned entity semantics")); }
-                } else if catalog.exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
+                } else if catalog.admission().exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
 
     Ok(())
 }

@@ -20,7 +20,7 @@ impl Scope<'_> {
         let scalar_type=match &descriptor.shape {
             Shape::ExactScalar{scalar_type:ExactScalarType::Binary} if self.binary_equality=>ExactScalarType::Binary,
             Shape::ExactScalar{scalar_type:ExactScalarType::Timestamp} if self.timestamp_equality=>ExactScalarType::Timestamp,
-            Shape::ExactScalar{scalar_type:ExactScalarType::Date} if self.catalog.exact_dates=>ExactScalarType::Date,
+            Shape::ExactScalar{scalar_type:ExactScalarType::Date} if self.catalog.admission().exact_dates=>ExactScalarType::Date,
             _=>return Ok(None),
         };
         match descriptor.availability.as_deref() {

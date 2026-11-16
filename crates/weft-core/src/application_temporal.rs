@@ -455,10 +455,11 @@ pub fn prepare(value: &Value, page: Option<(&KeyRef, u16)>) -> Result<(Request, 
     }
     p.word("from")?;
     let source = p.source()?;
-    let mut catalog = Catalog::prepare_truss_runtime(request.modules.clone(), true)?;
-    catalog.identity_name_fallback = true;
-    catalog.exact_scalars = true;
-    catalog.exact_dates = true;
+    let catalog = Catalog::prepare_truss_runtime(request.modules.clone(), true)?.admit(|admission| {
+        admission.identity_name_fallback = true;
+        admission.exact_scalars = true;
+        admission.exact_dates = true;
+    });
     let record = catalog.record(source.namespace.as_ref(), &source.name)?;
     let members = catalog.record_members(&record)?;
     let inspected = inspection::inspect(

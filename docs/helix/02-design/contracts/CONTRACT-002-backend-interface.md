@@ -68,7 +68,14 @@ The backend allocates parameter slots once from typed literals and discriminator
 values. PostgreSQL `$n` and Databricks `:pn` are initial emission conventions;
 values are never interpolated into SQL text. Identifier escaping, identifier
 length/version limits and physical discriminator filters are target-owned and
-must be covered by native evidence. Result numeric carriers must remain exact text.
+must be covered by native evidence. Result numeric carriers must remain exact text. The PostgreSQL conventions (quoted
+identifiers, `$n` slots, string literals, typed casts with the `C` collation and
+exact decoders) are implemented once in the `weft-postgresql-emit` crate; storage
+layouts such as Truss's are separate bindings over it. For the opt-in UMF `timestamp`
+and `float` families (not admitted by any weft dialect profile), `Emission<ScalarFamily>`
+columns use the exact text decoders `utc-instant` (`YYYY-MM-DDTHH:MM:SS.ffffffZ`) and
+`ieee754-binary64-hex` (the binary64 bit pattern, most significant byte first); these
+are experimental and covered by unit tests only.
 
 ## Initial Backend Profiles
 
@@ -182,6 +189,13 @@ target and language profiles. Registration snapshots and validates the manifest;
 unknown members, repeated IDs, mismatched pairs, missing domains and supported
 capabilities without declared evidence refuse. A declared evidence ID remains a
 trusted qualification reference; the compiler does not fetch or execute it.
+
+The checked pipeline is implemented once, in the `weft-backend` crate
+(`weft_backend::boundary`): a `Frontend` supplies the typed program and the
+manifest rules, a `Backend<F>` returns any `TargetArtifact` from `emit` (weft's
+backends return the SQL `Emission`; a backend that emits nothing returns
+`NoArtifact`), and `Registry<F, A>` runs the checks below in a fixed order. weft's
+frontend is `weft_core::backend::WeftPlans`.
 
 The Rust `Backend` trait in `crates/weft-core/src/backend.rs` uses associated
 `Mapping` and `TargetPlan` types. Each registered implementation owns those types;

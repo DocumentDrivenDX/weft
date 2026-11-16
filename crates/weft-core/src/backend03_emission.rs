@@ -704,7 +704,7 @@ fn validate_parameter(
         }
         let domain = crate::arithmetic_resolve::token_domain(
             &p.value,
-            Some(&Family::Decimal),
+            Some(weft_model::types::ScalarFamily::Decimal),
             &crate::ir::Span { start: 0, end: 0 },
         )
         .map_err(|_| fail("WFT-EMIT", "Decimal token is not exact base ten"))?;

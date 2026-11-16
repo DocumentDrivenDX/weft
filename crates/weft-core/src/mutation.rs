@@ -337,7 +337,6 @@ impl MutationRegistry {
             record: &record,
             parameters,
             used: BTreeMap::new(),
-            dependencies: Vec::new(),
         };
         let mut assignments = Vec::new();
         let mut provenance = Vec::new();
@@ -374,14 +373,15 @@ impl MutationRegistry {
         if resolver.used.len() != parameters.len() {
             return Err(fail("TYPE", "type", "Unused parameter refused"));
         }
+        let dependencies = predicate.dependencies();
         let selection = generated(
-            json!({"protocol":"weft.update-selection/1","record":{"module":record.identity.module,"element":record.identity.element},"key":request["target"],"predicate":predicate}),
+            json!({"protocol":weft_expr::selection::PROTOCOL,"record":{"module":record.identity.module,"element":record.identity.element},"key":request["target"],"predicate":predicate.to_json()}),
         )?;
         let source_envelope =
             generated(json!({"dialect":request["dialect"],"sql":sql,"parameters":parameters}))?;
         let parameter_artifact = generated(request["parameters"].clone())?;
         let plan = generated(
-            json!({"protocol":"umf.actions.plan/1","model":request["modelPin"],"action":request["action"],"target":request["target"],"source":source_envelope,"selection":{"profile":request["selectionProfile"],"artifact":selection,"dependencies":resolver.dependencies},"inputs":{"entityParameter":prepared["entityParameter"],"assignments":assignments},"execution":{"selection":"frozen","atomicity":"batch","conflict":"stop","partition":"manifest-order","batchSize":batch},"limits":{"maxItems":max_items,"maxManifestBytes":max_bytes}}),
+            json!({"protocol":"umf.actions.plan/1","model":request["modelPin"],"action":request["action"],"target":request["target"],"source":source_envelope,"selection":{"profile":request["selectionProfile"],"artifact":selection,"dependencies":dependencies},"inputs":{"entityParameter":prepared["entityParameter"],"assignments":assignments},"execution":{"selection":"frozen","atomicity":"batch","conflict":"stop","partition":"manifest-order","batchSize":batch},"limits":{"maxItems":max_items,"maxManifestBytes":max_bytes}}),
         )?;
         Ok(
             json!({"interfaceVersion":"weft-mutation-compile/0.1.0","status":"compiled","plan":plan,"provenance":{"sourceSha256":source_envelope.sha256,"parameters":parameter_artifact,"entityParameter":prepared["entityParameter"],"action":request["action"],"assignments":provenance},"diagnostics":[]}),

@@ -61,7 +61,7 @@ fn resolve_inner(
     timestamp_equality:bool,
     bounded_current_strings:bool,
 ) -> Result<ir::Plan> {
-    if catalog.bounded_current_strings != bounded_current_strings {
+    if catalog.admission().bounded_current_strings != bounded_current_strings {
         return Err(fail("WFT-VERSION", "Catalog requires its explicitly versioned bounded-string resolver"));
     }
     let complete_entity = profile.as_ref().is_some_and(|p| matches!(p.subset,ir::Subset::CompleteEntity|ir::Subset::CompleteEntityPage));

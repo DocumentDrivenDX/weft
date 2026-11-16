@@ -47,7 +47,7 @@ impl SecurityCandidateOntologyClosure{
     }
    }else{
     let SecurityAssociationRef::Relationship(r)=&reference else{return Err(fail());};
-    let doc=catalog.documents.iter().find(|d|d["id"]==r.document_id).ok_or_else(fail)?;
+    let doc=catalog.documents().iter().find(|d|d["id"]==r.document_id).ok_or_else(fail)?;
     let module=doc["modules"].as_array().ok_or_else(fail)?.iter().find(|m|m["id"]==r.module_id).ok_or_else(fail)?;
     let relations:Vec<_>=module["relationships"].as_array().ok_or_else(fail)?.iter().filter(|x|x["id"]==r.relationship_id).collect();if relations.len()!=1{return Err(fail());}let relation=relations[0];
     known(relation,&["id","name","source","target","sourceMultiplicity","targetMultiplicity","targetLifecycle","directed","inverse","associationRecord"])?;

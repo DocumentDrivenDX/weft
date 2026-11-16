@@ -1,0 +1,14 @@
+[package]
+license = "MIT OR Apache-2.0"
+name = "weft-expr"
+# Own semver, independent of the workspace and wheel versions. See README.md.
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+rust-version = "1.90"
+description = "Typed field, literal, comparison and exact-arithmetic expressions and the weft.update-selection/1 predicate format"
+
+[dependencies]
+weft-model = { path = "../weft-model" }
+serde.workspace = true
+serde_json.workspace = true

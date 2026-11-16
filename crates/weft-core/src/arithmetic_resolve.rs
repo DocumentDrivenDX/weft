@@ -4,116 +4,11 @@ use crate::{
     application_ir::Field,
     application_resolve::Parameter,
     arithmetic_syntax::{Expression as Syntax, Kind as SyntaxKind},
-    error::{Diagnostic, Result},
-    ir::{Family, Span},
+    error::Result,
     syntax::{Column, Name},
 };
-use serde::Serialize;
-#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
-#[serde(tag = "family", rename_all = "camelCase")]
-pub enum Domain {
-    Integer,
-    Decimal { scale: u64 },
-}
-impl Domain {
-    fn scale(&self) -> u64 {
-        match self {
-            Self::Integer => 0,
-            Self::Decimal { scale } => *scale,
-        }
-    }
-    fn combine(&self, right: &Self, operator: char, span: &Span) -> Result<Self> {
-        if matches!((self, right), (Self::Integer, Self::Integer)) {
-            return Ok(Self::Integer);
-        }
-        let scale = if operator == '*' {
-            self.scale().checked_add(right.scale()).ok_or_else(|| {
-                fail(
-                    "WFT-LIMIT",
-                    "Derived decimal scale exceeds representable metadata",
-                    span,
-                )
-            })?
-        } else {
-            self.scale().max(right.scale())
-        };
-        Ok(Self::Decimal { scale })
-    }
-}
-#[derive(Debug, Clone, Serialize)]
-pub struct Expression {
-    pub domain: Domain,
-    pub span: Span,
-    pub kind: Kind,
-}
-#[derive(Debug, Clone, Serialize)]
-#[serde(tag = "op", rename_all = "camelCase")]
-pub enum Kind {
-    Field {
-        field: Field,
-    },
-    Literal {
-        value: String,
-    },
-    Parameter {
-        name: String,
-        value: String,
-    },
-    Negate {
-        operand: Box<Expression>,
-    },
-    Binary {
-        operator: char,
-        left: Box<Expression>,
-        right: Box<Expression>,
-    },
-}
-fn fail(code: &str, message: &str, span: &Span) -> Diagnostic {
-    Diagnostic::new(code, "resolve", message).at(span)
-}
-pub(crate) fn token_domain(token: &str, family: Option<&Family>, span: &Span) -> Result<Domain> {
-    if token.len() > crate::arithmetic_syntax::MAX_LITERAL_BYTES {
-        return Err(fail(
-            "WFT-LIMIT",
-            "Numeric token exceeds expression limit",
-            span,
-        ));
-    }
-    let unsigned = token.strip_prefix('-').unwrap_or(token);
-    let mut parts = unsigned.split('.');
-    let whole = parts.next().unwrap_or("");
-    let fraction = parts.next();
-    if whole.is_empty()
-        || !whole.bytes().all(|b| b.is_ascii_digit())
-        || parts.next().is_some()
-        || fraction.is_some_and(|f| f.is_empty() || !f.bytes().all(|b| b.is_ascii_digit()))
-    {
-        return Err(fail(
-            "WFT-NUMERIC-DOMAIN",
-            "Exact numeric token requires base-ten digits",
-            span,
-        ));
-    }
-    match family {
-        Some(Family::Integer) if fraction.is_none() => Ok(Domain::Integer),
-        Some(Family::Integer) => Err(fail(
-            "WFT-NUMERIC-DOMAIN",
-            "Integer parameter has a fractional token",
-            span,
-        )),
-        Some(Family::Decimal) => Ok(Domain::Decimal {
-            scale: fraction.map_or(0, |f| f.len() as u64),
-        }),
-        Some(_) => Err(fail(
-            "WFT-TYPE",
-            "Arithmetic parameter must be numeric",
-            span,
-        )),
-        None => Ok(fraction.map_or(Domain::Integer, |f| Domain::Decimal {
-            scale: f.len() as u64,
-        })),
-    }
-}
+pub use weft_expr::arithmetic::{Domain, Expression, Kind};
+pub(crate) use weft_expr::arithmetic::token_domain;
 pub(crate) fn resolve<F, P>(syntax: &Syntax, field: &mut F, parameter: &mut P) -> Result<Expression>
 where
     F: FnMut(&Column) -> Result<Field>,
@@ -123,28 +18,7 @@ where
     let (domain, kind) = match &syntax.kind {
         SyntaxKind::Field(column) => {
             let value = field(column)?;
-            if value.logical_type.nullable {
-                return Err(fail(
-                    "WFT-TYPE",
-                    "Arithmetic requires an admitted required scalar",
-                    &span,
-                ));
-            }
-            let domain = match value.logical_type.family {
-                Family::Integer => Domain::Integer,
-                Family::Decimal => Domain::Decimal {
-                    scale: value.logical_type.facets["scale"].as_u64().ok_or_else(|| {
-                        fail("WFT-TYPE", "Authored decimal scale is unavailable", &span)
-                    })?,
-                },
-                _ => {
-                    return Err(fail(
-                        "WFT-TYPE",
-                        "Arithmetic requires numeric fields",
-                        &span,
-                    ))
-                }
-            };
+            let domain = Domain::of_field(&value.logical_type, &span)?;
             (domain, Kind::Field { field: value })
         }
         SyntaxKind::Literal(value) => (
@@ -156,7 +30,7 @@ where
         SyntaxKind::Parameter(name) => {
             let value = parameter(name)?;
             (
-                token_domain(&value.value, Some(&value.family), &span)?,
+                token_domain(&value.value, Some(value.family.clone().into()), &span)?,
                 Kind::Parameter {
                     name: name.value.clone(),
                     value: value.value,
@@ -197,7 +71,7 @@ mod tests {
     use super::*;
     use crate::{
         arithmetic_syntax::{self, Budget},
-        ir::{Identity, LogicalType},
+        ir::{Family, Identity, LogicalType},
         syntax::Parser,
     };
     use serde_json::json;

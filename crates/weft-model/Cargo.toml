@@ -1,0 +1,17 @@
+[package]
+license = "MIT OR Apache-2.0"
+name = "weft-model"
+# Own semver, independent of the workspace and wheel versions. See README.md.
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+rust-version = "1.90"
+description = "UMF model loading, identity resolution, logical typing and exact values shared by weft and other compilers"
+
+[dependencies]
+base64 = "=0.22.1"
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+num-bigint = "=0.4.8"
+jsonschema = { version = "=0.56.0", default-features = false, features = ["macros", "arbitrary-precision"] }

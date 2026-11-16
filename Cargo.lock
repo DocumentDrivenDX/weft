@@ -2229,6 +2229,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "weft-backend"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "weft-model",
+]
+
+[[package]]
 name = "weft-backend-probe"
 version = "0.0.0"
 dependencies = [
@@ -2251,6 +2260,9 @@ dependencies = [
  "sqlparser",
  "umf-codegen",
  "umf-core",
+ "weft-backend",
+ "weft-expr",
+ "weft-model",
 ]
 
 [[package]]
@@ -2264,11 +2276,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "weft-expr"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "weft-model",
+]
+
+[[package]]
 name = "weft-frontend-probe"
 version = "0.0.0"
 dependencies = [
  "wasm-bindgen",
  "weft-core",
+]
+
+[[package]]
+name = "weft-model"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "jsonschema",
+ "num-bigint",
+ "serde",
+ "serde_json",
+ "sha2",
 ]
 
 [[package]]
@@ -2281,6 +2314,18 @@ dependencies = [
  "serde_json",
  "sqlparser",
  "weft-core",
+ "weft-expr",
+ "weft-postgresql-emit",
+]
+
+[[package]]
+name = "weft-postgresql-emit"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "serde_json",
+ "weft-backend",
+ "weft-model",
 ]
 
 [[package]]

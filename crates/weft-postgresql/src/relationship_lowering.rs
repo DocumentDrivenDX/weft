@@ -189,7 +189,7 @@ pub fn lower<'a>(
                     logical_type: logical.clone(),
                     span: span.clone(),
                 };
-                let before = staged.0.len();
+                let before = staged.slots().len();
                 let right = native(&literal, &[], None, &mut staged)?;
                 if let Value::Parameter {
                     name,
@@ -198,15 +198,15 @@ pub fn lower<'a>(
                     span,
                 } = value
                 {
-                    if staged.0.len() != before + 1
-                        || staged.0[before].value != *value
-                        || staged.0[before].logical_type != *logical_type
+                    if staged.slots().len() != before + 1
+                        || staged.slots()[before].value != *value
+                        || staged.slots()[before].logical_type != *logical_type
                     {
                         return Err(fail(
                             "Relationship named parameter must retain one exact typed slot",
                         ));
                     }
-                    staged.0[before].origin = serde_json::json!({"parameter":name,"span":span});
+                    staged.set_origin(before, serde_json::json!({"parameter":name,"span":span}));
                 }
                 predicates.push(format!("({left})=({right})"));
             }

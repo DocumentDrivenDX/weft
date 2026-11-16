@@ -108,7 +108,11 @@ mod tests{
   let fixture:Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();
   let source=&fixture["resolution"]["documents"][0];let text=source["document"].to_string();
   let inputs=serde_json::from_value(serde_json::json!([{"documentJson":text,"pin":{"documentId":source["document"]["id"],"revision":source["revision"],"umfVersion":"0.10.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
-  let mut catalog=Catalog::prepare_security(inputs).unwrap();let packet=SecuritySourcePacket::read(&fixture["policy"].to_string(),&fixture["resolution"]["ontology"].to_string(),&catalog).unwrap();let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();
-  catalog.documents[0]["modules"][0]["elements"][0]["name"]=serde_json::json!("changed");assert!(plan.require_catalog(&catalog).is_err());
+  let catalog=Catalog::prepare_security(inputs).unwrap();let packet=SecuritySourcePacket::read(&fixture["policy"].to_string(),&fixture["resolution"]["ontology"].to_string(),&catalog).unwrap();let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();
+  // Prepared documents are immutable outside weft-model (whose own test covers
+  // in-place tampering); a catalog prepared from changed definitions must refuse.
+  let mut changed=source["document"].clone();changed["modules"][0]["elements"][0]["name"]=serde_json::json!("changed");let text=changed.to_string();
+  let inputs=serde_json::from_value(serde_json::json!([{"documentJson":text,"pin":{"documentId":source["document"]["id"],"revision":source["revision"],"umfVersion":"0.10.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
+  let changed=Catalog::prepare_security(inputs).unwrap();assert!(plan.require_catalog(&catalog).is_ok());assert!(plan.require_catalog(&changed).is_err());
  }
 }

@@ -30,6 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/check-tree-size.py
+      - run: python3 scripts/check-release-version.py --shared-crates
 
   rust:
     runs-on: ubuntu-24.04
@@ -320,4 +321,4 @@ jobs:
           sed -i -E "/umf\.git/ s/(rev|tag) = \"[^\"]*\"/tag = \"$tag\"/" Cargo.toml crates/weft-core/Cargo.toml
           cargo update -p umf-core -p umf-codegen
       # Red here means upstream moved; it tells the maintainer to bump the tag.
-      - run: cargo test -p weft-core -p weft-postgresql
+      - run: cargo test -p weft-model -p weft-core -p weft-postgresql

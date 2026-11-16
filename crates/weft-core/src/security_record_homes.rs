@@ -120,7 +120,7 @@ impl<'a> Index<'a> {
         let mut revisions = BTreeMap::new();
         let mut elements = BTreeMap::new();
         let mut types = BTreeMap::new();
-        for (doc, input) in ctx.catalog().documents.iter().zip(ctx.catalog().inputs()) {
+        for (doc, input) in ctx.catalog().documents().iter().zip(ctx.catalog().inputs()) {
             b.charge(input.document_json.len())?;
             b.charge(input.pin.document_id.len())?;
             b.charge(input.pin.revision.len())?;

@@ -4,6 +4,8 @@ use crate::mutation::{fail, validate_ref, Artifact, MResult, MutationDiagnostic}
 use serde::Serialize;
 use serde_json::Value;
 use std::collections::BTreeSet;
+use weft_expr::{compare::CompareOp, selection::{self, Refusal}};
+use weft_model::types::ScalarFamily;
 
 #[derive(Clone, Debug, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
@@ -454,7 +456,7 @@ pub fn inspect_selection(selection: &Artifact, model: &Artifact) -> MResult<Vec<
 }
 fn validate_selection(program: &Value, document: &Value) -> MResult<Vec<Value>> {
     exact(program, &["protocol", "record", "key", "predicate"])?;
-    if program["protocol"] != "weft.update-selection/1" || document["umf"] != "0.10.0" {
+    if program["protocol"] != selection::PROTOCOL || document["umf"] != "0.10.0" {
         return Err(refused("Exact selection/core profile required"));
     }
     validate_ref(&program["key"], true)?;
@@ -488,50 +490,31 @@ fn validate_selection(program: &Value, document: &Value) -> MResult<Vec<Value>> 
             return Err(refused("Original Key component is not a Field"));
         }
     }
-    let mut work = vec![(&program["predicate"], 1)];
-    let mut count = 0;
-    while let Some((node, depth)) = work.pop() {
-        if depth > 24 {
-            return Err(fail("LIMIT", "limit", "Selection predicate depth exceeded"));
-        }
-        let o = node
-            .as_object()
-            .filter(|o| o.len() == 1)
-            .ok_or_else(|| refused("Exact predicate node required"))?;
-        if let Some(compare) = o.get("compare") {
-            exact(compare, &["field", "op", "value"])?;
+    selection::walk(
+        &program["predicate"],
+        |compare| {
             if !members.contains(&compare["field"]) {
                 return Err(refused("Predicate Field outside Record"));
             }
             let f = scalar(document, &compare["field"])?;
-            let op = compare["op"].as_str().unwrap_or("");
-            if !matches!(op, "eq" | "ne" | "lt" | "le" | "gt" | "ge")
-                || f["scalarType"] == "boolean" && !matches!(op, "eq" | "ne")
-            {
+            let op = compare["op"].as_str().and_then(CompareOp::parse);
+            let family = f["scalarType"].as_str().and_then(ScalarFamily::from_umf);
+            if op.is_none_or(|op| family.is_some_and(|family| !op.admits(family))) {
                 return Err(refused("Predicate operator/domain refused"));
             }
             crate::security_literals::check_literal(f, &compare["value"])
-                .map_err(|_| refused("Predicate literal violates original Field"))?;
-            count += 1;
-            if count > 256 {
-                return Err(fail(
-                    "LIMIT",
-                    "limit",
-                    "Selection comparison bound exceeded",
-                ));
-            }
-        } else {
-            let children = o
-                .get("and")
-                .or_else(|| o.get("or"))
-                .and_then(Value::as_array)
-                .filter(|cs| cs.len() >= 2)
-                .ok_or_else(|| refused("Unknown predicate or operand bounds"))?;
-            if children.len() > 64 {
-                return Err(fail("LIMIT", "limit", "Selection operand count exceeded"));
-            }
-            work.extend(children.iter().rev().map(|child| (child, depth + 1)));
-        }
-    }
+                .map_err(|_| refused("Predicate literal violates original Field"))
+        },
+        |refusal| match refusal {
+            Refusal::Depth => fail("LIMIT", "limit", "Selection predicate depth exceeded"),
+            Refusal::Node => refused("Exact predicate node required"),
+            Refusal::CompareObject => refused("Selection object required"),
+            Refusal::CompareMembers => refused("Unknown selection member"),
+            Refusal::Operator => refused("Predicate operator/domain refused"),
+            Refusal::Operands => refused("Unknown predicate or operand bounds"),
+            Refusal::OperandCount => fail("LIMIT", "limit", "Selection operand count exceeded"),
+            Refusal::Comparisons => fail("LIMIT", "limit", "Selection comparison bound exceeded"),
+        },
+    )?;
     Ok(fields.clone())
 }
