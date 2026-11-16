@@ -52,13 +52,10 @@ fn original<T>(result: weft_core::error::Result<T>) -> MResult<T> {
     })
 }
 fn literal(text: &str) -> MResult<String> {
-    if text.contains('\0') {
-        return Err(fail(
-            "ACTION",
-            "Native PostgreSQL text cannot represent NUL",
-        ));
-    }
-    Ok(format!("'{}'", text.replace('\'', "''")))
+    weft_postgresql_emit::string_literal(text).ok_or_else(|| fail(
+        "ACTION",
+        "Native PostgreSQL text cannot represent NUL",
+    ))
 }
 impl OriginalMutationBackend {
     pub fn new(

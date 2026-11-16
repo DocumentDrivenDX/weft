@@ -244,13 +244,7 @@ fn native(id: &str) -> Result<()> {
     Ok(())
 }
 fn literal(s: &str) -> Result<String> {
-    if s.contains('\0') {
-        return Err(fail("NUL cannot enter PostgreSQL text"));
-    }
-    Ok(format!(
-        "E'{}'",
-        s.replace('\\', "\\\\").replace('\'', "''")
-    ))
+    weft_postgresql_emit::escape_string_literal(s).ok_or_else(|| fail("NUL cannot enter PostgreSQL text"))
 }
 fn cursor_obligation()->Obligation {
     Obligation { id:"truss.runtime.cursor-export/0.1".into(),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into(),
@@ -926,14 +920,7 @@ impl Backend for Runtime {
         })
     }
 }
-fn decoder(f: &Family) -> ScalarDecoder {
-    match f {
-        Family::String => ScalarDecoder::Text,
-        Family::Boolean => ScalarDecoder::Boolean,
-        Family::Integer => ScalarDecoder::ExactInteger,
-        Family::Decimal => ScalarDecoder::ExactDecimal,
-    }
-}
+use weft_postgresql_emit::decoder;
 struct Build<'a> {
     mapping: &'a Mapping,
     plan: &'a app::Plan,
@@ -1054,11 +1041,7 @@ impl Build<'_> {
                 let slot = self
                     .parameters
                     .push(logical_type.clone(), value.clone(), origin.unwrap_or_else(|| json!(v)))?;
-                Ok(match logical_type.family {
-                    Family::String => format!("{slot}::pg_catalog.text COLLATE pg_catalog.\"C\""),
-                    Family::Boolean => format!("{slot}::pg_catalog.bool"),
-                    Family::Integer | Family::Decimal => format!("{slot}::pg_catalog.numeric"),
-                })
+                Ok(weft_postgresql_emit::typed(&slot, &logical_type.family))
             }
         }
     }

@@ -74,14 +74,7 @@ fn descriptor<'a>(
         .find(|d| &d.identity == id)
         .ok_or_else(|| fail("Selected descriptor is missing"))
 }
-fn decoder(family: &Family) -> ScalarDecoder {
-    match family {
-        Family::String => ScalarDecoder::Text,
-        Family::Boolean => ScalarDecoder::Boolean,
-        Family::Integer => ScalarDecoder::ExactInteger,
-        Family::Decimal => ScalarDecoder::ExactDecimal,
-    }
-}
+use weft_postgresql_emit::decoder;
 pub(super) fn lower(
     context: &Context<'_>,
     mapping: &Admission,
@@ -760,17 +753,7 @@ impl Build<'_> {
             } => (value, logical_type, json!({"parameter":name,"span":span})),
         };
         let slot = self.parameters.push(ty.clone(), value.clone(), origin)?;
-        let cast = match ty.family {
-            Family::String => "text",
-            Family::Boolean => "bool",
-            Family::Integer | Family::Decimal => "numeric",
-        };
-        let value = format!("{slot}::pg_catalog.{cast}");
-        Ok(if ty.family == Family::String {
-            format!("{value} COLLATE pg_catalog.\"C\"")
-        } else {
-            value
-        })
+        Ok(weft_postgresql_emit::typed(&slot, &ty.family))
     }
     fn application_predicate(&mut self, p: &app::Predicate) -> Result<String> {
         Ok(match p {

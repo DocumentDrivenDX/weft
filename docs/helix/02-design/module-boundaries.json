@@ -3720,6 +3720,97 @@
       ]
     },
     {
+      "name": "weft-postgresql-emit",
+      "manifest": "crates/weft-postgresql-emit/Cargo.toml",
+      "responsibility": "Shared PostgreSQL emission primitives (own semver; see crates/weft-postgresql-emit/README.md)",
+      "ownedTypes": "Identifier, Parameters slots, string literals, typed casts, C collation, result decoders",
+      "constructionAndIntegration": "Pure library over weft-model and weft-backend; weft-postgresql binds the Truss layout over it, other compilers bind their own layouts",
+      "dependencies": [
+        {
+          "name": "base64",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.22.1",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-backend",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-backend"
+        },
+        {
+          "name": "weft-model",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-model"
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-postgresql-emit/src/lib.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "struct:Identifier",
+            "fn:new",
+            "fn:sql",
+            "fn:qualified",
+            "struct:Parameters",
+            "fn:push",
+            "fn:push_binary",
+            "fn:push_timestamp",
+            "fn:push_date",
+            "fn:into_slots",
+            "fn:slots",
+            "fn:set_origin",
+            "enum:CatalogDomain",
+            "fn:catalog",
+            "const:COLLATE_C",
+            "fn:collate_c",
+            "fn:string_literal",
+            "fn:escape_string_literal",
+            "fn:cast_type",
+            "fn:typed",
+            "fn:decoder",
+            "fn:decoder_for"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
       "name": "weft-postgresql",
       "manifest": "crates/weft-postgresql/Cargo.toml",
       "responsibility": "PostgreSQL backend",
@@ -3820,6 +3911,18 @@
           "features": [],
           "defaultFeatures": true,
           "path": "crates/weft-expr"
+        },
+        {
+          "name": "weft-postgresql-emit",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-postgresql-emit"
         }
       ],
       "sources": [
@@ -4039,17 +4142,7 @@
             "mod:truss_mutation",
             "mod:truss_runtime",
             "mod:value_definition",
-            "struct:Identifier",
-            "fn:new",
-            "fn:sql",
-            "fn:qualified",
-            "struct:Parameters",
-            "fn:push",
-            "fn:push_binary",
-            "fn:push_timestamp",
-            "fn:into_slots",
-            "enum:CatalogDomain",
-            "fn:catalog",
+            "use:weft_postgresql_emit : : { qualified , CatalogDomain , Identifier , Parameters }",
             "mod:leaf_codec_definition",
             "mod:native_comparator_definition",
             "mod:comparator_requirements",

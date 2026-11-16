@@ -2315,6 +2315,17 @@ dependencies = [
  "sqlparser",
  "weft-core",
  "weft-expr",
+ "weft-postgresql-emit",
+]
+
+[[package]]
+name = "weft-postgresql-emit"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "serde_json",
+ "weft-backend",
+ "weft-model",
 ]
 
 [[package]]

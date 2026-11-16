@@ -42,6 +42,14 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   (`WeftPlans`) and keeps its `Backend` trait, `Context`, `Registry` and type
   paths, so backend implementations compile unchanged; check order, refusal
   codes and the `Compilation` wire shape are unchanged.
+- New crate `weft-postgresql-emit` 0.1.0 (own semver;
+  `crates/weft-postgresql-emit/README.md`): PostgreSQL identifier quoting,
+  parameter slots, string literals, typed casts with the `C` collation and exact
+  result decoders, moved out of `weft-postgresql` (which re-exports
+  `Identifier`, `qualified`, `Parameters` and `CatalogDomain`). Duplicated cast,
+  literal and decoder helpers in the Truss runtime, candidate and mutation
+  lowerings now call it; emitted SQL is unchanged. The Truss layout stays in
+  `weft-postgresql`.
 - `bun scripts/module-boundaries-update.ts` regenerates the dependency and
   public-declaration inventory in `docs/helix/02-design/module-boundaries.json`.
   `scripts/check-release-version.py --shared-crates` (run in CI) checks that each

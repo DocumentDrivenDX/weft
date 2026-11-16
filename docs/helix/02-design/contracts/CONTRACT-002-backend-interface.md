@@ -68,7 +68,10 @@ The backend allocates parameter slots once from typed literals and discriminator
 values. PostgreSQL `$n` and Databricks `:pn` are initial emission conventions;
 values are never interpolated into SQL text. Identifier escaping, identifier
 length/version limits and physical discriminator filters are target-owned and
-must be covered by native evidence. Result numeric carriers must remain exact text.
+must be covered by native evidence. Result numeric carriers must remain exact text. The PostgreSQL conventions (quoted
+identifiers, `$n` slots, string literals, typed casts with the `C` collation and
+exact decoders) are implemented once in the `weft-postgresql-emit` crate; storage
+layouts such as Truss's are separate bindings over it.
 
 ## Initial Backend Profiles
 

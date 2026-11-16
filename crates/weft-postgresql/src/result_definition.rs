@@ -3,7 +3,7 @@
 use crate::property_definition::PropertyAdmission;
 use weft_core::{
     application_model::{Descriptor, Shape},
-    backend::{Column, Representation, ScalarCarrier, ScalarDecoder},
+    backend::{Column, Representation, ScalarCarrier},
     error::{Diagnostic, Result},
     ir::Family,
 };
@@ -335,12 +335,7 @@ fn column(descriptor: &Descriptor, position: usize, output_name: &str) -> Result
             Representation::Scalar {
                 logical_type: logical_type.clone(),
                 carrier: ScalarCarrier::Text,
-                decoder: match logical_type.family {
-                    Family::String => ScalarDecoder::Text,
-                    Family::Boolean => ScalarDecoder::Boolean,
-                    Family::Integer => ScalarDecoder::ExactInteger,
-                    Family::Decimal => ScalarDecoder::ExactDecimal,
-                },
+                decoder: weft_postgresql_emit::decoder(&logical_type.family),
             }
         }
         _ => Representation::Value {
@@ -538,12 +533,7 @@ fn scalar_column(
         representation: Representation::Scalar {
             logical_type: logical_type.clone(),
             carrier: ScalarCarrier::Text,
-            decoder: match logical_type.family {
-                Family::String => ScalarDecoder::Text,
-                Family::Boolean => ScalarDecoder::Boolean,
-                Family::Integer => ScalarDecoder::ExactInteger,
-                Family::Decimal => ScalarDecoder::ExactDecimal,
-            },
+            decoder: weft_postgresql_emit::decoder(&logical_type.family),
         },
         source_identities: sources,
         nullable: logical_type.nullable,
