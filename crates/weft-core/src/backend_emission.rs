@@ -117,7 +117,7 @@ pub(crate) fn validate(
             if !admitted || logical_type.facets != serde_json::json!({"scale":scale}) {
                 return Err(fail("Arithmetic decimal parameter requires explicit 0.3 capability admission"));
             }
-            let domain = crate::arithmetic_resolve::token_domain(&p.value, Some(&Family::Decimal), &crate::ir::Span {start:0,end:0})
+            let domain = crate::arithmetic_resolve::token_domain(&p.value, Some(weft_model::types::ScalarFamily::Decimal), &crate::ir::Span {start:0,end:0})
                 .map_err(|_| fail("Arithmetic decimal parameter is not exact base-ten text"))?;
             if domain != (crate::arithmetic_resolve::Domain::Decimal {scale}) {
                 return Err(fail("Arithmetic decimal parameter changes its original lexical scale"));

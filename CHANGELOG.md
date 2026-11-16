@@ -21,6 +21,14 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   available through `Catalog::field_as`, `Catalog::entity_descriptor_as` and the
   other `*_as` methods; `Admission::nullable_fields` types `absent-allowed`
   Fields as nullable.
+- New crate `weft-expr` 0.1.0 (own semver; `crates/weft-expr/README.md`): typed
+  `Field`/`Value` operands, comparison operators and their typing rule, exact
+  arithmetic domains and expressions, and the `weft.update-selection/1`
+  predicate format of CONTRACT-009. `weft-core` re-exports the operand,
+  comparison and arithmetic types under their old paths. The mutation frontend
+  builds selections with it, and `inspect_selection` and the PostgreSQL mutation
+  lowering decode them with one shared walker instead of two hand-written ones.
+  Wire shapes and refusal messages are unchanged.
 - `bun scripts/module-boundaries-update.ts` regenerates the dependency and
   public-declaration inventory in `docs/helix/02-design/module-boundaries.json`.
   `scripts/check-release-version.py --shared-crates` (run in CI) checks that each

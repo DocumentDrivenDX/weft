@@ -6,14 +6,15 @@ use crate::{
     mutation_syntax::{Input, Predicate},
     security_literals::check_literal,
 };
-use serde_json::{json, Value};
+use serde_json::Value;
 use std::collections::BTreeMap;
+use weft_expr::selection;
+use weft_model::types::ScalarFamily;
 pub(crate) struct Resolver<'a> {
     pub(crate) catalog: &'a Catalog,
     pub(crate) record: &'a Record,
     pub(crate) parameters: &'a serde_json::Map<String, Value>,
     pub(crate) used: BTreeMap<String, Value>,
-    pub(crate) dependencies: Vec<Value>,
 }
 impl Resolver<'_> {
     pub(crate) fn field(&self, name: &crate::syntax::Name) -> MResult<(Value, Value)> {
@@ -94,38 +95,31 @@ impl Resolver<'_> {
             .map_err(|_| fail("TYPE", "type", "Literal violates original Field domain"))?;
         Ok(value)
     }
-    pub(crate) fn predicate(&mut self, p: &Predicate, depth: usize) -> MResult<Value> {
-        if depth > 24 {
+    pub(crate) fn predicate(&mut self, p: &Predicate, depth: usize) -> MResult<selection::Predicate> {
+        if depth > selection::MAX_DEPTH {
             return Err(fail("LIMIT", "limit", "Decoded predicate depth exceeded"));
         }
         match p {
             Predicate::Compare(name, op, input) => {
                 let (reference, field) = self.field(name)?;
-                if field["scalarType"] == "boolean" && !matches!(op.as_str(), "eq" | "ne") {
+                let family = field["scalarType"].as_str().and_then(ScalarFamily::from_umf);
+                if family.is_some_and(|family| !op.admits(family)) {
                     return Err(fail("TYPE", "type", "Boolean ordering refused"));
                 }
                 let value = self.value(input, &reference, &field)?;
-                if !self.dependencies.contains(&reference) {
-                    self.dependencies.push(reference.clone());
-                }
-                Ok(json!({"compare":{"field":reference,"op":op,"value":value}}))
+                Ok(selection::Predicate::Compare(selection::Compare { field: reference, op: *op, value }))
             }
             Predicate::And(children) | Predicate::Or(children) => {
                 let and = matches!(p, Predicate::And(_));
-                let operator = if and { "and" } else { "or" };
                 let mut out = Vec::new();
                 for child in children {
                     let next = self.predicate(child, depth + 1)?;
-                    if let Some(same) = next.get(operator).and_then(Value::as_array) {
-                        out.extend(same.iter().cloned());
-                    } else {
-                        out.push(next);
-                    }
-                    if out.len() > 64 {
+                    selection::Predicate::splice(&mut out, and, next);
+                    if out.len() > selection::MAX_OPERANDS {
                         return Err(fail("LIMIT", "limit", "Predicate operand bound exceeded"));
                     }
                 }
-                Ok(json!({operator:out}))
+                Ok(if and { selection::Predicate::And(out) } else { selection::Predicate::Or(out) })
             }
         }
     }

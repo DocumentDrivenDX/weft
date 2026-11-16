@@ -753,6 +753,18 @@
           "path": null
         },
         {
+          "name": "weft-expr",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-expr"
+        },
+        {
           "name": "weft-model",
           "kind": "normal",
           "optional": false,
@@ -782,12 +794,7 @@
             "struct:EntityProjection",
             "field:facts",
             "field:relationships",
-            "struct:Field",
-            "field:scan",
-            "field:identity",
-            "field:logical_type",
-            "field:span",
-            "enum:Value",
+            "use:weft_expr : : operand : : { Field , Value }",
             "struct:ExactField",
             "field:scan",
             "field:identity",
@@ -1104,9 +1111,7 @@
         {
           "path": "crates/weft-core/src/arithmetic_plan.rs",
           "publicDeclarations": [
-            "enum:ComparisonOperator",
-            "fn:sql",
-            "fn:capability",
+            "use:weft_expr : : compare : : ComparisonOperator",
             "enum:Predicate",
             "enum:JoinKind",
             "struct:Join",
@@ -1180,12 +1185,7 @@
         {
           "path": "crates/weft-core/src/arithmetic_resolve.rs",
           "publicDeclarations": [
-            "enum:Domain",
-            "struct:Expression",
-            "field:domain",
-            "field:span",
-            "field:kind",
-            "enum:Kind"
+            "use:weft_expr : : arithmetic : : { Domain , Expression , Kind }"
           ],
           "pathReferences": []
         },
@@ -3452,6 +3452,138 @@
       ]
     },
     {
+      "name": "weft-expr",
+      "manifest": "crates/weft-expr/Cargo.toml",
+      "responsibility": "Shared typed expression and predicate core (own semver; see crates/weft-expr/README.md)",
+      "ownedTypes": "Field and Value operands, CompareOp and ComparisonOperator, exact arithmetic Domain/Expression/Kind, weft.update-selection/1 Predicate",
+      "constructionAndIntegration": "Pure library over weft-model; weft-core and backends build and decode these values, other compilers reuse them",
+      "dependencies": [
+        {
+          "name": "serde",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-model",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-model"
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-expr/src/arithmetic.rs",
+          "publicDeclarations": [
+            "const:MAX_LITERAL_BYTES",
+            "enum:Domain",
+            "fn:scale",
+            "fn:combine",
+            "fn:of_field",
+            "struct:Expression",
+            "field:domain",
+            "field:span",
+            "field:kind",
+            "enum:Kind",
+            "fn:token_domain"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-expr/src/compare.rs",
+          "publicDeclarations": [
+            "enum:CompareOp",
+            "const:ALL",
+            "fn:parse",
+            "fn:name",
+            "fn:sql",
+            "fn:orders",
+            "fn:admits",
+            "fn:check",
+            "enum:ComparisonOperator",
+            "fn:sql",
+            "fn:capability"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-expr/src/lib.rs",
+          "publicDeclarations": [
+            "mod:arithmetic",
+            "mod:compare",
+            "mod:operand",
+            "mod:selection",
+            "const:VERSION"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-expr/src/operand.rs",
+          "publicDeclarations": [
+            "struct:Field",
+            "field:scan",
+            "field:identity",
+            "field:logical_type",
+            "field:span",
+            "enum:Value",
+            "fn:logical_type"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-expr/src/selection.rs",
+          "publicDeclarations": [
+            "const:PROTOCOL",
+            "const:MAX_DEPTH",
+            "const:MIN_OPERANDS",
+            "const:MAX_OPERANDS",
+            "const:MAX_COMPARISONS",
+            "struct:Compare",
+            "field:field",
+            "field:op",
+            "field:value",
+            "enum:Predicate",
+            "enum:Refusal",
+            "fn:walk",
+            "fn:to_json",
+            "fn:comparisons",
+            "fn:dependencies",
+            "fn:splice"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
       "name": "weft-postgresql",
       "manifest": "crates/weft-postgresql/Cargo.toml",
       "responsibility": "PostgreSQL backend",
@@ -3540,6 +3672,18 @@
           "features": [],
           "defaultFeatures": true,
           "path": "crates/weft-core"
+        },
+        {
+          "name": "weft-expr",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-expr"
         }
       ],
       "sources": [

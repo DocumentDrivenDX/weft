@@ -2251,6 +2251,7 @@ dependencies = [
  "sqlparser",
  "umf-codegen",
  "umf-core",
+ "weft-expr",
  "weft-model",
 ]
 
@@ -2262,6 +2263,15 @@ dependencies = [
  "serde_json",
  "sqlparser",
  "weft-core",
+]
+
+[[package]]
+name = "weft-expr"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "weft-model",
 ]
 
 [[package]]
@@ -2294,6 +2304,7 @@ dependencies = [
  "serde_json",
  "sqlparser",
  "weft-core",
+ "weft-expr",
 ]
 
 [[package]]

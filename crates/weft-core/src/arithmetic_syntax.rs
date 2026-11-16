@@ -8,7 +8,7 @@ use crate::{
 };
 pub(crate) const MAX_NODES: usize = 256;
 pub(crate) const MAX_DEPTH: usize = 32;
-pub(crate) const MAX_LITERAL_BYTES: usize = 1024;
+pub(crate) use weft_expr::arithmetic::MAX_LITERAL_BYTES;
 #[derive(Debug, Clone)]
 pub(crate) enum Kind {
     Field(Column),

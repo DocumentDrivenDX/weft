@@ -2,6 +2,7 @@
 //! Bounded UPDATE syntax, separate from existing read interfaces.
 use super::mutation::{fail, MResult};
 use crate::{ir::Span, syntax::Name};
+use weft_expr::compare::CompareOp;
 use serde_json::{json, Value};
 #[derive(Clone, Debug)]
 enum Token {
@@ -18,7 +19,7 @@ pub enum Input {
 }
 #[derive(Clone, Debug)]
 pub enum Predicate {
-    Compare(Name, String, Input),
+    Compare(Name, CompareOp, Input),
     And(Vec<Predicate>),
     Or(Vec<Predicate>),
 }
@@ -180,25 +181,25 @@ impl Parser {
         let field = self.name()?;
         let op = if self.peek('=') {
             self.at += 1;
-            "eq"
+            CompareOp::Eq
         } else if self.peek('<') {
             self.at += 1;
             if self.peek('>') {
                 self.at += 1;
-                "ne"
+                CompareOp::Ne
             } else if self.peek('=') {
                 self.at += 1;
-                "le"
+                CompareOp::Le
             } else {
-                "lt"
+                CompareOp::Lt
             }
         } else if self.peek('>') {
             self.at += 1;
             if self.peek('=') {
                 self.at += 1;
-                "ge"
+                CompareOp::Ge
             } else {
-                "gt"
+                CompareOp::Gt
             }
         } else {
             return Err(syntax());
@@ -211,7 +212,7 @@ impl Parser {
                 "Predicate comparison bound exceeded",
             ));
         }
-        Ok(Predicate::Compare(field, op.into(), self.input()?))
+        Ok(Predicate::Compare(field, op, self.input()?))
     }
     // Iterative precedence/grouping avoids host-dependent recursion at the 128-group bound.
     fn predicate(&mut self) -> MResult<Predicate> {

@@ -7,6 +7,7 @@ publish.workspace = true
 [dependencies]
 sqlparser.workspace = true
 weft-core = { path = "../weft-core" }
+weft-expr = { path = "../weft-expr" }
 serde_json.workspace = true
 serde.workspace = true
 base64 = "=0.22.1"
