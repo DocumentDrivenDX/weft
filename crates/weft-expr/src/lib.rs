@@ -11,5 +11,5 @@ pub mod compare;
 pub mod operand;
 pub mod selection;
 
-/// This crate's contract version (`README.md`).
+/// The weft release version this crate was built at (see `README.md`).
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

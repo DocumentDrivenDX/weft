@@ -11,7 +11,7 @@ use weft_model::{
     types::{Family, FamilySet, LogicalType, ScalarFamily},
 };
 
-/// This crate's contract version (`README.md`).
+/// The weft release version this crate was built at (see `README.md`).
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 /// Exact quoted identifier in the proposed standard NAMEDATALEN=64 profile.
 /// Nonstandard server builds require a separately qualified identifier profile.

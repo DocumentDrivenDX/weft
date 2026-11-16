@@ -4,7 +4,7 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
 
 ## Unreleased
 
-- New crate `weft-model` 0.1.0 (own semver; `crates/weft-model/README.md`): UMF
+- New crate `weft-model` (published to crates.io; `crates/weft-model/README.md`): UMF
   0.10 document preparation, name and identity resolution, logical types,
   descriptors, exact literals, exact instants and diagnostics, moved out of
   `weft-core` so other compilers can depend on them. `weft-core` re-exports them
@@ -25,7 +25,7 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   field-domain normalizer from `security_ontology`) moves to
   `weft_model::core_literal`; `weft_core::security_literals` re-exports it.
   Diagnostic codes are unchanged.
-- New crate `weft-expr` 0.1.0 (own semver; `crates/weft-expr/README.md`): typed
+- New crate `weft-expr` (published to crates.io; `crates/weft-expr/README.md`): typed
   `Field`/`Value` operands, comparison operators and their typing rule, exact
   arithmetic domains and expressions, and the `weft.update-selection/1`
   predicate format of CONTRACT-009. `weft-core` re-exports the operand,
@@ -33,7 +33,7 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   builds selections with it, and `inspect_selection` and the PostgreSQL mutation
   lowering decode them with one shared walker instead of two hand-written ones.
   Wire shapes and refusal messages are unchanged.
-- New crate `weft-backend` 0.1.0 (own semver; `crates/weft-backend/README.md`):
+- New crate `weft-backend` (published to crates.io; `crates/weft-backend/README.md`):
   the CONTRACT-002 backend boundary. Manifest types and validation (accepted
   interface versions and language pairs come from the frontend), the `Frontend`
   and `Backend<F>` traits, a `TargetArtifact` emit output (`sql::Emission` for
@@ -42,7 +42,7 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   (`WeftPlans`) and keeps its `Backend` trait, `Context`, `Registry` and type
   paths, so backend implementations compile unchanged; check order, refusal
   codes and the `Compilation` wire shape are unchanged.
-- New crate `weft-postgresql-emit` 0.1.0 (own semver;
+- New crate `weft-postgresql-emit` (published to crates.io;
   `crates/weft-postgresql-emit/README.md`): PostgreSQL identifier quoting,
   parameter slots, string literals, typed casts with the `C` collation and exact
   result decoders, moved out of `weft-postgresql` (which re-exports
@@ -60,8 +60,16 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   Experimental: only unit tests exercise them.
 - `bun scripts/module-boundaries-update.ts` regenerates the dependency and
   public-declaration inventory in `docs/helix/02-design/module-boundaries.json`.
-  `scripts/check-release-version.py --shared-crates` (run in CI) checks that each
-  shared crate's README states its Cargo version.
+- The shared crates are published to crates.io by the release workflow, at the
+  release version. The Cargo workspace version is now the release version
+  (0.4.58), and `weft-python` inherits it; `compilerVersion` in compile
+  responses stays `weft/0.1.0` (`weft_core::COMPILER_VERSION`), so responses do
+  not change. `scripts/check-release-version.py` checks the workspace version
+  against the tag and, with `--shared-crates` (run in CI), that each shared crate
+  inherits it and is pinned at exactly it. CI packages and builds the four crates
+  as crates.io would on every pull request (`cargo publish --dry-run`). The
+  bundled UMF 0.10 schema moves to `crates/weft-model/schema/` so the crate
+  carries it.
 
 ## 0.4.58 - 2026-11-11
 

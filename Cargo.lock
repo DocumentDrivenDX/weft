@@ -2230,7 +2230,7 @@ dependencies = [
 
 [[package]]
 name = "weft-backend"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "serde",
  "serde_json",
@@ -2248,7 +2248,7 @@ dependencies = [
 
 [[package]]
 name = "weft-core"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "base64",
  "jsonschema",
@@ -2267,7 +2267,7 @@ dependencies = [
 
 [[package]]
 name = "weft-databricks"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "serde",
  "serde_json",
@@ -2277,7 +2277,7 @@ dependencies = [
 
 [[package]]
 name = "weft-expr"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "serde",
  "serde_json",
@@ -2294,7 +2294,7 @@ dependencies = [
 
 [[package]]
 name = "weft-model"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "base64",
  "jsonschema",
@@ -2306,7 +2306,7 @@ dependencies = [
 
 [[package]]
 name = "weft-postgresql"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "base64",
  "jsonschema",
@@ -2320,7 +2320,7 @@ dependencies = [
 
 [[package]]
 name = "weft-postgresql-emit"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "base64",
  "serde_json",
@@ -2338,7 +2338,7 @@ dependencies = [
 
 [[package]]
 name = "weft-runtime"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "serde",
  "serde_json",
@@ -2350,7 +2350,7 @@ dependencies = [
 
 [[package]]
 name = "weft-wasm"
-version = "0.1.0"
+version = "0.4.58"
 dependencies = [
  "js-sys",
  "wasm-bindgen",

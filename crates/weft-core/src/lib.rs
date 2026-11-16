@@ -1,3 +1,7 @@
+/// The `compilerVersion` every compile response reports. A wire identity, fixed
+/// independently of the crate's release version so that releases do not change
+/// emitted responses.
+pub const COMPILER_VERSION: &str = "weft/0.1.0";
 #[cfg(feature="engine-temporal")]
 pub mod application_temporal;
 // SPDX-License-Identifier: MIT OR Apache-2.0

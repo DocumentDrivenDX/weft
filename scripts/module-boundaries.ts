@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {readFile, readdir, realpath} from 'node:fs/promises';
 import {resolve, dirname} from 'node:path';
+// A workspace path dependency's version requirement is the release version
+// (checked by scripts/check-release-version.py), not a boundary fact.
 export function edgeIdentity(d:any, root:string) {
-  return {name:d.name,kind:d.kind ?? 'normal',optional:d.optional,source:d.source ?? null,req:d.req ?? null,rename:d.rename ?? null,target:d.target ?? null,features:[...(d.features ?? [])].sort(),defaultFeatures:d.uses_default_features ?? true,path:d.path ? resolve(d.path).slice(root.length+1) : null};
+  return {name:d.name,kind:d.kind ?? 'normal',optional:d.optional,source:d.source ?? null,req:d.path ? null : (d.req ?? null),rename:d.rename ?? null,target:d.target ?? null,features:[...(d.features ?? [])].sort(),defaultFeatures:d.uses_default_features ?? true,path:d.path ? resolve(d.path).slice(root.length+1) : null};
 }
 export function checkGraph(metadata: any, map: any, root:string='') {
   const expected = new Map<string, any>(map.packages.map((p: any) => [p.name,p]));

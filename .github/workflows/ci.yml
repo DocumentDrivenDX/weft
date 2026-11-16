@@ -32,6 +32,18 @@ jobs:
       - run: python3 scripts/check-tree-size.py
       - run: python3 scripts/check-release-version.py --shared-crates
 
+  crates:
+    # Package and build the shared crates exactly as crates.io would, without
+    # uploading. cargo 1.90 fails to verify a batch whose crates depend on each
+    # other ("no hash listed"); 1.97.1 can. The rust job still builds them with
+    # the pinned 1.90 toolchain.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install 1.97.1 --profile minimal
+      - run: cargo +1.97.1 publish --dry-run --locked -p weft-model -p weft-expr -p weft-backend -p weft-postgresql-emit
+
   rust:
     runs-on: ubuntu-24.04
     timeout-minutes: 40

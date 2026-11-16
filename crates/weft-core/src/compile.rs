@@ -593,7 +593,7 @@ impl Compiler {
                 .collect()
         };
         Ok(
-            json!({"interfaceVersion":version,"status":"compiled","diagnostics":[],"dialect":dialect,"compilerVersion":concat!("weft/",env!("CARGO_PKG_VERSION")),"modelPins":catalog.pins(),
+            json!({"interfaceVersion":version,"status":"compiled","diagnostics":[],"dialect":dialect,"compilerVersion":crate::COMPILER_VERSION,"modelPins":catalog.pins(),
    "backend":{"backendId":compiled.backend_id,"backendVersion":compiled.backend_version,"targetProfile":compiled.target_profile.id,"interfaceVersion":manifest.interface_version},
    "targetContext":compiled.target_profile,"bindingSha256":compiled.binding_sha256,"logicalPlan":logical_plan,"sql":compiled.emission.sql,"parameters":compiled.emission.parameters,"columns":columns,"obligations":compiled.emission.obligations,
    "qualification":{"status":if candidate{"candidate"}else{"conformance-verified"},"evidence":evidence,"assumptions":[],"operations":compiled.qualifications}}),

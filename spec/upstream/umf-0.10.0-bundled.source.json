@@ -20,7 +20,7 @@
       "sha256": "12daea86d95b60f280e74e0f9c3240ba297bc3e8407003bdb1601a53cd7b78ce"
     }
   ],
-  "bundlePath": "spec/upstream/umf-0.10.0-bundled.schema.json",
+  "bundlePath": "crates/weft-model/schema/umf-0.10.0-bundled.schema.json",
   "bundleSha256": "ebcb381df0cd673db5593a4769b63e3ec1e0db0c34e920ea51f3bd83c4eaa3c3",
   "generation": "Inline the owner-pinned semanticType reference resource at its exact external $ref sites; preserve all schema assertions and recursive self-reference semantics."
 }

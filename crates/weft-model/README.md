@@ -1,4 +1,4 @@
-# weft-model 0.1.0
+# weft-model
 
 UMF model loading, identity resolution, logical typing and exact values, shared by
 weft's compiler (`weft-core`) and other compilers that type programs against UMF
@@ -11,10 +11,19 @@ other workspace crate.
 
 ## Version
 
-The crate has its own semver, independent of the workspace and the `umf-weft`
-wheel. `weft_model::VERSION` reports it. While the major version is 0, a minor
-bump may break the public surface below; a patch bump may not. Diagnostic codes
-are part of the surface.
+Published to crates.io with every weft release, at the release version: the
+`vX.Y.Z` tag, the `umf-weft` wheel and all four shared crates (`weft-model`,
+`weft-expr`, `weft-backend`, `weft-postgresql-emit`) carry the same number, and
+`weft_model::VERSION` reports it. Depend on them at one exact version, for example
+`weft-model = "=0.4.58"`. While weft is 0.x any release may change the public
+surface below; `CHANGELOG.md` records each change. Diagnostic codes are part of the surface.
+
+Two build settings of this workspace do not travel with the published crate.
+weft patches `ahash` to its `no-rng` feature (`vendor/README.md`), so the schema
+validator uses no runtime entropy; without the same `[patch.crates-io]` entry a
+dependent gets upstream `ahash` with runtime entropy. And wasm32 builds need
+`--cfg getrandom_backend="unsupported"` (`.cargo/config.toml`). The compiled-in
+UMF 0.10 schema ships in the crate (`schema/`).
 
 ## Public surface
 

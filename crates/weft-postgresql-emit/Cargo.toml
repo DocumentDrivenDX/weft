@@ -1,15 +1,17 @@
 [package]
 license = "MIT OR Apache-2.0"
 name = "weft-postgresql-emit"
-# Own semver, independent of the workspace and wheel versions. See README.md.
-version = "0.1.0"
+# Published to crates.io at the weft release version. See README.md.
+version.workspace = true
 edition.workspace = true
-publish.workspace = true
+publish = ["crates-io"]
+repository.workspace = true
+readme = "README.md"
 rust-version = "1.90"
 description = "PostgreSQL emission primitives: identifier quoting, parameter slots, string literals, typed casts, collation and result decoders"
 
 [dependencies]
-weft-model = { path = "../weft-model" }
-weft-backend = { path = "../weft-backend" }
+weft-model.workspace = true
+weft-backend.workspace = true
 base64 = "=0.22.1"
 serde_json.workspace = true

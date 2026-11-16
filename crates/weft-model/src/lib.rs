@@ -18,5 +18,5 @@ pub mod name;
 pub mod string_domain;
 pub mod types;
 
-/// This crate's contract version (`README.md`).
+/// The weft release version this crate was built at (see `README.md`).
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

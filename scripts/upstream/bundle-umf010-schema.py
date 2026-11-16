@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_MANIFEST = ROOT / "spec/upstream/actions-plan-010/owner-pins.json"
-BUNDLE_PATH = ROOT / "spec/upstream/umf-0.10.0-bundled.schema.json"
+BUNDLE_PATH = ROOT / "crates/weft-model/schema/umf-0.10.0-bundled.schema.json"
 PROVENANCE_PATH = ROOT / "spec/upstream/umf-0.10.0-bundled.source.json"
 SEMANTIC_URI = "urn:umf:core:semantic-type-reference:1.0.0"
 SEMANTIC_LOCAL = "#/$defs/semanticTypeReference"
