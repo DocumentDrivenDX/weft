@@ -33,6 +33,15 @@ Older releases: see [GitHub Releases](https://github.com/DocumentDrivenDX/weft/r
   builds selections with it, and `inspect_selection` and the PostgreSQL mutation
   lowering decode them with one shared walker instead of two hand-written ones.
   Wire shapes and refusal messages are unchanged.
+- New crate `weft-backend` 0.1.0 (own semver; `crates/weft-backend/README.md`):
+  the CONTRACT-002 backend boundary. Manifest types and validation (accepted
+  interface versions and language pairs come from the frontend), the `Frontend`
+  and `Backend<F>` traits, a `TargetArtifact` emit output (`sql::Emission` for
+  SQL backends, `NoArtifact` for backends that emit nothing), the checked compile
+  pipeline and `Registry<F, A>`. `weft_core::backend` becomes weft's frontend
+  (`WeftPlans`) and keeps its `Backend` trait, `Context`, `Registry` and type
+  paths, so backend implementations compile unchanged; check order, refusal
+  codes and the `Compilation` wire shape are unchanged.
 - `bun scripts/module-boundaries-update.ts` regenerates the dependency and
   public-declaration inventory in `docs/helix/02-design/module-boundaries.json`.
   `scripts/check-release-version.py --shared-crates` (run in CI) checks that each

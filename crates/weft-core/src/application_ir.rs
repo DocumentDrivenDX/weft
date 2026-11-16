@@ -111,19 +111,8 @@ pub enum Expression {
         bound: u16,
     },
 }
-/// Explicit backend-owned facts, never synthetic authored UMF Field identities.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub enum NativeMetadata {
-    Version,
-    CreatedBy,
-    CreatedAt,
-    UpdatedBy,
-    UpdatedAt,
-    OriginalAuthor,
-    OriginalAt,
-    LoadId,
-}
+/// Explicit backend-owned facts; the type lives with the SQL carrier in weft-backend.
+pub use weft_backend::sql::NativeMetadata;
 #[derive(Debug, Clone, Serialize)]
 pub struct Output {
     pub name: String,

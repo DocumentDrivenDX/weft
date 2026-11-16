@@ -183,6 +183,13 @@ unknown members, repeated IDs, mismatched pairs, missing domains and supported
 capabilities without declared evidence refuse. A declared evidence ID remains a
 trusted qualification reference; the compiler does not fetch or execute it.
 
+The checked pipeline is implemented once, in the `weft-backend` crate
+(`weft_backend::boundary`): a `Frontend` supplies the typed program and the
+manifest rules, a `Backend<F>` returns any `TargetArtifact` from `emit` (weft's
+backends return the SQL `Emission`; a backend that emits nothing returns
+`NoArtifact`), and `Registry<F, A>` runs the checks below in a fixed order. weft's
+frontend is `weft_core::backend::WeftPlans`.
+
 The Rust `Backend` trait in `crates/weft-core/src/backend.rs` uses associated
 `Mapping` and `TargetPlan` types. Each registered implementation owns those types;
 the heterogeneous registry erases them only around its generic adapter, which

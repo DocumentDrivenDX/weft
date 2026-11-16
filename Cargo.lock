@@ -2229,6 +2229,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "weft-backend"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "weft-model",
+]
+
+[[package]]
 name = "weft-backend-probe"
 version = "0.0.0"
 dependencies = [
@@ -2251,6 +2260,7 @@ dependencies = [
  "sqlparser",
  "umf-codegen",
  "umf-core",
+ "weft-backend",
  "weft-expr",
  "weft-model",
 ]

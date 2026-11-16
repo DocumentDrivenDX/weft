@@ -3,7 +3,8 @@
   "modules": {
     "weft-model": [],
     "weft-expr": ["weft-model"],
-    "weft-core": ["weft-model", "weft-expr"],
+    "weft-backend": ["weft-model"],
+    "weft-core": ["weft-model", "weft-expr", "weft-backend"],
     "weft-databricks": ["weft-core"],
     "weft-postgresql": ["weft-core", "weft-expr"],
     "weft-backend-probe": ["weft-core"],

@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # Crates other compilers depend on. Each has its own semver and a README whose
 # first line is "# <name> <version>".
-SHARED_CRATES = ("weft-model", "weft-expr")
+SHARED_CRATES = ("weft-model", "weft-expr", "weft-backend")
 
 
 def shared_crate_errors() -> list[str]:
