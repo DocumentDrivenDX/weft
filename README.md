@@ -1,5 +1,7 @@
 # Weft
 
+[Explore Novirhyza](https://documentdrivendx.github.io/novirhyza/)
+
 Weft compiles a request (a UMF document, a storage binding and a query) into SQL
 for a chosen backend, with bound parameters, result types, decoding instructions
 and diagnostics. If a selected meaning cannot be preserved, compilation returns
